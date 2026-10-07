@@ -4,6 +4,10 @@
 
 Прочитайте корневые AGENTS.md, AI_RULES.md и PROJECT_MEMORY.md. Календарь content/calendar.json — единственный источник дат и episode ID. Голосовые настройки берутся только из content/voice-profile.json.
 
+## Изменение правил
+
+Если владелец меняет существующее правило, не добавляйте новое рядом со старым. Сначала обновите активное правило в `AI_RULES.md`, затем в той же задаче найдите и удалите/исправьте старую противоречащую формулировку во всех активных docs/config/plans. Обновите `PROJECT_MEMORY.md` как текущий снимок состояния. Старые значения допустимы только в исторических Hook/CTA/analytics/approval/publication записях и не считаются активными. Перед завершением выполните consistency sweep: активные источники должны описывать одну и ту же текущую политику.
+
 ### Как выполнять запрос «сделай сегодняшнее видео»
 
 Сначала определите сегодняшнюю дату в `Asia/Shanghai`, затем сверьте её с `list_planned_dates`.
@@ -54,7 +58,7 @@
 
 ## Файлы и состояние
 
-- content/calendar.json — 12 production dates, cadence and timezone.
+- content/calendar.json — canonical production dates, cadence and timezone; never hard-code the episode count in workflow docs.
 - content/episodes/<id>.json — canonical Russian scenario.
 - content/voice-profile.json — fixed voice configuration and one-time approval state.
 - review/<id>/episode.json — dated working copy; edits never silently rewrite the canonical plan.
