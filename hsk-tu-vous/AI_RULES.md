@@ -2,6 +2,14 @@
 
 Read this file and `PROJECT_MEMORY.md` before acting. `AGENTS.md` explains the project-level working rules. These are production rules, not suggestions.
 
+## Active-rule maintenance
+
+- This file is the authoritative source for **current mutable production policy**. The latest explicit owner instruction wins when it intentionally changes an existing rule.
+- Treat every such change as a migration: replace the active rule here, then search the repository for the superseded rule and remove or update all conflicting active copies in project memory, workflow docs, README/overview docs, active config, and affected future plans.
+- Never leave both the new and old rule active with labels such as “old”, “previous”, or “for reference”. If an old value must survive for evidence, it may remain only in a clearly historical/append-only record such as Hook Lab, CTA Lab, analytics, approval, or publication history, marked as superseded/history and never used as current policy.
+- A rule migration is not complete until the agent performs a consistency sweep and confirms that active sources agree. Future chats must use the reconciled repository state rather than remembered chat instructions.
+- Prefer references over duplication: mutable values should live in their canonical file whenever practical. Do not hardcode episode counts or other easily stale summaries when `content/calendar.json` or another canonical file can be read directly.
+
 ## Product and content
 
 - This project produces short Russian-language Mandarin lessons for HSK 1–2 beginners.
