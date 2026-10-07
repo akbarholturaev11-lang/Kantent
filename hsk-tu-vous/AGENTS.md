@@ -1,6 +1,15 @@
 # Agent instructions
 
-Before changing code or production content, read this file, `AI_RULES.md, and `PROJECT_MEMORY.md`. Keep the canonical rules in those files; do not rely on prior chat history.
+Before changing code or production content, read this file, `AI_RULES.md`, and `PROJECT_MEMORY.md`. Do not rely on prior chat history.
+
+## Canonical rule lifecycle
+
+- `AI_RULES.md` is the single source of truth for active, changeable production policy. `PROJECT_MEMORY.md` is current architecture/state, not a historical archive. README and overview files are explanatory and must never override `AI_RULES.md`.
+- A new explicit owner instruction that changes an established rule is a **rule migration**. Apply the new rule; do not append it beside the old one.
+- In the same task, search the active repository for the superseded value, aliases, and equivalent wording. Update or delete every conflicting active statement in `AI_RULES.md`, `PROJECT_MEMORY.md`, `WORKFLOW.md`, README/overview files, active JSON/config, and future-plan files affected by the rule.
+- Do not keep an obsolete active rule “for context”. Historical Hook/CTA corrections, analytics, publication records, and other append-only evidence may retain old values only as explicit history/superseded records; they must not be treated as current policy.
+- Before finishing any rule change, perform a consistency sweep and verify that all active documents/config agree with the newest owner rule. If a contradiction remains, the rule change is incomplete.
+- When possible, avoid duplicating mutable values in overview docs. Point to the canonical file instead, so a future change has one authoritative value to update.
 
 - Preserve the current architecture and brand. Make the smallest change that completes the requested work.
 - Read `content/SKILLS.md` before selecting a video skill. The owner-supplied local skill pack is installed in `.agents/skills/`; load the relevant `SKILL.md` and its needed references before using it. Existing HSK production rules and the owner's current request govern how generic skill workflows apply to this project.
