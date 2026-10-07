@@ -1,5 +1,11 @@
 # HSK AI project memory
 
+## Memory maintenance
+
+This file contains **current architecture and current state only**. It is not a changelog. When the owner changes a production rule, update or delete the superseded statement here in the same task; do not preserve contradictory active rules for historical context. Historical Hook/CTA corrections, analytics, approvals, and publication records belong in their dedicated append-only data, not in active project memory.
+
+`AI_RULES.md` is authoritative for mutable production policy. If this memory conflicts with `AI_RULES.md`, repair this file immediately as part of the rule-migration consistency sweep.
+
 ## Purpose
 
 Prepare review-ready, Russian-language HSK 1–2 Mandarin lesson videos on a dated calendar. After a final per-post preview and explicit owner confirmation, publish or schedule through the connected Zernio MCP to Instagram Reels and TikTok.
@@ -45,7 +51,7 @@ Prepare review-ready, Russian-language HSK 1–2 Mandarin lesson videos on a dat
 - No database or social credentials are stored in the project. Analytics are still entered by the owner; there is no automatic analytics connection, platform-specific variant rendering, or cover/thumbnail generation. Zernio account handles are resolved from the connected accounts for each publication and are never guessed.
 - Current publishing targets are Instagram Reels and TikTok; keep one clean 9:16 master. Do not publish to Telegram or another platform unless the owner explicitly changes the rule.
 - The speech site cannot prove the selected voice from MP3 metadata; its exact profile must be selected manually and recorded without overstating verification.
-- Chinese-language source URLs and review dates are recorded for the 2026-09-28 sample; the other 11 planned episodes still need source receipts. Calendar referenceFacts are planning notes, not independent language-review receipts.
+- Chinese-language source URLs and review dates are recorded for the 2026-09-28 sample. Any planned episode that has not yet been source-reviewed still needs its own source receipts. Calendar referenceFacts are planning notes, not independent language-review receipts.
 
 ## Known quality gates
 
