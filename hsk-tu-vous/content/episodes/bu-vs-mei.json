@@ -1,0 +1,273 @@
+{
+  "id": "bu-vs-mei",
+  "date": "2026-10-21",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "不 и 没: как различать отрицания",
+  "level": "HSK 1–2",
+  "topic": "不 и 没: два способа отрицания",
+  "durationTargetSec": 30,
+  "caption": "不 часто подходит для привычки или намерения, а 没 — для отсутствия или действия, которое не произошло. Проверяйте контекст.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#HSK2"
+  ],
+  "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+  "voiceProvider": "text-to-speech.online",
+  "learningFacts": [
+    "不 часто отрицает привычку, намерение или настоящее/будущее действие.",
+    "没 отрицает наличие или то, что действие не произошло; перед глаголом часто опускается 有.",
+    "Выбор зависит от времени и смысла, это не абсолютное правило."
+  ],
+  "examples": [
+    "不 bù",
+    "没 méi",
+    "我不喝咖啡。",
+    "我没去学校。"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 4,
+      "headline": "不 И 没 — РАЗНЫЕ ОТРИЦАНИЯ",
+      "narration": "Оба слова переводятся как «не», но контекст помогает выбрать нужное.",
+      "screenCaption": "不 · 没",
+      "editPlan": "0–4 с. Откройте видео вопросом «不 И 没 — РАЗНЫЕ ОТРИЦАНИЯ». На первом ударе появляется крупный главный иероглиф с коротким pop; следующие beats быстро показывают контраст. Оставьте заголовок внутри безопасных полей 9:16.",
+      "visualBeats": [
+        {
+          "hero": "不 ≠ 没",
+          "pinyin": "bù ≠ méi",
+          "meaning": "не · нет / не произошло",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "不 ≠ 没",
+          "pinyin": "bù ≠ méi",
+          "meaning": "не · нет / не произошло"
+        }
+      ]
+    },
+    {
+      "id": "bu",
+      "kind": "vocabulary",
+      "durationSec": 6,
+      "headline": "不: ПРИВЫЧКА ИЛИ НАМЕРЕНИЕ",
+      "narration": "不 часто используют для привычек или того, чего не собираются делать.",
+      "screenCaption": "我不喝咖啡。",
+      "editPlan": "4–10 с. Разберите понятие карточками в порядке: 不 → 我不喝咖啡。. Каждый новый иероглиф приходит отдельным slide; под ним сразу появляются пиньинь с тонами и русский смысл.",
+      "visualBeats": [
+        {
+          "hero": "不",
+          "pinyin": "bù",
+          "meaning": "не · часто привычка или намерение",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "我不喝咖啡。",
+          "pinyin": "Wǒ bù hē kāfēi.",
+          "meaning": "Я не пью кофе.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "不",
+          "pinyin": "bù",
+          "meaning": "не · часто привычка или намерение"
+        },
+        {
+          "hanzi": "我不喝咖啡。",
+          "pinyin": "Wǒ bù hē kāfēi.",
+          "meaning": "Я не пью кофе."
+        }
+      ]
+    },
+    {
+      "id": "mei",
+      "kind": "vocabulary",
+      "durationSec": 6,
+      "headline": "没: НЕ СЛУЧИЛОСЬ",
+      "narration": "没 часто отрицает действие, которое не произошло: «я не ходил в школу».",
+      "screenCaption": "我没去学校。",
+      "editPlan": "4–10 с. Разберите понятие карточками в порядке: 没 → 我没去学校。. Каждый новый иероглиф приходит отдельным slide; под ним сразу появляются пиньинь с тонами и русский смысл.",
+      "visualBeats": [
+        {
+          "hero": "没",
+          "pinyin": "méi",
+          "meaning": "не произошло · не было",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "我没去学校。",
+          "pinyin": "Wǒ méi qù xuéxiào.",
+          "meaning": "Я не ходил в школу.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "没",
+          "pinyin": "méi",
+          "meaning": "не произошло · не было"
+        },
+        {
+          "hanzi": "我没去学校。",
+          "pinyin": "Wǒ méi qù xuéxiào.",
+          "meaning": "Я не ходил в школу."
+        }
+      ]
+    },
+    {
+      "id": "compare",
+      "kind": "context",
+      "durationSec": 6,
+      "headline": "ПОДСКАЗКА, НЕ ЖЁСТКОЕ ПРАВИЛО",
+      "narration": "我不喝咖啡 — обычно не пью кофе. 我没去学校 — не ходил в школу. Выбор зависит от смысла.",
+      "screenCaption": "привычка · не произошло",
+      "editPlan": "5–11 с. Покажите связь между частями правила: 不喝 / 没去. Сначала выделите первую часть, затем вторую; русский вывод «привычка · не произошло» удерживайте в нижней зоне субтитров.",
+      "visualBeats": [
+        {
+          "hero": "不喝",
+          "pinyin": "bù hē",
+          "meaning": "не пью",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "没去",
+          "pinyin": "méi qù",
+          "meaning": "не ходил",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "不喝",
+          "pinyin": "bù hē",
+          "meaning": "не пью"
+        },
+        {
+          "hanzi": "没去",
+          "pinyin": "méi qù",
+          "meaning": "не ходил"
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "kind": "cta",
+      "captionStyleId": "pill",
+      "durationSec": 8,
+      "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+      "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+      "screenCaption": "Профиль → ссылка → сайт",
+      "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — скриншот окна ссылок и выделите карточку «Скачать HSK AI»; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано.",
+      "visualBeats": [
+        {
+          "hero": "HSK AI",
+          "meaning": "ПОПРОБУЙ",
+          "brandLogo": true,
+          "motion": "reveal",
+          "syncCueText": "Попробуй",
+          "transitionStyle": "type-reveal"
+        },
+        {
+          "hero": "ПРОФИЛЬ",
+          "screenImage": "cta/instagram-profile.png",
+          "screenImageWidthPx": 860,
+          "screenImageHeightPx": 633,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 86,
+            "widthPercent": 92,
+            "heightPercent": 7
+          },
+          "motion": "slide",
+          "syncCueText": "Зайди",
+          "transitionStyle": "slide-match"
+        },
+        {
+          "hero": "ССЫЛКА",
+          "screenImage": "cta/instagram-links.png",
+          "screenImageWidthPx": 842,
+          "screenImageHeightPx": 1164,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 52,
+            "widthPercent": 92,
+            "heightPercent": 15
+          },
+          "motion": "reveal",
+          "syncCueText": "Открой",
+          "transitionStyle": "mask-reveal"
+        },
+        {
+          "hero": "СКАЧАТЬ",
+          "screenImage": "cta/website-download.png",
+          "screenImageWidthPx": 600,
+          "screenImageHeightPx": 1300,
+          "screenHighlight": {
+            "leftPercent": 24,
+            "topPercent": 70,
+            "widthPercent": 52,
+            "heightPercent": 8
+          },
+          "motion": "slide",
+          "syncCueText": "скачай",
+          "transitionStyle": "slide-match"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "中文",
+          "pinyin": "zhōngwén",
+          "meaning": "ПРОСТО • ЛЕГКО"
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-tts-export",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-dmitry-v1",
+  "learningFactSources": [],
+  "hookExperiment": {
+    "id": "bu-vs-mei-hook-v1",
+    "formatId": "contrast",
+    "hypothesis": "Сопоставление 不 и 没 с разными ситуациями должно остановить зрителя, который считает их взаимозаменяемыми.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-21"
+  },
+  "audienceProblem": "Новичок использует 不 и 没 как взаимозаменяемые отрицания.",
+  "learningOutcome": "Сравнить типичные контексты привычки/намерения и непроизошедшего действия, не превращая тенденцию в абсолютное правило.",
+  "ctaExperiment": {
+    "id": "bu-vs-mei-cta-profile-link-download-v1",
+    "formatId": "benefit-profile-link-download",
+    "ruleVersion": "cta-policy-v8",
+    "offerId": "hsk-ai-profile-link-download-v1",
+    "keyword": null,
+    "hypothesis": "The owner-directed profile-to-website route becomes the fixed CTA baseline; this snapshot records the same route, not a performance test.",
+    "changedVariable": "baseline",
+    "comparisonGroupId": "hsk-profile-link-download-v1",
+    "registeredAt": "2026-10-01T11:47:41.896Z",
+    "copyHash": "a721ead74d64b27ff56b9b280a1ebb91d8fb39519d75e4bca8ff36cd918e0882",
+    "acknowledgedCorrectionIds": [
+      "cta-correction-0004",
+      "cta-correction-0005",
+      "cta-correction-0006",
+      "cta-correction-0008"
+    ]
+  }
+}

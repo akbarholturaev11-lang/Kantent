@@ -1,0 +1,236 @@
+{
+  "id": "zai-location",
+  "date": "2026-10-12",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "在: скажите, где вы находитесь",
+  "level": "HSK 1",
+  "topic": "在 для обозначения места: где я нахожусь",
+  "durationTargetSec": 30,
+  "caption": "Модель 我在家 означает «я дома». Замените место после 在 и получите свою фразу.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#китайскиефразы"
+  ],
+  "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+  "voiceProvider": "text-to-speech.online",
+  "learningFacts": [
+    "В модели 我在家 在 показывает местонахождение.",
+    "Базовый порядок примера: человек + 在 + место."
+  ],
+  "examples": [
+    "在 zài",
+    "我在家。",
+    "我在学校。",
+    "他在家。"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 4,
+      "headline": "ГДЕ ТЫ СЕЙЧАС?",
+      "narration": "Чтобы сказать, где вы находитесь, запомните простую модель с 在.",
+      "screenCaption": "человек + 在 + место",
+      "editPlan": "0–4 с. Откройте видео вопросом «ГДЕ ТЫ СЕЙЧАС?». На первом ударе появляется крупный главный иероглиф с коротким pop; следующие beats быстро показывают контраст. Оставьте заголовок внутри безопасных полей 9:16.",
+      "visualBeats": [
+        {
+          "hero": "在",
+          "pinyin": "zài",
+          "meaning": "находиться · быть в",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "在",
+          "pinyin": "zài",
+          "meaning": "находиться · быть в"
+        }
+      ]
+    },
+    {
+      "id": "pattern",
+      "kind": "context",
+      "durationSec": 6,
+      "headline": "МОДЕЛЬ ФРАЗЫ",
+      "narration": "Сначала назовите человека, затем 在, потом место: 我在… — «я нахожусь…».",
+      "screenCaption": "我 + 在 + место",
+      "editPlan": "5–11 с. Покажите связь между частями правила: 我在…. Сначала выделите первую часть, затем вторую; русский вывод «我 + 在 + место» удерживайте в нижней зоне субтитров.",
+      "visualBeats": [
+        {
+          "hero": "我在…",
+          "pinyin": "Wǒ zài…",
+          "meaning": "Я нахожусь…",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我在…",
+          "pinyin": "Wǒ zài…",
+          "meaning": "Я нахожусь…"
+        }
+      ]
+    },
+    {
+      "id": "home",
+      "kind": "example",
+      "durationSec": 6,
+      "headline": "ДОМА",
+      "narration": "我在家。 — «Я дома». 家 означает дом, а 在 связывает человека с местом.",
+      "screenCaption": "我在家。",
+      "editPlan": "5–11 с. Сначала крупно покажите полную китайскую фразу «我在家。», затем удержите ханцзы, тоновый пиньинь и перевод одновременно. На смене мысли переключите визуальный beat без потери читаемости.",
+      "visualBeats": [
+        {
+          "hero": "我在家。",
+          "pinyin": "Wǒ zài jiā.",
+          "meaning": "Я дома.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我在家。",
+          "pinyin": "Wǒ zài jiā.",
+          "meaning": "Я дома."
+        }
+      ]
+    },
+    {
+      "id": "school",
+      "kind": "example",
+      "durationSec": 6,
+      "headline": "В ШКОЛЕ",
+      "narration": "我在学校。 — «Я в школе». Оставьте начало, поменяйте только место.",
+      "screenCaption": "我在学校。",
+      "editPlan": "5–11 с. Сначала крупно покажите полную китайскую фразу «我在学校。», затем удержите ханцзы, тоновый пиньинь и перевод одновременно. На смене мысли переключите визуальный beat без потери читаемости.",
+      "visualBeats": [
+        {
+          "hero": "我在学校。",
+          "pinyin": "Wǒ zài xuéxiào.",
+          "meaning": "Я в школе.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我在学校。",
+          "pinyin": "Wǒ zài xuéxiào.",
+          "meaning": "Я в школе."
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "kind": "cta",
+      "captionStyleId": "pill",
+      "durationSec": 8,
+      "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+      "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+      "screenCaption": "Профиль → ссылка → сайт",
+      "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — скриншот окна ссылок и выделите карточку «Скачать HSK AI»; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано.",
+      "visualBeats": [
+        {
+          "hero": "HSK AI",
+          "meaning": "ПОПРОБУЙ",
+          "brandLogo": true,
+          "motion": "reveal",
+          "syncCueText": "Попробуй",
+          "transitionStyle": "type-reveal"
+        },
+        {
+          "hero": "ПРОФИЛЬ",
+          "screenImage": "cta/instagram-profile.png",
+          "screenImageWidthPx": 860,
+          "screenImageHeightPx": 633,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 86,
+            "widthPercent": 92,
+            "heightPercent": 7
+          },
+          "motion": "slide",
+          "syncCueText": "Зайди",
+          "transitionStyle": "slide-match"
+        },
+        {
+          "hero": "ССЫЛКА",
+          "screenImage": "cta/instagram-links.png",
+          "screenImageWidthPx": 842,
+          "screenImageHeightPx": 1164,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 52,
+            "widthPercent": 92,
+            "heightPercent": 15
+          },
+          "motion": "reveal",
+          "syncCueText": "Открой",
+          "transitionStyle": "mask-reveal"
+        },
+        {
+          "hero": "СКАЧАТЬ",
+          "screenImage": "cta/website-download.png",
+          "screenImageWidthPx": 600,
+          "screenImageHeightPx": 1300,
+          "screenHighlight": {
+            "leftPercent": 24,
+            "topPercent": 70,
+            "widthPercent": 52,
+            "heightPercent": 8
+          },
+          "motion": "slide",
+          "syncCueText": "скачай",
+          "transitionStyle": "slide-match"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "中文",
+          "pinyin": "zhōngwén",
+          "meaning": "ПРОСТО • ЛЕГКО"
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-tts-export",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-dmitry-v1",
+  "learningFactSources": [],
+  "hookExperiment": {
+    "id": "zai-location-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Знакомое место — дом или школа — должно показать практическую пользу 在 до формального объяснения.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-12"
+  },
+  "audienceProblem": "Новичок не может коротко сказать, где он или другой человек находится.",
+  "learningOutcome": "Собрать модель «человек + 在 + место» на примерах 我在家 и 我在学校.",
+  "ctaExperiment": {
+    "id": "zai-location-cta-profile-link-download-v1",
+    "formatId": "benefit-profile-link-download",
+    "ruleVersion": "cta-policy-v8",
+    "offerId": "hsk-ai-profile-link-download-v1",
+    "keyword": null,
+    "hypothesis": "The owner-directed profile-to-website route becomes the fixed CTA baseline; this snapshot records the same route, not a performance test.",
+    "changedVariable": "baseline",
+    "comparisonGroupId": "hsk-profile-link-download-v1",
+    "registeredAt": "2026-10-01T11:47:41.890Z",
+    "copyHash": "159b2506b75ece79370333a27b92b33cbe245a42b5c242d4b121d8d8ade1ad87",
+    "acknowledgedCorrectionIds": [
+      "cta-correction-0004",
+      "cta-correction-0005",
+      "cta-correction-0006",
+      "cta-correction-0008"
+    ]
+  }
+}

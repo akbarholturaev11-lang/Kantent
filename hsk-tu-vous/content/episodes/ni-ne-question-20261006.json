@@ -1,0 +1,269 @@
+{
+  "id": "ni-ne-question-20261006",
+  "date": "2026-10-06",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "Как спросить «а ты?» по-китайски",
+  "level": "HSK 1",
+  "topic": "你呢？ как коротко вернуть вопрос собеседнику",
+  "durationTargetSec": 30,
+  "caption": "После ответа на 你好吗？ верните вопрос короткой фразой 你呢？ — «А ты?»",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#учуитайский"
+  ],
+  "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+  "voiceProvider": "text-to-speech-online",
+  "voiceProfileId": "ru-dmitry-v1",
+  "learningFacts": [
+    "В коротком ответе 呢 в конце помогает вернуть собеседнику уже заданный вопрос: 我很好。你呢？ — «У меня всё хорошо. А ты?»",
+    "你呢？ Nǐ ne? — «А ты?» в этом диалоге; 呢 также имеет другие употребления, поэтому правило здесь ограничено контекстом ответа на вопрос о самочувствии."
+  ],
+  "examples": [
+    "你好吗？ Nǐ hǎo ma? — Как ты?",
+    "我很好。 Wǒ hěn hǎo. — У меня всё хорошо.",
+    "你呢？ Nǐ ne? — А ты?",
+    "我很好。你呢？ Wǒ hěn hǎo. Nǐ ne? — У меня всё хорошо. А ты?"
+  ],
+  "learningFactSources": [
+    {
+      "title": "Elementary Chinese Grammar 基础汉语语法 — Oxford Centre for Teaching Chinese as a Foreign Language",
+      "url": "https://www.ctcfl.ox.ac.uk/media/pages/pdf/lang-work-grammar-database-grammar-database-for-hard-copy.pdf",
+      "checkedAt": "2026-10-06",
+      "supports": [
+        "呢 at the end of a phrase can bounce a question back; the source gives the exchange 我很好。你呢？ and translates it “I am very well, and you?”"
+      ]
+    }
+  ],
+  "audienceProblem": "Новичок знает, как ответить на 你好吗？, но не знает, как коротко спросить собеседника в ответ.",
+  "learningOutcome": "Ответить 我很好。 и вернуть собеседнику вопрос фразой 你呢？.",
+  "hookExperiment": {
+    "id": "ni-ne-question-20261006-hook-v1",
+    "formatId": "question",
+    "hypothesis": "A quick recall question built around a familiar greeting may hold HSK 1 viewers until they retrieve a short, reusable reply; the result remains unmeasured until platform readbacks arrive.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-06"
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "КАК СПРОСИТЬ «А ТЫ?»",
+      "narration": "Как после «Во хэнь хао» спросить «а ты»?",
+      "screenCaption": "Короткий ответ в диалоге",
+      "captionStyleId": "headline",
+      "editPlan": "0–5 с. С первого кадра покажите ответ 我很好。 в центральной открытой композиции и обозначьте собеседника простой иллюстрацией. Крупный вопрос «А ты?» должен быть виден сразу; один короткий pop, без логотипного вступления.",
+      "visualBeats": [
+        {
+          "hero": "我很好。",
+          "pinyin": "Wǒ hěn hǎo.",
+          "meaning": "У меня всё хорошо.",
+          "chinese": true,
+          "motion": "pop",
+          "visualFocus": "friend",
+          "enterAtSceneStart": true
+        },
+        {
+          "hero": "你 + ？",
+          "meaning": "ты + ?",
+          "motion": "pop",
+          "visualFocus": "friend",
+          "syncCueText": "спросить"
+        },
+        {
+          "hero": "你呢？",
+          "pinyin": "Nǐ ne?",
+          "meaning": "А ты?",
+          "chinese": true,
+          "motion": "reveal",
+          "visualFocus": "friend",
+          "syncCueText": "ты"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我很好。",
+          "pinyin": "Wǒ hěn hǎo.",
+          "meaning": "У меня всё хорошо."
+        }
+      ]
+    },
+    {
+      "id": "challenge",
+      "kind": "hook",
+      "durationSec": 3,
+      "headline": "ДВА ИЕРОГЛИФА",
+      "narration": "Угадай: два иероглифа.",
+      "screenCaption": "你 + ? → «А ты?»",
+      "captionStyleId": "pill",
+      "editPlan": "5–8 с. Сохраните одну центральную фразу, закройте ответ на короткую паузу и дайте зрителю время вспомнить. Не добавляйте второй экран или отдельную карточку.",
+      "visualBeats": [
+        {
+          "hero": "你 + ？",
+          "meaning": "ты + ?",
+          "motion": "pulse"
+        }
+      ],
+      "cards": []
+    },
+    {
+      "id": "answer",
+      "kind": "example",
+      "durationSec": 9,
+      "headline": "你呢？ — А ТЫ?",
+      "narration": "Ответ: «ни нэ?» — «а ты?». В этой беседе частица «нэ» в конце возвращает собеседнику тот же вопрос.",
+      "screenCaption": "呢 в конце возвращает вопрос",
+      "captionStyleId": "highlight",
+      "editPlan": "8–17 с. На слове «Ответ» раскройте 你呢？ и сразу покажите тоновый пиньинь с русским значением вместе. Затем выделите 呢 в той же композиции, пока объясняется её роль именно в этом диалоге.",
+      "visualBeats": [
+        {
+          "hero": "你呢？",
+          "pinyin": "Nǐ ne?",
+          "meaning": "А ты?",
+          "chinese": true,
+          "motion": "slide",
+          "syncCueText": "Ответ"
+        },
+        {
+          "hero": "呢",
+          "pinyin": "ne",
+          "meaning": "возвращает вопрос в этом диалоге",
+          "chinese": true,
+          "motion": "reveal",
+          "syncCueText": "частица"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你呢？",
+          "pinyin": "Nǐ ne?",
+          "meaning": "А ты?"
+        },
+        {
+          "hanzi": "呢",
+          "pinyin": "ne",
+          "meaning": "возвращает вопрос в этом диалоге"
+        }
+      ]
+    },
+    {
+      "id": "recall",
+      "kind": "example",
+      "durationSec": 5,
+      "headline": "ОТВЕТЬ И СПРОСИ В ОТВЕТ",
+      "narration": "Повтори целиком: «Во хэнь хао. Ни нэ?»",
+      "screenCaption": "我很好。你呢？",
+      "captionStyleId": "pill",
+      "editPlan": "17–22 с. Соберите мини-диалог в центральной сцене, последовательно показывая обе реплики с ханцзы, тономаркированным пиньинем и коротким русским переводом. Оставьте мгновение на повторение.",
+      "visualBeats": [
+        {
+          "hero": "我很好。",
+          "pinyin": "Wǒ hěn hǎo.",
+          "meaning": "У меня всё хорошо.",
+          "chinese": true,
+          "motion": "slide",
+          "syncCueText": "Во хэнь хао"
+        },
+        {
+          "hero": "你呢？",
+          "pinyin": "Nǐ ne?",
+          "meaning": "А ты?",
+          "chinese": true,
+          "motion": "reveal",
+          "syncCueText": "Ни нэ"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我很好。",
+          "pinyin": "Wǒ hěn hǎo.",
+          "meaning": "У меня всё хорошо."
+        },
+        {
+          "hanzi": "你呢？",
+          "pinyin": "Nǐ ne?",
+          "meaning": "А ты?"
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "kind": "cta",
+      "captionStyleId": "pill",
+      "durationSec": 8,
+      "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+      "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+      "screenCaption": "Профиль → ссылка → сайт",
+      "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — скриншот окна ссылок и выделите карточку «Скачать HSK AI»; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано.",
+      "visualBeats": [
+        {
+          "hero": "HSK AI",
+          "meaning": "ПОПРОБУЙ",
+          "brandLogo": true,
+          "motion": "reveal",
+          "syncCueText": "Попробуй",
+          "transitionStyle": "type-reveal"
+        },
+        {
+          "hero": "ПРОФИЛЬ",
+          "screenImage": "cta/instagram-profile.png",
+          "screenImageWidthPx": 860,
+          "screenImageHeightPx": 633,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 86,
+            "widthPercent": 92,
+            "heightPercent": 7
+          },
+          "motion": "slide",
+          "syncCueText": "Зайди",
+          "transitionStyle": "slide-match"
+        },
+        {
+          "hero": "ССЫЛКА",
+          "screenImage": "cta/instagram-links.png",
+          "screenImageWidthPx": 842,
+          "screenImageHeightPx": 1164,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 52,
+            "widthPercent": 92,
+            "heightPercent": 15
+          },
+          "motion": "reveal",
+          "syncCueText": "Открой",
+          "transitionStyle": "mask-reveal"
+        },
+        {
+          "hero": "СКАЧАТЬ",
+          "screenImage": "cta/website-download.png",
+          "screenImageWidthPx": 600,
+          "screenImageHeightPx": 1300,
+          "screenHighlight": {
+            "leftPercent": 24,
+            "topPercent": 70,
+            "widthPercent": 52,
+            "heightPercent": 8
+          },
+          "motion": "slide",
+          "syncCueText": "скачай",
+          "transitionStyle": "slide-match"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "中文",
+          "pinyin": "zhōngwén",
+          "meaning": "ПРОСТО • ЛЕГКО"
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-tts-export",
+  "publishingStatus": "pending-owner-review"
+}

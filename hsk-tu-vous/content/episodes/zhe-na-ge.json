@@ -1,0 +1,263 @@
+{
+  "id": "zhe-na-ge",
+  "date": "2026-10-09",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "这个 и 那个: этот и тот",
+  "level": "HSK 1",
+  "topic": "这 и 那 с 个: этот и тот",
+  "durationTargetSec": 30,
+  "caption": "这 указывает на предмет рядом, 那 — на предмет подальше. С существительным покажем модель 这个苹果 и 那个苹果.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#китайскиеслова"
+  ],
+  "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+  "voiceProvider": "text-to-speech.online",
+  "learningFacts": [
+    "这 указывает на близкое, 那 — на более далёкое.",
+    "Перед существительным в простых примерах часто используют классификатор 个: 这个苹果, 那个苹果."
+  ],
+  "examples": [
+    "这 zhè",
+    "那 nà",
+    "个 ge",
+    "这个 zhège",
+    "那个 nàge",
+    "这个苹果",
+    "那个苹果"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 4,
+      "headline": "ЭТОТ ИЛИ ТОТ?",
+      "narration": "В китайском выберите указательное слово по расстоянию: рядом — 这, подальше — 那.",
+      "screenCaption": "这 · 那",
+      "editPlan": "0–4 с. Откройте видео вопросом «ЭТОТ ИЛИ ТОТ?». На первом ударе появляется крупный главный иероглиф с коротким pop; следующие beats быстро показывают контраст. Оставьте заголовок внутри безопасных полей 9:16.",
+      "visualBeats": [
+        {
+          "hero": "这 ≠ 那",
+          "pinyin": "zhè ≠ nà",
+          "meaning": "этот · тот",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "这 ≠ 那",
+          "pinyin": "zhè ≠ nà",
+          "meaning": "этот · тот"
+        }
+      ]
+    },
+    {
+      "id": "near",
+      "kind": "vocabulary",
+      "durationSec": 6,
+      "headline": "РЯДОМ: 这",
+      "narration": "这 означает «этот/это». Если показываете на яблоко рядом, скажите 这个苹果.",
+      "screenCaption": "这个苹果",
+      "editPlan": "4–10 с. Разберите понятие карточками в порядке: 这 → 这个苹果. Каждый новый иероглиф приходит отдельным slide; под ним сразу появляются пиньинь с тонами и русский смысл.",
+      "visualBeats": [
+        {
+          "hero": "这",
+          "pinyin": "zhè",
+          "meaning": "этот · это",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "这个苹果",
+          "pinyin": "zhège píngguǒ",
+          "meaning": "это яблоко",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "这",
+          "pinyin": "zhè",
+          "meaning": "этот · это"
+        },
+        {
+          "hanzi": "这个苹果",
+          "pinyin": "zhège píngguǒ",
+          "meaning": "это яблоко"
+        }
+      ]
+    },
+    {
+      "id": "far",
+      "kind": "vocabulary",
+      "durationSec": 6,
+      "headline": "ПОДАЛЬШЕ: 那",
+      "narration": "那 означает «тот/то». На яблоко подальше укажет фраза 那个苹果.",
+      "screenCaption": "那个苹果",
+      "editPlan": "4–10 с. Разберите понятие карточками в порядке: 那 → 那个苹果. Каждый новый иероглиф приходит отдельным slide; под ним сразу появляются пиньинь с тонами и русский смысл.",
+      "visualBeats": [
+        {
+          "hero": "那",
+          "pinyin": "nà",
+          "meaning": "тот · то",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "那个苹果",
+          "pinyin": "nàge píngguǒ",
+          "meaning": "то яблоко",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "那",
+          "pinyin": "nà",
+          "meaning": "тот · то"
+        },
+        {
+          "hanzi": "那个苹果",
+          "pinyin": "nàge píngguǒ",
+          "meaning": "то яблоко"
+        }
+      ]
+    },
+    {
+      "id": "measure",
+      "kind": "context",
+      "durationSec": 6,
+      "headline": "ЗАЧЕМ 个?",
+      "narration": "В 这个苹果 и 那个苹果 个 стоит между указанием и предметом. Это частый общий классификатор.",
+      "screenCaption": "这个 + предмет",
+      "editPlan": "5–11 с. Покажите связь между частями правила: 个. Сначала выделите первую часть, затем вторую; русский вывод «这个 + предмет» удерживайте в нижней зоне субтитров.",
+      "visualBeats": [
+        {
+          "hero": "个",
+          "pinyin": "ge",
+          "meaning": "общий классификатор",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "个",
+          "pinyin": "ge",
+          "meaning": "общий классификатор"
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "kind": "cta",
+      "captionStyleId": "pill",
+      "durationSec": 8,
+      "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+      "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+      "screenCaption": "Профиль → ссылка → сайт",
+      "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — скриншот окна ссылок и выделите карточку «Скачать HSK AI»; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано.",
+      "visualBeats": [
+        {
+          "hero": "HSK AI",
+          "meaning": "ПОПРОБУЙ",
+          "brandLogo": true,
+          "motion": "reveal",
+          "syncCueText": "Попробуй",
+          "transitionStyle": "type-reveal"
+        },
+        {
+          "hero": "ПРОФИЛЬ",
+          "screenImage": "cta/instagram-profile.png",
+          "screenImageWidthPx": 860,
+          "screenImageHeightPx": 633,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 86,
+            "widthPercent": 92,
+            "heightPercent": 7
+          },
+          "motion": "slide",
+          "syncCueText": "Зайди",
+          "transitionStyle": "slide-match"
+        },
+        {
+          "hero": "ССЫЛКА",
+          "screenImage": "cta/instagram-links.png",
+          "screenImageWidthPx": 842,
+          "screenImageHeightPx": 1164,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 52,
+            "widthPercent": 92,
+            "heightPercent": 15
+          },
+          "motion": "reveal",
+          "syncCueText": "Открой",
+          "transitionStyle": "mask-reveal"
+        },
+        {
+          "hero": "СКАЧАТЬ",
+          "screenImage": "cta/website-download.png",
+          "screenImageWidthPx": 600,
+          "screenImageHeightPx": 1300,
+          "screenHighlight": {
+            "leftPercent": 24,
+            "topPercent": 70,
+            "widthPercent": 52,
+            "heightPercent": 8
+          },
+          "motion": "slide",
+          "syncCueText": "скачай",
+          "transitionStyle": "slide-match"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "中文",
+          "pinyin": "zhōngwén",
+          "meaning": "ПРОСТО • ЛЕГКО"
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-tts-export",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-dmitry-v1",
+  "learningFactSources": [],
+  "hookExperiment": {
+    "id": "zhe-na-ge-hook-v1",
+    "formatId": "contrast",
+    "hypothesis": "Одновременный показ 这 / 那 и ближнего/дальнего предмета должен дать зрителю понятный визуальный критерий выбора.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-09"
+  },
+  "audienceProblem": "Новичок путает слова «этот» и «тот», указывая на предметы на разном расстоянии.",
+  "learningOutcome": "Использовать 这 и 那 в простых моделях 这个苹果 и 那个苹果.",
+  "ctaExperiment": {
+    "id": "zhe-na-ge-cta-profile-link-download-v1",
+    "formatId": "benefit-profile-link-download",
+    "ruleVersion": "cta-policy-v8",
+    "offerId": "hsk-ai-profile-link-download-v1",
+    "keyword": null,
+    "hypothesis": "The owner-directed profile-to-website route becomes the fixed CTA baseline; this snapshot records the same route, not a performance test.",
+    "changedVariable": "baseline",
+    "comparisonGroupId": "hsk-profile-link-download-v1",
+    "registeredAt": "2026-10-01T11:47:41.888Z",
+    "copyHash": "5db9b609de0a8bc58d7cf2aa80c5bf3662dfdce5d396f4b303455aed595fe7a5",
+    "acknowledgedCorrectionIds": [
+      "cta-correction-0004",
+      "cta-correction-0005",
+      "cta-correction-0006",
+      "cta-correction-0008"
+    ]
+  }
+}

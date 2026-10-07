@@ -1,0 +1,320 @@
+{
+  "id": "ni-nin-nimen-ru",
+  "level": "HSK 1",
+  "topic": "Разница между ты, Вы и вы во множественном числе",
+  "durationTargetSec": 30,
+  "voiceProvider": "gemini",
+  "voiceLocale": "ru-RU",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#учуитайский"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 3,
+      "screenCaption": "«Ты» и «Вы» — разные слова",
+      "visualBeats": [
+        {
+          "hero": "你",
+          "pinyin": "nǐ",
+          "meaning": "«ты»",
+          "chinese": true
+        },
+        {
+          "hero": "您",
+          "pinyin": "nín",
+          "meaning": "вежливое «Вы»",
+          "chinese": true
+        },
+        {
+          "hero": "你 ≠ 您",
+          "pinyin": "nǐ ≠ nín",
+          "meaning": "ты · Вы",
+          "chinese": true
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你 ≠ 您",
+          "pinyin": "nǐ ≠ nín",
+          "meaning": "ты · Вы"
+        }
+      ],
+      "headline": "В чём разница?",
+      "narration": "В китайском «ты» и вежливое «Вы» звучат по-разному."
+    },
+    {
+      "id": "three-forms",
+      "kind": "vocabulary",
+      "durationSec": 5,
+      "screenCaption": "Три формы обращения",
+      "visualBeats": [
+        {
+          "hero": "你",
+          "pinyin": "nǐ",
+          "meaning": "ты",
+          "chinese": true
+        },
+        {
+          "hero": "您",
+          "pinyin": "nín",
+          "meaning": "вежливое Вы",
+          "chinese": true
+        },
+        {
+          "hero": "你们",
+          "pinyin": "nǐmen",
+          "meaning": "вы · несколько человек",
+          "chinese": true
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你",
+          "pinyin": "nǐ",
+          "meaning": "ты"
+        },
+        {
+          "hanzi": "您",
+          "pinyin": "nín",
+          "meaning": "вежливое Вы"
+        },
+        {
+          "hanzi": "你们",
+          "pinyin": "nǐmen",
+          "meaning": "вы · несколько человек"
+        }
+      ],
+      "headline": "ТРИ ФОРМЫ ОБРАЩЕНИЯ",
+      "narration": "Ни — «ты». Нинь — вежливое «Вы». Нимэнь — «вы» для нескольких людей."
+    },
+    {
+      "id": "ni-hao",
+      "kind": "example",
+      "durationSec": 3,
+      "screenCaption": "Привет!",
+      "visualBeats": [
+        {
+          "hero": "你好！",
+          "pinyin": "Nǐ hǎo!",
+          "meaning": "Привет!",
+          "chinese": true
+        },
+        {
+          "hero": "Nǐ hǎo!",
+          "pinyin": "你好！",
+          "chinese": true
+        },
+        {
+          "hero": "Привет!",
+          "pinyin": "你好！",
+          "chinese": true
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你好！",
+          "pinyin": "Nǐ hǎo!",
+          "meaning": "Привет!"
+        }
+      ],
+      "headline": "ПРОСТОЕ ПРИВЕТСТВИЕ",
+      "narration": "Ни хао! Привет!"
+    },
+    {
+      "id": "nin-hao",
+      "kind": "example",
+      "durationSec": 3,
+      "screenCaption": "Здравствуйте! Вежливая форма",
+      "visualBeats": [
+        {
+          "hero": "您好！",
+          "pinyin": "Nín hǎo!",
+          "meaning": "Здравствуйте!",
+          "chinese": true
+        },
+        {
+          "hero": "Nín hǎo!",
+          "pinyin": "您好！",
+          "chinese": true
+        },
+        {
+          "hero": "Здравствуйте!",
+          "pinyin": "您好！",
+          "chinese": true
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "您好！",
+          "pinyin": "Nín hǎo!",
+          "meaning": "Здравствуйте!"
+        }
+      ],
+      "headline": "ВЕЖЛИВОЕ ПРИВЕТСТВИЕ",
+      "narration": "Нинь хао! Здравствуйте, вежливое приветствие."
+    },
+    {
+      "id": "nimen-hao",
+      "kind": "example",
+      "durationSec": 3,
+      "screenCaption": "Привет всем!",
+      "visualBeats": [
+        {
+          "hero": "你们好！",
+          "pinyin": "Nǐmen hǎo!",
+          "meaning": "Привет всем!",
+          "chinese": true
+        },
+        {
+          "hero": "Nǐmen hǎo!",
+          "pinyin": "你们好！",
+          "chinese": true
+        },
+        {
+          "hero": "Привет всем!",
+          "pinyin": "你们好！",
+          "chinese": true
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你们好！",
+          "pinyin": "Nǐmen hǎo!",
+          "meaning": "Привет всем!"
+        }
+      ],
+      "headline": "ПРИВЕТСТВИЕ НЕСКОЛЬКИМ",
+      "narration": "Нимэнь хао! Привет всем!"
+    },
+    {
+      "id": "context",
+      "kind": "context",
+      "durationSec": 7,
+      "screenCaption": "Учитель · старший · клиент",
+      "visualBeats": [
+        {
+          "hero": "您",
+          "pinyin": "nín",
+          "meaning": "с учителем",
+          "chinese": true
+        },
+        {
+          "hero": "您",
+          "pinyin": "nín",
+          "meaning": "со старшим",
+          "chinese": true
+        },
+        {
+          "hero": "您",
+          "pinyin": "nín",
+          "meaning": "с клиентом",
+          "chinese": true
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "您好",
+          "pinyin": "nín hǎo",
+          "meaning": "учитель · старший · клиент"
+        }
+      ],
+      "headline": "КОГДА ГОВОРЯТ 您?",
+      "narration": "Учителю, старшему и клиенту говорят «Нинь»."
+    },
+    {
+      "id": "cta",
+      "kind": "cta",
+      "durationSec": 6,
+      "screenCaption": "Напиши «HSK» в комментариях · ссылку пришлю в личку",
+      "visualBeats": [
+        {
+          "hero": "СЛУШАЙТЕ"
+        },
+        {
+          "hero": "СМОТРИТЕ"
+        },
+        {
+          "hero": "УЧИТЕ КАЖДЫЙ ДЕНЬ"
+        },
+        {
+          "hero": "НАПИШИТЕ «HSK»",
+          "pinyin": "В КОММЕНТАРИЯХ",
+          "meaning": "Ссылку пришлю в личку",
+          "brandLogo": true,
+          "ctaButton": "ПОЛУЧИТЬ ССЫЛКУ ↗"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "HSK AI",
+          "pinyin": "скачайте приложение · начните урок",
+          "meaning": "прямо сейчас"
+        }
+      ],
+      "headline": "УЧИТЕСЬ С HSK AI",
+      "narration": "Хочешь учить китайский каждый день? Напиши «HSK» в комментариях — пришлю ссылку в личку.",
+      "durationFrames": 255
+    }
+  ],
+  "captions": [
+    {
+      "text": "В китайском «ты» и вежливое «Вы» звучат по-разному.",
+      "startMs": 0,
+      "endMs": 3000,
+      "timestampMs": 0,
+      "confidence": 0.9
+    },
+    {
+      "text": "Ни — «ты». Нинь — вежливое «Вы». Нимэнь — «вы» для нескольких людей.",
+      "startMs": 3000,
+      "endMs": 8000,
+      "timestampMs": 3000,
+      "confidence": 0.9
+    },
+    {
+      "text": "Ни хао! Привет!",
+      "startMs": 8000,
+      "endMs": 11000,
+      "timestampMs": 8000,
+      "confidence": 0.9
+    },
+    {
+      "text": "Нинь хао! Здравствуйте, вежливое приветствие.",
+      "startMs": 11000,
+      "endMs": 14000,
+      "timestampMs": 11000,
+      "confidence": 0.9
+    },
+    {
+      "text": "Нимэнь хао! Привет всем!",
+      "startMs": 14000,
+      "endMs": 17000,
+      "timestampMs": 14000,
+      "confidence": 0.9
+    },
+    {
+      "text": "Учителю, старшему и клиенту говорят «Нинь».",
+      "startMs": 17000,
+      "endMs": 24000,
+      "timestampMs": 17000,
+      "confidence": 0.9
+    },
+    {
+      "text": "Хотите учить китайский каждый день? Напишите «HSK» в комментариях — пришлю ссылку в личные сообщения.",
+      "startMs": 24000,
+      "endMs": 32500,
+      "timestampMs": 24000,
+      "confidence": 0.9
+    }
+  ],
+  "captionSource": "scene-timing-estimate",
+  "languageCode": "ru-RU",
+  "title": "你, 您, 你们 — в чём разница?",
+  "caption": "Хочешь учить китайский каждый день? Напиши «HSK» в комментариях — пришлю ссылку на HSK AI в личку.",
+  "publishingStatus": "pending-owner-review"
+}

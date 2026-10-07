@@ -1,0 +1,272 @@
+{
+  "id": "shi-or-jiao",
+  "date": "2026-10-05",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "是 или 叫: представиться правильно",
+  "level": "HSK 1",
+  "topic": "是 и 叫: представить себя или назвать имя",
+  "durationTargetSec": 30,
+  "caption": "是 и 叫 могут встретиться в рассказе о себе, но выполняют разные задачи. Сравните два коротких примера.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#учуитайский"
+  ],
+  "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+  "voiceProvider": "text-to-speech.online",
+  "learningFacts": [
+    "是 связывает подлежащее с именной частью сказуемого: 我是学生。",
+    "叫 в конструкции с именем означает «зваться/меня зовут»."
+  ],
+  "examples": [
+    "是 shì",
+    "叫 jiào",
+    "我是学生。",
+    "我叫安娜。"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 4,
+      "headline": "是 И 叫 — НЕ ОДНО И ТО ЖЕ",
+      "narration": "Оба слова встречаются, когда вы рассказываете о себе. Разберём, где какое использовать.",
+      "screenCaption": "Кто вы? Как вас зовут?",
+      "editPlan": "0–4 с. Откройте видео вопросом «是 И 叫 — НЕ ОДНО И ТО ЖЕ». На первом ударе появляется крупный главный иероглиф с коротким pop; следующие beats быстро показывают контраст. Оставьте заголовок внутри безопасных полей 9:16.",
+      "visualBeats": [
+        {
+          "hero": "是 ≠ 叫",
+          "pinyin": "shì ≠ jiào",
+          "meaning": "быть · зваться",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "是 ≠ 叫",
+          "pinyin": "shì ≠ jiào",
+          "meaning": "быть · зваться"
+        }
+      ]
+    },
+    {
+      "id": "shi",
+      "kind": "vocabulary",
+      "durationSec": 6,
+      "headline": "是: КТО ВЫ?",
+      "narration": "是 соединяет человека с тем, кем он является. Например, «я студент».",
+      "screenCaption": "我是学生。",
+      "editPlan": "4–10 с. Разберите понятие карточками в порядке: 是 → 我是学生。. Каждый новый иероглиф приходит отдельным slide; под ним сразу появляются пиньинь с тонами и русский смысл.",
+      "visualBeats": [
+        {
+          "hero": "是",
+          "pinyin": "shì",
+          "meaning": "быть · являться",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "我是学生。",
+          "pinyin": "Wǒ shì xuésheng.",
+          "meaning": "Я студент.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "是",
+          "pinyin": "shì",
+          "meaning": "быть · являться"
+        },
+        {
+          "hanzi": "我是学生。",
+          "pinyin": "Wǒ shì xuésheng.",
+          "meaning": "Я студент."
+        }
+      ]
+    },
+    {
+      "id": "jiao",
+      "kind": "vocabulary",
+      "durationSec": 6,
+      "headline": "叫: КАК ВАС ЗОВУТ?",
+      "narration": "叫 помогает назвать имя: «меня зовут Анна».",
+      "screenCaption": "我叫安娜。",
+      "editPlan": "4–10 с. Разберите понятие карточками в порядке: 叫 → 我叫安娜。. Каждый новый иероглиф приходит отдельным slide; под ним сразу появляются пиньинь с тонами и русский смысл.",
+      "visualBeats": [
+        {
+          "hero": "叫",
+          "pinyin": "jiào",
+          "meaning": "зваться · называться",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "我叫安娜。",
+          "pinyin": "Wǒ jiào Ānnà.",
+          "meaning": "Меня зовут Анна.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "叫",
+          "pinyin": "jiào",
+          "meaning": "зваться · называться"
+        },
+        {
+          "hanzi": "我叫安娜。",
+          "pinyin": "Wǒ jiào Ānnà.",
+          "meaning": "Меня зовут Анна."
+        }
+      ]
+    },
+    {
+      "id": "contrast",
+      "kind": "context",
+      "durationSec": 6,
+      "headline": "СРАВНИТЕ",
+      "narration": "我是学生 — «я студент». 我叫安娜 — «меня зовут Анна». В первом случае — роль, во втором — имя.",
+      "screenCaption": "роль · имя",
+      "editPlan": "5–11 с. Покажите связь между частями правила: 我是学生 / 我叫安娜. Сначала выделите первую часть, затем вторую; русский вывод «роль · имя» удерживайте в нижней зоне субтитров.",
+      "visualBeats": [
+        {
+          "hero": "我是学生",
+          "pinyin": "Wǒ shì xuésheng",
+          "meaning": "Я студент",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "我叫安娜",
+          "pinyin": "Wǒ jiào Ānnà",
+          "meaning": "Меня зовут Анна",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我是学生",
+          "pinyin": "Wǒ shì xuésheng",
+          "meaning": "Я студент"
+        },
+        {
+          "hanzi": "我叫安娜",
+          "pinyin": "Wǒ jiào Ānnà",
+          "meaning": "Меня зовут Анна"
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "kind": "cta",
+      "captionStyleId": "pill",
+      "durationSec": 8,
+      "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+      "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+      "screenCaption": "Профиль → ссылка → сайт",
+      "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — скриншот окна ссылок и выделите карточку «Скачать HSK AI»; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано.",
+      "visualBeats": [
+        {
+          "hero": "HSK AI",
+          "meaning": "ПОПРОБУЙ",
+          "brandLogo": true,
+          "motion": "reveal",
+          "syncCueText": "Попробуй",
+          "transitionStyle": "type-reveal"
+        },
+        {
+          "hero": "ПРОФИЛЬ",
+          "screenImage": "cta/instagram-profile.png",
+          "screenImageWidthPx": 860,
+          "screenImageHeightPx": 633,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 86,
+            "widthPercent": 92,
+            "heightPercent": 7
+          },
+          "motion": "slide",
+          "syncCueText": "Зайди",
+          "transitionStyle": "slide-match"
+        },
+        {
+          "hero": "ССЫЛКА",
+          "screenImage": "cta/instagram-links.png",
+          "screenImageWidthPx": 842,
+          "screenImageHeightPx": 1164,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 52,
+            "widthPercent": 92,
+            "heightPercent": 15
+          },
+          "motion": "reveal",
+          "syncCueText": "Открой",
+          "transitionStyle": "mask-reveal"
+        },
+        {
+          "hero": "СКАЧАТЬ",
+          "screenImage": "cta/website-download.png",
+          "screenImageWidthPx": 600,
+          "screenImageHeightPx": 1300,
+          "screenHighlight": {
+            "leftPercent": 24,
+            "topPercent": 70,
+            "widthPercent": 52,
+            "heightPercent": 8
+          },
+          "motion": "slide",
+          "syncCueText": "скачай",
+          "transitionStyle": "slide-match"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "中文",
+          "pinyin": "zhōngwén",
+          "meaning": "ПРОСТО • ЛЕГКО"
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-tts-export",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-dmitry-v1",
+  "learningFactSources": [],
+  "hookExperiment": {
+    "id": "shi-or-jiao-hook-v1",
+    "formatId": "contrast",
+    "hypothesis": "Пара 我是… / 我叫… сразу показывает разницу между ролью и именем, делая контраст понятным до объяснения.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-05"
+  },
+  "audienceProblem": "Новичок путает 是 и 叫, представляясь по-китайски.",
+  "learningOutcome": "Использовать 是 для роли/идентичности, а 叫 — чтобы назвать имя.",
+  "ctaExperiment": {
+    "id": "shi-or-jiao-cta-profile-link-download-v1",
+    "formatId": "benefit-profile-link-download",
+    "ruleVersion": "cta-policy-v8",
+    "offerId": "hsk-ai-profile-link-download-v1",
+    "keyword": null,
+    "hypothesis": "The owner-directed profile-to-website route becomes the fixed CTA baseline; this snapshot records the same route, not a performance test.",
+    "changedVariable": "baseline",
+    "comparisonGroupId": "hsk-profile-link-download-v1",
+    "registeredAt": "2026-10-01T11:47:41.885Z",
+    "copyHash": "596ea5714a31f5d70a1c169606be495211e6dbc59ff946e3fbe2bcf5dbcb7cf0",
+    "acknowledgedCorrectionIds": [
+      "cta-correction-0004",
+      "cta-correction-0005",
+      "cta-correction-0006",
+      "cta-correction-0008"
+    ]
+  }
+}

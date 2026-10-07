@@ -1,0 +1,20 @@
+# HSK AI visual references
+
+These references guide the reusable open-stage Remotion lesson system. They are inspiration, not assets to copy. Keep each instrument’s role clear and record whether its specific reference was actually inspected.
+
+- **HSK-AI-Bot app palette** — owner-provided repository checked 2026-10-06. `app/static/course-v3.html` supplies the paper, surface, ink, muted, line, cinnabar, jade, and gold colors used in the video rules; `branding/README.md` confirms the red and gold identity ramps. These are exact source tokens, not sampled estimates. [Repository](https://github.com/akbarholturaev11-lang/HSK-AI-Bot) · [Course UI](https://github.com/akbarholturaev11-lang/HSK-AI-Bot/blob/main/app/static/course-v3.html) · [Branding](https://github.com/akbarholturaev11-lang/HSK-AI-Bot/blob/main/branding/README.md)
+
+- **HeroUI Native MCP** — confirmed design-system tool for semantic theme roles, component docs, and native UI references (surface, foreground, border, card, chip, button). HeroUI’s official guide documents this stdio setup and confirms the configured `@heroui/native-mcp@latest` command. Remotion remains the video renderer; HeroUI is not a runtime dependency. [Official MCP documentation](https://heroui.com/en/docs/native/getting-started/mcp-server)
+- **HeroUI React v3 MCP and skill** — installed project-scoped as `heroui-react`. Use its current component docs as a source for small interface details inside HSK AI videos (comment field, send button, comment row, status badge); do not use it to redesign project-management UI or as the renderer. Translate selected details into HSK styling and Remotion frame animation. [Official MCP documentation](https://heroui.com/docs/react/getting-started/mcp-server) · [Official Agent Skills guide](https://heroui.com/docs/react/getting-started/agent-skills)
+- **Pinterest** — the project contains a candidate pin titled “past now future” for Mandarin. The owner’s supplied screenshot shows an empty saved-ideas page, and the direct pin artwork could not be opened during this audit. Do not claim a specific visual pattern from that pin until it is inspected in the browser. [Candidate pin](https://www.pinterest.com/pin/past-now-future-mandarin-reels-shorts-trending-chinese-learning-language-igers--7951736836839821/)
+- **posts.design: “Folder animation” by Adi** — the owner selected posts.design for motion references. The reference page and its embedded preview were opened; the preview shows a paper/document layer over a cobalt folder against a warm neutral field. Adapted here as a short, top-hinge sheet-unfold for the posted-comment row after the send tap. The source artwork, exact layout, and colors are not reused. [Reference page](https://posts.design/adi-folder-animation-2026-09-26) · [posts.design](https://posts.design/)
+- The owner's original screenshot of the posts.design Recent feed also shows kinetic type, radial typography, and a light-trail motif. These remain optional broad references; apply them only when a script beat supports them, and record a specific post before attributing an exact treatment.
+
+## Applied to the 9:16 lesson
+
+- Use the source app's warm paper canvas, ink text, white surfaces, and cinnabar, jade, and gold accents.
+- Keep one open central composition. Do not add a visible enclosing card/backplate, generic header chips, `ON AIR` labels/meters, or segmented progress rails.
+- Keep one large Chinese form as the focal point; place toned pinyin and Russian meaning directly beneath it.
+- Reveal comparison forms one at a time with original, restrained type and context motion. Keep orbit and glow effects secondary to the lesson text.
+- For a spoken comment CTA, the send result may unfold as one layered sheet in the same central footprint as its composer. Keep it brief and cue-synced; do not stack the composer and posted state as two simultaneous focal cards.
+- Keep only text and visuals that teach the spoken idea or perform the CTA. Leave the final CTA readable through the final beat.

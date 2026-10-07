@@ -1,0 +1,177 @@
+{
+  "name": "HSK AI open-stage lessons",
+  "source": {
+    "designSystem": "HSK-AI-Bot app palette from app/static/course-v3.html and branding/README.md; HeroUI React v3 remains a reference only for in-video UI details",
+    "ownerVideoExamples": [
+      "0c6a11c7ac83469090419e3d084611c2.MP4",
+      "8b58e636ef18464fb29f11364eeb15d4.MP4",
+      "718b9a3a7a704621b41b90c995ebd48b.MP4",
+      "IMG_5366 2.mov"
+    ],
+    "pinterestCandidates": [
+      "https://www.pinterest.com/pin/past-now-future-mandarin-reels-shorts-trending-chinese-learning-language-igers--7951736836839821/"
+    ],
+    "motionCollection": "https://posts.design/",
+    "audit": {
+      "hskAiBotPalette": "Owner-provided HSK-AI-Bot repository checked 2026-10-06; warm app palette comes from app/static/course-v3.html, with brand red and gold ramps checked in branding/README.md",
+      "heroui": "official HeroUI Native MCP documentation checked; project setup matches the documented stdio server",
+      "herouiReact": "official HeroUI React v3 MCP documentation and skill installed for component-level in-video UI references; Remotion remains the motion and rendering engine",
+      "pinterest": "candidate pin title found in search, but direct pin artwork could not be opened; treat the visual interpretation as unverified",
+      "postsDesign": "owner screenshots show the Recent feed with radial typography, kinetic headline, card, ON AIR and light-trail motifs; no individual post was opened, so use these as broad UI-motion references without copying exact artwork",
+      "ownerVideoExamples": "local preview frames inspected: dark-grid kinetic typography, contextual portrait/cutaway, clean card/infographic, and IMG_5366 2.mov with kinetic type, a light wipe, and moving cards through the central stage. Use broad motion ideas only; do not copy source frames, artwork, or exact layouts."
+    },
+    "usage": "Use HeroUI React v3 only as a reference for small interface details shown inside videos (comment fields, send buttons, list rows, status badges), not for the project's own management UI or as a Remotion runtime dependency. Translate useful interactions into HSK AI styling and frame-driven Remotion animation. Use posts.design as the owner's broad motion-reference site; treat its feed and examples as inspiration, and do not copy exact artwork or layouts."
+  },
+  "colors": {
+    "background": "#FDF9F0",
+    "surface": "#FFFFFF",
+    "surfaceRaised": "#FFFFFF",
+    "foreground": "#211D17",
+    "muted": "#665D50",
+    "border": "#EAE0CC",
+    "brandRed": "#E04A40",
+    "brandTeal": "#2FA06A",
+    "brandGold": "#E9A916",
+    "accents": [
+      "#E04A40",
+      "#2FA06A",
+      "#E9A916"
+    ]
+  },
+  "shape": {
+    "cardRadiusPx": 46,
+    "chipRadiusPx": 999,
+    "safeMarginPx": 80
+  },
+  "motion": {
+    "stageReveal": "Keep scene changes in one open composition; use type motion and contextual visuals, never offset container cards.",
+    "teachingBeat": "Show one Hanzi form at a time, followed by pinyin and Russian meaning.",
+    "ctaHold": "Keep the final answer prompt steady long enough to read.",
+    "settleFrames": 14,
+    "popPeakFrame": 7,
+    "revealPeakFrame": 10,
+    "popStartScale": 0.9,
+    "popPeakScale": 1.045,
+    "cardStartScale": 0.94,
+    "cardPeakScale": 1.02,
+    "slideDistancePx": 44,
+    "floatDistancePx": 14,
+    "maxCardTiltDeg": 0.6,
+    "rearCardOffsetPx": 16,
+    "ambientRingRotationDegPerFrame": 0.04,
+    "ambientPulseAmplitude": 0.004,
+    "storyVisualEntryFrames": 9,
+    "storyVisualStartOffsetPx": 24,
+    "storyVisualHeightPx": 190,
+    "storyVisualBobAmplitudePx": 2,
+    "beatCrossfadeFrames": 8,
+    "toneContourDrawFrames": 9,
+    "toneContourWidthPx": 240,
+    "toneContourHeightPx": 48,
+    "heroCharacterStaggerFrames": 3,
+    "beatEntryLeadFrames": 6,
+    "ctaSlideMatchFrames": 14,
+    "ctaTypeRevealFrames": 12,
+    "ctaMaskRevealFrames": 12,
+    "ctaCommentTypingFrames": 20,
+    "ctaCommentTypingFallbackFrame": 29,
+    "ctaCommentSubmitCueProgress": 0.12,
+    "ctaCommentSubmitFallbackFrame": 84,
+    "ctaCommentSendPressFrames": 4,
+    "ctaCommentDraftHandoffFrames": 3,
+    "ctaCommentPostRevealFrames": 9,
+    "ctaCommentSheetFoldPerspectivePx": 980,
+    "ctaCommentSheetFoldStartDeg": 54,
+    "stageMinHeightPx": 970,
+    "brandTopInsetPx": 360,
+    "stageCenterPercentY": 46
+  },
+  "captions": {
+    "maxWordsPerPage": 2,
+    "maxCharactersPerPage": 32,
+    "maxPageDurationMs": 1250,
+    "maxGapMs": 250,
+    "holdAfterWordMs": 100,
+    "entryFrames": 3,
+    "entryOffsetPx": 5,
+    "leftRightInsetPx": 82,
+    "maxWidthPx": 900,
+    "lineHeight": 1.16,
+    "foreground": "#211D17",
+    "variants": {
+      "headline": {
+        "placement": "in-stage",
+        "topInsetPx": 1300,
+        "fontSizePx": 54,
+        "fontWeight": 900,
+        "textAlign": "center",
+        "background": "transparent",
+        "border": "none",
+        "borderRadiusPx": 0,
+        "horizontalPaddingPx": 8,
+        "verticalPaddingPx": 4,
+        "textShadow": "0 2px 10px rgba(33,29,23,.15)",
+        "boxShadow": "none"
+      },
+      "pill": {
+        "placement": "in-stage",
+        "topInsetPx": 1300,
+        "fontSizePx": 48,
+        "fontWeight": 750,
+        "textAlign": "center",
+        "background": "transparent",
+        "border": "none",
+        "borderRadiusPx": 0,
+        "horizontalPaddingPx": 0,
+        "verticalPaddingPx": 0,
+        "textShadow": "0 2px 10px rgba(33,29,23,.15)",
+        "boxShadow": "none"
+      },
+      "ctaFooter": {
+        "placement": "in-stage",
+        "topInsetPx": 1660,
+        "fontSizePx": 46,
+        "fontWeight": 750,
+        "textAlign": "center",
+        "background": "transparent",
+        "border": "none",
+        "borderRadiusPx": 0,
+        "horizontalPaddingPx": 0,
+        "verticalPaddingPx": 0,
+        "textShadow": "0 2px 10px rgba(33,29,23,.15)",
+        "boxShadow": "none"
+      },
+      "highlight": {
+        "placement": "in-stage",
+        "topInsetPx": 1300,
+        "fontSizePx": 46,
+        "fontWeight": 850,
+        "textAlign": "left",
+        "background": "transparent",
+        "border": "none",
+        "borderRadiusPx": 0,
+        "horizontalPaddingPx": 0,
+        "verticalPaddingPx": 0,
+        "textShadow": "0 2px 10px rgba(33,29,23,.15)",
+        "boxShadow": "none"
+      }
+    }
+  },
+  "sound": {
+    "sceneCueFrames": 18,
+    "sceneCueVolume": 0.08,
+    "sceneCuePeakFrame": 1,
+    "sceneCueFadeFrames": 7,
+    "beatCueFrames": 14,
+    "beatCueVolume": 0.09,
+    "beatCuePeakFrame": 0.5,
+    "beatCueFadeFrames": 4,
+    "maxBeatCuesPerScene": 2,
+    "backgroundMusic": {
+      "enabled": true,
+      "volume": 0.07,
+      "fadeInFrames": 18,
+      "fadeOutFrames": 24
+    }
+  }
+}

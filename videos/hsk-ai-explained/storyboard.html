@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HSK AI — Storyboard v1</title>
+  <style>
+    :root {
+      --paper: #fbf8ef;
+      --paper-deep: #e8ddc5;
+      --ink: #201b17;
+      --red: #e64b42;
+      --muted: #81796e;
+      --white: #fffdf8;
+      --green: #319b70;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 32px;
+      background: #eee9df; color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    main { max-width: 1440px; margin: 0 auto; }
+    header { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+    h1 { margin: 0 0 8px; font-size: clamp(32px, 4vw, 56px); line-height: .98; letter-spacing: -.045em; }
+    .dek { margin: 0; color: var(--muted); font-size: 17px; }
+    .spec { white-space: nowrap; border: 1px solid #d7cbb5; background: var(--paper); border-radius: 999px; padding: 11px 16px; font-size: 13px; font-weight: 800; letter-spacing: .04em; }
+    .act { margin: 28px 0 12px; color: var(--red); font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .2em; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    article { min-width: 0; }
+    .scene {
+      aspect-ratio: 16 / 9; container-type: inline-size; position: relative; overflow: hidden;
+      background: var(--paper); border: 2px solid var(--ink); padding: 5cqw; display: flex; align-items: center;
+    }
+    .scene::after { content: ""; position: absolute; inset: 4px; border: 1px solid var(--ink); pointer-events: none; }
+    .brand { position: absolute; top: 8%; left: 7%; display: flex; align-items: center; gap: 7px; z-index: 1; font-weight: 900; font-size: 3.2cqw; }
+    .brand img { width: 8cqw; height: 8cqw; object-fit: cover; border-radius: 50%; }
+    .label { color: var(--red); font-weight: 900; font-size: 2.4cqw; letter-spacing: .14em; text-transform: uppercase; }
+    .big { max-width: 88%; font-size: 9cqw; line-height: .95; letter-spacing: -.055em; font-weight: 950; }
+    .big.red { color: var(--red); }
+    .copy { font-size: 4.3cqw; line-height: 1.16; font-weight: 850; letter-spacing: -.03em; }
+    .small { font-size: 2.5cqw; line-height: 1.3; color: var(--muted); font-weight: 750; }
+    .question { width: 73%; margin: 10% auto 0; padding: 5% 7%; background: var(--white); border: 2px solid var(--red); box-shadow: 4px 4px 0 var(--red); font-size: 8.5cqw; line-height: 1.02; font-weight: 950; letter-spacing: -.04em; }
+    .answer { display: grid; grid-template-columns: 1.1fr .7fr; gap: 5%; align-items: center; width: 100%; }
+    .phone { width: 100%; height: 76%; border: 2px solid var(--paper-deep); background: var(--white); border-radius: 7cqw; padding: 5%; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--muted); font-size: 3.3cqw; font-weight: 850; }
+    .words { display: flex; flex-wrap: wrap; gap: 3%; align-items: center; margin-top: 6%; }
+    .word { background: var(--white); border: 1px solid var(--paper-deep); padding: 3.2% 4%; font-size: 4.1cqw; font-weight: 900; line-height: 1; }
+    .stack { width: 100%; display: grid; grid-template-columns: .72fr 1fr; gap: 4%; align-items: center; }
+    .media-block { min-height: 60%; border: 2px solid var(--paper-deep); border-radius: 5cqw; background: var(--white); display: grid; place-content: center; text-align: center; color: var(--muted); font-size: 3cqw; font-weight: 850; padding: 5%; }
+    .device { width: 100%; display: grid; grid-template-columns: 1fr .8fr; gap: 4%; align-items: center; }
+    .device-labels { display: grid; gap: 5%; }
+    .pill { background: var(--red); color: var(--white); padding: 3.2% 4%; font-size: 3.4cqw; line-height: 1.1; font-weight: 900; }
+    .small-pill { display: inline-block; background: var(--paper-deep); padding: 2.5% 3.5%; font-size: 2.35cqw; color: var(--ink); font-weight: 800; margin-top: 3%; }
+    .close { display: flex; align-items: center; justify-content: center; flex-direction: column; width: 100%; text-align: center; gap: 5%; }
+    .close img { width: 20cqw; height: 20cqw; object-fit: cover; border-radius: 50%; border: 2px solid var(--red); }
+    .close .big { font-size: 7.5cqw; max-width: 100%; }
+    .lang { color: var(--red); font-size: 3.7cqw; font-weight: 950; letter-spacing: .02em; }
+    .meta { display: flex; justify-content: space-between; gap: 12px; margin: 8px 1px 5px; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+    .meta span:last-child { color: var(--muted); font-weight: 700; }
+    .note { min-height: 48px; margin: 0; color: #615b53; font-size: 12px; line-height: 1.45; }
+    .note strong { color: var(--ink); }
+    .seam { display: inline-block; margin-top: 8px; padding: 4px 8px; border: 1px solid #d7cbb5; color: var(--red); font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+    .utility { min-height: 225px; align-items: stretch; display: flex; flex-direction: column; justify-content: center; }
+    .utility h2 { margin: 0 0 12px; font-size: 20px; letter-spacing: -.03em; }
+    .seamline { display: flex; align-items: center; justify-content: space-between; gap: 6px; color: var(--red); font-size: 12px; font-weight: 900; }
+    .seamline i { display: block; height: 4px; flex: 1; background: var(--paper-deep); position: relative; }
+    .seamline i::after { content: ""; position: absolute; right: -1px; top: -4px; border: 6px solid transparent; border-left-color: var(--red); }
+    .hold { margin-top: 18px; padding: 10px 12px; background: var(--white); border-left: 4px solid var(--red); font-size: 12px; line-height: 1.45; }
+    .swatches { display: flex; gap: 8px; margin-bottom: 12px; }
+    .swatch { width: 38px; height: 28px; border: 1px solid #b9ad99; }
+    .rules { margin: 0; padding-left: 18px; color: #615b53; font-size: 11px; line-height: 1.5; }
+    .rules b { color: var(--ink); }
+    footer { margin-top: 22px; color: var(--muted); font-size: 12px; }
+    @media (max-width: 960px) { body { padding: 18px; } .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } header { align-items: start; flex-direction: column; } }
+    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .spec { white-space: normal; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div><h1>HSK AI nima?</h1><p class="dek">Ruscha ovoz, haqiqiy mahsulot va Instagram profil kadrlari bilan video storyboard</p></div>
+    <div class="spec">1080 × 1920 · 32,8 soniya · 6 kadr · ruscha ovoz</div>
+  </header>
+  <div class="act">Savol → javob → dalil → platformalar</div>
+  <section class="grid" aria-label="Storyboard kadrlari">
+    <article id="frame-01">
+      <div class="scene">
+        <div class="brand"><img src="assets/brand-logo.png" alt="HSK AI logosi"><span>HSK AI</span></div>
+        <div class="question">HSK AI nima?</div>
+      </div>
+      <div class="meta"><span>01 · Savol</span><span>00:00–00:02.5</span></div>
+      <p class="note"><strong>Birinchi harakat:</strong> savol kattalashib, ekranga kiradi. Keyingi kadrga chapga suriladi.</p><span class="seam">Cut → push-slide</span>
+    </article>
+    <article id="frame-02">
+      <div class="scene">
+        <div class="answer"><div><div class="label">Qisqa javob</div><div class="copy">Xitoy tilini<br>HSK 1–4<br>bo‘yicha o‘rganish</div><div class="small">Haqiqiy kurs yo‘li ekrani</div></div><div class="phone">HSK AI kurs yo‘li · manba skrinshoti</div></div>
+      </div>
+      <div class="meta"><span>02 · Javob</span><span>00:02.5–00:06.5</span></div>
+      <p class="note"><strong>Birinchi harakat:</strong> javob satrma-satr ochiladi; kurs ekrani kadrga yaqinlashadi.</p><span class="seam">Push-slide →</span>
+    </article>
+    <article id="frame-03">
+      <div class="scene">
+        <div style="width:100%"><div class="label">Kurs ichida</div><div class="big red">So‘z.<br>Talaffuz.<br>Test.</div><div class="words"><span class="word">Lug‘at</span><span class="word">Mashq</span><span class="word">Test</span></div><div class="small">Haqiqiy mashq va lug‘at ekranlari</div></div>
+      </div>
+      <div class="meta"><span>03 · Mashq vositalari</span><span>00:06.5–00:10.5</span></div>
+      <p class="note"><strong>Birinchi harakat:</strong> so‘zlar ketma-ket chiqadi; haqiqiy kartalarga tez reframe.</p><span class="seam">Push-slide →</span>
+    </article>
+    <article id="frame-04">
+      <div class="scene">
+        <div class="stack"><div class="media-block">AI Voice<br>haqiqiy suhbati</div><div><div class="label">Gapirib mashq qiling</div><div class="copy">AI Voice’da gapiring.</div><div class="media-block" style="min-height:72px;margin-top:8px">Haqiqiy javobni ko‘rib chiqish ekrani</div></div></div>
+      </div>
+      <div class="meta"><span>04 · AI Voice</span><span>00:10.5–00:14.5</span></div>
+      <p class="note"><strong>Birinchi harakat:</strong> dialog kartasi yuqoriga ochiladi; tekshiruv ekrani pastdan ulanadi.</p><span class="seam">Push-slide →</span>
+    </article>
+    <article id="frame-05">
+      <div class="scene">
+        <div class="device"><div class="media-block">Haqiqiy Telegram profili<br>va qurilma tanlash sahifasi</div><div class="device-labels"><span class="pill">Telegram<br>Mini App</span><span class="small-pill">Android · macOS · Windows</span><div class="small">Yuklab olish rasmiy relizga bog‘liq.</div></div></div>
+      </div>
+      <div class="meta"><span>05 · Platformalar</span><span>00:14.5–00:19.5</span></div>
+      <p class="note"><strong>Birinchi harakat:</strong> platforma nomlari birma-bir paydo bo‘ladi; maket ichidagi haqiqiy selector markazga yaqinlashadi.</p><span class="seam">Push-slide →</span>
+    </article>
+    <article id="frame-06">
+      <div class="scene">
+        <div class="close"><img src="assets/brand-logo.png" alt="HSK AI logosi"><div class="big">HSK AI</div><div class="lang">O‘zbekcha · ruscha · tojikcha</div><div class="small">Profil → havola → HSK AI’ni yuklab olish</div><div class="media-block" style="min-height:88px;margin-top:10px">Instagram profilining haqiqiy kadri<br>va havolalar oynasi</div><div class="copy red">Hozir boshlang</div></div>
+      </div>
+      <div class="meta"><span>06 · Til va CTA</span><span>00:19.5–00:32.8</span></div>
+      <p class="note"><strong>Birinchi harakat:</strong> logo va tillar ko‘rsatiladi; keyin foydalanuvchi bergan profil kadridan havolalar oynasiga o‘tiladi.</p><span class="seam">Haqiqiy Instagram kadrlariga cut →</span>
+    </article>
+    <article>
+      <div class="scene utility">
+        <h2>Kadrlar orasidagi yo‘nalish</h2>
+        <div class="seamline"><b>01</b><i></i><b>02</b><i></i><b>03</b><i></i><b>04</b><i></i><b>05</b><i></i><b>06</b></div>
+        <div class="hold"><b>O‘qish pauzasi:</b> 02-kadrda javob jumlasi bir lahza tinch turadi. Qolgan kadrlar matn va haqiqiy ekranlarning ma’noli harakati bilan rivojlanadi.</div>
+      </div>
+      <div class="meta"><span>Seam xaritasi</span><span>Chapdan o‘ngga yo‘nalish</span></div>
+      <p class="note">Bitta yo‘nalish saqlanadi; ekrandagi mahsulot panellari davomiyligini keyingi bosqichda tekshiramiz.</p><span class="seam">Barcha o‘tishlar: chapga</span>
+    </article>
+    <article>
+      <div class="scene utility">
+        <h2>Vizual tizim va chegaralar</h2>
+        <div class="swatches"><span class="swatch" style="background:#fbf8ef"></span><span class="swatch" style="background:#e64b42"></span><span class="swatch" style="background:#201b17"></span><span class="swatch" style="background:#e8ddc5"></span></div>
+        <ul class="rules"><li><b>Asosiy:</b> iliq qog‘oz, HSK qizili, qora siyoh.</li><li><b>Haqiqiy:</b> logo va berilgan ilova ekranlari.</li><li><b>Yo‘q:</b> soxta UI, shaxsiy XP, uydirma raqam yoki natija.</li><li><b>Harakat:</b> kartalar slaydi emas; ma’noga mos crop, zoom va matn tempi.</li></ul>
+      </div>
+      <div class="meta"><span>Rang va qoidalar</span><span>Bold Poster remiksi</span></div>
+      <p class="note">Oltin rang faqat haqiqiy logoda va mahsulot ekranlarida qoladi; kadr matnida asosiy urg‘u qizil.</p><span class="seam">Kinetic type · real screens</span>
+    </article>
+  </section>
+  <footer>Ichki storyboard · yakuniy MP4 32,8 soniya · CTA va asosiy mazmun Reels xavfsiz hududida joylashgan.</footer>
+</main>
+</body>
+</html>

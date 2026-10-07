@@ -1,0 +1,235 @@
+{
+  "id": "ma-question",
+  "date": "2026-10-02",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "Как задать вопрос с 吗",
+  "level": "HSK 1",
+  "topic": "吗 в конце предложения задаёт вопрос да или нет",
+  "durationTargetSec": 30,
+  "caption": "Частица 吗 в конце фразы превращает утверждение в вопрос «да или нет». Посмотрите на два простых примера.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#грамматика"
+  ],
+  "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+  "voiceProvider": "text-to-speech.online",
+  "learningFacts": [
+    "吗 обычно ставится в конце повествовательного предложения, чтобы сделать общий вопрос да/нет.",
+    "Порядок слов в основе сохраняется."
+  ],
+  "examples": [
+    "吗 ma",
+    "你好吗？",
+    "你是学生吗？"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 4,
+      "headline": "ВОПРОС БЕЗ ИНВЕРСИИ?",
+      "narration": "В китайском часто не нужно переставлять слова, чтобы задать вопрос «да или нет».",
+      "screenCaption": "Добавьте одну частицу",
+      "editPlan": "0–4 с. Откройте видео вопросом «ВОПРОС БЕЗ ИНВЕРСИИ?». На первом ударе появляется крупный главный иероглиф с коротким pop; следующие beats быстро показывают контраст. Оставьте заголовок внутри безопасных полей 9:16.",
+      "visualBeats": [
+        {
+          "hero": "吗",
+          "pinyin": "ma",
+          "meaning": "частица вопроса да/нет",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "吗",
+          "pinyin": "ma",
+          "meaning": "частица вопроса да/нет"
+        }
+      ]
+    },
+    {
+      "id": "rule",
+      "kind": "context",
+      "durationSec": 6,
+      "headline": "ПОСТАВЬТЕ В КОНЕЦ",
+      "narration": "Возьмите обычное предложение и добавьте 吗 в самом конце.",
+      "screenCaption": "Утверждение + 吗 ?",
+      "editPlan": "5–11 с. Покажите связь между частями правила: 句子 + 吗？. Сначала выделите первую часть, затем вторую; русский вывод «Утверждение + 吗 ?» удерживайте в нижней зоне субтитров.",
+      "visualBeats": [
+        {
+          "hero": "句子 + 吗？",
+          "pinyin": "jùzi + ma?",
+          "meaning": "фраза + вопрос",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "句子 + 吗？",
+          "pinyin": "jùzi + ma?",
+          "meaning": "фраза + вопрос"
+        }
+      ]
+    },
+    {
+      "id": "example1",
+      "kind": "example",
+      "durationSec": 6,
+      "headline": "ПРИМЕР 1",
+      "narration": "你好吗？ Это вопрос «Как дела?» Частица 吗 стоит после основы фразы.",
+      "screenCaption": "你好吗？",
+      "editPlan": "5–11 с. Сначала крупно покажите полную китайскую фразу «你好吗？», затем удержите ханцзы, тоновый пиньинь и перевод одновременно. На смене мысли переключите визуальный beat без потери читаемости.",
+      "visualBeats": [
+        {
+          "hero": "你好吗？",
+          "pinyin": "Nǐ hǎo ma?",
+          "meaning": "Как дела?",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你好吗？",
+          "pinyin": "Nǐ hǎo ma?",
+          "meaning": "Как дела?"
+        }
+      ]
+    },
+    {
+      "id": "example2",
+      "kind": "example",
+      "durationSec": 6,
+      "headline": "ПРИМЕР 2",
+      "narration": "你是学生吗？ — «Ты студент?» Порядок 你是学生 сохраняется, 吗 добавляется в конец.",
+      "screenCaption": "你是学生吗？",
+      "editPlan": "5–11 с. Сначала крупно покажите полную китайскую фразу «你是学生吗？», затем удержите ханцзы, тоновый пиньинь и перевод одновременно. На смене мысли переключите визуальный beat без потери читаемости.",
+      "visualBeats": [
+        {
+          "hero": "你是学生吗？",
+          "pinyin": "Nǐ shì xuésheng ma?",
+          "meaning": "Ты студент?",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你是学生吗？",
+          "pinyin": "Nǐ shì xuésheng ma?",
+          "meaning": "Ты студент?"
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "kind": "cta",
+      "captionStyleId": "pill",
+      "durationSec": 8,
+      "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+      "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+      "screenCaption": "Профиль → ссылка → сайт",
+      "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — скриншот окна ссылок и выделите карточку «Скачать HSK AI»; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано.",
+      "visualBeats": [
+        {
+          "hero": "HSK AI",
+          "meaning": "ПОПРОБУЙ",
+          "brandLogo": true,
+          "motion": "reveal",
+          "syncCueText": "Попробуй",
+          "transitionStyle": "type-reveal"
+        },
+        {
+          "hero": "ПРОФИЛЬ",
+          "screenImage": "cta/instagram-profile.png",
+          "screenImageWidthPx": 860,
+          "screenImageHeightPx": 633,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 86,
+            "widthPercent": 92,
+            "heightPercent": 7
+          },
+          "motion": "slide",
+          "syncCueText": "Зайди",
+          "transitionStyle": "slide-match"
+        },
+        {
+          "hero": "ССЫЛКА",
+          "screenImage": "cta/instagram-links.png",
+          "screenImageWidthPx": 842,
+          "screenImageHeightPx": 1164,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 52,
+            "widthPercent": 92,
+            "heightPercent": 15
+          },
+          "motion": "reveal",
+          "syncCueText": "Открой",
+          "transitionStyle": "mask-reveal"
+        },
+        {
+          "hero": "СКАЧАТЬ",
+          "screenImage": "cta/website-download.png",
+          "screenImageWidthPx": 600,
+          "screenImageHeightPx": 1300,
+          "screenHighlight": {
+            "leftPercent": 24,
+            "topPercent": 70,
+            "widthPercent": 52,
+            "heightPercent": 8
+          },
+          "motion": "slide",
+          "syncCueText": "скачай",
+          "transitionStyle": "slide-match"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "中文",
+          "pinyin": "zhōngwén",
+          "meaning": "ПРОСТО • ЛЕГКО"
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-tts-export",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-dmitry-v1",
+  "learningFactSources": [],
+  "hookExperiment": {
+    "id": "ma-question-hook-v1",
+    "formatId": "question",
+    "hypothesis": "Вопрос о том, можно ли задать да/нет вопрос без перестановки слов, побуждает зрителя дождаться короткого правила с 吗.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-02"
+  },
+  "audienceProblem": "Новичок думает, что для вопроса «да или нет» нужно переставлять слова.",
+  "learningOutcome": "Добавить 吗 в конец основы и задать простой вопрос без перестановки слов.",
+  "ctaExperiment": {
+    "id": "ma-question-cta-profile-link-download-v1",
+    "formatId": "benefit-profile-link-download",
+    "ruleVersion": "cta-policy-v8",
+    "offerId": "hsk-ai-profile-link-download-v1",
+    "keyword": null,
+    "hypothesis": "The owner-directed profile-to-website route becomes the fixed CTA baseline; this snapshot records the same route, not a performance test.",
+    "changedVariable": "baseline",
+    "comparisonGroupId": "hsk-profile-link-download-v1",
+    "registeredAt": "2026-10-01T11:47:41.867Z",
+    "copyHash": "43ae1686eaaba9ca514a2923b2b7d6b76f7eef9ef8f16b262604f6f583ed26ad",
+    "acknowledgedCorrectionIds": [
+      "cta-correction-0004",
+      "cta-correction-0005",
+      "cta-correction-0006",
+      "cta-correction-0008"
+    ]
+  }
+}

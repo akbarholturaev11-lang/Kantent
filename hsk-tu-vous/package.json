@@ -1,0 +1,44 @@
+{
+  "name": "hsk-tu-vous",
+  "version": "1.0.0",
+  "description": "Local date-driven Russian HSK video production via MCP and Remotion",
+  "repository": {},
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.1.0",
+    "@remotion/cli": "4.0.529",
+    "@remotion/tailwind-v4": "4.0.529",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.529",
+    "tailwindcss": "4.0.0",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.529",
+    "@types/react": "19.2.7",
+    "@types/web": "0.0.166",
+    "eslint": "9.19.0",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion bundle",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src && tsc",
+    "content:plan": "node scripts/show-plan.mjs",
+    "content:draft": "node scripts/generate-draft.mjs",
+    "content:voice": "node scripts/prepare-online-tts.mjs",
+    "content:prepare-online-tts": "node scripts/prepare-online-tts.mjs",
+    "content:import-tts": "node scripts/import-online-tts.mjs",
+    "content:render": "node scripts/render-episode.mjs",
+    "content:make": "node scripts/make-episode.mjs",
+    "content:approve": "node scripts/approve-package.mjs",
+    "mcp": "node scripts/mcp-server.mjs"
+  },
+  "sideEffects": [
+    "*.css"
+  ]
+}

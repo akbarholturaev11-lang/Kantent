@@ -1,0 +1,32 @@
+<template>
+<style>
+#root{position:absolute;inset:0;width:1080px;height:1920px;overflow:hidden;color:#201B17;font-family:system-ui,sans-serif}
+#root *{box-sizing:border-box}
+.clip{position:absolute}
+.practice-bg{inset:0;background:#FBF8EF}
+.practice-word{z-index:1;left:54px;top:320px;width:972px;height:102px;display:flex;align-items:center;justify-content:center;border-radius:24px;background:#E64B42;color:#FBF8EF;font-size:56px;font-weight:900;letter-spacing:-1px;line-height:1;white-space:nowrap}
+.practice-screen{z-index:0;inset:0;width:1080px;height:1920px;padding:0;border:0;border-radius:0;background:#FBF8EF;box-shadow:none;overflow:hidden}
+.practice-screen img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 46%;border-radius:0}
+</style>
+<div id="root" data-composition-id="02-practice" data-width="1080" data-height="1920">
+  <div id="frame02-practice-bg" class="clip practice-bg" data-start="0" data-duration="4.5" data-track-index="0"></div>
+  <div id="frame02-practice-vocab" class="clip practice-word" data-start="0" data-duration="4.5" data-track-index="2">СЛОВА</div>
+  <div id="frame02-practice-pronunciation" class="clip practice-word" data-start="0" data-duration="4.5" data-track-index="3">ПРОИЗНОШЕНИЕ</div>
+  <div id="frame02-practice-tests" class="clip practice-word" data-start="0" data-duration="4.5" data-track-index="4">ТЕСТЫ</div>
+  <div id="frame02-practice-mistakes" class="clip practice-word" data-start="0" data-duration="4.5" data-track-index="5">РАЗБОР ОШИБОК</div>
+  <div id="frame02-practice-screen" class="clip practice-screen" data-start="0" data-duration="4.5" data-track-index="6"><img data-layout-allow-overflow="true" src="assets/practice-menu.png" alt="Подлинное меню практики HSK AI"></div>
+</div>
+<script>
+window.__timelines=window.__timelines||{};
+const tl=gsap.timeline({paused:true});
+tl.fromTo('#frame02-practice-vocab',{opacity:0,x:-45,scale:.97},{opacity:1,x:0,scale:1,duration:.38,ease:'power3.out'},.10);
+tl.to('#frame02-practice-vocab',{opacity:0,duration:.02,ease:'none'},1.0);
+tl.fromTo('#frame02-practice-pronunciation',{opacity:0,x:45,scale:.97},{opacity:1,x:0,scale:1,duration:.4,ease:'power3.out'},1.02);
+tl.to('#frame02-practice-pronunciation',{opacity:0,duration:.02,ease:'none'},1.9);
+tl.fromTo('#frame02-practice-tests',{opacity:0,x:-45,scale:.97},{opacity:1,x:0,scale:1,duration:.4,ease:'power3.out'},2.2);
+tl.to('#frame02-practice-tests',{opacity:0,duration:.02,ease:'none'},2.87);
+tl.fromTo('#frame02-practice-mistakes',{opacity:0,x:45,scale:.97},{opacity:1,x:0,scale:1,duration:.42,ease:'power3.out'},2.9);
+tl.fromTo('#frame02-practice-screen img',{scale:1.015,x:0},{scale:1.055,x:-8,duration:4.0,ease:'sine.inOut'},.15);
+window.__timelines['02-practice']=tl;
+</script>
+</template>

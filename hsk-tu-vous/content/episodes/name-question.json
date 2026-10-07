@@ -1,0 +1,233 @@
+{
+  "id": "name-question",
+  "date": "2026-09-30",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "Как спросить имя по-китайски",
+  "level": "HSK 1",
+  "topic": "Как спросить имя: 你叫什么名字？",
+  "durationTargetSec": 30,
+  "caption": "Одна фраза для знакомства: 你叫什么名字？ Научитесь спросить имя и ответить своей фразой.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#китайскийдляначинающих"
+  ],
+  "cta": "Хочешь учить китайский просто и легко? Скачай HSK AI и начни сейчас. Напиши «HSK» в комментариях — я пришлю ссылку в директ.",
+  "voiceProvider": "text-to-speech.online",
+  "learningFacts": [
+    "你叫什么名字？ означает «Как тебя зовут?»",
+    "叫 в этой конструкции вводит имя.",
+    "Пример ответа: 我叫安娜。 — «Меня зовут Анна»."
+  ],
+  "examples": [
+    "你 nǐ",
+    "叫 jiào",
+    "什么 shénme",
+    "名字 míngzi",
+    "你叫什么名字？",
+    "我叫安娜。"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 4,
+      "headline": "КАК ТЕБЯ ЗОВУТ?",
+      "narration": "Для знакомства запомните простой вопрос на китайском.",
+      "screenCaption": "Вопрос об имени",
+      "editPlan": "0–4 с. Откройте видео вопросом «КАК ТЕБЯ ЗОВУТ?». На первом ударе появляется крупный главный иероглиф с коротким pop; следующие beats быстро показывают контраст. Оставьте заголовок внутри безопасных полей 9:16.",
+      "visualBeats": [
+        {
+          "hero": "你叫什么名字？",
+          "pinyin": "Nǐ jiào shénme míngzi?",
+          "meaning": "Как тебя зовут?",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你叫什么名字？",
+          "pinyin": "Nǐ jiào shénme míngzi?",
+          "meaning": "Как тебя зовут?"
+        }
+      ]
+    },
+    {
+      "id": "build",
+      "kind": "vocabulary",
+      "durationSec": 6,
+      "headline": "СОБЕРЁМ ФРАЗУ",
+      "narration": "你 — ты, 叫 — зваться, 什么 — какой или что, 名字 — имя.",
+      "screenCaption": "Ты + зваться + какое имя",
+      "editPlan": "4–10 с. Разберите понятие карточками в порядке: 叫 → 名字. Каждый новый иероглиф приходит отдельным slide; под ним сразу появляются пиньинь с тонами и русский смысл.",
+      "visualBeats": [
+        {
+          "hero": "叫",
+          "pinyin": "jiào",
+          "meaning": "зваться · называться",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "名字",
+          "pinyin": "míngzi",
+          "meaning": "имя",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "叫",
+          "pinyin": "jiào",
+          "meaning": "зваться · называться"
+        },
+        {
+          "hanzi": "名字",
+          "pinyin": "míngzi",
+          "meaning": "имя"
+        }
+      ]
+    },
+    {
+      "id": "question",
+      "kind": "example",
+      "durationSec": 6,
+      "headline": "СПРОСИТЕ",
+      "narration": "你叫什么名字？ Буквально: «Ты называешься каким именем?» Естественный перевод — «Как тебя зовут?»",
+      "screenCaption": "你叫什么名字？",
+      "editPlan": "5–11 с. Сначала крупно покажите полную китайскую фразу «你叫什么名字？», затем удержите ханцзы, тоновый пиньинь и перевод одновременно. На смене мысли переключите визуальный beat без потери читаемости.",
+      "visualBeats": [
+        {
+          "hero": "你叫什么名字？",
+          "pinyin": "Nǐ jiào shénme míngzi?",
+          "meaning": "Как тебя зовут?",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你叫什么名字？",
+          "pinyin": "Nǐ jiào shénme míngzi?",
+          "meaning": "Как тебя зовут?"
+        }
+      ]
+    },
+    {
+      "id": "answer",
+      "kind": "context",
+      "durationSec": 6,
+      "headline": "ОТВЕТЬТЕ",
+      "narration": "Ответьте: 我叫安娜。 «Меня зовут Анна». Подставьте после 我叫 своё имя.",
+      "screenCaption": "我叫安娜。",
+      "editPlan": "5–11 с. Покажите связь между частями правила: 我叫安娜。. Сначала выделите первую часть, затем вторую; русский вывод «我叫安娜。» удерживайте в нижней зоне субтитров.",
+      "visualBeats": [
+        {
+          "hero": "我叫安娜。",
+          "pinyin": "Wǒ jiào Ānnà.",
+          "meaning": "Меня зовут Анна.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我叫安娜。",
+          "pinyin": "Wǒ jiào Ānnà.",
+          "meaning": "Меня зовут Анна."
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "kind": "cta",
+      "captionStyleId": "pill",
+      "durationSec": 10,
+      "headline": "HSK AI • НАЧНИ СЕЙЧАС",
+      "narration": "Хочешь учить китайский просто и легко? Скачай HSK AI и начни сейчас. Напиши «HSK» в комментариях — я пришлю ссылку в директ.",
+      "screenCaption": "Китайский — просто и легко",
+      "editPlan": "CTA: одна открытая центральная композиция и три оригинальных перехода, точно привязанных к речи. На «Хочешь» раскройте 中文 и «просто • легко» типографикой; на «Скачай» покажите интерфейс загрузки HSK AI. На cue «Напиши» откройте реалистичное поле комментария; начинайте печатать точное латинское HSK на cue «HSK». Когда начинается слово «комментариях», нажмите кнопку отправки. После короткого нажатия уберите черновик и в том же месте раскройте опубликованный ряд эффектом sheet-unfold; к концу слова ряд и метка «ОТПРАВЛЕНО» уже полностью читаются. Это только постановочный UI внутри видео, реальная публикация/отправка не выполняется. Удерживайте комментарий читаемым до следующего cue «директ» не менее 1,2 секунды. На «директ» та же композиция переходит к превью ссылки в DM. Анимации и точные моменты берите из Remotion-кадров и импортированных VTT-времён; субтитры остаются синхронизированными с голосом.",
+      "visualBeats": [
+        {
+          "hero": "中文",
+          "pinyin": "zhōngwén",
+          "meaning": "ПРОСТО • ЛЕГКО",
+          "chinese": true,
+          "motion": "reveal",
+          "syncCueText": "Хочешь",
+          "transitionStyle": "type-reveal"
+        },
+        {
+          "hero": "HSK AI",
+          "meaning": "СКАЧАТЬ • НАЧАТЬ СЕЙЧАС",
+          "motion": "slide",
+          "syncCueText": "Скачай",
+          "actionIcon": "app-download",
+          "transitionStyle": "slide-match"
+        },
+        {
+          "hero": "HSK",
+          "motion": "reveal",
+          "syncCueText": "Напиши",
+          "actionIcon": "comment",
+          "transitionStyle": "mask-reveal",
+          "detailRevealStyle": "sheet-unfold"
+        },
+        {
+          "hero": "ДИРЕКТ",
+          "meaning": "ССЫЛКА НА HSK AI",
+          "motion": "slide",
+          "syncCueText": "директ",
+          "actionIcon": "direct-message",
+          "transitionStyle": "slide-match"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "中文",
+          "pinyin": "zhōngwén",
+          "meaning": "ПРОСТО • ЛЕГКО"
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-tts-export",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-dmitry-v1",
+  "learningFactSources": [],
+  "hookExperiment": {
+    "id": "name-question-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Ситуация знакомства делает вопрос 你叫什么名字？ сразу применимым и повышает раннее удержание по сравнению с абстрактным объяснением.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-09-30"
+  },
+  "audienceProblem": "Новичок хочет познакомиться, но не умеет спросить имя и ответить на этот вопрос.",
+  "learningOutcome": "Спросить 你叫什么名字？ и ответить 我叫… со своим именем.",
+  "ctaExperiment": {
+    "id": "name-question-cta-fixed-v1",
+    "formatId": "benefit-comment-dm",
+    "ruleVersion": "cta-policy-v7",
+    "offerId": "hsk-ai-download-link-v1",
+    "keyword": "HSK",
+    "hypothesis": "The fixed series CTA keeps the HSK AI offer and comment action consistent; this registration snapshots this episode and does not test a CTA variant. Audience performance remains unmeasured until owner-entered readbacks.",
+    "changedVariable": "baseline",
+    "comparisonGroupId": "hsk-series-fixed-cta-v1",
+    "registeredAt": "2026-09-28T17:58:46.633Z",
+    "copyHash": "4135a5e4e2d8ec198268e2b140dde13bd93c34e79d5cc0db5ffe7bef7f36e25a",
+    "acknowledgedCorrectionIds": [
+      "cta-correction-0001",
+      "cta-correction-0002",
+      "cta-correction-0004",
+      "cta-correction-0005",
+      "cta-correction-0006",
+      "cta-correction-0007"
+    ]
+  }
+}

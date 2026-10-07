@@ -1,0 +1,250 @@
+{
+  "id": "ni-nin-nimen-20260928",
+  "date": "2026-09-28",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "你, 您 и 你们: как обратиться?",
+  "level": "HSK 1",
+  "topic": "你, 您, 你们: ты, вежливое Вы и вы",
+  "durationTargetSec": 30,
+  "caption": "В китайском форма обращения зависит от уважительности и числа собеседников. Сохраните три формы и попробуйте составить своё приветствие.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#учукитайский"
+  ],
+  "cta": "Хочешь учить китайский просто и легко? Скачай HSK AI и начни сейчас. Напиши «HSK» в комментариях — я пришлю ссылку в директ.",
+  "voiceProvider": "text-to-speech.online",
+  "learningFacts": [
+    "你 — обычное обращение к одному человеку.",
+    "您 — уважительное обращение к одному человеку.",
+    "你们 — обращение к нескольким людям; 您们 не является обычной формой множественного числа."
+  ],
+  "examples": [
+    "你 nǐ",
+    "您 nín",
+    "你们 nǐmen",
+    "你好 nǐ hǎo",
+    "您好 nín hǎo",
+    "你们好 nǐmen hǎo"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 4,
+      "headline": "Ты, Вы или вы?",
+      "narration": "В китайском обращение меняется в зависимости от того, кому и скольким людям вы говорите.",
+      "screenCaption": "Три формы — три ситуации",
+      "editPlan": "0–4 с. Откройте видео вопросом «Ты, Вы или вы?». В первом кадре покажите все три формы 你 · 您 · 你们; на первом ударе они появляются коротким pop. Не скрывайте третью форму до поздней сцены. Заголовок и примеры держите внутри безопасных полей 9:16.",
+      "visualBeats": [
+        {
+          "hero": "你 · 您 · 你们",
+          "pinyin": "nǐ · nín · nǐmen",
+          "meaning": "ты · Вы · вы",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你 · 您 · 你们",
+          "pinyin": "nǐ · nín · nǐmen",
+          "meaning": "ты · Вы · вы"
+        }
+      ]
+    },
+    {
+      "id": "forms",
+      "kind": "vocabulary",
+      "durationSec": 6,
+      "headline": "ТРИ ФОРМЫ",
+      "narration": "«Ни» — ты для одного человека. «Нин» — уважительное «вы» тоже для одного человека. «Нимэнь» — вы для нескольких людей.",
+      "screenCaption": "Число и вежливость",
+      "editPlan": "4–10 с. Разберите понятие карточками в порядке: 你 → 您 → 你们. Каждый новый иероглиф приходит отдельным slide; под ним сразу появляются пиньинь с тонами и русский смысл.",
+      "visualBeats": [
+        {
+          "hero": "你",
+          "pinyin": "nǐ",
+          "meaning": "ты · один человек",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "您",
+          "pinyin": "nín",
+          "meaning": "уважительное Вы · один человек",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "你们",
+          "pinyin": "nǐmen",
+          "meaning": "вы · несколько человек",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你",
+          "pinyin": "nǐ",
+          "meaning": "ты · один человек"
+        },
+        {
+          "hanzi": "您",
+          "pinyin": "nín",
+          "meaning": "уважительное Вы · один человек"
+        },
+        {
+          "hanzi": "你们",
+          "pinyin": "nǐmen",
+          "meaning": "вы · несколько человек"
+        }
+      ]
+    },
+    {
+      "id": "greetings",
+      "kind": "example",
+      "durationSec": 6,
+      "headline": "ПРИВЕТСТВИЕ",
+      "narration": "С другом скажите «ни хао». Вежливое «нин хао» подойдёт старшему или преподавателю.",
+      "screenCaption": "你好 · 您好",
+      "editPlan": "5–11 с. Сначала крупно покажите полную китайскую фразу «你好 · 您好», затем удержите ханцзы, тоновый пиньинь и перевод одновременно. На смене мысли переключите визуальный beat без потери читаемости.",
+      "visualBeats": [
+        {
+          "hero": "你好！",
+          "pinyin": "Nǐ hǎo!",
+          "meaning": "Привет!",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "您好！",
+          "pinyin": "Nín hǎo!",
+          "meaning": "Здравствуйте!",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你好！",
+          "pinyin": "Nǐ hǎo!",
+          "meaning": "Привет!"
+        },
+        {
+          "hanzi": "您好！",
+          "pinyin": "Nín hǎo!",
+          "meaning": "Здравствуйте!"
+        }
+      ]
+    },
+    {
+      "id": "group",
+      "kind": "context",
+      "durationSec": 6,
+      "headline": "КОГДА ИХ НЕ ПУТАТЬ",
+      "narration": "Группе людей говорят «ни-мэнь хао». Запомните: «нимэнь» — это множественное число, а «нин» — уважительная форма обращения к одному человеку.",
+      "screenCaption": "你们好 · привет всем",
+      "editPlan": "5–11 с. Покажите связь между частями правила: 你们好！. Сначала выделите первую часть, затем вторую; русский вывод «你们好 · привет всем» удерживайте в нижней зоне субтитров.",
+      "visualBeats": [
+        {
+          "hero": "你们好！",
+          "pinyin": "Nǐmen hǎo!",
+          "meaning": "Привет всем!",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你们好！",
+          "pinyin": "Nǐmen hǎo!",
+          "meaning": "Привет всем!"
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "kind": "cta",
+      "captionStyleId": "pill",
+      "durationSec": 10,
+      "headline": "HSK AI • НАЧНИ СЕЙЧАС",
+      "narration": "Хочешь учить китайский просто и легко? Скачай HSK AI и начни сейчас. Напиши «HSK» в комментариях — я пришлю ссылку в директ.",
+      "screenCaption": "Китайский — просто и легко",
+      "editPlan": "CTA: одна открытая центральная композиция и три оригинальных перехода, точно привязанных к речи. На «Хочешь» раскройте 中文 и «просто • легко» типографикой; на «Скачай» покажите интерфейс загрузки HSK AI. На cue «Напиши» откройте реалистичное поле комментария; начинайте печатать точное латинское HSK на cue «HSK». Когда начинается слово «комментариях», нажмите кнопку отправки. После короткого нажатия уберите черновик и в том же месте раскройте опубликованный ряд эффектом sheet-unfold; к концу слова ряд и метка «ОТПРАВЛЕНО» уже полностью читаются. Это только постановочный UI внутри видео, реальная публикация/отправка не выполняется. Удерживайте комментарий читаемым до следующего cue «директ» не менее 1,2 секунды. На «директ» та же композиция переходит к превью ссылки в DM. Анимации и точные моменты берите из Remotion-кадров и импортированных VTT-времён; субтитры остаются синхронизированными с голосом.",
+      "visualBeats": [
+        {
+          "hero": "中文",
+          "pinyin": "zhōngwén",
+          "meaning": "ПРОСТО • ЛЕГКО",
+          "chinese": true,
+          "motion": "reveal",
+          "syncCueText": "Хочешь",
+          "transitionStyle": "type-reveal"
+        },
+        {
+          "hero": "HSK AI",
+          "meaning": "СКАЧАТЬ • НАЧАТЬ СЕЙЧАС",
+          "motion": "slide",
+          "syncCueText": "Скачай",
+          "actionIcon": "app-download",
+          "transitionStyle": "slide-match"
+        },
+        {
+          "hero": "HSK",
+          "motion": "reveal",
+          "syncCueText": "Напиши",
+          "actionIcon": "comment",
+          "transitionStyle": "mask-reveal",
+          "detailRevealStyle": "sheet-unfold"
+        },
+        {
+          "hero": "ДИРЕКТ",
+          "meaning": "ССЫЛКА НА HSK AI",
+          "motion": "slide",
+          "syncCueText": "директ",
+          "actionIcon": "direct-message",
+          "transitionStyle": "slide-match"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "中文",
+          "pinyin": "zhōngwén",
+          "meaning": "ПРОСТО • ЛЕГКО"
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-tts-export",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-dmitry-v1",
+  "learningFactSources": [
+    {
+      "title": "Ministry of Education, Taiwan — Concised Dictionary: 您",
+      "url": "https://dict.concised.moe.edu.tw/dictView.jsp?ID=12880&la=0&powerMode=0",
+      "checkedAt": "2026-09-28",
+      "supports": "您 (nín) — respectful second-person form, commonly addressed to one person; the entry also notes it can generally refer to 你们. Keep the episode's beginner singular example, but do not teach singular-only meaning."
+    },
+    {
+      "title": "Hong Kong Education Bureau — Vocabulary and Context (Putonghua), p. 56",
+      "url": "https://www.edb.gov.hk/attachment/tc/curriculum-development/kla/chi-edu/resources/secondary-edu/pth/Vocabularyandcontext_tc.pdf",
+      "checkedAt": "2026-09-28",
+      "supports": "您 is a respectful form; the examples include 您三位 for a group. 您们 may occur in writing, but is not normally spoken; 你们 is the usual spoken plural form."
+    }
+  ],
+  "hookExperiment": {
+    "id": "ni-nin-nimen-20260928-hook-v1",
+    "formatId": "question",
+    "hypothesis": "Зритель выберет форму для собеседника, если в первые секунды сразу увидеть 你, 您 и 你们 и услышать, что разница зависит от вежливости и числа людей.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-09-28"
+  },
+  "audienceProblem": "Новичок не знает, какую форму обращения выбрать для одного человека, старшего или группы.",
+  "learningOutcome": "Различать 你, 您 и 你们 и выбрать форму по числу собеседников и вежливости."
+}

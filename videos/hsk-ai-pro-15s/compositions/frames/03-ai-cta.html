@@ -1,0 +1,28 @@
+<template>
+<style>
+#root{position:absolute;inset:0;width:1080px;height:1920px;overflow:hidden;color:#201B17;font-family:system-ui,sans-serif}
+#root *{box-sizing:border-box}
+.clip{position:absolute}
+.ai-bg{inset:0;background:#FBF8EF}
+.ai-title{z-index:1;left:54px;top:286px;width:972px;height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:24px;background:#FBF8EF;color:#201B17;line-height:1}
+.ai-title span:first-child{display:block;font-size:70px;font-weight:900;letter-spacing:-2px}
+.ai-title span:last-child{display:block;margin-top:10px;color:#E64B42;font-size:30px;font-weight:850;letter-spacing:.5px}
+.ai-screen{z-index:0;inset:0;width:1080px;height:1920px;padding:0;border:0;border-radius:0;background:#FBF8EF;box-shadow:none;overflow:hidden}
+.ai-screen img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 58%;border-radius:0}
+.ai-cta{z-index:1;left:90px;top:1480px;width:900px;height:104px;display:flex;align-items:center;justify-content:center;border-radius:28px;background:#E64B42;color:#FBF8EF;font-size:34px;font-weight:850;letter-spacing:.25px;text-align:center}
+</style>
+<div id="root" data-composition-id="03-ai-cta" data-width="1080" data-height="1920">
+  <div id="frame03-ai-cta-bg" class="clip ai-bg" data-start="0" data-duration="7.3" data-track-index="0"></div>
+  <div id="frame03-ai-cta-title" class="clip ai-title" data-start="0" data-duration="7.3" data-track-index="2"><span>AI ВОПРОСЫ</span><span>ПО ФОТО · ГОЛОСОМ</span></div>
+  <div id="frame03-ai-cta-screen" class="clip ai-screen" data-start="0" data-duration="7.3" data-track-index="4"><img data-layout-allow-overflow="true" src="assets/ai-voice.png" alt="Подлинный экран AI Voice в HSK AI"></div>
+  <div id="frame03-ai-cta-button" class="clip ai-cta" data-start="0" data-duration="7.3" data-track-index="5">УСЛОВИЯ PRO · В ПРОФИЛЕ</div>
+</div>
+<script>
+window.__timelines=window.__timelines||{};
+const tl=gsap.timeline({paused:true});
+tl.fromTo('#frame03-ai-cta-title',{opacity:0,y:20},{opacity:1,y:0,duration:.28,ease:'power3.out'},0);
+tl.fromTo('#frame03-ai-cta-screen img',{scale:1.02,y:0},{scale:1.055,y:-12,duration:2.6,ease:'sine.inOut'},.12);
+tl.fromTo('#frame03-ai-cta-button',{opacity:0,y:38,scale:.985},{opacity:1,y:0,scale:1,duration:.5,ease:'power3.out'},3.28);
+window.__timelines['03-ai-cta']=tl;
+</script>
+</template>

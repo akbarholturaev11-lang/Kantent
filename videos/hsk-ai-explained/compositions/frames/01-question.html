@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="UTF-8" /></head><body><template>
+<style>
+#root{position:absolute;inset:0;width:1080px;height:1920px;overflow:hidden;background:#FBF8EF;color:#201B17;font-family:Arial,Helvetica,system-ui,sans-serif} #root *{box-sizing:border-box} .clip{position:absolute} .headline{font-size:70px;font-weight:800;line-height:1.05;letter-spacing:-.045em;color:#201B17} .screen-inner{width:100%;height:100%;border:5px solid #E8DDC5;border-radius:34px;background:#fff;box-shadow:0 22px 52px #201b1726;overflow:hidden} .screen-inner img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+ .mark img{width:100%;height:100%;object-fit:cover;border-radius:50%;box-shadow:0 28px 64px #201b1730}  .eyebrow{font-size:32px;font-weight:800;letter-spacing:.22em;color:#E64B42;text-transform:uppercase}  .brand{font-size:112px;font-weight:850;line-height:1;letter-spacing:-.055em;color:#201B17;text-align:center}  .bubble{height:100%;width:100%;border:5px solid #E64B42;border-radius:66px;background:#fff;box-shadow:0 16px 0 #c83e35;display:flex;align-items:center;justify-content:center;padding:28px 40px}  .question{font-size:88px;font-weight:850;letter-spacing:-.05em;line-height:1.05;color:#201B17;text-align:center}  .accent{height:100%;width:18px;border-radius:30px;background:#F3AE17}
+</style>
+<div id="root" data-composition-id="01-question" data-start="0" data-duration="3" data-width="1080" data-height="1920" style="position:relative;width:1080px;height:1920px;overflow:hidden;background:#FBF8EF;color:#201B17;font-family:Arial,Helvetica,system-ui,sans-serif">
+      <div id="q-orbit" class="clip" data-start="0" data-duration="3" data-track-index="1" style="position:absolute;left:38px;top:340px;width:1004px;height:1004px;border-radius:50%;border:2px solid #E8DDC5;"><div></div></div>
+      <div id="q-mark" class="clip" data-start="0" data-duration="3" data-track-index="2" style="position:absolute;left:390px;top:260px;width:300px;height:300px;"><div class="mark"><img src="assets/brand-logo.png" alt="HSK AI logo" /></div></div>
+      <div id="q-brand" class="clip" data-start="0" data-duration="3" data-track-index="3" style="position:absolute;left:120px;top:590px;width:840px;height:150px;"><div class="brand">HSK AI</div></div>
+      <div id="q-eyebrow" class="clip" data-start="0" data-duration="3" data-track-index="4" style="position:absolute;left:150px;top:810px;width:780px;height:60px;"><div class="eyebrow">ВОПРОС</div></div>
+      <div id="q-question" class="clip" data-start="0" data-duration="3" data-track-index="5" style="position:absolute;left:80px;top:900px;width:920px;height:300px;"><div class="bubble"><div class="question">Что такое HSK AI?</div></div></div>
+      <div id="q-accent" class="clip" data-start="0" data-duration="3" data-track-index="6" style="position:absolute;left:100px;top:1280px;width:880px;height:18px;"><div class="accent"></div></div>
+</div>
+<script>
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+tl.fromTo('#q-mark .mark',{opacity:0,scale:.55,y:55},{opacity:1,scale:1,y:0,duration:.68,ease:'back.out(1.35)'},0); tl.fromTo('#q-brand .brand',{opacity:0,y:38},{opacity:1,y:0,duration:.52,ease:'power3.out'},.48); tl.fromTo('#q-eyebrow .eyebrow',{opacity:0,x:-38},{opacity:1,x:0,duration:.36,ease:'power2.out'},1.02); tl.fromTo('#q-question .bubble',{opacity:0,y:110,scale:.94},{opacity:1,y:0,scale:1,duration:.58,ease:'power3.out'},.96); tl.fromTo('#q-accent .accent',{scaleX:0,transformOrigin:'left center'},{scaleX:1,duration:.36,ease:'power2.out'},1.65); tl.fromTo('#q-orbit',{scale:.86,opacity:.1},{scale:1,opacity:.82,duration:1.2,ease:'power1.out'},0);
+window.__timelines["01-question"] = tl;
+</script>
+</template></body></html>

@@ -1,0 +1,249 @@
+{
+  "id": "ji-vs-duoshao",
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "几 или 多少: как спросить «сколько»",
+  "level": "HSK 1–2",
+  "topic": "几 или 多少: сколько?",
+  "durationTargetSec": 30,
+  "caption": "Оба слова помогают спросить о количестве. 几 часто используется с небольшим ожидаемым числом, 多少 — с открытым количеством или ценой.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#HSK2"
+  ],
+  "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+  "voiceProvider": "text-to-speech.online",
+  "learningFacts": [
+    "几 обычно спрашивает небольшое или ожидаемое конкретное число; часто рядом стоит счётное слово.",
+    "多少 спрашивает количество или цену, когда размер заранее не ограничивают.",
+    "Это тенденция, а не абсолютное правило: выбор зависит от ситуации."
+  ],
+  "examples": [
+    "几 jǐ",
+    "多少 duōshao",
+    "你有几个苹果？",
+    "多少钱？"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 4,
+      "headline": "КАК СКАЗАТЬ «СКОЛЬКО»?",
+      "narration": "Есть 几 и 多少. Они похожи, но контекст вопроса часто подсказывает выбор.",
+      "screenCaption": "几 · 多少",
+      "editPlan": "0–4 с. Откройте видео вопросом «КАК СКАЗАТЬ «СКОЛЬКО»?». На первом ударе появляется крупный главный иероглиф с коротким pop; следующие beats быстро показывают контраст. Оставьте заголовок внутри безопасных полей 9:16.",
+      "visualBeats": [
+        {
+          "hero": "几 ≈ 多少",
+          "pinyin": "jǐ ≈ duōshao",
+          "meaning": "сколько?",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "几 ≈ 多少",
+          "pinyin": "jǐ ≈ duōshao",
+          "meaning": "сколько?"
+        }
+      ]
+    },
+    {
+      "id": "ji",
+      "kind": "vocabulary",
+      "durationSec": 6,
+      "headline": "几: ЧАСТО НЕБОЛЬШОЕ ЧИСЛО",
+      "narration": "几 часто используют, когда ожидают небольшое количество. Посмотрите на вопрос про яблоки.",
+      "screenCaption": "几个苹果?",
+      "editPlan": "4–10 с. Разберите понятие карточками в порядке: 几. Каждый новый иероглиф приходит отдельным slide; под ним сразу появляются пиньинь с тонами и русский смысл.",
+      "visualBeats": [
+        {
+          "hero": "几",
+          "pinyin": "jǐ",
+          "meaning": "сколько · часто небольшое число",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "几",
+          "pinyin": "jǐ",
+          "meaning": "сколько · часто небольшое число"
+        }
+      ]
+    },
+    {
+      "id": "example1",
+      "kind": "example",
+      "durationSec": 6,
+      "headline": "ПРО ЯБЛОКИ",
+      "narration": "你有几个苹果？ — «Сколько у тебя яблок?» После 几 здесь стоит классификатор 个.",
+      "screenCaption": "你有几个苹果？",
+      "editPlan": "5–11 с. Сначала крупно покажите полную китайскую фразу «你有几个苹果？», затем удержите ханцзы, тоновый пиньинь и перевод одновременно. На смене мысли переключите визуальный beat без потери читаемости.",
+      "visualBeats": [
+        {
+          "hero": "你有几个苹果？",
+          "pinyin": "Nǐ yǒu jǐ ge píngguǒ?",
+          "meaning": "Сколько у тебя яблок?",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你有几个苹果？",
+          "pinyin": "Nǐ yǒu jǐ ge píngguǒ?",
+          "meaning": "Сколько у тебя яблок?"
+        }
+      ]
+    },
+    {
+      "id": "duoshao",
+      "kind": "vocabulary",
+      "durationSec": 6,
+      "headline": "多少: ОТКРЫТОЕ КОЛИЧЕСТВО",
+      "narration": "多少 подходит для открытого количества и часто встречается в вопросе о цене.",
+      "screenCaption": "多少钱？",
+      "editPlan": "4–10 с. Разберите понятие карточками в порядке: 多少 → 多少钱？. Каждый новый иероглиф приходит отдельным slide; под ним сразу появляются пиньинь с тонами и русский смысл.",
+      "visualBeats": [
+        {
+          "hero": "多少",
+          "pinyin": "duōshao",
+          "meaning": "сколько · какое количество",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "多少钱？",
+          "pinyin": "Duōshao qián?",
+          "meaning": "Сколько стоит?",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "多少",
+          "pinyin": "duōshao",
+          "meaning": "сколько · какое количество"
+        },
+        {
+          "hanzi": "多少钱？",
+          "pinyin": "Duōshao qián?",
+          "meaning": "Сколько стоит?"
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "kind": "cta",
+      "captionStyleId": "pill",
+      "durationSec": 8,
+      "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+      "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+      "screenCaption": "Профиль → ссылка → сайт",
+      "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — скриншот окна ссылок и выделите карточку «Скачать HSK AI»; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано.",
+      "visualBeats": [
+        {
+          "hero": "HSK AI",
+          "meaning": "ПОПРОБУЙ",
+          "brandLogo": true,
+          "motion": "reveal",
+          "syncCueText": "Попробуй",
+          "transitionStyle": "type-reveal"
+        },
+        {
+          "hero": "ПРОФИЛЬ",
+          "screenImage": "cta/instagram-profile.png",
+          "screenImageWidthPx": 860,
+          "screenImageHeightPx": 633,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 86,
+            "widthPercent": 92,
+            "heightPercent": 7
+          },
+          "motion": "slide",
+          "syncCueText": "Зайди",
+          "transitionStyle": "slide-match"
+        },
+        {
+          "hero": "ССЫЛКА",
+          "screenImage": "cta/instagram-links.png",
+          "screenImageWidthPx": 842,
+          "screenImageHeightPx": 1164,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 52,
+            "widthPercent": 92,
+            "heightPercent": 15
+          },
+          "motion": "reveal",
+          "syncCueText": "Открой",
+          "transitionStyle": "mask-reveal"
+        },
+        {
+          "hero": "СКАЧАТЬ",
+          "screenImage": "cta/website-download.png",
+          "screenImageWidthPx": 600,
+          "screenImageHeightPx": 1300,
+          "screenHighlight": {
+            "leftPercent": 24,
+            "topPercent": 70,
+            "widthPercent": 52,
+            "heightPercent": 8
+          },
+          "motion": "slide",
+          "syncCueText": "скачай",
+          "transitionStyle": "slide-match"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "中文",
+          "pinyin": "zhōngwén",
+          "meaning": "ПРОСТО • ЛЕГКО"
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-tts-export",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-dmitry-v1",
+  "learningFactSources": [],
+  "hookExperiment": {
+    "id": "ji-vs-duoshao-hook-v1",
+    "formatId": "question",
+    "hypothesis": "Короткий вопрос о количестве до раскрытия 几 и 多少 должен удержать зрителя до контекстного различия.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-14"
+  },
+  "audienceProblem": "Новичок выбирает между 几 и 多少, когда спрашивает о количестве или цене.",
+  "learningOutcome": "Увидеть типичные контексты обоих вопросов и помнить, что это тенденция, а не абсолютное правило.",
+  "ctaExperiment": {
+    "id": "ji-vs-duoshao-cta-profile-link-download-v1",
+    "formatId": "benefit-profile-link-download",
+    "ruleVersion": "cta-policy-v8",
+    "offerId": "hsk-ai-profile-link-download-v1",
+    "keyword": null,
+    "hypothesis": "The owner-directed profile-to-website route becomes the fixed CTA baseline; this snapshot records the same route, not a performance test.",
+    "changedVariable": "baseline",
+    "comparisonGroupId": "hsk-profile-link-download-v1",
+    "registeredAt": "2026-10-01T11:47:41.891Z",
+    "copyHash": "f33a249a4d3f39fd1a1efd00d5b5a8d1031213d3ab965e6fef401a0a659d84b4",
+    "acknowledgedCorrectionIds": [
+      "cta-correction-0004",
+      "cta-correction-0005",
+      "cta-correction-0006",
+      "cta-correction-0008"
+    ]
+  }
+}

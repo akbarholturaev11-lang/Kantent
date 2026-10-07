@@ -1,0 +1,18 @@
+{
+  "bgm": null,
+  "voices": [
+    {
+      "frame": 1,
+      "path": "assets/voiceover/segments/01.wav"
+    },
+    {
+      "frame": 2,
+      "path": "assets/voiceover/segments/02.wav"
+    },
+    {
+      "frame": 3,
+      "path": "assets/voiceover/segments/03.wav"
+    }
+  ],
+  "sfx": []
+}

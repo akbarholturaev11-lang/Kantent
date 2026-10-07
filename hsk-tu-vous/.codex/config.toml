@@ -1,0 +1,17 @@
+[mcp_servers.hsk_ai_content]
+command = "node"
+args = ["scripts/mcp-server.mjs"]
+startup_timeout_sec = 10
+tool_timeout_sec = 1800
+
+[mcp_servers.heroui-native]
+command = "npx"
+args = ["-y", "@heroui/native-mcp@latest"]
+startup_timeout_sec = 30
+tool_timeout_sec = 60
+
+[mcp_servers.heroui-react]
+command = "npx"
+args = ["-y", "@heroui/react-mcp@latest"]
+startup_timeout_sec = 30
+tool_timeout_sec = 60

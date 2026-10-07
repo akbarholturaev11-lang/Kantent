@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family:
+    Arial, "Aptos", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.frame {
+  color: #211D17;
+  background: #FDF9F0;
+}
+
+.card {
+  border: 1px solid #EAE0CC;
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 22px 55px rgba(33, 29, 23, 0.07);
+}
+
+.pill {
+  color: #2FA06A;
+  border: 2px solid rgba(47, 160, 106, 0.23);
+  border-radius: 100px;
+  background: rgba(47, 160, 106, 0.08);
+}

@@ -1,0 +1,130 @@
+{
+  "id": "ni-nin-nimen",
+  "level": "HSK 1",
+  "topic": "Фарқи ту, Шумо ва шумоён",
+  "durationTargetSec": 30,
+  "voiceProvider": "gemini",
+  "hashtags": ["#HSKAI", "#забоничинӣ", "#HSK1", "#омӯзишиҳанзӣ"],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 3,
+      "cards": [
+        {
+          "hanzi": "你 ≠ 您",
+          "pinyin": "nǐ ≠ nín",
+          "meaning": "ту · Шумо"
+        }
+      ],
+      "headline": "Як калима — се муроҷиат?",
+      "narration": "Дар забони чинӣ «ту» ва «Шумо» як калима нест.",
+      "screenCaption": "Дар чинӣ «ту» ва «Шумо» фарқ доранд."
+    },
+    {
+      "id": "three-forms",
+      "kind": "vocabulary",
+      "durationSec": 5,
+      "cards": [
+        {
+          "hanzi": "你",
+          "pinyin": "nǐ",
+          "meaning": "ту"
+        },
+        {
+          "hanzi": "您",
+          "pinyin": "nín",
+          "meaning": "Шумо · бо эҳтиром"
+        },
+        {
+          "hanzi": "你们",
+          "pinyin": "nǐmen",
+          "meaning": "шумо · чанд нафар"
+        }
+      ],
+      "headline": "СЕ ШАКЛИ МУРОҶИАТ",
+      "narration": "你 — nǐ — ту. 您 — nín — Шумо, бо эҳтиром. 你们 — nǐmen — шумо, чанд нафар.",
+      "screenCaption": "Се шакли муроҷиат"
+    },
+    {
+      "id": "ni-hao",
+      "kind": "example",
+      "durationSec": 3,
+      "cards": [
+        {
+          "hanzi": "你好！",
+          "pinyin": "Nǐ hǎo!",
+          "meaning": "Салом!"
+        }
+      ],
+      "headline": "ОДӢ ВА ҒАЙРИРАСМӢ",
+      "narration": "你好！ Nǐ hǎo! Салом!",
+      "screenCaption": "Салом!"
+    },
+    {
+      "id": "nin-hao",
+      "kind": "example",
+      "durationSec": 3,
+      "cards": [
+        {
+          "hanzi": "您好！",
+          "pinyin": "Nín hǎo!",
+          "meaning": "Салом! · бо эҳтиром"
+        }
+      ],
+      "headline": "БО ЭҲТИРОМ",
+      "narration": "您好！ Nín hǎo! Салом — бо эҳтиром.",
+      "screenCaption": "Салом бо эҳтиром"
+    },
+    {
+      "id": "nimen-hao",
+      "kind": "example",
+      "durationSec": 3,
+      "cards": [
+        {
+          "hanzi": "你们好！",
+          "pinyin": "Nǐmen hǎo!",
+          "meaning": "Салом ба шумо!"
+        }
+      ],
+      "headline": "БА ЧАНД НАФАР",
+      "narration": "你们好！ Nǐmen hǎo! Салом ба шумо!",
+      "screenCaption": "Салом ба шумо!"
+    },
+    {
+      "id": "context",
+      "kind": "context",
+      "durationSec": 7,
+      "cards": [
+        {
+          "hanzi": "您好",
+          "pinyin": "nín hǎo",
+          "meaning": "бо омӯзгор · калонсол · муштарӣ"
+        }
+      ],
+      "headline": "КАЙ МЕГӮЯНД 您?",
+      "narration": "Агар бо омӯзгор, шахси калонсол ё муштарӣ суҳбат кунед, 您 табиитар аст.",
+      "screenCaption": "Бо омӯзгор · калонсол · муштарӣ"
+    },
+    {
+      "id": "cta",
+      "kind": "cta",
+      "durationSec": 6,
+      "cards": [
+        {
+          "hanzi": "HSK AI",
+          "pinyin": "гӯш кунед · хонед · машқ кунед",
+          "meaning": "Замимаро зеркашӣ кунед"
+        }
+      ],
+      "headline": "БО HSK AI ОМӮЗЕД",
+      "narration": "Дар HSK AI калимаҳоро мешунавед, мисолҳоро мебинед ва машқ мекунед. Замимаи HSK AI-ро зеркашӣ кунед ва дарси аввалро ҳамин ҳозир оғоз кунед.",
+      "screenCaption": "Замимаи HSK AI-ро зеркашӣ кунед · дарси аввалро ҳозир оғоз кунед"
+    }
+  ],
+  "captions": [],
+  "captionSource": "scene-timing-estimate",
+  "languageCode": "tg-TJ",
+  "title": "你, 您, 你们 — чӣ фарқ доранд?",
+  "caption": "Дар забони чинӣ шакли муроҷиат эҳтиромро нишон медиҳад. Ин се шаклро бо мисол дар HSK AI омӯзед. Замимаи HSK AI-ро зеркашӣ кунед ва дарси аввалро ҳамин ҳозир оғоз кунед."
+}

@@ -1,0 +1,21 @@
+No website capture was performed. This is a provided-material / source-repository project.
+
+User's brief:
+Create a short Uzbek video that feels like an answer to “HSK AI nima?” Use the actual HSK AI source material and screenshots. Do not add false product information. Show that HSK AI is available through the Telegram Mini App and also has Android, macOS, and Windows apps. Make the video dynamic so it does not feel like a slideshow of still screenshots.
+
+Verified product facts from /Users/kaijimima1234/Projects/HSK AI bot/docs/SEO_DISCOVERABILITY.md and app/static/course-v3.html, plus the supplied real UI screenshots:
+- HSK AI provides Chinese-learning course materials for HSK 1–4.
+- Its learning tools include vocabulary, pronunciation practice, tests, and an AI helper / AI Voice practice.
+- The interface/content support Uzbek, Russian, and Tajik.
+- The product is available as a Telegram Mini App. The download page includes macOS, Windows, and Android platform choices; it says a download is available when an official release exists. iPhone/iPad users continue through the Telegram Mini App.
+- AI Voice practice shows a conversation and a corrections/review flow. Do not claim every learner gets unlimited use or a specific learning result.
+
+On-screen answer copy (Uzbek Latin):
+“HSK AI nima?”
+“Xitoy tilini HSK 1–4 kurslari orqali o‘rganish platformasi.”
+“Lug‘at, talaffuz mashqlari va testlar.”
+“AI Voice’da gapiring, javoblaringizni ko‘rib chiqing.”
+“Telegram Mini App, Android, macOS va Windows.”
+“O‘zbekcha, ruscha yoki tojikcha.”
+
+No voiceover script was provided. The first storyboard pass uses concise on-screen text and real screens; it does not invent a spoken recording.

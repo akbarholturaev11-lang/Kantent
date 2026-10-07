@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="UTF-8" /></head><body><template>
+<style>
+#root{position:absolute;inset:0;width:1080px;height:1920px;overflow:hidden;background:#F5EFE3;color:#201B17;font-family:Arial,Helvetica,system-ui,sans-serif} #root *{box-sizing:border-box} .clip{position:absolute} .headline{font-size:70px;font-weight:800;line-height:1.05;letter-spacing:-.045em;color:#201B17} .screen-inner{width:100%;height:100%;border:5px solid #E8DDC5;border-radius:34px;background:#fff;box-shadow:0 22px 52px #201b1726;overflow:hidden} .screen-inner img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+ .eyebrow{font-size:33px;font-weight:800;letter-spacing:.1em;color:#E64B42}  .title{font-size:102px;font-weight:880;line-height:1;letter-spacing:-.06em;color:#201B17}  .screen-inner{width:100%;height:100%;border:5px solid #fff;border-radius:36px;background:#fff;box-shadow:0 25px 60px #201b1728;overflow:hidden}  .screen-inner img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}  .step{font-size:37px;font-weight:750;line-height:1.1;letter-spacing:-.035em;color:#201B17}  .bridge{font-size:66px;font-weight:800;color:#E64B42}  .underline{height:12px;width:100%;background:#F3AE17;border-radius:20px}
+</style>
+<div id="root" data-composition-id="04-ai-voice" data-start="0" data-duration="4.5" data-width="1080" data-height="1920" style="position:relative;width:1080px;height:1920px;overflow:hidden;background:#F5EFE3;color:#201B17;font-family:Arial,Helvetica,system-ui,sans-serif">
+      <div id="v-eyebrow" class="clip" data-start="0" data-duration="4.5" data-track-index="1" style="position:absolute;left:80px;top:250px;width:920px;height:52px;"><div class="eyebrow">ПРАКТИКА РЕЧИ И РАБОТА НАД ОШИБКАМИ</div></div>
+      <div id="v-title" class="clip" data-start="0" data-duration="4.5" data-track-index="2" style="position:absolute;left:78px;top:330px;width:920px;height:120px;"><div class="title">AI Voice</div></div>
+      <div id="v-talk" class="clip" data-start="0" data-duration="4.5" data-track-index="3" style="position:absolute;left:80px;top:480px;width:390px;height:845px;--rise: 80px;"><div class="screen-inner"><img src="assets/ai-voice-conversation.png" alt="HSK AI AI Voice suhbat ekrani" /></div></div>
+      <div id="v-arrow" class="clip" data-start="0" data-duration="4.5" data-track-index="4" style="position:absolute;left:490px;top:830px;width:80px;height:100px;"><div class="bridge">→</div></div>
+      <div id="v-review" class="clip" data-start="0" data-duration="4.5" data-track-index="5" style="position:absolute;left:610px;top:480px;width:390px;height:845px;--rise: 80px;"><div class="screen-inner"><img src="assets/mistakes-review.png" alt="HSK AI xatolarni ko‘rib chiqish ekrani" /></div></div>
+      <div id="v-copy1" class="clip" data-start="0" data-duration="4.5" data-track-index="6" style="position:absolute;left:80px;top:1355px;width:390px;height:110px;"><div class="step">Говорите в AI Voice.</div></div>
+      <div id="v-copy2" class="clip" data-start="0" data-duration="4.5" data-track-index="7" style="position:absolute;left:610px;top:1355px;width:390px;height:110px;"><div class="step">Разбирайте свои ошибки.</div></div>
+      <div id="v-line" class="clip" data-start="0" data-duration="4.5" data-track-index="8" style="position:absolute;left:80px;top:1485px;width:920px;height:12px;"><div class="underline"></div></div>
+</div>
+<script>
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+tl.fromTo('#v-eyebrow .eyebrow',{opacity:0,y:24},{opacity:1,y:0,duration:.38,ease:'power2.out'},0); tl.fromTo('#v-title .title',{opacity:0,x:-45},{opacity:1,x:0,duration:.55,ease:'power3.out'},.22); tl.fromTo('#v-talk .screen-inner',{opacity:0,x:-110,scale:.97},{opacity:1,x:0,scale:1,duration:.72,ease:'power3.out'},.62); tl.fromTo('#v-arrow .bridge',{opacity:0,scale:.5},{opacity:1,scale:1,duration:.42,ease:'back.out(1.4)'},1.26); tl.fromTo('#v-review .screen-inner',{opacity:0,x:110,scale:.97},{opacity:1,x:0,scale:1,duration:.72,ease:'power3.out'},1.45); tl.fromTo('#v-copy1 .step',{opacity:0,y:28},{opacity:1,y:0,duration:.45,ease:'power2.out'},2.28); tl.fromTo('#v-copy2 .step',{opacity:0,y:28},{opacity:1,y:0,duration:.45,ease:'power2.out'},2.55); tl.fromTo('#v-line .underline',{scaleX:0,transformOrigin:'left center'},{scaleX:1,duration:.45,ease:'power2.out'},3); tl.to('#v-talk .screen-inner img',{scale:1.025,y:-7,duration:1.5,ease:'sine.inOut'},2.25); tl.to('#v-review .screen-inner img',{scale:1.025,y:-7,duration:1.5,ease:'sine.inOut'},2.45);
+window.__timelines["04-ai-voice"] = tl;
+</script>
+</template></body></html>

@@ -1,0 +1,237 @@
+{
+  "id": "le-first-look",
+  "date": "2026-10-23",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "了: не только прошлое время",
+  "level": "HSK 2",
+  "topic": "了: завершённое действие и изменение ситуации",
+  "durationTargetSec": 30,
+  "caption": "了 зависит от позиции и контекста. Сравните завершённое действие 我买了书 и изменение решения 我不买了.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK2",
+    "#грамматика"
+  ],
+  "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+  "voiceProvider": "text-to-speech.online",
+  "learningFacts": [
+    "了 имеет несколько функций, и смысл зависит от позиции и контекста.",
+    "В 我买了书。 частица после глагола может отмечать завершённое действие.",
+    "В 我不买了。 финальная 了 может показывать изменение ситуации: передумал и теперь не покупаю.",
+    "了 не является просто маркером прошедшего времени."
+  ],
+  "examples": [
+    "了 le",
+    "我买了书。",
+    "我不买了。"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 4,
+      "headline": "了 — ЭТО ПРОШЕДШЕЕ ВРЕМЯ?",
+      "narration": "Не совсем. У частицы 了 несколько функций. Посмотрим на два простых контекста.",
+      "screenCaption": "了 зависит от контекста",
+      "editPlan": "0–4 с. Откройте видео вопросом «了 — ЭТО ПРОШЕДШЕЕ ВРЕМЯ?». На первом ударе появляется крупный главный иероглиф с коротким pop; следующие beats быстро показывают контраст. Оставьте заголовок внутри безопасных полей 9:16.",
+      "visualBeats": [
+        {
+          "hero": "了",
+          "pinyin": "le",
+          "meaning": "частица · значение зависит от контекста",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "了",
+          "pinyin": "le",
+          "meaning": "частица · значение зависит от контекста"
+        }
+      ]
+    },
+    {
+      "id": "completed",
+      "kind": "example",
+      "durationSec": 6,
+      "headline": "ДЕЙСТВИЕ ЗАВЕРШЕНО",
+      "narration": "我买了一本书。 — «Я купил книгу». Частица 了 стоит после глагола 买 и здесь отмечает завершённое действие.",
+      "screenCaption": "我买了一本书。",
+      "editPlan": "5–11 с. Сначала покажите полное предложение 我买了一本书, затем акцентируйте 了 сразу после глагола 买. Удержите тоновый пиньинь и перевод одновременно.",
+      "visualBeats": [
+        {
+          "hero": "我买了一本书。",
+          "pinyin": "Wǒ mǎi le yì běn shū.",
+          "meaning": "Я купил книгу.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我买了一本书。",
+          "pinyin": "Wǒ mǎi le yì běn shū.",
+          "meaning": "Я купил книгу."
+        }
+      ]
+    },
+    {
+      "id": "change",
+      "kind": "example",
+      "durationSec": 6,
+      "headline": "РЕШЕНИЕ ИЗМЕНИЛОСЬ",
+      "narration": "我不买了。 — «Я больше не буду покупать» или «я передумал покупать». Финальная 了 показывает изменение ситуации.",
+      "screenCaption": "我不买了。",
+      "editPlan": "5–11 с. Сначала крупно покажите полную китайскую фразу «我不买了。», затем удержите ханцзы, тоновый пиньинь и перевод одновременно. На смене мысли переключите визуальный beat без потери читаемости.",
+      "visualBeats": [
+        {
+          "hero": "我不买了。",
+          "pinyin": "Wǒ bú mǎi le.",
+          "meaning": "Я передумал покупать.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我不买了。",
+          "pinyin": "Wǒ bú mǎi le.",
+          "meaning": "Я передумал покупать."
+        }
+      ]
+    },
+    {
+      "id": "contrast",
+      "kind": "context",
+      "durationSec": 6,
+      "headline": "НЕ ТОЛЬКО ПРОШЕДШЕЕ",
+      "narration": "В первом примере 了 стоит после глагола, во втором — в конце. Не переводите её автоматически как прошедшее время.",
+      "screenCaption": "позиция + контекст",
+      "editPlan": "5–11 с. Покажите связь между частями правила: 买了书 / 不买了. Сначала выделите первую часть, затем вторую; русский вывод «позиция + контекст» удерживайте в нижней зоне субтитров.",
+      "visualBeats": [
+        {
+          "hero": "买了书 / 不买了",
+          "pinyin": "mǎi le shū / bú mǎi le",
+          "meaning": "купил / передумал покупать",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "买了书 / 不买了",
+          "pinyin": "mǎi le shū / bú mǎi le",
+          "meaning": "купил / передумал покупать"
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "kind": "cta",
+      "captionStyleId": "pill",
+      "durationSec": 8,
+      "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+      "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+      "screenCaption": "Профиль → ссылка → сайт",
+      "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — скриншот окна ссылок и выделите карточку «Скачать HSK AI»; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано.",
+      "visualBeats": [
+        {
+          "hero": "HSK AI",
+          "meaning": "ПОПРОБУЙ",
+          "brandLogo": true,
+          "motion": "reveal",
+          "syncCueText": "Попробуй",
+          "transitionStyle": "type-reveal"
+        },
+        {
+          "hero": "ПРОФИЛЬ",
+          "screenImage": "cta/instagram-profile.png",
+          "screenImageWidthPx": 860,
+          "screenImageHeightPx": 633,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 86,
+            "widthPercent": 92,
+            "heightPercent": 7
+          },
+          "motion": "slide",
+          "syncCueText": "Зайди",
+          "transitionStyle": "slide-match"
+        },
+        {
+          "hero": "ССЫЛКА",
+          "screenImage": "cta/instagram-links.png",
+          "screenImageWidthPx": 842,
+          "screenImageHeightPx": 1164,
+          "screenHighlight": {
+            "leftPercent": 4,
+            "topPercent": 52,
+            "widthPercent": 92,
+            "heightPercent": 15
+          },
+          "motion": "reveal",
+          "syncCueText": "Открой",
+          "transitionStyle": "mask-reveal"
+        },
+        {
+          "hero": "СКАЧАТЬ",
+          "screenImage": "cta/website-download.png",
+          "screenImageWidthPx": 600,
+          "screenImageHeightPx": 1300,
+          "screenHighlight": {
+            "leftPercent": 24,
+            "topPercent": 70,
+            "widthPercent": 52,
+            "heightPercent": 8
+          },
+          "motion": "slide",
+          "syncCueText": "скачай",
+          "transitionStyle": "slide-match"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "中文",
+          "pinyin": "zhōngwén",
+          "meaning": "ПРОСТО • ЛЕГКО"
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-tts-export",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-dmitry-v1",
+  "learningFactSources": [],
+  "hookExperiment": {
+    "id": "le-first-look-hook-v1",
+    "formatId": "question",
+    "hypothesis": "Вопрос «了 — это прошлое время?» создаёт конкретное заблуждение, которое видео сразу уточняет без упрощения правила.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-23"
+  },
+  "audienceProblem": "Новичок считает, что 了 всегда просто означает прошедшее время.",
+  "learningOutcome": "Увидеть две разные позиции и функции 了 на коротких контекстных примерах.",
+  "ctaExperiment": {
+    "id": "le-first-look-cta-profile-link-download-v1",
+    "formatId": "benefit-profile-link-download",
+    "ruleVersion": "cta-policy-v8",
+    "offerId": "hsk-ai-profile-link-download-v1",
+    "keyword": null,
+    "hypothesis": "The owner-directed profile-to-website route becomes the fixed CTA baseline; this snapshot records the same route, not a performance test.",
+    "changedVariable": "baseline",
+    "comparisonGroupId": "hsk-profile-link-download-v1",
+    "registeredAt": "2026-10-01T11:47:41.898Z",
+    "copyHash": "cb9fb8bef6290203f4ab2ec2315b3a498510bb12b8371fb0a3277e7df3c53741",
+    "acknowledgedCorrectionIds": [
+      "cta-correction-0004",
+      "cta-correction-0005",
+      "cta-correction-0006",
+      "cta-correction-0008"
+    ]
+  }
+}

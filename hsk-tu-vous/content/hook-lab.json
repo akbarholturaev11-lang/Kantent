@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "baselineFormatId": "question",
+  "status": "awaiting-first-platform-readback",
+  "platformsConfigured": [],
+  "policy": {
+    "readbackWindows": [
+      "24h",
+      "7d"
+    ],
+    "compareWithinSamePlatformWindowMetricLevelAndDurationBand": true,
+    "minimumPostsPerFormat": 3,
+    "minimumViewsPerPost": 500,
+    "minimumRelativeLiftPercent": 10,
+    "maximumSecondaryIntentDropPercent": 10,
+    "secondaryIntentMetrics": [
+      "savesPer1000Views",
+      "sharesPer1000Views"
+    ],
+    "promotionRequiresOwnerDecision": true,
+    "thresholdNote": "Initial operating thresholds to avoid deciding from tiny samples; they are not a promise of statistical significance and should be recalibrated after the first 12 published episodes.",
+    "planningHorizonWeeks": 4,
+    "distinctTopicSpecificHookPerEpisode": true
+  },
+  "formats": [
+    {
+      "id": "question",
+      "name": "Savol / sinov",
+      "description": "Birinchi soniyalarda tomoshabinga aniq savol bering va javobni kutishga sabab yarating."
+    },
+    {
+      "id": "contrast",
+      "name": "Tezkor taqqoslash",
+      "description": "Ikki yoki uch shaklni yonma-yon ko‘rsatib, bitta farqni oching."
+    },
+    {
+      "id": "scenario",
+      "name": "Hayotiy vaziyat",
+      "description": "Tanish vaziyat yoki juda qisqa dialog bilan boshlang; darsdagi iborani darhol eshittiring."
+    }
+  ],
+  "readbacks": [],
+  "ownerCorrections": [
+    {
+      "id": "hook-correction-0001",
+      "createdAt": "2026-09-28T17:54:08.793Z",
+      "source": "owner-correction",
+      "scope": {
+        "type": "series"
+      },
+      "ownerWording": "Hook esa qoidalarga tayangan holda video tayyorlashdan oldin yoziladi; vaqt o‘tishi bilan qoidalar sifatli hook yozishni ta’minlashi kerak.",
+      "rule": "Write a distinct, topic-specific hook during the rolling four-week plan, before recording or editing. Use the current Hook Lab playbook and active owner corrections; open one concrete beginner problem, make a truthful promise, and deliver its answer early. Persist each later owner correction, let the newest same-scope rule supersede older active rules, and never ask the owner to repeat a saved correction in another chat.",
+      "supersedes": []
+    },
+    {
+      "id": "hook-correction-0002",
+      "createdAt": "2026-09-28T17:57:21.773Z",
+      "source": "owner-correction",
+      "scope": {
+        "type": "series"
+      },
+      "ownerWording": "Hook esa Qoidalarga tayangan xolda video tayorlashni boshlashdan oldin yoziladi shunda qoidalar vaxt utkansari hookni sifatliy yozilishini taminlaydi.",
+      "rule": "Write a distinct, topic-specific hook during the rolling four-week plan, before recording or editing. Use the current Hook Lab playbook and active owner corrections; open one concrete beginner problem, make a truthful promise, and deliver its answer early. Persist each later owner correction, let the newest same-scope rule supersede older active rules, and never ask the owner to repeat a saved correction in another chat.",
+      "supersedes": [
+        "hook-correction-0001"
+      ]
+    },
+    {
+      "id": "hook-correction-0003",
+      "createdAt": "2026-10-01T03:18:54.000Z",
+      "source": "owner-correction",
+      "scope": {
+        "type": "series"
+      },
+      "ownerWording": "znachit biz qoidalarni moslasjimiz kerak instagram/tiktok/yutubshors da uchaydigon video bulishi kerak agar xoxlasang shu nishadakilarni tekshir qanday video qiladi xozir isnstaga qanday videolar maqul",
+      "rule": "Adapt the series rules for discoverable, engaging videos across Instagram Reels, TikTok, and YouTube Shorts. Check current platform guidance and examples from the Chinese-learning niche. Open with a specific beginner situation or curiosity, deliver one accurate and useful lesson quickly, and make the result worth replaying, saving, or sharing. Tailor metadata and measure platform-native results. Never promise virality; keep iterating from owner-entered analytics.",
+      "supersedes": [
+        "hook-correction-0002"
+      ]
+    }
+  ],
+  "revision": 3
+}

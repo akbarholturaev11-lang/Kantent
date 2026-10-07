@@ -1,0 +1,24 @@
+{
+  "profileId": "ru-dmitry-v1",
+  "revision": 2,
+  "status": "approved",
+  "provider": "text-to-speech-online",
+  "serviceName": "text-to-speech.online",
+  "site": "https://text-to-speech.online/",
+  "locale": "ru-RU",
+  "voiceName": "Dmitry – RU",
+  "gender": "male",
+  "speedPercent": 0,
+  "pitchPercent": 0,
+  "outputFormat": "MP3",
+  "captionExport": "word-level VTT preferred; word-level SRT accepted",
+  "scope": "all Russian HSK AI videos, fixed series voice",
+  "sampleEpisodeId": "ni-nin-nimen-20260928",
+  "sampleAudio": "review/ni-nin-nimen-20260928/incoming/TTSOL-ru-RU-Dmitry-20260928-140209.mp3",
+  "approval": {
+    "approvedAt": "2026-09-28T17:54:56.000Z",
+    "approvedBy": "owner",
+    "basis": "Owner confirms the already selected series voice is to remain fixed across all videos."
+  },
+  "changeRule": "Do not substitute or change these settings. If unavailable, stop and request an explicit owner decision and new sample."
+}
