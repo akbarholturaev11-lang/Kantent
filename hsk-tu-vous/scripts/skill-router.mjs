@@ -99,6 +99,7 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
   const isExisting = flags.editing || existingEngine !== "unknown";
   const chosen = existingEngine === "hyperframes" ? "hyperframes"
     : existingEngine === "remotion" ? "remotion"
+    : flags.remotion ? "remotion"
     : flags.hyper ? "hyperframes"
     : actualLesson ? "remotion"
     : (flags.promo || flags.effects) && flags.premium ? "hyperframes"
@@ -167,7 +168,7 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
   }
   if (flags.promo && flags.video) return withStages("remotion","lesson","remotion-best-practices",
     ["promotion"],"A straightforward promo can use Remotion; premium motion must be explicit.", "medium");
-  if (flags.effects && !flags.video) return withStages("standalone","special","motion-effects",["effects"],"Isolated seek-safe effect sketch.", "medium");
+  if (flags.effects && !flags.promo && !actualLesson) return withStages("standalone","special","motion-effects",["effects"],"Isolated seek-safe effect sketch.", "medium");
   if (flags.video) return make("clarify", [], "Specify whether dated HSK lesson, existing edit, or independent premium/special deliverable.", "low", true);
   return make("none", [], "No video action is needed.", "medium");
 }
