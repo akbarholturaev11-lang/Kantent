@@ -4,7 +4,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { readCtaLab, validateCtaEpisode } from "./cta-lab.mjs";
-import { composeLessonCta } from "./episode-cta-assembly.mjs";
+import { assertCanonicalLessonSource, composeLessonCta } from "./episode-cta-assembly.mjs";
 import { getPlannedEpisode, validateEpisode } from "./lib.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -24,6 +24,7 @@ for (const [date, id] of future) {
     const source = JSON.parse(await fs.readFile(
       path.join(root, "content/episodes", id + ".json"), "utf8",
     ));
+    assert.doesNotThrow(() => assertCanonicalLessonSource(source, lab));
     assert.equal("cta" in source, false);
     assert.equal("ctaExperiment" in source, false);
     assert.ok(source.scenes.every((scene) => scene.kind !== "cta"));
@@ -81,4 +82,22 @@ test("a stray CTA value without a CTA scene fails rather than masking stale stat
   ));
   source.cta = "old independent CTA";
   assert.throws(() => composeLessonCta(source, lab), /stale CTA metadata/);
+});
+
+test("future source with hand-written CTA fails the canonical source guard", async () => {
+  const source = JSON.parse(await fs.readFile(
+    path.join(root, "content/episodes", "zhe-na-ge.json"), "utf8",
+  ));
+  source.cta = lab.offer.canonicalRussian;
+  assert.throws(() => assertCanonicalLessonSource(source, lab), /must not embed CTA/);
+  delete source.cta;
+  source.scenes.push({ id: "cta", kind: "cta" });
+  assert.throws(() => assertCanonicalLessonSource(source, lab), /must not embed CTA/);
+});
+
+test("older legacy lesson source remains exempt from future source guard", async () => {
+  const source = JSON.parse(await fs.readFile(
+    path.join(root, "content/episodes", "xiexie-20261001.json"), "utf8",
+  ));
+  assert.doesNotThrow(() => assertCanonicalLessonSource(source, lab));
 });
