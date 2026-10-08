@@ -16,6 +16,8 @@ description: >
 
 # HyperFrames entry point
 
+> **HSK AI hybrid override:** This skill is **not** mandatory for dated Remotion lessons. Only use HyperFrames for a separate advanced/premium video whose route is approved in `content/skill-catalog.json`, or a separately authorized explicit migration. Do not automatically run skill updates/installations, switch voice providers, add external API keys, replace HSK AI brand colors, or publish. The owner-approved CTA and final preview gate remain mandatory.
+
 HyperFrames **renders video from HTML** — a composition is an HTML file whose DOM declares timing with `data-*` attributes, whose animation runtime is seekable, and whose media playback is owned by the framework. The full authoring contract lives in `/hyperframes-core`; read it before writing composition HTML. Brief, storyboard, review, production, dispatch, and frame-worker contracts live in this skill's `references/`.
 
 ## 1. Start from project state
