@@ -3,6 +3,7 @@ import path from "node:path";
 import { spawn } from "node:child_process";
 import { McpServer } from "@modelcontextprotocol/server";
 import { serveStdio } from "@modelcontextprotocol/server/stdio";
+import { recommendSkills } from "./skill-router.mjs";
 import * as z from "zod/v4";
 import {
   CALENDAR_PATH,
@@ -50,7 +51,7 @@ const createServer = () => {
     { name: "hsk-ai-content", version: "1.0.0" },
     {
       instructions:
-        "Работайте по AGENTS.md и AI_RULES.md. До hook edits читайте content/HOOK_LAB.md и get_hook_learning_status; пишите отдельный topic-specific hook до производства, сохраняйте точные слова владельца через record_hook_correction и не выдумывайте результаты без platform readback. До CTA edits читайте content/CTA_LAB.md и get_cta_learning_status; используйте единый CTA серии, сохраняйте точные слова владельца через record_cta_correction, регистрируйте датированный неизменный снимок до voice/render. Используйте только закреплённый профиль text-to-speech.online из content/voice-profile.json, не спрашивайте подтверждение для каждого эпизода. Не вызывайте OpenAI/Whisper, ElevenLabs, Gemini или другие TTS API. Импортируйте MP3 и word-timed SRT/VTT, проверьте burned-in captions и соберите Remotion-пакет. Публикуйте только через подключённый Zernio MCP и только после явного подтверждения владельца финального preview с точным роликом, аккаунтом, caption/xeshteg, disclosure и временем. Ограничьте публикацию Instagram/TikTok; не отправляйте DM.",
+        "Для создания или редактирования видео сначала вызывайте recommend_skills, затем читайте выбранные SKILL.md и текущие правила из content/SKILLS.md. Не запускайте HyperFrames для обычного HSK-урока и не меняйте движок или провайдера без разрешения владельца. Работайте по AGENTS.md и AI_RULES.md. До hook edits читайте content/HOOK_LAB.md и get_hook_learning_status; пишите отдельный topic-specific hook до производства, сохраняйте точные слова владельца через record_hook_correction и не выдумывайте результаты без platform readback. До CTA edits читайте content/CTA_LAB.md и get_cta_learning_status; используйте единый CTA серии, сохраняйте точные слова владельца через record_cta_correction, регистрируйте датированный неизменный снимок до voice/render. Используйте только закреплённый профиль text-to-speech.online из content/voice-profile.json, не спрашивайте подтверждение для каждого эпизода. Не вызывайте OpenAI/Whisper, ElevenLabs, Gemini или другие TTS API. Импортируйте MP3 и word-timed SRT/VTT, проверьте burned-in captions и соберите Remotion-пакет. Публикуйте только через подключённый Zernio MCP и только после явного подтверждения владельца финального preview с точным роликом, аккаунтом, caption/xeshteg, disclosure и временем. Ограничьте публикацию Instagram/TikTok; не отправляйте DM.",
     },
   );
 
@@ -329,11 +330,26 @@ const createServer = () => {
   }
 
   server.registerTool(
+    "recommend_skills",
+    {
+      title: "Recommend task-appropriate video skills",
+      description:
+        "Call before starting a video creation/edit/render task. Uses content/SKILLS.md to choose relevant skills and preserve the Remotion lesson/HyperFrames standalone promo boundary. Returns recommendations only; never runs or installs a skill. For a task that is not a video, it may return none.",
+      inputSchema: z.object({
+        task: z.string().min(3).max(2000),
+        existingEngine: z.enum(["unknown", "remotion", "hyperframes"]).optional(),
+      }),
+    },
+    async ({ task, existingEngine }) =>
+      withToolErrors(async () => recommendSkills(task, { existingEngine })),
+  );
+
+  server.registerTool(
     "list_planned_dates",
     {
       title: "List planned HSK AI videos",
       description:
-        "Показывает даты, темы и текущий статус 12 роликов в календаре Asia/Shanghai.",
+        "Показывает даты, темы и текущий статус из content/calendar.json.",
       inputSchema: z.object({}),
     },
     async () =>
