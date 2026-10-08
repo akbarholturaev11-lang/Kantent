@@ -7,6 +7,8 @@ metadata:
 
 # Displaying captions in Remotion
 
+> **HSK AI override:** Already-rendered captions use `src/CaptionOverlay.tsx`, `scripts/caption-utils.mjs`, and `content/visual-system.json`; preserve their imported word timings. Do not install `@remotion/captions` automatically, substitute TikTok word highlights, center the text over lesson content, or override the project's approved caption colors, font sizes, positions and no-backplate design. Examples below are library demonstrations, not HSK AI styling.
+
 This guide explains how to display captions in Remotion, assuming you already have captions in the [`Caption`](https://www.remotion.dev/docs/captions/caption) format.
 
 ## Prerequisites
