@@ -14,6 +14,11 @@ const activeDocs = [
   "content/CONTENT_PLAN.md",
   "content/SKILLS.md",
   "content/CTA_LAB.md",
+  "content/HOOK_LAB.md",
+  "content/EDITING_SPEC.md",
+  "content/EPISODE_SCHEMA.md",
+  "content/REFERENCE_AUDIT.md",
+  "content/reference-sources.md",
 ];
 
 function asPath(root, relativePath) {
