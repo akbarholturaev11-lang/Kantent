@@ -16,6 +16,15 @@ export function validatePlatformCtaConfig(lab) {
     }
     if (!["approved", "pending-owner-configuration"].includes(item.status))
       errors.push(`Invalid CTA variant status: ${platform}`);
+    if (platform === "instagram" && item.status === "approved") {
+      const template = item.sceneTemplate;
+      if (!template || template.kind !== "cta" || template.id !== "cta" ||
+          !Array.isArray(template.visualBeats) || !template.visualBeats.length ||
+          !isText(template.headline) || !isText(template.editPlan) ||
+          "narration" in template || "cta" in template || "ctaExperiment" in template) {
+        errors.push("Instagram needs a central CTA sceneTemplate without duplicated narration or registrations");
+      }
+    }
     if (platform === "instagram" && item.copySource !== "offer")
       errors.push("Instagram must reference the canonical offer; do not duplicate its wording");
     if (platform !== "instagram" && item.copySource !== "platform")
