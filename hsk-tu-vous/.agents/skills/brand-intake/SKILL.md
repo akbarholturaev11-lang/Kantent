@@ -91,4 +91,4 @@ Run the same one-line prompt twice, once in an empty folder and once in this pro
 
 ## Hand off
 
-Tell the user brand.md, MOTION.md and the CLAUDE.md rule are in place, then list what to try next: `launch-video`, `vox-explainer`, `animated-chart`, `milestone-reveal`. Until both files exist, no other skill may call its result on-brand.
+Tell the user brand.md, MOTION.md and the CLAUDE.md rule are in place, then list what to try next: `product-launch-video`, `vox-explainer`, `animated-chart`, `milestone-reveal`. Until both files exist, no other skill may call its result on-brand.
