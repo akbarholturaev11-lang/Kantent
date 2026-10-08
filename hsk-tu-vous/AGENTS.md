@@ -9,7 +9,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Active global behavior and safety rules | `AI_RULES.md` |
 | Production procedure and error handling | `content/WORKFLOW.md` |
 | Dates, IDs, cadence, episode references | `content/calendar.json` |
-| Dated script and its versioned snapshots | `content/episodes/*.json` |
+| CTA-free future lesson scripts; approved/published legacy snapshots kept immutable | `content/episodes/*.json` |
 | Approved voice/provider/settings | `content/voice-profile.json` |
 | CTA wording and active corrections | `content/cta-lab.json`, explained by `content/CTA_LAB.md` |
 | Hook rules, hypotheses and readbacks | `content/hook-lab.json`, explained by `content/HOOK_LAB.md` |
@@ -34,6 +34,10 @@ After any rule change, run `npm run check:consistency` from this project directo
 ## Skill selection at the moment of work
 
 Before creating, changing, rendering or exporting any video, invoke the local MCP `recommend_skills` tool with the actual user request and the existing project's engine (when known). Read the owning Skill's `SKILL.md` and only the recommended phase references; helpers are optional and must be task-relevant. The sole category/branch inventory is `content/skill-catalog.json`. If the MCP tool is unavailable, follow the decision hierarchy in `content/SKILLS.md` manually; do not blindly trust a Skill frontmatter claim. A recommendation is advisory: it does not install a package, approve an engine migration, replace a voice, or authorize social publishing. If the tool returns `clarify` or `approval-required`, stop for the missing decision instead of silently choosing a framework.
+
+## Central CTA assembly for future lessons
+
+Author future canonical `content/episodes/*.json` lessons with teaching scenes only: **no** top-level `cta`, `ctaExperiment` or embedded CTA scene. The canonical copy plus visual template are under `content/cta-lab.json`; `scripts/episode-cta-assembly.mjs` adds them when a working episode is materialized. The working `review/<id>/episode.json` then keeps one immutable-version CTA snapshot for verified voice, cue timing, QA and publication. Legacy sources and registered CTA experiments are historical, not alternate CTA sources. Do not auto-acknowledge a changed owner rule or reuse a stale registration: a new CTA version must be validated/registered before TTS/render.
 
 ## Operating boundaries
 
