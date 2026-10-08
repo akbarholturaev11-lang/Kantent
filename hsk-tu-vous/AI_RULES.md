@@ -21,7 +21,7 @@ Read `AGENTS.md` for the ownership map and migration protocol. In case of confli
 
 - The current production series teaches Mandarin to **Russian-speaking HSK 1–2 beginners**. Write explanation, voice and platform copy in Russian Cyrillic. Present Simplified Chinese characters, tone-marked pinyin and a concise Russian meaning for each teaching example.
 - One useful, well-explained point per episode. Verify tones, grammar, word order, meaning and examples from trustworthy references; preserve source URLs/review dates in the episode record. Calendar planning notes are not proof of language verification.
-- Use only dates and episode IDs from `content/calendar.json`. Do not silently create, skip or substitute dates. A new date requires the owner's explicit planning instruction.
+- Use only dates and episode IDs from `content/calendar.json`. Keep explicit dated requests strict; never create or rename episodes without approval. **One owner-approved exception:** for the relative command "Бугунги видеони тайёрла", if today has no calendar item, select the nearest future `planned` item in the calendar timezone and visibly disclose the actual chosen date. See `content/WORKFLOW.md` for the procedure.
 - Make a complete dated plan before producing audio: narrative, visual beats, verified Chinese examples, hook hypothesis, CTA snapshot and post copy.
 - Never invent product features, reviews, learner results or engagement metrics. Claims about the HSK AI app must be supported by real owner-provided product evidence.
 
