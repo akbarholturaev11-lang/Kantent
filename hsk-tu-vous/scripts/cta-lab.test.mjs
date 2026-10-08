@@ -30,6 +30,7 @@ const episodeFor = (lab, id = "test-episode") => ({
   date: "2026-09-28",
   level: "HSK 1",
   topic: "greetings",
+  voiceProvider: "text-to-speech-online",
   voiceProfileId: "ru-dmitry-v1",
   hookExperiment: { formatId: "question" },
   cta: lab.offer.canonicalRussian,
