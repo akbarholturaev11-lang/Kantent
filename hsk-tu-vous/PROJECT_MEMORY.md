@@ -11,7 +11,7 @@ This file is **not another policy document**. Keep only architecture, current te
 - Visual numeric tokens come from `content/visual-system.json`; shot-level editing rules from `content/EDITING_SPEC.md`.
 - Hook/CTA experiments, corrections and owner-entered analytics reside in their respective `content/*-lab.json` files; explanatory methodology is in the corresponding `*_LAB.md` files. Preserve historical snapshots rather than rewriting past experiment results.
 - The publication integration uses the existing connected social MCP. `mcp-server.mjs` records the approved preview and returned post IDs/status under each episode's review package. It does not store platform credentials or provide direct social-platform API authentication.
-- The available local skills and approved hybrid engine-routing policy are indexed in `content/SKILLS.md`. The dated lesson production renderer remains Remotion; standalone special-promo compositions may use HyperFrames without changing the lesson pipeline. HeroUI integrations supply component design references.
+- Installed skills, functional categories and the lesson/premium/special stage-owner recipes live in `content/skill-catalog.json`. `content/SKILLS.md` explains the policy, and `scripts/skill-router.mjs` powers the MCP `recommend_skills` tool. Remotion remains the dated lesson renderer; a separate standalone premium/special project can use HyperFrames. HeroUI is a design reference only.
 
 ## Known implementation details
 
@@ -21,6 +21,10 @@ This file is **not another policy document**. Keep only architecture, current te
 - A voice file itself does not authenticate the identity of the voice chosen in the website UI. Preserve this verification limitation.
 - Generated media and review data are intentionally ignored by Git; inspect local `review/<episode-id>/status.json` for actual render/publication state, rather than assuming that a source JSON marked planned means rendered/published.
 - No trusted platform analytics ingestion is implemented: the labs store owner-provided results. No automatic cover-generation or platform-specific variant-rendering pipeline is established.
+
+## Known planning boundary
+
+- The two earliest planned calendar/episode entries still preserve an obsolete comment/DM CTA in their historical production plans. Do not render/publish those drafts as current: `requireCurrentCta` rejects them until the owner explicitly requests a new CTA version with approved footage, voice, word-level cues and new registration. The old experiment ledger and published snapshots must not be silently rewritten. The renderer no longer supplies a comment/DM fallback when `visualBeats` is absent.
 
 ## Maintenance
 
