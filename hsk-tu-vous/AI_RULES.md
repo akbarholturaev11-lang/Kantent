@@ -28,7 +28,7 @@ Read `AGENTS.md` for the ownership map and migration protocol. In case of confli
 ## Hooks, CTA and analytics
 
 - Apply `content/HOOK_LAB.md` and the **active** corrections in `content/hook-lab.json`; choose a specific genuine beginner problem, a truthful payoff, and a distinct hook format. Follow the Lab's timings, screening checks and versioned measurements rather than copying numbers into this file.
-- Apply the current CTA **by reading `content/cta-lab.json`**, including the offer, required action path and active corrections. Do not reuse historical CTA copies from old episodes. Follow `content/CTA_LAB.md` for cue-synced visual execution.
+- Apply the active platform CTA **only by reading `content/cta-lab.json`**. One central registry defines Instagram, TikTok and YouTube variant readiness; episode CTA fields are version-bound working/approved snapshots, not competing editable settings. Never route an unapproved TikTok/YouTube placeholder to voice/render or silently copy Instagram wording. Follow `content/CTA_LAB.md` for platform-specific cue-synced execution and mandatory corrections.
 - A new CTA direction requires an explicit owner instruction. Analytics may inform a proposal, but must not silently replace the approved CTA. Never request comments/DMs or use auto-DM unless a newer owner-approved CTA explicitly enables them.
 - Preserve historical hook/CTA corrections, readbacks and experiment IDs as immutable append-only evidence with supersession status. A new rule should not rewrite past performance.
 - Track performance from real platform results only, keeping each platform's metric definitions and windows separate. Unmeasured is not the same as zero.
