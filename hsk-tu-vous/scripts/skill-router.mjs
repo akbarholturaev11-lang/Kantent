@@ -50,7 +50,7 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
   if (!text) return finish("clarify", [], "Describe the requested video task.", "low", true);
   const remotion = has(text, /remotion|ремоушин|ремотион|ремоушн/iu);
   const hyper = has(text, /hyperframes|hyper\s*frames|хайперфрейм|гиперфрейм/iu);
-  const migrate = has(text, /migrat|convert|портир|кўчир|кучир|миграц|перенос|ўтказ|утказ/iu);
+  const migrate = has(text, /migrat|convert|портир|кўчир|кучир|миграц|перенос|перенес|перенеси|переведи|ўтказ|утказ/iu);
   const existing = has(text, /existing|current|already|existing video|edit |fix |update |мавжуд|ҳозирги|хозирги|олдинги|тузат|ўзгартир|узгартир|исправ|существующ|передел/iu);
   const lesson = has(text, /hsk[\s-]*[1-6]|дарс|урок|lesson|курс|иероглиф|hanzi|pinyin|пиньин|грамматик|луғат|лугат|словар/iu);
   const promo = has(text, /promo|промо|реклама|advert|marketing|product launch|launch film|тизер|trailer|трейлер|реклам/iu);
