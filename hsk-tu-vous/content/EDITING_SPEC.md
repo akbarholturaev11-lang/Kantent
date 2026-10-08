@@ -35,8 +35,8 @@ This is the shared edit and caption standard for every HSK AI short. The rendere
 
 ## Russian captions
 
-- Use the exact Russian narration and word timings exported manually from `text-to-speech.online`. Do not create timings through a transcription API or move timings by hand to fit a changed script.
-- Group adjacent word cues into quick readable phrases: at most two words, 32 characters, 1.25 seconds, and a 250 ms gap. Hold the final word for up to 100 ms, stopping sooner when the next phrase begins.
+- Use the exact narration and word timings exported through the approved provider in `content/voice-profile.json`. Do not create timings through a transcription API or move timings by hand to fit a changed script.
+- Group adjacent word cues into quick readable phrases using the current caps in `content/visual-system.json` (word count, characters, duration, and gap); do not duplicate numerical settings here. Avoid a gap. Hold the final word for up to 100 ms, stopping sooner when the next phrase begins.
 - Keep captions high-contrast ink text with no backing shape and inside the 82 px side safe area. Use the configured differences in type size, weight, and position. Main captions sit at 1300 px; place ctaFooter at 1660 px below the tallest CTA screenshot, to keep the source UI readable.
 - Keep one or two short lines on screen at a time. Do not cover Hanzi, pinyin, Russian meaning, the HSK AI logo, or the final CTA. If the available timed cues cannot fit clearly, stop and ask for a cleaner export; do not shrink text below the configured size.
 - Burn the same scene-bounded phrase pages into the MP4 and write those same pages to `captions.srt`. Each scene's style range follows imported audio timestamps. A script edit requires a fresh matching MP3 and word-timed caption export before rendering.
