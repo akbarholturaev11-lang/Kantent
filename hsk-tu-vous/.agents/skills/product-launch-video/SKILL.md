@@ -13,6 +13,8 @@ description: "Turn a product or marketing URL, pasted script, or brief into a pr
 
 # Product Launch to HyperFrames
 
+> **HSK AI override:** This workflow is for an independent premium promotion only. Do not migrate the dated Remotion series. Use the existing HSK AI logo/palette, verified product UI/screenshots, approved voice provider and CTA from their canonical project files. Do not call the generic HeyGen voice or image generation API, fetch unapproved external media, install/update dependencies, or publish without separate owner authorization and final-preview consent.
+
 Use this skill to capture a product, understand its brand, plan a launch video, and build it frame by frame in HyperFrames.
 
 > **The front door is `/hyperframes`.** You are the orchestrator. Run each step, verify its gate, and only then continue to the next step. This skill is for a **product being marketed, launched, promoted, or revealed**, including requests such as "promo for our site" when the purpose is promotional. A site tour / showcase ask stays here too: `BRIEF.md` carries the show-it-as-is intent, and the captured screens become the assets the video features. Any other intent, a bare "make a video", or any uncertainty → read `/hyperframes` first — the intent layer owns every route decision, and a fresh creation arriving here without `BRIEF.md` goes through it anyway (Setup's opening rule).
