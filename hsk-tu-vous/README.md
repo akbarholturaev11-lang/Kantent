@@ -20,7 +20,7 @@ npm run mcp
 
 A single owner request **«Бугунги видеони тайёрла»** routes through MCP `prepare_today_video`. It first checks the calendar-local date and, when today has no entry, takes the nearest future **planned** entry while disclosing its real date. Explicit YYYY-MM-DD requests remain strict. As before, the TTS website requires agent browser automation and might block on login/CAPTCHA; the tool may return a continuation step rather than a completed MP4. The video review package is the stop point: publication still requires exact-preview approval.
 
-Typical tasks: list dates, read a dated production plan, prepare a video, inspect its review package, and explicitly approve a final publication preview. See `content/WORKFLOW.md` for the process and real external blockers.
+Future canonical `content/episodes/*.json` files intentionally store lesson scenes *without* CTA. The working plan/draft loader attaches the approved platform CTA from `content/cta-lab.json`; old approved and published snapshots stay unchanged. `get_platform_cta_status` reports which variants can be prepared; Instagram is currently approved while TikTok/YouTube still require the owner to finish the content and flow.\n\nTypical tasks: list dates, read a dated production plan, prepare a video, inspect its review package, and explicitly approve a final publication preview. See `content/WORKFLOW.md` for the process and real external blockers.
 
 ## Where each fact lives
 
