@@ -52,10 +52,10 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
   const hyper = has(text, /hyperframes|hyper\s*frames|хайперфрейм|гиперфрейм/iu);
   const migrate = has(text, /migrat|convert|портир|кўчир|кучир|миграц|перенос|ўтказ|утказ/iu);
   const existing = has(text, /existing|current|already|existing video|edit |fix |update |мавжуд|ҳозирги|хозирги|олдинги|тузат|ўзгартир|узгартир|исправ|существующ|передел/iu);
-  const lesson = has(text, /\bhsk\b|hsk[1-6]|дарс|урок|lesson|курс|иероглиф|hanzi|pinyin|пиньин|грамматик|луғат|лугат|словар/iu);
+  const lesson = has(text, /hsk[\s-]*[1-6]|дарс|урок|lesson|курс|иероглиф|hanzi|pinyin|пиньин|грамматик|луғат|лугат|словар/iu);
   const promo = has(text, /promo|промо|реклама|advert|marketing|product launch|launch film|тизер|trailer|трейлер|реклам/iu);
   const premium = has(text, /premium|премиум|махсус|special|кинематограф|cinematic|brand film|complex|мураккаб|сложн|advanced motion|advanced ui|ui animation|интерфейс анимац|эффект|3d intro|motion graphic/iu);
-  const makeVideo = has(text, /видео|ролик|reel|shorts?|animation|анимац|монтаж|render|рендер|export|экспорт|яс[ао]|ярат|сделай|создай|create|produce|тайёрла|таерла/iu);
+  const makeVideo = has(text, /video|видео|ролик|reel|shorts?|animation|анимац|монтаж|render|рендер|export|экспорт|яс[ао]|ярат|сделай|создай|create|generate|produce|тайёрла|таерла/iu);
   const ui = has(text, /\bui\b|interface|интерфейс|экран|heroui|кнопка|button/iu);
   const vertical = has(text, /reframe|crop|convert to vertical|16:9.*9:16|горизонтал.*вертикал|вертикал.*формат|reel.export|экспорт.*reels/iu);
   const voiceOnly = has(text, /voice profile|голос|озвучк|овоз|tts|provider|провайдер/iu) && !makeVideo;
@@ -65,6 +65,12 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
   if (migrate && remotion && hyper) {
     return finish("approval-required", ["remotion-to-hyperframes"],
       "Explicit migration: establish scope and preserve existing source until approved.", "high", true);
+  }
+  if (existingEngine === "remotion" && hyper) {
+    return finish("approval-required", [], "HyperFrames was requested for an existing Remotion project: confirm separate build or explicit migration.", "high", true);
+  }
+  if (hyper && lesson) {
+    return finish("approval-required", [], "A dated HSK lesson was requested with HyperFrames. Preserve the Remotion series unless a separate deliverable/migration is explicitly approved.", "high", true);
   }
   if (remotion && hyper) return finish("clarify", [], "Two engines mentioned; ask which deliverable to build.", "low", true);
   if (existingEngine === "remotion" || (existing && remotion) || (existing && lesson && !hyper)) {
