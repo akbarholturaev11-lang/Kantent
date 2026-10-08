@@ -9,6 +9,10 @@ metadata:
 
 Use this skills whenever you are dealing with Remotion code to obtain the domain-specific knowledge.
 
+## HSK AI project precedence
+
+Inside `hsk-tu-vous`, never scaffold a replacement project, install a substitute caption/TTS library, or use generic provider defaults. Read `AI_RULES.md`, `content/voice-profile.json`, `content/visual-system.json`, and `content/EDITING_SPEC.md` first. The approved MP3 + word-level cue importer and existing caption renderer are already implemented. Skills are techniques, not authority to override active project rules.
+
 ## New project setup
 
 When in an empty folder or workspace with no existing Remotion project, scaffold one using:
@@ -236,7 +240,7 @@ At 30 fps, `--frame=30` is the one-second mark (`--frame` is zero-based).
 
 ## Captions
 
-When dealing with captions or subtitles, load the [./rules/subtitles.md](./rules/subtitles.md) file for more information.
+For captions, read [./rules/subtitles.md](./rules/subtitles.md) for data format only. Inside HSK AI, preserve the project's existing word-level MP3/VTT/SRT importer and `content/visual-system.json` style. Do NOT follow optional Whisper transcription or default TikTok caption coloring/installation examples.
 
 ## Using FFmpeg
 
@@ -361,4 +365,4 @@ For complex maps with animated routes or flyovers, load the maps rule: [rules/ma
 
 ## Voiceover
 
-See [rules/voiceover.md](rules/voiceover.md) for adding AI-generated voiceover to Remotion compositions using ElevenLabs TTS.
+The generic [rules/voiceover.md](rules/voiceover.md) uses ElevenLabs as an example and is NOT the HSK AI production pipeline. Here use only the already approved provider/configuration in `content/voice-profile.json` and the importer in `content/WORKFLOW.md`. Do not use ElevenLabs, Whisper or another speech API.
