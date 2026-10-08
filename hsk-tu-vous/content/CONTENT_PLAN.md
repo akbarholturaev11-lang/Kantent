@@ -1,28 +1,9 @@
-# HSK AI: план русскоязычных видео
+# Content planning guide
 
-**Период текущего календаря:** 28 сентября — 23 октября 2026 года.  
-**Базовый ритм:** три видео в неделю; владелец может добавлять отдельные дополнительные даты.  
-**Язык:** русский, аудитория HSK 1–2.  
-**Формат:** вертикальный 9:16, цель — 25–35 секунд. Перед размещением владелец подтверждает точный preview; отправка в Instagram Reels/TikTok выполняется через Zernio только после этого подтверждения.
+The live production calendar is **`calendar.json`**. It owns dates, episode IDs, per-date topics, the timezone and publishing cadence. Do not mirror its rows or hard-code episode counts here.
 
-> `calendar.json` — единственный источник актуальных дат и episode ID. Эта таблица является удобным представлением текущего календаря и должна обновляться или удаляться в той же задаче, если календарное правило или дата меняются.
+For each scheduled episode, maintain the single canonical scenario at `episodes/<episode-id>.json`. Apply the current global rules (`../AI_RULES.md`), active hook corrections (`HOOK_LAB.md` and `hook-lab.json`), and current CTA configuration (`cta-lab.json`).
 
-| Дата        | Тема                                           | Уровень | Формат |
-| ----------- | ---------------------------------------------- | ------- | ------ |
-| 28 сентября | 你, 您, 你们: ты, вежливое Вы и вы             | HSK 1   | Три формы обращения в коротких примерах |
-| 30 сентября | 你叫什么名字？ — как спросить имя              | HSK 1   | Вопрос и короткий ответ для знакомства |
-| 1 октября   | 谢谢 — простая благодарность                   | HSK 1   | Одно слово, пиньинь и ситуация благодарности |
-| 2 октября   | 吗 — вопрос «да/нет»                           | HSK 1   | Одно правило и два примера |
-| 3 октября   | 会 huì перед глаголом: освоенный навык         | HSK 1   | Вопрос и короткий ответ о навыке |
-| 5 октября   | 是 и 叫 — представить себя или назвать имя     | HSK 1   | Два похожих предложения рядом |
-| 6 октября   | 你呢？ — коротко вернуть вопрос «А ты?»        | HSK 1   | Короткая задача на recall в диалоге |
-| 7 октября   | 有 и 没有 — есть или нет                       | HSK 1   | Повседневные предметы и естественное отрицание |
-| 9 октября   | 这 и 那 с 个 — этот и тот                      | HSK 1   | Близкий и дальний предмет |
-| 12 октября  | 在 — где я нахожусь                            | HSK 1   | Одна модель с несколькими местами |
-| 14 октября  | 几 или 多少 — сколько?                         | HSK 1–2 | Количество и цена |
-| 16 октября  | 想 и 要 — желание, просьба и намерение         | HSK 2   | Короткий диалог в кафе |
-| 19 октября  | Где ставить время в китайском предложении?    | HSK 1–2 | Собрать предложение из блоков |
-| 21 октября  | 不 и 没 — два способа отрицания                | HSK 1–2 | Два примера и подсказка по контексту |
-| 23 октября  | 了 — завершение и изменение ситуации           | HSK 2   | Два контекста без упрощения до прошедшего времени |
+A plan should specify one learner problem, source-checked examples, a topic-specific opening, scene/edit cues, exact voice narration, and a relevant closing action. Production and approval steps are in `WORKFLOW.md`.
 
-Полные сценарии и рабочие данные хранятся в [episodes](./episodes/). Источник дат — [calendar.json](./calendar.json), часовой пояс — Asia/Shanghai.
+If the owner modifies the schedule or a theme, edit `calendar.json` and the affected canonical episode in the same task. This guide must not become a second calendar.
