@@ -23,6 +23,8 @@ jobs:
         run: node --test scripts/check-consistency.test.mjs
       - name: Test task-to-skill routing
         run: node --test scripts/skill-router.test.mjs
+      - name: Test all functional skill branches
+        run: node --test scripts/skill-router.categories.test.mjs
       - name: Parse MCP server
         run: node --check scripts/mcp-server.mjs
       - name: Verify canonical files and avoid duplicated active settings
