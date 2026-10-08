@@ -36,7 +36,8 @@
     "content:render": "node scripts/render-episode.mjs",
     "content:make": "node scripts/make-episode.mjs",
     "content:approve": "node scripts/approve-package.mjs",
-    "mcp": "node scripts/mcp-server.mjs"
+    "mcp": "node scripts/mcp-server.mjs",
+    "check:consistency": "node scripts/check-consistency.mjs"
   },
   "sideEffects": [
     "*.css"
