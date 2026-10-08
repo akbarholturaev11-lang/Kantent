@@ -1,114 +1,60 @@
-# HSK AI: rules for every future chat
+# HSK AI — active production guardrails
 
-Read this file and `PROJECT_MEMORY.md` before acting. `AGENTS.md` explains the project-level working rules. These are production rules, not suggestions.
+These are the **current global policies** for every agent and chat. They are deliberately not a copy of settings, calendar entries, creative Lab procedures or technical implementation details.
 
-## Active-rule maintenance
+## Ownership and precedence
 
-- This file is the authoritative source for **current mutable production policy**. The latest explicit owner instruction wins when it intentionally changes an existing rule.
-- Treat every such change as a migration: replace the active rule here, then search the repository for the superseded rule and remove or update all conflicting active copies in project memory, workflow docs, README/overview docs, active config, and affected future plans.
-- Never leave both the new and old rule active with labels such as “old”, “previous”, or “for reference”. If an old value must survive for evidence, it may remain only in a clearly historical/append-only record such as Hook Lab, CTA Lab, analytics, approval, or publication history, marked as superseded/history and never used as current policy.
-- A rule migration is not complete until the agent performs a consistency sweep and confirms that active sources agree. Future chats must use the reconciled repository state rather than remembered chat instructions.
-- Prefer references over duplication: mutable values should live in their canonical file whenever practical. Do not hardcode episode counts or other easily stale summaries when `content/calendar.json` or another canonical file can be read directly.
+Read `AGENTS.md` for the ownership map and migration protocol. In case of conflict, the latest explicit owner instruction authorizes a **migration of the owning source**, not a silent override in one chat. Stop and reconcile inconsistent active files before production or publication.
 
-## Product and content
+- `AI_RULES.md`: global behavior, editorial limits, publishing authorization and safety.
+- `content/voice-profile.json`: sole source of approved provider/voice/settings.
+- `content/cta-lab.json`: sole source of current CTA wording/offer and correction state; `content/CTA_LAB.md` describes its use.
+- `content/hook-lab.json` and `content/HOOK_LAB.md`: hook experiments, corrections, readback policy and editorial criteria.
+- `content/calendar.json`: dates, IDs, schedule and timezone.
+- `content/visual-system.json`: numeric design and caption settings; `content/EDITING_SPEC.md` explains editing technique.
+- `content/EPISODE_SCHEMA.md`: persisted episode/review record shape.
+- `content/WORKFLOW.md`: operational order, error handling and preview process.
 
-- This project produces short Russian-language Mandarin lessons for HSK 1–2 beginners.
-- Use Russian Cyrillic for narration, captions, post copy, and on-screen explanations. Show Simplified Chinese, tone-marked pinyin, and a concise Russian meaning together for each teaching example.
-- Teach one clear point per video. Do not invent Chinese grammar or claim that a tendency is an absolute rule. Check characters, tones, word order, and translation against reliable Chinese-learning references; flag uncertainty for the owner instead of guessing.
-- Record the source URL and review date for each factual teaching point in the episode record. Calendar referenceFacts are planning notes, not proof that a teacher or reference has checked them. Do not label an episode language-verified when its source check is missing.
-- Use only episodes referenced by `content/calendar.json`. Dates are ISO `YYYY-MM-DD` in `Asia/Shanghai`. Do not resurrect the orphaned Tajik or draft episodes.
-- Target 9:16, 1080×1920, 25–35 seconds for the current renderer. Treat that as a production constraint, not proof that a script will perform. Keep text inside safe areas and readable on a phone. Use non-identifiable illustrated people for teaching context; do not invent language examples or product claims.
-- Every date needs a complete scene plan, voice script, Chinese examples, edit/motion direction, CTA, and Russian post copy before production.
+**Rule changes are migrations.** Update the owning source, search active documents/configuration/code for all dependent copies, remove or reconcile superseded active statements, run `npm run check:consistency` and test the affected flow. Preserve historical experiment data and already approved/published snapshots as historical evidence; never relabel old content as current. No automated check can detect all semantic contradictions, so agent review remains mandatory.
 
-## Discovery and platform fit
+## Teaching and scripts
 
-- Aim for videos that earn a viewer’s attention, replay, save, or share; never promise virality or treat a trend as guaranteed reach.
-- Choose the lesson through a beginner’s recognizable moment: a real conversation, awkward mistake, useful contrast, quick guessing challenge, or memorable response. Do not lead with a curriculum label, “today’s word,” a logo, or an abstract grammar definition.
-- In the opening second, show the situation, choice, mistake, or payoff visually and say a specific truthful promise. Make the first frame match the spoken line. Reveal the useful answer by the first 30% of the video, then give the viewer a chance to hear, say, or recall it before the fixed CTA.
-- A single word is a good topic only when the script gives it a human use or a mini challenge; otherwise teach a useful phrase or exchange. Keep one accurate teaching point, but make the context entertaining and specific enough to matter to a beginner.
-- Across the three weekly posts, rotate scenario/dialogue, mistake-or-contrast, and quick challenge/recall formats. These are creative options, not proven winners; preregister and measure them as described in `content/HOOK_LAB.md`.
-- For simultaneous posting, keep one clean vertical master without another platform’s watermark, then tailor the title, first caption line, and searchable terms to each platform. Use TikTok Creator Search Insights when available. Use a trend only when it fits the lesson naturally; never stuff keywords or copy another creator’s script.
-- Preserve the fixed series CTA and place it after the lesson payoff. Do not add a forced “share this” request or allow the CTA to replace the teaching value.
+- The current production series teaches Mandarin to **Russian-speaking HSK 1–2 beginners**. Write explanation, voice and platform copy in Russian Cyrillic. Present Simplified Chinese characters, tone-marked pinyin and a concise Russian meaning for each teaching example.
+- One useful, well-explained point per episode. Verify tones, grammar, word order, meaning and examples from trustworthy references; preserve source URLs/review dates in the episode record. Calendar planning notes are not proof of language verification.
+- Use only dates and episode IDs from `content/calendar.json`. Do not silently create, skip or substitute dates. A new date requires the owner's explicit planning instruction.
+- Make a complete dated plan before producing audio: narrative, visual beats, verified Chinese examples, hook hypothesis, CTA snapshot and post copy.
+- Never invent product features, reviews, learner results or engagement metrics. Claims about the HSK AI app must be supported by real owner-provided product evidence.
 
-## Hook improvement loop
+## Hooks, CTA and analytics
 
-- Read `content/HOOK_LAB.md` and `content/hook-lab.json` before writing or changing an opening hook. Call `get_hook_learning_status` before selecting a hook pattern.
-- Write a distinct hook for each planned lesson during the rolling four-week content plan, before voice recording or editing. Use the current Hook Playbook and active owner corrections; do not ask the owner to choose a hook for routine episodes. The words vary by topic while the quality rules remain consistent.
-- Start each lesson from one real beginner problem, make one truthful promise, and solve it with one accurate, usable Chinese explanation. HSK AI is the consistent next step for continued learning through the fixed CTA; do not invent app features or claims.
-- When the owner corrects a hook rule, retain their exact wording with `record_hook_correction`. A newer same-scope correction supersedes the older active rule; preserve history, apply the newest rule to future scripts, and do not ask the owner to repeat it in another chat.
-- Every dated episode must preregister `hookExperiment` with a version ID, one dominant format (`question`, `contrast`, or `scenario`), a specific audience/result hypothesis, preferred metric, fallback metric, and registration date before publishing.
-- Keep the opening hook within six seconds, with the situation and promise evident in the first second. Deliver the promised answer in the first 30% of the video. A first visual must agree with the spoken promise; one video tests one main hook change. Never simplify a language rule into a false claim. Before rendering, pass at least 4 of 5 editorial checks in `content/HOOK_LAB.md`; accuracy is a hard requirement.
-- Treat editorial scoring as a preflight check, never as audience-performance evidence. If the video was not posted or platform metrics were not supplied, report its hook as `unmeasured`.
-- After a video is published, collect 24h and 7d dashboard readbacks through `record_hook_analytics`. For YouTube Shorts, use its “chose to view” rate when preregistered; also keep average watch ratio and completion where available. Do not request platform passwords or connect analytics APIs.
-- Compare only the same platform, readback window, primary metric, HSK level, and duration band. Topics can still confound results. Use initial sample thresholds in `content/hook-lab.json` as cautious operating defaults, not statistical proof. The status tool may identify a candidate, but only the owner can promote a pattern into the playbook.
-- Keep raw owner-entered counts and the platform's metric definition. Never fabricate missing views, retention, shares, or saves; never turn low-volume data into a confident rule.
+- Apply `content/HOOK_LAB.md` and the **active** corrections in `content/hook-lab.json`; choose a specific genuine beginner problem, a truthful payoff, and a distinct hook format. Follow the Lab's timings, screening checks and versioned measurements rather than copying numbers into this file.
+- Apply the current CTA **by reading `content/cta-lab.json`**, including the offer, required action path and active corrections. Do not reuse historical CTA copies from old episodes. Follow `content/CTA_LAB.md` for cue-synced visual execution.
+- A new CTA direction requires an explicit owner instruction. Analytics may inform a proposal, but must not silently replace the approved CTA. Never request comments/DMs or use auto-DM unless a newer owner-approved CTA explicitly enables them.
+- Preserve historical hook/CTA corrections, readbacks and experiment IDs as immutable append-only evidence with supersession status. A new rule should not rewrite past performance.
+- Track performance from real platform results only, keeping each platform's metric definitions and windows separate. Unmeasured is not the same as zero.
 
-## CTA learning loop
+## Approved voice
 
-- Before any CTA writing or edit, read `content/CTA_LAB.md` and `content/cta-lab.json`, then call `get_cta_learning_status`. Owner corrections are durable policy: preserve their exact wording, acknowledge all active correction IDs, and never repeat a corrected CTA mistake in another date or chat.
-- Use the current owner-approved Russian CTA in every episode: “Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.” Match the profile, profile-links, and website-download screenshots to the spoken steps, and highlight where to go at each cue. Do not request a comment, DM, or competing engagement action.
-- Keep the CTA’s scene timing and motion in the episode edit plan, tied to imported word cues. Its current specification is in `content/CTA_LAB.md`; keep screenshots legible in one central stage and never imply that a real link was opened or that a download finished.
-- After an owner-requested CTA edit, save the exact correction and its supersession in CTA Lab, apply it to all future planned episodes, then register each dated snapshot before voice preparation or render. Narration changes need fresh matching audio and word-level captions. A new dated snapshot records context; it does not authorize a CTA variant.
-- CTA readbacks can inform reports but never change the series CTA automatically. Only a later explicit owner instruction can replace the active CTA rule; preserve earlier versions and measurements as history.
-- Learn from 24h and 7d platform readbacks entered by the owner. Never invent missing counts or claim an unmeasured variant is better. Compare only matched platform, window, metric definition, offer, level, duration band, hook, voice and comparison group. A measured candidate remains a proposal until the owner explicitly promotes it.
-- CTA feedback and performance are separate: corrections take effect immediately; audience metrics only provide evidence after posting and readback. Never auto-DM or claim the local lab downloads an app. Posting requires the final Zernio preview confirmation described below.
+- `content/voice-profile.json` is the **only place** where the active site, locale, voice name, speed, pitch, export settings and approval status are defined. Do not write a second copy here.
+- The chosen series voice is reused automatically once approved. Do not ask to reconfirm it for each episode. A different voice/provider or changed settings need an explicit owner decision and a freshly approved sample.
+- The agent must generate/export matching audio and word-level timing itself through the approved site with available browser automation. Preparing the text or asking the owner to download/move routine exports is not completion.
+- If the approved provider, voice or required export is unavailable—or if login/CAPTCHA/permissions block it—stop and report the exact blocker. Never switch to another voice/API, invent audio, or bypass access controls to conceal failure.
+- No external TTS/transcription API or additional paid credential path is authorized for this workflow. Do not send narration/audio to another service.
+- Exported MP3 metadata does not independently prove the voice selected in a browser; represent verification limitations accurately.
 
-## One fixed voice for the series
+## Visuals, timing and QA
 
-- The only production voice provider is `text-to-speech.online`. Do not use OpenAI/Whisper, Gemini, ElevenLabs, macOS voices, or another fallback.
-- The owner-selected series voice is Dmitry – RU, Russian (`ru-RU`), male, speed 0%, pitch 0%, MP3, stored in `content/voice-profile.json`. Reuse it automatically for every Russian episode without per-video prompts.
-- Voice approval is one series decision, separate from each video’s review. Change the voice only when the owner explicitly asks; then record the replacement decision and make one new owner-reviewed sample before using it.
-- The speech website does not provide a verifiable voice identity inside the MP3. Record the configured profile and the owner’s manual selection honestly; never claim that the audio file itself cryptographically proves which voice made it.
-- If the approved voice/settings disappear or the site changes, stop and ask the owner. Never substitute a voice or change settings silently. A different voice requires a new explicit owner decision and a new sample approval.
-- There are no API keys in this workflow. Do not add keys or enable paid API calls.
-- When the owner asks to make a dated video, the agent owns the complete production run. Use the available browser/computer-use tool to open `https://text-to-speech.online/`, enter that date’s exact `tts-input.txt`, set or verify the approved profile above, generate the audio, and download the site’s word-level VTT (preferred) or SRT plus MP3/WAV into that episode’s `incoming/` folder. Then import, render, inspect, and return the complete review package in the same task. Preparing the text file is only an intermediate step, never a completed response.
-- Do not tell the owner to click Generate, download files, rename files, move files, or call the import/render tools. Do those steps yourself. Use the existing browser session when available; otherwise open the approved site in the available browser. If a site interaction fails, inspect the current page and retry from its visible state instead of converting the task into manual owner instructions.
-- Ask for owner input only when a concrete external gate prevents the agent from proceeding (for example, a required sign-in, CAPTCHA, browser permission prompt, or the approved Dmitry voice/settings are unavailable or changed). Report the exact gate and completed work. Do not label routine generation/export as requiring owner action. Never bypass access controls or switch providers/settings to evade a gate.
+- Use the existing React/Remotion renderer. Apply `content/visual-system.json` for quantitative design values and `content/EDITING_SPEC.md` for transitions, captions, sound and shot composition. The current short-video target is 9:16, 1080×1920 at 25–35 seconds.
+- Build meaningful synchronized scenes—not a static slideshow. A visual object/person should correspond to the spoken cue. Keep subtitles legible on a phone, with correct word-level timing and no overlap with crucial lesson/CTA content.
+- Use genuine owner-approved product screenshots. Avoid copying third-party branded visuals; source examples and creative inspiration do not authorize infringement or fabricated UI.
+- Narration edits invalidate imported voice and caption timing. Any content/visual change invalidates the render, final publication preview and prior package approval; regenerate and inspect the updated package.
+- Validate video duration, voice/caption match, pinyin, Chinese content, design safety margins, music/effects, encoded video, sidecar captions and metadata before calling a review package complete.
 
-## Captions, video, and package
+## Publication and credentials
 
-- The agent creates the audio in the browser from the approved profile and downloads MP3 plus word-level SRT or VTT. Prefer VTT when the site exports per-word cues. Do not send the audio to a transcription service.
-- Require timed Russian captions that follow the spoken script. Reject empty, sentence-only, or obviously mismatched captions and explain how to export per-word timings.
-- The Remotion MP4 must show the timed captions burned in. Also provide a sidecar SRT generated from the same cues. Check that captions stay legible and do not cover the learning card or CTA.
-- Follow `content/EDITING_SPEC.md` for motion, sound effects, caption grouping, layout, and final review. `content/visual-system.json` is the shared numeric source for renderer effect and caption values; do not add one-off conflicting values in a scene.
-- Cut to the narration: give each named person, place, or action a matching `visualFocus` and an exact `syncCueText` from the word-timed VTT. Switch the scene/lesson beat when that cue begins. Use a teacher when the voice says teacher, a shopkeeper only when the script says shopkeeper, and a group when it says several people. Keep abstract lines on kinetic typography/cards instead of unrelated stock imagery.
-- Keep lesson visuals changing with the voice: do not hold one composition through a multi-idea explanation. Give each important object or idea a relevant visual beat on its exact word cue (for example, show a book when “book” is spoken), then hold the complete phrase long enough to read. Connect beats with a gentle 8–12 frame crossfade or short eased slide; no flash, strobe, bright sweep, glitch, or repeated per-word pulse.
-- Choose two or three ink-colored caption styles per video and assign them by scene with `captionStyleId`. Do not put a backing shape behind subtitles. Change one style at a time through size, weight, and position; move captions between the clear scene band, above-card area, and lower-card area according to the shot. Group at most two words at a time. Follow the spoken Russian quickly; do not keep every subtitle at the bottom.
-- Require an effective duration from 25 through 35 seconds. If a script edit changes narration, discard that date’s imported audio and caption timings and request a fresh matched MP3+caption export.
-- A complete review package contains `video.mp4`, `captions.srt`, `post.md`, `episode.json`, `status.json`, and source/import files. Keep it under `review/<episode-id>/`.
-- Any script, visual, caption, or audio change invalidates the prior rendered video, post, and package approval. Never show or approve stale output as current.
-- Apply existing plans, hook/CTA rules, and approved voice automatically for a clear video-production command. Do not pause for routine confirmation. If the owner explicitly requests a script edit, apply it to the dated working copy, refresh the voice/captions, and continue. Render only after the matching source audio and timed captions are available.
-- Maintain a rolling content plan at least four weeks ahead. Before recording each episode, finalize its one learner problem, source-checked lesson, hook and hypothesis, fixed CTA, and scene-by-scene edit plan. Each scene names the visual, transition/effect, caption treatment, and exact spoken cue; follow the production order in `content/WORKFLOW.md`.
-- Each video needs source receipts for its learning facts and an explicit owner review before it is marked approved. The approval tool records the owner's confirmation of a specific Zernio publication preview; it does not publish by itself.
-
-## Design and references
-
-- Follow `content/visual-system.json` and `content/reference-sources.md`. Use HeroUI React v3 MCP and its skill for component-level details shown inside videos (such as profile links and download buttons), not for the project's own management UI. Build final timed motion in Remotion; do not add HeroUI as a Remotion runtime dependency.
-- Use the owner's selected `posts.design` site and supplied screenshots as motion and transition references. The opened “Folder animation” preview informs a brief sheet-unfold reveal for a posted comment row; the preview and adaptation are documented in `content/reference-sources.md`.
-- Use the HSK-AI-Bot source palette recorded in `content/reference-sources.md`: warm paper background, dark ink, white surface, cinnabar, jade, and gold. Keep the logo and open central stage without an enclosing card/backplate. Use references for ideas only: do not copy their artwork, assets, or exact layouts.
-- Remotion is the renderer. HeroUI is a design-system reference/tool, not a new Remotion runtime dependency.
-- Check reference URLs when a user asks to revisit them; a saved screenshot or link is not proof that the current page still behaves the same.
-
-## Interaction and handoff
-
-- Prefer using the local MCP tools to list dates, get/edit a dated plan, prepare/import voice artifacts, render, and read status. Use the project CLI only when needed.
-- Resolve “today” from the current date in `Asia/Shanghai`, then check `content/calendar.json` or call `list_planned_dates`. Never infer a production date from the chat title, an attached file name, or another chat’s history.
-- If the requested date has no calendar entry, do not invent an episode or silently switch dates. State that the requested date is unplanned, name the next scheduled date and topic, and say that no video was rendered. Do not ask “which video?” when the requested date is already clear. If the owner explicitly asks to create a new date, explain that the calendar is the source of truth and update it only through an authorized planning change.
-- If the date is planned but the voice gate is pending, explain that this is the one-time series choice, not a per-video approval, and identify the sample and exact next step. Once the owner clearly fixes the selected voice for the series, record that decision once; after that never request voice approval for individual episodes.
-- Keep the series voice decision separate from per-video publishing approval. The per-video Zernio preview must show the exact media, account, caption and hashtags, platform disclosures, and immediate or scheduled time. Only an affirmative response to that preview authorizes the Zernio publish/schedule call. Voice approval never approves a video.
-- When a planned episode is eligible, check that its audio and word-timed captions match that episode’s current narration. A sample MP3/VTT from another date cannot be reused. If those files are missing, create them yourself through the approved browser workflow; never request them from the owner.
-- Explain an owner action only when a concrete external gate or the final per-video review decision requires it. Otherwise complete the workflow and report the finished package, checks, and any genuine blocker.
-- A missing date, unapproved voice, unavailable export, bad timing, or failed render is a stop with a clear error. Never fall back to an unapproved provider to make the job appear complete.
-- Do not create or use API credentials for video generation. Do not ask for passwords or tokens.
-- The publishing targets are Instagram Reels and TikTok through the connected Zernio MCP integration. Keep one clean vertical master. Resolve account IDs and platform requirements through Zernio before presenting the final preview; do not guess an account. See the Zernio Publishing Workflow below.
-
-## Zernio publishing workflow
-
-- The project uses the connected Zernio MCP integration in Codex; do not add a second credential path or store an API key. Use Zernio account listing and health tools to find eligible Instagram and TikTok accounts. If either requested platform has no eligible account, explain which one needs connection/reconnection and ask whether the owner wants to continue with only the other; never silently omit a requested platform. If there are multiple plausible accounts for one platform, ask which one.
-- Once the rendered package passes its language, timing, subtitle, visual, and duration checks, prepare platform-specific Russian captions and relevant hashtags from the episode. Preserve the fixed HSK AI CTA and do not add unsupported app claims. Validate the MP4 and the exact platform copy against current Zernio/platform constraints.
-- Before asking, show the video and final publication preview: each platform/account, its exact caption including hashtags, platform disclosure/settings, and either “publish now” or the exact date/time in `Asia/Shanghai`. Ask one clear question such as: “Video tayyor bo‘ldi. Shu ko‘rinishda Instagram va TikTok’ka hozir joylaymi?” An unqualified “ha” applies only to that complete preview. Without that affirmative answer, do not upload media to Zernio, schedule, or publish.
-- After the affirmative answer, call the package approval tool with the confirmed intent, use Zernio’s media upload flow to attach the local MP4, then use `posts_create_post` with one explicit action: `publish_now: true` for immediate publication, or `scheduled_for` plus `timezone: "Asia/Shanghai"` for the owner-specified future time. Never rely on Zernio defaults to decide draft, publish, or schedule mode.
-- For TikTok, fetch creator info before the final preview. Use a supported `privacy_level` and the creator's required interaction toggle values. The fixed CTA promotes HSK AI, so set `commercialContentType: "brand_organic"` and show TikTok's own-brand “Promotional content” disclosure in the preview. The series uses synthetic TTS narration, so set `video_made_with_ai: true` and show the AI label in the preview. Set `content_preview_confirmed` and `express_consent_given` to `true` only after the exact preview receives the owner's affirmative response. For Instagram, a single video is a Reel; show whether it will also appear in the feed and whether its AI-generated visual/video label applies. See [TikTok's commercial-content policy](https://support.tiktok.com/en/business-and-creator/creator-and-business-accounts/promoting-a-brand-product-or-service), [TikTok's AI-content policy](https://support.tiktok.com/en/using-tiktok/creating-videos/ai-generated-content), and the [Zernio TikTok fields](https://docs.zernio.com/platforms/tiktok).
-- After Zernio returns, record the returned post ID, platform/account, result status, scheduled time, and link (when available) with `record_zernio_publication`. Report “published” only when Zernio confirms publication; distinguish scheduled, processing, partial, and failed outcomes. Never retry an ambiguous result until Zernio confirms the original post was not created.
-- If the owner requests scheduling but omits or ambiguously states the date/time, ask for it. Never schedule in the past. Use `Asia/Shanghai` unless the owner explicitly supplies another timezone.
-- Zernio's hosted MCP server is used for account and publishing actions. Its media upload UI may require a browser file selection; automate that with the available browser tool when possible. Ask for owner action only if a real browser access/permission gate prevents the upload. Never request or store platform passwords or tokens.
+- Current social publication destinations: **Instagram Reels and TikTok** through the existing **Zernio MCP** connection. Do not publish to other destinations unless the owner explicitly changes this policy.
+- A production request authorizes work **through** a finished review package, not publication. Before any media upload, scheduling or post creation, present the exact final video, destination accounts, each platform's caption/hashtags, disclosure settings and publish time; wait for the owner's unambiguous approval of that preview.
+- Match current platform rules: check TikTok creator capabilities/privacy/toggles; disclose HSK AI's own-brand promotion and synthetic narration where required. Verify any applicable Instagram AI labels and feed distribution. Never guess account IDs or reuse stale platform capability checks.
+- The authorized connection handles credentials. Never store OAuth tokens, service keys or social passwords in source, memory, scripts, comments or artifacts. If an account needs reconnection, report the blocker.
+- After approval, publish/schedule only through the permitted integration and record returned IDs, status, time and links. Distinguish queued, scheduled, processing, partial, failed and published. Never retry an ambiguous response before confirming whether the post exists.
+- When a target platform is unavailable or the requested publication time is unclear, ask the owner for the **specific missing decision** instead of silently omitting a platform or inventing a time.
