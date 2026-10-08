@@ -5,6 +5,8 @@ description: The setup step every other skill in this pack reads. A short interv
 
 # Brand intake
 
+> **HSK AI override:** The HSK AI brand is already defined. Do **not** run this intake automatically, create independent `brand.md`/`MOTION.md` or add a competing `CLAUDE.md` source. Run only on an explicit owner-requested rebrand; put any approved resulting values into the existing canonical brand files named in `AGENTS.md` and `content/visual-system.json`. External templates never override the existing palette or approved logo.
+
 Every other skill in this pack reads the two files this one writes. Without them, Claude picks its own colours, its own type and its own idea of motion. Run this once per brand.
 
 ## Start straight away
