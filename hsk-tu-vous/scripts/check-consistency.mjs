@@ -64,58 +64,65 @@ export function findDuplicatedValues(text, settings) {
 
 export function validateSkillRegistry(root = projectRoot) {
   const errors = [];
-  const registryFile = asPath(root, "content/SKILLS.md");
-  const skillsDir = asPath(root, ".agents/skills");
-  let markdown;
-  let directories;
+  const catalog = readJson(root, "content/skill-catalog.json", errors);
+  if (!catalog?.skills || !catalog?.recipes) return [...errors, "skill-catalog.json: missing skills or recipes"];
+  const directory = asPath(root, ".agents/skills");
+  let installed = [];
   try {
-    markdown = fs.readFileSync(registryFile, "utf8");
-    directories = fs.readdirSync(skillsDir, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory())
-      .map((entry) => entry.name);
+    installed = fs.readdirSync(directory, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory()).map((entry) => entry.name);
   } catch (e) {
-    return ["Skill registry or local skill directory is missing: " + e.message];
+    return [...errors, "Skill directory unreadable: " + e.message];
   }
-
-  const section = markdown.split("## Registered skills")[1]?.split("## Onboarding")[0];
-  if (!section) return ["content/SKILLS.md: missing registered skill table"];
-
-  const found = new Map();
-  const allowedRoutes = new Set(["remotion-default", "conditional", "hyperframes-only"]);
-  for (const line of section.split("\n")) {
-    const match = line.match(/^\|\s*\x60([a-z0-9-]+)\x60\s*\|\s*\x60([a-z-]+)\x60\s*\|\s*(.+)\s*\|$/);
-    if (!match) continue;
-    const [, name, route, description] = match;
-    if (found.has(name)) errors.push("content/SKILLS.md: duplicate skill route for " + name);
-    found.set(name, route);
-    if (!allowedRoutes.has(route)) errors.push("content/SKILLS.md: unknown route " + route + " for " + name);
-    if (description.trim().length < 20) errors.push("content/SKILLS.md: missing actionable routing for " + name);
-  }
-
-  const installed = new Set(directories);
-  for (const name of directories) {
-    if (!found.has(name)) errors.push("content/SKILLS.md: unregistered installed skill " + name);
-    const file = path.join(skillsDir, name, "SKILL.md");
+  const routes = new Set(["remotion-default", "hyperframes-only", "conditional"]);
+  const branchNames = new Set(["lesson", "premium", "special"]);
+  const categoryNames = new Set(["engine","layout","effects","captions","audio","brand","promo","teaching","data","editing","export","migration"]);
+  const skills = catalog.skills;
+  const entries = Object.entries(skills);
+  for (const name of installed) {
+    if (!skills[name]) errors.push("Unregistered installed skill: " + name);
+    const filename = path.join(directory, name, "SKILL.md");
     try {
-      const text = fs.readFileSync(file, "utf8");
-      const frontmatter = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-      const nameField = frontmatter?.[1].match(/^name:\s*(.+)\s*$/m)?.[1]?.trim().replace(/^["']|["']$/g, "");
-      if (!nameField || nameField !== name) {
-        errors.push("Skill " + name + ": missing or mismatched SKILL.md frontmatter name");
+      const body = fs.readFileSync(filename, "utf8");
+      const frontmatter = body.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+      const skillName = frontmatter?.[1].match(/^name:\s*(.+)\s*$/m)?.[1]?.trim().replace(/^["']|["']$/g, "");
+      if (skillName !== name) errors.push("Skill has missing/mismatched frontmatter name: " + name);
+    } catch (e) { errors.push("SKILL.md not readable for " + name + ": " + e.message); }
+  }
+  for (const [name, skill] of entries) {
+    if (!installed.includes(name)) errors.push("Skill missing installed folder: " + name);
+    if (!routes.has(skill.route)) errors.push("Unknown skill route: " + name);
+    if (!categoryNames.has(skill.category)) errors.push("Unknown skill category: " + name);
+    if (!branchNames.has(skill.branch)) errors.push("Unknown skill branch: " + name);
+    if (typeof skill.purpose !== "string" || skill.purpose.length < 12) errors.push("Missing skill purpose: " + name);
+  }
+  if (skills["remotion-best-practices"]?.route !== "remotion-default" ||
+      entries.filter(([,skill]) => skill.route === "remotion-default").length !== 1) {
+    errors.push("Remotion must be the only default engine for dated lessons");
+  }
+  if (skills["hyperframes"]?.route !== "hyperframes-only") errors.push("HyperFrames must remain opt-in");
+  const requiredSteps = ["effects","layout","captions","audio","branding","promotion","export"];
+  for (const step of requiredSteps) {
+    const variants = catalog.recipes[step];
+    if (!variants) { errors.push("Missing functional recipe: " + step); continue; }
+    for (const branch of branchNames) {
+      const recipe = variants[branch];
+      if (!recipe || !Object.prototype.hasOwnProperty.call(recipe,"owner")) {
+        errors.push("Missing recipe branch: " + step + "/" + branch);
+        continue;
       }
-    } catch (e) {
-      errors.push("Skill " + name + ": cannot read SKILL.md (" + e.message + ")");
+      const owner = recipe.owner;
+      if (owner !== null && !skills[owner]) errors.push("Unknown recipe owner: " + step + "/" + branch + "/" + owner);
+      if (owner !== null && branch === "lesson" && skills[owner]?.route === "hyperframes-only") {
+        errors.push("Cannot route a HyperFrames owner to a lesson: " + step);
+      }
+      if (!Array.isArray(recipe.helpers) && recipe.helpers !== undefined) errors.push("Invalid helpers: " + step + "/" + branch);
+      for (const helper of recipe.helpers ?? []) {
+        if (!skills[helper]) errors.push("Unknown recipe helper: " + step + "/" + helper);
+        if (branch === "lesson" && skills[helper]?.route === "hyperframes-only") errors.push("HyperFrames helper in lesson: " + step + "/" + helper);
+      }
+      if (typeof recipe.notes !== "string" || recipe.notes.length < 15) errors.push("Missing recipe notes: " + step + "/" + branch);
     }
-  }
-  for (const name of found.keys()) {
-    if (!installed.has(name)) errors.push("content/SKILLS.md: skill folder not found: " + name);
-  }
-  if (found.get("remotion-best-practices") !== "remotion-default" ||
-      [...found.values()].filter((route) => route === "remotion-default").length !== 1) {
-    errors.push("content/SKILLS.md: only remotion-best-practices may be the default renderer skill");
-  }
-  if (found.get("hyperframes") !== "hyperframes-only") {
-    errors.push("content/SKILLS.md: HyperFrames entry point must remain explicitly opt-in");
   }
   return errors;
 }
