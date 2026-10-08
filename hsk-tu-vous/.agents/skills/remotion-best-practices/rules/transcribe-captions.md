@@ -7,6 +7,8 @@ metadata:
 
 # Transcribing audio
 
+> **HSK AI override:** Do **not** install Whisper, download transcription models or regenerate cue timestamps for dated HSK lessons. Only approved provider-exported word-level VTT/SRT is allowed; see `content/voice-profile.json` and `content/WORKFLOW.md`. The example below applies to unrelated Remotion projects.
+
 To transcribe audio to generate captions in Remotion, you can use the [`transcribe()`](https://www.remotion.dev/docs/install-whisper-cpp/transcribe) function from the [`@remotion/install-whisper-cpp`](https://www.remotion.dev/docs/install-whisper-cpp) package.
 
 ## Prerequisites
