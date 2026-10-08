@@ -154,7 +154,14 @@ export function validateConsistency(root = projectRoot) {
         if (!filename || path.isAbsolute(filename) || filename.includes("..") || !filename.startsWith("episodes/")) {
           errors.push(`content/calendar.json: invalid episode path for ${item.id}`);
         } else {
-          readJson(root, path.posix.join("content", filename), errors);
+          const planned = readJson(root, path.posix.join("content", filename), errors);
+          if (planned && cta?.sourcePolicy?.ctaFreeFromDate &&
+              item.date >= cta.sourcePolicy.ctaFreeFromDate &&
+              (Object.hasOwn(planned, "cta") ||
+               Object.hasOwn(planned, "ctaExperiment") ||
+               planned.scenes?.some((scene) => scene.kind === "cta"))) {
+            errors.push(`content/${filename}: future canonical lesson must be CTA-free; use cta-lab.json`);
+          }
         }
       }
     }
