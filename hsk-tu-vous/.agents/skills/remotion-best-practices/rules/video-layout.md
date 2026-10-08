@@ -7,6 +7,8 @@ metadata:
 
 # Video layout
 
+> **HSK AI override:** Use this file for general principles only. Exact inset, type size and caption positions live in `content/visual-system.json` and the open-stage composition is defined in `content/EDITING_SPEC.md`. Do not install a second card column or add generic panel layouts because a snippet below suggests one.
+
 Videos are watched differently than web pages are read. Design for quick understanding from the full frame, not for a dense UI that rewards close inspection.
 
 ## Start from the frame
