@@ -3,6 +3,21 @@ import { getPlatformCtaStatus } from "./platform-cta.mjs";
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
+/** Prevent accidentally reintroducing inline CTA into canonical future lesson files. */
+export function assertCanonicalLessonSource(episode, lab) {
+  const from = lab?.sourcePolicy?.ctaFreeFromDate;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(from ?? ""))
+    throw new Error("CTA Lab sourcePolicy.ctaFreeFromDate must be YYYY-MM-DD.");
+  if (episode.date < from) return;
+  if (episode.cta !== undefined || episode.ctaExperiment !== undefined ||
+      episode.scenes?.some((scene) => scene.kind === "cta")) {
+    throw new Error(
+      "Canonical lesson " + episode.id + " must not embed CTA text/scene/experiment. " +
+      "Use the central content/cta-lab.json and assemble only in the working copy.",
+    );
+  }
+}
+
 /**
  * Combine a CTA-free plan with the single canonical CTA Lab at the moment a
  * working episode is materialized. No canonical lesson or ledger is mutated.
