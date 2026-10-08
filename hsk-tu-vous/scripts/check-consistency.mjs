@@ -61,8 +61,67 @@ export function findDuplicatedValues(text, settings) {
   return errors;
 }
 
-export function validateConsistency(root = projectRoot) {
+
+export function validateSkillRegistry(root = projectRoot) {
   const errors = [];
+  const registryFile = asPath(root, "content/SKILLS.md");
+  const skillsDir = asPath(root, ".agents/skills");
+  let markdown;
+  let directories;
+  try {
+    markdown = fs.readFileSync(registryFile, "utf8");
+    directories = fs.readdirSync(skillsDir, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name);
+  } catch (e) {
+    return ["Skill registry or local skill directory is missing: " + e.message];
+  }
+
+  const section = markdown.split("## Registered skills")[1]?.split("## Onboarding")[0];
+  if (!section) return ["content/SKILLS.md: missing registered skill table"];
+
+  const found = new Map();
+  const allowedRoutes = new Set(["remotion-default", "conditional", "hyperframes-only"]);
+  for (const line of section.split("\n")) {
+    const match = line.match(/^\|\s*\x60([a-z0-9-]+)\x60\s*\|\s*\x60([a-z-]+)\x60\s*\|\s*(.+)\s*\|$/);
+    if (!match) continue;
+    const [, name, route, description] = match;
+    if (found.has(name)) errors.push("content/SKILLS.md: duplicate skill route for " + name);
+    found.set(name, route);
+    if (!allowedRoutes.has(route)) errors.push("content/SKILLS.md: unknown route " + route + " for " + name);
+    if (description.trim().length < 20) errors.push("content/SKILLS.md: missing actionable routing for " + name);
+  }
+
+  const installed = new Set(directories);
+  for (const name of directories) {
+    if (!found.has(name)) errors.push("content/SKILLS.md: unregistered installed skill " + name);
+    const file = path.join(skillsDir, name, "SKILL.md");
+    try {
+      const text = fs.readFileSync(file, "utf8");
+      const frontmatter = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+      const nameField = frontmatter?.[1].match(/^name:\s*(.+)\s*$/m)?.[1]?.trim().replace(/^["']|["']$/g, "");
+      if (!nameField || nameField !== name) {
+        errors.push("Skill " + name + ": missing or mismatched SKILL.md frontmatter name");
+      }
+    } catch (e) {
+      errors.push("Skill " + name + ": cannot read SKILL.md (" + e.message + ")");
+    }
+  }
+  for (const name of found.keys()) {
+    if (!installed.has(name)) errors.push("content/SKILLS.md: skill folder not found: " + name);
+  }
+  if (found.get("remotion-best-practices") !== "remotion-default" ||
+      [...found.values()].filter((route) => route === "remotion-default").length !== 1) {
+    errors.push("content/SKILLS.md: only remotion-best-practices may be the default renderer skill");
+  }
+  if (found.get("hyperframes") !== "hyperframes-only") {
+    errors.push("content/SKILLS.md: HyperFrames entry point must remain explicitly opt-in");
+  }
+  return errors;
+}
+
+export function validateConsistency(root = projectRoot) {
+  const errors = validateSkillRegistry(root);
   const calendar = readJson(root, "content/calendar.json", errors);
   const voice = readJson(root, "content/voice-profile.json", errors);
   const cta = readJson(root, "content/cta-lab.json", errors);
@@ -134,6 +193,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     console.error("Consistency check failed:\n" + errors.map((e) => " - " + e).join("\n"));
     process.exitCode = 1;
   } else {
-    console.log("Consistency check passed: active docs contain no duplicated canonical voice/CTA values; calendar and configuration references are readable.");
+    console.log("Consistency check passed: canonical settings, calendar and all registered skill routes are consistent.");
   }
 }
