@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import { fileURLToPath } from "node:url";
+import { validatePlatformCtaConfig } from "./platform-cta.mjs";
 
 export const CTA_LAB_PATH = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -101,6 +102,8 @@ export function getActiveCtaCorrections(lab, { episodeId, formatId } = {}) {
 }
 
 function validateLab(lab) {
+  const platformErrors = validatePlatformCtaConfig(lab);
+  if (platformErrors.length) throw new Error("Invalid platform CTA configuration: " + platformErrors.join("; "));
   if (
     lab.version !== 1 ||
     !Number.isSafeInteger(lab.revision) ||
