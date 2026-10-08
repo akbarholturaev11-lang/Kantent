@@ -18,6 +18,8 @@ Open this `hsk-tu-vous/` directory in your coding agent. The local MCP server is
 npm run mcp
 ```
 
+A single owner request **«Бугунги видеони тайёрла»** routes through MCP `prepare_today_video`. It first checks the calendar-local date and, when today has no entry, takes the nearest future **planned** entry while disclosing its real date. Explicit YYYY-MM-DD requests remain strict. As before, the TTS website requires agent browser automation and might block on login/CAPTCHA; the tool may return a continuation step rather than a completed MP4. The video review package is the stop point: publication still requires exact-preview approval.
+
 Typical tasks: list dates, read a dated production plan, prepare a video, inspect its review package, and explicitly approve a final publication preview. See `content/WORKFLOW.md` for the process and real external blockers.
 
 ## Where each fact lives
