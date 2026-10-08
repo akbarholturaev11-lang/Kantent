@@ -1,70 +1,47 @@
-# HSK AI: процесс подготовки видео
+# HSK AI video production — operating procedure
 
-## Прежде чем продолжить в любом чате
+This file describes **the sequence of operations**, not the values of production settings. Start with `AGENTS.md` and `AI_RULES.md`. Read current values from the canonical files listed in `AGENTS.md`; never substitute remembered dates, voice profiles or CTA wording.
 
-Прочитайте корневые AGENTS.md, AI_RULES.md и PROJECT_MEMORY.md. Календарь content/calendar.json — единственный источник дат и episode ID. Голосовые настройки берутся только из content/voice-profile.json.
+## 1. Resolve the requested episode
 
-## Изменение правил
+1. Resolve relative dates in the timezone defined in `content/calendar.json`.
+2. Use `list_planned_dates` and `get_production_plan`, or read the calendar/episode JSON directly.
+3. When no entry exists for the requested date, report that explicitly and show the next planned entry; do not silently switch to another date or invent a video.
+4. Read the current voice profile and Hook/CTA Lab active corrections before drafting.
 
-Если владелец меняет существующее правило, не добавляйте новое рядом со старым. Сначала обновите активное правило в `AI_RULES.md`, затем в той же задаче найдите и удалите/исправьте старую противоречащую формулировку во всех активных docs/config/plans. Обновите `PROJECT_MEMORY.md` как текущий снимок состояния. Старые значения допустимы только в исторических Hook/CTA/analytics/approval/publication записях и не считаются активными. Перед завершением выполните consistency sweep: активные источники должны описывать одну и ту же текущую политику.
+## 2. Prepare the plan
 
-### Как выполнять запрос «сделай сегодняшнее видео»
+1. Check the language examples against trustworthy references and record dated evidence. The calendar's reference facts are not independent verification.
+2. Apply active Hook Lab rules. Record a dated hypothesis and one dominant opening pattern, without inventing audience-performance results.
+3. Apply the current `content/cta-lab.json` offer and active CTA corrections. Register the episode-specific snapshot; never copy a superseded CTA into a new episode.
+4. Finish the narration, relevant Chinese characters/pinyin/meaning, scene plan, synced visual beats, subtitles, and post text before voice generation.
+5. Use the spec/schema and design token sources linked in `AGENTS.md`. An episode-level change affects its working copy; do not rewrite canonical published history.
 
-Сначала определите сегодняшнюю дату в `Asia/Shanghai`, затем сверьте её с `list_planned_dates`.
+## 3. Generate and import speech
 
-- Если даты нет в календаре, не сочиняйте ролик и не переключайтесь молча на следующую дату. Скажите, что на запрошенную дату плана нет, назовите ближайшую следующую дату и её тему, и прямо укажите, что рендер не выполнялся. Не спрашивайте «какое видео вы имеете в виду?», если дата запроса понятна.
-- Если дата есть, проверьте тему и статус голоса, затем продолжайте производство до готового review-пакета. Не останавливайтесь после показа плана и не ждите, пока владелец вручную сделает промежуточные шаги.
-- Пока `content/voice-profile.json` показывает `pending-owner-approval`, можно подготовить только пример на 2026-09-28. Это единственное первичное решение о голосе на всю серию, а не вопрос перед каждым видео. Если владелец ясным текстом закрепляет выбранный голос за серией, зафиксируйте это один раз; после этого никогда не просите повторное подтверждение на отдельные даты.
-- После закрепления голоса для каждой другой даты нужны MP3 и пословные VTT/SRT, созданные именно по текущему тексту этой серии. Не переносите аудио или тайминги с 2026-09-28 на другой сценарий.
-- Не смешивайте однократное подтверждение голоса и подтверждение точного preview конкретной публикации. Публикация выполняется через Zernio только после второго решения.
+1. Check `content/voice-profile.json`. Reuse its approved configuration; a new voice/provider decision requires the owner's separate authorization and new sample.
+2. Prepare the exact script as the dated `tts-input.txt`.
+3. The agent—not the owner—uses its available browser automation to operate the approved website, export audio and word-level subtitle cues, and save them in the matching `review/<episode-id>/incoming/` directory.
+4. Import the exact matching audio and VTT/SRT through `import_voice_artifacts`. Validate script fingerprint, cue granularity, start/end timestamps and duration.
+5. Stop only for a real external blocker (login, CAPTCHA, permission gate, missing approved voice, missing export) or failed validation. Never change providers silently and never request routine manual file handling from the owner.
 
-Пример ясного ответа, когда дата отсутствует: «Сегодня 2026-09-29 по Asia/Shanghai. На эту дату ролика в календаре нет; следующая тема — 2026-09-30, “Как спросить имя: 你叫什么名字？”. Я не переключал дату и не запускал рендер. MP3 от 28 сентября относится к примеру, а не к тексту на 30 сентября».
+## 4. Render and validate
 
-## Первый и единственный выбор голоса
+1. Run the existing Remotion renderer on the dated working copy.
+2. Build the review package with the rendered MP4, baked-in subtitles, sidecar SRT, episode snapshot, post copy and status metadata.
+3. Inspect speech/cue alignment, the last spoken phrase, tone-marked pinyin, visual relevance, shot transitions, safe areas, music/effects and on-screen readability against `content/EDITING_SPEC.md` and `content/visual-system.json`.
+4. A narration edit invalidates imported speech/timing and all downstream media; a visual or packaging edit invalidates the video, post preview and approval. Re-render and re-review before presenting as ready.
 
-Пробный MP3 лежит в review/ni-nin-nimen-20260928/incoming/TTSOL-ru-RU-Dmitry-20260928-140209.mp3. Владелец выбрал Dmitry – RU как единый голос HSK AI на всю серию; решение хранится в `content/voice-profile.json`. После фиксации этого решения больше не задавайте вопрос о голосе перед очередной датой.
+## 5. Preview, approval and publishing
 
-Закреплённые настройки: text-to-speech.online, Russian (ru-RU), мужской Dmitry – RU, скорость 0%, высота тона 0%, MP3. Агент сам выбирает и проверяет те же параметры на сайте при каждом запуске и сохраняет экспорт в `review/<id>/incoming/`. Пин и интеграция не подтверждают владельца файла автоматически: MP3 не содержит проверяемого доказательства голоса. Если поставщик, голос или настройки изменились либо стали недоступны, остановитесь и спросите владельца. Не подставляйте другой голос.
+1. Resolve eligible accounts and platform-specific requirements through the currently authorized publishing integration specified in `AI_RULES.md`.
+2. Present the **actual** finished video, exact accounts, captions/hashtags, disclosures, and immediate/scheduled posting time in the configured timezone.
+3. Wait for explicit owner approval of **that specific preview**. Production authorization or voice approval is not publishing consent.
+4. Only then run the permitted publish/schedule action through the authorized integration and store the returned IDs, statuses and links. Never infer success from an ambiguous tool result or retry without checking.
+5. Collect later metrics only from verifiable owner/platform readbacks; do not fabricate engagement outcomes.
 
-### Обязательное автономное выполнение
+## Rule changes and handoffs
 
-- Ясная команда владельца подготовить видео разрешает закончить все production-этапы вплоть до готового пакета на проверку. Существующий hook, CTA, voice profile и design rules применяются автоматически; не задавайте рутинных вопросов и не запрашивайте отдельного согласования каждого этапа.
-- Для озвучки агент сам открывает `text-to-speech.online` через доступную browser/computer-use автоматизацию, вставляет точный текст из `review/<id>/tts-input.txt`, проверяет профиль Dmitry – RU / ru-RU / male / 0% / 0% / MP3, генерирует аудио и скачивает MP3 плюс word-level VTT (предпочтительно) или SRT в `review/<id>/incoming/`.
-- Затем агент сам вызывает импорт, Remotion render, проверяет синхронность, длительность и итоговые файлы, исправляет доступные локальные проблемы и возвращает review-пакет. `generate_voice` — подготовительный шаг; после него работа продолжается автоматически, это не передача задачи владельцу.
-- Не просите владельца нажимать кнопки, сохранять/переименовывать/перемещать экспорты или повторять команды MCP. Обращайтесь за участием владельца только если сайт предъявил реальный барьер (например, вход в аккаунт, CAPTCHA, permission prompt, недоступный/изменённый утверждённый профиль) либо после render для отдельного решения о review/approval. Не обходите барьер и не заменяйте сервис.
+Rule changes must update the canonical source and remove conflicting active copies in the same task. Follow `AGENTS.md`, run `npm run check:consistency`, and review code references that may depend on the changed setting. Historical experiment/publication snapshots are immutable evidence; do not rewrite them to appear current.
 
-## Постоянные правила серии и порядок производства
-
-- Держите календарь минимум на четыре недели вперёд. Для каждой даты заранее запишите одну проблему начинающего, полезное решение с проверенными китайскими примерами, индивидуальный hook и подробный монтажный план. HSK AI предлагается как следующий шаг обучения через единый CTA; не обещайте непроверенные функции приложения.
-- Hook пишется отдельно под тему до записи голоса и монтажа. Перед этим прочитайте активные правила и поправки Hook Lab и используйте реальные метрики, если они есть. Не просите владельца выбирать hook для обычного ролика.
-- Во всех текущих и будущих видео используйте формулировку CTA из `content/CTA_LAB.md`: попробовать HSK AI → зайти в Instagram-профиль → открыть ссылку → скачать приложение с сайта. Покажите профиль, окно ссылок и сайт на соответствующих словах, выделив нужный ряд/кнопку; каждый beat и переход привяжите в edit plan к VTT. Не просите комментарии или Direct.
-- Голос Dmitry – RU закреплён один раз на всю серию: `text-to-speech.online`, `ru-RU`, male, 0% speed, 0% pitch, MP3. Не спрашивайте подтверждение для каждого эпизода. Голос меняется только по прямому решению владельца и после одного нового образца.
-- Порядок: (1) сверить дату и календарь, (2) проверить источники языковых фактов, (3) прочитать Hook Lab и CTA Lab, (4) подготовить сценарий и hook, (5) расписать кадры/эффекты/субтитры по словам, (6) агент открывает выбранный TTS-сайт, вставляет текст и сам скачивает MP3 + пословный VTT/SRT, (7) импортирует точные файлы этой даты, (8) собирает в Remotion и проверяет синхронность, (9) подготавливает review-пакет, (10) подготавливает Zernio preview и ждёт подтверждение владельца, (11) после ответа «да» загружает MP4 и публикует или ставит его в расписание через Zernio.
-
-## Подготовка даты
-
-1. Вызовите list_planned_dates, затем get_production_plan. Дата в ISO формате, часовой пояс Asia/Shanghai.
-2. Прочитайте `HOOK_LAB.md` и `CTA_LAB.md`, вызовите `get_hook_learning_status` и `get_cta_learning_status`, затем подготовьте полный сценарий, Chinese/pinyin/translation, hook hypothesis/format и монтажный план с конкретными кадрами, UI-элементами, эффектами, переходами и cue-словами. Сохраните только затребованные владельцем редакторские правки через `update_production_plan`; у даты должны быть hookExperiment и неизменный снимок CTA до voice preparation. Не просите владельца выбирать hook/CTA заново.
-3. Если менялась озвучка, подготовьте новый полный голосовой текст и импортируйте новые MP3 плюс word-level captions. Старые тайминги нельзя переносить на изменённый сценарий. Визуальные правки при неизменной речи могут использовать ту же озвучку.
-4. Агент через browser automation сам вставляет `review/<id>/tts-input.txt` в сайт. Использует утверждённый профиль, генерирует речь и скачивает MP3 и word-level VTT (предпочтительно) или SRT в `review/<id>/incoming/`. Не перекладывайте этот шаг на владельца.
-5. Импортируйте оба файла через import_voice_artifacts. Проверка останавливается до монтажа, если формат, длительность или тайминг неверны. Ни аудио, ни текст не отправляются на транскрипционный API.
-6. Соберите 9:16 MP4 через Remotion по `content/EDITING_SPEC.md` и `content/visual-system.json`. Сцена и учебный beat должны меняться на соответствующем слове VTT; MP4 и captions.srt используют одни и те же сгруппированные фразы.
-7. Проверьте, что иллюстрация совпадает с произнесённым человеком/ситуацией и что за ролик использованы только 2–3 стиля ink-титров без подложки. На экране не больше двух слов за раз; captions быстро следуют русской речи, меняют положение по сцене и не остаются всё видео у самого нижнего края. Также проверьте тихую музыку под голосом, эффекты, удержание CTA и длительность 25–35 секунд. В review/<id>/ должны лежать video.mp4, captions.srt, post.md, episode.json и status.json.
-8. До загрузки в Zernio составьте короткие platform-specific captions и хештеги, прочитайте подключённые аккаунты через Zernio и проверьте их состояние. Если аккаунт для Instagram или TikTok не подключён, сообщите о конкретном барьере; если вариантов больше одного, спросите владельца, какой аккаунт выбрать.
-9. Для TikTok вызовите creator info и возьмите допустимый privacy level и обязательные interaction toggles. Поскольку фиксированный CTA рекламирует HSK AI, включите disclosure собственного бренда (`commercialContentType: brand_organic`) и AI-label для синтетической озвучки. Для Instagram укажите, будет ли Reel показываться в ленте и применима ли AI-label к визуалу/видео.
-10. Покажите владельцу сам video.mp4, выбранные аккаунты, точный caption с хештегами для каждой платформы, disclosure/settings и время. Для расписания показывайте точную дату/время в Asia/Shanghai. Спросите: «Video tayyor bo‘ldi. Shu ko‘rinishda Instagram va TikTok’ka hozir joylaymi?» Ответ «ha» разрешает только показанный вариант; без него не загружайте файл в Zernio.
-11. После «ha» вызовите approve_video_package с тем же preview, загрузите MP4 через Zernio media tools/browser upload, затем вызовите posts_create_post. Для немедленной публикации передайте publish_now=true; для расписания передайте точное scheduled_for и timezone=Asia/Shanghai. Запишите полученные post IDs, account, status, время и ссылки через record_zernio_publication. Не повторяйте неоднозначный вызов, пока Zernio не подтвердит, что post не создан.
-12. Метрики вносите примерно через 24 часа и 7 дней после статуса published через record_hook_analytics. Смотрите сравнение через get_hook_learning_status. Для не опубликованного или запланированного поста отмечайте hook как unmeasured; не делайте вывод по ощущениям.
-
-## Файлы и состояние
-
-- content/calendar.json — canonical production dates, cadence and timezone; never hard-code the episode count in workflow docs.
-- content/episodes/<id>.json — canonical Russian scenario.
-- content/voice-profile.json — fixed voice configuration and one-time approval state.
-- review/<id>/episode.json — dated working copy; edits never silently rewrite the canonical plan.
-- review/<id>/incoming/ — MP3 and caption files downloaded by the agent from the owner-selected speech site.
-- review/<id>/video.mp4, captions.srt, post.md, status.json — current review outputs.
-- review/<id>/approval.json — exact owner-approved Zernio preview: platform/account, captions, settings, and timing.
-- review/<id>/publications.json — Zernio post IDs, per-platform status, schedule time, and URL when returned.
-
-No OpenAI/Whisper, ElevenLabs, Gemini, macOS voice fallback, project-stored API key, or database is used. Social account actions use the connected Zernio MCP integration; analytics readbacks are still entered by the owner.
+The current source of episode dates is always `content/calendar.json`. Audio settings are always `content/voice-profile.json`; current CTA wording is always `content/cta-lab.json`.
