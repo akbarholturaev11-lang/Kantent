@@ -150,12 +150,11 @@ const getBeats = (scene: LessonScene): VisualBeat[] => {
   }
 
   if (scene.kind === "cta") {
-    return [
-      { hero: "中文", pinyin: "zhōngwén", meaning: "ПРОСТО • ЛЕГКО", chinese: true },
-      { hero: "HSK AI", meaning: "СКАЧАТЬ • НАЧАТЬ СЕЙЧАС", actionIcon: "app-download" },
-      { hero: "HSK", meaning: "В КОММЕНТАРИИ", actionIcon: "comment" },
-      { hero: "ДИРЕКТ", meaning: "ССЫЛКА НА HSK AI", actionIcon: "direct-message" },
-    ];
+    // Fail closed. The current CTA has a registered, word-synced visual sequence.
+    // Never fabricate fallback comment/DM instructions or unapproved CTA artwork.
+    throw new Error(
+      "CTA scene requires explicit current visualBeats from the approved CTA Lab.",
+    );
   }
 
   if (card) {
