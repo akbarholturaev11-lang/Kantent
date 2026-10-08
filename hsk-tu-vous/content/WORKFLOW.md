@@ -5,7 +5,7 @@ This file describes **the sequence of operations**, not the values of production
 ## 1. Resolve the requested episode
 
 1. Resolve relative dates in the timezone defined in `content/calendar.json`.
-2. Use `list_planned_dates` and `get_production_plan`, or read the calendar/episode JSON directly.
+2. Use `list_planned_dates` and `get_production_plan`. New `content/episodes/*.json` source lessons deliberately exclude CTA. The plan/draft loader runs `composeLessonCta` against the currently approved `content/cta-lab.json` template, creating the **working** CTA snapshot. If you inspect raw lesson JSON directly, do not treat a missing CTA as a missing lesson.
 3. **Owner-approved relative command:** for exactly «Бугунги видеони тайёрла» / "prepare today's video", use the calendar's timezone and the MCP `prepare_today_video` tool. If today has no entry, automatically select the **nearest future** entry with `status: planned`, disclose both dates and keep the episode's original calendar date/ID. Never rename the next episode to today, or select an older episode. If no future planned entry exists, stop and report that there is nothing to prepare.
 4. **Explicit dates remain strict:** if the owner specifies a particular YYYY-MM-DD, use that exact date; if absent, report it rather than substituting another date. For requests other than the approved "today's video" command, do not silently change dates.
 5. Read the current voice profile and Hook/CTA Lab active corrections before drafting.
