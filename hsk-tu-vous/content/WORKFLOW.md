@@ -14,7 +14,7 @@ This file describes **the sequence of operations**, not the values of production
 
 1. Check the language examples against trustworthy references and record dated evidence. The calendar's reference facts are not independent verification.
 2. Apply active Hook Lab rules. Record a dated hypothesis and one dominant opening pattern, without inventing audience-performance results.
-3. Apply the current `content/cta-lab.json` offer and active CTA corrections. Register the episode-specific snapshot; never copy a superseded CTA into a new episode.
+3. Read the single `content/cta-lab.json` registry for the requested **platform**. Instagram refers to `offer.canonicalRussian`; TikTok/YouTube are independent variants and remain unavailable while `pending-owner-configuration`. Call `get_platform_cta_status`; never copy Instagram CTA to another platform, promise an unverified keyword DM, or invent a platform link. For an approved variant, register a separate episode/platform CTA snapshot and prepare matching platform-specific voice and word-level cues. Preserve old registrations and do not claim that three platform exports already exist. Then apply active CTA corrections for that platform.
 4. Finish the narration, relevant Chinese characters/pinyin/meaning, scene plan, synced visual beats, subtitles, and post text before voice generation.
 5. Use the spec/schema and design token sources linked in `AGENTS.md`. An episode-level change affects its working copy; do not rewrite canonical published history.
 
