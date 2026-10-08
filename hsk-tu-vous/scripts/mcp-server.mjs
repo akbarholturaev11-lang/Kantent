@@ -4,6 +4,7 @@ import { spawn } from "node:child_process";
 import { McpServer } from "@modelcontextprotocol/server";
 import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { recommendSkills } from "./skill-router.mjs";
+import { resolveTodayVideo } from "./resolve-production-date.mjs";
 import * as z from "zod/v4";
 import {
   CALENDAR_PATH,
@@ -51,7 +52,7 @@ const createServer = () => {
     { name: "hsk-ai-content", version: "1.0.0" },
     {
       instructions:
-        "Для создания или редактирования видео сначала вызывайте recommend_skills, затем читайте выбранные SKILL.md и текущие правила из content/SKILLS.md. Не запускайте HyperFrames для обычного HSK-урока и не меняйте движок или провайдера без разрешения владельца. Работайте по AGENTS.md и AI_RULES.md. До hook edits читайте content/HOOK_LAB.md и get_hook_learning_status; пишите отдельный topic-specific hook до производства, сохраняйте точные слова владельца через record_hook_correction и не выдумывайте результаты без platform readback. До CTA edits читайте content/CTA_LAB.md и get_cta_learning_status; используйте единый CTA серии, сохраняйте точные слова владельца через record_cta_correction, регистрируйте датированный неизменный снимок до voice/render. Используйте только закреплённый профиль text-to-speech.online из content/voice-profile.json, не спрашивайте подтверждение для каждого эпизода. Не вызывайте OpenAI/Whisper, ElevenLabs, Gemini или другие TTS API. Импортируйте MP3 и word-timed SRT/VTT, проверьте burned-in captions и соберите Remotion-пакет. Публикуйте только через подключённый Zernio MCP и только после явного подтверждения владельца финального preview с точным роликом, аккаунтом, caption/xeshteg, disclosure и временем. Ограничьте публикацию Instagram/TikTok; не отправляйте DM.",
+        "На команду «Бугунги видеони тайёрла» сначала вызывайте prepare_today_video; если на сегодня нет слота, инструмент выберет ближайший следующий planned по timezone календаря и сообщит дату. Явно названная дата обрабатывается строго без подмены. Для создания или редактирования видео сначала вызывайте recommend_skills, затем читайте выбранные SKILL.md и текущие правила из content/SKILLS.md. Не запускайте HyperFrames для обычного HSK-урока и не меняйте движок или провайдера без разрешения владельца. Работайте по AGENTS.md и AI_RULES.md. До hook edits читайте content/HOOK_LAB.md и get_hook_learning_status; пишите отдельный topic-specific hook до производства, сохраняйте точные слова владельца через record_hook_correction и не выдумывайте результаты без platform readback. До CTA edits читайте content/CTA_LAB.md и get_cta_learning_status; используйте единый CTA серии, сохраняйте точные слова владельца через record_cta_correction, регистрируйте датированный неизменный снимок до voice/render. Используйте только закреплённый профиль text-to-speech.online из content/voice-profile.json, не спрашивайте подтверждение для каждого эпизода. Не вызывайте OpenAI/Whisper, ElevenLabs, Gemini или другие TTS API. Импортируйте MP3 и word-timed SRT/VTT, проверьте burned-in captions и соберите Remotion-пакет. Публикуйте только через подключённый Zernio MCP и только после явного подтверждения владельца финального preview с точным роликом, аккаунтом, caption/xeshteg, disclosure и временем. Ограничьте публикацию Instagram/TikTok; не отправляйте DM.",
     },
   );
 
@@ -704,16 +705,10 @@ const createServer = () => {
       }),
   );
 
-  server.registerTool(
-    "prepare_video_for_date",
-    {
-      title: "Prepare complete video package for a date",
-      description:
-        "Готовит review-пакет для даты по единому профилю text-to-speech.online. Если голосовых файлов нет, агент должен сам продолжить через browser automation и скачать MP3+word-level SRT/VTT; не просите владельца экспортировать/переносить файлы. Затем импортируйте, соберите и проверьте Remotion-пакет 25–35 секунд. Ничего не публикуется.",
-      inputSchema: z.object({ date: dateSchema }),
-    },
-    async ({ date }) =>
-      withToolErrors(async () => {
+
+  // Same exact-date preparation routine powers explicit and relative commands.
+  // TTS browser work remains an explicit next-agent action, never a fake success.
+  async function prepareReviewForDate(date) {
         const { item, episode } = await currentEpisode(date);
         const { item: runItem } = await ensureRunCopy(date);
         const folder = reviewDir(item.id);
@@ -775,6 +770,44 @@ const createServer = () => {
         throw new Error(
           "Неподдерживаемый голосовой провайдер. По правилам HSK AI можно использовать только профиль text-to-speech.online.",
         );
+  }
+
+  server.registerTool(
+    "prepare_video_for_date",
+    {
+      title: "Prepare complete video package for a date",
+      description:
+        "Готовит review-пакет для даты по единому профилю text-to-speech.online. Если голосовых файлов нет, агент должен сам продолжить через browser automation и скачать MP3+word-level SRT/VTT; не просите владельца экспортировать/переносить файлы. Затем импортируйте, соберите и проверьте Remotion-пакет 25–35 секунд. Ничего не публикуется.",
+      inputSchema: z.object({ date: dateSchema }),
+    },
+    async ({ date }) => withToolErrors(() => prepareReviewForDate(date)),
+  );
+
+  server.registerTool(
+    "prepare_today_video",
+    {
+      title: "Prepare today's HSK video or the next planned episode",
+      description:
+        "For a request such as «Бугунги видеони тайёрла»: resolve the calendar-local date. Use today's episode when present; otherwise select the nearest FUTURE planned entry. Then begin the existing review-package workflow. Clearly report any fallback date. Do not publish or claim video completion before voice artifacts and a render exist.",
+      inputSchema: z.object({}),
+    },
+    async () =>
+      withToolErrors(async () => {
+        const resolved = resolveTodayVideo(await readJson(CALENDAR_PATH));
+        const prepared = await prepareReviewForDate(resolved.selectedDate);
+        return {
+          ...prepared,
+          requestedDate: resolved.requestedDate,
+          selectedDate: resolved.selectedDate,
+          selection: resolved.selection,
+          selectedTopic: resolved.topic,
+          timezone: resolved.timezone,
+          dateNotice:
+            resolved.selection === "today"
+              ? "Today's calendar episode was selected."
+              : `No episode for ${resolved.requestedDate}. Automatically selected the next planned video for ${resolved.selectedDate}.`,
+          publishing: "manual-review-required; nothing was published",
+        };
       }),
   );
 
