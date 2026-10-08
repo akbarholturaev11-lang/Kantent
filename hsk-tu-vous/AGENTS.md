@@ -18,7 +18,8 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Episode schema and invalidation | `content/EPISODE_SCHEMA.md` |
 | Runtime architecture, limitations and known technical gotchas | `PROJECT_MEMORY.md` |
 | Developer startup commands | `README.md` |
-| Local skills routing | `content/SKILLS.md` |
+| Installed skill inventory, functional categories and per-branch owners | `content/skill-catalog.json` |
+| Skill selection principles and precedence | `content/SKILLS.md` |
 
 ## Automatic rule categorization
 
@@ -32,7 +33,7 @@ After any rule change, run `npm run check:consistency` from this project directo
 
 ## Skill selection at the moment of work
 
-Before creating, changing, rendering or exporting any video, invoke the local MCP `recommend_skills` tool with the actual user request and the existing project's engine (when known). Read only the recommended Skill's `SKILL.md` and relevant references. If the MCP tool is unavailable, follow the decision hierarchy in `content/SKILLS.md` manually; do not blindly trust a Skill frontmatter claim. A recommendation is advisory: it does not install a package, approve an engine migration, replace a voice, or authorize social publishing. If the tool returns `clarify` or `approval-required`, stop for the missing decision instead of silently choosing a framework.
+Before creating, changing, rendering or exporting any video, invoke the local MCP `recommend_skills` tool with the actual user request and the existing project's engine (when known). Read the owning Skill's `SKILL.md` and only the recommended phase references; helpers are optional and must be task-relevant. The sole category/branch inventory is `content/skill-catalog.json`. If the MCP tool is unavailable, follow the decision hierarchy in `content/SKILLS.md` manually; do not blindly trust a Skill frontmatter claim. A recommendation is advisory: it does not install a package, approve an engine migration, replace a voice, or authorize social publishing. If the tool returns `clarify` or `approval-required`, stop for the missing decision instead of silently choosing a framework.
 
 ## Operating boundaries
 
