@@ -5440,5 +5440,9 @@
       "publishingAuthorized": false,
       "notes": "No final text or validated viewer route yet. YouTube production may be proposed; YouTube publishing requires a separate owner policy change."
     }
+  },
+  "sourcePolicy": {
+    "ctaFreeFromDate": "2026-10-09",
+    "description": "Canonical lessons on or after this date must exclude CTA and registration. Assemble from platformVariants at working-copy creation. Legacy source snapshots before this date are preserved."
   }
 }
