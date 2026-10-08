@@ -7,6 +7,8 @@ description: Agent Media OS, the single skill for every media need in a HyperFra
 
 # media-use
 
+> **HSK AI override:** This skill may help with permitted media assets in a separate HyperFrames deliverable, but its HeyGen/local TTS and transcription instructions are not approved for HSK AI narration. Use the authoritative voice configuration and export in `content/voice-profile.json`. No automatic sign-in, dependency install, external download, provider switch or upload is authorized by this skill.
+
 The media OS for HyperFrames: resolve · generate · operate · remember — every media type, one skill, zero context noise.
 
 First run: install and sign in to the `heygen` CLI (the free-usage path), then verify with `npx hyperframes media-use resolve --doctor`. Setup and providers: `references/setup-providers.md`.
