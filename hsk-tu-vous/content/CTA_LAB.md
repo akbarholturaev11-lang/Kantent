@@ -2,9 +2,7 @@
 
 ## Doimiy CTA yo‘li
 
-Ruscha asosiy matn:
-
-> Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.
+Amaldagi ruscha CTA matni faqat `cta-lab.json` ichidagi `offer.canonicalRussian` maydonida saqlanadi. Bu hujjatda uning ikkinchi nusxasini yozmang; matn o‘zgarsa qiymatni JSON’dan qayta o‘qing.
 
 Tomoshabinning yo‘li bitta va ketma-ket: HSK AI’ni sinab ko‘rish → Instagram profiliga kirish → profildagi havolani ochish → saytdan ilovani yuklab olish. Izohga kalit so‘z yozish, Direct yoki boshqa qo‘shimcha harakatni so‘ramang. Sayt yoki ilova holatini tekshirilgan deb ko‘rsatmang; CTA matni egasi tanlagan yo‘riqdir.
 
