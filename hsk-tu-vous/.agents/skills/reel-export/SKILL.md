@@ -5,6 +5,8 @@ description: Turn any horizontal or square motion video into a 1080 x 1920 Insta
 
 # Reel export
 
+> **HSK AI override:** This standalone converter is for reformatting already-rendered external footage. Do not run it on an existing dated HSK Remotion composition without a dedicated conversion request. The universal y=360..1420 zone below **must not override** `content/visual-system.json` caption/CTA positions. Preserve the existing narration audio (`-map 0:a` when source audio exists); the generic command's silent source (`-map 2:a`) will erase narration. Inspect the actual export at phone size and require a new preview approval before any publishing.
+
 Most motion is built wide. This turns it into a vertical file with a hook on top that the apps accept without washing out the colours.
 
 **Before you start:** read `brand.md` and `MOTION.md` if they exist. If not, run `brand-intake` first, or ask for hex codes, a font and a logo file. Never call a result on-brand without them.
