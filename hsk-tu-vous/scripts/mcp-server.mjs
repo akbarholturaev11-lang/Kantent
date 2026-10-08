@@ -4,6 +4,7 @@ import { spawn } from "node:child_process";
 import { McpServer } from "@modelcontextprotocol/server";
 import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { recommendSkills } from "./skill-router.mjs";
+import { CTA_PLATFORMS, getPlatformCtaStatus } from "./platform-cta.mjs";
 import { resolveTodayVideo } from "./resolve-production-date.mjs";
 import * as z from "zod/v4";
 import {
@@ -857,6 +858,29 @@ const createServer = () => {
   );
 
   server.registerTool(
+    "get_platform_cta_status",
+    {
+      title: "Inspect platform-specific CTA readiness",
+      description:
+        "Read the single canonical CTA Lab for Instagram, TikTok and YouTube. Reports which variant is owner-approved and which is blocked pending final copy, screenshots and verified delivery mechanism. Never sends a DM, publishes, or fabricates a variant.",
+      inputSchema: z.object({
+        platform: z.enum(["instagram", "tiktok", "youtube"]).optional(),
+      }),
+    },
+    async ({ platform }) =>
+      withToolErrors(async () => {
+        const lab = await readCtaLab();
+        return {
+          canonicalSource: "content/cta-lab.json",
+          variants: (platform ? [platform] : CTA_PLATFORMS).map(
+            (name) => getPlatformCtaStatus(lab, name),
+          ),
+          note: "One common lesson; each new platform CTA needs its own registered snapshot and regenerated voice/word-level captions. YouTube publishing is not currently authorized.",
+        };
+      }),
+  );
+
+  server.registerTool(
     "get_cta_learning_status",
     {
       title: "Read CTA rules, corrections and evidence",
@@ -870,6 +894,7 @@ const createServer = () => {
         const result = {
           ...summarizeCtaLab(lab),
           revision: lab.revision,
+          platformVariants: CTA_PLATFORMS.map((name) => getPlatformCtaStatus(lab, name)),
           correctionHistory: lab.corrections,
         };
         if (date) {
