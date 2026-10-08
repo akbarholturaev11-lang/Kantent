@@ -32,7 +32,7 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
     lesson: /дарс|урок|lesson|курс виде|учебн|грамматик|иероглиф|hanzi|pinyin|пиньин|луғат|лугат|словар|слова китай|vocabulary|вокабул/iu,
     hskNumber: /hsk[\s.-]*[1-6](?:\.0)?/iu,
     promo: /promo|промо|реклама|advert|marketing|product launch|launch film|тизер|trailer|трейлер|реклам|продвижен|презентац.*продукт/iu,
-    premium: /premium|премиум|махсус|special|кинематограф|cinematic|brand film|complex|мураккаб|сложн|advanced|продвинут|motion graphic|эффект|эффекты|effect|visual fx/iu,
+    premium: /premium|премиум|махсус|special|кинематограф|cinematic|brand film|complex|мураккаб|сложн|advanced|продвинут|motion graphic/iu,
     video: /video|видео|ролик|reel|shorts?|animation|анимац|монтаж|render|рендер|export|экспорт|яс[ао]|ярат|сделай|создай|create|generate|produce|тайёрла|таерла|тайёр|таёр|собери/iu,
     captions: /caption|subtitle|субтитр|титр|vtt|srt|captions?/iu,
     layout: /layout|жойлаш|располож|композиц|позици|overlap|перекры|экран|screen layout|шрифт|типограф|font size|text size/iu,
