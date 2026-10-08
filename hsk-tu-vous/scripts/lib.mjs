@@ -8,6 +8,7 @@ import {
   groupTimedCaptions,
 } from "./caption-utils.mjs";
 import { readCtaLab, validateCtaEpisode } from "./cta-lab.mjs";
+import { composeLessonCta } from "./episode-cta-assembly.mjs";
 
 export const PROJECT_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -191,7 +192,12 @@ export async function getCalendarItemByDate(date) {
 export async function getPlannedEpisode(date) {
   const item = await getCalendarItemByDate(date);
   const filePath = path.join(PROJECT_ROOT, "content", item.episodeFile);
-  const episode = normalizeEpisode(await readJson(filePath));
+  const lesson = normalizeEpisode(await readJson(filePath));
+  // CTA-free future plans get the current central CTA only when materialized.
+  // Legacy completed/registered plans keep their original version snapshots.
+  const episode = lesson.scenes.some((scene) => scene.kind === "cta")
+    ? lesson
+    : composeLessonCta(lesson, await readCtaLab());
   validateEpisode(episode);
   if (episode.id !== item.id || episode.date !== item.date) {
     throw new Error(
@@ -260,7 +266,11 @@ export async function getEpisode(id, { seed = true } = {}) {
     `${safeId(id)}.json`,
   );
   try {
-    const episode = normalizeEpisode(await readJson(seedPath));
+    const base = normalizeEpisode(await readJson(seedPath));
+    const episode = base.scenes.some((scene) => scene.kind === "cta")
+      ? base
+      : composeLessonCta(base, await readCtaLab());
+    validateEpisode(episode);
     await writeJson(draft, episode);
     return { episode, filePath: draft, isSeed: true };
   } catch (error) {
