@@ -1,0 +1,361 @@
+{
+  "schemaVersion": 1,
+  "description": "Single machine-readable owner for installed skill inventory, functional category and task/engine branches. SKILLS.md explains usage without replicating the registry.",
+  "skills": {
+    "remotion-best-practices": {
+      "category": "engine",
+      "route": "remotion-default",
+      "branch": "lesson",
+      "purpose": "Default renderer for dated HSK lessons"
+    },
+    "hyperframes": {
+      "category": "engine",
+      "route": "hyperframes-only",
+      "branch": "premium",
+      "purpose": "Entry point for standalone HyperFrames video"
+    },
+    "hyperframes-core": {
+      "category": "engine",
+      "route": "hyperframes-only",
+      "branch": "premium",
+      "purpose": "Composition HTML contract"
+    },
+    "hyperframes-cli": {
+      "category": "engine",
+      "route": "hyperframes-only",
+      "branch": "premium",
+      "purpose": "HyperFrames validation render and export"
+    },
+    "general-video": {
+      "category": "engine",
+      "route": "hyperframes-only",
+      "branch": "special",
+      "purpose": "Custom long-form or mixed-media composition"
+    },
+    "heroui-react": {
+      "category": "layout",
+      "route": "conditional",
+      "branch": "lesson",
+      "purpose": "Small UI details; design reference only"
+    },
+    "apple-design": {
+      "category": "layout",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Interaction principles and UI motion reference"
+    },
+    "hyperframes-studio": {
+      "category": "layout",
+      "route": "hyperframes-only",
+      "branch": "premium",
+      "purpose": "HyperFrames scene layout, track grouping and safe zones"
+    },
+    "figma": {
+      "category": "layout",
+      "route": "hyperframes-only",
+      "branch": "special",
+      "purpose": "Import Figma frames/tokens into HyperFrames"
+    },
+    "motion-effects": {
+      "category": "effects",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Standalone isolated HTML seek-safe effects; reference for Remotion"
+    },
+    "hyperframes-animation": {
+      "category": "effects",
+      "route": "hyperframes-only",
+      "branch": "premium",
+      "purpose": "Motion patterns and transitions for HyperFrames"
+    },
+    "hyperframes-keyframes": {
+      "category": "effects",
+      "route": "hyperframes-only",
+      "branch": "premium",
+      "purpose": "Precise transform and seek-safe keyframes"
+    },
+    "hyperframes-registry": {
+      "category": "effects",
+      "route": "hyperframes-only",
+      "branch": "premium",
+      "purpose": "Search and reuse premade motion blocks"
+    },
+    "motion-graphics": {
+      "category": "effects",
+      "route": "hyperframes-only",
+      "branch": "premium",
+      "purpose": "Short standalone non-narrated kinetic motion unit"
+    },
+    "title-sequence-3d": {
+      "category": "effects",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Standalone cinematic 3D opener"
+    },
+    "embedded-captions": {
+      "category": "captions",
+      "route": "hyperframes-only",
+      "branch": "special",
+      "purpose": "Caption/matting workflow for existing talking-head footage only"
+    },
+    "hyperframes-audio": {
+      "category": "audio",
+      "route": "hyperframes-only",
+      "branch": "premium",
+      "purpose": "Mix/duck/mask sound inside HyperFrames; never source narration"
+    },
+    "media-use": {
+      "category": "audio",
+      "route": "hyperframes-only",
+      "branch": "premium",
+      "purpose": "Resolve permitted media in HyperFrames; approved provider overrides"
+    },
+    "music-to-video": {
+      "category": "audio",
+      "route": "hyperframes-only",
+      "branch": "special",
+      "purpose": "Beat-driven music video"
+    },
+    "brand-intake": {
+      "category": "brand",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Owner-requested rebrand; not default brand source"
+    },
+    "hyperframes-creative": {
+      "category": "brand",
+      "route": "hyperframes-only",
+      "branch": "premium",
+      "purpose": "HyperFrames design and storyboard against canonical brand"
+    },
+    "product-launch-video": {
+      "category": "promo",
+      "route": "hyperframes-only",
+      "branch": "premium",
+      "purpose": "Main HyperFrames commercial/product demo workflow"
+    },
+    "apple-launch-film": {
+      "category": "promo",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Apple/Mac-style standalone launch film"
+    },
+    "newsletter-promo": {
+      "category": "promo",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Newsletter issue promotion"
+    },
+    "pr-to-video": {
+      "category": "promo",
+      "route": "hyperframes-only",
+      "branch": "special",
+      "purpose": "GitHub pull request feature-change promo"
+    },
+    "faceless-explainer": {
+      "category": "teaching",
+      "route": "hyperframes-only",
+      "branch": "special",
+      "purpose": "New standalone explainer without footage"
+    },
+    "vox-explainer": {
+      "category": "teaching",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Documentary-style distinct editorial explainer"
+    },
+    "motion-brief-writer": {
+      "category": "teaching",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Write production brief, does not render"
+    },
+    "animated-chart": {
+      "category": "data",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Verified data visualization loop"
+    },
+    "milestone-reveal": {
+      "category": "data",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Verified milestone count animation"
+    },
+    "model-showdown": {
+      "category": "data",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Same-brief fair model comparison"
+    },
+    "talking-head-recut": {
+      "category": "editing",
+      "route": "hyperframes-only",
+      "branch": "special",
+      "purpose": "Graphics over existing speaker video"
+    },
+    "slideshow": {
+      "category": "editing",
+      "route": "hyperframes-only",
+      "branch": "special",
+      "purpose": "Interactive deck, not an MP4"
+    },
+    "loop-cover": {
+      "category": "editing",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Seamless animated GIF cover"
+    },
+    "reel-export": {
+      "category": "export",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Aspect ratio conversion/export QA for existing video"
+    },
+    "remotion-to-hyperframes": {
+      "category": "migration",
+      "route": "hyperframes-only",
+      "branch": "special",
+      "purpose": "Only explicit Remotion-to-HyperFrames migration"
+    }
+  },
+  "recipes": {
+    "effects": {
+      "lesson": {
+        "owner": "remotion-best-practices",
+        "references": [
+          "rules/effects.md",
+          "rules/transitions.md",
+          "rules/timing.md"
+        ],
+        "helpers": [
+          "heroui-react"
+        ],
+        "notes": "Frame-driven transitions and teaching cues; only approved subtle motion; skip glitch, strobe, bright sweeps."
+      },
+      "premium": {
+        "owner": "hyperframes-animation",
+        "helpers": [
+          "hyperframes-keyframes",
+          "hyperframes-registry"
+        ],
+        "notes": "Standalone premium project only. Core entry point hyperframes, source assets and brand from canonical HSK files."
+      },
+      "special": {
+        "owner": "motion-effects",
+        "helpers": [
+          "title-sequence-3d"
+        ],
+        "notes": "Isolated effect/intro only on explicit request, not a renderer switch."
+      }
+    },
+    "layout": {
+      "lesson": {
+        "owner": "remotion-best-practices",
+        "references": [
+          "rules/video-layout.md",
+          "rules/measuring-text.md"
+        ],
+        "helpers": [
+          "heroui-react"
+        ],
+        "notes": "One open center stage; Chinese+pinyin+meaning and captions must not overlap."
+      },
+      "premium": {
+        "owner": "hyperframes-studio",
+        "helpers": [
+          "hyperframes-creative"
+        ],
+        "notes": "HyperFrames timeline grouping and safe areas within brand identity; keep captions readable."
+      },
+      "special": {
+        "owner": "apple-design",
+        "helpers": [
+          "figma"
+        ],
+        "notes": "Apply when Apple-like interaction or Figma design is explicitly requested."
+      }
+    },
+    "captions": {
+      "lesson": {
+        "owner": "remotion-best-practices",
+        "references": [
+          "rules/subtitles.md",
+          "rules/display-captions.md",
+          "rules/video-layout.md"
+        ],
+        "notes": "Use imported approved TTS word-timed captions and content/visual-system.json; IGNORE Whisper, default TikTok highlight colors, and new subtitle dependencies."
+      },
+      "premium": {
+        "owner": "hyperframes-studio",
+        "notes": "Use separate caption track, but canonical brand and approved speech timings still control HSK AI promos."
+      },
+      "special": {
+        "owner": "embedded-captions",
+        "notes": "Only existing talking-head footage when owner explicitly asks and any new transcription/matting service is approved."
+      }
+    },
+    "audio": {
+      "lesson": {
+        "owner": null,
+        "notes": "Only the approved TTS+VTT/SRT importer in content/WORKFLOW.md and voice-profile.json. No third-party TTS/Whisper."
+      },
+      "premium": {
+        "owner": "hyperframes-audio",
+        "helpers": [
+          "media-use"
+        ],
+        "notes": "Mix existing sound safely; media-use does not authorize voice provider change or downloads."
+      },
+      "special": {
+        "owner": "music-to-video",
+        "notes": "Only a music-led standalone edit; not a Mandarin narration workflow."
+      }
+    },
+    "branding": {
+      "lesson": {
+        "owner": null,
+        "notes": "Use canonical content/visual-system.json, content/EDITING_SPEC.md; no brand.md/MOTION.md duplicates."
+      },
+      "premium": {
+        "owner": "hyperframes-creative",
+        "notes": "Read existing HSK tokens; a HyperFrames preset must not override colors, logos, typography."
+      },
+      "special": {
+        "owner": "brand-intake",
+        "notes": "Only after owner explicitly orders a brand reset; update canonical sources instead of creating competing files."
+      }
+    },
+    "promotion": {
+      "lesson": {
+        "owner": "remotion-best-practices",
+        "notes": "Standard low-complexity promo remains Remotion."
+      },
+      "premium": {
+        "owner": "product-launch-video",
+        "helpers": [
+          "hyperframes-animation"
+        ],
+        "notes": "Independent HyperFrames commercial. Respect approved CTA, provider and exact preview approval."
+      },
+      "special": {
+        "owner": "apple-launch-film",
+        "notes": "Only explicitly Apple/Mac launch style. Other special workflows are in the catalog."
+      }
+    },
+    "export": {
+      "lesson": {
+        "owner": "remotion-best-practices",
+        "notes": "Preserve the original spoken audio and caption positions."
+      },
+      "premium": {
+        "owner": "hyperframes-cli",
+        "notes": "Run project-specific validation and render; no automatic publishing."
+      },
+      "special": {
+        "owner": "reel-export",
+        "notes": "For horizontal-to-vertical exports. Preserve existing audio; preview safe areas rather than applying universal y=360-1420."
+      }
+    }
+  }
+}
