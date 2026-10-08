@@ -79,7 +79,7 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
     return recipe.owner;
   };
   const withStages = (engine, branch, workflowName, stageIds, reason, confidence = "high") => {
-    const names = [workflowName].filter(Boolean);
+    const names = (Array.isArray(workflowName) ? workflowName : [workflowName]).filter(Boolean);
     for (const id of stageIds) {
       const owner = stage(id, branch);
       if (owner) names.push(owner);
@@ -101,7 +101,7 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
     : existingEngine === "remotion" ? "remotion"
     : flags.hyper ? "hyperframes"
     : actualLesson ? "remotion"
-    : flags.promo && flags.premium ? "hyperframes"
+    : (flags.promo || flags.effects) && flags.premium ? "hyperframes"
     : "unknown";
 
   const feature = (pattern) => has(t,pattern);
@@ -162,7 +162,7 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
     if (flags.vertical) ids.push("export");
     if (!ids.length) ids.push("layout");
     const main = flags.promo ? "product-launch-video" : flags.effects && !flags.video ? "motion-graphics" : "general-video";
-    return withStages("hyperframes","premium",["hyperframes",main][0],ids,
+    return withStages("hyperframes","premium",["hyperframes",main],ids,
       "Standalone HyperFrames workflow. Read its main creation workflow and requested stage owners.");
   }
   if (flags.promo && flags.video) return withStages("remotion","lesson","remotion-best-practices",
