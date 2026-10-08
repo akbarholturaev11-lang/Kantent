@@ -11,7 +11,7 @@ This file is **not another policy document**. Keep only architecture, current te
 - Visual numeric tokens come from `content/visual-system.json`; shot-level editing rules from `content/EDITING_SPEC.md`.
 - Hook/CTA experiments, corrections and owner-entered analytics reside in their respective `content/*-lab.json` files; explanatory methodology is in the corresponding `*_LAB.md` files. Preserve historical snapshots rather than rewriting past experiment results.
 - The publication integration uses the existing connected social MCP. `mcp-server.mjs` records the approved preview and returned post IDs/status under each episode's review package. It does not store platform credentials or provide direct social-platform API authentication.
-- The available local skills are indexed in `content/SKILLS.md`. HeroUI integrations supply component design references; Remotion stays the video renderer unless a new architecture is explicitly approved.
+- The available local skills and approved hybrid engine-routing policy are indexed in `content/SKILLS.md`. The dated lesson production renderer remains Remotion; standalone special-promo compositions may use HyperFrames without changing the lesson pipeline. HeroUI integrations supply component design references.
 
 ## Known implementation details
 
