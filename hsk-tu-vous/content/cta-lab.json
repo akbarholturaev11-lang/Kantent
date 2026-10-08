@@ -5335,5 +5335,39 @@
     }
   ],
   "readbacks": [],
-  "promotions": []
+  "promotions": [],
+  "platformVariants": {
+    "instagram": {
+      "status": "approved",
+      "copySource": "offer",
+      "visualSource": "approved-episode-snapshot",
+      "deliveryMode": "profile-website-download",
+      "destinationVerified": false,
+      "automationVerified": null,
+      "publishingAuthorized": true,
+      "notes": "Reuses existing owner-approved Instagram offer and registered word-synced visual beats. Never infer a live site/download from the preview."
+    },
+    "tiktok": {
+      "status": "pending-owner-configuration",
+      "copySource": "platform",
+      "canonicalRussian": null,
+      "visualBeats": null,
+      "deliveryMode": null,
+      "destinationVerified": false,
+      "automationVerified": false,
+      "publishingAuthorized": true,
+      "notes": "No final text or automation approved. Keyword-based DM is only an option after the real account workflow is enabled and tested. An intro message is NOT a keyword auto-reply."
+    },
+    "youtube": {
+      "status": "pending-owner-configuration",
+      "copySource": "platform",
+      "canonicalRussian": null,
+      "visualBeats": null,
+      "deliveryMode": null,
+      "destinationVerified": false,
+      "automationVerified": null,
+      "publishingAuthorized": false,
+      "notes": "No final text or validated viewer route yet. YouTube production may be proposed; YouTube publishing requires a separate owner policy change."
+    }
+  }
 }
