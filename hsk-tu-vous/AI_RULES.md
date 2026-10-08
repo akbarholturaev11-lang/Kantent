@@ -44,7 +44,7 @@ Read `AGENTS.md` for the ownership map and migration protocol. In case of confli
 
 ## Visuals, timing and QA
 
-- Use the existing React/Remotion renderer. Apply `content/visual-system.json` for quantitative design values and `content/EDITING_SPEC.md` for transitions, captions, sound and shot composition. The current short-video target is 9:16, 1080×1920 at 25–35 seconds.
+- For dated HSK lesson videos, keep the existing React/Remotion renderer. Separate premium promotions and advanced standalone motion videos may use HyperFrames according to the canonical engine-selection policy in `content/SKILLS.md`; never silently migrate existing lessons. Apply `content/visual-system.json` for quantitative design values and `content/EDITING_SPEC.md` for transitions, captions, sound and shot composition. The current dated lesson target is 9:16, 1080×1920 at 25–35 seconds.
 - Build meaningful synchronized scenes—not a static slideshow. A visual object/person should correspond to the spoken cue. Keep subtitles legible on a phone, with correct word-level timing and no overlap with crucial lesson/CTA content.
 - Use genuine owner-approved product screenshots. Avoid copying third-party branded visuals; source examples and creative inspiration do not authorize infringement or fabricated UI.
 - Narration edits invalidate imported voice and caption timing. Any content/visual change invalidates the render, final publication preview and prior package approval; regenerate and inspect the updated package.
