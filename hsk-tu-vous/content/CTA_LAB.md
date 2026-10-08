@@ -1,14 +1,23 @@
 # CTA laboratoriyasi
 
-## Doimiy CTA yo‘li
+## Markaziy CTA manbasi va platforma variantlari
 
-Amaldagi ruscha CTA matni faqat `cta-lab.json` ichidagi `offer.canonicalRussian` maydonida saqlanadi. Bu hujjatda uning ikkinchi nusxasini yozmang; matn o‘zgarsa qiymatni JSON’dan qayta o‘qing.
+**CTA матни қўлда ҳар бир сценарийга такрор ёзилмайди.** Фақат `content/cta-lab.json` файлда битта CTA registry бор:
 
-Tomoshabinning yo‘li bitta va ketma-ket: HSK AI’ni sinab ko‘rish → Instagram profiliga kirish → profildagi havolani ochish → saytdan ilovani yuklab olish. Izohga kalit so‘z yozish, Direct yoki boshqa qo‘shimcha harakatni so‘ramang. Sayt yoki ilova holatini tekshirilgan deb ko‘rsatmang; CTA matni egasi tanlagan yo‘riqdir.
+- `offer.canonicalRussian` — эгаси аллақачон тасдиқлаган **Instagram** CTA матнининг ягона таҳрирланадиган манбаси.
+- `platformVariants.instagram` — шу матнга `copySource: "offer"` орқали ҳавола қилади; **иккинчи Instagram CTA матни сақланмайди**.
+- `platformVariants.tiktok` — алоҳида TikTok CTA. Матни ва платформавий интерфейс кўриниши кейин эгаси томонидан тасдиқланади. Ҳозир `pending-owner-configuration`.
+- `platformVariants.youtube` — алоҳида YouTube Shorts CTA. Матни ва экран кўриниши кейин белгиланади; `pending-owner-configuration`. YouTube нашри амалдаги нашр қоидаларида ҳали рухсат этилмаган.
 
-Ovoz bilan bir vaqtda uchta egasi yuborgan skrinshotni ko‘rsating: “профиль” deyilganda Instagram profili va havola qatori; “ссылку” deyilganda Instagram havolalar oynasi va HSK AI havolasi; “скачай” deyilganda yuklab olish sayti va yuklab olish tugmasi. Butun skrinshot markaziy sahnada o‘qiladigan bo‘lsin, kerakli joyni esa aniq halqa/yumshoq puls bilan belgilang. Kadrni ovozga moslang; haqiqiy bosish yoki yuklab olish yakunlandi degan taassurot bermang.
+**Бир дарс → 3 вариант қоидаси:** асосий hook/таълим/мисол/бренд бир хил. Фақат CTA овози, CTA саҳнасининг кадрлари/ҳаракатлари ва шу овозга боғлиқ word-level subtitles ҳар бир платформанинг тасдиқланган вариантидан йиғилади. Натижада учта алоҳида MP4 яратиш архитектураси белгиланган; ҳозирча TikTok/YouTube CTA тасдиқланмаган ва платформавий рендерни автоматлаштириш иши тугалланмаган. Уларни «тайёр видео» деб кўрсатманг.
 
-Bu matn va so‘zlarga bog‘langan CTA UI ketma-ketligi butun seriya uchun doimiy standart. Har videoda aynan shu ruscha nusxa va amallar ishlatiladi. CTA o‘zgarishi, boshqa UI ketma-ketligi yoki montaj varianti faqat egasi aniq so‘raganda kiritiladi. Ko‘rsatkichlar hisobot va tahlil uchun; ular CTA’ni avtomatik o‘zgartirmaydi. Egasi o‘zgartirish so‘rasa, yangi qoida barcha keyingi sanalarda amal qiladi, eskisi esa tarixda saqlanadi.
+**Instagram амалдаги рўйхатга олинган CTA:** viewer → Instagram profile → profile link → HSK AI website → download. Эгаси берган Instagram профили, ҳаволалар ва сайт скриншотлари овознинг керакли сўзларига синхронлаштирилади; кўрсатма реал босиш/юклаб олиш амалга ошганини билдирмайди.
+
+**TikTok DM билан адашмаслик:** янги чатга чиқадиган `Введение для чата` матни — **калит сўзга автоматик жавоб эмас**. `HSK` сўзига автоматик DM жўнатиш CTA’си аккаунтда ҳақиқий ишлаши синовдан ўтиб, `automationVerified: true` тасдиқланмагунча тайёр деб белгиланмайди. Шунчаки дастур экрани очилгани бундай тасдиқ эмас. YouTube учун ҳам босиладиган ҳавола йўли текширилмагунча аниқ CTA йўлини ваъда қилманг.
+
+**Нима учун эпизод ичида CTA учрайди?** `content/episodes/*.json` ва `review/<id>/episode.json` даги CTA — рендер, овоз, вақтлар ва версияланган CTA экспериментларига боғланган **сценарий snapshot’и**. Бу таҳрирланадиган иккинчи қоида эмас. CTA манбада янгиланганда мавжуд тасдиқланган/нашр қилинган snapshot’лар ўзгармайди; келгусидаги платформа версияси янги ишчи нусха ва янги CTA registration олади. Календар CTA матнини сақламайди.
+
+**Хавфсизлик:** `get_platform_cta_status` орқали ҳар вариант тайёрлигини текширинг. `pending` ҳолатидаги матнни Instagram вариантдан кўчирманг, сохта авто-DM ёки ҳавола имкониятини тасвирламанг. `scripts/platform-cta.mjs` variant draft функцияси тайёр, аммо TikTok/YouTube учун алоҳида TTS/субтитр/рендер оқими ҳали тўлиқ ишга тушмаган. Барча вариантда ҳам ҳар бир аниқ final preview учун нашрдан олдин эгасининг тасдиғи талаб қилинади.
 
 ## Har yangi chat va CTA tahriridan oldin
 
