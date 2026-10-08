@@ -27,6 +27,12 @@ Choose the video **engine by deliverable**, not by a skill's claim that its own 
 **Quality gate:** Check the actual delivered video for readability on mobile, scene pacing, accurate language and product information, soundtrack/caption synchronization, transitions, export format and platform-safe areas. Choosing HyperFrames does **not** guarantee more views or a better video. Owner approval of the exact final publication preview remains required for either engine.
 
 
+## Runtime skill recommendation
+
+For each new video-creation/edit/render/export request, call the project MCP tool `recommend_skills(task, existingEngine)` **before** opening a Skill. It returns an engine choice, the needed Skill names and paths, confidence, and whether explicit clarification/approval is required. The tool reads this registry, so its output cannot silently recommend an unregistered Skill. Use the recommended Skill only at the relevant stage; do not load all installed Skills. If the recommendation is incomplete or wrong for the job, stop and reconcile it with the owner's instruction and the hybrid selection hierarchy; do not treat the classifier as infallible. The implementation and prompt tests are `scripts/skill-router.mjs` and `scripts/skill-router.test.mjs`.
+
+This MCP tool is available only when the local `hsk-ai-content` MCP server is running and connected. A general chat outside that environment is not guaranteed to invoke it automatically.
+
 ## Registered skills
 
 | Skill | Route | Precise use / exclusion |
