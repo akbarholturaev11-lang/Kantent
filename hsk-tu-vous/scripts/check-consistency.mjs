@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { validatePlatformCtaConfig } from "./platform-cta.mjs";
 
 export const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -146,6 +147,7 @@ export function validateConsistency(root = projectRoot) {
         if (!/^\d{4}-\d{2}-\d{2}$/.test(item.date ?? "") || dates.has(item.date)) {
           errors.push(`content/calendar.json: invalid/duplicate date ${item.date}`);
         }
+        if (Object.hasOwn(item, "cta")) errors.push(`content/calendar.json: CTA must only be defined in cta-lab.json, not calendar item ${item.id}`);
         ids.add(item.id);
         dates.add(item.date);
         const filename = item.episodeFile;
@@ -164,6 +166,7 @@ export function validateConsistency(root = projectRoot) {
   if (!cta?.offer?.canonicalRussian || !cta?.offer?.id) {
     errors.push("content/cta-lab.json: missing canonical offer text/id");
   }
+  if (cta) errors.push(...validatePlatformCtaConfig(cta).map((issue) => `content/cta-lab.json: ${issue}`));
   if (!hook?.policy) errors.push("content/hook-lab.json: missing hook policy");
   if (!visual?.colors || !visual?.motion) errors.push("content/visual-system.json: missing visual tokens");
 
