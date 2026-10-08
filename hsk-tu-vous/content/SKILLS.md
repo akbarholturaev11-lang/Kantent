@@ -1,84 +1,58 @@
-# HSK AI — Skill registry and routing
+# HSK AI — Skills routing guide
 
-**This is the only active registry of installed local skills.** Every folder under `.agents/skills/` must appear exactly once in the table below. `AGENTS.md` points here. The registry describes *when* skills can be loaded; each skill's `SKILL.md` describes its own technique.
+## Single source of truth
 
-## Selection hierarchy
+**`content/skill-catalog.json` is the only active machine-readable inventory.** It assigns every installed `.agents/skills/<name>/SKILL.md` to exactly one functional category, an engine compatibility route, and a main usage branch. It also defines one *owner* and optional *helpers* for each task branch.
 
-1. First read `AGENTS.md` and the canonical project policy. An individual third-party skill cannot supersede HSK AI rules, approved voice/provider, calendar, brand, publishing approval or existing renderer.
-2. For **normal dated HSK AI lessons**, use `remotion-best-practices` as the default. Read only its relevant references (`rules/video-layout.md`, `rules/subtitles.md`, and related audio/timing/transition rules). Use the project's actual Remotion scripts, imported speech cues and visual tokens.
-3. Load a `conditional` skill only when the specific job needs it. Its workflow is advisory and must not install a new framework, require unrelated interview steps or change production policy.
-4. **Never route an existing dated Remotion lesson to a `hyperframes-only` skill** based on wording in its own `SKILL.md`, including a claimed "mandatory entry point". HyperFrames is approved for a separate special-promo/motion deliverable under the hybrid policy below, or an explicitly authorized migration. It must not silently modify the dated Remotion lesson pipeline.
-5. New provider, transcription API, external media download, account action, dependency install, skill update, video publishing or renderer migration always follows the owner's current authorization and the project's security/publishing gates; a skill's instructions alone do not authorize them.
+Do not keep a second skill-by-skill list in this Markdown file. Use `scripts/skill-router.mjs` or `recommend_skills` from the local HSK AI MCP server. Read the returned owner skill and only the references needed for that phase.
 
+## Functional categories
 
-## Hybrid production policy (owner-approved)
+- `engine` — Remotion/HyperFrames composition, runtime and validation.
+- `layout` — composition of elements, safe areas, responsive text and small interface elements.
+- `effects` — animations, transitions, timing, 3D, motion blocks.
+- `captions` — subtitles and caption treatments for existing footage.
+- `audio` — music/SFX mixing and approved media assets.
+- `brand` — design system and approved visual identity.
+- `promo` — product advertisements, announcements and launch films.
+- `teaching` — explainers and briefing.
+- `data` — numerical visualizations, milestones and comparisons.
+- `editing` — existing-footage enhancement, interactive slides and covers.
+- `export` — reframing and encoding to requested formats.
+- `migration` — explicit framework migration only.
 
-Choose the video **engine by deliverable**, not by a skill's claim that its own engine is mandatory:
+Each skill belongs to **one** category. Categories may have different *workflows*, but do not create another skill for the same responsibility unless the engine or actual deliverable differs.
 
-| Deliverable | Engine | Skill routing |
-| --- | --- | --- |
-| A dated HSK vocabulary/grammar lesson, normal recurring short, or re-render of an existing lesson | **Remotion (required default)** | `remotion-best-practices` and only relevant conditional design skills |
-| A **separate** HSK AI launch/premium advertisement, cinematic brand film, advanced UI animation or motion-heavy standalone promo | **HyperFrames (allowed/preferred when its capabilities fit the brief)** | `hyperframes` entry point, then the relevant `hyperframes-only` skills (e.g. `product-launch-video`, `motion-graphics`, `hyperframes-animation`) |
-| A straightforward promotion or a requested edit to an **existing Remotion** promo/composition | **Keep Remotion** unless the owner explicitly requests a new HyperFrames deliverable | `remotion-best-practices`; do not assume all advertising requires HyperFrames |
-| Conversion/migration of existing Remotion source | **Requires a separate explicit owner decision** | `remotion-to-hyperframes` after approval; keep source intact until the new export is reviewed |
+## Three branches for each production step
 
-**Isolation:** Standalone HyperFrames work must live as an independent video composition/project, not as a replacement for `hsk-tu-vous/src/` or its dated MCP renderer. Do not install/migrate frameworks, upgrade dependencies, or rewrite calendar/episodes merely to use an optional engine. Both engines must use canonical HSK AI brand assets, verified product claims and the currently approved voice/CTA rules; if a skill prescribes a conflicting speech/API/media workflow, ignore that step and follow project policy or report a concrete blocker.
+The recipes in `skill-catalog.json` have `lesson`, `premium` and `special` branches where relevant. In each branch the **owner** supplies the primary technique. **Helpers** are loaded only when the actual task needs them; they do not replace the owner.
 
-**Quality gate:** Check the actual delivered video for readability on mobile, scene pacing, accurate language and product information, soundtrack/caption synchronization, transitions, export format and platform-safe areas. Choosing HyperFrames does **not** guarantee more views or a better video. Owner approval of the exact final publication preview remains required for either engine.
+| Step | Ordinary HSK lesson | Premium HSK AI promo | Explicit special request |
+| --- | --- | --- | --- |
+| Effects | `remotion-best-practices`, its `rules/effects.md`, `rules/transitions.md` | `hyperframes-animation`, optional `hyperframes-keyframes`/`hyperframes-registry` | `motion-effects` for a standalone effect |
+| Layout | Remotion `rules/video-layout.md`/`rules/measuring-text.md` | `hyperframes-studio` with HSK brand limits | `apple-design` or Figma-specific input |
+| Captions | Remotion `rules/subtitles.md`, existing HSK caption components | `hyperframes-studio` captions track | `embedded-captions` for existing talking-head footage only |
+| Audio | Approved voice profile and importer (no external Skill) | `hyperframes-audio` for mixing existing tracks | Standalone music/video workflow only |
+| Brand | Existing `visual-system.json` (no extra brand files) | `hyperframes-creative` references canonical brand | `brand-intake` only on requested brand reset |
+| Advertising | Existing Remotion renderer for simple promo | `product-launch-video` | Explicit Apple-style or other specialized promo |
+| Export | Remotion video render with its existing audio | `hyperframes-cli` validation | `reel-export` only for video reframe/encoding |
 
+For data visualizations, educational explainers, social content, and special existing-footage edits, use the corresponding **named capability** under `skill-catalog.json`; they remain registered without becoming default steps for every video.
 
-## Runtime skill recommendation
+## Non-negotiable precedence
 
-For each new video-creation/edit/render/export request, call the project MCP tool `recommend_skills(task, existingEngine)` **before** opening a Skill. It returns an engine choice, the needed Skill names and paths, confidence, and whether explicit clarification/approval is required. The tool reads this registry, so its output cannot silently recommend an unregistered Skill. Use the recommended Skill only at the relevant stage; do not load all installed Skills. If the recommendation is incomplete or wrong for the job, stop and reconcile it with the owner's instruction and the hybrid selection hierarchy; do not treat the classifier as infallible. The implementation and prompt tests are `scripts/skill-router.mjs` and `scripts/skill-router.test.mjs`.
+1. `AGENTS.md`, `AI_RULES.md`, `content/WORKFLOW.md`, `content/EDITING_SPEC.md`, `content/visual-system.json`, `content/cta-lab.json` and `content/voice-profile.json` override all third-party Skill samples.
+2. **Ordinary dated HSK lessons remain Remotion.** Only an independent special premium commercial may use HyperFrames; migration of existing code requires the owner's separate explicit approval.
+3. Captions must come from the approved word-level voice export. Ignore Whisper/WhisperX/ElevenLabs/HeyGen recommendations in generic skills, even if a skill calls them prerequisites. Do not add a new TTS/transcription API, package, provider or login without authorization.
+4. Remotion caption styling and placements are owned by `visual-system.json` and `EDITING_SPEC.md`; do not copy a generic TikTok highlight color, pill background or 80px font just because a skill illustrates it.
+5. HyperFrames safe zones can guide a standalone promo, but don't move existing lesson captions to the export skill's generic coordinates. Keep both existing narration audio and caption timing on aspect conversions.
+6. A generic skill's `brand.md`, `MOTION.md` or `CLAUDE.md` recommendation is **not** permission to create parallel HSK brand sources. Never replace approved logo, palette, CTA or product screenshots from a preset.
+7. Skills may advise, but they do **not** authorize publishing, a network download, credential creation, auto-update, dependency installation or an engine migration. Preserve the preview approval gate.
 
-This MCP tool is available only when the local `hsk-ai-content` MCP server is running and connected. A general chat outside that environment is not guaranteed to invoke it automatically.
+## Runtime selection and maintenance
 
-## Registered skills
+Before starting any video, invoke `recommend_skills(task, existingEngine)`. It chooses the engine, named workflow, and optional per-stage owner/helper skills. It reads `skill-catalog.json`. A return of `clarify` or `approval-required` means do not proceed without that decision.
 
-| Skill | Route | Precise use / exclusion |
-| --- | --- | --- |
-| `remotion-best-practices` | `remotion-default` | Existing HSK AI Remotion composition, render, animations, captions and export; ignore substitute TTS/ASR advice. |
-| `animated-chart` | `conditional` | Only a requested data-driven chart animation; verified numbers required; adapt to Remotion if used in an HSK episode. |
-| `apple-design` | `conditional` | Apple-like UI motion/interaction reference; not a replacement video runtime. |
-| `apple-launch-film` | `conditional` | Explicit Mac/Apple-style launch-film brief; not regular HSK lessons. |
-| `brand-intake` | `conditional` | Only owner-requested new brand or major brand reset; do not overwrite HSK AI tokens by default. |
-| `heroui-react` | `conditional` | Reference for UI details inside generated video, not install/runtime dependency. |
-| `launch-video` | `conditional` | Explicit standalone product announcement; respect current duration, CTA and renderer. |
-| `loop-cover` | `conditional` | Only a looping image/GIF cover, not a 9:16 lesson. |
-| `milestone-reveal` | `conditional` | Verified milestone/count reveal; no invented statistics. |
-| `model-showdown` | `conditional` | Only explicit comparison of generated model outputs. |
-| `motion-brief-writer` | `conditional` | Optional brief drafting for an independent motion task; do not block dated automation with intake prompts. |
-| `motion-effects` | `conditional` | Design reference or explicit isolated HTML loop; adapt effects into frame-driven Remotion for current videos. |
-| `newsletter-promo` | `conditional` | Only newsletter promotion, not HSK course content. |
-| `reel-export` | `conditional` | Technical reframe/export check for already-produced video; publishing still needs separate approval. |
-| `title-sequence-3d` | `conditional` | Explicit standalone cinematic 3D intro; avoid adding to normal lessons. |
-| `vox-explainer` | `conditional` | Explicit documentary-style explainer, not the default lesson template. |
-| `hyperframes` | `hyperframes-only` | Entry point for a standalone special-promo/advanced-motion HyperFrames deliverable allowed by the hybrid policy, or an explicit migration. |
-| `hyperframes-animation` | `hyperframes-only` | HyperFrames motion patterns/runtime adapters. |
-| `hyperframes-audio` | `hyperframes-only` | Mixing audio already in a HyperFrames composition. |
-| `hyperframes-cli` | `hyperframes-only` | HyperFrames CLI/diagnostics and render workflow. |
-| `hyperframes-core` | `hyperframes-only` | HyperFrames HTML composition contract. |
-| `hyperframes-creative` | `hyperframes-only` | HyperFrames creative planning/tokens. |
-| `hyperframes-keyframes` | `hyperframes-only` | HyperFrames timeline/keyframe mechanics. |
-| `hyperframes-registry` | `hyperframes-only` | HyperFrames registry components, only after that engine is explicitly chosen. |
-| `hyperframes-studio` | `hyperframes-only` | HyperFrames Studio workflow and human feedback. |
-| `remotion-to-hyperframes` | `hyperframes-only` | Only when owner explicitly requests Remotion-to-HyperFrames migration. |
-| `embedded-captions` | `hyperframes-only` | Subtitles for existing talking-head footage within HyperFrames; not HSK lesson captions or a new ASR provider. |
-| `faceless-explainer` | `hyperframes-only` | HyperFrames explainer from text; separate engine only. |
-| `figma` | `hyperframes-only` | Figma-to-HyperFrames asset reconstruction; not general Figma UI implementation. |
-| `general-video` | `hyperframes-only` | Unspecified custom video build inside HyperFrames. |
-| `media-use` | `hyperframes-only` | HyperFrames media sourcing/mixing; no override of current approved HSK speech/asset rules. |
-| `motion-graphics` | `hyperframes-only` | HyperFrames motion-first, generally non-narrated units. |
-| `music-to-video` | `hyperframes-only` | Music-led HyperFrames edit rather than Mandarin lesson. |
-| `pr-to-video` | `hyperframes-only` | GitHub PR changes explained by a HyperFrames video. |
-| `product-launch-video` | `hyperframes-only` | Special standalone product promo/site demo using HyperFrames; never the normal dated Remotion lesson. |
-| `slideshow` | `hyperframes-only` | Navigable HyperFrames deck, not an MP4 unless specifically converted. |
-| `talking-head-recut` | `hyperframes-only` | Overlays on existing talking-head video, HyperFrames route. |
+**Skill deduplication:** remove a skill only if another installed skill truly performs the same task and deleting it does not eliminate a separate output/engine or leave a broken reference. For any rename/delete, migrate references and tests in the same change. Do not delete distinct niche capabilities solely because they are infrequent.
 
-## Onboarding and auditing new skills
-
-- Add the downloaded skill folder only after confirming its `SKILL.md` exists and it is from an appropriate, trusted source. Assign **exactly one** route in this registry, with a clear task trigger and exclusion.
-- Before adopting a new skill, check overlaps with existing routes, external-service dependencies, credential requests, framework assumptions and conflicts with canonical HSK AI policy. A skill's frontmatter may say it is mandatory; this does **not** override this project-level routing.
-- Prefer the existing canonical file for any shared brand, voice, CTA or calendar values. Do not copy them into this registry.
-- Keep one job owner: if an existing route fully covers the task, a new overlapping skill should not silently become the default. Retain optional alternatives only for distinct use cases.
-- Run `npm run check:consistency` after adding/removing/renaming skills. CI verifies directory-to-registry alignment, readable `SKILL.md` files, matching frontmatter names and valid route names; a human still assesses semantic overlaps and actual skill quality.
+A new skill must be added to the JSON catalog with category, route, branch and purpose. Verify all folders/`SKILL.md` names, recipe owners and helper references through `npm run check:consistency`. Run `node --test scripts/skill-router.test.mjs`; inspect actual output for new task patterns. Tests do not prove visual quality without rendering.
