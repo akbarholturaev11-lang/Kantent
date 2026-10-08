@@ -6,7 +6,7 @@ The calendar is the index. Each calendar item points to one canonical JSON episo
 
 - `id`, `date`, `timezone`, `languageCode`: identity; ISO date and Asia/Shanghai.
 - `voiceProvider`, `voiceProfileId`: production provider key and the one fixed profile in voice-profile.json.
-- `title`, `level`, `topic`, `durationTargetSec`, `caption`, `hashtags`, `cta`: packaging and learning context. `audienceProblem` names one concrete beginner pain point; `learningOutcome` states the single useful result the viewer should get from the lesson.
+- `title`, `level`, `topic`, `durationTargetSec`, `caption`, `hashtags`, `cta`: packaging and learning context. **`cta` is an immutable-per-registration draft/render snapshot** resolved from the central `content/cta-lab.json`, NOT a second editable CTA policy. `audienceProblem` names one concrete beginner pain point; `learningOutcome` states the single useful result the viewer should get from the lesson.
 - `learningFacts`, `examples`: the intended lesson point and Chinese examples. These are planning notes until checked.
 - `learningFactSources`: evidence receipts, one per source: `{ title, url, checkedAt, supports }`. `checkedAt` is YYYY-MM-DD and `supports` names the specific fact(s) the source supports. Empty means language-source review has not been recorded.
 - `hookExperiment`: required preregistration `{ id, formatId, hypothesis, primaryMetric, fallbackMetric, registeredAt }`. `formatId` is `question`, `contrast`, or `scenario`; metrics are `three-second-hold-rate`, `average-watch-ratio`, or YouTube Shorts’ `chose-to-view-rate`. Register the hypothesis before publishing so results are not explained after the fact.
@@ -20,7 +20,7 @@ The calendar is the index. Each calendar item points to one canonical JSON episo
 - `audioTrimAfterFrames`, when present on an imported review episode, is Remotion's absolute source-frame endpoint (`Audio.trimAfter`), not a count of frames to remove from the tail. The importer sets it after the last timed word plus a short natural pause.
 - `publishingStatus`: records pending confirmation, owner-approved Zernio publication, or the per-version outcome (`published`, `scheduled`, `processing`, `partial`, or `failed`).
 
-## Hook measurement record
+## Platform CTA variants\n\n`content/cta-lab.json` defines a single platform variant map (`instagram`, `tiktok`, `youtube`). The existing approved Instagram text is read through `offer.canonicalRussian` without a duplicate editable value. TikTok/YouTube copy and assets are currently unapproved placeholders. `scripts/platform-cta.mjs` returns readiness and can prepare an isolated **in-memory draft** with the same teaching scenes, fresh CTA scene and invalidated audio/approval/CTA registration; it does not independently render three files. Each eventual platform MP4 needs its own synchronized CTA voice/subtitle timings, new registration and separate review output. No unapproved draft may render. YouTube publishing additionally needs a separate owner authorization. Do not rewrite legacy approved or published snapshots.\n\n## Hook measurement record
 
 - `content/hook-lab.json` stores the initial comparison rules and owner-entered 24h/7d platform analytics snapshots. YouTube’s `chose-to-view-rate` readback uses the dashboard’s “How many chose to view” percentage.
 - Readbacks are grouped by hook version, platform, time window, and the same primary metric. Do not compare platform totals as if their view definitions were identical.
