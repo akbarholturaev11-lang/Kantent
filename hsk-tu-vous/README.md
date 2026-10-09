@@ -47,7 +47,7 @@ Run `npm run content:buffer` to check the next planned canonical episodes in the
 
 ## GitHub freshness before every video
 
-Before creating a draft, preparing/importing speech, or rendering, the relevant CLI entrypoints and MCP prepare routine fetch `origin/main` using regular Git and require the current checkout's HEAD to include it. Offline, missing Git auth or stale code means **fail closed**; update the local checkout manually and retry. Each review status captures the verified SHA. This uses existing Git access, **not a new API key**. The validator does not edit working files, force-push, or approve publication.
+Before creating a draft, preparing/importing speech, or rendering, the relevant CLI entrypoints and MCP prepare routine fetch both `origin/main` and the current remote branch using regular Git and require the checkout's HEAD to include both. Offline, missing Git auth or stale code means **fail closed**; update the local checkout manually and retry. Each review status captures the verified SHA. This uses existing Git access, **not a new API key**. The validator does not edit working files, force-push, or approve publication.
 
 ## Zernio feedback evidence (no extra API)
 
