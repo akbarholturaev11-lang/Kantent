@@ -1,3 +1,4 @@
+import { requireFreshGitMain } from './git-freshness.mjs';
 import fs from "node:fs/promises";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -35,6 +36,7 @@ if (![".srt", ".vtt"].includes(captionsExtension)) {
   );
 }
 
+const sourceRevision = requireFreshGitMain();
 const { episode, filePath } = await getEpisode(id);
 validateEpisode(episode);
 const visualSystem = JSON.parse(
@@ -315,6 +317,7 @@ await writeJson(filePath, episode);
 
 const durationSec = Number(sceneDurationSec.toFixed(2));
 await writeStatus(id, {
+  sourceRevision,
   stage: "voice-and-captions-imported",
   updatedAt: new Date().toISOString(),
   provider: voiceProfile.serviceName,

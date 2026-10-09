@@ -1,3 +1,4 @@
+import { requireFreshGitMain } from './git-freshness.mjs';
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
@@ -19,6 +20,7 @@ if (!id) {
   );
 }
 
+const sourceRevision = requireFreshGitMain();
 const { episode, filePath } = await getEpisode(id);
 validateEpisode(episode);
 const ctaValidation = await requireCurrentCta(episode);
@@ -50,6 +52,7 @@ episode.voiceTextHash = narrationHash(episode);
 await writeJson(filePath, episode);
 await writeStatus(id, {
   stage: "tts-browser-automation-ready",
+  sourceRevision,
   updatedAt: new Date().toISOString(),
   provider: "text-to-speech.online",
   voiceProfileId: voiceProfile.profileId,
