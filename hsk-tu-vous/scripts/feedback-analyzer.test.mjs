@@ -39,3 +39,53 @@ test('fixed-window cohorts keep HSK level separate',()=>{
 test('provider watch time is milliseconds',()=>{
  const m=deriveMetrics(source());assert.equal(m.averageWatchSeconds,5.266);assert.equal(m.averageWatchRatio,0.1549);assert.equal(m.savesPer1000Views,16.64);assert.equal(durationBand(22),'under-25s');
 });
+
+const asOf = '2026-10-10T20:11:11.872Z';
+function fixed({id='17961571305238269',date='2026-10-01T10:31:38.000Z',window='7d',format='question',level='HSK 1'}={}){
+ const o=source();o.platformPostId=id;o.publishedAt=date;o.window=window;
+ o.episodeId='episode-'+id;o.hookFormat=format;o.hskLevel=level;
+ return o;
+}
+test('rolling 30 days filters by publication date, not Zernio collection date',()=>{
+ const included=fixed({id:'17961571305238269',date:'2026-09-12T10:31:38.000Z'});
+ const old=fixed({id:'17961571305238268',date:'2026-09-09T10:31:38.000Z'});
+ const r=analyzeObservations([included,old],{analysisLookbackDays:30},{asOf});
+ assert.equal(r.posts.length,1);assert.equal(r.posts[0].postId,included.platformPostId);
+ assert.equal(r.historicalPostWindowsExcluded,1);assert.equal(r.analysisWindow.publishedLookbackDays,30);
+});
+test('exact cutoff is inclusive, future snapshots do not leak into asOf',()=>{
+ const cutoff=fixed({id:'17961571305238269',date:'2026-09-10T20:11:11.872Z'});
+ const future=structuredClone(cutoff);future.observedAt='2026-10-12T20:11:11.872Z';
+ const r=analyzeObservations([cutoff,future],{analysisLookbackDays:30},{asOf});
+ assert.equal(r.posts.length,1);assert.equal(r.futureSnapshotsExcluded,1);
+});
+test('24h cohorts can only be early signals, even with three eligible posts',()=>{
+ const arr=['17961571305238269','17961571305238268','17961571305238267']
+   .map(id=>fixed({id,window:'24h'}));
+ const r=analyzeObservations(arr,{analysisLookbackDays:30,minimumPostsPerFormat:3,minimumViewsPerPost:500},{asOf});
+ assert.equal(r.comparableGroups[0].readiness,'early-signal-only');
+ assert.equal(r.performanceChangeEvidence,'insufficient-evidence');
+});
+test('three matched 7d posts allow only owner-review evidence, never auto-winner',()=>{
+ const arr=['17961571305238269','17961571305238268','17961571305238267']
+   .map(id=>fixed({id}));
+ const r=analyzeObservations(arr,{analysisLookbackDays:30,minimumPostsPerFormat:3,minimumViewsPerPost:500},{asOf});
+ assert.equal(r.comparableGroups[0].phase,'primary');
+ assert.equal(r.comparableGroups[0].readiness,'descriptive-only-owner-review');
+ assert.equal(r.performanceChangeEvidence,'owner-review-required');
+ assert.equal(r.decision,'no-automatic-winner');
+});
+test('fixed 7d window cannot be labelled for a two-day-old post',()=>{
+ const r=fixed({date:'2026-10-07T10:31:38.000Z'});
+ assert.match(validateObservation(r).join(' '),/claimed before required post age/);
+});
+test('lifetime engagement never becomes 7d evidence in the last 30 days',()=>{
+ const r=analyzeObservations([source()],{analysisLookbackDays:30},{asOf});
+ assert.equal(r.recentPostWindows,1);
+ assert.equal(r.performanceChangeEvidence,'insufficient-evidence');
+});
+test('missing episode mapping prevents format comparison',()=>{
+ const r=fixed();r.episodeId=null;
+ const out=analyzeObservations([r],{analysisLookbackDays:30},{asOf});
+ assert.equal(out.comparableGroups.length,0);
+});

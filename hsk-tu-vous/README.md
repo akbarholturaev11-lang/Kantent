@@ -49,6 +49,10 @@ Run `npm run content:buffer` to check the next planned canonical episodes in the
 
 Before creating a draft, preparing/importing speech, or rendering, the relevant CLI entrypoints and MCP prepare routine fetch both `origin/main` and the current remote branch using regular Git and require the checkout's HEAD to include both. Offline, missing Git auth or stale code means **fail closed**; update the local checkout manually and retry. Each review status captures the verified SHA. This uses existing Git access, **not a new API key**. The validator does not edit working files, force-push, or approve publication.
 
+## Rolling 30-day Hook feedback
+
+`content/hook-lab.json#policy` owns the performance analysis window: the last 30 days by **publication date**, an actual 24-hour provider window as early evidence, and an actual 7-day provider window for primary owner-review decisions. `npm run content:feedback -- --json` reports excluded historical post/windows and whether primary evidence exists. Lifetime metrics are preserved as source history but cannot be relabelled as day-specific. No automatic winner, CTA change or publication is permitted.
+
 ## Zernio feedback evidence (no extra API)
 
 `npm run content:feedback` validates snapshots in `content/feedback/observations/` and prints descriptive performance metrics. Add `-- --json` for a machine-readable report. These snapshots come from the connected Zernio service, not from a separate API token or from HSK AI's learner application. `content/feedback/AGENT_PLAYBOOK.md` is the future ChatGPT ↔ Zernio ↔ GitHub execution protocol; unattended scheduling is not deployed yet.

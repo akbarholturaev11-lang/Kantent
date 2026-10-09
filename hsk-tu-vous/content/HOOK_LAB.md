@@ -60,6 +60,16 @@ Har renderdan oldingi tahririy tekshiruv: quyidagi 5 banddan kamida 4 tasi “ha
 
 Matnning sodda va telefon ekranida o‘qilishi shu besh banddan tashqari majburiy tekshiruvdir. Xitoy tili aniqligi ham hard requirement bo‘lib qoladi. Ball faqat chiqarishdan oldingi sifat filtri; u ko‘rish statistikasi o‘rnini bosmaydi.
 
+## 30 kunlik o‘rganish oynasi
+
+Joriy vaqt qoidalarining **yagona manbasi**: `content/hook-lab.json#policy`. AI qaror uchun faqat tahlil vaqtiga nisbatan **oxirgi 30 × 24 soat ichida nashr qilingan** videolarni tanlaydi (`publishedAt` bo‘yicha, statistika yig‘ilgan sana bo‘yicha emas). Oldingi snapshotlar tarixda o‘chirilmaydi, lekin hozirgi taqqoslash guruhiga qo‘shilmaydi.
+
+- **24h** — dastlabki signal, keyingi tajriba gipotezasini tanlashga yordam beradi, lekin g‘olib format yoki doimiy qoida uchun yetarli emas.
+- **7d** — asosiy tahlil. Faqat manbasi aniqlangan, aynan 7 kunlik kuzatuv oynasi va tasdiqlangan `postId → episodeId → Hook` bog‘lanishi bilan qaror muhokama qilinadi.
+- `lifetime` — saqlanadi, lekin teng yoshdagi videolarning 24h/7d natijasi deb ko‘rsatilmaydi. `72h` mavjud tarixiy format sifatida qoladi, аммо 7d ni almashtirmaydi.
+- Zernio faqat jamg‘arilgan lifetime metrikalarini qaytarsa, 24h/7d sonlarini uydirmang; `insufficient-evidence` holatini saqlang.
+- Kamida 3 ta mos post, har birida kamida 500 view va ilgari qayd etilgan >10% metrika/intent tekshiruvlari hamon amal qiladi. Egasining ruxsatisiz avtomatik g‘olib e’lon qilish yo‘q; tasdiqlanmagan kelajak ssenariylari dalil asosida tahrirlanishi mumkin, tasdiqlangan/yuborilgan videolar esa muzlatilgan.
+
 ## Natijani qayd etish
 
 1. Egasi tasdiqlagan videoni qo‘lda joylang; hech qanday avtomatik post yo‘q.

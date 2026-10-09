@@ -20,7 +20,12 @@
     "promotionRequiresOwnerDecision": true,
     "thresholdNote": "Initial operating thresholds to avoid deciding from tiny samples; they are not a promise of statistical significance and should be recalibrated after the first 12 published episodes.",
     "distinctTopicSpecificHookPerEpisode": true,
-    "planningBufferSource": "content/calendar.json#planningBuffer"
+    "planningBufferSource": "content/calendar.json#planningBuffer",
+    "analysisLookbackDays": 30,
+    "earlySignalWindow": "24h",
+    "primaryDecisionWindow": "7d",
+    "missingPrimaryWindowDecision": "insufficient-evidence",
+    "analysisScope": "publishedAt-rolling-window"
   },
   "formats": [
     {
