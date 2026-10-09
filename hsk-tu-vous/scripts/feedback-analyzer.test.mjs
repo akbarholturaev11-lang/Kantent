@@ -25,7 +25,7 @@ test('rejects duplicate snapshot',()=>{
 });
 test('new snapshot updates a post, does not count it twice',()=>{
  const o=source(),n=structuredClone(o);n.observedAt='2026-10-10T20:11:11.872Z';n.metrics.views=800;
- const r=analyzeObservations([o,n]);assert.equal(r.observationCount,2);assert.equal(r.distinctPostWindows,1);assert.equal(r.posts[0].views,800);
+ const r=analyzeObservations([o,n], {}, {asOf:'2026-10-11T00:00:00.000Z'});assert.equal(r.observationCount,2);assert.equal(r.distinctPostWindows,1);assert.equal(r.posts[0].views,800);
 });
 test('lifetime results cannot produce comparability verdicts',()=>{
  const o=source();o.hookFormat='question';o.hskLevel='HSK 1';
