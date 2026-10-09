@@ -32,8 +32,8 @@ test('lifetime results cannot produce comparability verdicts',()=>{
  const r=analyzeObservations([o]);assert.equal(r.comparableGroups.length,0);assert.equal(r.decision,'no-automatic-winner');
 });
 test('fixed-window cohorts keep HSK level separate',()=>{
- const a=source();a.window='24h';a.hookFormat='question';a.hskLevel='HSK 1';
- const b=structuredClone(a);b.platformPostId='17961571305238268';b.hskLevel='HSK 2';
+ const a=source();a.window='24h';a.hookFormat='question';a.hskLevel='HSK 1';a.episodeId='sample-hsk1';
+ const b=structuredClone(a);b.platformPostId='17961571305238268';b.hskLevel='HSK 2';b.episodeId='sample-hsk2';
  const r=analyzeObservations([a,b]);assert.equal(r.comparableGroups.length,2);assert.ok(r.comparableGroups.every(x=>x.readiness==='insufficient-sample'));
 });
 test('provider watch time is milliseconds',()=>{
