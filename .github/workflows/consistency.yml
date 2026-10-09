@@ -37,6 +37,8 @@ jobs:
         run: node --test scripts/feedback-analyzer.test.mjs && npm run content:feedback -- --json > /tmp/feedback-report.json
       - name: Test source freshness guards
         run: node --test scripts/git-freshness.test.mjs && node --check scripts/git-freshness.mjs
+      - name: Test scenario buffer date proposals
+        run: node --test scripts/scenario-buffer-plan.test.mjs && npm run content:scenario-buffer -- --json > /tmp/scenario-proposal.json
       - name: Parse MCP server
         run: node --check scripts/mcp-server.mjs
       - name: Verify canonical files and avoid duplicated active settings

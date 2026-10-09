@@ -337,5 +337,10 @@
   "planningBuffer": {
     "minimumFutureEpisodes": 3,
     "targetFutureEpisodes": 4
-  }
+  },
+  "planningWeekdays": [
+    "MO",
+    "WE",
+    "FR"
+  ]
 }

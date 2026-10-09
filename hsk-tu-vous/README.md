@@ -41,6 +41,10 @@ Run `npm run content:buffer` to check the next planned canonical episodes in the
 
 `content/feedback/README.md` defines the evidence format and safeguards for future Zernio-to-ChatGPT analysis. Automatic Zernio ingestion, scheduled execution, script rewriting, and new calendar-date generation are **not** implemented in this phase; the owner-preview gate remains unchanged.
 
+## Agent scenario reserve
+
+`npm run content:scenario-buffer -- --json` proposes next publication dates for a shortfall (canonical `calendar.json#planningBuffer`, `planningWeekdays`). It creates **no** empty placeholder lessons and changes **no** repo files. ChatGPT may author the full, evidence-checked CTA-free future lesson JSON and register new dates/IDs in a review PR, subject to the active production rules. This is independent of video publishing.
+
 ## GitHub freshness before every video
 
 Before creating a draft, preparing/importing speech, or rendering, the relevant CLI entrypoints and MCP prepare routine fetch `origin/main` using regular Git and require the current checkout's HEAD to include it. Offline, missing Git auth or stale code means **fail closed**; update the local checkout manually and retry. Each review status captures the verified SHA. This uses existing Git access, **not a new API key**. The validator does not edit working files, force-push, or approve publication.
