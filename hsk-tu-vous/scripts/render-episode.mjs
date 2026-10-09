@@ -1,3 +1,4 @@
+import { requireFreshGitMain } from './git-freshness.mjs';
 import fs from "node:fs/promises";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -21,6 +22,7 @@ import {
 
 const id = process.argv[2];
 if (!id) throw new Error("Foydalanish: npm run content:render -- <mavzu-ID>");
+const sourceRevision = requireFreshGitMain();
 const { episode, filePath } = await getEpisode(id);
 const visualSystem = await readJson(
   path.join(PROJECT_ROOT, "content", "visual-system.json"),
@@ -85,6 +87,7 @@ await writeJson(filePath, episode);
 await invalidateReviewArtifacts(id);
 await writeStatus(id, {
   stage: "rendering",
+  sourceRevision,
   updatedAt: new Date().toISOString(),
 });
 
@@ -151,6 +154,7 @@ const postText = `${episode.caption || episode.title}\n\n${hashtags}${ctaText ? 
 await fs.writeFile(path.join(folder, "post.md"), `${postText}\n`, "utf8");
 await writeStatus(id, {
   stage: "rendered-pending-owner-approval",
+  sourceRevision,
   updatedAt: new Date().toISOString(),
   video: output,
   captions: path.join(folder, "captions.srt"),

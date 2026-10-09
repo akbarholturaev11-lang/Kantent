@@ -34,7 +34,7 @@ Oldingi renderdagi aniq kamchilik tuzatildi: dars uch shaklni va’da qilganida 
 
 ## Har bir hook uchun oldindan yoziladigan narsa
 
-Har bir dars uchun hook alohida va mavzuga mos bo‘ladi; bitta jumlani barcha roliklarga ko‘chirmang. Uni kamida to‘rt haftalik kontent rejasida ssenariy bilan birga, ovoz yozish va montajdan oldin yozing. Joriy playbook, egasining faol tuzatishlari va mavjud readbacklardan foydalaning. Oddiy roliklarda egadan hook tanlashni so‘ramang.
+Har bir dars uchun hook alohida va mavzuga mos bo‘ladi; bitta jumlani barcha roliklarga ko‘chirmang. Uni `content/calendar.json` ichidagi `planningBuffer` ko‘rsatgan kelgusi epizodlar zaxirasi bilan birga, ovoz yozish va montajdan oldin yozing. Joriy playbook, egasining faol tuzatishlari va mavjud readbacklardan foydalaning. Oddiy roliklarda egadan hook tanlashni so‘ramang.
 
 Hook bitta boshlang‘ich o‘rganuvchining aniq muammosini birinchi soniyalarda ko‘rsatsin, bitta rost va’da bersin va javobi shu videoda tezda ochilsin. Dars shu muammoni tekshirilgan, foydali xitoycha izoh bilan yechadi. HSK AI o‘rganishni davom ettirish uchun doimiy CTA bo‘ladi; ilova funksiyalari haqida manbasiz da’vo qo‘shmang.
 

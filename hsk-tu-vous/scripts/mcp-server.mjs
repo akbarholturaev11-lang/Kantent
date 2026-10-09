@@ -6,6 +6,7 @@ import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { recommendSkills } from "./skill-router.mjs";
 import { CTA_PLATFORMS, getPlatformCtaStatus } from "./platform-cta.mjs";
 import { resolveTodayVideo } from "./resolve-production-date.mjs";
+import { requireFreshGitMain } from "./git-freshness.mjs";
 import * as z from "zod/v4";
 import {
   CALENDAR_PATH,
@@ -710,6 +711,7 @@ const createServer = () => {
   // Same exact-date preparation routine powers explicit and relative commands.
   // TTS browser work remains an explicit next-agent action, never a fake success.
   async function prepareReviewForDate(date) {
+        const sourceRevision = requireFreshGitMain();
         const { item, episode } = await currentEpisode(date);
         const { item: runItem } = await ensureRunCopy(date);
         const folder = reviewDir(item.id);
@@ -738,6 +740,7 @@ const createServer = () => {
               date,
               episodeId: item.id,
               reviewFolder: folder,
+              sourceRevision,
               status: await readStatus(item.id),
               requiresHumanAction: false,
               nextAgentAction:
@@ -751,11 +754,13 @@ const createServer = () => {
               publishing: "manual-review-required; nothing was published",
             };
           }
+          // Child renderer repeats the remote-main check immediately before rendering.
           const render = await runScript("render-episode.mjs", item.id);
           return {
             date,
             episodeId: item.id,
             reviewFolder: folder,
+            sourceRevision,
             files: {
               video: path.join(folder, "video.mp4"),
               subtitles: path.join(folder, "captions.srt"),

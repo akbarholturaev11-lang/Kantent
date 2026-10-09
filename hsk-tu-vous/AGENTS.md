@@ -9,6 +9,9 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Active global behavior and safety rules | `AI_RULES.md` |
 | Production procedure and error handling | `content/WORKFLOW.md` |
 | Dates, IDs, cadence, episode references | `content/calendar.json` |
+| Future publishing weekdays and autonomous draft reserve | `content/calendar.json#planningWeekdays` and `#planningBuffer` |
+| Future planned episode buffer (minimum/target) | `content/calendar.json#planningBuffer` |
+| Raw external Zernio performance observations and optimizer audit notes | `content/feedback/` (not the canonical Hook/CTA Labs) |
 | CTA-free future lesson scripts; approved/published legacy snapshots kept immutable | `content/episodes/*.json` |
 | Approved voice/provider/settings | `content/voice-profile.json` |
 | CTA wording and active corrections | `content/cta-lab.json`, explained by `content/CTA_LAB.md` |
@@ -38,6 +41,10 @@ Before creating, changing, rendering or exporting any video, invoke the local MC
 ## Central CTA assembly for future lessons
 
 Author future canonical `content/episodes/*.json` lessons with teaching scenes only: **no** top-level `cta`, `ctaExperiment` or embedded CTA scene. The canonical copy plus visual template are under `content/cta-lab.json`; `scripts/episode-cta-assembly.mjs` adds them when a working episode is materialized. The working `review/<id>/episode.json` then keeps one immutable-version CTA snapshot for verified voice, cue timing, QA and publication. Legacy sources and registered CTA experiments are historical, not alternate CTA sources. Do not auto-acknowledge a changed owner rule or reuse a stale registration: a new CTA version must be validated/registered before TTS/render.
+
+## Zernio feedback learning
+
+`content/feedback/observations/` stores externally sourced measurement snapshots. `scripts/feedback-analyzer.mjs` validates and summarizes them read-only; it is not a second Hook Lab. Follow `content/feedback/AGENT_PLAYBOOK.md` for future connector-assisted analysis. `content/calendar.json#planningBuffer` owns future scenario coverage. In particular, do not treat unequal-age lifetime totals as same-window experiment results.
 
 ## Operating boundaries
 

@@ -6,4 +6,6 @@ For each scheduled episode, maintain the single canonical scenario at `episodes/
 
 A plan should specify one learner problem, source-checked examples, a topic-specific opening, scene/edit cues, exact voice narration, and a relevant closing action. Production and approval steps are in `WORKFLOW.md`.
 
+For the owner-authorized future buffer replenishment, the agent may add new future calendar dates + full episode JSON together via a GitHub PR, using `planningWeekdays` and the target in `calendar.json`. Follow `scripts/scenario-buffer-plan.mjs`; date proposals alone are not written scripts, and owner approval remains mandatory for publication. Do not rewrite old approved or published episodes.
+
 If the owner modifies the schedule or a theme, edit `calendar.json` and the affected canonical episode in the same task. This guide must not become a second calendar.

@@ -2,6 +2,10 @@
 
 This file describes **the sequence of operations**, not the values of production settings. Start with `AGENTS.md` and `AI_RULES.md`. Read current values from the canonical files listed in `AGENTS.md`; never substitute remembered dates, voice profiles or CTA wording.
 
+## Automated scenario buffer — planning only
+
+The owner authorizes creating **new future** dates and full CTA-free lesson plans when the canonical `content/calendar.json#planningBuffer` is below target. Use `npm run content:scenario-buffer -- --json` (or `--date YYYY-MM-DD` in tests) for a read-only shortlist of dates/needed repairs, respecting `planningWeekdays` and the existing publishing cadence. Write complete teaching scenarios with real language-source verification and unique hook hypotheses in `content/episodes/`, then register their IDs/dates in the canonical calendar **in the same PR**. Do not count a blank template as a prepared scenario. Keep approved/published history, voice and central CTA unchanged; generated scenarios require the usual production QA and owner approval before publication. A missing future slot in an explicit dated video request is still an error; do not silently synthesize one.
+
 ## 1. Resolve the requested episode
 
 1. Resolve relative dates in the timezone defined in `content/calendar.json`.

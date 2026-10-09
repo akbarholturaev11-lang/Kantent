@@ -1,3 +1,4 @@
+import { requireFreshGitMain } from './git-freshness.mjs';
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import {
@@ -13,6 +14,9 @@ const input = process.argv[2];
 if (!input) {
   throw new Error("Foydalanish: npm run content:make -- YYYY-MM-DD [episode-ID]");
 }
+
+const sourceRevision = requireFreshGitMain();
+console.log('GitHub source verified:', sourceRevision.remoteMainSha);
 
 const item = /^\d{4}-\d{2}-\d{2}$/.test(input)
   ? await getCalendarItemByDate(input)
