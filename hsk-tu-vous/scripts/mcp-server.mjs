@@ -5,6 +5,10 @@ import { McpServer } from "@modelcontextprotocol/server";
 import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { recommendSkills } from "./skill-router.mjs";
 import { CTA_PLATFORMS, getPlatformCtaStatus } from "./platform-cta.mjs";
+import {
+  APPROVED_PUBLICATION_PLATFORMS,
+  validatePublicationTarget,
+} from "./publication-policy.mjs";
 import { resolveTodayVideo } from "./resolve-production-date.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import * as z from "zod/v4";
@@ -54,7 +58,7 @@ const createServer = () => {
     { name: "hsk-ai-content", version: "1.0.0" },
     {
       instructions:
-        "На команду «Бугунги видеони тайёрла» сначала вызывайте prepare_today_video; если на сегодня нет слота, инструмент выберет ближайший следующий planned по timezone календаря и сообщит дату. Явно названная дата обрабатывается строго без подмены. Для создания или редактирования видео сначала вызывайте recommend_skills, затем читайте выбранные SKILL.md и текущие правила из content/SKILLS.md. Не запускайте HyperFrames для обычного HSK-урока и не меняйте движок или провайдера без разрешения владельца. Работайте по AGENTS.md и AI_RULES.md. До hook edits читайте content/HOOK_LAB.md и get_hook_learning_status; пишите отдельный topic-specific hook до производства, сохраняйте точные слова владельца через record_hook_correction и не выдумывайте результаты без platform readback. До CTA edits читайте content/CTA_LAB.md и get_cta_learning_status; используйте единый CTA серии, сохраняйте точные слова владельца через record_cta_correction, регистрируйте датированный неизменный снимок до voice/render. Используйте только закреплённый профиль text-to-speech.online из content/voice-profile.json, не спрашивайте подтверждение для каждого эпизода. Не вызывайте OpenAI/Whisper, ElevenLabs, Gemini или другие TTS API. Импортируйте MP3 и word-timed SRT/VTT, проверьте burned-in captions и соберите Remotion-пакет. Публикуйте только через подключённый Zernio MCP и только после явного подтверждения владельца финального preview с точным роликом, аккаунтом, caption/xeshteg, disclosure и временем. Ограничьте публикацию Instagram/TikTok; не отправляйте DM.",
+        "На команду «Бугунги видеони тайёрла» сначала вызывайте prepare_today_video; если на сегодня нет слота, инструмент выберет ближайший следующий planned по timezone календаря и сообщит дату. Явно названная дата обрабатывается строго без подмены. Для создания или редактирования видео сначала вызывайте recommend_skills, затем читайте выбранные SKILL.md и текущие правила из content/SKILLS.md. Не запускайте HyperFrames для обычного HSK-урока и не меняйте движок или провайдера без разрешения владельца. Работайте по AGENTS.md и AI_RULES.md. До hook edits читайте content/HOOK_LAB.md и get_hook_learning_status; пишите отдельный topic-specific hook до производства, сохраняйте точные слова владельца через record_hook_correction и не выдумывайте результаты без platform readback. До CTA edits читайте content/CTA_LAB.md и get_cta_learning_status; используйте единый CTA серии, сохраняйте точные слова владельца через record_cta_correction, регистрируйте датированный неизменный снимок до voice/render. Используйте только закреплённый профиль text-to-speech.online из content/voice-profile.json, не спрашивайте подтверждение для каждого эпизода. Не вызывайте OpenAI/Whisper, ElevenLabs, Gemini или другие TTS API. Импортируйте MP3 и word-timed SRT/VTT, проверьте burned-in captions и соберите Remotion-пакет. Публикуйте только через подключённый Zernio MCP и только после явного подтверждения владельца финального preview с точным роликом, целевым аккаунтом, caption/description, YouTube title/visibility/audience/synthetic-media settings, Instagram Reel settings и временем. Разрешённые платформы: Instagram Reels и YouTube Shorts. TikTok’га нашр қилманг.",
     },
   );
 
@@ -95,6 +99,9 @@ const createServer = () => {
           "person-with-book",
           "coffee",
           "empty-cup",
+          "apple-near",
+          "apple-far",
+          "apple-pair",
         ])
         .optional(),
       syncCueText: z.string().min(1).max(120).optional(),
@@ -158,28 +165,19 @@ const createServer = () => {
     acknowledgedCorrectionIds: z.array(identifierSchema).max(1000),
   });
   const publicationTargetSchema = z.object({
-    platform: z.enum(["instagram", "tiktok"]),
+    platform: z.enum(APPROVED_PUBLICATION_PLATFORMS),
     accountId: z.string().min(1).max(180),
     accountName: z.string().min(1).max(180),
     caption: z.string().min(1).max(2200),
     instagramSettings: z
       .object({ shareToFeed: z.boolean(), isAiGenerated: z.boolean() })
       .optional(),
-    tiktokSettings: z
+    youtubeSettings: z
       .object({
-        privacy_level: z.enum([
-          "PUBLIC_TO_EVERYONE",
-          "MUTUAL_FOLLOW_FRIENDS",
-          "FOLLOWER_OF_CREATOR",
-          "SELF_ONLY",
-        ]),
-        allow_comment: z.boolean(),
-        allow_duet: z.boolean(),
-        allow_stitch: z.boolean(),
-        content_preview_confirmed: z.literal(true),
-        express_consent_given: z.literal(true),
-        video_made_with_ai: z.literal(true),
-        commercialContentType: z.literal("brand_organic"),
+        title: z.string().trim().min(1).max(100),
+        visibility: z.enum(["public", "private", "unlisted"]),
+        madeForKids: z.boolean(),
+        containsSyntheticMedia: z.boolean(),
       })
       .optional(),
   });
@@ -199,19 +197,11 @@ const createServer = () => {
           message: "Use at most one account per selected platform.",
         });
       for (const [index, target] of intent.platforms.entries()) {
-        if (target.platform === "tiktok" && !target.tiktokSettings)
+        for (const message of validatePublicationTarget(target))
           context.addIssue({
             code: "custom",
-            path: ["platforms", index, "tiktokSettings"],
-            message:
-              "Fetch TikTok creator info and include the exact settings shown in the preview.",
-          });
-        if (target.platform === "instagram" && !target.instagramSettings)
-          context.addIssue({
-            code: "custom",
-            path: ["platforms", index, "instagramSettings"],
-            message:
-              "Include the Reel feed and AI-label settings shown in the preview.",
+            path: ["platforms", index],
+            message,
           });
       }
       if (intent.mode === "scheduled") {
@@ -237,7 +227,7 @@ const createServer = () => {
     });
   const publicationResultSchema = z
     .object({
-      platform: z.enum(["instagram", "tiktok"]),
+      platform: z.enum(APPROVED_PUBLICATION_PLATFORMS),
       accountId: z.string().min(1).max(180),
       accountName: z.string().min(1).max(180),
       postId: z.string().min(1).max(180).optional(),
@@ -867,7 +857,7 @@ const createServer = () => {
     {
       title: "Inspect platform-specific CTA readiness",
       description:
-        "Read the single canonical CTA Lab for Instagram, TikTok and YouTube. Reports which variant is owner-approved and which is blocked pending final copy, screenshots and verified delivery mechanism. Never sends a DM, publishes, or fabricates a variant.",
+        "Read the single canonical CTA Lab for Instagram, TikTok and YouTube. Reports which variant is owner-approved and which is blocked pending final copy, screenshots and verified delivery mechanism. Instagram Reels and YouTube Shorts are the authorized publishing destinations; TikTok is not. Never sends a DM, publishes, or fabricates a variant.",
       inputSchema: z.object({
         platform: z.enum(["instagram", "tiktok", "youtube"]).optional(),
       }),
@@ -880,7 +870,7 @@ const createServer = () => {
           variants: (platform ? [platform] : CTA_PLATFORMS).map(
             (name) => getPlatformCtaStatus(lab, name),
           ),
-          note: "One common lesson; each new platform CTA needs its own registered snapshot and regenerated voice/word-level captions. YouTube publishing is not currently authorized.",
+          note: "One shared lesson body with a platform-specific final CTA. When CTA narration is identical, reuse its approved audio and word-level captions; the CTA visual change still needs a new registration and final export. YouTube Shorts is authorized after exact-preview approval, but its ending is not yet routed into the final render/review package.",
         };
       }),
   );
@@ -1431,7 +1421,7 @@ const createServer = () => {
     {
       title: "Confirm the final preview for Zernio publishing",
       description:
-        "Call only after the owner says yes to the immediately preceding preview with the exact video, Instagram/TikTok account, caption including hashtags, platform disclosure/settings, and immediate/scheduled time. Records that precise approval; this tool does not upload or publish. The following action must use the connected Zernio MCP tools.",
+        "Call only after the owner says yes to the immediately preceding preview with the exact video, Instagram Reels or YouTube Shorts account, caption/description, all platform-specific settings (including YouTube title, visibility, audience and synthetic-media disclosure), and immediate/scheduled time. Records that precise approval; this tool does not upload or publish. The following action must use the connected Zernio MCP tools.",
       inputSchema: z.object({
         date: dateSchema,
         publicationIntent: publicationIntentSchema,

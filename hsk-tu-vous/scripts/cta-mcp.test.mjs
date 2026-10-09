@@ -24,21 +24,16 @@ test(
     const fixture = await fs.mkdtemp(path.join(os.tmpdir(), "hsk-cta-mcp-"));
     let child;
     try {
-      await fs.mkdir(path.join(fixture, "scripts"));
-      for (const name of [
-        "mcp-server.mjs",
-        "lib.mjs",
-        "caption-utils.mjs",
-        "hook-lab.mjs",
-        "cta-lab.mjs",
-        "prepare-online-tts.mjs",
-        "render-episode.mjs",
-        "approve-package.mjs",
-      ])
-        await fs.copyFile(
-          path.join(project, "scripts", name),
-          path.join(fixture, "scripts", name),
-        );
+      await fs.cp(path.join(project, "scripts"), path.join(fixture, "scripts"), {
+        recursive: true,
+        filter: (source) => !source.endsWith(".test.mjs"),
+      });
+      // This isolated fixture has no GitHub remote; keep this test focused on
+      // CTA invalidation rather than the separate live-remote freshness gate.
+      await fs.writeFile(
+        path.join(fixture, "scripts/git-freshness.mjs"),
+        "export function requireFreshGitMain() { return { checkedAt: new Date().toISOString() }; }\n",
+      );
       await fs.symlink(
         path.join(project, "node_modules"),
         path.join(fixture, "node_modules"),

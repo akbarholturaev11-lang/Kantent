@@ -58,13 +58,20 @@ test("an unregistered new CTA text is populated from central source but needs fr
   assert.equal(validateCtaEpisode(assembled, modified).valid, false);
 });
 
-test("no TikTok or YouTube assembly before approval", async () => {
+test("pending TikTok cannot assemble, while approved YouTube uses the canonical CTA and replaced frames", async () => {
   const source = JSON.parse(await fs.readFile(
     path.join(root, "content/episodes", "zhe-na-ge.json"), "utf8",
   ));
-  for (const platform of ["tiktok", "youtube"]) {
-    assert.throws(() => composeLessonCta(source, lab, { platform }), /not approved/);
-  }
+  assert.throws(() => composeLessonCta(source, lab, { platform: "tiktok" }), /not approved/);
+  const assembled = composeLessonCta(source, lab, { platform: "youtube" });
+  assert.equal(assembled.cta, lab.offer.canonicalRussian);
+  assert.equal(assembled.ctaPlatform, "youtube");
+  const scene = assembled.scenes.find((item) => item.kind === "cta");
+  assert.equal(scene.narration, lab.offer.canonicalRussian);
+  assert.equal(scene.visualBeats[1].screenImage, "cta/youtube-telegram-profile.jpg");
+  assert.equal(scene.visualBeats[2].screenImage, "cta/youtube-open-link-browser.jpg");
+  assert.equal(validateCtaEpisode(assembled, lab, { requireRegistration: false }).errors
+    .some((error) => error.includes("CTA visuals")), false);
 });
 
 test("old registered source keeps its historical CTA snapshot", async () => {

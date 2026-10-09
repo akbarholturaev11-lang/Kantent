@@ -10,6 +10,7 @@ import {
   writeJson,
   writeStatus,
 } from "./lib.mjs";
+import { validatePublicationTarget } from "./publication-policy.mjs";
 
 const id = process.argv[2];
 const publicationIntentJson = process.argv[3];
@@ -34,48 +35,12 @@ if (
   throw new Error("Zernio publication intent maydoni noto‘g‘ri.");
 const selectedPlatforms = new Set();
 for (const target of publicationIntent.platforms) {
-  if (
-    !["instagram", "tiktok"].includes(target.platform) ||
-    selectedPlatforms.has(target.platform) ||
-    typeof target.accountId !== "string" ||
-    !target.accountId.trim() ||
-    typeof target.accountName !== "string" ||
-    !target.accountName.trim() ||
-    typeof target.caption !== "string" ||
-    !target.caption.trim() ||
-    target.caption.length > 2200
-  )
-    throw new Error("Zernio previewdagi platform/account/caption noto‘g‘ri.");
+  const targetErrors = validatePublicationTarget(target);
+  if (targetErrors.length)
+    throw new Error(`Zernio preview target noto‘g‘ri: ${targetErrors.join("; ")}`);
+  if (selectedPlatforms.has(target.platform))
+    throw new Error("Zernio previewda har bir platformadan bittadan akkaunt tanlang.");
   selectedPlatforms.add(target.platform);
-  if (target.platform === "tiktok") {
-    const settings = target.tiktokSettings;
-    if (
-      !settings ||
-      ![
-        "PUBLIC_TO_EVERYONE",
-        "MUTUAL_FOLLOW_FRIENDS",
-        "FOLLOWER_OF_CREATOR",
-        "SELF_ONLY",
-      ].includes(settings.privacy_level) ||
-      typeof settings.allow_comment !== "boolean" ||
-      typeof settings.allow_duet !== "boolean" ||
-      typeof settings.allow_stitch !== "boolean" ||
-      settings.content_preview_confirmed !== true ||
-      settings.express_consent_given !== true ||
-      settings.video_made_with_ai !== true ||
-      settings.commercialContentType !== "brand_organic"
-    )
-      throw new Error(
-        "TikTok preview uchun creator privacy/toggle qiymatlari va egasining preview roziligi kerak.",
-      );
-  }
-  if (
-    target.platform === "instagram" &&
-    (!target.instagramSettings ||
-      typeof target.instagramSettings.shareToFeed !== "boolean" ||
-      typeof target.instagramSettings.isAiGenerated !== "boolean")
-  )
-    throw new Error("Instagram previewdagi disclosure/share sozlamalari kerak.");
 }
 if (publicationIntent.mode === "scheduled") {
   if (

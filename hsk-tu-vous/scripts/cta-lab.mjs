@@ -352,11 +352,17 @@ export function validateCtaEpisode(
     const screenshots = snapshot.scenes[0]?.visualBeats
       .filter((beat) => beat.screenImage)
       .map((beat) => ({ image: beat.screenImage, cue: beat.syncCueText }));
-    const expected = [
-      { image: "cta/instagram-profile.png", cue: "Зайди" },
-      { image: "cta/instagram-links.png", cue: "Открой" },
-      { image: "cta/website-download.png", cue: "скачай" },
-    ];
+    const expected = episode.ctaPlatform === "youtube"
+      ? [
+          { image: "cta/youtube-telegram-profile.jpg", cue: "Зайди" },
+          { image: "cta/youtube-open-link-browser.jpg", cue: "Открой" },
+          { image: "cta/website-download.png", cue: "скачай" },
+        ]
+      : [
+          { image: "cta/instagram-profile.png", cue: "Зайди" },
+          { image: "cta/instagram-links.png", cue: "Открой" },
+          { image: "cta/website-download.png", cue: "скачай" },
+        ];
     if (JSON.stringify(screenshots) !== JSON.stringify(expected))
       errors.push("CTA visuals must show profile, profile links, then website download on their matching word cues.");
     if (snapshot.scenes[0]?.visualBeats.some((beat) => beat.actionIcon === "comment" || beat.actionIcon === "direct-message"))

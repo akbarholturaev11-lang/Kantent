@@ -25,27 +25,44 @@ export function validatePlatformCtaConfig(lab) {
         errors.push("Instagram needs a central CTA sceneTemplate without duplicated narration or registrations");
       }
     }
+    if (platform === "youtube" && item.status === "approved") {
+      const template = item.sceneTemplate;
+      if (!template || template.kind !== "cta" || template.id !== "cta" ||
+          !Array.isArray(template.visualBeats) || !template.visualBeats.length ||
+          !isText(template.headline) || !isText(template.screenCaption) || !isText(template.editPlan) ||
+          "narration" in template || "cta" in template || "ctaExperiment" in template) {
+        errors.push("YouTube needs a central CTA sceneTemplate without duplicated narration or registrations");
+      }
+    }
     if (platform === "instagram" && item.copySource !== "offer")
       errors.push("Instagram must reference the canonical offer; do not duplicate its wording");
-    if (platform !== "instagram" && item.copySource !== "platform")
+    if (platform === "tiktok" && item.copySource !== "platform")
       errors.push(`${platform} needs its own platform CTA wording in the same lab`);
+    if (platform === "youtube" && !["offer", "platform"].includes(item.copySource))
+      errors.push("YouTube must reference the canonical offer or its own platform CTA wording");
     if (item.status === "approved" && item.copySource === "platform") {
+      const template = item.sceneTemplate ?? item;
       if (!isText(item.canonicalRussian)) errors.push(`${platform}: approved copy missing`);
-      if (!Array.isArray(item.visualBeats) || !item.visualBeats.length)
+      if (!Array.isArray(template.visualBeats) || !template.visualBeats.length)
         errors.push(`${platform}: approved visual beats missing`);
-      if (!isText(item.headline) || !isText(item.screenCaption) || !isText(item.editPlan))
+      if (!isText(template.headline) || !isText(template.screenCaption) || !isText(template.editPlan))
         errors.push(`${platform}: approved scene fields missing`);
       if (item.deliveryMode === "keyword-dm" && item.automationVerified !== true)
         errors.push(`${platform}: keyword DM cannot be approved before real automation is verified`);
       if (!isText(item.deliveryMode))
         errors.push(`${platform}: deliveryMode missing`);
     }
+    if (platform === "youtube" && item.status === "approved" && item.copySource === "offer" &&
+        !isText(item.deliveryMode))
+      errors.push("youtube: deliveryMode missing");
     if (item.status !== "approved" && item.copySource === "platform" &&
       (isText(item.canonicalRussian) || (Array.isArray(item.visualBeats) && item.visualBeats.length))) {
       // Draft text may be worked on, but an unapproved variant must never be rendered.
     }
-    if (platform === "youtube" && item.publishingAuthorized !== false)
-      errors.push("YouTube publishing requires a separate owner policy authorization");
+    if (platform === "youtube" && item.publishingAuthorized !== true)
+      errors.push("YouTube Shorts is an owner-authorized publication destination");
+    if (platform === "tiktok" && item.publishingAuthorized !== false)
+      errors.push("TikTok is not an authorized publication destination");
   }
   if (!isText(lab.offer?.canonicalRussian))
     errors.push("Canonical Instagram offer copy is missing");
@@ -61,14 +78,15 @@ export function getPlatformCtaStatus(lab, platform) {
   const variant = lab.platformVariants[platform];
   const text = variant.copySource === "offer"
     ? lab.offer.canonicalRussian : variant.canonicalRussian;
+  const template = variant.sceneTemplate ?? variant;
   const missing = [];
   if (variant.status !== "approved") missing.push("owner approval of platform CTA");
   if (!isText(text)) missing.push("platform-specific CTA text");
   if (variant.copySource === "platform" &&
-    (!Array.isArray(variant.visualBeats) || !variant.visualBeats.length))
+    (!Array.isArray(template.visualBeats) || !template.visualBeats.length))
     missing.push("platform-specific CTA visual beats/screenshots");
   if (variant.copySource === "platform" &&
-    (!isText(variant.headline) || !isText(variant.screenCaption) || !isText(variant.editPlan)))
+    (!isText(template.headline) || !isText(template.screenCaption) || !isText(template.editPlan)))
     missing.push("approved CTA scene layout and cue instructions");
   if (variant.deliveryMode === "keyword-dm" && variant.automationVerified !== true)
     missing.push("real keyword-DM automation verification");
@@ -86,8 +104,12 @@ export function getPlatformCtaStatus(lab, platform) {
     publishingAuthorized: variant.publishingAuthorized,
     destinationVerified: variant.destinationVerified === true,
     automationVerified: variant.automationVerified === true,
-    warning: platform === "instagram" && variant.destinationVerified !== true
-      ? "Owner-approved instruction; website reachability and downloads are not independently verified."
+    warning: variant.destinationVerified !== true
+      ? platform === "instagram"
+        ? "Owner-approved instruction; website reachability and downloads are not independently verified."
+        : platform === "youtube"
+          ? "YouTube reuses the canonical Instagram offer; the linked destination is unverified, and the YouTube render flow is not enabled."
+          : null
       : null,
   };
 }
@@ -108,31 +130,47 @@ export function preparePlatformCtaDraft(baseEpisode, lab, platform) {
     return source;
   }
   const variant = lab.platformVariants[platform];
+  const template = variant.sceneTemplate ?? variant;
+  const previousNarration = source.scenes
+    .map((item) => item.narration.trim())
+    .join("\n\n");
   source.cta = status.copy;
   scene.narration = status.copy;
-  scene.headline = variant.headline;
-  scene.screenCaption = variant.screenCaption;
-  scene.editPlan = variant.editPlan;
-  scene.visualBeats = structuredClone(variant.visualBeats);
+  scene.headline = template.headline;
+  scene.screenCaption = template.screenCaption;
+  scene.editPlan = template.editPlan;
+  scene.visualBeats = structuredClone(template.visualBeats);
   scene.cards = [];
-  // Explicitly invalidate all identity and derived media. A variant is a fresh
-  // experiment; a previous platform's voice/render/approval cannot be reused.
+  source.ctaPlatform = platform;
+  const nextNarration = source.scenes
+    .map((item) => item.narration.trim())
+    .join("\n\n");
+  const sameSceneDurations = source.scenes.length === baseEpisode.scenes.length &&
+    source.scenes.every((item, index) =>
+      (item.durationFrames ?? item.durationSec ?? null) ===
+      (baseEpisode.scenes[index].durationFrames ?? baseEpisode.scenes[index].durationSec ?? null));
+  const narrationChanged = previousNarration !== nextNarration || !sameSceneDurations;
+  // A platform variant always needs its own CTA registration and render
+  // approval. Reuse speech/cue files when the spoken script and scene timing
+  // are byte-for-byte equivalent; only the last CTA visuals then change.
   delete source.ctaExperiment;
-  delete source.audioSrc;
-  delete source.audioDurationMs;
-  delete source.sourceAudioDurationMs;
-  delete source.audioTrimAfterFrames;
-  delete source.voiceTextHash;
-  delete source.captions;
-  source.captionSource = "pending-tts-export";
   source.publishingStatus = "pending-owner-review";
-  for (const item of source.scenes) {
-    delete item.startMs;
-    delete item.endMs;
-    delete item.durationFrames;
-    delete item.audioSrc;
-    delete item.audioHash;
-    delete item.audioDurationMs;
+  if (narrationChanged) {
+    delete source.audioSrc;
+    delete source.audioDurationMs;
+    delete source.sourceAudioDurationMs;
+    delete source.audioTrimAfterFrames;
+    delete source.voiceTextHash;
+    delete source.captions;
+    source.captionSource = "pending-tts-export";
+    for (const item of source.scenes) {
+      delete item.startMs;
+      delete item.endMs;
+      delete item.durationFrames;
+      delete item.audioSrc;
+      delete item.audioHash;
+      delete item.audioDurationMs;
+    }
   }
   return source;
 }

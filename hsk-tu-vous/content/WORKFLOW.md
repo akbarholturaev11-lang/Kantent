@@ -18,7 +18,7 @@ The owner authorizes creating **new future** dates and full CTA-free lesson plan
 
 1. Check the language examples against trustworthy references and record dated evidence. The calendar's reference facts are not independent verification.
 2. Apply active Hook Lab rules. Record a dated hypothesis and one dominant opening pattern, without inventing audience-performance results.
-3. Read the single `content/cta-lab.json` registry for the requested **platform**. Instagram refers to `offer.canonicalRussian`; TikTok/YouTube are independent variants and remain unavailable while `pending-owner-configuration`. Call `get_platform_cta_status`; never copy Instagram CTA to another platform, promise an unverified keyword DM, or invent a platform link. For an approved variant, register a separate episode/platform CTA snapshot and prepare matching platform-specific voice and word-level cues. Preserve old registrations and do not claim that three platform exports already exist. Then apply active CTA corrections for that platform.
+3. Read the single `content/cta-lab.json` registry for the requested **platform**. Instagram and YouTube use `offer.canonicalRussian`; the lesson body is shared, and YouTube changes only the two supplied screenshots in the final CTA scene. Since the spoken CTA is identical, reuse the approved audio and word-level cues. A changed CTA scene needs a fresh CTA registration, final export and review; it does not need a separately written or generated lesson. TikTok CTA remains pending and TikTok is not an authorized publishing destination. Call `get_platform_cta_status`; never promise an unverified keyword DM or invent a platform link. The current production renderer still does not route the YouTube ending into a separate final review package, so do not claim that YouTube export is ready until that route exists. Preserve old registrations and published snapshots.
 4. Finish the narration, relevant Chinese characters/pinyin/meaning, scene plan, synced visual beats, subtitles, and post text before voice generation.
 5. Use the spec/schema and design token sources linked in `AGENTS.md`. An episode-level change affects its working copy; do not rewrite canonical published history.
 
@@ -39,7 +39,7 @@ The owner authorizes creating **new future** dates and full CTA-free lesson plan
 
 ## 5. Preview, approval and publishing
 
-1. Resolve eligible accounts and platform-specific requirements through the currently authorized publishing integration specified in `AI_RULES.md`.
+1. Resolve the connected Instagram Reels or YouTube Shorts account and its platform-specific requirements through the currently authorized publishing integration specified in `AI_RULES.md`. For YouTube, include the exact title, visibility, audience selection and synthetic-media disclosure in the owner preview.
 2. Present the **actual** finished video, exact accounts, captions/hashtags, disclosures, and immediate/scheduled posting time in the configured timezone.
 3. Wait for explicit owner approval of **that specific preview**. Production authorization or voice approval is not publishing consent.
 4. Only then run the permitted publish/schedule action through the authorized integration and store the returned IDs, statuses and links. Never infer success from an ambiguous tool result or retry without checking.

@@ -11,7 +11,10 @@ export type VisualFocus =
   | "book"
   | "person-with-book"
   | "coffee"
-  | "empty-cup";
+  | "empty-cup"
+  | "apple-near"
+  | "apple-far"
+  | "apple-pair";
 
 const clamp = {
   extrapolateLeft: "clamp" as const,
@@ -86,11 +89,228 @@ export const NarrativeVisual: React.FC<{
   focus?: VisualFocus;
   localFrame: number;
   accent: string;
-}> = ({ focus, localFrame, accent }) => {
+  motionDesign?: boolean;
+  motionHeight?: number;
+}> = ({ focus, localFrame, accent, motionDesign = false, motionHeight = 360 }) => {
   if (!focus) return null;
 
+  if (motionDesign && focus.startsWith("apple-")) {
+    const nearTarget = focus === "apple-near"
+      ? 1.82
+      : focus === "apple-far"
+        ? 1.28
+        : 1.58;
+    const farTarget = focus === "apple-far"
+      ? 1.04
+      : focus === "apple-near"
+        ? 0.7
+        : 0.82;
+    const nearScale = interpolate(
+      localFrame,
+      [0, 6, 22],
+      [nearTarget * 0.76, nearTarget * 1.035, nearTarget],
+      { ...clamp, easing: Easing.bezier(0.16, 1, 0.3, 1) },
+    );
+    const farScale = interpolate(
+      localFrame,
+      [0, 7, 21],
+      [farTarget * 0.78, farTarget * 1.025, farTarget],
+      { ...clamp, easing: Easing.bezier(0.16, 1, 0.3, 1) },
+    );
+    const nearOpacity = focus === "apple-far" ? 0.46 : 1;
+    const farOpacity = focus === "apple-near" ? 0.58 : 1;
+    const nearRing = interpolate(
+      localFrame,
+      [0, 10],
+      [0.12, focus === "apple-near" ? 0.92 : focus === "apple-pair" ? 0.5 : 0.22],
+      clamp,
+    );
+    const farRing = interpolate(
+      localFrame,
+      [0, 10],
+      [0.12, focus === "apple-far" ? 0.94 : focus === "apple-pair" ? 0.58 : 0.2],
+      clamp,
+    );
+    const pulse = 1 + Math.sin(localFrame / 15) * 0.015;
+    const markerProgress = (localFrame % 60) / 60;
+    const markerX = 274 + markerProgress * 286;
+    const markerY = 265 - Math.sin(markerProgress * Math.PI) * 93;
+    const motionId = `motion-apple-${focus}`;
+
+    const renderApple = (
+      x: number,
+      y: number,
+      scale: number,
+      opacity: number,
+      ringOpacity: number,
+      ringColor: string,
+      bob: number,
+    ) => (
+      <>
+        <ellipse
+          cx={x}
+          cy={y + 105 * scale + bob}
+          rx={53 * scale}
+          ry={11 * scale}
+          fill="rgba(33,29,23,.12)"
+        />
+        <ellipse
+          cx={x}
+          cy={y + 34 + bob}
+          rx={89 * scale}
+          ry={70 * scale}
+          fill={`url(#${motionId}-halo)`}
+          opacity={ringOpacity * 0.74}
+        />
+        <ellipse
+          cx={x}
+          cy={y + 34 + bob}
+          rx={88 * scale}
+          ry={68 * scale}
+          fill="none"
+          stroke={ringColor}
+          strokeOpacity={ringOpacity}
+          strokeWidth={3 * scale}
+          strokeDasharray="8 12"
+          strokeDashoffset={-localFrame * 0.8}
+          transform={`rotate(${localFrame * 0.16} ${x} ${y + 34 + bob})`}
+        />
+        <g
+          transform={`translate(${x} ${y + bob}) scale(${scale * pulse})`}
+          opacity={opacity}
+        >
+          <path
+            d="M0 12C-18 -5 -52 1 -58 31C-64 60 -42 91 -17 93C-7 94 -3 85 0 85C3 85 7 94 17 93C42 91 64 60 58 31C52 1 18 -5 0 12Z"
+            fill={`url(#${motionId}-fruit)`}
+            stroke="#74332d"
+            strokeWidth="3"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M0 11C-3 0 -1 -10 5 -18"
+            fill="none"
+            stroke="#47332b"
+            strokeWidth="5"
+            strokeLinecap="round"
+          />
+          <path
+            d="M5 -12C18 -27 37 -23 34 -8C22 -5 12 -6 5 -12Z"
+            fill="#2FA06A"
+            stroke="#244b37"
+            strokeWidth="2.5"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M-34 29C-39 40 -36 52 -31 58"
+            fill="none"
+            stroke="rgba(255,255,255,.78)"
+            strokeWidth="5"
+            strokeLinecap="round"
+          />
+          <ellipse cx="-22" cy="38" rx="12" ry="25" fill={`url(#${motionId}-shine)`} opacity=".56" />
+        </g>
+      </>
+    );
+
+    return (
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          height: motionHeight,
+          flexShrink: 0,
+          margin: "-6px 0 0",
+          overflow: "visible",
+        }}
+      >
+        <svg
+          viewBox="0 0 840 360"
+          width="100%"
+          height="100%"
+          role="img"
+          aria-label={focus === "apple-near" ? "Close apple in the foreground" : focus === "apple-far" ? "Small apple farther away" : "Two apples at different distances"}
+          style={{ overflow: "visible" }}
+        >
+          <defs>
+            <linearGradient id={`${motionId}-fruit`} x1="0" y1="0" x2=".9" y2="1">
+              <stop offset="0" stopColor="#ff8c77" />
+              <stop offset=".46" stopColor="#ef5146" />
+              <stop offset="1" stopColor="#b92f35" />
+            </linearGradient>
+            <radialGradient id={`${motionId}-shine`}>
+              <stop offset="0" stopColor="#fff8df" stopOpacity=".82" />
+              <stop offset="1" stopColor="#fff8df" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id={`${motionId}-halo`}>
+              <stop offset="0" stopColor={accent} stopOpacity=".3" />
+              <stop offset="1" stopColor={accent} stopOpacity="0" />
+            </radialGradient>
+            <linearGradient id={`${motionId}-distance`} x1="0" x2="1">
+              <stop offset="0" stopColor="#2FA06A" stopOpacity=".12" />
+              <stop offset=".55" stopColor="#E9A916" stopOpacity=".82" />
+              <stop offset="1" stopColor="#E04A40" stopOpacity=".52" />
+            </linearGradient>
+          </defs>
+
+          <path
+            d="M244 273 C318 184 416 121 559 184"
+            fill="none"
+            stroke={`url(#${motionId}-distance)`}
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeDasharray="1"
+            pathLength="1"
+            strokeDashoffset={interpolate(localFrame, [0, 26], [1, 0], clamp)}
+          />
+          <path
+            d="M147 337 H710"
+            fill="none"
+            stroke="#665d50"
+            strokeOpacity=".14"
+            strokeWidth="2"
+            strokeDasharray="3 12"
+          />
+          <circle cx="274" cy="265" r="7" fill="#2FA06A" opacity=".82" />
+          <circle cx="560" cy="180" r="7" fill="#E04A40" opacity=".86" />
+          <circle
+            cx={markerX}
+            cy={markerY}
+            r="6"
+            fill="#E9A916"
+            opacity={interpolate(localFrame, [0, 6], [0, 0.95], clamp)}
+          />
+
+          {renderApple(
+            274,
+            230,
+            farScale,
+            farOpacity,
+            farRing,
+            "#2FA06A",
+            Math.sin(localFrame / 14) * 2,
+          )}
+          {renderApple(
+            560,
+            145,
+            nearScale,
+            nearOpacity,
+            nearRing,
+            "#E04A40",
+            Math.sin(localFrame / 12 + 1) * 3,
+          )}
+        </svg>
+      </div>
+    );
+  }
+
   const entryFrames = visualSystem.motion.storyVisualEntryFrames;
-  const opacity = interpolate(localFrame, [0, entryFrames], [0, 1], clamp);
+  const initialOpacity = focus === "apple-pair" ? 0.58 : 0;
+  const opacity = interpolate(
+    localFrame,
+    [0, entryFrames],
+    [initialOpacity, 1],
+    clamp,
+  );
   const offset = interpolate(
     localFrame,
     [0, entryFrames],
@@ -98,6 +318,7 @@ export const NarrativeVisual: React.FC<{
     clamp,
   );
   const dashOffset = -localFrame * 0.45;
+  const scanOpacity = 0.58 + Math.sin(localFrame / 8) * 0.22;
   const orbitRotation = localFrame * 0.22;
   const orbitRadius = 102 + Math.sin(localFrame / 22) * 2;
 
@@ -120,6 +341,12 @@ export const NarrativeVisual: React.FC<{
                     ? "Cup of coffee"
                     : focus === "empty-cup"
                       ? "Empty cup"
+                      : focus === "apple-near"
+                        ? "Near and far apples, near one highlighted"
+                        : focus === "apple-far"
+                          ? "Near and far apples, far one highlighted"
+                          : focus === "apple-pair"
+                            ? "Near and far apples"
               : "Animated friends scene";
 
   return (
@@ -235,6 +462,96 @@ export const NarrativeVisual: React.FC<{
             {focus === "empty-cup" && (
               <path d="M-40 65Q-7 55 29 65" fill="none" stroke={COLORS.border} strokeWidth="4" strokeLinecap="round" />
             )}
+          </g>
+        )}
+
+        {(focus === "apple-near" ||
+          focus === "apple-far" ||
+          focus === "apple-pair") && (
+          <g>
+            <path
+              d="M176 178H666"
+              stroke={COLORS.border}
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+            <path
+              d="M310 146Q418 78 536 129"
+              fill="none"
+              stroke={accent}
+              strokeOpacity=".24"
+              strokeWidth="3"
+              strokeDasharray="5 11"
+              strokeDashoffset={dashOffset}
+            />
+            <g
+              transform={`translate(302 ${128 + Math.sin(localFrame / 24) * 2}) scale(${visualSystem.lessonLayout.appleFarScale})`}
+              opacity={focus === "apple-near" ? 0.62 : 1}
+            >
+              <ellipse cx="0" cy="68" rx="39" ry="7" fill="rgba(33,29,23,.12)" />
+              <path
+                d="M0 12C-18 -5 -52 1 -58 31C-64 60 -42 91 -17 93C-7 94 -3 85 0 85C3 85 7 94 17 93C42 91 64 60 58 31C52 1 18 -5 0 12Z"
+                fill={COLORS.brandRed}
+                stroke={COLORS.foreground}
+                strokeWidth="4"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M0 11C-3 0 -1 -10 5 -18"
+                fill="none"
+                stroke={COLORS.foreground}
+                strokeWidth="5"
+                strokeLinecap="round"
+              />
+              <path
+                d="M5 -12C18 -27 37 -23 34 -8C22 -5 12 -6 5 -12Z"
+                fill={COLORS.brandTeal}
+                stroke={COLORS.foreground}
+                strokeWidth="3"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M-34 29C-39 40 -36 52 -31 58"
+                fill="none"
+                stroke="rgba(255,255,255,.64)"
+                strokeWidth="5"
+                strokeLinecap="round"
+              />
+            </g>
+            <g
+              transform={`translate(548 ${104 + Math.sin(localFrame / 26 + 1) * 2}) scale(${visualSystem.lessonLayout.appleNearScale})`}
+              opacity={focus === "apple-far" ? 0.62 : 1}
+            >
+              <ellipse cx="0" cy="68" rx="39" ry="7" fill="rgba(33,29,23,.12)" />
+              <path
+                d="M0 12C-18 -5 -52 1 -58 31C-64 60 -42 91 -17 93C-7 94 -3 85 0 85C3 85 7 94 17 93C42 91 64 60 58 31C52 1 18 -5 0 12Z"
+                fill={COLORS.brandRed}
+                stroke={COLORS.foreground}
+                strokeWidth="4"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M0 11C-3 0 -1 -10 5 -18"
+                fill="none"
+                stroke={COLORS.foreground}
+                strokeWidth="5"
+                strokeLinecap="round"
+              />
+              <path
+                d="M5 -12C18 -27 37 -23 34 -8C22 -5 12 -6 5 -12Z"
+                fill={COLORS.brandTeal}
+                stroke={COLORS.foreground}
+                strokeWidth="3"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M-34 29C-39 40 -36 52 -31 58"
+                fill="none"
+                stroke="rgba(255,255,255,.64)"
+                strokeWidth="5"
+                strokeLinecap="round"
+              />
+            </g>
           </g>
         )}
 

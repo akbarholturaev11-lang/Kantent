@@ -457,6 +457,9 @@ export function validateEpisode(episode) {
           "person-with-book",
           "coffee",
           "empty-cup",
+          "apple-near",
+          "apple-far",
+          "apple-pair",
         ].includes(beat.visualFocus)
       ) {
         throw new Error(

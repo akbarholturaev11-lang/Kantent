@@ -29,19 +29,24 @@ const baseEpisode = {
   publishingStatus: "owner-approved-for-zernio-publishing",
 };
 
-test("exactly three platform entries have safe states", () => {
+test("three platform entries expose safe CTA states", () => {
   assert.deepEqual(CTA_PLATFORMS, ["instagram", "tiktok", "youtube"]);
   assert.deepEqual(validatePlatformCtaConfig(lab), []);
   assert.equal(getPlatformCtaStatus(lab, "instagram").readyForRendering, true);
-  for (const platform of ["tiktok", "youtube"]) {
-    const state = getPlatformCtaStatus(lab, platform);
-    assert.equal(state.status, "pending-owner-configuration");
-    assert.equal(state.readyForDraft, false);
-    assert.equal(state.readyForRendering, false);
-    assert.equal(state.copy, null);
-    assert.ok(state.missing.length > 0);
-  }
-  assert.equal(getPlatformCtaStatus(lab, "youtube").publishingAuthorized, false);
+  const tiktok = getPlatformCtaStatus(lab, "tiktok");
+  assert.equal(tiktok.status, "pending-owner-configuration");
+  assert.equal(tiktok.readyForDraft, false);
+  assert.equal(tiktok.readyForRendering, false);
+  assert.equal(tiktok.copy, null);
+  assert.ok(tiktok.missing.length > 0);
+  assert.equal(tiktok.publishingAuthorized, false);
+  const youtube = getPlatformCtaStatus(lab, "youtube");
+  assert.equal(youtube.status, "approved");
+  assert.equal(youtube.readyForDraft, true);
+  assert.equal(youtube.readyForRendering, false);
+  assert.equal(youtube.copy, lab.offer.canonicalRussian);
+  assert.equal(youtube.copySource, "content/cta-lab.json#offer.canonicalRussian");
+  assert.equal(youtube.publishingAuthorized, true);
 });
 
 test("Instagram CTA copy is centrally read from offer and not duplicated", () => {
@@ -54,13 +59,40 @@ test("Instagram CTA copy is centrally read from offer and not duplicated", () =>
   assert.notEqual(retained, baseEpisode);
 });
 
-test("pending TikTok or YouTube can never silently inherit Instagram copy", () => {
-  for (const platform of ["tiktok", "youtube"]) {
-    assert.throws(
-      () => preparePlatformCtaDraft(baseEpisode, lab, platform),
-      /CTA is not ready/,
-    );
+test("pending TikTok cannot silently inherit Instagram copy", () => {
+  assert.throws(
+    () => preparePlatformCtaDraft(baseEpisode, lab, "tiktok"),
+    /CTA is not ready/,
+  );
+});
+
+test("YouTube reuses Instagram copy and changes only the two supplied screenshot frames", () => {
+  const state = getPlatformCtaStatus(lab, "youtube");
+  const instagram = lab.platformVariants.instagram.sceneTemplate;
+  const youtube = lab.platformVariants.youtube.sceneTemplate;
+  assert.equal(state.copy, lab.offer.canonicalRussian);
+  assert.equal(lab.platformVariants.youtube.canonicalRussian, undefined);
+  assert.equal(youtube.headline, instagram.headline);
+  assert.equal(youtube.screenCaption, instagram.screenCaption);
+  assert.equal(youtube.durationSec, instagram.durationSec);
+  assert.deepEqual(youtube.visualBeats[0], instagram.visualBeats[0]);
+  assert.deepEqual(youtube.visualBeats[3], instagram.visualBeats[3]);
+  for (const index of [1, 2]) {
+    const omitFrame = ({ screenImage, screenImageWidthPx, screenImageHeightPx, screenHighlight, ...rest }) => rest;
+    assert.deepEqual(omitFrame(youtube.visualBeats[index]), omitFrame(instagram.visualBeats[index]));
   }
+  assert.equal(youtube.visualBeats[1].screenImage, "cta/youtube-telegram-profile.jpg");
+  assert.equal(youtube.visualBeats[2].screenImage, "cta/youtube-open-link-browser.jpg");
+  const draft = preparePlatformCtaDraft(baseEpisode, lab, "youtube");
+  assert.equal(draft.cta, lab.offer.canonicalRussian);
+  assert.equal(draft.ctaPlatform, "youtube");
+  assert.equal(draft.scenes.find((scene) => scene.kind === "cta").narration, lab.offer.canonicalRussian);
+  assert.equal(draft.audioSrc, baseEpisode.audioSrc);
+  assert.equal(draft.voiceTextHash, baseEpisode.voiceTextHash);
+  assert.deepEqual(draft.captions, baseEpisode.captions);
+  assert.equal(draft.scenes[0].durationFrames, baseEpisode.scenes[0].durationFrames);
+  assert.equal(draft.ctaExperiment, undefined);
+  assert.equal(draft.publishingStatus, "pending-owner-review");
 });
 
 test("TikTok keyword auto-DM requires actual verification before approval", () => {
@@ -96,10 +128,24 @@ test("TikTok keyword auto-DM requires actual verification before approval", () =
   assert.equal(cloned.scenes[0].durationFrames, undefined);
 });
 
-test("YouTube publication remains blocked even for an eventually approved CTA", () => {
+test("a platform CTA wording change invalidates shared speech and word timings", () => {
+  const staged = structuredClone(lab);
+  Object.assign(staged.platformVariants.youtube, {
+    copySource: "platform",
+    canonicalRussian: "Попробуй HSK AI. Зайди в канал, открой описание и скачай приложение с сайта.",
+  });
+  const draft = preparePlatformCtaDraft(baseEpisode, staged, "youtube");
+  assert.equal(draft.audioSrc, undefined);
+  assert.equal(draft.voiceTextHash, undefined);
+  assert.equal(draft.captions, undefined);
+  assert.equal(draft.captionSource, "pending-tts-export");
+});
+
+test("YouTube is an authorized destination but stays blocked at its render gate", () => {
   const staged = structuredClone(lab);
   Object.assign(staged.platformVariants.youtube, {
     status: "approved",
+    copySource: "platform",
     deliveryMode: "channel-profile-link",
     canonicalRussian: "Тестовый утверждённый YouTube текст",
     headline: "YouTube CTA",
@@ -109,7 +155,7 @@ test("YouTube publication remains blocked even for an eventually approved CTA", 
   });
   assert.equal(getPlatformCtaStatus(staged, "youtube").readyForDraft, true);
   assert.equal(getPlatformCtaStatus(staged, "youtube").readyForRendering, false);
-  assert.equal(getPlatformCtaStatus(staged, "youtube").publishingAuthorized, false);
+  assert.equal(getPlatformCtaStatus(staged, "youtube").publishingAuthorized, true);
   const draft = preparePlatformCtaDraft(baseEpisode, staged, "youtube");
   assert.equal(draft.cta, staged.platformVariants.youtube.canonicalRussian);
 });
@@ -126,6 +172,6 @@ test("changing the Instagram offer without re-registering does not silently reus
 test("unknown platform and incompletely approved variants fail closed", () => {
   assert.throws(() => getPlatformCtaStatus(lab, "telegram"), /Unsupported/);
   const bad = structuredClone(lab);
-  bad.platformVariants.youtube.status = "approved";
+  bad.platformVariants.youtube.sceneTemplate = null;
   assert.ok(validatePlatformCtaConfig(bad).length > 0);
 });

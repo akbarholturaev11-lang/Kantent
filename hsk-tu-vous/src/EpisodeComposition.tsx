@@ -15,6 +15,7 @@ import { buildCaptionSections } from "../scripts/caption-utils.mjs";
 import seedEpisode from "../content/episodes/ni-nin-nimen-20260928.json";
 import visualSystem from "../content/visual-system.json";
 import { CaptionOverlay, type TimedCaption } from "./CaptionOverlay";
+import { BoldMotionScene } from "./BoldMotionScene";
 import { NarrativeVisual, type VisualFocus } from "./NarrativeVisual";
 
 type LessonCard = {
@@ -59,7 +60,7 @@ type LessonEpisode = {
 };
 
 type EpisodeProps = { episode: LessonEpisode };
-type VisualBeat = {
+export type VisualBeat = {
   hero: string;
   pinyin?: string;
   meaning?: string;
@@ -182,6 +183,17 @@ const focusSize = (text: string, chinese = false) => {
   if (text.length <= 10) return 116;
   if (text.length <= 16) return 88;
   return 66;
+};
+
+const motionAccentForBeat = (beat: VisualBeat, fallback: string) => {
+  if (beat.hero === "个") return COLORS.brandGold;
+  if (beat.visualFocus === "apple-near" || beat.hero.startsWith("这")) {
+    return COLORS.brandRed;
+  }
+  if (beat.visualFocus === "apple-far" || beat.hero.startsWith("那")) {
+    return COLORS.brandTeal;
+  }
+  return fallback;
 };
 
 const normalizeCueText = (text: string) =>
@@ -526,6 +538,7 @@ const BeatText: React.FC<{
   beat: VisualBeat;
   localFrame: number;
   accent: string;
+  motionDesign?: boolean;
   visualFocus?: VisualFocus;
   transitionFrame: number;
   beatIndex: number;
@@ -535,7 +548,8 @@ const BeatText: React.FC<{
 }> = ({
   beat,
   localFrame,
-  accent,
+  accent: sceneAccent,
+  motionDesign = false,
   visualFocus,
   transitionFrame,
   beatIndex,
@@ -543,17 +557,23 @@ const BeatText: React.FC<{
   isHook,
   isOutgoing = false,
 }) => {
+  const accent = motionDesign
+    ? motionAccentForBeat(beat, sceneAccent)
+    : sceneAccent;
   const motion = beat.motion ?? (isHook ? "pop" : "reveal");
-  const entry = motion === "pop"
+  const defaultEntry = motion === "pop"
     ? interpolate(
         localFrame,
         [0, MOTION.popPeakFrame, MOTION.settleFrames],
         [isHook ? 0.985 : MOTION.popStartScale, MOTION.popPeakScale, 1],
         clampEase,
       )
-    : motion === "reveal"
-      ? interpolate(localFrame, [0, MOTION.settleFrames], [MOTION.cardStartScale, 1], clampEase)
-      : 1;
+      : motion === "reveal"
+        ? interpolate(localFrame, [0, MOTION.settleFrames], [MOTION.cardStartScale, 1], clampEase)
+        : 1;
+  const entry = motionDesign
+    ? interpolate(localFrame, [0, 9, 24], [0.88, 1.035, 1], clampEase)
+    : defaultEntry;
   const opacity = isOutgoing
     ? interpolate(
         transitionFrame,
@@ -586,8 +606,13 @@ const BeatText: React.FC<{
     [0, 100],
     clampEase,
   );
-  const fontSize = focusSize(beat.hero, beat.chinese);
-  const staggeredHero = beat.chinese && !beat.hero.includes("·") && !isHook;
+  const appleTeachingLayout = visualFocus?.startsWith("apple-") ?? false;
+  const fontSize = focusSize(beat.hero, beat.chinese) *
+    (appleTeachingLayout ? visualSystem.lessonLayout.appleTeachingTextScale : 1) *
+    (motionDesign ? 1.12 : 1);
+  const staggeredHero = beat.chinese &&
+    !beat.hero.includes("·") &&
+    (!isHook || motionDesign);
   const highlightOpacity = interpolate(localFrame, [0, MOTION.beatCrossfadeFrames], [0, 1], clampEase);
 
   return (
@@ -628,6 +653,7 @@ const BeatText: React.FC<{
             focus={visualFocus}
             localFrame={localFrame}
             accent={accent}
+            motionDesign={motionDesign}
           />
         )}
         {beat.brandLogo && (
@@ -660,8 +686,12 @@ const BeatText: React.FC<{
               maxWidth: "100%",
               height: beat.screenImageHeightPx ?? 1100,
               flexShrink: 0,
-              borderRadius: 24,
-              boxShadow: "0 24px 64px rgba(33,29,23,.18)",
+              borderRadius: motionDesign ? 34 : 24,
+              border: motionDesign ? `2px solid ${accent}88` : undefined,
+              background: motionDesign ? "rgba(255,255,255,.72)" : undefined,
+              boxShadow: motionDesign
+                ? `0 34px 100px rgba(33,29,23,.2), 0 12px 32px ${accent}24`
+                : "0 24px 64px rgba(33,29,23,.18)",
             }}
           >
             <Img
@@ -671,7 +701,7 @@ const BeatText: React.FC<{
                 width: "100%",
                 height: "100%",
                 objectFit: "contain",
-                borderRadius: 24,
+                borderRadius: motionDesign ? 32 : 24,
               }}
             />
             {beat.screenHighlight && (
@@ -726,16 +756,57 @@ const BeatText: React.FC<{
                   characterIndex * MOTION.heroCharacterStaggerFrames;
                 return (
                   <span
-                    key={`${character}-${characterIndex}`}
-                    style={{
-                      display: "inline-block",
-                      opacity: interpolate(
-                        localFrame,
-                        [characterDelay, characterDelay + 5],
-                        [0, 1],
-                        clampEase,
-                      ),
-                    }}
+              key={`${character}-${characterIndex}`}
+              style={{
+                display: "inline-block",
+                opacity: interpolate(
+                  localFrame,
+                  [characterDelay, characterDelay + 5],
+                  [0, 1],
+                  clampEase,
+                ),
+                translate: motionDesign
+                  ? `${interpolate(
+                      localFrame,
+                      [characterDelay, characterDelay + 14],
+                      [characterIndex % 2 === 0 ? -86 : 86, 0],
+                      clampEase,
+                    )}px ${interpolate(
+                      localFrame,
+                      [characterDelay, characterDelay + 14],
+                      [characterIndex % 2 === 0 ? 24 : -24, 0],
+                      clampEase,
+                    )}px`
+                  : undefined,
+                scale: motionDesign
+                  ? interpolate(
+                      localFrame,
+                      [characterDelay, characterDelay + 8, characterDelay + 16],
+                      [0.72, 1.08, 1],
+                      clampEase,
+                    )
+                  : undefined,
+                rotate: motionDesign
+                  ? `${interpolate(
+                      localFrame,
+                      [characterDelay, characterDelay + 14],
+                      [characterIndex % 2 === 0 ? -8 : 8, 0],
+                      clampEase,
+                    )}deg`
+                  : undefined,
+                color: motionDesign
+                  ? character === "这"
+                    ? COLORS.brandRed
+                    : character === "那"
+                      ? COLORS.brandTeal
+                      : character === "个"
+                        ? COLORS.brandGold
+                        : COLORS.foreground
+                  : undefined,
+                textShadow: motionDesign
+                  ? `0 10px 30px ${accent}20`
+                  : undefined,
+              }}
                   >
                     {character}
                   </span>
@@ -748,7 +819,9 @@ const BeatText: React.FC<{
             style={{
               marginTop: 15,
               color: accent,
-              fontSize: 51,
+              fontSize: 51 * (appleTeachingLayout
+                ? visualSystem.lessonLayout.appleTeachingSupportTextScale
+                : 1) * (motionDesign ? 1.12 : 1),
               lineHeight: 1.1,
               fontWeight: 800,
               letterSpacing: "-.025em",
@@ -770,15 +843,19 @@ const BeatText: React.FC<{
               display: "inline-flex",
               alignItems: "center",
               gap: 12,
-              marginTop: 15,
+              marginTop: motionDesign ? 19 : 15,
               padding: "13px 22px",
               borderRadius: visualSystem.shape.chipRadiusPx,
-              background: COLORS.surface,
-              border: `1px solid ${COLORS.border}`,
+              background: motionDesign ? "rgba(255,255,255,.8)" : COLORS.surface,
+              border: `1px solid ${motionDesign ? `${accent}55` : COLORS.border}`,
               color: COLORS.muted,
-              fontSize: beat.meaning.length > 22 ? 32 : 39,
+              fontSize: (beat.meaning.length > 22 ? 32 : 39) *
+                (appleTeachingLayout
+                  ? visualSystem.lessonLayout.appleTeachingSupportTextScale
+                  : 1),
               fontWeight: 650,
               lineHeight: 1.22,
+              boxShadow: motionDesign ? `0 16px 42px ${accent}22` : undefined,
           }}
         >
           <span
@@ -873,14 +950,24 @@ const ToneContour: React.FC<{
 };
 
 const LessonSlide: React.FC<{
+  episodeId: string;
   scene: LessonScene;
   index: number;
   durationFrames: number;
   timelineStartMs: number;
   captions: TimedCaption[];
-}> = ({ scene, index, durationFrames, timelineStartMs, captions }) => {
+}> = ({ episodeId, scene, index, durationFrames, timelineStartMs, captions }) => {
   const frame = useCurrentFrame();
-  const accent = ACCENTS[index % ACCENTS.length];
+  const motionDesign = episodeId === "zhe-na-ge";
+  const accent = motionDesign
+    ? scene.id === "near"
+      ? COLORS.brandRed
+      : scene.id === "far"
+        ? COLORS.brandTeal
+        : scene.id === "measure"
+          ? COLORS.brandGold
+          : COLORS.brandRed
+    : ACCENTS[index % ACCENTS.length];
   const beats = getBeats(scene);
   const weights = beats.map(() => 1 / beats.length);
   const beatDurations = weights.map((weight) =>
@@ -1022,23 +1109,36 @@ const LessonSlide: React.FC<{
         color: COLORS.foreground,
       }}
     >
-      <AbsoluteFill
-        style={{
-          background: `radial-gradient(ellipse at 50% 48%, ${accent}24 0%, ${accent}0b 27%, transparent 56%), linear-gradient(155deg, ${COLORS.surface} 0%, ${COLORS.background} 72%, ${COLORS.background} 100%)`,
-        }}
-      />
-      <AbsoluteFill
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(102,93,80,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(102,93,80,.07) 1px, transparent 1px)",
-          backgroundSize: "72px 72px",
-          opacity: 0.42,
-          maskImage:
-            "radial-gradient(ellipse at center, black 0%, transparent 76%)",
-        }}
-      />
+      {motionDesign ? (
+        <BoldMotionScene
+          sceneId={scene.id}
+          beat={beat}
+          previousBeat={shouldCrossfadeBeat ? previousBeat : undefined}
+          frame={frame}
+          beatFrame={localBeatFrame}
+          accent={accent}
+        />
+      ) : (
+        <>
+          <AbsoluteFill
+            style={{
+              background: `radial-gradient(ellipse at 50% 48%, ${accent}24 0%, ${accent}0b 27%, transparent 56%), linear-gradient(155deg, ${COLORS.surface} 0%, ${COLORS.background} 72%, ${COLORS.background} 100%)`,
+            }}
+          />
+          <AbsoluteFill
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(102,93,80,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(102,93,80,.07) 1px, transparent 1px)",
+              backgroundSize: "72px 72px",
+              opacity: 0.42,
+              maskImage:
+                "radial-gradient(ellipse at center, black 0%, transparent 76%)",
+            }}
+          />
+        </>
+      )}
 
-      <div
+      {!motionDesign && <div
         style={{
           position: "absolute",
           top: MOTION.brandTopInsetPx,
@@ -1065,32 +1165,34 @@ const LessonSlide: React.FC<{
           }}
         />
         HSK <span style={{ color: accent, marginLeft: -9 }}>AI</span>
-      </div>
+      </div>}
 
-      {shouldCrossfadeBeat && previousBeat && (
+      {!motionDesign && shouldCrossfadeBeat && previousBeat && (
         <BeatText
           key={`${scene.id}-${beatIndex - 1}-outgoing`}
           beat={previousBeat}
           localFrame={Math.max(0, frame - previousBeatStart)}
           transitionFrame={localBeatFrame}
           accent={accent}
+          motionDesign={motionDesign}
           visualFocus={previousBeat.visualFocus}
           beatIndex={beatIndex - 1}
           isHook={scene.kind === "hook"}
           isOutgoing
         />
       )}
-      <BeatText
+      {!motionDesign && <BeatText
         key={`${scene.id}-${beatIndex}`}
         beat={beat}
         localFrame={localBeatFrame}
         transitionFrame={localBeatFrame}
         accent={accent}
+        motionDesign={motionDesign}
         visualFocus={beat.visualFocus}
         beatIndex={beatIndex}
         commentTiming={commentTiming}
         isHook={scene.kind === "hook"}
-      />
+      />}
 
       {index > 0 && (
         <Sequence durationInFrames={SOUND.sceneCueFrames}>
@@ -1150,6 +1252,7 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode }) => {
       {timeline.map(({ scene, index, from, durationFrames }) => (
         <Sequence key={scene.id} from={from} durationInFrames={durationFrames}>
           <LessonSlide
+            episodeId={episode.id}
             scene={scene}
             index={index}
             durationFrames={durationFrames}
@@ -1210,6 +1313,7 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode }) => {
       <CaptionOverlay
         captions={episode.captions ?? []}
         sceneSections={captionSections}
+        motionDesign={episode.id === "zhe-na-ge"}
       />
     </AbsoluteFill>
   );

@@ -352,7 +352,7 @@ export function summarizeHookLab(lab, experiments, { asOf = new Date() } = {}) {
       (entry) => entry.window === (rules.earlySignalWindow ?? "24h"),
     ).length,
     platformAnalyticsConnected: false,
-    note: "Zernio may be used for owner-confirmed Instagram/TikTok publishing. Readbacks are entered by the owner from platform dashboards; no analytics API is called.",
+    note: "Zernio may be used for owner-confirmed Instagram Reels/YouTube Shorts publishing. Readbacks are entered by the owner from platform dashboards; no analytics API is called.",
     baselineFormatId: lab.baselineFormatId,
     policy: rules,
     activeOwnerCorrections: getActiveHookCorrections(lab),

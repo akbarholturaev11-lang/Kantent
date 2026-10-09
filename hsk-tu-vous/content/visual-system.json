@@ -43,6 +43,12 @@
     "chipRadiusPx": 999,
     "safeMarginPx": 80
   },
+  "lessonLayout": {
+    "appleFarScale": 0.78,
+    "appleNearScale": 1.15,
+    "appleTeachingTextScale": 0.88,
+    "appleTeachingSupportTextScale": 0.9
+  },
   "motion": {
     "stageReveal": "Keep scene changes in one open composition; use type motion and contextual visuals, never offset container cards.",
     "teachingBeat": "Show one Hanzi form at a time, followed by pinyin and Russian meaning.",
@@ -69,7 +75,7 @@
     "toneContourWidthPx": 240,
     "toneContourHeightPx": 48,
     "heroCharacterStaggerFrames": 3,
-    "beatEntryLeadFrames": 6,
+    "beatEntryLeadFrames": 15,
     "ctaSlideMatchFrames": 14,
     "ctaTypeRevealFrames": 12,
     "ctaMaskRevealFrames": 12,
