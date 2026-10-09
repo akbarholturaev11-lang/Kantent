@@ -33,6 +33,8 @@ jobs:
         run: node --test scripts/resolve-production-date.test.mjs
       - name: Test future episode buffer audit
         run: node --test scripts/self-improvement-check.test.mjs
+      - name: Test 30-day canonical Hook Lab decisions
+        run: node --test scripts/hook-lab-rolling.test.mjs
       - name: Test Zernio feedback analyzer and source snapshots
         run: node --test scripts/feedback-analyzer.test.mjs && npm run content:feedback -- --json > /tmp/feedback-report.json
       - name: Test source freshness guards

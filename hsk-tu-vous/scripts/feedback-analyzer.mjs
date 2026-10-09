@@ -16,6 +16,12 @@ export function validateObservation(o) {
   if(!iso(o.publishedAt)||!iso(o.observedAt)) errors.push('invalid timestamps');
   if(iso(o.publishedAt)&&iso(o.observedAt)&&Date.parse(o.publishedAt)>Date.parse(o.observedAt)) errors.push('observation precedes publication');
   if(!windows.has(o.window)) errors.push('invalid window');
+  // A time-window result can only exist once the post has reached that age.
+  // Later retrieval of provider-labelled historical windows remains valid.
+  const ageRequiredHours = {'24h':24,'72h':72,'7d':168}[o.window];
+  if (ageRequiredHours && iso(o.publishedAt) && iso(o.observedAt) &&
+      Date.parse(o.observedAt)-Date.parse(o.publishedAt)<ageRequiredHours*3600000)
+    errors.push('window '+o.window+' claimed before required post age');
   if(o.source?.provider!=='Zernio'||!iso(o.source?.syncedAt)||!o.source?.endpoint) errors.push('missing Zernio provenance');
   if(o.postUrl!=null && (typeof o.postUrl!=='string'||!/^https:\/\/(www\.)?(instagram\.com|tiktok\.com)\//.test(o.postUrl))) errors.push('invalid postUrl');
   if(o.episodeId!=null && (typeof o.episodeId!=='string'||!/^[a-z0-9-]+$/.test(o.episodeId))) errors.push('invalid episodeId');
@@ -61,17 +67,40 @@ export function deriveMetrics(o){
     sharesPer1000Views:shares==null||!views?null:+(1000*shares/views).toFixed(2)
   };
 }
-export function analyzeObservations(observations,policy={}){
+export function analyzeObservations(observations,policy={}, {asOf = new Date()} = {}){
+  const lookbackDays=policy.analysisLookbackDays??30;
+  const earlyWindow=policy.earlySignalWindow??'24h';
+  const primaryWindow=policy.primaryDecisionWindow??'7d';
+  const asOfDate=asOf instanceof Date?asOf:new Date(asOf);
+  if(Number.isNaN(asOfDate.valueOf()))throw Error('Invalid analysis asOf timestamp');
+  if(!Number.isSafeInteger(lookbackDays)||lookbackDays<1||lookbackDays>365)
+    throw Error('Invalid analysisLookbackDays');
+  if(!windows.has(earlyWindow)||!windows.has(primaryWindow)||
+      earlyWindow==='lifetime'||primaryWindow==='lifetime'||earlyWindow===primaryWindow)
+    throw Error('Invalid analysis windows');
+  const cutoffMs=asOfDate.valueOf()-lookbackDays*86400000;
   const latest=new Map();
+  let observationsAfterAsOf=0;
   for(const o of observations){
     const errors=validateObservation(o); if(errors.length) throw Error(errors.join('; '));
+    if(Date.parse(o.observedAt)>asOfDate.valueOf()) {observationsAfterAsOf++;continue;}
     const key=[o.platform,o.platformPostId,o.window].join('/');
     if(!latest.has(key)||latest.get(key).observedAt<o.observedAt) latest.set(key,o);
   }
-  const posts=[...latest.values()].map(deriveMetrics).sort((a,b)=>a.postId.localeCompare(b.postId));
+  const allPosts=[...latest.values()].map(deriveMetrics);
+  // Use PUBLICATION time, never collection time, to select the recent cohort.
+  const posts=allPosts.filter(p=>
+    Date.parse(p.publishedAt)>=cutoffMs &&
+    Date.parse(p.publishedAt)<=asOfDate.valueOf()
+  ).sort((a,b)=>a.postId.localeCompare(b.postId));
+  const historicalPostWindowsExcluded=allPosts.length-posts.length;
   const cohorts=new Map();
   for(const p of posts){
-    if(p.window==='lifetime'||!p.hookFormat||!p.hskLevel||p.averageWatchRatio==null) continue;
+    // 24h is an early signal; ONLY provider-grounded 7d evidence can be
+    // considered the primary comparable cohort. Lifetime/72h never substitute.
+    if(![earlyWindow,primaryWindow].includes(p.window) ||
+        !p.episodeId || !p.hookFormat || !p.hskLevel ||
+        p.averageWatchRatio==null) continue;
     const key=[p.platform,p.window,p.hskLevel,p.durationBand,p.hookFormat].join('|');
     if(!cohorts.has(key)) cohorts.set(key,[]);
     cohorts.get(key).push(p);
@@ -79,17 +108,39 @@ export function analyzeObservations(observations,policy={}){
   const comparableGroups=[...cohorts].map(([key,group])=>{
     const eligible=group.filter(p=>p.views!=null&&p.views>=(policy.minimumViewsPerPost??500));
     const ratios=eligible.map(p=>p.averageWatchRatio).sort((a,b)=>a-b);
-    const n=ratios.length;const median=n?(n%2?ratios[(n-1)/2]:(ratios[n/2-1]+ratios[n/2])/2):null;
-    return {key,postCount:n,medianWatchRatio:median,readiness:n>=(policy.minimumPostsPerFormat??3)?'descriptive-only-owner-review':'insufficient-sample'};
+    const n=ratios.length;
+    const median=n?(n%2?ratios[(n-1)/2]:(ratios[n/2-1]+ratios[n/2])/2):null;
+    const phase=group[0].window===primaryWindow?'primary':'early';
+    const readiness=n<(policy.minimumPostsPerFormat??3)?
+      'insufficient-sample':phase==='early'?'early-signal-only':'descriptive-only-owner-review';
+    return {key,window:group[0].window,phase,postCount:n,medianWatchRatio:median,readiness};
   });
   const caveats=[];
-  if(posts.some(p=>p.window==='lifetime')) caveats.push('Lifetime metrics have unequal post ages: not a controlled retention or hook comparison.');
-  if(posts.some(p=>p.episodeId==null||p.hookFormat==null||p.hskLevel==null)) caveats.push('Missing verified post-to-episode/format/HSK matching: do not attribute a result to a creative choice.');
-  if(!posts.length) caveats.push('Unmeasured is not zero. No analytics observations.');
+  if(posts.some(p=>p.window==='lifetime'))
+    caveats.push('Lifetime metrics have unequal post ages: never a controlled 24h/7d comparison.');
+  if(posts.some(p=>p.episodeId==null||p.hookFormat==null||p.hskLevel==null))
+    caveats.push('Unverified episode/hook/HSK attribution; do not infer creative effectiveness from these posts.');
+  if(!comparableGroups.some(p=>p.phase==='primary'&&p.readiness==='descriptive-only-owner-review'))
+    caveats.push('No eligible primary 7d cohort: insufficient evidence for adopting a performance-led script change.');
+  if(!posts.length) caveats.push('Unmeasured is not zero. No analytics observations in the rolling window.');
+  if(observationsAfterAsOf) caveats.push('Snapshots collected after asOf were omitted from this historical analysis.');
   return {
-    schemaVersion:1,observationCount:observations.length,distinctPostWindows:posts.length,posts,
-    comparableGroups,decision:'no-automatic-winner',caveats,
-    nextActions:['Test a single opening or edit variable, not several at once.','Keep CTA and publishing owner-approval gates unchanged.']
+    schemaVersion:1,
+    analysisWindow:{publishedLookbackDays:lookbackDays,asOf:asOfDate.toISOString(),
+      publicationCutoff:new Date(cutoffMs).toISOString(),earlySignalWindow:earlyWindow,
+      primaryDecisionWindow:primaryWindow},
+    observationCount:observations.length,
+    recentPostWindows:posts.length,
+    historicalPostWindowsExcluded,
+    futureSnapshotsExcluded:observationsAfterAsOf,
+    distinctPostWindows:posts.length,
+    posts,comparableGroups,
+    performanceChangeEvidence:comparableGroups.some(p=>p.phase==='primary'&&p.readiness==='descriptive-only-owner-review')?'owner-review-required':'insufficient-evidence',
+    decision:'no-automatic-winner',
+    caveats,
+    nextActions:['Use grounded 24h data only as a preliminary signal; require actual 7d window for primary decisions.',
+      'Make only evidence-backed changes to unapproved future scripts, in a GitHub PR.',
+      'Keep CTA, approved/published snapshots and publishing owner-approval gates unchanged.']
   };
 }
 export function loadObservations(dir=path.join(root,'content/feedback/observations')){
@@ -106,10 +157,10 @@ export function runCli(args=process.argv.slice(2)){
   const result=analyzeObservations(loadObservations(),policy);
   if(args.includes('--json')) console.log(JSON.stringify(result,null,2));
   else {
-    console.log('Zernio: '+result.observationCount+' observations, '+result.distinctPostWindows+' post/windows');
+    console.log('Zernio: last '+result.analysisWindow.publishedLookbackDays+' days; '+result.recentPostWindows+' recent post/windows; '+result.historicalPostWindowsExcluded+' historical windows excluded');
     for(const p of result.posts) console.log(p.platform+' '+p.postId+' '+p.window+' views='+p.views+' watchRatio='+p.averageWatchRatio+' skip='+p.skipRatePercent);
     for(const note of result.caveats) console.log('CAUTION: '+note);
-    console.log('Decision: '+result.decision);
+    console.log('Evidence: '+result.performanceChangeEvidence+'; decision: '+result.decision);
   }
   return 0;
 }

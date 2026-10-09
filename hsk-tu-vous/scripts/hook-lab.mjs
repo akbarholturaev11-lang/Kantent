@@ -177,13 +177,29 @@ export function createHookReadback({
   };
 }
 
-export function summarizeHookLab(lab, experiments) {
+export function summarizeHookLab(lab, experiments, { asOf = new Date() } = {}) {
   const rules = lab.policy;
+  const analysisDate = asOf instanceof Date ? asOf : new Date(asOf);
+  const analysisDays = rules.analysisLookbackDays ?? 30;
+  if (Number.isNaN(analysisDate.valueOf()) || !Number.isSafeInteger(analysisDays) ||
+      analysisDays < 1 || analysisDays > 365)
+    throw new Error("Invalid Hook Lab analysis horizon.");
+  const cutoffMs = analysisDate.valueOf() - analysisDays * 86400000;
+  const recentReadbacks = lab.readbacks.filter((entry) => {
+    const publishedMs = Date.parse(entry.publishedAt);
+    const capturedMs = Date.parse(entry.capturedAt);
+    return Number.isFinite(publishedMs) && Number.isFinite(capturedMs) &&
+      publishedMs >= cutoffMs && publishedMs <= analysisDate.valueOf() &&
+      capturedMs <= analysisDate.valueOf();
+  });
+  const decisionReadbacks = recentReadbacks.filter(
+    (entry) => entry.window === (rules.primaryDecisionWindow ?? "7d"),
+  );
   const formatSummaries = lab.formats.map((format) => {
     const assigned = experiments.filter(
       (experiment) => experiment.formatId === format.id,
     );
-    const records = lab.readbacks.filter(
+    const records = recentReadbacks.filter(
       (entry) => entry.hookFormatId === format.id,
     );
     const eligible = records.filter(
@@ -199,7 +215,7 @@ export function summarizeHookLab(lab, experiments) {
   });
 
   const cohortKeys = new Set(
-    lab.readbacks.map((entry) =>
+    decisionReadbacks.map((entry) =>
       [
         entry.platform,
         entry.window,
@@ -214,7 +230,7 @@ export function summarizeHookLab(lab, experiments) {
   for (const cohortKey of cohortKeys) {
     const [platform, window, primaryMetric, level, durationBand] =
       cohortKey.split("|");
-    const cohort = lab.readbacks.filter(
+    const cohort = decisionReadbacks.filter(
       (entry) =>
         entry.platform === platform &&
         entry.window === window &&
@@ -323,7 +339,18 @@ export function summarizeHookLab(lab, experiments) {
   }
 
   return {
-    status: lab.readbacks.length ? "measured" : "unmeasured",
+    status: recentReadbacks.length ? "measured" : "unmeasured",
+    analysisWindow: {
+      publishedLookbackDays: analysisDays,
+      asOf: analysisDate.toISOString(),
+      publicationCutoff: new Date(cutoffMs).toISOString(),
+      earlySignalWindow: rules.earlySignalWindow ?? "24h",
+      primaryDecisionWindow: rules.primaryDecisionWindow ?? "7d",
+    },
+    historicalReadbacksExcluded: lab.readbacks.length - recentReadbacks.length,
+    earlyReadbacks: recentReadbacks.filter(
+      (entry) => entry.window === (rules.earlySignalWindow ?? "24h"),
+    ).length,
     platformAnalyticsConnected: false,
     note: "Zernio may be used for owner-confirmed Instagram/TikTok publishing. Readbacks are entered by the owner from platform dashboards; no analytics API is called.",
     baselineFormatId: lab.baselineFormatId,
@@ -332,9 +359,9 @@ export function summarizeHookLab(lab, experiments) {
     correctionHistoryCount: (lab.ownerCorrections ?? []).length,
     formats: formatSummaries,
     comparisons,
-    recentReadbacks: lab.readbacks.slice(-12),
-    nextAction: lab.readbacks.length
-      ? "Use the same platform, 24h/7d window, primary metric, HSK level, and duration band; gather missing comparable samples. Topic differences remain a possible confounder."
-      : "After an approved video is published, enter its 24h and 7d dashboard metrics with record_hook_analytics.",
+    recentReadbacks: recentReadbacks.slice(-12),
+    nextAction: decisionReadbacks.length
+      ? "Review only last-30-day 7d cohorts with the same platform, primary metric, HSK level, and duration band. 24h is preliminary; topic differences remain a confounder."
+      : "No eligible recent 7d evidence. Obtain actual platform-labelled 24h and 7d snapshots; never relabel lifetime totals as fixed-window results.",
   };
 }
