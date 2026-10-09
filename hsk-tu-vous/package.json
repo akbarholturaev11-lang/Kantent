@@ -38,7 +38,8 @@
     "content:approve": "node scripts/approve-package.mjs",
     "mcp": "node scripts/mcp-server.mjs",
     "check:consistency": "node scripts/check-consistency.mjs",
-    "content:buffer": "node scripts/self-improvement-check.mjs"
+    "content:buffer": "node scripts/self-improvement-check.mjs",
+    "content:feedback": "node scripts/feedback-analyzer.mjs"
   },
   "sideEffects": [
     "*.css"

@@ -175,6 +175,7 @@ export function validateConsistency(root = projectRoot) {
   }
   if (cta) errors.push(...validatePlatformCtaConfig(cta).map((issue) => `content/cta-lab.json: ${issue}`));
   if (!hook?.policy) errors.push("content/hook-lab.json: missing hook policy");
+  if (hook?.policy?.planningHorizonWeeks !== undefined || hook?.policy?.planningBufferSource !== "content/calendar.json#planningBuffer") errors.push("content/hook-lab.json: planning horizon must reference the canonical calendar buffer");
   if (!visual?.colors || !visual?.motion) errors.push("content/visual-system.json: missing visual tokens");
 
   for (const doc of activeDocs) {

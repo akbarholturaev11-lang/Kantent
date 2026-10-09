@@ -13,6 +13,13 @@ This directory is reserved for **raw, sourced** Zernio observations and agent de
 
 ## First-phase scope
 
-Implemented: read-only buffer audit and validation tests.
+Implemented: read-only buffer audit, validated Zernio snapshot format, one genuine Instagram readback and a deterministic local analyzer.
 
-Not yet implemented: automatic Zernio collection, analytics persistence, AI-driven scenario drafting, cloud schedules, GitHub sync before render, HSK AI user attribution, automatic publication. No analytics examples in this directory are presented as actual results.
+- `observations/*.json` holds source-stamped immutable collections. Run `npm run content:feedback` or `npm run content:feedback -- --json` to review.
+- A snapshot uses `window: "lifetime"` unless an actual 24h, 72h or 7d readback was measured. Lifetime counts of posts of different ages are not comparable controlled experiments.
+- Absent metrics are recorded as `null`, not zero. `avgWatchMs` is the Zernio Reel average-watch field in milliseconds.
+- `episodeId`, `hookFormat`, `hskLevel`, `effectStyle` stay `null` until a match to production assets is verified. Date proximity alone is insufficient.
+- New time-stamped snapshots should be added as new files rather than altering existing source measurements. The analyzer uses the newest snapshot per post + window; it never declares an automatic winner.
+- `AGENT_PLAYBOOK.md` describes future ChatGPT ↔ Zernio ↔ GitHub orchestration.
+
+Not yet implemented: unattended Zernio collection, model-authored scenarios, cloud scheduling, GitHub pre-render synchronization, HSK AI user attribution or automatic publishing. Existing approval gates remain unchanged.

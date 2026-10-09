@@ -33,6 +33,8 @@ jobs:
         run: node --test scripts/resolve-production-date.test.mjs
       - name: Test future episode buffer audit
         run: node --test scripts/self-improvement-check.test.mjs
+      - name: Test Zernio feedback analyzer and source snapshots
+        run: node --test scripts/feedback-analyzer.test.mjs && npm run content:feedback -- --json > /tmp/feedback-report.json
       - name: Parse MCP server
         run: node --check scripts/mcp-server.mjs
       - name: Verify canonical files and avoid duplicated active settings

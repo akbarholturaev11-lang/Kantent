@@ -41,6 +41,10 @@ Before creating, changing, rendering or exporting any video, invoke the local MC
 
 Author future canonical `content/episodes/*.json` lessons with teaching scenes only: **no** top-level `cta`, `ctaExperiment` or embedded CTA scene. The canonical copy plus visual template are under `content/cta-lab.json`; `scripts/episode-cta-assembly.mjs` adds them when a working episode is materialized. The working `review/<id>/episode.json` then keeps one immutable-version CTA snapshot for verified voice, cue timing, QA and publication. Legacy sources and registered CTA experiments are historical, not alternate CTA sources. Do not auto-acknowledge a changed owner rule or reuse a stale registration: a new CTA version must be validated/registered before TTS/render.
 
+## Zernio feedback learning
+
+`content/feedback/observations/` stores externally sourced measurement snapshots. `scripts/feedback-analyzer.mjs` validates and summarizes them read-only; it is not a second Hook Lab. Follow `content/feedback/AGENT_PLAYBOOK.md` for future connector-assisted analysis. `content/calendar.json#planningBuffer` owns future scenario coverage. In particular, do not treat unequal-age lifetime totals as same-window experiment results.
+
 ## Operating boundaries
 
 - Do not edit secrets, add credentials, or use an unapproved external service.
