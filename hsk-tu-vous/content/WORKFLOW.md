@@ -18,7 +18,7 @@ The owner authorizes creating **new future** dates and full CTA-free lesson plan
 
 1. Check the language examples against trustworthy references and record dated evidence. The calendar's reference facts are not independent verification.
 2. Apply active Hook Lab rules. Record a dated hypothesis and one dominant opening pattern, without inventing audience-performance results.
-3. Read the single `content/cta-lab.json` registry for the requested **platform**. Instagram and YouTube use `offer.canonicalRussian`; the lesson body is shared, and YouTube changes only the two supplied screenshots in the final CTA scene. Since the spoken CTA is identical, reuse the approved audio and word-level cues. A changed CTA scene needs a fresh CTA registration, final export and review; it does not need a separately written or generated lesson. TikTok CTA remains pending and TikTok is not an authorized publishing destination. Call `get_platform_cta_status`; never promise an unverified keyword DM or invent a platform link. The current production renderer still does not route the YouTube ending into a separate final review package, so do not claim that YouTube export is ready until that route exists. Preserve old registrations and published snapshots.
+3. Read the single `content/cta-lab.json` registry for the requested **platform**. Instagram and YouTube use `offer.canonicalRussian`; the lesson body is shared, and YouTube changes only the two supplied screenshots in the final CTA scene. Since the spoken CTA is identical, reuse the approved audio and word-level cues. A changed CTA scene needs a fresh CTA registration, final export and review; it does not need a separately written or generated lesson. TikTok CTA remains pending and TikTok is not an authorized publishing destination. Call `get_platform_cta_status`; never promise an unverified keyword DM or invent a platform link. Normal make/render/MCP preparation automatically includes the approved YouTube ending. Its baseline registration inherits only the current correction acknowledgements already explicitly reviewed for the base; a new or missing correction blocks the derivation. A changed spoken CTA blocks shared export until matching voice/cues exist. Preserve old registrations and published snapshots.
 4. Finish the narration, relevant Chinese characters/pinyin/meaning, scene plan, synced visual beats, subtitles, and post text before voice generation.
 5. Use the spec/schema and design token sources linked in `AGENTS.md`. An episode-level change affects its working copy; do not rewrite canonical published history.
 
@@ -32,17 +32,17 @@ The owner authorizes creating **new future** dates and full CTA-free lesson plan
 
 ## 4. Render and validate
 
-1. Run the existing Remotion renderer on the dated working copy.
-2. Build the review package with the rendered MP4, baked-in subtitles, sidecar SRT, episode snapshot, post copy and status metadata.
+1. Run the existing Remotion renderer on the dated working copy. It automatically renders the shared lesson once, each approved CTA ending, and one continuous voice/sound mix. Both final MP4s reuse identical encoded lesson frames; the join does not split the speech audio.
+2. The renderer writes the Instagram package to the existing review root and the YouTube package under `review/<id>/youtube/`, each with MP4, baked-in subtitles, sidecar SRT, episode snapshot and post copy. `status.platformPackages` lists exact files, content hashes, video hashes and CTA registrations. A failed output keeps the whole job in a failed stage; do not silently omit YouTube.
 3. Inspect speech/cue alignment, the last spoken phrase, tone-marked pinyin, visual relevance, shot transitions, safe areas, music/effects and on-screen readability against `content/EDITING_SPEC.md` and `content/visual-system.json`.
 4. A narration edit invalidates imported speech/timing and all downstream media; a visual or packaging edit invalidates the video, post preview and approval. Re-render and re-review before presenting as ready.
 
 ## 5. Preview, approval and publishing
 
 1. Resolve the connected Instagram Reels or YouTube Shorts account and its platform-specific requirements through the currently authorized publishing integration specified in `AI_RULES.md`. For YouTube, include the exact title, visibility, audience selection and synthetic-media disclosure in the owner preview.
-2. Present the **actual** finished video, exact accounts, captions/hashtags, disclosures, and immediate/scheduled posting time in the configured timezone.
+2. Present each destination’s **actual** video from `status.platformPackages`, exact accounts, captions/hashtags, disclosures, and immediate/scheduled posting time in the configured timezone. Instagram must use its root export; YouTube must use its YouTube export. Approval verifies the current snapshot/CTA and media hash for each selected target, and returned post records retain that binding.
 3. Wait for explicit owner approval of **that specific preview**. Production authorization or voice approval is not publishing consent.
-4. Only then run the permitted publish/schedule action through the authorized integration and store the returned IDs, statuses and links. Never infer success from an ambiguous tool result or retry without checking.
+4. Only then upload/publish or schedule each platform's corresponding video through the authorized integration as a separate platform post; a single shared media file must not be sent to both accounts. Store each returned ID, status and link with its approved platform video/CTA binding. Never infer success from an ambiguous tool result or retry without checking.
 5. Collect later metrics only from verifiable owner/platform readbacks; do not fabricate engagement outcomes.
 
 ## Rule changes and handoffs

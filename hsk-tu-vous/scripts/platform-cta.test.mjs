@@ -43,7 +43,7 @@ test("three platform entries expose safe CTA states", () => {
   const youtube = getPlatformCtaStatus(lab, "youtube");
   assert.equal(youtube.status, "approved");
   assert.equal(youtube.readyForDraft, true);
-  assert.equal(youtube.readyForRendering, false);
+  assert.equal(youtube.readyForRendering, true);
   assert.equal(youtube.copy, lab.offer.canonicalRussian);
   assert.equal(youtube.copySource, "content/cta-lab.json#offer.canonicalRussian");
   assert.equal(youtube.publishingAuthorized, true);
@@ -141,7 +141,7 @@ test("a platform CTA wording change invalidates shared speech and word timings",
   assert.equal(draft.captionSource, "pending-tts-export");
 });
 
-test("YouTube is an authorized destination but stays blocked at its render gate", () => {
+test("approved YouTube CTA can render with matching speech artifacts", () => {
   const staged = structuredClone(lab);
   Object.assign(staged.platformVariants.youtube, {
     status: "approved",
@@ -154,7 +154,7 @@ test("YouTube is an authorized destination but stays blocked at its render gate"
     visualBeats: [{ hero: "Открой канал" }],
   });
   assert.equal(getPlatformCtaStatus(staged, "youtube").readyForDraft, true);
-  assert.equal(getPlatformCtaStatus(staged, "youtube").readyForRendering, false);
+  assert.equal(getPlatformCtaStatus(staged, "youtube").readyForRendering, true);
   assert.equal(getPlatformCtaStatus(staged, "youtube").publishingAuthorized, true);
   const draft = preparePlatformCtaDraft(baseEpisode, staged, "youtube");
   assert.equal(draft.cta, staged.platformVariants.youtube.canonicalRussian);

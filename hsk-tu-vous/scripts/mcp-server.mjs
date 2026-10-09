@@ -5,6 +5,7 @@ import { McpServer } from "@modelcontextprotocol/server";
 import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { recommendSkills } from "./skill-router.mjs";
 import { CTA_PLATFORMS, getPlatformCtaStatus } from "./platform-cta.mjs";
+import { requirePlatformPackage, requireApprovedPlatformPackages } from "./platform-exports.mjs";
 import {
   APPROVED_PUBLICATION_PLATFORMS,
   validatePublicationTarget,
@@ -662,7 +663,7 @@ const createServer = () => {
     {
       title: "Render review package",
       description:
-        "Собирает 9:16 MP4 с вшитыми синхронными субтитрами, sidecar SRT и текстом поста; ничего не публикует.",
+        "Автоматически собирает Instagram и YouTube 9:16 MP4: один общий урок, два утверждённых CTA-окончания, непрерывный общий звук, синхронные субтитры, SRT и тексты постов. Ничего не публикует.",
       inputSchema: z.object({ date: dateSchema }),
     },
     async ({ date }) =>
@@ -687,11 +688,13 @@ const createServer = () => {
           );
         }
         const result = await runScript("render-episode.mjs", item.id);
+        const status = await readStatus(item.id);
         return {
           date,
           episodeId: item.id,
           reviewFolder: reviewDir(item.id),
-          status: await readStatus(item.id),
+          status,
+          exports: status.platformPackages,
           log: result.log,
         };
       }),
@@ -746,6 +749,7 @@ const createServer = () => {
           }
           // Child renderer repeats the remote-main check immediately before rendering.
           const render = await runScript("render-episode.mjs", item.id);
+          const renderedStatus = await readStatus(item.id);
           return {
             date,
             episodeId: item.id,
@@ -757,8 +761,9 @@ const createServer = () => {
               postText: path.join(folder, "post.md"),
               script: path.join(folder, "episode.json"),
               status: path.join(folder, "status.json"),
+              platforms: renderedStatus.platformPackages,
             },
-            status: await readStatus(item.id),
+            status: renderedStatus,
             stages: [render.script],
             publishing: "manual-review-required; nothing was published",
           };
@@ -821,6 +826,14 @@ const createServer = () => {
         const status = await readStatus(item.id);
         const { episode } = await currentEpisode(date);
         const ctaValidation = validateCtaEpisode(episode, await readCtaLab());
+        const platformPackageErrors = {};
+        for (const platform of Object.keys(status.platformPackages ?? {})) {
+          try {
+            await requirePlatformPackage(episode, status, platform);
+          } catch (error) {
+            platformPackageErrors[platform] = error.message;
+          }
+        }
         let approval = null;
         try {
           approval = await readJson(
@@ -836,8 +849,10 @@ const createServer = () => {
           status,
           approval,
           ctaValidation,
+          platformPackageErrors,
           packageCurrent:
             ctaValidation.valid &&
+            Object.keys(platformPackageErrors).length === 0 &&
             status.contentHash === episodeContentHash(episode) &&
             [
               "rendered-pending-owner-approval",
@@ -870,7 +885,7 @@ const createServer = () => {
           variants: (platform ? [platform] : CTA_PLATFORMS).map(
             (name) => getPlatformCtaStatus(lab, name),
           ),
-          note: "One shared lesson body with a platform-specific final CTA. When CTA narration is identical, reuse its approved audio and word-level captions; the CTA visual change still needs a new registration and final export. YouTube Shorts is authorized after exact-preview approval, but its ending is not yet routed into the final render/review package.",
+          note: "The normal render produces Instagram and YouTube packages automatically: one shared lesson render, separate approved CTA endings, and reused continuous audio/word cues. Each destination is bound to its exact exported file and CTA registration. YouTube Shorts publishing requires exact-preview approval.",
         };
       }),
   );
@@ -1368,7 +1383,7 @@ const createServer = () => {
             path.join(reviewDir(item.id), "publications.json"),
           );
           const expectedPlatform =
-            data.platform === "instagram-reels" ? "instagram" : data.platform;
+              data.platform === "instagram-reels" ? "instagram" : data.platform === "youtube-shorts" ? "youtube" : data.platform;
           const hasPublishedPost = publicationLog.records?.some(
             (record) =>
               record.contentHash === status.contentHash &&
@@ -1478,6 +1493,7 @@ const createServer = () => {
           approval.contentHash !== status.contentHash
         )
           throw new Error("A current owner-approved Zernio preview is required before recording publication.");
+        await requireApprovedPlatformPackages(episode, status, approval);
         if (
           ![
             "owner-approved-for-zernio-publishing",
@@ -1572,6 +1588,12 @@ const createServer = () => {
             throw new Error("A different Zernio post ID is already recorded for this package and account.");
           const savedResult = {
             ...result,
+            ...(approval.platformPackages?.[result.platform] ? {
+              contentHash: approval.platformPackages[result.platform].contentHash,
+              ctaExperimentId: approval.platformPackages[result.platform].ctaExperimentId,
+              video: approval.platformPackages[result.platform].video,
+              videoSha256: approval.platformPackages[result.platform].videoSha256,
+            } : {}),
             ...(approval.publicationIntent.mode === "scheduled" &&
             !result.scheduledFor
               ? { scheduledFor: approval.publicationIntent.scheduledFor }

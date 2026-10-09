@@ -705,23 +705,32 @@ const BeatText: React.FC<{
               }}
             />
             {beat.screenHighlight && (
-              <div
+              <svg
                 aria-hidden="true"
+                viewBox={`0 0 ${beat.screenImageWidthPx ?? 860} ${beat.screenImageHeightPx ?? 1100}`}
+                preserveAspectRatio="xMidYMid meet"
                 style={{
                   position: "absolute",
-                  left: `${beat.screenHighlight.leftPercent}%`,
-                  top: `${beat.screenHighlight.topPercent}%`,
-                  width: `${beat.screenHighlight.widthPercent}%`,
-                  height: `${beat.screenHighlight.heightPercent}%`,
-                  boxSizing: "border-box",
-                  border: `4px solid ${COLORS.foreground}`,
-                  borderRadius: 22,
-                  background: `${accent}18`,
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
                   opacity: highlightOpacity,
-                  boxShadow: `0 0 0 3px ${accent}bb, 0 0 22px ${accent}88`,
                   pointerEvents: "none",
                 }}
-              />
+              >
+                <rect
+                  x={(beat.screenHighlight.leftPercent / 100) * (beat.screenImageWidthPx ?? 860)}
+                  y={(beat.screenHighlight.topPercent / 100) * (beat.screenImageHeightPx ?? 1100)}
+                  width={(beat.screenHighlight.widthPercent / 100) * (beat.screenImageWidthPx ?? 860)}
+                  height={(beat.screenHighlight.heightPercent / 100) * (beat.screenImageHeightPx ?? 1100)}
+                  rx={22}
+                  fill={`${accent}18`}
+                  stroke={COLORS.foreground}
+                  strokeWidth={4}
+                  vectorEffect="non-scaling-stroke"
+                  style={{filter: `drop-shadow(0 0 3px ${accent}bb) drop-shadow(0 0 8px ${accent}88)`}}
+                />
+              </svg>
             )}
           </div>
         )}

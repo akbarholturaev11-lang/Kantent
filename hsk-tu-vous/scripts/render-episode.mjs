@@ -1,8 +1,15 @@
-import { requireFreshGitMain } from './git-freshness.mjs';
+import { requireFreshGitMain } from "./git-freshness.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { buildCaptionSections } from "./caption-utils.mjs";
+import { readCtaLab, writeCtaLab } from "./cta-lab.mjs";
+import {
+  prepareExportEpisodes,
+  platformPackagePaths,
+  videoHash,
+} from "./platform-exports.mjs";
+import { renderSharedPlatformVideos } from "./render-platform-videos.mjs";
 import {
   getEpisode,
   episodeContentHash,
@@ -83,6 +90,12 @@ if (perWordCueCount / episode.captions.length < 0.8) {
 const folder = reviewDir(id);
 await fs.mkdir(folder, { recursive: true });
 episode.publishingStatus = "pending-owner-review";
+const lab = await readCtaLab();
+const { episodes, registrations } = prepareExportEpisodes(episode, lab);
+if (registrations.length) {
+  lab.experiments.push(...registrations);
+  await writeCtaLab(lab);
+}
 await writeJson(filePath, episode);
 await invalidateReviewArtifacts(id);
 await writeStatus(id, {
@@ -91,10 +104,6 @@ await writeStatus(id, {
   updatedAt: new Date().toISOString(),
 });
 
-const output = path.join(folder, "video.mp4");
-const renderPropsPath = path.join(folder, "render-props.json");
-await writeJson(renderPropsPath, { episode });
-const remotionBin = path.join(PROJECT_ROOT, "node_modules", ".bin", "remotion");
 const sfxResult = spawnSync(
   process.execPath,
   [path.join(PROJECT_ROOT, "scripts", "generate-sfx.mjs")],
@@ -106,59 +115,64 @@ if (sfxResult.status !== 0)
     `Не удалось подготовить звуковые эффекты: ${sfxResult.stderr || sfxResult.stdout}`,
   );
 
-const renderArgs = [
-  "render",
-  "src/index.ts",
-  "HSKAI-Episode",
-  output,
-  "--props",
-  renderPropsPath,
-  "--image-format",
-  "png",
-  "--pixel-format",
-  "yuv420p",
-  "--color-space",
-  "bt709",
-];
-if (process.env.HSK_REMOTION_BROWSER_EXECUTABLE) {
-  renderArgs.push(
-    "--browser-executable",
-    process.env.HSK_REMOTION_BROWSER_EXECUTABLE,
-  );
+const paths = Object.fromEntries(
+  Object.keys(episodes).map((platform) => [
+    platform,
+    platformPackagePaths(id, platform),
+  ]),
+);
+const platformPackages = {};
+try {
+  await renderSharedPlatformVideos({
+    episodes,
+    outputs: Object.fromEntries(
+      Object.entries(paths).map(([platform, files]) => [platform, files.video]),
+    ),
+    workDir: path.join(folder, ".render-work"),
+  });
+  for (const [platform, variant] of Object.entries(episodes)) {
+    const files = paths[platform];
+    await writeJson(files.episode, variant);
+    await fs.writeFile(
+      files.captions,
+      captionsToSrt(
+        variant.captions,
+        visualSystem.captions,
+        buildCaptionSections(variant.scenes, 30),
+      ),
+      "utf8",
+    );
+    const hashtags = (variant.hashtags || []).join(" ");
+    const postText = `${variant.caption || variant.title}\n\n${hashtags}\n\n${variant.cta}\n\nТема: ${variant.title}\nПлатформа: ${platform}\nСтатус: пакет готов к ручной проверке HSK AI`;
+    await fs.writeFile(files.post, `${postText}\n`, "utf8");
+    platformPackages[platform] = {
+      ...files,
+      contentHash: episodeContentHash(variant),
+      baseContentHash: episodeContentHash(episode),
+      ctaExperimentId: variant.ctaExperiment.id,
+      ctaCopyHash: variant.ctaExperiment.copyHash,
+      ctaRuleVersion: variant.ctaExperiment.ruleVersion,
+      videoSha256: await videoHash(files.video),
+    };
+  }
+} catch (error) {
+  await writeStatus(id, {
+    stage: "render-failed",
+    sourceRevision,
+    updatedAt: new Date().toISOString(),
+    error: error.message,
+  });
+  throw error;
 }
-const result = spawnSync(
-  remotionBin,
-  renderArgs,
-  { cwd: PROJECT_ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
-);
-if (result.error) throw result.error;
-if (result.status !== 0)
-  throw new Error(
-    `Remotion render завершился с ошибкой (${result.status ?? "неизвестно"}): ${(result.stderr || result.stdout || "").slice(-5000)}`,
-  );
-await fs.rm(renderPropsPath, { force: true });
-
-await fs.writeFile(
-  path.join(folder, "captions.srt"),
-  captionsToSrt(
-    episode.captions,
-    visualSystem.captions,
-    buildCaptionSections(episode.scenes, 30),
-  ),
-  "utf8",
-);
-const hashtags = (episode.hashtags || []).join(" ");
-const ctaScene = episode.scenes.find((scene) => scene.kind === "cta");
-const ctaText = episode.cta || ctaScene?.screenCaption;
-const postText = `${episode.caption || episode.title}\n\n${hashtags}${ctaText ? `\n\n${ctaText}` : ""}\n\nТема: ${episode.title}\nСтатус: пакет готов к ручной проверке HSK AI`;
-await fs.writeFile(path.join(folder, "post.md"), `${postText}\n`, "utf8");
 await writeStatus(id, {
   stage: "rendered-pending-owner-approval",
   sourceRevision,
   updatedAt: new Date().toISOString(),
-  video: output,
-  captions: path.join(folder, "captions.srt"),
-  post: path.join(folder, "post.md"),
+  video: paths.instagram.video,
+  captions: paths.instagram.captions,
+  post: paths.instagram.post,
+  platformPackages,
+  sharedLessonRenderedOnce: true,
   voiceProfileId: voiceProfile.profileId,
   voice: voiceProfile.voiceName,
   hookExperimentId: episode.hookExperiment.id,
@@ -184,4 +198,7 @@ await writeStatus(id, {
   ),
 });
 console.log(`Пакет готов для проверки: ${folder}`);
+for (const [platform, exported] of Object.entries(platformPackages)) {
+  console.log(`${platform}: ${exported.video}`);
+}
 console.log("Видео не опубликовано. Автоматической публикации нет.");

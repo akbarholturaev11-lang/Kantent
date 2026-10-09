@@ -11,6 +11,7 @@ import {
   writeStatus,
 } from "./lib.mjs";
 import { validatePublicationTarget } from "./publication-policy.mjs";
+import { requirePlatformPackage } from "./platform-exports.mjs";
 
 const id = process.argv[2];
 const publicationIntentJson = process.argv[3];
@@ -37,9 +38,13 @@ const selectedPlatforms = new Set();
 for (const target of publicationIntent.platforms) {
   const targetErrors = validatePublicationTarget(target);
   if (targetErrors.length)
-    throw new Error(`Zernio preview target noto‘g‘ri: ${targetErrors.join("; ")}`);
+    throw new Error(
+      `Zernio preview target noto‘g‘ri: ${targetErrors.join("; ")}`,
+    );
   if (selectedPlatforms.has(target.platform))
-    throw new Error("Zernio previewda har bir platformadan bittadan akkaunt tanlang.");
+    throw new Error(
+      "Zernio previewda har bir platformadan bittadan akkaunt tanlang.",
+    );
   selectedPlatforms.add(target.platform);
 }
 if (publicationIntent.mode === "scheduled") {
@@ -84,6 +89,14 @@ for (const filename of ["video.mp4", "captions.srt", "post.md"]) {
     );
   }
 }
+const platformPackages = {};
+for (const target of publicationIntent.platforms) {
+  platformPackages[target.platform] = await requirePlatformPackage(
+    episode,
+    status,
+    target.platform,
+  );
+}
 const approval = {
   episodeId: id,
   state: "approved-for-zernio-publishing",
@@ -93,14 +106,25 @@ const approval = {
   ctaRuleVersion: ctaValidation.ruleVersion,
   contentHash: status.contentHash,
   publicationIntent,
+  platformPackages,
   note: "Владелец подтвердил показанный Zernio preview. Для фактической публикации требуется отдельный вызов Zernio MCP.",
 };
 await writeJson(path.join(folder, "approval.json"), approval);
-// Keep exact-version approval evidence when later edits invalidate current output.
-await writeJson(
-  path.join(folder, "approvals", `${safeId(episode.ctaExperiment.id)}.json`),
-  approval,
-);
+// Archive each selected CTA/video version separately for honest attribution.
+for (const target of publicationIntent.platforms) {
+  const exported = platformPackages[target.platform];
+  await writeJson(
+    path.join(folder, "approvals", `${safeId(exported.ctaExperimentId)}.json`),
+    {
+      ...approval,
+      contentHash: exported.contentHash,
+      ctaExperimentId: exported.ctaExperimentId,
+      ctaCopyHash: exported.ctaCopyHash,
+      ctaRuleVersion: exported.ctaRuleVersion,
+      publicationIntent: { ...publicationIntent, platforms: [target] },
+    },
+  );
+}
 await writeStatus(id, {
   ...status,
   stage: "owner-approved-for-zernio-publishing",

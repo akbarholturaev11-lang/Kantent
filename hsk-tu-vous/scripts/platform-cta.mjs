@@ -94,7 +94,7 @@ export function getPlatformCtaStatus(lab, platform) {
     platform,
     status: variant.status,
     readyForDraft: missing.length === 0,
-    readyForRendering: missing.length === 0 && platform === "instagram",
+    readyForRendering: missing.length === 0 && variant.publishingAuthorized === true,
     copySource: variant.copySource === "offer" ? "content/cta-lab.json#offer.canonicalRussian"
       : `content/cta-lab.json#platformVariants.${platform}.canonicalRussian`,
     copy: missing.length === 0 ? text : null,
@@ -108,7 +108,7 @@ export function getPlatformCtaStatus(lab, platform) {
       ? platform === "instagram"
         ? "Owner-approved instruction; website reachability and downloads are not independently verified."
         : platform === "youtube"
-          ? "YouTube reuses the canonical Instagram offer; the linked destination is unverified, and the YouTube render flow is not enabled."
+          ? "Owner-approved YouTube CTA; the linked destination is not independently verified."
           : null
       : null,
   };
@@ -140,7 +140,7 @@ export function preparePlatformCtaDraft(baseEpisode, lab, platform) {
   scene.screenCaption = template.screenCaption;
   scene.editPlan = template.editPlan;
   scene.visualBeats = structuredClone(template.visualBeats);
-  scene.cards = [];
+  scene.cards = structuredClone(template.cards ?? []);
   source.ctaPlatform = platform;
   const nextNarration = source.scenes
     .map((item) => item.narration.trim())

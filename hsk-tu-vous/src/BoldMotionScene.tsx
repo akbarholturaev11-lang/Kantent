@@ -382,23 +382,32 @@ export const BoldMotionScene: React.FC<{
             }}
           />
           {beat.screenHighlight && (
-            <div
+            <svg
               aria-hidden="true"
+              viewBox={`0 0 ${beat.screenImageWidthPx ?? 860} ${beat.screenImageHeightPx ?? 1120}`}
+              preserveAspectRatio="xMidYMid meet"
               style={{
                 position: "absolute",
-                left: `${beat.screenHighlight.leftPercent}%`,
-                top: `${beat.screenHighlight.topPercent}%`,
-                width: `${beat.screenHighlight.widthPercent}%`,
-                height: `${beat.screenHighlight.heightPercent}%`,
-                boxSizing: "border-box",
-                border: `6px solid ${accent}`,
-                borderRadius: 22,
-                background: `${accent}24`,
+                inset: 10,
+                width: "calc(100% - 20px)",
+                height: "calc(100% - 20px)",
                 opacity: interpolate(beatFrame, [0, 10], [0, 1], clamp),
-                boxShadow: `0 0 0 4px rgba(255,255,255,.78), 0 0 44px ${accent}`,
                 pointerEvents: "none",
               }}
-            />
+            >
+              <rect
+                x={(beat.screenHighlight.leftPercent / 100) * (beat.screenImageWidthPx ?? 860)}
+                y={(beat.screenHighlight.topPercent / 100) * (beat.screenImageHeightPx ?? 1120)}
+                width={(beat.screenHighlight.widthPercent / 100) * (beat.screenImageWidthPx ?? 860)}
+                height={(beat.screenHighlight.heightPercent / 100) * (beat.screenImageHeightPx ?? 1120)}
+                rx={22}
+                fill={`${accent}24`}
+                stroke={accent}
+                strokeWidth={6}
+                vectorEffect="non-scaling-stroke"
+                style={{filter: `drop-shadow(0 0 4px rgba(255,255,255,.78)) drop-shadow(0 0 12px ${accent})`}}
+              />
+            </svg>
           )}
         </div>
       )}

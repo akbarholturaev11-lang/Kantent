@@ -151,6 +151,10 @@ export async function invalidateReviewArtifacts(
       fs.rm(path.join(folder, filename), { force: true }),
     ),
   );
+  // Current derived exports are disposable; append-only approvals and
+  // publication history remain in the parent review directory.
+  await fs.rm(path.join(folder, "youtube"), { recursive: true, force: true });
+  await fs.rm(path.join(folder, ".render-work"), { recursive: true, force: true });
   if (narrationChanged)
     await fs.rm(path.join(PROJECT_ROOT, "public", "generated", safeId(id)), {
       recursive: true,

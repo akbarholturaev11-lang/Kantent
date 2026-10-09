@@ -44,6 +44,10 @@ if (result.status !== 0) throw new Error(script + " завершился с ош
 
 if (hasImportedVoice) {
   console.log("Пакет готов для ручной проверки: " + folder);
+  const status = await readStatus(item.id);
+  for (const [platform, exported] of Object.entries(status.platformPackages ?? {})) {
+    console.log(`${platform}: ${exported.video}`);
+  }
 } else {
   const status = await readStatus(item.id);
   console.log("TTS-текст подготовлен. Агент должен продолжить через browser automation: создать и скачать MP3+word-level SRT/VTT, импортировать их и затем собрать пакет.");
