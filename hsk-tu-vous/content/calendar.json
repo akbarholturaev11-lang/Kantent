@@ -333,5 +333,9 @@
       "episodeFile": "episodes/le-first-look.json",
       "status": "planned"
     }
-  ]
+  ],
+  "planningBuffer": {
+    "minimumFutureEpisodes": 3,
+    "targetFutureEpisodes": 4
+  }
 }

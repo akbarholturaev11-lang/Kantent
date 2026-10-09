@@ -9,6 +9,8 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Active global behavior and safety rules | `AI_RULES.md` |
 | Production procedure and error handling | `content/WORKFLOW.md` |
 | Dates, IDs, cadence, episode references | `content/calendar.json` |
+| Future planned episode buffer (minimum/target) | `content/calendar.json#planningBuffer` |
+| Raw external Zernio performance observations and optimizer audit notes | `content/feedback/` (not the canonical Hook/CTA Labs) |
 | CTA-free future lesson scripts; approved/published legacy snapshots kept immutable | `content/episodes/*.json` |
 | Approved voice/provider/settings | `content/voice-profile.json` |
 | CTA wording and active corrections | `content/cta-lab.json`, explained by `content/CTA_LAB.md` |

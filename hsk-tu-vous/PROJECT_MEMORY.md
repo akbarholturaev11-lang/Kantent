@@ -20,6 +20,7 @@ This file is **not another policy document**. Keep only architecture, current te
 - `prepare-online-tts.mjs` produces continuous narration text: unintended blank lines can introduce pauses absent from word-level cue timing.
 - A voice file itself does not authenticate the identity of the voice chosen in the website UI. Preserve this verification limitation.
 - Generated media and review data are intentionally ignored by Git; inspect local `review/<episode-id>/status.json` for actual render/publication state, rather than assuming that a source JSON marked planned means rendered/published.
+- `scripts/self-improvement-check.mjs` provides a read-only buffer check for the next planned canonical episodes, based on `content/calendar.json#planningBuffer`. `content/feedback/` defines the future Zernio readback format without storing fabricated analytics.
 - No trusted platform analytics ingestion is implemented: the labs store owner-provided results. No automatic cover-generation or platform-specific variant-rendering pipeline is established.
 
 ## Known planning boundary

@@ -37,7 +37,8 @@
     "content:make": "node scripts/make-episode.mjs",
     "content:approve": "node scripts/approve-package.mjs",
     "mcp": "node scripts/mcp-server.mjs",
-    "check:consistency": "node scripts/check-consistency.mjs"
+    "check:consistency": "node scripts/check-consistency.mjs",
+    "content:buffer": "node scripts/self-improvement-check.mjs"
   },
   "sideEffects": [
     "*.css"
