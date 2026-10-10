@@ -183,9 +183,9 @@
   "storyboardLayout": {
     "environmentTopPx": 250,
     "environmentHeightPx": 720,
-    "heroTopPx": 970,
+    "heroTopPx": 840,
     "safeSidePx": 100,
-    "pinyinFontPx": 65,
-    "meaningFontPx": 51
+    "pinyinFontPx": 58,
+    "meaningFontPx": 46
   }
 }
