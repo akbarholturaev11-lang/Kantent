@@ -90,7 +90,6 @@ export const CinematicStoryScene:React.FC<{
  const fontSize=isChinese?(beat.hero.length<=2?198:beat.hero.length<=6?138:99):(beat.hero.length>20?67:82);
  const meaning=beat.meaning;
  const quiz=storyboard.formatId==='speed-quiz';
- const appearance=storyboard.formatId==='problem-fix' ? colors.brandRed : colors.brandTeal;
  return <AbsoluteFill style={{background:colors.background, overflow:'hidden',fontFamily:font,color:colors.foreground}}>
    <AbsoluteFill style={{background:`radial-gradient(ellipse at 56% 30%, ${colors.brandGold}21 0%, transparent 50%),linear-gradient(160deg,#FFF8E9 0%,#F6E7D2 70%,#FDF9F0 100%)`}}/>
    <svg viewBox="0 0 1080 790" style={{position:'absolute',top:layout.environmentTopPx,left:0,width:1080,height:layout.environmentHeightPx,overflow:'visible'}} aria-hidden>
@@ -105,7 +104,7 @@ export const CinematicStoryScene:React.FC<{
     </svg>
     {quiz&&<div style={{position:'absolute',top:510,left:90,right:90,display:'flex',gap:14,justifyContent:'center'}}>
       {storyboard.options?.map((opt,index)=><div key={index} style={{minWidth:180,maxWidth:275,padding:'17px 22px',
-        borderRadius:20,background:'#FFFDF7E8',border:`2px solid ${index===0?appearance:colors.border}`,
+        borderRadius:20,background:'#FFFDF7E8',border:`2px solid ${colors.border}`,
         textAlign:'center',fontSize:45,fontWeight:850,boxShadow:'0 9px 22px #61431A18'}}>
           {opt}
         </div>)}
