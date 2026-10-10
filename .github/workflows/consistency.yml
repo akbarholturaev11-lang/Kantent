@@ -37,6 +37,8 @@ jobs:
         run: node --test scripts/hook-lab-rolling.test.mjs
       - name: Test Zernio feedback analyzer and source snapshots
         run: node --test scripts/feedback-analyzer.test.mjs && npm run content:feedback -- --json > /tmp/feedback-report.json
+      - name: Validate four-format content pilot and read-only planning
+        run: node --test scripts/viral-plan.test.mjs && npm run content:viral-plan -- --date 2026-10-11 --json > /tmp/viral-plan.json && node --check scripts/viral-plan.mjs
       - name: Test source freshness guards
         run: node --test scripts/git-freshness.test.mjs && node --check scripts/git-freshness.mjs
       - name: Test scenario buffer date proposals
