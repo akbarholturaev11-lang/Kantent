@@ -40,6 +40,7 @@
     "check:consistency": "node scripts/check-consistency.mjs",
     "content:buffer": "node scripts/self-improvement-check.mjs",
     "content:feedback": "node scripts/feedback-analyzer.mjs",
+    "content:viral-plan": "node scripts/viral-plan.mjs",
     "content:scenario-buffer": "node scripts/scenario-buffer-plan.mjs"
   },
   "sideEffects": [
