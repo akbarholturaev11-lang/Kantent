@@ -19,6 +19,8 @@ Implemented: read-only buffer audit, validated Zernio snapshot format, one genui
 - A snapshot uses `window: "lifetime"` unless an actual 24h, 72h or 7d readback was measured. Lifetime counts of posts of different ages are not comparable controlled experiments.
 - Absent metrics are recorded as `null`, not zero. `avgWatchMs` is the Zernio Reel average-watch field in milliseconds.
 - `episodeId`, `hookFormat`, `hskLevel`, `effectStyle` stay `null` until a match to production assets is verified. Date proximity alone is insufficient.
+- Optional `creativeFormatId` is allowed **only** after the published post-to-episode mapping and the associated hook/HSK level are independently verified. It must match a format in `content/creative-formats.json`. Missing tags are unknown, not failure or a zero metric.
+- `npm run content:viral-plan -- --json` reads these snapshots and suggests compatible packaging of **future unapproved** lessons without changing anything. Its baseline target is aspirational; it cannot measure HSK AI downloads or lesson starts without verified external funnel instrumentation.
 - New time-stamped snapshots should be added as new files rather than altering existing source measurements. The analyzer uses the newest snapshot per post + window; it never declares an automatic winner.
 - `AGENT_PLAYBOOK.md` describes future ChatGPT ↔ Zernio ↔ GitHub orchestration.
 
