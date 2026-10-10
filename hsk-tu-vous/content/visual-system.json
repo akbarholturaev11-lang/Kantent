@@ -179,5 +179,13 @@
       "fadeInFrames": 18,
       "fadeOutFrames": 24
     }
+  },
+  "storyboardLayout": {
+    "environmentTopPx": 250,
+    "environmentHeightPx": 720,
+    "heroTopPx": 970,
+    "safeSidePx": 100,
+    "pinyinFontPx": 65,
+    "meaningFontPx": 51
   }
 }
