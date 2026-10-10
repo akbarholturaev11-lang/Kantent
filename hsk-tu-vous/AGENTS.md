@@ -16,6 +16,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Approved voice/provider/settings | `content/voice-profile.json` |
 | CTA wording and active corrections | `content/cta-lab.json`, explained by `content/CTA_LAB.md` |
 | Hook rules, hypotheses and readbacks | `content/hook-lab.json`, explained by `content/HOOK_LAB.md` |
+| Creative packaging formats and pilot allocation | `content/creative-formats.json` |
 | Design tokens, caption numbers and motion parameters | `content/visual-system.json` |
 | Visual editorial method | `content/EDITING_SPEC.md` |
 | Episode schema and invalidation | `content/EPISODE_SCHEMA.md` |
