@@ -48,13 +48,11 @@ jobs:
           node -e "const fs=require('fs');const episode=require('./content/episodes/zai-location.json');fs.writeFileSync('/tmp/hsk-storyboard-props.json', JSON.stringify({episode}));"
           npx remotion still src/index.ts HSKAI-Episode /tmp/zai-hook.png --props /tmp/hsk-storyboard-props.json --frame=15
           npx remotion still src/index.ts HSKAI-Episode /tmp/zai-home.png --props /tmp/hsk-storyboard-props.json --frame=330
-      - name: Upload storyboard preview images
-        uses: actions/upload-artifact@v4
-        with:
-          name: zai-cinematic-storyboard-preview
-          path: |
-            /tmp/zai-hook.png
-            /tmp/zai-home.png
+      - name: Check locally rendered storyboard frames
+        run: |
+          test -s /tmp/zai-hook.png
+          test -s /tmp/zai-home.png
+          file /tmp/zai-hook.png /tmp/zai-home.png
       - name: Test source freshness guards
         run: node --test scripts/git-freshness.test.mjs && node --check scripts/git-freshness.mjs
       - name: Test scenario buffer date proposals
