@@ -177,6 +177,7 @@ await writeStatus(id, {
   voice: voiceProfile.voiceName,
   hookExperimentId: episode.hookExperiment.id,
   hookFormatId: episode.hookExperiment.formatId,
+  creativeFormatId: episode.creativeFormatId ?? null,
   hookPerformanceStatus: "unmeasured",
   ctaExperimentId: episode.ctaExperiment.id,
   ctaRuleVersion: ctaValidation.ruleVersion,
