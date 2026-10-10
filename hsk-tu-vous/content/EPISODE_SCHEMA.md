@@ -2,6 +2,12 @@
 
 The calendar is the index. Each calendar item points to one CTA-free planned JSON lesson in `content/episodes/` for new dates. CTA text and cue-synced visuals live **only** in the canonical CTA Lab. The assembly of an active *review copy* happens in `scripts/episode-cta-assembly.mjs` when the agent opens or creates the dated production plan. Older historical source files may retain previously registered CTA snapshots; do not rewrite published or approved history.
 
+## Cinematic storyboard treatment (optional)
+
+Unapproved future *lesson* scenes may opt in through `scene.storyboard = {formatId, setting, character, mood, sign?}`. Allowed `formatId` values are owned by `content/creative-formats.json`, not by CTA Lab. `setting` supports `street`, `cafe`, `campus`, `home`; `character` supports `student`, `shopkeeper`; and `mood` supports `question`, `mistake`, `answer`, `practice`. For `speed-quiz`, include 2–3 short `options`. Only source-supported or harmless general context labels are allowed. The 12 October `zai-location` episode is the first visual-only pilot; its existing narrator text, hook experiment and approved voice provider must stay unchanged.
+
+The Remotion renderer uses `CinematicStoryScene` only when `scene.storyboard` is set. Otherwise the existing visual stays unchanged; CTA never accepts storyboard and is always taken from the central CTA Lab. The style does **not** create real footage, a verified real location, a valid TTS export, or publication approval. Preview frames can be tested independently; production MP4 still requires approved MP3 and timed word cues, language-source checks, and exact publication preview review.
+
 ## Canonical episode record
 
 - `id`, `date`, `timezone`, `languageCode`: identity; ISO date and Asia/Shanghai.
