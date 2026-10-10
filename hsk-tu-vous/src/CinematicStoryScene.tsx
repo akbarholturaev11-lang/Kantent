@@ -102,6 +102,8 @@ export const CinematicStoryScene:React.FC<{
         {!quiz&&<Human character={storyboard.character} mood={storyboard.mood} frame={frame}/>}
       </g>
     </svg>
+    <div aria-hidden style={{position:'absolute',top:750,left:0,right:0,height:660,
+       background:'linear-gradient(180deg,rgba(253,249,240,0) 0%,rgba(253,249,240,.94) 55%,#FDF9F0 100%)'}}/>
     {quiz&&<div style={{position:'absolute',top:510,left:90,right:90,display:'flex',gap:14,justifyContent:'center'}}>
       {storyboard.options?.map((opt,index)=><div key={index} style={{minWidth:180,maxWidth:275,padding:'17px 22px',
         borderRadius:20,background:'#FFFDF7E8',border:`2px solid ${colors.border}`,
