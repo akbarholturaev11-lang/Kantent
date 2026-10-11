@@ -71,7 +71,7 @@ await writeStatus(id, {
 });
 
 console.log(
-  `Агент должен продолжить через browser automation: открыть https://text-to-speech.online/ и вставить ${scriptPath}. Не запрашивайте у владельца ручной экспорт.`,
+  `Агент должен продолжить через browser automation по content/WORKFLOW.md (§3: выбор браузера и экспорт): открыть https://text-to-speech.online/ и вставить ${scriptPath}. Не запрашивайте у владельца ручной экспорт.`,
 );
 console.log(
   `Используйте только профиль ${voiceProfile.profileId}: Russian (${voiceProfile.locale}) → мужской голос ${voiceProfile.voiceName} → скорость ${voiceProfile.speedPercent}% → высота тона ${voiceProfile.pitchPercent}% → ${voiceProfile.outputFormat}.`,

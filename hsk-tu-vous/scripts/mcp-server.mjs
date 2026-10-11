@@ -601,7 +601,7 @@ const createServer = () => {
     {
       title: "Prepare text-to-speech input",
       description:
-        "Подготавливает точный текст и проверяет единый профиль text-to-speech.online. Это промежуточный этап: агент должен сам продолжить через browser automation, сгенерировать и скачать MP3+word-level VTT/SRT, импортировать их и собрать видео. Не просите владельца экспортировать файлы; API-запросов нет.",
+        "Подготавливает точный текст и проверяет единый профиль text-to-speech.online. Это промежуточный этап: агент должен сам продолжить через browser automation по content/WORKFLOW.md (§3: выбор браузера и экспорт), сгенерировать и скачать MP3+word-level VTT/SRT, импортировать их и собрать видео. Не просите владельца экспортировать файлы; API-запросов нет.",
       inputSchema: z.object({ date: dateSchema }),
     },
     async ({ date }) =>
@@ -620,7 +620,7 @@ const createServer = () => {
           log: result.log,
           requiresHumanAction: false,
           nextAgentAction:
-            "Continue in the browser now: enter this episode’s exact tts-input.txt at text-to-speech.online, verify the approved Dmitry – RU profile/settings, generate and download MP3 plus word-level VTT (preferred) or SRT into incoming/, import them with import_voice_artifacts, then render and inspect the review package. Do not ask the owner to do or move any of these files. Stop only for a concrete external access/permission gate or unavailable/changed approved voice.",
+            "Follow content/WORKFLOW.md §3 for browser selection and export. Continue in that browser now: enter this episode’s exact tts-input.txt at text-to-speech.online, verify the approved Dmitry – RU profile/settings, generate and download MP3 plus word-level VTT (preferred) or SRT into incoming/, import them with import_voice_artifacts, then render and inspect the review package. Do not ask the owner to do or move any of these files. Stop only for a concrete external access/permission gate or unavailable/changed approved voice.",
         };
       }),
   );
@@ -758,7 +758,7 @@ const createServer = () => {
               status: await readStatus(item.id),
               requiresHumanAction: false,
               nextAgentAction:
-                "Continue this same production task in the browser: open text-to-speech.online, enter the exact tts-input.txt, verify Dmitry – RU / ru-RU / male / 0% speed / 0% pitch / MP3, generate and download the matching MP3 plus word-level VTT (preferred) or SRT into incoming/, import them, then render and inspect the review package. Do not ask the owner to click, download, rename, move, or import files. Stop only for a concrete external access/permission gate or unavailable/changed approved voice.",
+                "Follow content/WORKFLOW.md §3 for browser selection and export. Continue this same production task in that browser: open text-to-speech.online, enter the exact tts-input.txt, verify Dmitry – RU / ru-RU / male / 0% speed / 0% pitch / MP3, generate and download the matching MP3 plus word-level VTT (preferred) or SRT into incoming/, import them, then render and inspect the review package. Do not ask the owner to click, download, rename, move, or import files. Stop only for a concrete external access/permission gate or unavailable/changed approved voice.",
               files: {
                 script: path.join(folder, "tts-input.txt"),
                 incoming: path.join(folder, "incoming"),
@@ -799,7 +799,7 @@ const createServer = () => {
     {
       title: "Prepare complete video package for a date",
       description:
-        "Готовит review-пакет для даты по единому профилю text-to-speech.online. Если голосовых файлов нет, агент должен сам продолжить через browser automation и скачать MP3+word-level SRT/VTT; не просите владельца экспортировать/переносить файлы. Затем импортируйте, соберите и проверьте Remotion-пакет 25–35 секунд. Ничего не публикуется.",
+        "Готовит review-пакет для даты по единому профилю text-to-speech.online. Если голосовых файлов нет, агент должен сам продолжить через browser automation по content/WORKFLOW.md (§3: выбор браузера и экспорт) и скачать MP3+word-level SRT/VTT; не просите владельца экспортировать/переносить файлы. Затем импортируйте, соберите и проверьте Remotion-пакет 25–35 секунд. Ничего не публикуется.",
       inputSchema: z.object({ date: dateSchema }),
     },
     async ({ date }) => withToolErrors(() => prepareReviewForDate(date)),

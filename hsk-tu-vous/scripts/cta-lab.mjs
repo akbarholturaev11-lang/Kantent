@@ -327,8 +327,8 @@ export function validateCtaEpisode(
     if (!/HSK\s+AI/u.test(text)) errors.push(`${field}: name HSK AI exactly.`);
     if (!/профил/iu.test(text)) errors.push(`${field}: direct viewers to the profile.`);
     if (!/ссылк/iu.test(text)) errors.push(`${field}: ask viewers to open the profile link.`);
-    if (!/скача/iu.test(text) || !/сайт/iu.test(text))
-      errors.push(`${field}: direct viewers to download the app from the website.`);
+    if (!/скача/iu.test(text))
+      errors.push(`${field}: direct viewers to download HSK AI.`);
     if (
       /(сохран[иите]|подпиш|постав[ььте].*лайк|напиши(?:те)?\s+ответ|ответь)/iu.test(
         text,

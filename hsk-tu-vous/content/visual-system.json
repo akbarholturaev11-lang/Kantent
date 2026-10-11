@@ -71,6 +71,8 @@
     "storyVisualHeightPx": 190,
     "storyVisualBobAmplitudePx": 2,
     "beatCrossfadeFrames": 8,
+    "sceneCrossfadeFrames": 8,
+    "sceneBackgroundPushScale": 1.025,
     "toneContourDrawFrames": 9,
     "toneContourWidthPx": 240,
     "toneContourHeightPx": 48,

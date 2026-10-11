@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "revision": 45,
+  "revision": 50,
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
     "id": "hsk-ai-profile-link-download-v1",
     "keyword": null,
     "languageCode": "ru-RU",
-    "canonicalRussian": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
-    "immediateAction": "Open the link on the Instagram profile and download the HSK AI app from the website.",
-    "fulfillment": "The viewer follows the profile link and downloads the app from the website.",
+    "canonicalRussian": "Попробуй HSK AI. Зайди в профиль, открой ссылку, скачай HSK AI и учи китайский каждый день.",
+    "immediateAction": "Open the profile link, download HSK AI, and learn Chinese every day.",
+    "fulfillment": "The viewer follows the profile link to download HSK AI and can use it as part of a daily Chinese-learning routine.",
     "appAvailabilityVerified": false,
     "automaticDmsConfigured": false,
     "ownerApprovedWording": true
@@ -33,7 +33,7 @@
     "fixedSeriesVisualSequence": true,
     "ownerRequestedChangesOnly": true,
     "performanceAutoPromotion": false,
-    "primaryAction": "Visit the Instagram profile, open its link, then download HSK AI from the website."
+    "primaryAction": "Visit the profile, open its link, download HSK AI, and learn Chinese every day."
   },
   "corrections": [
     {
@@ -150,6 +150,38 @@
         "cta-correction-0001",
         "cta-correction-0002",
         "cta-correction-0007"
+      ],
+      "effect": "mandatory-owner-policy",
+      "performanceEvidence": "not-a-performance-result"
+    },
+    {
+      "id": "cta-correction-0009",
+      "ruleVersion": "cta-policy-v9",
+      "createdAt": "2026-10-10T06:00:04.836Z",
+      "source": "owner-correction",
+      "ownerWording": "CTA aga qoshimcha qil Skachaete HSK AI i kajdiy den uchis kistayskiy",
+      "rule": "Add the owner-requested daily Chinese-learning benefit to the Russian CTA after the profile-link and website-download directions. Use natural informal imperative wording (“учи китайский каждый день”), keep HSK AI named in the CTA, preserve the profile → link → website route, and do not add comments, DMs, or unsupported feature claims. Close with a cue-synced HSK AI brand card reading “КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ”; retain the approved profile, links, and website screenshots in order.",
+      "scope": {
+        "type": "series"
+      },
+      "supersedes": [
+        "cta-correction-0008"
+      ],
+      "effect": "mandatory-owner-policy",
+      "performanceEvidence": "not-a-performance-result"
+    },
+    {
+      "id": "cta-correction-0010",
+      "ruleVersion": "cta-policy-v10",
+      "createdAt": "2026-10-10T06:05:03.695Z",
+      "source": "owner-correction",
+      "ownerWording": "loiha ichidayam qoidada qayt qil kein iz zayta degani olip tashla va sayt kadriniyam",
+      "rule": "For the Russian-language series, remove the phrase “с сайта” and remove the website screenshot from the CTA. Keep the route through the profile and profile link; say “скачай HSK AI и учи китайский каждый день” in natural informal Russian. On “Зайди” show the approved profile screenshot; on “Открой” show the approved profile-links screenshot; on “скачай” show a branded HSK AI download card with no website image; on “учи” show the HSK AI closing card “КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ”. Do not depict or claim that a download has completed. Apply to this unreleased episode and future Russian-language episodes.",
+      "scope": {
+        "type": "series"
+      },
+      "supersedes": [
+        "cta-correction-0009"
       ],
       "effect": "mandatory-owner-policy",
       "performanceEvidence": "not-a-performance-result"
@@ -6130,6 +6162,702 @@
       },
       "primaryMetric": "profile-link-clickers-per-1000-views",
       "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "zai-location-cta-profile-link-download-v2",
+      "episodeId": "zai-location",
+      "date": "2026-10-12",
+      "formatId": "benefit-profile-link-download",
+      "ruleVersion": "cta-policy-v8",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Keep the approved profile-link CTA fixed while refreshing the lesson narration with Russian phonetic cues; CTA performance remains unmeasured.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "hsk-profile-link-download-v1",
+      "registeredAt": "2026-10-10T05:27:22.500Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0008"
+      ],
+      "supersedes": "zai-location-cta-profile-link-download-v1",
+      "copyHash": "159b2506b75ece79370333a27b92b33cbe245a42b5c242d4b121d8d8ade1ad87",
+      "copySnapshot": {
+        "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+            "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+            "screenCaption": "Профиль → ссылка → сайт",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "ПОПРОБУЙ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "Попробуй",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ПРОФИЛЬ",
+                "screenImage": "cta/instagram-profile.png",
+                "screenImageWidthPx": 860,
+                "screenImageHeightPx": 633,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 86,
+                  "widthPercent": 92,
+                  "heightPercent": 7
+                },
+                "motion": "slide",
+                "syncCueText": "Зайди",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "ССЫЛКА",
+                "screenImage": "cta/instagram-links.png",
+                "screenImageWidthPx": 842,
+                "screenImageHeightPx": 1164,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 52,
+                  "widthPercent": 92,
+                  "heightPercent": 15
+                },
+                "motion": "reveal",
+                "syncCueText": "Открой",
+                "transitionStyle": "mask-reveal"
+              },
+              {
+                "hero": "СКАЧАТЬ",
+                "screenImage": "cta/website-download.png",
+                "screenImageWidthPx": 600,
+                "screenImageHeightPx": 1300,
+                "screenHighlight": {
+                  "leftPercent": 24,
+                  "topPercent": 70,
+                  "widthPercent": 52,
+                  "heightPercent": 8
+                },
+                "motion": "slide",
+                "syncCueText": "скачай",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — скриншот окна ссылок и выделите карточку «Скачать HSK AI»; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 4,
+            "precedingSceneIds": [
+              "hook",
+              "pattern",
+              "home",
+              "school"
+            ],
+            "durationSec": 8,
+            "plannedStartSec": 22
+          }
+        ]
+      },
+      "placementHash": "1fee5191c0f6d69505981c3d47e37ec1fc6b9b59278beca3ad4b5a0d55eeca2a",
+      "contextSnapshot": {
+        "level": "HSK 1",
+        "topic": "在 для обозначения места: где я нахожусь",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "ru-dmitry-v1",
+        "voiceProvider": "text-to-speech.online",
+        "nonCtaContentHash": "14116a604d8eb9340dd852468963f8cbc1d34fa317ca1c6fc0331206967220c1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "zai-location-cta-profile-link-download-v3",
+      "episodeId": "zai-location",
+      "date": "2026-10-12",
+      "formatId": "benefit-profile-link-download",
+      "ruleVersion": "cta-policy-v8",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Keep the approved profile-link CTA fixed while tightening the lesson narration to fit the approved 25–35 second export window; CTA performance remains unmeasured.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "hsk-profile-link-download-v1",
+      "registeredAt": "2026-10-10T05:35:56.280Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0008"
+      ],
+      "supersedes": "zai-location-cta-profile-link-download-v2",
+      "copyHash": "159b2506b75ece79370333a27b92b33cbe245a42b5c242d4b121d8d8ade1ad87",
+      "copySnapshot": {
+        "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+            "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+            "screenCaption": "Профиль → ссылка → сайт",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "ПОПРОБУЙ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "Попробуй",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ПРОФИЛЬ",
+                "screenImage": "cta/instagram-profile.png",
+                "screenImageWidthPx": 860,
+                "screenImageHeightPx": 633,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 86,
+                  "widthPercent": 92,
+                  "heightPercent": 7
+                },
+                "motion": "slide",
+                "syncCueText": "Зайди",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "ССЫЛКА",
+                "screenImage": "cta/instagram-links.png",
+                "screenImageWidthPx": 842,
+                "screenImageHeightPx": 1164,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 52,
+                  "widthPercent": 92,
+                  "heightPercent": 15
+                },
+                "motion": "reveal",
+                "syncCueText": "Открой",
+                "transitionStyle": "mask-reveal"
+              },
+              {
+                "hero": "СКАЧАТЬ",
+                "screenImage": "cta/website-download.png",
+                "screenImageWidthPx": 600,
+                "screenImageHeightPx": 1300,
+                "screenHighlight": {
+                  "leftPercent": 24,
+                  "topPercent": 70,
+                  "widthPercent": 52,
+                  "heightPercent": 8
+                },
+                "motion": "slide",
+                "syncCueText": "скачай",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — скриншот окна ссылок и выделите карточку «Скачать HSK AI»; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 4,
+            "precedingSceneIds": [
+              "hook",
+              "pattern",
+              "home",
+              "school"
+            ],
+            "durationSec": 8,
+            "plannedStartSec": 22
+          }
+        ]
+      },
+      "placementHash": "1fee5191c0f6d69505981c3d47e37ec1fc6b9b59278beca3ad4b5a0d55eeca2a",
+      "contextSnapshot": {
+        "level": "HSK 1",
+        "topic": "在 для обозначения места: где я нахожусь",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "ru-dmitry-v1",
+        "voiceProvider": "text-to-speech.online",
+        "nonCtaContentHash": "bd35368ffe3d78b0543a8ea9e9c9755519805fc9c4af9edbbe56558dbfd5671e"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "zai-location-youtube-cta-v1",
+      "episodeId": "zai-location",
+      "date": "2026-10-12",
+      "formatId": "benefit-profile-link-download",
+      "ruleVersion": "cta-policy-v8",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Bind the owner-approved platform CTA visuals to the reviewed shared lesson and existing speech. This baseline registration makes no performance claim.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "hsk-profile-link-download-v1-youtube",
+      "registeredAt": "2026-10-10T05:52:56.083Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0008"
+      ],
+      "supersedes": null,
+      "copyHash": "fe9201960b92ac4f0126e876c2b3ac7f67e9d4a9cba9c061ebfb4ed178c0f495",
+      "copySnapshot": {
+        "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+            "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+            "screenCaption": "Профиль → ссылка → сайт",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "ПОПРОБУЙ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "Попробуй",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ПРОФИЛЬ",
+                "screenImage": "cta/youtube-telegram-profile.jpg",
+                "screenImageWidthPx": 1178,
+                "screenImageHeightPx": 1035,
+                "screenHighlight": {
+                  "leftPercent": 3,
+                  "topPercent": 76,
+                  "widthPercent": 94,
+                  "heightPercent": 10
+                },
+                "motion": "slide",
+                "syncCueText": "Зайди",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "ССЫЛКА",
+                "screenImage": "cta/youtube-open-link-browser.jpg",
+                "screenImageWidthPx": 1178,
+                "screenImageHeightPx": 2261,
+                "screenHighlight": {
+                  "leftPercent": 2,
+                  "topPercent": 55.5,
+                  "widthPercent": 96,
+                  "heightPercent": 11.5
+                },
+                "motion": "reveal",
+                "syncCueText": "Открой",
+                "transitionStyle": "mask-reveal"
+              },
+              {
+                "hero": "СКАЧАТЬ",
+                "screenImage": "cta/website-download.png",
+                "screenImageWidthPx": 600,
+                "screenImageHeightPx": 1300,
+                "screenHighlight": {
+                  "leftPercent": 24,
+                  "topPercent": 70,
+                  "widthPercent": 52,
+                  "heightPercent": 8
+                },
+                "motion": "slide",
+                "syncCueText": "скачай",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — присланный скриншот выбора браузера и выделите карточку Chrome; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 4,
+            "precedingSceneIds": [
+              "hook",
+              "pattern",
+              "home",
+              "school"
+            ],
+            "durationSec": 8,
+            "plannedStartSec": 22
+          }
+        ]
+      },
+      "placementHash": "1fee5191c0f6d69505981c3d47e37ec1fc6b9b59278beca3ad4b5a0d55eeca2a",
+      "contextSnapshot": {
+        "level": "HSK 1",
+        "topic": "在 для обозначения места: где я нахожусь",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "ru-dmitry-v1",
+        "voiceProvider": "text-to-speech-online",
+        "nonCtaContentHash": "bd35368ffe3d78b0543a8ea9e9c9755519805fc9c4af9edbbe56558dbfd5671e"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "zai-location-cta-daily-study-v4",
+      "episodeId": "zai-location",
+      "date": "2026-10-12",
+      "formatId": "benefit-profile-link-download",
+      "ruleVersion": "cta-policy-v9",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Add the owner-requested daily-learning benefit to the profile-link download CTA; performance remains unmeasured.",
+      "changedVariable": "wording",
+      "comparisonGroupId": "hsk-profile-link-daily-study-v1",
+      "registeredAt": "2026-10-10T06:00:04.837Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0009"
+      ],
+      "supersedes": "zai-location-cta-profile-link-download-v3",
+      "copyHash": "40a108cf4b084f6ce761e51d5f476606e1743066433f652488bcc449f4ee9cfb",
+      "copySnapshot": {
+        "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку, скачай приложение с сайта и учи китайский каждый день.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку, скачай приложение с сайта и учи китайский каждый день.",
+            "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+            "screenCaption": "Профиль → ссылка → сайт → каждый день",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "ПОПРОБУЙ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "Попробуй",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ПРОФИЛЬ",
+                "screenImage": "cta/instagram-profile.png",
+                "screenImageWidthPx": 860,
+                "screenImageHeightPx": 633,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 86,
+                  "widthPercent": 92,
+                  "heightPercent": 7
+                },
+                "motion": "slide",
+                "syncCueText": "Зайди",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "ССЫЛКА",
+                "screenImage": "cta/instagram-links.png",
+                "screenImageWidthPx": 842,
+                "screenImageHeightPx": 1164,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 52,
+                  "widthPercent": 92,
+                  "heightPercent": 15
+                },
+                "motion": "reveal",
+                "syncCueText": "Открой",
+                "transitionStyle": "mask-reveal"
+              },
+              {
+                "hero": "СКАЧАТЬ",
+                "screenImage": "cta/website-download.png",
+                "screenImageWidthPx": 600,
+                "screenImageHeightPx": 1300,
+                "screenHighlight": {
+                  "leftPercent": 24,
+                  "topPercent": 70,
+                  "widthPercent": 52,
+                  "heightPercent": 8
+                },
+                "motion": "slide",
+                "syncCueText": "скачай",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "учи",
+                "transitionStyle": "type-reveal"
+              }
+            ],
+            "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — скриншот окна ссылок и выделите карточку «Скачать HSK AI»; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано. На словах «учи китайский каждый день» верните логотип HSK AI и покажите финальный титр «КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ» в том же центральном stage; не показывайте неподтверждённые функции приложения."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 4,
+            "precedingSceneIds": [
+              "hook",
+              "pattern",
+              "home",
+              "school"
+            ],
+            "durationSec": 11,
+            "plannedStartSec": 22
+          }
+        ]
+      },
+      "placementHash": "951c61133e78aca46d99e21810529c65406dcd64dc50b999856d3458ec38b632",
+      "contextSnapshot": {
+        "level": "HSK 1",
+        "topic": "在 для обозначения места: где я нахожусь",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "ru-dmitry-v1",
+        "voiceProvider": "text-to-speech-online",
+        "nonCtaContentHash": "966a46c20de1a792a96f0e77ea6c86b77eeee05c1e01b127c6bfbafac3ea6d7c"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "zai-location-cta-daily-study-v5",
+      "episodeId": "zai-location",
+      "date": "2026-10-12",
+      "formatId": "benefit-profile-link-download",
+      "ruleVersion": "cta-policy-v10",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Record the owner-directed CTA without website wording or website imagery while retaining the profile-link download and daily-learning benefit; performance remains unmeasured.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "hsk-profile-link-daily-study-v2",
+      "registeredAt": "2026-10-10T06:05:03.696Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0010"
+      ],
+      "supersedes": "zai-location-cta-daily-study-v4",
+      "copyHash": "b61f396a95b0af879099b9caf7edbccca9aa5ca879ca868ced8a6694bf69518c",
+      "copySnapshot": {
+        "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку, скачай HSK AI и учи китайский каждый день.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку, скачай HSK AI и учи китайский каждый день.",
+            "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+            "screenCaption": "Профиль → ссылка → HSK AI → каждый день",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "ПОПРОБУЙ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "Попробуй",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ПРОФИЛЬ",
+                "screenImage": "cta/instagram-profile.png",
+                "screenImageWidthPx": 860,
+                "screenImageHeightPx": 633,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 86,
+                  "widthPercent": 92,
+                  "heightPercent": 7
+                },
+                "motion": "slide",
+                "syncCueText": "Зайди",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "ССЫЛКА",
+                "screenImage": "cta/instagram-links.png",
+                "screenImageWidthPx": 842,
+                "screenImageHeightPx": 1164,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 52,
+                  "widthPercent": 92,
+                  "heightPercent": 15
+                },
+                "motion": "reveal",
+                "syncCueText": "Открой",
+                "transitionStyle": "mask-reveal"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "СКАЧАТЬ ПРИЛОЖЕНИЕ",
+                "brandLogo": true,
+                "motion": "slide",
+                "syncCueText": "скачай",
+                "actionIcon": "app-download",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "учи",
+                "transitionStyle": "type-reveal"
+              }
+            ],
+            "editPlan": "CTA в одной центральной композиции. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля Instagram и выделите ссылку; на «Открой» — полный скриншот окна ссылок и подсветите карточку HSK AI; на «скачай» — брендированную карточку HSK AI с иконкой загрузки, без сайта и его скриншота; на «учи китайский каждый день» — финальный титр «КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ» с логотипом HSK AI. Сохраняйте скриншоты целиком, держите текст в безопасных полях и синхронизируйте переходы с cue. Не показывайте реальные нажатия, завершённую загрузку или неподтверждённые функции приложения."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 4,
+            "precedingSceneIds": [
+              "hook",
+              "pattern",
+              "home",
+              "school"
+            ],
+            "durationSec": 11,
+            "plannedStartSec": 22
+          }
+        ]
+      },
+      "placementHash": "951c61133e78aca46d99e21810529c65406dcd64dc50b999856d3458ec38b632",
+      "contextSnapshot": {
+        "level": "HSK 1",
+        "topic": "在 для обозначения места: где я нахожусь",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "ru-dmitry-v1",
+        "voiceProvider": "text-to-speech-online",
+        "nonCtaContentHash": "966a46c20de1a792a96f0e77ea6c86b77eeee05c1e01b127c6bfbafac3ea6d7c"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "zai-location-youtube-cta-v2",
+      "episodeId": "zai-location",
+      "date": "2026-10-12",
+      "formatId": "benefit-profile-link-download",
+      "ruleVersion": "cta-policy-v10",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Bind the owner-approved platform CTA visuals to the reviewed shared lesson and existing speech. This baseline registration makes no performance claim.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "hsk-profile-link-daily-study-v2-youtube",
+      "registeredAt": "2026-10-10T06:09:01.439Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0010"
+      ],
+      "supersedes": null,
+      "copyHash": "4c7ca00a02608b2ccefc3bb2bb2134ec2840aaefe2d2d02e1457e04dae55b852",
+      "copySnapshot": {
+        "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку, скачай HSK AI и учи китайский каждый день.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку, скачай HSK AI и учи китайский каждый день.",
+            "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+            "screenCaption": "Профиль → ссылка → HSK AI → каждый день",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "ПОПРОБУЙ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "Попробуй",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ПРОФИЛЬ",
+                "screenImage": "cta/youtube-telegram-profile.jpg",
+                "screenImageWidthPx": 1178,
+                "screenImageHeightPx": 1035,
+                "screenHighlight": {
+                  "leftPercent": 3,
+                  "topPercent": 76,
+                  "widthPercent": 94,
+                  "heightPercent": 10
+                },
+                "motion": "slide",
+                "syncCueText": "Зайди",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "ССЫЛКА",
+                "screenImage": "cta/youtube-open-link-browser.jpg",
+                "screenImageWidthPx": 1178,
+                "screenImageHeightPx": 2261,
+                "screenHighlight": {
+                  "leftPercent": 2,
+                  "topPercent": 55.5,
+                  "widthPercent": 96,
+                  "heightPercent": 11.5
+                },
+                "motion": "reveal",
+                "syncCueText": "Открой",
+                "transitionStyle": "mask-reveal"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "СКАЧАТЬ ПРИЛОЖЕНИЕ",
+                "brandLogo": true,
+                "motion": "slide",
+                "syncCueText": "скачай",
+                "actionIcon": "app-download",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "учи",
+                "transitionStyle": "type-reveal"
+              }
+            ],
+            "editPlan": "CTA в одной центральной композиции. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля канала и выделите ссылку; на «Открой» — полный скриншот выбора приложения для открытия ссылки и подсветите карточку HSK AI; на «скачай» — брендированную карточку HSK AI с иконкой загрузки, без сайта и его скриншота; на «учи китайский каждый день» — финальный титр «КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ» с логотипом HSK AI. Сохраняйте скриншоты целиком, держите текст в безопасных полях и синхронизируйте переходы с cue. Не показывайте реальные нажатия, завершённую загрузку или неподтверждённые функции приложения."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 4,
+            "precedingSceneIds": [
+              "hook",
+              "pattern",
+              "home",
+              "school"
+            ],
+            "durationSec": 11,
+            "plannedStartSec": 22
+          }
+        ]
+      },
+      "placementHash": "951c61133e78aca46d99e21810529c65406dcd64dc50b999856d3458ec38b632",
+      "contextSnapshot": {
+        "level": "HSK 1",
+        "topic": "在 для обозначения места: где я нахожусь",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "ru-dmitry-v1",
+        "voiceProvider": "text-to-speech-online",
+        "nonCtaContentHash": "966a46c20de1a792a96f0e77ea6c86b77eeee05c1e01b127c6bfbafac3ea6d7c"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
     }
   ],
   "readbacks": [],
@@ -6139,19 +6867,19 @@
       "status": "approved",
       "copySource": "offer",
       "visualSource": "sceneTemplate",
-      "deliveryMode": "profile-website-download",
+      "deliveryMode": "profile-link-download",
       "destinationVerified": false,
       "automationVerified": null,
       "publishingAuthorized": true,
-      "notes": "Reuses existing owner-approved Instagram offer and registered word-synced visual beats. Never infer a live site/download from the preview.",
+      "notes": "Uses the owner-approved profile-link route, HSK AI download card, and daily-learning close; do not show or claim a website/download completion.",
       "sceneTemplate": {
         "id": "cta",
         "kind": "cta",
         "captionStyleId": "pill",
-        "durationSec": 8,
+        "durationSec": 11,
         "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
-        "screenCaption": "Профиль → ссылка → сайт",
-        "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — скриншот окна ссылок и выделите карточку «Скачать HSK AI»; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано.",
+        "screenCaption": "Профиль → ссылка → HSK AI → каждый день",
+        "editPlan": "CTA в одной центральной композиции. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля Instagram и выделите ссылку; на «Открой» — полный скриншот окна ссылок и подсветите карточку HSK AI; на «скачай» — брендированную карточку HSK AI с иконкой загрузки, без сайта и его скриншота; на «учи китайский каждый день» — финальный титр «КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ» с логотипом HSK AI. Сохраняйте скриншоты целиком, держите текст в безопасных полях и синхронизируйте переходы с cue. Не показывайте реальные нажатия, завершённую загрузку или неподтверждённые функции приложения.",
         "visualBeats": [
           {
             "hero": "HSK AI",
@@ -6192,19 +6920,21 @@
             "transitionStyle": "mask-reveal"
           },
           {
-            "hero": "СКАЧАТЬ",
-            "screenImage": "cta/website-download.png",
-            "screenImageWidthPx": 600,
-            "screenImageHeightPx": 1300,
-            "screenHighlight": {
-              "leftPercent": 24,
-              "topPercent": 70,
-              "widthPercent": 52,
-              "heightPercent": 8
-            },
+            "hero": "HSK AI",
+            "meaning": "СКАЧАТЬ ПРИЛОЖЕНИЕ",
+            "brandLogo": true,
             "motion": "slide",
             "syncCueText": "скачай",
+            "actionIcon": "app-download",
             "transitionStyle": "slide-match"
+          },
+          {
+            "hero": "HSK AI",
+            "meaning": "КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ",
+            "brandLogo": true,
+            "motion": "reveal",
+            "syncCueText": "учи",
+            "transitionStyle": "type-reveal"
           }
         ],
         "cards": [
@@ -6230,19 +6960,19 @@
     "youtube": {
       "status": "approved",
       "copySource": "offer",
-      "deliveryMode": "profile-website-download",
+      "deliveryMode": "profile-link-download",
       "destinationVerified": false,
       "automationVerified": null,
       "publishingAuthorized": true,
-      "notes": "YouTube Shorts publishing is owner-authorized through Zernio after exact-preview approval. Reuses the canonical Instagram CTA wording; only the profile/link screenshots are replaced. Destination remains unverified. The normal renderer automatically exports this ending with the shared lesson and continuous voice/cues.",
+      "notes": "YouTube Shorts uses the canonical profile-link route and daily-learning CTA; only the approved profile/link screenshots differ from Instagram. Do not show or claim a website/download completion.",
       "sceneTemplate": {
         "id": "cta",
         "kind": "cta",
         "captionStyleId": "pill",
-        "durationSec": 8,
+        "durationSec": 11,
         "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
-        "screenCaption": "Профиль → ссылка → сайт",
-        "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — присланный скриншот выбора браузера и выделите карточку Chrome; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано.",
+        "screenCaption": "Профиль → ссылка → HSK AI → каждый день",
+        "editPlan": "CTA в одной центральной композиции. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля канала и выделите ссылку; на «Открой» — полный скриншот выбора приложения для открытия ссылки и подсветите карточку HSK AI; на «скачай» — брендированную карточку HSK AI с иконкой загрузки, без сайта и его скриншота; на «учи китайский каждый день» — финальный титр «КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ» с логотипом HSK AI. Сохраняйте скриншоты целиком, держите текст в безопасных полях и синхронизируйте переходы с cue. Не показывайте реальные нажатия, завершённую загрузку или неподтверждённые функции приложения.",
         "visualBeats": [
           {
             "hero": "HSK AI",
@@ -6283,19 +7013,21 @@
             "transitionStyle": "mask-reveal"
           },
           {
-            "hero": "СКАЧАТЬ",
-            "screenImage": "cta/website-download.png",
-            "screenImageWidthPx": 600,
-            "screenImageHeightPx": 1300,
-            "screenHighlight": {
-              "leftPercent": 24,
-              "topPercent": 70,
-              "widthPercent": 52,
-              "heightPercent": 8
-            },
+            "hero": "HSK AI",
+            "meaning": "СКАЧАТЬ ПРИЛОЖЕНИЕ",
+            "brandLogo": true,
             "motion": "slide",
             "syncCueText": "скачай",
+            "actionIcon": "app-download",
             "transitionStyle": "slide-match"
+          },
+          {
+            "hero": "HSK AI",
+            "meaning": "КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ",
+            "brandLogo": true,
+            "motion": "reveal",
+            "syncCueText": "учи",
+            "transitionStyle": "type-reveal"
           }
         ],
         "cards": [

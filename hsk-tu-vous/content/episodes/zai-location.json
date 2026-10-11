@@ -164,6 +164,18 @@
       "url": "https://www.settemilalingue.com/en/languages/zh/grammar/for-location",
       "checkedAt": "2026-10-11",
       "supports": "在 (zài) expresses location in subject + 在 + place; confirms 我在家 and 在学校 patterns."
+    },
+    {
+      "title": "California State University, Fullerton — Using Chinese: A guide to contemporary usage",
+      "url": "https://english.fullerton.edu/publications/clnArchives/pdf/Chinese.pdf",
+      "checkedAt": "2026-10-10",
+      "supports": "The pattern 他在家 means “he/she is at home” and 在 is the main verb expressing location; supports the same subject + 在 + place pattern in 我在家 and 我在学校."
+    },
+    {
+      "title": "University of Hawaiʻi Kapiʻolani / LibreTexts — Indicating location with 在 before verbs",
+      "url": "https://human.libretexts.org/Bookshelves/Languages/Chinese/CHN102_Elementary_Mandarin_II_Textbook/03%3A_Origins_and_Language/3.06%3A_Lesson_2_Grammar_-_Indicating_location_with__%28zai%29_before_verbs",
+      "checkedAt": "2026-10-10",
+      "supports": "Explains 在 as location marker and gives the order subject + 在 + place + verb with 我在夏威夷大学学习; confirms the location phrase follows the subject and precedes the action."
     }
   ],
   "hookExperiment": {

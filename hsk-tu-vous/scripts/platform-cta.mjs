@@ -106,7 +106,7 @@ export function getPlatformCtaStatus(lab, platform) {
     automationVerified: variant.automationVerified === true,
     warning: variant.destinationVerified !== true
       ? platform === "instagram"
-        ? "Owner-approved instruction; website reachability and downloads are not independently verified."
+        ? "Owner-approved instruction; the profile-link destination and app availability are not independently verified."
         : platform === "youtube"
           ? "Owner-approved YouTube CTA; the linked destination is not independently verified."
           : null

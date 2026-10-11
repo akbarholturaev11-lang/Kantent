@@ -964,12 +964,31 @@ const LessonSlide: React.FC<{
   episodeId: string;
   scene: LessonScene;
   index: number;
+  sceneCount: number;
   durationFrames: number;
   timelineStartMs: number;
   captions: TimedCaption[];
-}> = ({ episodeId, scene, index, durationFrames, timelineStartMs, captions }) => {
+}> = ({ episodeId, scene, index, sceneCount, durationFrames, timelineStartMs, captions }) => {
   const frame = useCurrentFrame();
   const motionDesign = episodeId === "zhe-na-ge";
+  const fadeIn = index === 0
+    ? 1
+    : interpolate(frame, [0, MOTION.sceneCrossfadeFrames], [0, 1], clampEase);
+  const fadeOut = index === sceneCount - 1
+    ? 1
+    : interpolate(
+        frame,
+        [durationFrames, durationFrames + MOTION.sceneCrossfadeFrames],
+        [1, 0],
+        clampEase,
+      );
+  const sceneOpacity = fadeIn * fadeOut;
+  const backgroundPush = interpolate(
+    frame,
+    [0, durationFrames],
+    [1, MOTION.sceneBackgroundPushScale],
+    clampEase,
+  );
   const accent = motionDesign
     ? scene.id === "near"
       ? COLORS.brandRed
@@ -1118,6 +1137,7 @@ const LessonSlide: React.FC<{
         overflow: "hidden",
         background: COLORS.background,
         color: COLORS.foreground,
+        opacity: sceneOpacity,
       }}
     >
       {motionDesign ? (
@@ -1142,6 +1162,7 @@ const LessonSlide: React.FC<{
           <AbsoluteFill
             style={{
               background: `radial-gradient(ellipse at 50% 48%, ${accent}24 0%, ${accent}0b 27%, transparent 56%), linear-gradient(155deg, ${COLORS.surface} 0%, ${COLORS.background} 72%, ${COLORS.background} 100%)`,
+              scale: backgroundPush,
             }}
           />
           <AbsoluteFill
@@ -1269,11 +1290,21 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode }) => {
   return (
     <AbsoluteFill>
       {timeline.map(({ scene, index, from, durationFrames }) => (
-        <Sequence key={scene.id} from={from} durationInFrames={durationFrames}>
+        <Sequence
+          key={scene.id}
+          from={from}
+          durationInFrames={
+            durationFrames +
+            (index < episode.scenes.length - 1
+              ? MOTION.sceneCrossfadeFrames
+              : 0)
+          }
+        >
           <LessonSlide
             episodeId={episode.id}
             scene={scene}
             index={index}
+            sceneCount={episode.scenes.length}
             durationFrames={durationFrames}
             timelineStartMs={(from / FPS) * 1000}
             captions={episode.captions ?? []}

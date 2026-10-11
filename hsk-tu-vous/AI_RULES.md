@@ -37,7 +37,7 @@ Read `AGENTS.md` for the ownership map and migration protocol. In case of confli
 
 - `content/voice-profile.json` is the **only place** where the active site, locale, voice name, speed, pitch, export settings and approval status are defined. Do not write a second copy here.
 - The chosen series voice is reused automatically once approved. Do not ask to reconfirm it for each episode. A different voice/provider or changed settings need an explicit owner decision and a freshly approved sample.
-- The agent must generate/export matching audio and word-level timing itself through the approved site with available browser automation. Preparing the text or asking the owner to download/move routine exports is not completion.
+- The agent must generate/export matching audio and word-level timing itself through the approved site, following the browser selection and export procedure in [WORKFLOW §3](content/WORKFLOW.md#3-generate-and-import-speech). Preparing the text or asking the owner to download/move routine exports is not completion.
 - If the approved provider, voice or required export is unavailable—or if login/CAPTCHA/permissions block it—stop and report the exact blocker. Never switch to another voice/API, invent audio, or bypass access controls to conceal failure.
 - No external TTS/transcription API or additional paid credential path is authorized for this workflow. Do not send narration/audio to another service.
 - Exported MP3 metadata does not independently prove the voice selected in a browser; represent verification limitations accurately.

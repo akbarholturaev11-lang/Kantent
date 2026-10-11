@@ -48,7 +48,7 @@ The owner authorizes creating **new future** dates and full CTA-free lesson plan
 
 1. Check `content/voice-profile.json`. Reuse its approved configuration; a new voice/provider decision requires the owner's separate authorization and new sample.
 2. Prepare the exact script as the dated `tts-input.txt`.
-3. The agent—not the owner—uses its available browser automation to operate the approved website, export audio and word-level subtitle cues, and save them in the matching `review/<episode-id>/incoming/` directory.
+3. The agent—not the owner—must use **Google Chrome** for speech generation and export. Select Chrome explicitly in the available browser automation, operate the approved website, export audio and word-level subtitle cues, and save them in the matching `review/<episode-id>/incoming/` directory. If Chrome cannot be controlled, report that blocker instead of silently selecting another browser.
 4. Import the exact matching audio and VTT/SRT through `import_voice_artifacts`. Validate script fingerprint, cue granularity, start/end timestamps and duration.
 5. Stop only for a real external blocker (login, CAPTCHA, permission gate, missing approved voice, missing export) or failed validation. Never change providers silently and never request routine manual file handling from the owner.
 

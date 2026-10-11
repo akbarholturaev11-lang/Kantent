@@ -13,7 +13,7 @@
 
 **Автоматик экспорт:** оддий make/render/MCP тайёрлаш оқими иккала якунги файлни чиқаради. Асосий дарс кадрлари бир марта рендер қилинади; Instagram ва YouTube CTA охирлари алоҳида уланади. Битта узлуксиз овоз/SFX микси иккаласида ишлатилади. YouTube пакети `review/<id>/youtube/`да, Instagram пакети аввалги review папкасида сақланади. `status.platformPackages` ҳар платформанинг аниқ видео файли, hash ва CTA версиясини кўрсатади. Оқим янги қоида тасдиғини тахмин қилмайди: база регистрациясидаги амалдаги, аниқ тан олинган тузатишларгина YouTube baseline регистрациясига ўтади. Аниқ мос эски регистрация қайта ишлатилади; бошқа ҳолда янги ўзгармас версия қўшилади.
 
-**Instagram амалдаги рўйхатга олинган CTA:** viewer → Instagram profile → profile link → HSK AI website → download. Эгаси берган Instagram профили, ҳаволалар ва сайт скриншотлари овознинг керакли сўзларига синхронлаштирилади; кўрсатма реал босиш/юклаб олиш амалга ошганини билдирмайди.
+**Instagram amaldagi ro‘yxatga olingan CTA:** viewer → Instagram profile → profile link → download HSK AI → learn Chinese every day. “Зайди” cue’da egasi bergan profil skrinshoti, “Открой” cue’da havolalar skrinshoti ko‘rsatiladi. Sayt skrinshoti va “с сайта” iborasi olib tashlangan. “Скачай”da HSK AI yuklab olish kartasi, “учи”da “КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ” yakuniy brend kartasi chiqadi. Bu sahnalashtirilgan ko‘rsatma; real bosish yoki yuklab olish tugaganini bildirmaydi.
 
 **TikTok DM билан адашмаслик:** янги чатга чиқадиган `Введение для чата` матни — **калит сўзга автоматик жавоб эмас**. `HSK` сўзига автоматик DM жўнатиш CTA’си аккаунтда ҳақиқий ишлаши синовдан ўтиб, `automationVerified: true` тасдиқланмагунча тайёр деб белгиланмайди. Шунчаки дастур экрани очилгани бундай тасдиқ эмас. YouTube’даги ҳавола скриншоти ва ҳаволанинг ҳақиқий манзили мустақил текширилмаган; уларни текширилган ишлайдиган ҳавола деб айтманг.
 
@@ -27,7 +27,7 @@
 
 1. Ushbu fayl va `content/cta-lab.json`ni o‘qing. `get_cta_learning_status` orqali amaldagi qoidalar versiyasi va tuzatishlarni oling.
 2. `corrections` ichidagi barcha faol umumiy, epizodga yoki formatga tegishli qoidalarni o‘qing. Har qoida original `ownerWording`, aniq `rule`, doira (`scope`), ID va versiyani saqlaydi.
-3. CTA matni, ovoz, UI amali va vaqtlarini bitta reja sifatida yozing. “Зайди” cue’da profil, “Открой” cue’da havolalar oynasi, “скачай” cue’da sayt ko‘rinsin; tegishli qator yoki tugmani belgilang.
+3. CTA matni, ovoz, UI amali va vaqtlarini bitta reja sifatida yozing. “Зайди” cue’da profil, “Открой” cue’da havolalar oynasi ko‘rinsin; “скачай”da HSK AI brendli yuklab olish kartasi, “учи”da kundalik o‘rganish yakuniy kartasi chiqsin. Sayt skrinshoti ishlatilmaydi.
 4. Matnni tekshirib, yangi CTA versiyasini ro‘yxatdan o‘tkazing. `acknowledgedCorrectionIds` ichiga o‘qilgan faol tuzatishlarning aniq IDlarini kiriting. Bu maydonni ko‘r-ko‘rona to‘ldirish tahririy tekshiruv hisoblanmaydi.
 5. Narratsiya o‘zgarsa oldingi MP3, VTT/SRT, render va tasdiq yaroqsiz. Shu matnga mos yangi ovoz va so‘zma-so‘z vaqtlar kerak. Faqat yangi CTA yozib eski ovoz bilan paketni “tayyor” demang.
 
