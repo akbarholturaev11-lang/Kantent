@@ -52,6 +52,12 @@ jobs:
           npx remotion still src/index.ts HSKAI-Episode /tmp/series.png --props /tmp/story-2026-10-16.json --frame=35
           npx remotion still src/index.ts HSKAI-Episode /tmp/fix.png --props /tmp/story-2026-10-19.json --frame=35
           test -s /tmp/quiz.png && test -s /tmp/series.png && test -s /tmp/fix.png
+      - name: Render NEW owner-authorized cinematic pilot preview frames
+        run: |
+          node --input-type=module -e "import fs from 'node:fs';import {getPlannedEpisode} from './scripts/lib.mjs';import {validateCtaEpisode,readCtaLab} from './scripts/cta-lab.mjs';const {episode}=await getPlannedEpisode('2026-10-13');if(episode.id!=='zai-location-cinematic-v2'||episode.creativeFormatId!=='street-situation'||!validateCtaEpisode(episode,await readCtaLab()).valid)throw Error('Pilot plan/CTA invalid');fs.writeFileSync('/tmp/zai-recut-preview-props.json',JSON.stringify({episode}));"
+          npx remotion still src/index.ts HSKAI-Episode /tmp/zai-recut-hook.png --props /tmp/zai-recut-preview-props.json --frame=15
+          npx remotion still src/index.ts HSKAI-Episode /tmp/zai-recut-home.png --props /tmp/zai-recut-preview-props.json --frame=330
+          test -s /tmp/zai-recut-hook.png && test -s /tmp/zai-recut-home.png
       - name: Render visual-only cinematic storyboard stills
         run: |
           node -e "const fs=require('fs');const episode=require('./content/episodes/zai-location.json');fs.writeFileSync('/tmp/hsk-storyboard-props.json', JSON.stringify({episode}));"
