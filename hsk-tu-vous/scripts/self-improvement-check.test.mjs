@@ -32,16 +32,39 @@ test('does not treat already published slots as future drafts', () => {
   calendar.items[0].status = 'published';
   assert.equal(auditPlanningBuffer(calendar, { today: '2026-10-09' }).status, 'replenish');
 });
-test('checks the actual lesson identity and narration', () => {
+test('counts only complete sourced CTA-free drafts with matching identity', () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'hsk-feedback-'));
   try {
     fs.mkdirSync(path.join(tmp, 'content/episodes'), { recursive: true });
     const item = { id: 'ep', date: '2026-10-12', episodeFile: 'episodes/ep.json' };
     const file = path.join(tmp, 'content/episodes/ep.json');
-    fs.writeFileSync(file, JSON.stringify({ id: 'ep', date: '2026-10-12', topic: '在', hookExperiment: { id: 'h1' }, scenes: [{ kind: 'lesson', narration: 'Я дома.' }] }));
+    const card = { hanzi: '我在家。', pinyin: 'Wǒ zài jiā.', meaning: 'Я дома.' };
+    const complete = {
+      id: item.id, date: item.date, timezone: 'Asia/Shanghai',
+      languageCode: 'ru-RU', topic: '在', durationTargetSec: 30,
+      learningFacts: ['在 denotes location'], examples: ['我在家。'],
+      learningFactSources: [{
+        title: 'Location reference', url: 'https://example.org/grammar/zai',
+        checkedAt: '2026-10-11', supports: 'subject + 在 + place',
+      }],
+      hookExperiment: { id: 'hook-v1', formatId: 'scenario', hypothesis: 'Show location before explaining.' },
+      scenes: [
+        { kind: 'hook', narration: 'Где ты?', cards: [card] },
+        { kind: 'context', narration: 'Здесь нужна 在.', cards: [card] },
+        { kind: 'example', narration: 'Я дома.', cards: [card] },
+      ],
+    };
+    const write = (episode) => fs.writeFileSync(file, JSON.stringify(episode));
+    write(complete);
     assert.equal(Boolean(isDraftReady(tmp, item)), true);
-    fs.writeFileSync(file, JSON.stringify({ id: 'wrong', date: '2026-10-12', topic: '在', hookExperiment: { id: 'h1' }, scenes: [{ kind: 'lesson', narration: 'Я дома.' }] }));
-    assert.equal(isDraftReady(tmp, item), false);
+    write({ ...complete, learningFactSources: [] });
+    assert.equal(Boolean(isDraftReady(tmp, item)), false, 'no checked source means not ready');
+    write({ ...complete, scenes: [{ kind: 'hook', narration: 'Что?' }] });
+    assert.equal(Boolean(isDraftReady(tmp, item)), false, 'placeholder scene means not ready');
+    write({ ...complete, cta: { text: 'duplicate' } });
+    assert.equal(Boolean(isDraftReady(tmp, item)), false, 'CTA must come from central registry');
+    write({ ...complete, id: 'wrong' });
+    assert.equal(Boolean(isDraftReady(tmp, item)), false, 'identity mismatch');
   } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
 });
 test('invalid buffer config is rejected', () => {
