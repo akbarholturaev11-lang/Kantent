@@ -38,6 +38,26 @@ export function recommendCreativeFormats({ calendar, episodeByFile, registry, fe
       return { date: item.date, episodeId: item.id, status: 'existing-approval-state-protected', creativeFormatId: null };
     const hookFormat = episode.hookExperiment?.formatId;
     const formats = registry.formats;
+    // Owner-authorized re-cut is a separate new experiment, but does not
+    // advance the fixed four-format rotation of original calendar slots.
+    // It must share a valid registered family with its original episode.
+    if (episode.pilotRemakeOfEpisodeId) {
+      const parent = calendar.items.find(x=>x.id===episode.pilotRemakeOfEpisodeId);
+      const parentEpisode = parent && episodeByFile[parent.episodeFile];
+      const pinned = formats.find(x=>x.id===episode.creativeFormatId);
+      if (!parent || !parentEpisode || !pinned || !pinned.hookFormats.includes(hookFormat) ||
+          episode.id===parent.id || episode.date===parent.date ||
+          parentEpisode.id!==parent.id) {
+        return {date:item.date,episodeId:item.id,status:'invalid-recut',creativeFormatId:null};
+      }
+      return {
+        date:item.date,episodeId:item.id,status:'creative-brief-only',
+        currentHookFormat:hookFormat,creativeFormatId:pinned.id,creativeFormatLabel:pinned.label,
+        currentTopic:episode.topic,audienceProblem:episode.audienceProblem??null,
+        recommendedBeats:pinned.beats,editorialCheck:pinned.editorial,
+        note:'Explicit fresh cinematic pilot, independently measured; does not alter the legacy published episode or subsequent format rotation.'
+      };
+    }
     let idx = -1;
     for (let n=0; n<formats.length; n++) {
       const i = (nextFormatIndex+n) % formats.length;
