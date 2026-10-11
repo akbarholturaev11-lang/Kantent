@@ -12,6 +12,7 @@ const lab = await readCtaLab();
 const future = [
   ["2026-10-09", "zhe-na-ge"],
   ["2026-10-12", "zai-location"],
+  ["2026-10-13", "zai-location-cinematic-v2"],
   ["2026-10-14", "ji-vs-duoshao"],
   ["2026-10-16", "xiang-vs-yao"],
   ["2026-10-19", "time-word-order"],
