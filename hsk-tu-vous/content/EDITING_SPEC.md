@@ -47,4 +47,4 @@ For a future, unapproved HSK lesson, a `scene.storyboard` can select an original
 
 ## Review before delivery
 
-For each render, check cue-accurate cutaways, a hook-matched first frame, consistent caption styles, correctly paired Chinese examples and pinyin, safe audio levels, a readable CTA, and compliance with the current duration limits in `AI_RULES.md`. A visual, caption, or sound edit invalidates the previous MP4 and package approval; render and review the new version before approval.
+For each render, check cue-accurate cutaways, a hook-matched first frame, consistent caption styles, correctly paired Chinese examples and pinyin, safe audio levels, a readable CTA, and that the full scenario and narration finish cleanly. There is no fixed duration cap. A visual, caption, or sound edit invalidates the previous MP4 and package approval; render and review the new version before approval.

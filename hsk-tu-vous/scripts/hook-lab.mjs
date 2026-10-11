@@ -154,7 +154,14 @@ export function createHookReadback({
     primaryMetricValue: round(primaryValue),
     metricDefinition,
     videoDurationSeconds: roundedDuration,
-    durationBand: roundedDuration < 30 ? "25-29s" : "30-35s",
+    durationBand:
+      roundedDuration < 25
+        ? "under-25s"
+        : roundedDuration < 30
+          ? "25-29s"
+          : roundedDuration <= 35
+            ? "30-35s"
+            : "over-35s",
     views,
     viewsAt3Seconds: viewsAt3Seconds ?? null,
     averageViewDurationSeconds: averageViewDurationSeconds ?? null,

@@ -129,7 +129,7 @@ const createServer = () => {
     editPlan: z.string().max(1200).optional(),
     visualBeats: z.array(visualBeatSchema).max(12).optional(),
     captionStyleId: z.enum(["headline", "pill", "highlight"]).optional(),
-    durationSec: z.number().positive().max(35).optional(),
+    durationSec: z.number().positive().optional(),
   });
   const factSourceSchema = z.object({
     title: z.string().min(1).max(180),
@@ -799,7 +799,7 @@ const createServer = () => {
     {
       title: "Prepare complete video package for a date",
       description:
-        "Готовит review-пакет для даты по единому профилю text-to-speech.online. Если голосовых файлов нет, агент должен сам продолжить через browser automation по content/WORKFLOW.md (§3: выбор браузера и экспорт) и скачать MP3+word-level SRT/VTT; не просите владельца экспортировать/переносить файлы. Затем импортируйте, соберите и проверьте Remotion-пакет 25–35 секунд. Ничего не публикуется.",
+        "Готовит review-пакет для даты по единому профилю text-to-speech.online. Если голосовых файлов нет, агент должен сам продолжить через browser automation по content/WORKFLOW.md (§3: выбор браузера и экспорт) и скачать MP3+word-level SRT/VTT; не просите владельца экспортировать/переносить файлы. Затем импортируйте, соберите и проверьте Remotion-пакет на соответствие полному сценарию. Фиксированного ограничения длительности нет. Ничего не публикуется.",
       inputSchema: z.object({ date: dateSchema }),
     },
     async ({ date }) => withToolErrors(() => prepareReviewForDate(date)),
@@ -1067,7 +1067,7 @@ const createServer = () => {
         postReference: z.string().min(1).max(180),
         publishedAt: z.iso.datetime({ offset: true }),
         capturedAt: z.iso.datetime({ offset: true }),
-        videoDurationSeconds: z.number().min(25).max(35),
+        videoDurationSeconds: z.number().positive(),
         metricDefinition: z.string().min(5).max(1000),
         views: z.number().int().min(0).max(1_000_000_000),
         hskCommenters: z

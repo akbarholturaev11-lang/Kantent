@@ -279,12 +279,6 @@ const outputDurationSec = Math.max(
   sceneDurationSec,
   effectiveDurationMs / 1000,
 );
-if (outputDurationSec < 25 || outputDurationSec > 35) {
-  throw new Error(
-    `Ovoz va sahna rejasidan yakuniy video ${outputDurationSec.toFixed(1)} s chiqadi; maqsad 25–35 s. TTS matnini qisqartiring yoki cho‘zing, keyin MP3 va SRT ni qayta eksport qiling. Fayllar hali review paketiga ko‘chirilmagan.`,
-  );
-}
-
 const folder = reviewDir(id);
 const assetFolder = path.join(
   path.dirname(filePath),
@@ -315,7 +309,7 @@ episode.captionSource =
 episode.publishingStatus = "pending-owner-review";
 await writeJson(filePath, episode);
 
-const durationSec = Number(sceneDurationSec.toFixed(2));
+const durationSec = Number(outputDurationSec.toFixed(2));
 await writeStatus(id, {
   sourceRevision,
   stage: "voice-and-captions-imported",
@@ -338,5 +332,5 @@ await writeStatus(id, {
 
 console.log(`MP3 va subtitrlar import qilindi: ${folder}`);
 console.log(
-  `Taxminiy video davomiyligi: ${durationSec.toFixed(1)} s; ko‘zlangan oraliq 25–35 s.`,
+  `To‘liq ssenariy bo‘yicha video davomiyligi: ${durationSec.toFixed(1)} s.`,
 );

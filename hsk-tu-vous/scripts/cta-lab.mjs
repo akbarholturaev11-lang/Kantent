@@ -567,14 +567,8 @@ export function createCtaReadback({
     );
   if (profileLinkClickers !== null && profileLinkClickers > views)
     throw new Error("Profile link clickers exceed views; check the metric definition/window.");
-  if (
-    !Number.isFinite(videoDurationSeconds) ||
-    videoDurationSeconds < 25 ||
-    videoDurationSeconds > 35
-  )
-    throw new Error(
-      "Supply the actual published video duration, from 25 to 35 seconds.",
-    );
+  if (!Number.isFinite(videoDurationSeconds) || videoDurationSeconds <= 0)
+    throw new Error("Supply the actual positive published video duration.");
   const downstream = Object.fromEntries(
     Object.entries({ deliveredDms, linkClicks, downloads }).map(
       ([name, value]) => [name, count(value, name, { optional: true })],
@@ -631,7 +625,14 @@ export function createCtaReadback({
     capturedAt,
     metricDefinition,
     videoDurationSeconds,
-    durationBand: videoDurationSeconds < 30 ? "25-29s" : "30-35s",
+    durationBand:
+      videoDurationSeconds < 25
+        ? "under-25s"
+        : videoDurationSeconds < 30
+          ? "25-29s"
+          : videoDurationSeconds <= 35
+            ? "30-35s"
+            : "over-35s",
     views,
     hskCommenters,
     profileLinkClickers,

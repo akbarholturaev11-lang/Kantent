@@ -59,7 +59,7 @@ export function isDraftReady(rootDirectory, item) {
     return episode.id === item.id && episode.date === item.date &&
       episode.timezone === 'Asia/Shanghai' && episode.languageCode === 'ru-RU' &&
       typeof episode.topic === 'string' && episode.topic.trim().length > 0 &&
-      episode.durationTargetSec >= 25 && episode.durationTargetSec <= 35 &&
+      Number.isFinite(episode.durationTargetSec) && episode.durationTargetSec > 0 &&
       Array.isArray(episode.learningFacts) && episode.learningFacts.length > 0 &&
       Array.isArray(episode.examples) && episode.examples.length > 0 &&
       Array.isArray(sources) && sources.length > 0 &&

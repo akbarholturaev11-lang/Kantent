@@ -49,14 +49,14 @@ The owner authorizes creating **new future** dates and full CTA-free lesson plan
 1. Check `content/voice-profile.json`. Reuse its approved configuration; a new voice/provider decision requires the owner's separate authorization and new sample.
 2. Prepare the exact script as the dated `tts-input.txt`.
 3. The agent—not the owner—must use **Google Chrome** for speech generation and export. Select Chrome explicitly in the available browser automation, operate the approved website, export audio and word-level subtitle cues, and save them in the matching `review/<episode-id>/incoming/` directory. If Chrome cannot be controlled, report that blocker instead of silently selecting another browser.
-4. Import the exact matching audio and VTT/SRT through `import_voice_artifacts`. Validate script fingerprint, cue granularity, start/end timestamps and duration.
+4. Import the exact matching audio and VTT/SRT through `import_voice_artifacts`. Validate script fingerprint, cue granularity, start/end timestamps and that the complete script is represented by the audio; do not reject a package for its duration.
 5. Stop only for a real external blocker (login, CAPTCHA, permission gate, missing approved voice, missing export) or failed validation. Never change providers silently and never request routine manual file handling from the owner.
 
 ## 4. Render and validate
 
 1. Run the existing Remotion renderer on the dated working copy. It automatically renders the shared lesson once, each approved CTA ending, and one continuous voice/sound mix. Both final MP4s reuse identical encoded lesson frames; the join does not split the speech audio.
 2. The renderer writes the Instagram package to the existing review root and the YouTube package under `review/<id>/youtube/`, each with MP4, baked-in subtitles, sidecar SRT, episode snapshot and post copy. `status.platformPackages` lists exact files, content hashes, video hashes and CTA registrations. A failed output keeps the whole job in a failed stage; do not silently omit YouTube.
-3. Inspect speech/cue alignment, the last spoken phrase, tone-marked pinyin, visual relevance, shot transitions, safe areas, music/effects and on-screen readability against `content/EDITING_SPEC.md` and `content/visual-system.json`.
+3. Inspect speech/cue alignment, the last spoken phrase, tone-marked pinyin, visual relevance, shot transitions, safe areas, music/effects, on-screen readability and whether the full scenario finishes cleanly against `content/EDITING_SPEC.md` and `content/visual-system.json`. Do not impose a fixed duration limit.
 4. A narration edit invalidates imported speech/timing and all downstream media; a visual or packaging edit invalidates the video, post preview and approval. Re-render and re-review before presenting as ready.
 
 ## 5. Preview, approval and publishing

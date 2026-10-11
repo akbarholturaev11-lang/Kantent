@@ -58,21 +58,6 @@ if (episode.voiceTextHash !== narrationHash(episode))
   );
 const audioPath = path.join(PROJECT_ROOT, "public", episode.audioSrc);
 await fs.access(audioPath);
-const sceneDurationSec =
-  episode.scenes.reduce(
-    (sum, scene) =>
-      sum + (scene.durationFrames ?? Math.ceil((scene.durationSec ?? 4) * 30)),
-    0,
-  ) / 30;
-const outputDurationSec = Math.max(
-  sceneDurationSec,
-  (episode.audioDurationMs ?? 0) / 1000,
-);
-if (outputDurationSec < 25 || outputDurationSec > 35) {
-  throw new Error(
-    `Yakuniy video ${outputDurationSec.toFixed(1)} s; maqsad 25–35 s. TTS yoki sahna vaqtlarini moslab qayta urinib ko‘ring.`,
-  );
-}
 if (
   !episode.captions?.length ||
   !["online-tts-srt", "online-tts-vtt"].includes(episode.captionSource)
