@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "description": "Manual verification snapshots of platform publication outcomes. Not current real-time provider status and not evidence of which renderer was used. Add records only after a connected platform confirms publication, with platform and post ID; never infer publication from approved/scheduled review state.",
+  "records": [
+    {
+      "episodeId": "zai-location",
+      "calendarDate": "2026-10-12",
+      "platform": "instagram",
+      "zernioPostId": "6ac9e2b2578c0bd8bcd18f62",
+      "zernioStatus": "published",
+      "scheduledFor": "2026-10-10T13:00:00Z",
+      "verifiedOn": "2026-10-11",
+      "evidence": "Zernio posts_get",
+      "creativeFormatVerified": false
+    },
+    {
+      "episodeId": "zai-location",
+      "calendarDate": "2026-10-12",
+      "platform": "youtube",
+      "zernioPostId": "6ac9e2e6ea2139aa08cbd278",
+      "zernioStatus": "published",
+      "scheduledFor": "2026-10-10T13:00:00Z",
+      "verifiedOn": "2026-10-11",
+      "evidence": "Zernio posts_get",
+      "creativeFormatVerified": false
+    }
+  ]
+}
