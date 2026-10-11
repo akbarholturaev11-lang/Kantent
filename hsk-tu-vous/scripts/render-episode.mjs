@@ -1,3 +1,4 @@
+import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -30,6 +31,7 @@ import {
 const id = process.argv[2];
 if (!id) throw new Error("Foydalanish: npm run content:render -- <mavzu-ID>");
 const sourceRevision = requireFreshGitMain();
+assertNotPreviouslyPublished(id);
 const { episode, filePath } = await getEpisode(id);
 const visualSystem = await readJson(
   path.join(PROJECT_ROOT, "content", "visual-system.json"),

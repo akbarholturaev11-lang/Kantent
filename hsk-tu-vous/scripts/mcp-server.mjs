@@ -11,6 +11,7 @@ import {
   validatePublicationTarget,
 } from "./publication-policy.mjs";
 import { resolveTodayVideo } from "./resolve-production-date.mjs";
+import { verifiedPublishedRecords, confirmedPublishedIds, confirmedPublishedFor } from "./published-evidence.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import * as z from "zod/v4";
 import {
@@ -706,6 +707,24 @@ const createServer = () => {
   // Same exact-date preparation routine powers explicit and relative commands.
   // TTS browser work remains an explicit next-agent action, never a fake success.
   async function prepareReviewForDate(date) {
+        // Provider-confirmed publication overrides the calendar's stale
+        // "planned" status. Never re-render or re-publish the same post ID.
+        const plannedItem = await getCalendarItemByDate(date);
+        const alreadyPublished = confirmedPublishedFor(plannedItem.id);
+        if (alreadyPublished.length) {
+          return {
+            date, episodeId:plannedItem.id, status:{
+              stage:"externally-verified-published",
+              verifiedOn:alreadyPublished[0].verifiedOn,
+              records:alreadyPublished,
+              creativeFormatVerified:alreadyPublished.every(r=>r.creativeFormatVerified)
+            },
+            reviewFolder:reviewDir(plannedItem.id),
+            nextAgentAction:"Do not regenerate or publish this episode. It is already published on the verified platforms. An old published MP4 cannot be labelled as the new cinematic format without an actual render audit. For a new version, request a distinct calendar slot and episode ID.",
+            publicationVerifiedFrom:"Zernio posts_get",
+            publishing:"already-published; no action taken"
+          };
+        }
         const sourceRevision = requireFreshGitMain();
         const { item, episode } = await currentEpisode(date);
         const { item: runItem } = await ensureRunCopy(date);
@@ -791,12 +810,12 @@ const createServer = () => {
     {
       title: "Prepare today's HSK video or the next planned episode",
       description:
-        "For a request such as «Бугунги видеони тайёрла»: resolve the calendar-local date. Use today's episode when present; otherwise select the nearest FUTURE planned entry. Then begin the existing review-package workflow. Clearly report any fallback date. Do not publish or claim video completion before voice artifacts and a render exist.",
+        "For a request such as «Бугунги видеони тайёрла»: resolve the calendar-local date. Use today's unpublished episode when present; otherwise skip externally verified published episodes and select the nearest FUTURE planned unpublished entry. Then begin the existing review-package workflow. Clearly report any fallback date. Do not publish or claim video completion before voice artifacts and a render exist.",
       inputSchema: z.object({}),
     },
     async () =>
       withToolErrors(async () => {
-        const resolved = resolveTodayVideo(await readJson(CALENDAR_PATH));
+        const resolved = resolveTodayVideo(await readJson(CALENDAR_PATH), new Date(), { confirmedPublishedEpisodeIds: confirmedPublishedIds() });
         const prepared = await prepareReviewForDate(resolved.selectedDate);
         return {
           ...prepared,
@@ -808,8 +827,9 @@ const createServer = () => {
           dateNotice:
             resolved.selection === "today"
               ? "Today's calendar episode was selected."
-              : `No episode for ${resolved.requestedDate}. Automatically selected the next planned video for ${resolved.selectedDate}.`,
-          publishing: "manual-review-required; nothing was published",
+              : `No eligible unpublished video for ${resolved.requestedDate}. Automatically selected ${resolved.selectedDate}. Previously published calendar episodes skipped: ${JSON.stringify(resolved.skippedPublished ?? [])}.`,
+          publishedEpisodesSkipped: resolved.skippedPublished ?? [],
+          publishing: prepared.publishing,
         };
       }),
   );
@@ -826,6 +846,15 @@ const createServer = () => {
       withToolErrors(async () => {
         const item = await getCalendarItemByDate(date);
         const status = await readStatus(item.id);
+        const verifiedPosts = confirmedPublishedFor(item.id);
+        if (verifiedPosts.length) return {
+          date, episodeId:item.id, topic:item.topic,
+          status, verifiedPublishedPosts:verifiedPosts,
+          publicationExternallyConfirmed:true,
+          creativeFormatPublicationVerified:verifiedPosts.every(r=>r.creativeFormatVerified),
+          packageCurrent:false,
+          note:"Published post IDs were verified through Zernio; historical creative format and current local review package were not verified. No render or publication action taken."
+        };
         const { episode } = await currentEpisode(date);
         const ctaValidation = validateCtaEpisode(episode, await readCtaLab());
         const platformPackageErrors = {};
@@ -849,6 +878,9 @@ const createServer = () => {
           episodeId: item.id,
           topic: item.topic,
           status,
+          verifiedPublishedPosts:verifiedPosts,
+          publicationExternallyConfirmed:verifiedPosts.length>0,
+          creativeFormatPublicationVerified:verifiedPosts.length>0 && verifiedPosts.every(r=>r.creativeFormatVerified),
           approval,
           ctaValidation,
           platformPackageErrors,

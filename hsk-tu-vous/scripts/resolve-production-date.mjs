@@ -5,7 +5,7 @@
  * slot is absent, choose the nearest upcoming *planned* calendar item.
  * Explicit YYYY-MM-DD requests must continue using exact-date lookup.
  */
-export function resolveTodayVideo(calendar, now = new Date()) {
+export function resolveTodayVideo(calendar, now = new Date(), { confirmedPublishedEpisodeIds = new Set() } = {}) {
   const timeZone = calendar?.timezone;
   if (typeof timeZone !== "string" || !timeZone) {
     throw new Error("Calendar timezone is missing.");
@@ -24,7 +24,7 @@ export function resolveTodayVideo(calendar, now = new Date()) {
   const all = calendar?.items;
   if (!Array.isArray(all)) throw new Error("Calendar items are missing.");
   const exact = all.find((item) => item.date === today);
-  if (exact) return {
+  if (exact && exact.status === "planned" && !confirmedPublishedEpisodeIds.has(exact.id)) return {
     requestedDate: today,
     selectedDate: exact.date,
     episodeId: exact.id,
@@ -33,11 +33,11 @@ export function resolveTodayVideo(calendar, now = new Date()) {
     timezone: timeZone,
   };
   const future = all
-    .filter((item) => typeof item.date === "string" && item.date > today && item.status === "planned")
+    .filter((item) => typeof item.date === "string" && item.date > today && item.status === "planned" && !confirmedPublishedEpisodeIds.has(item.id))
     .sort((a, b) => a.date.localeCompare(b.date))[0];
   if (!future) {
     throw new Error(
-      `No video is scheduled for ${today}, and no upcoming planned video exists. Do not select a past date or create a new episode.`,
+      `No eligible unpublished video is scheduled for ${today}, and no upcoming planned video exists. Do not select a past date or create a new episode.`,
     );
   }
   return {
@@ -46,6 +46,7 @@ export function resolveTodayVideo(calendar, now = new Date()) {
     episodeId: future.id,
     topic: future.topic,
     selection: "next-planned",
+    skippedPublished: all.filter(item=>item.date >= today && confirmedPublishedEpisodeIds.has(item.id)).map(item=>({date:item.date,episodeId:item.id})),
     timezone: timeZone,
   };
 }

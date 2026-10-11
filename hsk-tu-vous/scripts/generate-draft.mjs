@@ -1,3 +1,4 @@
+import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { requireFreshGitMain } from './git-freshness.mjs';
 import path from "node:path";
 import {
@@ -13,6 +14,7 @@ const id = process.argv[2];
 if (!id)
   throw new Error("Использование: npm run content:draft -- <episode-ID>");
 const sourceRevision = requireFreshGitMain();
+assertNotPreviouslyPublished(id);
 const item = await getCalendarItem(id);
 const outputPath = path.join(reviewDir(id), "episode.json");
 const { episode } = await getPlannedEpisode(item.date);
