@@ -21,7 +21,8 @@ export function validateStoryboardScene(scene) {
   if(s.sign!==undefined && (typeof s.sign!=='string'||s.sign.length>12)) errors.push('invalid storyboard sign');
   if(s.options!==undefined && (!Array.isArray(s.options)||s.options.length<2||s.options.length>3||
     s.options.some(v=>typeof v!=='string'||!v.trim()||v.length>18))) errors.push('storyboard options must be 2–3 short choices');
-  if(s.formatId==='speed-quiz' && !s.options) errors.push('speed-quiz requires options');
+  if(s.formatId==='speed-quiz' && scene.kind==='hook' && !s.options) errors.push('speed-quiz requires options');
+  if(scene.kind!=='hook' && s.options) errors.push('storyboard options belong only to the quiz hook');
   if(s.formatId!=='speed-quiz' && s.options) errors.push('options only allowed for speed-quiz');
   return errors;
 }
