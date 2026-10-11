@@ -225,6 +225,30 @@
       "status": "planned"
     },
     {
+      "id": "zai-location-cinematic-v2",
+      "date": "2026-10-13",
+      "week": 3,
+      "level": "HSK 1",
+      "pillar": "Готовая фраза",
+      "topic": "В Китае спрашивают, где ты: ситуационный ответ с 在",
+      "format": "Street Situation — новая кинематографичная история с персонажем и двумя контекстами",
+      "targetItems": [
+        "在 zài",
+        "我在家。",
+        "我在学校。",
+        "他在家。"
+      ],
+      "referenceFacts": [
+        "В модели 我在家 在 показывает местонахождение.",
+        "Базовый порядок примера: человек + 在 + место."
+      ],
+      "episodeFile": "episodes/zai-location-cinematic-v2.json",
+      "status": "planned",
+      "pilotRemakeOfEpisodeId": "zai-location",
+      "originalCalendarDate": "2026-10-12",
+      "planningNote": "Owner-requested extra pilot slot for a unique cinematic recut of the 12 Oct topic. Old Zernio posts stay published and are excluded from the new-format pilot; the regular 14 Oct quiz slot is unchanged."
+    },
+    {
       "id": "ji-vs-duoshao",
       "date": "2026-10-14",
       "week": 3,

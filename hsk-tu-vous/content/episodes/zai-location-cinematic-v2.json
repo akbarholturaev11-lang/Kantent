@@ -1,0 +1,191 @@
+{
+  "id": "zai-location-cinematic-v2",
+  "date": "2026-10-13",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "Где ты сейчас? Ответь по-китайски с 在",
+  "level": "HSK 1",
+  "topic": "在 для обозначения места: где я нахожусь",
+  "durationTargetSec": 30,
+  "caption": "В Китае спросили, где ты? Скажи: 我在家 (я дома) или 我在学校 (я в школе). Один шаблон: человек + 在 + место.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#китайскиефразы"
+  ],
+  "voiceProvider": "text-to-speech.online",
+  "learningFacts": [
+    "В модели 我在家 在 показывает местонахождение.",
+    "Базовый порядок примера: человек + 在 + место."
+  ],
+  "examples": [
+    "在 zài",
+    "我在家。",
+    "我在学校。",
+    "他在家。"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 4,
+      "headline": "ТЫ В КИТАЕ. ГДЕ ТЫ?",
+      "narration": "Ты в Китае, и тебя спрашивают: где ты сейчас? Ответь одной короткой фразой.",
+      "screenCaption": "Где ты сейчас? → 在",
+      "editPlan": "0–4 с. На самой первой секунде иллюстрация улицы Китая и персонаж с вопросом; ханцзы 在 крупно, без заставки. Озвучка начинается с вопроса, быстрый зум и жест персонажа.",
+      "visualBeats": [
+        {
+          "hero": "在",
+          "pinyin": "zài",
+          "meaning": "находиться · быть в",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "在",
+          "pinyin": "zài",
+          "meaning": "находиться · быть в"
+        }
+      ],
+      "storyboard": {
+        "formatId": "street-situation",
+        "setting": "street",
+        "character": "student",
+        "mood": "question",
+        "sign": "中国"
+      }
+    },
+    {
+      "id": "pattern",
+      "kind": "context",
+      "durationSec": 6,
+      "headline": "ОТВЕТ: Я НАХОЖУСЬ...",
+      "narration": "Начни с 我在 — я нахожусь. Затем просто назови нужное место.",
+      "screenCaption": "我在 + место",
+      "editPlan": "4–10 с. На экране крупное 我在… и затем подсветить я + нахожусь + место; субтитры ниже, без карточек поверх иероглифов.",
+      "visualBeats": [
+        {
+          "hero": "我在…",
+          "pinyin": "Wǒ zài…",
+          "meaning": "Я нахожусь…",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我在…",
+          "pinyin": "Wǒ zài…",
+          "meaning": "Я нахожусь…"
+        }
+      ],
+      "storyboard": {
+        "formatId": "street-situation",
+        "setting": "street",
+        "character": "student",
+        "mood": "practice",
+        "sign": "中国"
+      }
+    },
+    {
+      "id": "home",
+      "kind": "example",
+      "durationSec": 6,
+      "headline": "ЕСЛИ ТЫ ДОМА",
+      "narration": "Ты дома? Скажи: 我在家。 Это значит: я дома.",
+      "screenCaption": "我在家。 — Я дома.",
+      "editPlan": "10–16 с. Уй (home) фонида қаҳрамон, катта 我在家。, pinyin, кейин маъноси; барча матн safe areaда.",
+      "visualBeats": [
+        {
+          "hero": "我在家。",
+          "pinyin": "Wǒ zài jiā.",
+          "meaning": "Я дома.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我在家。",
+          "pinyin": "Wǒ zài jiā.",
+          "meaning": "Я дома."
+        }
+      ],
+      "storyboard": {
+        "formatId": "street-situation",
+        "setting": "home",
+        "character": "student",
+        "mood": "answer"
+      }
+    },
+    {
+      "id": "school",
+      "kind": "example",
+      "durationSec": 6,
+      "headline": "ЕСЛИ ТЫ В ШКОЛЕ",
+      "narration": "А если ты в школе: 我在学校。 Поменяли только место — и фраза готова.",
+      "screenCaption": "我在学校。 — Я в школе.",
+      "editPlan": "16–22 с. Мактаб контексти. Катта 我在学校。 + pinyin ва маъноси, персонаж қўли ҳаракатланади; кейин марказий CTA алоҳида қўшилади.",
+      "visualBeats": [
+        {
+          "hero": "我在学校。",
+          "pinyin": "Wǒ zài xuéxiào.",
+          "meaning": "Я в школе.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我在学校。",
+          "pinyin": "Wǒ zài xuéxiào.",
+          "meaning": "Я в школе."
+        }
+      ],
+      "storyboard": {
+        "formatId": "street-situation",
+        "setting": "campus",
+        "character": "student",
+        "mood": "answer",
+        "sign": "学校"
+      }
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-tts-export",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-dmitry-v1",
+  "learningFactSources": [
+    {
+      "title": "在 for Location in Mandarin Chinese — Settemila Lingue",
+      "url": "https://www.settemilalingue.com/en/languages/zh/grammar/for-location",
+      "checkedAt": "2026-10-11",
+      "supports": "在 (zài) expresses location in subject + 在 + place; confirms 我在家 and 在学校 patterns."
+    }
+  ],
+  "hookExperiment": {
+    "id": "zai-location-cinematic-v2-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Immediate Chinese real-life question plus location animation should make the usable 在 answer clear without a lecture intro.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-11"
+  },
+  "audienceProblem": "В реальной ситуации новичок не знает, как ответить на вопрос о своём местоположении.",
+  "learningOutcome": "Коротко ответить на «Где ты?» двумя примерами: 我在家 / 我在学校.",
+  "creativeFormatId": "street-situation",
+  "pilotRemakeOfEpisodeId": "zai-location",
+  "originalCalendarDate": "2026-10-12",
+  "creativePilot": {
+    "format": "street-situation",
+    "edition": "new-cinematic-v2",
+    "excludeOriginalPostIds": [
+      "6ac9e2b2578c0bd8bcd18f62",
+      "6ac9e2e6ea2139aa08cbd278"
+    ],
+    "evaluation": "new-publication-only-after-owner-approved-preview"
+  }
+}
