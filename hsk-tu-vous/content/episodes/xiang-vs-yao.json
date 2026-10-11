@@ -168,7 +168,20 @@
   "captionSource": "pending-tts-export",
   "publishingStatus": "pending-owner-review",
   "voiceProfileId": "ru-dmitry-v1",
-  "learningFactSources": [],
+  "learningFactSources": [
+    {
+      "title": "想 vs 要 vs 需要 — The Pure Language",
+      "url": "https://www.thepurelanguage.com/chinese-grammar/xiang-yao-xuyao",
+      "checkedAt": "2026-10-11",
+      "supports": "想 + verb conveys a wish; 要 may express a firm wish/intention and takes noun objects in orders such as 我要一杯咖啡."
+    },
+    {
+      "title": "要 / 想 / 打算 — ChineseGrammar",
+      "url": "https://chinesegrammar.app/grammar/yao-xiang-dasuan",
+      "checkedAt": "2026-10-11",
+      "supports": "想 and 要 can both convey desire or intention; strength and interpretation depend on context."
+    }
+  ],
   "hookExperiment": {
     "id": "xiang-vs-yao-hook-v1",
     "formatId": "scenario",
