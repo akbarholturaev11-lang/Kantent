@@ -16,6 +16,7 @@ import seedEpisode from "../content/episodes/ni-nin-nimen-20260928.json";
 import visualSystem from "../content/visual-system.json";
 import { CaptionOverlay, type TimedCaption } from "./CaptionOverlay";
 import { BoldMotionScene } from "./BoldMotionScene";
+import { CinematicStoryScene, type Storyboard } from "./CinematicStoryScene";
 import { NarrativeVisual, type VisualFocus } from "./NarrativeVisual";
 
 type LessonCard = {
@@ -31,6 +32,7 @@ type LessonScene = {
   narration: string;
   screenCaption?: string;
   editPlan?: string;
+  storyboard?: Storyboard;
   visualBeats?: VisualBeat[];
   durationSec?: number;
   durationFrames?: number;
@@ -1127,6 +1129,14 @@ const LessonSlide: React.FC<{
           beatFrame={localBeatFrame}
           accent={accent}
         />
+      ) : scene.storyboard && scene.kind !== "cta" ? (
+        <CinematicStoryScene
+          beat={beat}
+          storyboard={scene.storyboard}
+          frame={frame}
+          beatFrame={localBeatFrame}
+          isHook={scene.kind === "hook"}
+        />
       ) : (
         <>
           <AbsoluteFill
@@ -1176,7 +1186,7 @@ const LessonSlide: React.FC<{
         HSK <span style={{ color: accent, marginLeft: -9 }}>AI</span>
       </div>}
 
-      {!motionDesign && shouldCrossfadeBeat && previousBeat && (
+      {!motionDesign && !scene.storyboard && shouldCrossfadeBeat && previousBeat && (
         <BeatText
           key={`${scene.id}-${beatIndex - 1}-outgoing`}
           beat={previousBeat}
@@ -1190,7 +1200,7 @@ const LessonSlide: React.FC<{
           isOutgoing
         />
       )}
-      {!motionDesign && <BeatText
+      {!motionDesign && !scene.storyboard && <BeatText
         key={`${scene.id}-${beatIndex}`}
         beat={beat}
         localFrame={localBeatFrame}

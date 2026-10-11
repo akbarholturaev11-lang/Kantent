@@ -49,7 +49,14 @@
           "pinyin": "zài",
           "meaning": "находиться · быть в"
         }
-      ]
+      ],
+      "storyboard": {
+        "formatId": "street-situation",
+        "setting": "campus",
+        "character": "student",
+        "mood": "question",
+        "sign": "学校"
+      }
     },
     {
       "id": "pattern",
@@ -74,7 +81,14 @@
           "pinyin": "Wǒ zài…",
           "meaning": "Я нахожусь…"
         }
-      ]
+      ],
+      "storyboard": {
+        "formatId": "street-situation",
+        "setting": "street",
+        "character": "student",
+        "mood": "practice",
+        "sign": "中国"
+      }
     },
     {
       "id": "home",
@@ -99,7 +113,13 @@
           "pinyin": "Wǒ zài jiā.",
           "meaning": "Я дома."
         }
-      ]
+      ],
+      "storyboard": {
+        "formatId": "street-situation",
+        "setting": "home",
+        "character": "student",
+        "mood": "answer"
+      }
     },
     {
       "id": "school",
@@ -124,7 +144,14 @@
           "pinyin": "Wǒ zài xuéxiào.",
           "meaning": "Я в школе."
         }
-      ]
+      ],
+      "storyboard": {
+        "formatId": "street-situation",
+        "setting": "campus",
+        "character": "student",
+        "mood": "answer",
+        "sign": "学校"
+      }
     }
   ],
   "captions": [],
@@ -141,5 +168,6 @@
     "registeredAt": "2026-10-12"
   },
   "audienceProblem": "Новичок не может коротко сказать, где он или другой человек находится.",
-  "learningOutcome": "Собрать модель «человек + 在 + место» на примерах 我在家 и 我在学校."
+  "learningOutcome": "Собрать модель «человек + 在 + место» на примерах 我在家 и 我在学校.",
+  "creativeFormatId": "street-situation"
 }

@@ -37,6 +37,10 @@ Do **not** use this README as a second configuration file. `AGENTS.md` lists eve
 - Design tokens: `content/visual-system.json`.
 - Runtime details: `PROJECT_MEMORY.md`.
 
+## Cinematic story renderer — first pilot
+
+The 12 October `zai-location` draft now opts into a per-scene procedural cinematic illustration using `scene.storyboard`. The Remotion `CinematicStoryScene` produces original campus/street/home context motion, while the existing Chinese/pinyin/Russian teaching point and global captions remain. CTA and older lessons do not opt in. Validate metadata with `node --test scripts/storyboard-validation.test.mjs`; TypeScript checks are run in the PR CI. This pilot is a **visual implementation**, not an audio-approved finished video: no TTS, website downloads, fake app usage or social publishing were carried out.
+
 ## Creative format pilot (read-only)
 
 `npm run content:viral-plan` (or `npm run content:viral-plan -- --json` / `--date YYYY-MM-DD`) allocates compatible packaging hypotheses to upcoming *planned* episodes, using four formats in `content/creative-formats.json`: real-life situation, three-second quiz, self-contained serial, and mistake-to-fix. This is a **proposal**, not a script rewrite or automatic production: canonical episode hooks, voice, central platform CTA, dates, publication and approval stay unchanged. Only real source-verified, matched 7d creative observations may create an owner-comparison candidate; lifetime readbacks are insufficient. New format attribution must be verified and entered as `creativeFormatId` alongside the matching `episodeId`, `hookFormat` and `hskLevel` in observation snapshots. App activations are currently unmeasured, so 50–90K is an aspiration and never a forecast. Tests: `node --test scripts/viral-plan.test.mjs scripts/feedback-analyzer.test.mjs`.

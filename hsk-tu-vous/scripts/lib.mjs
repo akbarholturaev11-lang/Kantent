@@ -9,6 +9,7 @@ import {
 } from "./caption-utils.mjs";
 import { readCtaLab, validateCtaEpisode } from "./cta-lab.mjs";
 import { assertCanonicalLessonSource, composeLessonCta } from "./episode-cta-assembly.mjs";
+import { validateStoryboardScene } from "./storyboard-validation.mjs";
 
 export const PROJECT_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -400,6 +401,8 @@ export function validateEpisode(episode) {
     );
   }
   for (const [index, scene] of episode.scenes.entries()) {
+    const storyboardErrors = validateStoryboardScene(scene);
+    if (storyboardErrors.length) throw new Error(`${scene.id ?? index}: ${storyboardErrors.join("; ")}`);
     if (!scene.id || !scene.headline || !scene.narration) {
       throw new Error(
         `${index + 1}-sahnada ID, sarlavha yoki ovoz matni yetishmayapti.`,

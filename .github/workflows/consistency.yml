@@ -39,6 +39,20 @@ jobs:
         run: node --test scripts/feedback-analyzer.test.mjs && npm run content:feedback -- --json > /tmp/feedback-report.json
       - name: Validate four-format content pilot and read-only planning
         run: node --test scripts/viral-plan.test.mjs && npm run content:viral-plan -- --date 2026-10-11 --json > /tmp/viral-plan.json && node --check scripts/viral-plan.mjs
+      - name: Test storyboard safety and centralized CTA compatibility
+        run: node --test scripts/storyboard-validation.test.mjs
+      - name: Install Remotion dependencies and typecheck cinematic renderer
+        run: npm ci --no-audit --no-fund && npm run lint
+      - name: Render visual-only cinematic storyboard stills
+        run: |
+          node -e "const fs=require('fs');const episode=require('./content/episodes/zai-location.json');fs.writeFileSync('/tmp/hsk-storyboard-props.json', JSON.stringify({episode}));"
+          npx remotion still src/index.ts HSKAI-Episode /tmp/zai-hook.png --props /tmp/hsk-storyboard-props.json --frame=15
+          npx remotion still src/index.ts HSKAI-Episode /tmp/zai-home.png --props /tmp/hsk-storyboard-props.json --frame=330
+      - name: Check locally rendered storyboard frames
+        run: |
+          test -s /tmp/zai-hook.png
+          test -s /tmp/zai-home.png
+          file /tmp/zai-hook.png /tmp/zai-home.png
       - name: Test source freshness guards
         run: node --test scripts/git-freshness.test.mjs && node --check scripts/git-freshness.mjs
       - name: Test scenario buffer date proposals
