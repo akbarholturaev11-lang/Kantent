@@ -1,3 +1,4 @@
+import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { requireFreshGitMain } from './git-freshness.mjs';
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -21,6 +22,7 @@ if (!id) {
 }
 
 const sourceRevision = requireFreshGitMain();
+assertNotPreviouslyPublished(id);
 const { episode, filePath } = await getEpisode(id);
 validateEpisode(episode);
 const ctaValidation = await requireCurrentCta(episode);
