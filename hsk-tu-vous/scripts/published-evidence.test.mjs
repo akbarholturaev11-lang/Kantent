@@ -13,18 +13,18 @@ test("12 October posts have provider-confirmed published status, IDs and schedul
   assert.ok(verified.every(x=>x.zernioStatus==="published" && x.creativeFormatVerified===false));
   assert.ok(verified.every(x=>x.scheduledFor==="2026-10-10T13:00:00Z"));
 });
-test("today's video bypasses already published 12 Oct and selects next planned 14 Oct",()=>{
+test("today's video bypasses published 12 Oct and selects new 13 Oct pilot",()=>{
  const result=resolveTodayVideo(calendar,new Date("2026-10-11T03:30:00Z"),
   {confirmedPublishedEpisodeIds:confirmedPublishedIds()});
  assert.equal(result.requestedDate,"2026-10-11");
- assert.equal(result.selectedDate,"2026-10-14");
- assert.equal(result.episodeId,"ji-vs-duoshao");
+ assert.equal(result.selectedDate,"2026-10-13");
+ assert.equal(result.episodeId,"zai-location-cinematic-v2");
  assert.deepEqual(result.skippedPublished,[{date:"2026-10-12",episodeId:"zai-location"}]);
 });
 test("when the published date is today it is skipped too",()=>{
  const result=resolveTodayVideo(calendar,new Date("2026-10-12T02:00:00Z"),
   {confirmedPublishedEpisodeIds:confirmedPublishedIds()});
- assert.equal(result.selectedDate,"2026-10-14");
+ assert.equal(result.selectedDate,"2026-10-13");
 });
 test("manual specific-date video cannot accidentally overwrite verified publications",()=>{
  assert.throws(()=>assertNotPreviouslyPublished("zai-location"),/already has externally VERIFIED published post/);
