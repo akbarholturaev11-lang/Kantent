@@ -7,7 +7,7 @@
   "level": "HSK 2",
   "topic": "了: завершённое действие и изменение ситуации",
   "durationTargetSec": 30,
-  "caption": "了 зависит от позиции и контекста. Сравните завершённое действие 我买了书 и изменение решения 我不买了.",
+  "caption": "了 зависит от позиции и контекста. Сравните завершённое действие 我买了一本书 и изменение решения 我不买了.",
   "hashtags": [
     "#HSKAI",
     "#китайскийязык",
@@ -23,7 +23,7 @@
   ],
   "examples": [
     "了 le",
-    "我买了书。",
+    "我买了一本书。",
     "我不买了。"
   ],
   "scenes": [
@@ -88,7 +88,7 @@
       "visualBeats": [
         {
           "hero": "我不买了。",
-          "pinyin": "Wǒ bú mǎi le.",
+          "pinyin": "Wǒ bù mǎi le.",
           "meaning": "Я передумал покупать.",
           "chinese": true,
           "motion": "slide"
@@ -97,7 +97,7 @@
       "cards": [
         {
           "hanzi": "我不买了。",
-          "pinyin": "Wǒ bú mǎi le.",
+          "pinyin": "Wǒ bù mǎi le.",
           "meaning": "Я передумал покупать."
         }
       ]
@@ -113,7 +113,7 @@
       "visualBeats": [
         {
           "hero": "买了书 / 不买了",
-          "pinyin": "mǎi le shū / bú mǎi le",
+          "pinyin": "mǎi le shū / bù mǎi le",
           "meaning": "купил / передумал покупать",
           "chinese": true,
           "motion": "slide"
@@ -122,7 +122,7 @@
       "cards": [
         {
           "hanzi": "买了书 / 不买了",
-          "pinyin": "mǎi le shū / bú mǎi le",
+          "pinyin": "mǎi le shū / bù mǎi le",
           "meaning": "купил / передумал покупать"
         }
       ]
@@ -132,7 +132,20 @@
   "captionSource": "pending-tts-export",
   "publishingStatus": "pending-owner-review",
   "voiceProfileId": "ru-dmitry-v1",
-  "learningFactSources": [],
+  "learningFactSources": [
+    {
+      "title": "了 — Completed Action vs Change of State — The Pure Language",
+      "url": "https://www.thepurelanguage.com/chinese-grammar/le-particle",
+      "checkedAt": "2026-10-11",
+      "supports": "Verb-final 了 can mark a completed event; sentence-final 了 a changed state; 了 is not a past-tense suffix."
+    },
+    {
+      "title": "不 Sandhi — Elon.io",
+      "url": "https://elon.io/grammar/chinese-mandarin/pronunciation/bu-sandhi",
+      "checkedAt": "2026-10-11",
+      "supports": "Before third-tone 买 (mǎi), 不 is pronounced bù, not bú."
+    }
+  ],
   "hookExperiment": {
     "id": "le-first-look-hook-v1",
     "formatId": "question",
