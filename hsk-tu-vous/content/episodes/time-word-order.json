@@ -131,7 +131,20 @@
   "captionSource": "pending-tts-export",
   "publishingStatus": "pending-owner-review",
   "voiceProfileId": "ru-dmitry-v1",
-  "learningFactSources": [],
+  "learningFactSources": [
+    {
+      "title": "Time Word Placement — ChineseGrammar",
+      "url": "https://chinesegrammar.app/grammar/time-word-order",
+      "checkedAt": "2026-10-11",
+      "supports": "Time adverbs like 今天/明天 go before an action, commonly after the subject or at the start of the sentence."
+    },
+    {
+      "title": "Time words and word order — TongTong",
+      "url": "https://www.tongtong.app/grammar/time-words-and-word-order",
+      "checkedAt": "2026-10-11",
+      "supports": "Both subject + time + verb and time + subject + verb are grammatical patterns."
+    }
+  ],
   "hookExperiment": {
     "id": "time-word-order-hook-v1",
     "formatId": "contrast",
