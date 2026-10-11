@@ -25,10 +25,10 @@ jobs:
         run: node --test scripts/skill-router.test.mjs
       - name: Test all functional skill branches
         run: node --test scripts/skill-router.categories.test.mjs
-      - name: Test CTA-free lesson plans and central CTA hydration
-        run: node --test scripts/episode-cta-assembly.test.mjs
       - name: Preview owner-authorized cinematic recut CTA registration
         run: node scripts/preview-recut-cta.mjs
+      - name: Test CTA-free lesson plans and central CTA hydration
+        run: node --test scripts/episode-cta-assembly.test.mjs
       - name: Test CTA variants and immutable CTA ledger
         run: node --test scripts/platform-cta.test.mjs scripts/cta-lab.test.mjs
       - name: Test timezone-aware today-video selection and verified published deduplication
