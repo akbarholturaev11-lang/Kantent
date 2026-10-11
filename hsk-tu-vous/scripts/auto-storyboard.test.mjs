@@ -45,6 +45,23 @@ test("dated production loader gets auto storyboard BEFORE central CTA, without c
     assert.ok(episode.scenes.filter(s=>s.kind!=="cta").every(s=>s.storyboard?.formatId===episode.creativeFormatId));
   }
 });
+test("owner-authorized recut is a distinct street situation pilot without changing original",()=>{
+  const old=baseline("zai-location");
+  const recut=decorate("zai-location-cinematic-v2");
+  assert.equal(recut.id,"zai-location-cinematic-v2");
+  assert.equal(recut.date,"2026-10-13");
+  assert.equal(recut.pilotRemakeOfEpisodeId,"zai-location");
+  assert.equal(recut.originalCalendarDate,"2026-10-12");
+  assert.equal(recut.creativeFormatId,"street-situation");
+  assert.equal(recut.scenes[0].storyboard.setting,"street");
+  assert.notEqual(recut.scenes[0].narration,old.scenes[0].narration);
+  assert.equal(recut.cta,undefined);
+  assert.equal(recut.ctaExperiment,undefined);
+  assert.equal(recut.scenes.length,4);
+  const quiz=decorate("ji-vs-duoshao");
+  assert.equal(quiz.creativeFormatId,"speed-quiz");
+});
+
 test("canonical lesson files remain unchanged and animation planning is idempotent",()=>{
   const raw=baseline("xiang-vs-yao");
   const snapshot=JSON.stringify(raw);
