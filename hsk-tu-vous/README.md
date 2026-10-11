@@ -37,6 +37,10 @@ Do **not** use this README as a second configuration file. `AGENTS.md` lists eve
 - Design tokens: `content/visual-system.json`.
 - Runtime details: `PROJECT_MEMORY.md`.
 
+## Creative format pilot (read-only)
+
+`npm run content:viral-plan` (or `npm run content:viral-plan -- --json` / `--date YYYY-MM-DD`) allocates compatible packaging hypotheses to upcoming *planned* episodes, using four formats in `content/creative-formats.json`: real-life situation, three-second quiz, self-contained serial, and mistake-to-fix. This is a **proposal**, not a script rewrite or automatic production: canonical episode hooks, voice, central platform CTA, dates, publication and approval stay unchanged. Only real source-verified, matched 7d creative observations may create an owner-comparison candidate; lifetime readbacks are insufficient. New format attribution must be verified and entered as `creativeFormatId` alongside the matching `episodeId`, `hookFormat` and `hskLevel` in observation snapshots. App activations are currently unmeasured, so 50–90K is an aspiration and never a forecast. Tests: `node --test scripts/viral-plan.test.mjs scripts/feedback-analyzer.test.mjs`.
+
 ## Self-improvement foundation (read-only)
 
 Run `npm run content:buffer` to check the next planned canonical episodes in the calendar timezone; run `npm run content:buffer -- --json` for a machine-readable report. Calendar coverage thresholds are owned by `content/calendar.json#planningBuffer`. A report below minimum exits with code 2. Neither command writes, generates, publishes, edits CTA, nor calls any external API.

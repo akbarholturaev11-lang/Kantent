@@ -28,6 +28,8 @@ export function validateObservation(o) {
   if(o.hookFormat!=null && !['question','contrast','scenario'].includes(o.hookFormat)) errors.push('invalid hookFormat');
   if(o.hskLevel!=null && (typeof o.hskLevel!=='string'||!/^HSK\s*[1-6](?:\s*[-–]\s*[1-6])?$/.test(o.hskLevel))) errors.push('invalid hskLevel');
   if(o.effectStyle!=null && (typeof o.effectStyle!=='string'||o.effectStyle.length>80)) errors.push('invalid effectStyle');
+  if(o.creativeFormatId!=null && (!/^[a-z][a-z0-9-]{2,80}$/.test(o.creativeFormatId) || !o.episodeId || !o.hookFormat || !o.hskLevel))
+    errors.push('creativeFormatId requires valid ID and verified episode/hook/HSK mapping');
   for(const name of fields){
     const v=o.metrics?.[name];
     if(!Object.hasOwn(o.metrics||{},name) || !(v===null||(typeof v==='number'&&Number.isFinite(v)&&v>=0))) errors.push('invalid metric '+name);
@@ -58,7 +60,7 @@ export function deriveMetrics(o){
   const {views,saves,shares,avgWatchMs,skipRatePercent,durationSeconds}=o.metrics;
   return {
     platform:o.platform,postId:o.platformPostId,episodeId:o.episodeId,
-    hookFormat:o.hookFormat,hskLevel:o.hskLevel,window:o.window,
+    hookFormat:o.hookFormat,hskLevel:o.hskLevel,creativeFormatId:o.creativeFormatId??null,window:o.window,
     observedAt:o.observedAt,publishedAt:o.publishedAt,
     durationBand:durationBand(durationSeconds),views,skipRatePercent,
     averageWatchSeconds:avgWatchMs==null?null:+(avgWatchMs/1000).toFixed(3),

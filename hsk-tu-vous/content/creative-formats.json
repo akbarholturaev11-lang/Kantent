@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Creative packaging hypotheses for organic Instagram Reels / YouTube Shorts. Not a virality guarantee, CTA registry, or publishing permission.",
+  "aspiration": {
+    "viewsPerSuccessfulVideo": {
+      "min": 50000,
+      "max": 90000
+    },
+    "businessGoal": "verified new HSK AI lesson starts",
+    "measurementStatus": "not-connected",
+    "note": "Views do not imply downloads or users. No learner-app events or inferred conversions are collected here."
+  },
+  "pilot": {
+    "plannedPosts": 12,
+    "postsPerFormat": 3,
+    "perWeek": 3,
+    "selection": "cycle-compatible-formats",
+    "windowSource": "content/hook-lab.json#policy",
+    "notes": "Calendar owns real dates; this is a target, not an authorization to invent or overwrite episodes."
+  },
+  "formats": [
+    {
+      "id": "street-situation",
+      "label": "Real-life Chinese situation",
+      "hookFormats": [
+        "scenario"
+      ],
+      "concept": "Open with a concrete misunderstanding in a recognisable daily-life Chinese location, then one verified phrase solves it.",
+      "beats": [
+        {
+          "fromSec": 0,
+          "toSec": 2,
+          "goal": "Show the problem before logos or greetings"
+        },
+        {
+          "fromSec": 2,
+          "toSec": 8,
+          "goal": "Make the misunderstanding clear without belittling people"
+        },
+        {
+          "fromSec": 8,
+          "toSec": 18,
+          "goal": "Resolve with one accurate Chinese example plus pinyin and Russian meaning"
+        },
+        {
+          "fromSec": 18,
+          "toSec": 22,
+          "goal": "Demonstrate the phrase once in context"
+        }
+      ],
+      "editorial": "Avoid exaggerated culture claims and invented real events."
+    },
+    {
+      "id": "speed-quiz",
+      "label": "Three-second Mandarin choice",
+      "hookFormats": [
+        "question"
+      ],
+      "concept": "Present one credible question with visible answer options in the first second. Reveal the answer early and explain why.",
+      "beats": [
+        {
+          "fromSec": 0,
+          "toSec": 2,
+          "goal": "Show one answerable choice immediately"
+        },
+        {
+          "fromSec": 2,
+          "toSec": 7,
+          "goal": "Short visual countdown; do not stall with fake suspense"
+        },
+        {
+          "fromSec": 7,
+          "toSec": 17,
+          "goal": "Reveal correct answer and teach one usable distinction"
+        },
+        {
+          "fromSec": 17,
+          "toSec": 22,
+          "goal": "Repeat in a natural spoken phrase"
+        }
+      ],
+      "editorial": "Test must have a defensible answer; show all required characters in the first visual."
+    },
+    {
+      "id": "micro-series",
+      "label": "Self-contained China life serial",
+      "hookFormats": [
+        "scenario"
+      ],
+      "concept": "A consistent learner character confronts one real-life language task per episode. Each episode resolves its own problem; next instalment is optional.",
+      "beats": [
+        {
+          "fromSec": 0,
+          "toSec": 2,
+          "goal": "A new, instantly legible obstacle"
+        },
+        {
+          "fromSec": 2,
+          "toSec": 8,
+          "goal": "Character tries the task"
+        },
+        {
+          "fromSec": 8,
+          "toSec": 18,
+          "goal": "One accurate phrase solves it"
+        },
+        {
+          "fromSec": 18,
+          "toSec": 22,
+          "goal": "Show the immediate outcome, not a forced cliffhanger"
+        }
+      ],
+      "editorial": "Do not claim an unscheduled next episode exists or use an invented real testimonial."
+    },
+    {
+      "id": "problem-fix",
+      "label": "Mistake to practical fix",
+      "hookFormats": [
+        "question",
+        "contrast",
+        "scenario"
+      ],
+      "concept": "Start with a specific learner mistake, correct it in context and show how HSK AI helps practise only a documented product capability.",
+      "beats": [
+        {
+          "fromSec": 0,
+          "toSec": 2,
+          "goal": "State the recognizable difficulty visually"
+        },
+        {
+          "fromSec": 2,
+          "toSec": 8,
+          "goal": "Show a credible mistake without mocking the learner"
+        },
+        {
+          "fromSec": 8,
+          "toSec": 18,
+          "goal": "Provide the verified correction and pinyin meaning"
+        },
+        {
+          "fromSec": 18,
+          "toSec": 22,
+          "goal": "Short correct usage example"
+        }
+      ],
+      "editorial": "Do not invent app screens, user outcomes or features. Attach only the approved central CTA on export."
+    }
+  ],
+  "productionGuardrails": [
+    "Russian Cyrillic voice/copy for current beginner HSK 1–2 series",
+    "One verified Chinese learning point per video",
+    "Use existing episode hookExperiment formatId; do not auto-rewrite it",
+    "CTA remains owned by content/cta-lab.json and platform export rules",
+    "No autonomous render, post, CTA change or voice change",
+    "Only suggest edits to unapproved future drafts; never mutate reviewed/published source",
+    "Do not infer 24h/7d windows from lifetime cumulative metrics"
+  ]
+}
