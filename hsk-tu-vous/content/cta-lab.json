@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 44,
+  "revision": 45,
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
     "id": "hsk-ai-profile-link-download-v1",
@@ -6013,6 +6013,120 @@
         "voiceProfileId": "ru-dmitry-v1",
         "voiceProvider": "text-to-speech.online",
         "nonCtaContentHash": "e9b4b39939174079142f2bd11f2776a854b49ada2bcdf6aab7501635de6ef6ec"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "zai-location-cinematic-v2-cta-profile-link-v2",
+      "episodeId": "zai-location-cinematic-v2",
+      "date": "2026-10-13",
+      "formatId": "benefit-profile-link-download",
+      "ruleVersion": "cta-policy-v8",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Distinct Cinematic Street Situation recut retains the pre-approved profile-link website download CTA; no changes to copy, screens or placement.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "hsk-profile-link-download-v1",
+      "registeredAt": "2026-10-11T04:20:00.000Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0008"
+      ],
+      "supersedes": "zai-location-cinematic-v2-cta-profile-link-v1",
+      "copyHash": "159b2506b75ece79370333a27b92b33cbe245a42b5c242d4b121d8d8ade1ad87",
+      "copySnapshot": {
+        "cta": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Попробуй HSK AI. Зайди в профиль, открой ссылку и скачай приложение с сайта.",
+            "headline": "HSK AI • ССЫЛКА В ПРОФИЛЕ",
+            "screenCaption": "Профиль → ссылка → сайт",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "ПОПРОБУЙ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "Попробуй",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ПРОФИЛЬ",
+                "screenImage": "cta/instagram-profile.png",
+                "screenImageWidthPx": 860,
+                "screenImageHeightPx": 633,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 86,
+                  "widthPercent": 92,
+                  "heightPercent": 7
+                },
+                "motion": "slide",
+                "syncCueText": "Зайди",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "ССЫЛКА",
+                "screenImage": "cta/instagram-links.png",
+                "screenImageWidthPx": 842,
+                "screenImageHeightPx": 1164,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 52,
+                  "widthPercent": 92,
+                  "heightPercent": 15
+                },
+                "motion": "reveal",
+                "syncCueText": "Открой",
+                "transitionStyle": "mask-reveal"
+              },
+              {
+                "hero": "СКАЧАТЬ",
+                "screenImage": "cta/website-download.png",
+                "screenImageWidthPx": 600,
+                "screenImageHeightPx": 1300,
+                "screenHighlight": {
+                  "leftPercent": 24,
+                  "topPercent": 70,
+                  "widthPercent": 52,
+                  "heightPercent": 8
+                },
+                "motion": "slide",
+                "syncCueText": "скачай",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "CTA в одной центральной композиции, кадры и подсветки совпадают с голосом. На «Попробуй» покажите HSK AI; на «Зайди» — присланный скриншот профиля и выделите строку ссылки; на «Открой» — скриншот окна ссылок и выделите карточку «Скачать HSK AI»; на «скачай» — страницу загрузки и выделите кнопку скачивания. Используйте чистые короткие переходы, сохраняйте скриншоты целиком и не закрывайте текст субтитрами. Никаких реальных нажатий и утверждений, что приложение уже скачано."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 4,
+            "precedingSceneIds": [
+              "hook",
+              "pattern",
+              "home",
+              "school"
+            ],
+            "durationSec": 8,
+            "plannedStartSec": 22
+          }
+        ]
+      },
+      "placementHash": "1fee5191c0f6d69505981c3d47e37ec1fc6b9b59278beca3ad4b5a0d55eeca2a",
+      "contextSnapshot": {
+        "level": "HSK 1",
+        "topic": "在 для обозначения места: где я нахожусь",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "ru-dmitry-v1",
+        "voiceProvider": "text-to-speech.online",
+        "nonCtaContentHash": "33e34763a4156a189c0f31625e82b6887741722a945fdfcc3478f2dd2fa068f6"
       },
       "primaryMetric": "profile-link-clickers-per-1000-views",
       "evidenceStatus": "unmeasured"
