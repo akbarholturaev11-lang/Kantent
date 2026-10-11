@@ -810,7 +810,7 @@ const createServer = () => {
     {
       title: "Prepare today's HSK video or the next planned episode",
       description:
-        "For a request such as «Бугунги видеони тайёрла»: resolve the calendar-local date. Use today's episode when present; otherwise select the nearest FUTURE planned entry. Then begin the existing review-package workflow. Clearly report any fallback date. Do not publish or claim video completion before voice artifacts and a render exist.",
+        "For a request such as «Бугунги видеони тайёрла»: resolve the calendar-local date. Use today's unpublished episode when present; otherwise skip externally verified published episodes and select the nearest FUTURE planned unpublished entry. Then begin the existing review-package workflow. Clearly report any fallback date. Do not publish or claim video completion before voice artifacts and a render exist.",
       inputSchema: z.object({}),
     },
     async () =>
@@ -847,6 +847,14 @@ const createServer = () => {
         const item = await getCalendarItemByDate(date);
         const status = await readStatus(item.id);
         const verifiedPosts = confirmedPublishedFor(item.id);
+        if (verifiedPosts.length) return {
+          date, episodeId:item.id, topic:item.topic,
+          status, verifiedPublishedPosts:verifiedPosts,
+          publicationExternallyConfirmed:true,
+          creativeFormatPublicationVerified:verifiedPosts.every(r=>r.creativeFormatVerified),
+          packageCurrent:false,
+          note:"Published post IDs were verified through Zernio; historical creative format and current local review package were not verified. No render or publication action taken."
+        };
         const { episode } = await currentEpisode(date);
         const ctaValidation = validateCtaEpisode(episode, await readCtaLab());
         const platformPackageErrors = {};
