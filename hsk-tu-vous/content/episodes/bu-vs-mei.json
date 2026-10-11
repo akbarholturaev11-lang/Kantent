@@ -168,7 +168,20 @@
   "captionSource": "pending-tts-export",
   "publishingStatus": "pending-owner-review",
   "voiceProfileId": "ru-dmitry-v1",
-  "learningFactSources": [],
+  "learningFactSources": [
+    {
+      "title": "不 vs 没 — ChineseGrammar",
+      "url": "https://chinesegrammar.app/grammar/bu-vs-mei",
+      "checkedAt": "2026-10-11",
+      "supports": "不 for habitual or intended negation; 没(有) for an action that did not occur, as illustrated by 我不喝咖啡 and 我没去学校."
+    },
+    {
+      "title": "不 vs 没有 — Hanyu Guide",
+      "url": "https://hanyuguide.com/grammar/bu-vs-meiyou-negation",
+      "checkedAt": "2026-10-11",
+      "supports": "Confirms common 没(有) negative patterns and contrasts them with 不."
+    }
+  ],
   "hookExperiment": {
     "id": "bu-vs-mei-hook-v1",
     "formatId": "contrast",

@@ -144,7 +144,20 @@
   "captionSource": "pending-tts-export",
   "publishingStatus": "pending-owner-review",
   "voiceProfileId": "ru-dmitry-v1",
-  "learningFactSources": [],
+  "learningFactSources": [
+    {
+      "title": "How Many / How Much — 几 & 多少 — HSK Grammar Wiki",
+      "url": "https://hskcompanion.org/grammar/question-ji-duoshao/",
+      "checkedAt": "2026-10-11",
+      "supports": "几 typically requests a small count with a measure word; 多少 asks open-ended quantity, including 多少钱 for price."
+    },
+    {
+      "title": "Choosing Basic Question Pronouns — ChineseGrammar",
+      "url": "https://chinesegrammar.app/grammar/basic-question-pronouns",
+      "checkedAt": "2026-10-11",
+      "supports": "Both 几 and 多少 are quantity-interrogatives chosen according to the unknown information."
+    }
+  ],
   "hookExperiment": {
     "id": "ji-vs-duoshao-hook-v1",
     "formatId": "question",

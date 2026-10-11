@@ -158,7 +158,14 @@
   "captionSource": "pending-tts-export",
   "publishingStatus": "pending-owner-review",
   "voiceProfileId": "ru-dmitry-v1",
-  "learningFactSources": [],
+  "learningFactSources": [
+    {
+      "title": "在 for Location in Mandarin Chinese — Settemila Lingue",
+      "url": "https://www.settemilalingue.com/en/languages/zh/grammar/for-location",
+      "checkedAt": "2026-10-11",
+      "supports": "在 (zài) expresses location in subject + 在 + place; confirms 我在家 and 在学校 patterns."
+    }
+  ],
   "hookExperiment": {
     "id": "zai-location-hook-v1",
     "formatId": "scenario",

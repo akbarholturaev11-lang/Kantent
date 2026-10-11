@@ -54,10 +54,32 @@ export function isDraftReady(rootDirectory, item) {
   const file = path.join(rootDirectory, 'content', item.episodeFile);
   try {
     const episode = JSON.parse(fs.readFileSync(file, 'utf8'));
+    const sources = episode.learningFactSources;
+    const scenes = episode.scenes;
     return episode.id === item.id && episode.date === item.date &&
+      episode.timezone === 'Asia/Shanghai' && episode.languageCode === 'ru-RU' &&
       typeof episode.topic === 'string' && episode.topic.trim().length > 0 &&
-      episode.hookExperiment && Array.isArray(episode.scenes) &&
-      episode.scenes.some(scene => scene?.kind !== 'cta' && typeof scene?.narration === 'string' && scene.narration.trim());
+      episode.durationTargetSec >= 25 && episode.durationTargetSec <= 35 &&
+      Array.isArray(episode.learningFacts) && episode.learningFacts.length > 0 &&
+      Array.isArray(episode.examples) && episode.examples.length > 0 &&
+      Array.isArray(sources) && sources.length > 0 &&
+      sources.every(source =>
+        typeof source.title === 'string' && source.title.trim().length > 0 &&
+        typeof source.url === 'string' && source.url.startsWith('https://') &&
+        /^\d{4}-\d{2}-\d{2}$/.test(source.checkedAt) &&
+        typeof source.supports === 'string' && source.supports.trim().length > 0) &&
+      !Object.hasOwn(episode, 'cta') && !Object.hasOwn(episode, 'ctaExperiment') &&
+      episode.hookExperiment?.id && episode.hookExperiment?.hypothesis &&
+      ['question', 'contrast', 'scenario'].includes(episode.hookExperiment.formatId) &&
+      Array.isArray(scenes) && scenes.length >= 3 &&
+      scenes.every(scene =>
+        scene.kind !== 'cta' && typeof scene.narration === 'string' &&
+        scene.narration.trim().length > 0 &&
+        Array.isArray(scene.cards) && scene.cards.length > 0 &&
+        scene.cards.every(card =>
+          typeof card.hanzi === 'string' && card.hanzi.trim() &&
+          typeof card.pinyin === 'string' && card.pinyin.trim() &&
+          typeof card.meaning === 'string' && card.meaning.trim()));
   } catch {
     return false;
   }
