@@ -66,7 +66,7 @@ export function isDraftReady(rootDirectory, item) {
       sources.every(source =>
         typeof source.title === 'string' && source.title.trim().length > 0 &&
         typeof source.url === 'string' && source.url.startsWith('https://') &&
-        /^\\d{4}-\\d{2}-\\d{2}$/.test(source.checkedAt) &&
+        /^\d{4}-\d{2}-\d{2}$/.test(source.checkedAt) &&
         typeof source.supports === 'string' && source.supports.trim().length > 0) &&
       !Object.hasOwn(episode, 'cta') && !Object.hasOwn(episode, 'ctaExperiment') &&
       episode.hookExperiment?.id && episode.hookExperiment?.hypothesis &&
