@@ -29,8 +29,8 @@ jobs:
         run: node --test scripts/episode-cta-assembly.test.mjs
       - name: Test CTA variants and immutable CTA ledger
         run: node --test scripts/platform-cta.test.mjs scripts/cta-lab.test.mjs
-      - name: Test timezone-aware today-video selection
-        run: node --test scripts/resolve-production-date.test.mjs
+      - name: Test timezone-aware today-video selection and verified published deduplication
+        run: node --test scripts/resolve-production-date.test.mjs scripts/published-evidence.test.mjs
       - name: Test future episode buffer audit
         run: node --test scripts/self-improvement-check.test.mjs
       - name: Test 30-day canonical Hook Lab decisions
