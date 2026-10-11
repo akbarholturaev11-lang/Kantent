@@ -2,6 +2,14 @@
 
 This file describes **the sequence of operations**, not the values of production settings. Start with `AGENTS.md` and `AI_RULES.md`. Read current values from the canonical files listed in `AGENTS.md`; never substitute remembered dates, voice profiles or CTA wording.
 
+## Owner-authorized independent cinematic pilot
+
+The older `zai-location` calendar episode remains at its original date and its verified Instagram/YouTube published post IDs remain untouched. Its video was made before the new creative renderer was confirmed; it must **never** be counted as a Cinematic format result (a user-reported old view count is not a comparable 7d platform measurement). The owner separately authorized redoing the **same learning topic** as a first real cinematic pilot.
+
+The canonical calendar permits only one episode per date, so the recut is a new additional review slot `2026-10-13` named `zai-location-cinematic-v2`. This deliberately uses the original lesson's verified Chinese learning facts but a new situation-driven hook and narration, a new independent Hook Lab identifier, the existing approved voice profile, original illustrated Street Situation storyboard, and a fresh immutable CTA registration against the unchanged central profile-to-website message. No MP3 or final MP4 is falsely claimed. The original episode's publication ledger remains as historical evidence, not an eligible pilot outcome.
+
+`prepare_today_video` skips the externally verified published old episode and selects this new unpublished slot before the regular upcoming videos; `content:make -- 2026-10-13` targets the new episode only. The exceptional recut **does not advance** the four-format rotation, so the following regular Speed Quiz stays a Speed Quiz. Do not reuse the original post ID, edit its published snapshot, clone its rendered preview approval, treat its lifetime views as new-format data or post the recut without exact owner preview approval.
+
 ## Published-video deduplication (verified Zernio evidence)
 
 `content/published-posts.json` holds narrowly scoped verification records keyed by the **calendar episode ID**, platform and real Zernio post ID. Records must come from an actual connected Zernio `posts_get` readback showing `published`; a scheduled timestamp or owner-approved local package alone is never publication evidence. The schedule time does not redefine the canonical calendar date. Publication evidence **does not prove** the post was generated with the current renderer; `creativeFormatVerified:false` is intentional until an audited exported MP4 is matched.
