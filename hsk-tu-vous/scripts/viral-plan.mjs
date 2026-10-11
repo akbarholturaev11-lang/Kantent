@@ -78,8 +78,15 @@ export function recommendCreativeFormats({ calendar, episodeByFile, registry, fe
 
   // Derive evidence only from source-labelled 7d platform windows with VERIFIED
   // episode/hook/level mapping. Different levels/duration bands are never pooled.
+  // Older posts remain in Zernio/analytics history, but an owner-authorized
+  // cinematic remake starts a NEW experiment. Never assign its published
+  // predecessor's views (or watch metrics) to the new creative pilot.
+  const replacedLegacyEpisodeIds = new Set(
+    Object.values(episodeByFile).map(ep=>ep?.pilotRemakeOfEpisodeId).filter(Boolean)
+  );
   const groups = new Map();
   for (const post of feedback.posts) {
+    if (replacedLegacyEpisodeIds.has(post.episodeId)) continue;
     if (post.window !== policy.primaryDecisionWindow || !seen.has(post.creativeFormatId) ||
         !post.episodeId || !post.hookFormat || !post.hskLevel ||
         post.averageWatchRatio == null || post.views == null ||
