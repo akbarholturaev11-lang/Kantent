@@ -51,6 +51,21 @@ test('refuses format attribution without verified mapping',()=>{
   assert.deepEqual(validateObservation(obs),[]);
   assert.equal(deriveMetrics(obs).creativeFormatId,'speed-quiz');
 });
+test('published legacy post never becomes a new-format win, even if someone tags it with the new format',()=>{
+  const oldRecord={
+    creativeFormatId:'street-situation',window:'7d',postId:'old-post',platform:'instagram',
+    episodeId:'zai-location',hookFormat:'scenario',hskLevel:'HSK 1',
+    durationBand:'25-29s',views:63000,averageWatchRatio:0.99
+  };
+  const result=recommendCreativeFormats({
+    calendar,episodeByFile:episodes,registry,policy,date:'2026-10-11',
+    feedback:{posts:[oldRecord],caveats:[]}
+  });
+  assert.deepEqual(result.evidence,[]);
+  assert.equal(result.evidenceStatus,'insufficient-evidence');
+  assert.equal(result.productFunnel.verifiedNewLessonStarts,null);
+});
+
 test('lifetime tagged data is never treated as evidence and no winner is auto-picked',()=>{
   const summary=recommendCreativeFormats({
     calendar,episodeByFile:episodes,registry,policy,date:'2026-10-11',
