@@ -9,6 +9,7 @@ import {
 } from "./caption-utils.mjs";
 import { readCtaLab, validateCtaEpisode } from "./cta-lab.mjs";
 import { assertCanonicalLessonSource, composeLessonCta } from "./episode-cta-assembly.mjs";
+import { decorateCanonicalLesson, compareAuthorialContent } from "./auto-storyboard.mjs";
 import { validateStoryboardScene } from "./storyboard-validation.mjs";
 
 export const PROJECT_ROOT = path.resolve(
@@ -197,9 +198,10 @@ export async function getCalendarItemByDate(date) {
 export async function getPlannedEpisode(date) {
   const item = await getCalendarItemByDate(date);
   const filePath = path.join(PROJECT_ROOT, "content", item.episodeFile);
-  const lesson = normalizeEpisode(await readJson(filePath));
+  const sourceLesson = normalizeEpisode(await readJson(filePath));
   const ctaLab = await readCtaLab();
-  assertCanonicalLessonSource(lesson, ctaLab);
+  assertCanonicalLessonSource(sourceLesson, ctaLab);
+  const lesson = decorateCanonicalLesson(sourceLesson);
   // CTA-free future plans get the current central CTA only when materialized.
   // Legacy completed/registered plans keep their original version snapshots.
   const episode = lesson.scenes.some((scene) => scene.kind === "cta")
@@ -214,17 +216,37 @@ export async function getPlannedEpisode(date) {
   return { item, episode, filePath };
 }
 
+export function synchronizeAutoStoryboard(saved, planned, status = {stage:"planned"}) {
+  const wanted=planned.creativeFormatId;
+  if(!wanted || !planned.scenes.some(s=>s.kind!=="cta" && s.storyboard)) return saved;
+  if(saved.id!==planned.id || saved.date!==planned.date)
+    throw Error("Review-copy date/episode mismatch; refused creative migration");
+  const current=saved.creativeFormatId;
+  const formats=saved.scenes.filter(s=>s.kind!=="cta");
+  if(current===wanted && formats.every(s=>s.storyboard?.formatId===wanted)) return saved;
+  const protectedStages=["rendered-pending-owner-approval","owner-approved-for-zernio-publishing",
+    "zernio-published","zernio-scheduled","zernio-publication-processing",
+    "zernio-publication-partial","zernio-publication-failed"];
+  if(protectedStages.includes(status.stage)||saved.audioSrc||saved.voiceTextHash||
+     saved.captions?.length||!["planned","plan-ready"].includes(status.stage)||
+     !compareAuthorialContent(saved,planned)) {
+    throw Error("Existing review copy differs from current creative storyboard or already has voice/review state. "+
+      "Do not silently replace approved or manually edited work; inspect this episode and explicitly regenerate an unapproved draft.");
+  }
+  // Only touch clean pre-voice copies matching canonical source exactly.
+  return planned;
+}
+
 export async function getRunEpisodeByDate(date) {
   const { item, episode: plannedEpisode } = await getPlannedEpisode(date);
   const folder = reviewDir(item.id);
   const filePath = path.join(folder, "episode.json");
   try {
-    return {
-      item,
-      episode: normalizeEpisode(await readJson(filePath)),
-      filePath,
-      isRunCopy: true,
-    };
+    const saved = normalizeEpisode(await readJson(filePath));
+    const status = await readStatus(item.id);
+    const episode = synchronizeAutoStoryboard(saved, plannedEpisode, status);
+    if (episode !== saved) await writeJson(filePath, episode);
+    return { item, episode, filePath, isRunCopy: true };
   } catch (error) {
     if (error?.code !== "ENOENT") throw error;
   }
@@ -255,11 +277,9 @@ export async function getEpisode(id, { seed = true } = {}) {
   const folder = reviewDir(id);
   const draft = path.join(folder, "episode.json");
   try {
-    return {
-      episode: normalizeEpisode(await readJson(draft)),
-      filePath: draft,
-      isSeed: false,
-    };
+    const saved = normalizeEpisode(await readJson(draft));
+    const {episode} = await getRunEpisodeByDate(saved.date);
+    return { episode, filePath: draft, isSeed: false };
   } catch (error) {
     if (error?.code !== "ENOENT") throw error;
   }
@@ -276,9 +296,10 @@ export async function getEpisode(id, { seed = true } = {}) {
     const base = normalizeEpisode(await readJson(seedPath));
     const ctaLab = await readCtaLab();
     assertCanonicalLessonSource(base, ctaLab);
-    const episode = base.scenes.some((scene) => scene.kind === "cta")
-      ? base
-      : composeLessonCta(base, ctaLab);
+    const lesson = decorateCanonicalLesson(base);
+    const episode = lesson.scenes.some((scene) => scene.kind === "cta")
+      ? lesson
+      : composeLessonCta(lesson, ctaLab);
     validateEpisode(episode);
     await writeJson(draft, episode);
     return { episode, filePath: draft, isSeed: true };

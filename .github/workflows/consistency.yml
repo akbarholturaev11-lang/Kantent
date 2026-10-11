@@ -40,9 +40,16 @@ jobs:
       - name: Validate four-format content pilot and read-only planning
         run: node --test scripts/viral-plan.test.mjs && npm run content:viral-plan -- --date 2026-10-11 --json > /tmp/viral-plan.json && node --check scripts/viral-plan.mjs
       - name: Test storyboard safety and centralized CTA compatibility
-        run: node --test scripts/storyboard-validation.test.mjs
+        run: node --test scripts/storyboard-validation.test.mjs scripts/auto-storyboard.test.mjs
       - name: Install Remotion dependencies and typecheck cinematic renderer
         run: npm ci --no-audit --no-fund && npm run lint
+      - name: Generate multi-format visual stills without publishing
+        run: |
+          node --input-type=module -e "import fs from 'node:fs'; import {getPlannedEpisode} from './scripts/lib.mjs'; for (const date of ['2026-10-14','2026-10-16','2026-10-19']) {const {episode}=await getPlannedEpisode(date);fs.writeFileSync('/tmp/story-'+date+'.json',JSON.stringify({episode}));}"
+          npx remotion still src/index.ts HSKAI-Episode /tmp/quiz.png --props /tmp/story-2026-10-14.json --frame=35
+          npx remotion still src/index.ts HSKAI-Episode /tmp/series.png --props /tmp/story-2026-10-16.json --frame=35
+          npx remotion still src/index.ts HSKAI-Episode /tmp/fix.png --props /tmp/story-2026-10-19.json --frame=35
+          test -s /tmp/quiz.png && test -s /tmp/series.png && test -s /tmp/fix.png
       - name: Render visual-only cinematic storyboard stills
         run: |
           node -e "const fs=require('fs');const episode=require('./content/episodes/zai-location.json');fs.writeFileSync('/tmp/hsk-storyboard-props.json', JSON.stringify({episode}));"

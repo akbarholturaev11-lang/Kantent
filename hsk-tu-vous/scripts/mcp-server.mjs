@@ -21,6 +21,7 @@ import {
   episodeContentHash,
   getPlannedEpisode,
   getRunEpisodeByDate,
+  synchronizeAutoStoryboard,
   normalizeEpisode,
   normalizeVoiceProvider,
   invalidateReviewArtifacts,
@@ -273,7 +274,8 @@ const createServer = () => {
     } = await getPlannedEpisode(date);
     const filePath = path.join(reviewDir(item.id), "episode.json");
     try {
-      const episode = normalizeEpisode(await readJson(filePath));
+      const saved = normalizeEpisode(await readJson(filePath));
+      const episode = synchronizeAutoStoryboard(saved, planned, await readStatus(item.id));
       validateEpisode(episode);
       return { item, episode, filePath, isRunCopy: true, planPath };
     } catch (error) {

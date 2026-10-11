@@ -1,0 +1,85 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { decorateFutureLesson, decorateCanonicalLesson, authoredQuizChoices, compareAuthorialContent } from "./auto-storyboard.mjs";
+import { getPlannedEpisode, synchronizeAutoStoryboard } from "./lib.mjs";
+import { validateStoryboardEpisode } from "./storyboard-validation.mjs";
+import { validateCtaEpisode } from "./cta-lab.mjs";
+
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
+const read=(p)=>JSON.parse(fs.readFileSync(path.join(root,"content",p),"utf8"));
+const calendar=read("calendar.json");
+const registry=read("creative-formats.json");
+const ctaLab=read("cta-lab.json");
+const byFile=Object.fromEntries(calendar.items
+  .filter(i=>i.episodeFile && fs.existsSync(path.join(root,"content",i.episodeFile)))
+  .map(i=>[i.episodeFile,read(i.episodeFile)]));
+const baseline=(id)=>byFile[calendar.items.find(i=>i.id===id).episodeFile];
+const decorate=(id)=>decorateFutureLesson(baseline(id),{calendar,registry,episodeByFile:byFile});
+
+test("all upcoming planned episodes are auto-formatted consistently from the same calendar anchor",()=>{
+  const ids=["zai-location","ji-vs-duoshao","xiang-vs-yao","time-word-order"];
+  const result=ids.map(id=>decorate(id));
+  assert.deepEqual(result.map(e=>e.creativeFormatId),
+    ["street-situation","speed-quiz","micro-series","problem-fix"]);
+  assert.ok(result.every(e=>validateStoryboardEpisode(e)));
+  assert.ok(result.every(e=>e.scenes.every(s=>s.storyboard?.formatId===e.creativeFormatId)));
+  assert.equal(result[2].scenes.every(s=>s.storyboard.character==="student"),true);
+  assert.equal(result[1].scenes[0].storyboard.options.length,2);
+  assert.deepEqual(result[1].scenes[0].storyboard.options,["几","多少"]);
+  assert.ok(result[1].scenes.slice(1).every(s=>s.storyboard.options===undefined));
+});
+test("dated production loader gets auto storyboard BEFORE central CTA, without changing its registered copy",async()=>{
+  for(const date of ["2026-10-12","2026-10-14","2026-10-16","2026-10-19","2026-10-21","2026-10-23"]){
+    const {episode}=await getPlannedEpisode(date);
+    assert.ok(episode.creativeFormatId, date);
+    assert.equal(episode.scenes.at(-1).kind,"cta");
+    assert.equal(episode.scenes.at(-1).storyboard,undefined);
+    assert.equal(episode.scenes.filter(s=>s.kind==="cta").length,1);
+    assert.equal(episode.autoStoryboard.status,"generated-for-review");
+    assert.equal(episode.voiceProvider,"text-to-speech.online");
+    assert.equal(validateCtaEpisode(episode,ctaLab).valid, date!=="2026-10-23",
+      "pre-existing stale CTA registration stays stale");
+    assert.ok(episode.scenes.filter(s=>s.kind!=="cta").every(s=>s.storyboard?.formatId===episode.creativeFormatId));
+  }
+});
+test("canonical lesson files remain unchanged and animation planning is idempotent",()=>{
+  const raw=baseline("xiang-vs-yao");
+  const snapshot=JSON.stringify(raw);
+  assert.equal(decorateCanonicalLesson(raw).creativeFormatId,"micro-series");
+  assert.equal(JSON.stringify(raw),snapshot);
+  assert.deepEqual(decorate("xiang-vs-yao"),decorateFutureLesson(decorate("xiang-vs-yao"),{calendar,registry,episodeByFile:byFile}));
+});
+test("refuse fake speed-quiz choices; use non-quiz format instead when terms unavailable",()=>{
+  const updated=structuredClone(baseline("ji-vs-duoshao"));
+  updated.scenes=updated.scenes.filter(s=>s.id==="hook"||s.id==="example1");
+  assert.equal(authoredQuizChoices(updated),null);
+  const modified={...byFile,"episodes/ji-vs-duoshao.json":updated};
+  const output=decorateFutureLesson(updated,{calendar,registry,episodeByFile:modified});
+  assert.equal(output.creativeFormatId,"problem-fix");
+  assert.equal(output.autoStoryboard.reason,"missing-authored-quiz-options-fallback");
+  assert.ok(output.scenes.every(s=>s.storyboard.formatId==="problem-fix"));
+});
+test("safe-sync only clean, pre-voice review; never clobber published/owner-edited copy",async()=>{
+  const desired=(await getPlannedEpisode("2026-10-14")).episode;
+  const stale=structuredClone(desired);
+  delete stale.creativeFormatId;
+  delete stale.autoStoryboard;
+  for(const s of stale.scenes) delete s.storyboard;
+  assert.equal(compareAuthorialContent(stale,desired),true);
+  assert.deepEqual(synchronizeAutoStoryboard(stale,desired,{stage:"plan-ready"}),desired);
+  const edited=structuredClone(stale);
+  edited.scenes[0].narration+=" (owner changed)";
+  assert.throws(()=>synchronizeAutoStoryboard(edited,desired,{stage:"plan-ready"}),/review copy differs/i);
+  assert.throws(()=>synchronizeAutoStoryboard({...stale,audioSrc:"voice.mp3"},desired,{stage:"plan-ready"}),/review copy differs/i);
+  assert.throws(()=>synchronizeAutoStoryboard(stale,desired,{stage:"rendered-pending-owner-approval"}),/review copy differs/i);
+  assert.strictEqual(synchronizeAutoStoryboard(desired,desired,{stage:"rendered-pending-owner-approval"}),desired);
+});
+test("explicit approval and legacy videos remain unmodified",()=>{
+  const old=baseline("name-question");
+  assert.deepEqual(decorateCanonicalLesson(old),old);
+  const published={...baseline("xiang-vs-yao"), publishingStatus:"published"};
+  assert.deepEqual(decorateFutureLesson(published,{calendar,registry,episodeByFile:byFile}),published);
+});

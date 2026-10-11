@@ -151,8 +151,16 @@
     "One verified Chinese learning point per video",
     "Use existing episode hookExperiment formatId; do not auto-rewrite it",
     "CTA remains owned by content/cta-lab.json and platform export rules",
-    "No autonomous render, post, CTA change or voice change",
-    "Only suggest edits to unapproved future drafts; never mutate reviewed/published source",
+    "Creative storyboard assignment is enabled for unapproved planned episodes only; no automatic MP3/MP4/publication, CTA changes or voice changes",
+    "Automatic storyboard treatment is applied to eligible working copies only; canonical lesson JSON remains unchanged",
     "Do not infer 24h/7d windows from lifetime cumulative metrics"
-  ]
+  ],
+  "automaticStoryboard": {
+    "enabled": true,
+    "fromDate": "2026-10-12",
+    "owner": "scripts/auto-storyboard.mjs",
+    "appliesTo": "CTA-free planned episodes, working copies only",
+    "quizFallback": "problem-fix when no two authored vocabulary choices",
+    "reviewSafety": "never rewrite an existing approved/voice-prepared/owner-edited review"
+  }
 }

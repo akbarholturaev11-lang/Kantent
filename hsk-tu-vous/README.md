@@ -37,6 +37,10 @@ Do **not** use this README as a second configuration file. `AGENTS.md` lists eve
 - Design tokens: `content/visual-system.json`.
 - Runtime details: `PROJECT_MEMORY.md`.
 
+## Automatic cinematic formats for upcoming video commands
+
+The runtime now selects a hook-compatible visual format for every eligible future planned video and attaches storyboard fields before central CTA assembly. `prepare_today_video` uses this runtime path, as do `getPlannedEpisode`, `getEpisode` and the local production CLI; no need to manually add `storyboard` to upcoming canonical lesson files. Old clean plan-ready review copies are synced; voice-prepared, published, approved, and owner-edited copies fail closed instead of silently reverting to the old renderer. The calendar controls dates, `content/creative-formats.json` owns format assignment, and `content/cta-lab.json` remains the only CTA source. This is automatic visual preparation, **not** automated sourcing of approved MP3 or word-timed VTT/SRT, final MP4 approval or social publication. Test: `node --test scripts/auto-storyboard.test.mjs`.
+
 ## Cinematic story renderer — first pilot
 
 The 12 October `zai-location` draft now opts into a per-scene procedural cinematic illustration using `scene.storyboard`. The Remotion `CinematicStoryScene` produces original campus/street/home context motion, while the existing Chinese/pinyin/Russian teaching point and global captions remain. CTA and older lessons do not opt in. Validate metadata with `node --test scripts/storyboard-validation.test.mjs`; TypeScript checks are run in the PR CI. This pilot is a **visual implementation**, not an audio-approved finished video: no TTS, website downloads, fake app usage or social publishing were carried out.

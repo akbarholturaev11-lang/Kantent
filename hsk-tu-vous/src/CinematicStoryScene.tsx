@@ -89,9 +89,15 @@ export const CinematicStoryScene:React.FC<{
  const isChinese=beat.chinese || /[\u3400-\u9fff]/u.test(beat.hero);
  const fontSize=isChinese?(beat.hero.length<=2?198:beat.hero.length<=6?138:99):(beat.hero.length>20?67:82);
  const meaning=beat.meaning;
- const quiz=storyboard.formatId==='speed-quiz';
+ const quiz=storyboard.formatId==='speed-quiz' && Boolean(storyboard.options?.length);
+ const isSeries=storyboard.formatId==='micro-series';
+ const isFix=storyboard.formatId==='problem-fix';
+ const quizSeconds=Math.max(1,3-Math.floor(frame/30));
  return <AbsoluteFill style={{background:colors.background, overflow:'hidden',fontFamily:font,color:colors.foreground}}>
-   <AbsoluteFill style={{background:`radial-gradient(ellipse at 56% 30%, ${colors.brandGold}21 0%, transparent 50%),linear-gradient(160deg,#FFF8E9 0%,#F6E7D2 70%,#FDF9F0 100%)`}}/>
+   <AbsoluteFill style={{background:isSeries
+     ? `radial-gradient(ellipse at 56% 30%, ${colors.brandTeal}24 0%, transparent 50%),linear-gradient(160deg,#FFF8E9 0%,#F1E6CC 70%,#FDF9F0 100%)`
+     : isFix ? `radial-gradient(ellipse at 56% 30%, ${colors.brandRed}19 0%, transparent 50%),linear-gradient(160deg,#FFF9F2 0%,#F1DACC 70%,#FDF9F0 100%)`
+     : `radial-gradient(ellipse at 56% 30%, ${colors.brandGold}21 0%, transparent 50%),linear-gradient(160deg,#FFF8E9 0%,#F6E7D2 70%,#FDF9F0 100%)`}}/>
    <svg viewBox="0 0 1080 790" style={{position:'absolute',top:layout.environmentTopPx,left:0,width:1080,height:layout.environmentHeightPx,overflow:'visible'}} aria-hidden>
       <g transform={`translate(${pan} 0)`}>
         <ellipse cx="828" cy="144" rx="114" ry="114" fill="#F0C47B" fillOpacity=".45"/>
@@ -104,6 +110,15 @@ export const CinematicStoryScene:React.FC<{
     </svg>
     <div aria-hidden style={{position:'absolute',top:750,left:0,right:0,height:660,
        background:'linear-gradient(180deg,rgba(253,249,240,0) 0%,rgba(253,249,240,.94) 55%,#FDF9F0 100%)'}}/>
+    {quiz&&isHook&&<div style={{position:'absolute',top:425,left:0,right:0,textAlign:'center',
+        fontSize:62,fontWeight:900,color:colors.brandRed,opacity:frame<90?1:0.2}}>
+        {quizSeconds}
+      </div>}
+    {isFix&&<div aria-hidden style={{position:'absolute',top:820,left:150,right:150,height:7,
+       borderRadius:30,background:storyboard.mood==='question'||storyboard.mood==='mistake' ? colors.brandRed : colors.brandTeal,
+       opacity:0.65}}/>}
+    {isSeries&&<div aria-hidden style={{position:'absolute',top:730,left:210,right:210,height:5,borderRadius:30,
+        background:colors.brandTeal,opacity:0.4}}/>}
     {quiz&&<div style={{position:'absolute',top:510,left:90,right:90,display:'flex',gap:14,justifyContent:'center'}}>
       {storyboard.options?.map((opt,index)=><div key={index} style={{minWidth:180,maxWidth:275,padding:'17px 22px',
         borderRadius:20,background:'#FFFDF7E8',border:`2px solid ${colors.border}`,
