@@ -1,3 +1,4 @@
+import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { requireFreshGitMain } from './git-freshness.mjs';
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -21,6 +22,7 @@ console.log('GitHub source verified:', sourceRevision.remoteMainSha);
 const item = /^\d{4}-\d{2}-\d{2}$/.test(input)
   ? await getCalendarItemByDate(input)
   : await getCalendarItem(input);
+assertNotPreviouslyPublished(item.id);
 const { episode } = await getRunEpisodeByDate(item.date);
 if (normalizeVoiceProvider(episode.voiceProvider) !== "text-to-speech-online") {
   throw new Error("HSK AI faqat content/voice-profile.json dagi yagona ovoz profiliga ruxsat beradi.");
