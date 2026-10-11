@@ -36,8 +36,14 @@ for (const [date, id] of future) {
     assert.deepEqual(episode.scenes.at(-1).visualBeats,
       lab.platformVariants.instagram.sceneTemplate.visualBeats);
     validateEpisode(episode);
-    assert.equal(validateCtaEpisode(episode, lab).valid, true,
-      "Registered snapshot should match unchanged central CTA");
+    const ctaValidation = validateCtaEpisode(episode, lab);
+    if (id === "le-first-look") {
+      assert.equal(ctaValidation.valid, false,
+        "Edited narration/cards must invalidate the previously registered CTA snapshot");
+    } else {
+      assert.equal(ctaValidation.valid, true,
+        "Unchanged lesson should retain its registered central CTA snapshot");
+    }
     const after = JSON.parse(await fs.readFile(
       path.join(root, "content/episodes", id + ".json"), "utf8",
     ));
