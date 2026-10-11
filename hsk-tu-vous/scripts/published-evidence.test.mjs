@@ -27,8 +27,7 @@ test("when the published date is today it is skipped too",()=>{
  assert.equal(result.selectedDate,"2026-10-14");
 });
 test("manual specific-date video cannot accidentally overwrite verified publications",()=>{
- assert.match(assert.throws(()=>assertNotPreviouslyPublished("zai-location")).message,
-  /already has externally VERIFIED published post/);
+ assert.throws(()=>assertNotPreviouslyPublished("zai-location"),/already has externally VERIFIED published post/);
  assert.doesNotThrow(()=>assertNotPreviouslyPublished("ji-vs-duoshao"));
 });
 test("scheduled, approved or unverified entries cannot count as published",()=>{
