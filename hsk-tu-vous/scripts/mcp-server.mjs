@@ -709,17 +709,17 @@ const createServer = () => {
   async function prepareReviewForDate(date) {
         // Provider-confirmed publication overrides the calendar's stale
         // "planned" status. Never re-render or re-publish the same post ID.
-        const item = await getCalendarItemByDate(date);
-        const alreadyPublished = confirmedPublishedFor(item.id);
+        const plannedItem = await getCalendarItemByDate(date);
+        const alreadyPublished = confirmedPublishedFor(plannedItem.id);
         if (alreadyPublished.length) {
           return {
-            date, episodeId:item.id, status:{
+            date, episodeId:plannedItem.id, status:{
               stage:"externally-verified-published",
               verifiedOn:alreadyPublished[0].verifiedOn,
               records:alreadyPublished,
               creativeFormatVerified:alreadyPublished.every(r=>r.creativeFormatVerified)
             },
-            reviewFolder:reviewDir(item.id),
+            reviewFolder:reviewDir(plannedItem.id),
             nextAgentAction:"Do not regenerate or publish this episode. It is already published on the verified platforms. An old published MP4 cannot be labelled as the new cinematic format without an actual render audit. For a new version, request a distinct calendar slot and episode ID.",
             publicationVerifiedFrom:"Zernio posts_get",
             publishing:"already-published; no action taken"
