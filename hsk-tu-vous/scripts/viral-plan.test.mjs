@@ -23,9 +23,11 @@ test('four distinct pilot formats compatible with existing hooks',()=>{
   const result=recommendCreativeFormats({
     calendar,episodeByFile:episodes,registry,feedback:emptyFeedback,policy,date:'2026-10-11'
   });
-  assert.deepEqual(result.upcoming.slice(0,4).map((p)=>p.creativeFormatId),
+  const regular = result.upcoming.filter(p=>p.episodeId!=="zai-location-cinematic-v2");
+  assert.equal(result.upcoming.find(p=>p.episodeId==="zai-location-cinematic-v2").creativeFormatId,"street-situation");
+  assert.deepEqual(regular.slice(0,4).map((p)=>p.creativeFormatId),
     ['street-situation','speed-quiz','micro-series','problem-fix']);
-  assert.deepEqual(result.upcoming.slice(0,4).map((p)=>p.currentHookFormat),
+  assert.deepEqual(regular.slice(0,4).map((p)=>p.currentHookFormat),
     ['scenario','question','scenario','contrast']);
   assert.equal(result.evidenceStatus,'insufficient-evidence');
   assert.equal(result.productFunnel.verifiedNewLessonStarts,null);
