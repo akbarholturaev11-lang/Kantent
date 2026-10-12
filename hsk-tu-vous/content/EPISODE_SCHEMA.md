@@ -22,7 +22,7 @@ The Remotion renderer uses `CinematicStoryScene` only when `scene.storyboard` is
 - Screenshot `screenHighlight` percentages refer to the intrinsic screenshot dimensions (`screenImageWidthPx` / `screenImageHeightPx`). The overlay follows the same contained image aspect ratio, including letterboxing; it must not target percentages of the surrounding padded card.
 - Caption style IDs are `headline`, `pill`, or `highlight`. Choose two or three styles per episode, one style at a time per scene; default styles depend on scene kind.
 - `captions[]`: timed cue records `{ text, startMs, endMs, timestampMs, confidence }`, imported from word-level VTT/SRT.
-- `captionSource`: only `pending-tts-export`, `online-tts-srt`, or `online-tts-vtt` is used by production.
+- `captionSource`: new production uses `pending-gemini-generation` before voice work and `gemini-word-timestamps` after import. Older online TTS labels may remain in immutable historical snapshots.
 - `audioSrc`, `voiceTextHash`, `voiceProfileId`: identify the imported audio and exact narration/profile version it belongs to. If narration changes, remove the hash/audio/captions and import a fresh pair.
 - `audioTrimAfterFrames`, when present on an imported review episode, is Remotion's absolute source-frame endpoint (`Audio.trimAfter`), not a count of frames to remove from the tail. The importer sets it after the last timed word plus a short natural pause.
 - `publishingStatus`: records pending confirmation, owner-approved Zernio publication, or the per-version outcome (`published`, `scheduled`, `processing`, `partial`, or `failed`).
@@ -45,7 +45,7 @@ TikTok is not an authorized publishing destination. The normal make/render/MCP f
 Each date writes to review/<id>/:
 
 - `episode.json` — mutable working copy of the canonical scenario.
-- `tts-input.txt`, `incoming/` — exact narration text and source MP3 plus word-level captions downloaded by the agent from the approved speech site.
+- `tts-input.txt`, `gemini-production/<timestamp>/` — exact narration, API WAV/MP3, word-level VTT, transcript diagnostics and generation metadata. The importer copies the approved MP3 into `public/generated/`.
 - `video.mp4` — 1080×1920 Remotion export with captions burned in.
 - `captions.srt` — sidecar made from the same timed cues.
 - `post.md` — Russian post copy and CTA.

@@ -167,7 +167,10 @@ export function validateConsistency(root = projectRoot) {
     }
   }
 
-  if (!voice?.voiceName || !voice?.provider || !voice?.site || !voice?.locale || !voice?.status) {
+  const voiceProviderConfig = voice?.provider === "gemini-api"
+    ? Boolean(voice?.ttsModel && voice?.transcriptionModel && voice?.outputFormat)
+    : Boolean(voice?.site);
+  if (!voice?.voiceName || !voice?.provider || !voice?.locale || !voice?.status || !voiceProviderConfig) {
     errors.push("content/voice-profile.json: missing canonical voice configuration");
   }
   if (!cta?.offer?.canonicalRussian || !cta?.offer?.id) {

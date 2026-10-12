@@ -14,7 +14,7 @@
     "#HSK1",
     "#HSK2"
   ],
-  "voiceProvider": "text-to-speech.online",
+  "voiceProvider": "gemini-api",
   "learningFacts": [
     "几 обычно спрашивает небольшое или ожидаемое конкретное число; часто рядом стоит счётное слово.",
     "多少 спрашивает количество или цену, когда размер заранее не ограничивают.",
@@ -141,9 +141,9 @@
     }
   ],
   "captions": [],
-  "captionSource": "pending-tts-export",
+  "captionSource": "pending-gemini-generation",
   "publishingStatus": "pending-owner-review",
-  "voiceProfileId": "ru-dmitry-v1",
+  "voiceProfileId": "ru-gemini-kore-v1",
   "learningFactSources": [
     {
       "title": "How Many / How Much — 几 & 多少 — HSK Grammar Wiki",

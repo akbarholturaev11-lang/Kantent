@@ -162,7 +162,7 @@ export function preparePlatformCtaDraft(baseEpisode, lab, platform) {
     delete source.audioTrimAfterFrames;
     delete source.voiceTextHash;
     delete source.captions;
-    source.captionSource = "pending-tts-export";
+    source.captionSource = "pending-gemini-generation";
     for (const item of source.scenes) {
       delete item.startMs;
       delete item.endMs;

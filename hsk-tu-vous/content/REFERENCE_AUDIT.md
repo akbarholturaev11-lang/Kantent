@@ -11,7 +11,7 @@
 
 В HSK AI сохраняются логотип, тёплая бумажная основа и cinnabar/jade/gold акценты из source palette владельца. Субтитры используют тёмный ink без подложки, группами максимум по два слова. Текущая layered-card motion — собственная Remotion-анимация, а не заявленная копия конкретного поста.
 
-Старое описание с ElevenLabs/Whisper было ошибочным для выбранного владельцем процесса и отключено. Единственный production голос и провайдер определяются текущим утверждённым профилем в `content/voice-profile.json`. Сайт экспортирует timed VTT/SRT, поэтому OpenAI transcription не нужен и не вызывается.
+Production voice uses Gemini TTS and Gemini Transcribe through the owner-authorized API profile in `content/voice-profile.json`. The workflow sends narration and generated audio to Google, checks the transcript against the script, and imports only exact word matches. The rendered sample remains pending owner voice approval; only its designated episode can use the pending profile.
 
 Из трёх роликов пользователя нельзя вывести доступ к чужим MCP, аккаунтам или API. Интеграция локального HSK MCP и HeroUI MCP настроена отдельно в проектной конфигурации; Pinterest и posts.design — только ссылки-референсы.
 

@@ -14,7 +14,7 @@
     "#HSK1",
     "#HSK2"
   ],
-  "voiceProvider": "text-to-speech.online",
+  "voiceProvider": "gemini-api",
   "learningFacts": [
     "不 часто отрицает привычку, намерение или настоящее/будущее действие.",
     "没 отрицает наличие или то, что действие не произошло; перед глаголом часто опускается 有.",
@@ -165,9 +165,9 @@
     }
   ],
   "captions": [],
-  "captionSource": "pending-tts-export",
+  "captionSource": "pending-gemini-generation",
   "publishingStatus": "pending-owner-review",
-  "voiceProfileId": "ru-dmitry-v1",
+  "voiceProfileId": "ru-gemini-kore-v1",
   "learningFactSources": [
     {
       "title": "不 vs 没 — ChineseGrammar",

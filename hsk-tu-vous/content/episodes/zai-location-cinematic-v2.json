@@ -14,7 +14,7 @@
     "#HSK1",
     "#китайскиефразы"
   ],
-  "voiceProvider": "text-to-speech.online",
+  "voiceProvider": "gemini-api",
   "learningFacts": [
     "В модели 我在家 在 показывает местонахождение.",
     "Базовый порядок примера: человек + 在 + место."
@@ -155,9 +155,9 @@
     }
   ],
   "captions": [],
-  "captionSource": "pending-tts-export",
+  "captionSource": "pending-gemini-generation",
   "publishingStatus": "pending-owner-review",
-  "voiceProfileId": "ru-dmitry-v1",
+  "voiceProfileId": "ru-gemini-kore-v1",
   "learningFactSources": [
     {
       "title": "在 for Location in Mandarin Chinese — Settemila Lingue",

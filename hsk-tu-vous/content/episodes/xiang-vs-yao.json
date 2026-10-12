@@ -14,7 +14,7 @@
     "#HSK2",
     "#китайскиевкафе"
   ],
-  "voiceProvider": "text-to-speech.online",
+  "voiceProvider": "gemini-api",
   "learningFacts": [
     "想 может выражать желание или намерение.",
     "要 может выражать желание, просьбу или необходимость; оттенок зависит от ситуации.",
@@ -165,9 +165,9 @@
     }
   ],
   "captions": [],
-  "captionSource": "pending-tts-export",
+  "captionSource": "pending-gemini-generation",
   "publishingStatus": "pending-owner-review",
-  "voiceProfileId": "ru-dmitry-v1",
+  "voiceProfileId": "ru-gemini-kore-v1",
   "learningFactSources": [
     {
       "title": "想 vs 要 vs 需要 — The Pure Language",

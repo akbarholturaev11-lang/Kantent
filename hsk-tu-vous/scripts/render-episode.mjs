@@ -17,7 +17,6 @@ import {
   invalidateReviewArtifacts,
   requireCurrentCta,
   narrationHash,
-  normalizeVoiceProvider,
   PROJECT_ROOT,
   readJson,
   reviewDir,
@@ -39,18 +38,15 @@ const visualSystem = await readJson(
 validateEpisode(episode);
 const ctaValidation = await requireCurrentCta(episode);
 const voiceProfile = await requireApprovedVoiceProfile(id);
-if (
-  normalizeVoiceProvider(episode.voiceProvider) !==
-  normalizeVoiceProvider(voiceProfile.provider)
-)
-  throw new Error("Эпизод не использует единый профиль text-to-speech.online.");
+if (episode.voiceProvider !== voiceProfile.provider)
+  throw new Error("Episode voice provider does not match the active voice profile.");
 if (episode.audioSrc && episode.voiceProfileId !== voiceProfile.profileId)
   throw new Error(
     "Аудио сделано по другому профилю. Не заменяйте закреплённый голос.",
   );
 if (!episode.audioSrc)
   throw new Error(
-    "Перед Remotion-рендером импортируйте MP3 из text-to-speech.online.",
+    "Gemini TTS voice must be generated and imported before Remotion rendering.",
   );
 if (episode.voiceTextHash !== narrationHash(episode))
   throw new Error(
@@ -60,10 +56,10 @@ const audioPath = path.join(PROJECT_ROOT, "public", episode.audioSrc);
 await fs.access(audioPath);
 if (
   !episode.captions?.length ||
-  !["online-tts-srt", "online-tts-vtt"].includes(episode.captionSource)
+  episode.captionSource !== "gemini-word-timestamps"
 ) {
   throw new Error(
-    "Перед рендером импортируйте word-level SRT/VTT из text-to-speech.online.",
+    "Gemini Transcribe word-level captions must be imported before rendering.",
   );
 }
 const perWordCueCount = episode.captions.filter(
@@ -71,7 +67,7 @@ const perWordCueCount = episode.captions.filter(
 ).length;
 if (perWordCueCount / episode.captions.length < 0.8) {
   throw new Error(
-    "Нужны word-level VTT/SRT cues из text-to-speech.online перед рендером.",
+    "Gemini word-level caption cues are incomplete; rerun voice generation.",
   );
 }
 const folder = reviewDir(id);

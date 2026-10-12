@@ -7,7 +7,7 @@ import {
   getCalendarItem,
   getCalendarItemByDate,
   getRunEpisodeByDate,
-  normalizeVoiceProvider,
+  requireApprovedVoiceProfile,
   readStatus,
 } from "./lib.mjs";
 
@@ -24,35 +24,30 @@ const item = /^\d{4}-\d{2}-\d{2}$/.test(input)
   : await getCalendarItem(input);
 assertNotPreviouslyPublished(item.id);
 const { episode } = await getRunEpisodeByDate(item.date);
-if (normalizeVoiceProvider(episode.voiceProvider) !== "text-to-speech-online") {
-  throw new Error("HSK AI faqat content/voice-profile.json dagi yagona ovoz profiliga ruxsat beradi.");
-}
+const voiceProfile = await requireApprovedVoiceProfile(item.id);
+if (episode.voiceProvider !== voiceProfile.provider)
+  throw new Error("Episode voice provider does not match content/voice-profile.json.");
 
 const folder = path.join(PROJECT_ROOT, "review", item.id);
 const hasImportedVoice =
   episode.audioSrc &&
-  ["online-tts-srt", "online-tts-vtt"].includes(episode.captionSource) &&
+  episode.voiceProfileId === voiceProfile.profileId &&
+  episode.captionSource === "gemini-word-timestamps" &&
   episode.captions?.length;
-const script = hasImportedVoice
-  ? "render-episode.mjs"
-  : "prepare-online-tts.mjs";
-const result = spawnSync(
-  process.execPath,
-  [path.join(PROJECT_ROOT, "scripts", script), item.id],
-  { cwd: PROJECT_ROOT, stdio: "inherit" },
-);
-if (result.error) throw result.error;
-if (result.status !== 0) throw new Error(script + " завершился с ошибкой.");
+const runStage = (script) => {
+  const result = spawnSync(
+    process.execPath,
+    [path.join(PROJECT_ROOT, "scripts", script), item.id],
+    { cwd: PROJECT_ROOT, stdio: "inherit" },
+  );
+  if (result.error) throw result.error;
+  if (result.status !== 0) throw new Error(script + " завершился с ошибкой.");
+};
 
-if (hasImportedVoice) {
-  console.log("Пакет готов для ручной проверки: " + folder);
-  const status = await readStatus(item.id);
-  for (const [platform, exported] of Object.entries(status.platformPackages ?? {})) {
-    console.log(`${platform}: ${exported.video}`);
-  }
-} else {
-  const status = await readStatus(item.id);
-  console.log("TTS-текст подготовлен. Агент должен продолжить через browser automation по content/WORKFLOW.md (§3: выбор браузера и экспорт): создать и скачать MP3+word-level SRT/VTT, импортировать их и затем собрать пакет.");
-  console.log("Файл сценария: " + status.script);
-  console.log("Папка для загрузок: " + path.join(folder, "incoming"));
+if (!hasImportedVoice) runStage("generate-voice-gemini.mjs");
+runStage("render-episode.mjs");
+console.log("Пакет готов для ручной проверки: " + folder);
+const status = await readStatus(item.id);
+for (const [platform, exported] of Object.entries(status.platformPackages ?? {})) {
+  console.log(`${platform}: ${exported.video}`);
 }

@@ -56,7 +56,7 @@ async function fixture(id = "platform-export-test") {
     audioSrc: "generated/test/voice.mp3",
     voiceTextHash: narrationHash(base),
     captions: [{ text: "Попробуй", startMs: 23000, endMs: 23500 }],
-    captionSource: "online-tts-vtt",
+    captionSource: "gemini-word-timestamps",
     audioDurationMs: 30000,
   });
   const record = createCtaExperiment({

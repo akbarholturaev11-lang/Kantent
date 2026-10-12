@@ -1,4 +1,5 @@
 import { requireFreshGitMain } from './git-freshness.mjs';
+import { assertNotPreviouslyPublished } from './published-evidence.mjs';
 import fs from "node:fs/promises";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -6,9 +7,9 @@ import {
   FPS,
   getEpisode,
   narrationHash,
-  normalizeVoiceProvider,
   PROJECT_ROOT,
   requireApprovedVoiceProfile,
+  readStatus,
   reviewDir,
   writeJson,
   writeStatus,
@@ -18,7 +19,7 @@ import {
 const [id, audioInput, captionsInput] = process.argv.slice(2);
 if (!id || !audioInput || !captionsInput) {
   throw new Error(
-    "Foydalanish: node scripts/import-online-tts.mjs <episode-ID> <audio.mp3> <captions.srt|captions.vtt>",
+    "Foydalanish: node scripts/import-voice.mjs <episode-ID> <audio.mp3> <captions.srt|captions.vtt>",
   );
 }
 
@@ -27,16 +28,17 @@ const captionsPath = path.resolve(captionsInput);
 const captionsExtension = path.extname(captionsPath).toLowerCase();
 if (![".mp3", ".wav"].includes(path.extname(audioPath).toLowerCase())) {
   throw new Error(
-    "text-to-speech.online audio fayli MP3 yoki WAV bo‘lishi kerak.",
+    "Gemini tomonidan yaratilgan audio MP3 yoki WAV bo‘lishi kerak.",
   );
 }
 if (![".srt", ".vtt"].includes(captionsExtension)) {
   throw new Error(
-    "text-to-speech.online subtitri .srt yoki .vtt bo‘lishi kerak.",
+    "Gemini word-timed subtitri .srt yoki .vtt bo‘lishi kerak.",
   );
 }
 
 const sourceRevision = requireFreshGitMain();
+assertNotPreviouslyPublished(id);
 const { episode, filePath } = await getEpisode(id);
 validateEpisode(episode);
 const visualSystem = JSON.parse(
@@ -47,15 +49,31 @@ const visualSystem = JSON.parse(
 );
 const beatEntryLeadFrames = visualSystem.motion.beatEntryLeadFrames;
 const voiceProfile = await requireApprovedVoiceProfile(id);
-if (episode.voiceProfileId !== voiceProfile.profileId) {
-  throw new Error(
-    "Episode voiceProfileId ovoz profiliga mos emas. Profilni o‘zgartirmang; HSK AI egasidan qaror so‘rang.",
-  );
+if (voiceProfile.provider !== "gemini-api") {
+  throw new Error("Faol ovoz profili Gemini API provayderiga mos emas.");
 }
-if (normalizeVoiceProvider(episode.voiceProvider) !== "text-to-speech-online") {
-  throw new Error(
-    `text-to-speech.online tanlanmagan (voiceProvider: ${episode.voiceProvider || "ko‘rsatilmagan"}).`,
-  );
+const existingStatus = await readStatus(id);
+const protectedStages = new Set([
+  "owner-approved-for-zernio-publishing",
+  "zernio-published",
+  "zernio-scheduled",
+  "zernio-publication-processing",
+  "zernio-publication-partial",
+  "zernio-publication-failed",
+]);
+if (
+  protectedStages.has(existingStatus.stage) ||
+  ["owner-approved-for-zernio-publishing", "published", "scheduled"].includes(
+    episode.publishingStatus,
+  )
+) {
+  throw new Error("Tasdiqlangan yoki e’lon qilingan episode ovozini import orqali almashtirib bo‘lmaydi.");
+}
+try {
+  await fs.access(path.join(reviewDir(id), "approval.json"));
+  throw new Error("Owner approval fayli mavjud. Ovoz almashtirishdan oldin paket egasi tomonidan bekor qilinishi kerak.");
+} catch (error) {
+  if (error?.code !== "ENOENT") throw error;
 }
 
 const parseTime = (value) => {
@@ -121,7 +139,7 @@ const perWordCueCount = captions.filter(
 ).length;
 if (perWordCueCount / captions.length < 0.8) {
   throw new Error(
-    "Subtitrlar so‘zma-so‘z vaqtlanmagan ko‘rinadi. text-to-speech.online saytidan word-level VTT yoki SRT eksport qiling; API orqali transkripsiya qilinmaydi.",
+    "Subtitrlar so‘zma-so‘z vaqtlanmagan ko‘rinadi. Gemini Transcribe word-level vaqt belgilarini yozmagan; bunday audio import qilinmaydi.",
   );
 }
 
@@ -144,7 +162,7 @@ if (lastCaptionEndMs > durationMs + 250) {
   throw new Error("Subtitr audio davomiyligidan keyin tugayapti.");
 }
 
-// Some online TTS MP3 exports contain several seconds of uncaptioned trailing silence.
+// Some TTS outputs contain several seconds of uncaptioned trailing silence.
 // Keep a short natural tail after the final timed word and trim the rest in Remotion.
 // Remotion's trimAfter is the source-frame endpoint, not the number of tail frames to remove.
 let audioTrimAfterFrames;
@@ -167,14 +185,14 @@ if (
   episode.voiceTextHash !== narrationHash(episode)
 ) {
   throw new Error(
-    "Ssenariy ovoz tayyorlashdan keyin o‘zgargan yoki TTS matni tayyorlanmagan. Avval prepare-online-tts ni qayta bajaring; eski ovoz/subtitr import qilinmadi.",
+    "Ssenariy ovoz tayyorlashdan keyin o‘zgargan yoki TTS matni tayyorlanmagan. Gemini voice generatorini joriy ssenariy bilan qayta bajaring; eski ovoz/subtitr import qilinmadi.",
   );
 }
 if (
   normalize(captions.map((caption) => caption.text).join("")) !== sourceText
 ) {
   throw new Error(
-    "Subtitr matni joriy ruscha ssenariyga to‘liq mos emas. Shu ssenariy bilan text-to-speech.online dan MP3 va word-level captionlarni qayta yuklang.",
+    "Subtitr matni joriy ruscha ssenariyga to‘liq mos emas. Gemini generatorini joriy ssenariy bilan qayta bajaring.",
   );
 }
 const sceneRanges = [];
@@ -294,7 +312,7 @@ const destinationAudio = path.join(assetFolder, audioFilename);
 await fs.copyFile(audioPath, destinationAudio);
 await fs.copyFile(
   captionsPath,
-  path.join(folder, `text-to-speech-online${captionsExtension}`),
+  path.join(folder, `gemini-word-timestamps${captionsExtension}`),
 );
 
 episode.audioSrc = `generated/${id}/${audioFilename}`;
@@ -304,8 +322,7 @@ episode.sourceAudioDurationMs = durationMs;
 episode.audioDurationMs = effectiveDurationMs;
 episode.audioTrimAfterFrames = audioTrimAfterFrames;
 episode.captions = captions;
-episode.captionSource =
-  captionsExtension === ".vtt" ? "online-tts-vtt" : "online-tts-srt";
+episode.captionSource = "gemini-word-timestamps";
 episode.publishingStatus = "pending-owner-review";
 await writeJson(filePath, episode);
 
@@ -318,8 +335,7 @@ await writeStatus(id, {
   voiceProvider: voiceProfile.provider,
   voiceProfileId: voiceProfile.profileId,
   voice: voiceProfile.voiceName,
-  voiceSelection:
-    "owner-selected in browser; MP3 metadata does not independently verify the voice",
+  voiceSelection: "Gemini API profile; generated voice identity recorded from the API request",
   voiceTextHash: episode.voiceTextHash,
   audio: destinationAudio,
   sourceCaptions: captionsPath,
@@ -327,7 +343,7 @@ await writeStatus(id, {
   sourceDurationSec: Number((durationMs / 1000).toFixed(3)),
   trimmedTailMs: Math.round(durationMs - effectiveDurationMs),
   captionCount: captions.length,
-  timingSource: `text-to-speech.online ${captionsExtension.slice(1).toUpperCase()} export`,
+  timingSource: `Gemini Transcribe word timestamps; exact normalized token match; ${captionsExtension.slice(1).toUpperCase()}`,
 });
 
 console.log(`MP3 va subtitrlar import qilindi: ${folder}`);

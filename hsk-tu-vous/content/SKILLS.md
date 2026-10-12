@@ -32,7 +32,7 @@ The recipes in `skill-catalog.json` have `lesson`, `premium` and `special` branc
 | Effects | `remotion-best-practices`, its `rules/effects.md`, `rules/transitions.md` | `hyperframes-animation`, optional `hyperframes-keyframes`/`hyperframes-registry` | `motion-effects` for a standalone effect |
 | Layout | Remotion `rules/video-layout.md`/`rules/measuring-text.md` | `hyperframes-studio` with HSK brand limits | `apple-design` or Figma-specific input |
 | Captions | Remotion `rules/subtitles.md`, existing HSK caption components | `hyperframes-studio` captions track | `embedded-captions` for existing talking-head footage only |
-| Audio | Approved voice profile and importer (no external Skill) | `hyperframes-audio` for mixing existing tracks | Standalone music/video workflow only |
+| Audio | Approved Gemini voice profile and automatic word-timed audio importer | `hyperframes-audio` for mixing existing tracks | Standalone music/video workflow only |
 | Brand | Existing `visual-system.json` (no extra brand files) | `hyperframes-creative` references canonical brand | `brand-intake` only on requested brand reset |
 | Advertising | Existing Remotion renderer for simple promo | `product-launch-video` | Explicit Apple-style or other specialized promo |
 | Export | Remotion video render with its existing audio | `hyperframes-cli` validation | `reel-export` only for video reframe/encoding |
@@ -43,7 +43,7 @@ For data visualizations, educational explainers, social content, and special exi
 
 1. `AGENTS.md`, `AI_RULES.md`, `content/WORKFLOW.md`, `content/EDITING_SPEC.md`, `content/visual-system.json`, `content/cta-lab.json` and `content/voice-profile.json` override all third-party Skill samples.
 2. **Ordinary dated HSK lessons remain Remotion.** Only an independent special premium commercial may use HyperFrames; migration of existing code requires the owner's separate explicit approval.
-3. Captions must come from the approved word-level voice export. Ignore Whisper/WhisperX/ElevenLabs/HeyGen recommendations in generic skills, even if a skill calls them prerequisites. Do not add a new TTS/transcription API, package, provider or login without authorization.
+3. Production captions come from Gemini Transcribe word timestamps for the audio generated with the approved Gemini TTS profile. The normalized transcript must match every script token before a VTT is imported. Ignore Whisper/WhisperX/ElevenLabs/HeyGen recommendations in generic skills; do not add another TTS/transcription provider.
 4. Remotion caption styling and placements are owned by `visual-system.json` and `EDITING_SPEC.md`; do not copy a generic TikTok highlight color, pill background or 80px font just because a skill illustrates it.
 5. HyperFrames safe zones can guide a standalone promo, but don't move existing lesson captions to the export skill's generic coordinates. Keep both existing narration audio and caption timing on aspect conversions.
 6. A generic skill's `brand.md`, `MOTION.md` or `CLAUDE.md` recommendation is **not** permission to create parallel HSK brand sources. Never replace approved logo, palette, CTA or product screenshots from a preset.

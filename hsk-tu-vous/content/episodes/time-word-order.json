@@ -14,7 +14,7 @@
     "#HSK1",
     "#HSK2"
   ],
-  "voiceProvider": "text-to-speech.online",
+  "voiceProvider": "gemini-api",
   "learningFacts": [
     "В распространённой модели время ставят после подлежащего и перед действием: 我 + 今天 + 学习中文.",
     "Время также может стоять перед подлежащим в некоторых контекстах; видео показывает базовую модель."
@@ -128,9 +128,9 @@
     }
   ],
   "captions": [],
-  "captionSource": "pending-tts-export",
+  "captionSource": "pending-gemini-generation",
   "publishingStatus": "pending-owner-review",
-  "voiceProfileId": "ru-dmitry-v1",
+  "voiceProfileId": "ru-gemini-kore-v1",
   "learningFactSources": [
     {
       "title": "Time Word Placement — ChineseGrammar",

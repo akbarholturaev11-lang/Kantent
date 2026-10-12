@@ -30,9 +30,8 @@
     "lint": "eslint src && tsc",
     "content:plan": "node scripts/show-plan.mjs",
     "content:draft": "node scripts/generate-draft.mjs",
-    "content:voice": "node scripts/prepare-online-tts.mjs",
-    "content:prepare-online-tts": "node scripts/prepare-online-tts.mjs",
-    "content:import-tts": "node scripts/import-online-tts.mjs",
+    "content:voice": "node scripts/generate-voice-gemini.mjs",
+    "content:voice:gemini": "node scripts/generate-voice-gemini.mjs",
     "content:render": "node scripts/render-episode.mjs",
     "content:make": "node scripts/make-episode.mjs",
     "content:approve": "node scripts/approve-package.mjs",
@@ -41,7 +40,8 @@
     "content:buffer": "node scripts/self-improvement-check.mjs",
     "content:feedback": "node scripts/feedback-analyzer.mjs",
     "content:viral-plan": "node scripts/viral-plan.mjs",
-    "content:scenario-buffer": "node scripts/scenario-buffer-plan.mjs"
+    "content:scenario-buffer": "node scripts/scenario-buffer-plan.mjs",
+    "content:import-voice": "node scripts/import-voice.mjs"
   },
   "sideEffects": [
     "*.css"

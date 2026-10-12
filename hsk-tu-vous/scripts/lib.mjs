@@ -29,27 +29,23 @@ export const VOICE_PROFILE_PATH = path.join(
 );
 export const FPS = 30;
 
-export function normalizeVoiceProvider(provider) {
-  return provider === "text-to-speech.online"
-    ? "text-to-speech-online"
-    : provider;
-}
-
 export async function readVoiceProfile() {
   const profile = await readJson(VOICE_PROFILE_PATH);
   if (
-    profile?.profileId !== "ru-dmitry-v1" ||
-    profile.provider !== "text-to-speech-online" ||
-    profile.serviceName !== "text-to-speech.online" ||
+    profile?.profileId !== "ru-gemini-kore-v1" ||
+    profile.provider !== "gemini-api" ||
+    profile.serviceName !== "Google Gemini API" ||
     profile.locale !== "ru-RU" ||
-    profile.voiceName !== "Dmitry – RU" ||
-    profile.gender !== "male" ||
-    profile.speedPercent !== 0 ||
-    profile.pitchPercent !== 0 ||
-    profile.outputFormat !== "MP3"
+    profile.voiceName !== "Kore" ||
+    profile.ttsModel !== "gemini-3.8-flash-lite-tts" ||
+    profile.transcriptionModel !== "gemini-3.5-transcribe" ||
+    profile.outputFormat !== "MP3" ||
+    profile.mp3BitrateKbps !== 128 ||
+    profile.sampleRateHz !== 24000 ||
+    profile.channels !== 1
   ) {
     throw new Error(
-      "content/voice-profile.json noto‘g‘ri. Ovoz profilini qo‘lda almashtirmang; HSK AI egasidan tasdiq so‘rang.",
+      "content/voice-profile.json Gemini production sozlamalariga mos kelmaydi.",
     );
   }
   if (!["pending-owner-approval", "approved"].includes(profile.status)) {

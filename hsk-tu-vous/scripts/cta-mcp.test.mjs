@@ -199,7 +199,7 @@ test(
         audioSrc: `generated/${item.id}/voice.mp3`,
         audioDurationMs: 31000,
         captions: [{ text: "HSK", startMs: 100, endMs: 200 }],
-        captionSource: "online-tts-vtt",
+        captionSource: "gemini-word-timestamps",
       });
       await write(path.join(folder, "episode.json"), run);
       for (const name of [
@@ -333,7 +333,7 @@ test(
         false,
       );
       for (const name of [
-        "prepare-online-tts.mjs",
+        "generate-voice-gemini.mjs",
         "render-episode.mjs",
         "approve-package.mjs",
       ]) {

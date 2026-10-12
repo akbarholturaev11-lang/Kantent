@@ -39,7 +39,7 @@ For a future, unapproved HSK lesson, a `scene.storyboard` can select an original
 
 ## Russian captions
 
-- Use the exact narration and word timings exported through the approved provider in `content/voice-profile.json`. Do not create timings through a transcription API or move timings by hand to fit a changed script.
+- Use the exact narration and Gemini Transcribe word timings produced through the approved provider in `content/voice-profile.json`. The import step must confirm a normalized exact-token match; do not move timings by hand to fit a changed script.
 - Group adjacent word cues into readable phrases using the current limits and hold timings in `content/visual-system.json`. Never stretch captions across unrelated speech.
 - Keep captions as high-contrast ink text without backing shapes. Use the caption safe areas, variants and positions from `content/visual-system.json`, including the CTA-specific placement to avoid covering screenshots.
 - Keep one or two short lines on screen at a time. Do not cover Hanzi, pinyin, Russian meaning, the HSK AI logo, or the final CTA. If the available timed cues cannot fit clearly, stop and ask for a cleaner export; do not shrink text below the configured size.

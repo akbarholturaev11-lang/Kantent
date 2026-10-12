@@ -14,7 +14,7 @@
     "#HSK2",
     "#грамматика"
   ],
-  "voiceProvider": "text-to-speech.online",
+  "voiceProvider": "gemini-api",
   "learningFacts": [
     "了 имеет несколько функций, и смысл зависит от позиции и контекста.",
     "В 我买了书。 частица после глагола может отмечать завершённое действие.",
@@ -129,9 +129,9 @@
     }
   ],
   "captions": [],
-  "captionSource": "pending-tts-export",
+  "captionSource": "pending-gemini-generation",
   "publishingStatus": "pending-owner-review",
-  "voiceProfileId": "ru-dmitry-v1",
+  "voiceProfileId": "ru-gemini-kore-v1",
   "learningFactSources": [
     {
       "title": "了 — Completed Action vs Change of State — The Pure Language",

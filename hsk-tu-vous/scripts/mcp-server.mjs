@@ -24,7 +24,6 @@ import {
   getRunEpisodeByDate,
   synchronizeAutoStoryboard,
   normalizeEpisode,
-  normalizeVoiceProvider,
   invalidateReviewArtifacts,
   readJson,
   readStatus,
@@ -61,7 +60,7 @@ const createServer = () => {
     { name: "hsk-ai-content", version: "1.0.0" },
     {
       instructions:
-        "На команду «Бугунги видеони тайёрла» сначала вызывайте prepare_today_video; если на сегодня нет слота, инструмент выберет ближайший следующий planned по timezone календаря и сообщит дату. Явно названная дата обрабатывается строго без подмены. Для создания или редактирования видео сначала вызывайте recommend_skills, затем читайте выбранные SKILL.md и текущие правила из content/SKILLS.md. Не запускайте HyperFrames для обычного HSK-урока и не меняйте движок или провайдера без разрешения владельца. Работайте по AGENTS.md и AI_RULES.md. До hook edits читайте content/HOOK_LAB.md и get_hook_learning_status; пишите отдельный topic-specific hook до производства, сохраняйте точные слова владельца через record_hook_correction и не выдумывайте результаты без platform readback. До CTA edits читайте content/CTA_LAB.md и get_cta_learning_status; используйте единый CTA серии, сохраняйте точные слова владельца через record_cta_correction, регистрируйте датированный неизменный снимок до voice/render. Используйте только закреплённый профиль text-to-speech.online из content/voice-profile.json, не спрашивайте подтверждение для каждого эпизода. Не вызывайте OpenAI/Whisper, ElevenLabs, Gemini или другие TTS API. Импортируйте MP3 и word-timed SRT/VTT, проверьте burned-in captions и соберите Remotion-пакет. Публикуйте только через подключённый Zernio MCP и только после явного подтверждения владельца финального preview с точным роликом, целевым аккаунтом, caption/description, YouTube title/visibility/audience/synthetic-media settings, Instagram Reel settings и временем. Разрешённые платформы: Instagram Reels и YouTube Shorts. TikTok’га нашр қилманг.",
+      "На команду «Бугунги видеони тайёрла» сначала вызывайте prepare_today_video; если на сегодня нет слота, инструмент выберет ближайший следующий planned по timezone календаря и сообщит дату. Явно названная дата обрабатывается строго без подмены. Для создания или редактирования видео сначала вызывайте recommend_skills, затем читайте выбранные SKILL.md и текущие правила из content/SKILLS.md. Не запускайте HyperFrames для обычного HSK-урока и не меняйте движок без разрешения владельца. Работайте по AGENTS.md и AI_RULES.md. До hook edits читайте content/HOOK_LAB.md и get_hook_learning_status; пишите отдельный topic-specific hook до производства, сохраняйте точные слова владельца через record_hook_correction и не выдумывайте результаты без platform readback. До CTA edits читайте content/CTA_LAB.md и get_cta_learning_status; используйте единый CTA серии, сохраняйте точные слова владельца через record_cta_correction, регистрируйте датированный неизменный снимок до voice/render. Production voice берiladi фақат content/voice-profile.json dagi Gemini API profilidan; `content:voice` Gemini TTS orqali MP3 yaratadi, Gemini Transcribe so‘zma-so‘z timestamp beradi, exact-token tekshiruvidan keyin audio/caption avtomatik import qilinadi. HSK_AI_ALLOW_GEMINI_API=true va GEMINI_API_KEY lokal sozlanadi; matn va audio Google API ga yuborilishini hisobga oling. Yangi Gemini profilining egasi tinglaydigan bitta sample epizodidan tashqari boshqa epizodlar faqat profil tasdiqlangandan keyin tayyorlanadi. Boshqa TTS yoki transkripsiya provayderiga o‘tmang. Burned-in captions’ni tekshirib, Remotion review paketini yig‘ing. Публикуйте только через подключённый Zernio MCP и только после явного подтверждения владельца финального preview с точным роликом, целевым аккаунтом, caption/description, YouTube title/visibility/audience/synthetic-media settings, Instagram Reel settings и временем. Разрешённые платформы: Instagram Reels и YouTube Shorts. TikTok’га нашр қилманг.",
     },
   );
 
@@ -372,7 +371,7 @@ const createServer = () => {
     {
       title: "Get the series voice profile",
       description:
-        "Показывает единый голос и его статус. Dmitry – RU можно закрепить для серии только после того, как владелец прослушал приложенный пробный MP3.",
+        "Показывает единственный production voice profile, статус подтверждения и путь к пробному MP3.",
       inputSchema: z.object({}),
     },
     async () =>
@@ -421,10 +420,22 @@ const createServer = () => {
         if (!samplePath.startsWith(PROJECT_ROOT + path.sep))
           throw new Error("Путь к пробному голосу выходит за пределы проекта.");
         await fs.access(samplePath);
-        if (!path.basename(samplePath).toLowerCase().includes("dmitry"))
-          throw new Error(
-            "Пробный файл не подтверждает ожидаемый голос Dmitry – RU.",
-          );
+        if (path.extname(samplePath).toLowerCase() !== ".mp3")
+          throw new Error("Профиль требует MP3 sample.");
+        const metadataPath = path.join(path.dirname(samplePath), "metadata.json");
+        const sampleMetadata = await readJson(metadataPath);
+        if (
+          sampleMetadata.sampleOnly !== true ||
+          sampleMetadata.status !== "ready-for-owner-audition" ||
+          sampleMetadata.provider !== profile.provider ||
+          sampleMetadata.ttsModel !== profile.ttsModel ||
+          sampleMetadata.voice !== profile.voiceName
+        )
+          throw new Error("Пробный MP3 metadata не совпадает с текущим voice profile.");
+        const sampleCaptionsPath = path.resolve(PROJECT_ROOT, profile.sampleCaptions);
+        if (!sampleCaptionsPath.startsWith(PROJECT_ROOT + path.sep))
+          throw new Error("Путь к пробным субтитрам выходит за пределы проекта.");
+        await fs.access(sampleCaptionsPath);
         const approvedAt = new Date().toISOString();
         profile.status = "approved";
         profile.approval = { approvedAt, approvedBy: "owner" };
@@ -432,7 +443,7 @@ const createServer = () => {
         return {
           profile,
           message:
-            "Dmitry – RU закреплён для всех будущих русских видео. Настройки менять или заменять голос нельзя без нового решения владельца.",
+            "Текущий Gemini voice profile подтверждён для будущих русских видео. Настройки менять нельзя без нового решения владельца и нового sample.",
         };
       }),
   );
@@ -558,7 +569,7 @@ const createServer = () => {
         episode.publishingStatus = "pending-owner-review";
         if (narrationChanged) {
           episode.captions = [];
-          episode.captionSource = "pending-tts-export";
+          episode.captionSource = "pending-gemini-generation";
           delete episode.audioSrc;
           delete episode.audioDurationMs;
           delete episode.sourceAudioDurationMs;
@@ -599,20 +610,21 @@ const createServer = () => {
   server.registerTool(
     "generate_voice",
     {
-      title: "Prepare text-to-speech input",
+      title: "Generate Gemini voice and word-timed captions",
       description:
-        "Подготавливает точный текст и проверяет единый профиль text-to-speech.online. Это промежуточный этап: агент должен сам продолжить через browser automation по content/WORKFLOW.md (§3: выбор браузера и экспорт), сгенерировать и скачать MP3+word-level VTT/SRT, импортировать их и собрать видео. Не просите владельца экспортировать файлы; API-запросов нет.",
+        "Automatically generates MP3 and word-timed VTT with the approved Gemini TTS and Transcribe settings in content/voice-profile.json. A normalized exact-token match is required before media is imported. The script and generated audio are sent to Google.",
       inputSchema: z.object({ date: dateSchema }),
     },
     async ({ date }) =>
       withToolErrors(async () => {
         const { item, episode } = await currentEpisode(date);
         const { item: runItem } = await ensureRunCopy(date);
-        if (normalizeVoiceProvider(episode.voiceProvider) !== "text-to-speech-online")
+        const voiceProfile = await requireApprovedVoiceProfile(item.id);
+        if (episode.voiceProvider !== voiceProfile.provider)
           throw new Error(
-            "HSK AI разрешает только text-to-speech.online и утверждённый голосовой профиль.",
+            "Episode voice provider does not match the approved Gemini profile.",
           );
-        const result = await runScript("prepare-online-tts.mjs", runItem.id);
+        const result = await runScript("generate-voice-gemini.mjs", runItem.id);
         return {
           date,
           episodeId: item.id,
@@ -620,7 +632,7 @@ const createServer = () => {
           log: result.log,
           requiresHumanAction: false,
           nextAgentAction:
-            "Follow content/WORKFLOW.md §3 for browser selection and export. Continue in that browser now: enter this episode’s exact tts-input.txt at text-to-speech.online, verify the approved Dmitry – RU profile/settings, generate and download MP3 plus word-level VTT (preferred) or SRT into incoming/, import them with import_voice_artifacts, then render and inspect the review package. Do not ask the owner to do or move any of these files. Stop only for a concrete external access/permission gate or unavailable/changed approved voice.",
+            "Voice and Gemini word-timed VTT were generated and imported automatically. Continue by rendering the Remotion review package, then inspect the complete video and both platform exports.",
         };
       }),
   );
@@ -628,9 +640,9 @@ const createServer = () => {
   server.registerTool(
     "import_voice_artifacts",
     {
-      title: "Import text-to-speech.online MP3 and captions",
+      title: "Import Gemini voice and word-timed captions",
       description:
-        "Copies downloaded MP3/WAV and SRT/VTT files into the dated review package and maps word timings to lesson scenes; no API key or upload is used.",
+        "Imports Gemini-generated MP3/WAV and exact-script SRT/VTT into the dated review package and maps word timings to lesson scenes. Approved or published packages are protected.",
       inputSchema: z.object({
         date: dateSchema,
         audioPath: z.string().min(1),
@@ -640,14 +652,12 @@ const createServer = () => {
     async ({ date, audioPath, captionsPath }) =>
       withToolErrors(async () => {
         const { item, episode } = await currentEpisode(date);
-        if (normalizeVoiceProvider(episode.voiceProvider) !== "text-to-speech-online") {
-          throw new Error(
-            "Bu sana text-to-speech.online provayderida sozlanmagan.",
-          );
-        }
+        const voiceProfile = await requireApprovedVoiceProfile(item.id);
+        if (voiceProfile.provider !== "gemini-api")
+          throw new Error("Faol ovoz profili Gemini API emas.");
         const { item: runItem } = await ensureRunCopy(date);
         const result = await runScript(
-          "import-online-tts.mjs",
+          "import-voice.mjs",
           runItem.id,
           audioPath,
           captionsPath,
@@ -681,13 +691,11 @@ const createServer = () => {
             "Импортированный звук сделан по другому профилю. Не заменяйте утверждённый голос.",
           );
         if (
-          !["online-tts-srt", "online-tts-vtt"].includes(
-            episode.captionSource,
-          ) ||
+          episode.captionSource !== "gemini-word-timestamps" ||
           !episode.captions?.length
         ) {
           throw new Error(
-            "Пакет нельзя собрать без импортированных word-level SRT/VTT из text-to-speech.online.",
+            "Review package requires imported Gemini word-timed captions.",
           );
         }
         const result = await runScript("render-episode.mjs", item.id);
@@ -705,7 +713,7 @@ const createServer = () => {
 
 
   // Same exact-date preparation routine powers explicit and relative commands.
-  // TTS browser work remains an explicit next-agent action, never a fake success.
+  // Gemini voice generation, import and rendering run automatically; nothing is published.
   async function prepareReviewForDate(date) {
         // Provider-confirmed publication overrides the calendar's stale
         // "planned" status. Never re-render or re-publish the same post ID.
@@ -730,68 +738,37 @@ const createServer = () => {
         const { item: runItem } = await ensureRunCopy(date);
         const folder = reviewDir(item.id);
         const voiceProfile = await requireApprovedVoiceProfile(item.id);
-        if (
-          episode.audioSrc &&
-          episode.voiceProfileId !== voiceProfile.profileId
-        )
-          throw new Error(
-            "Импортированный звук сделан по другому профилю. Не заменяйте утверждённый голос.",
-          );
-        if (normalizeVoiceProvider(episode.voiceProvider) === "text-to-speech-online") {
-          const runEpisode = (await currentEpisode(date)).episode;
-          if (
-            !runEpisode.audioSrc ||
-            !["online-tts-srt", "online-tts-vtt"].includes(
-              runEpisode.captionSource,
-            ) ||
-            !runEpisode.captions?.length
-          ) {
-            const preparation = await runScript(
-              "prepare-online-tts.mjs",
-              runItem.id,
-            );
-            return {
-              date,
-              episodeId: item.id,
-              reviewFolder: folder,
-              sourceRevision,
-              status: await readStatus(item.id),
-              requiresHumanAction: false,
-              nextAgentAction:
-                "Follow content/WORKFLOW.md §3 for browser selection and export. Continue this same production task in that browser: open text-to-speech.online, enter the exact tts-input.txt, verify Dmitry – RU / ru-RU / male / 0% speed / 0% pitch / MP3, generate and download the matching MP3 plus word-level VTT (preferred) or SRT into incoming/, import them, then render and inspect the review package. Do not ask the owner to click, download, rename, move, or import files. Stop only for a concrete external access/permission gate or unavailable/changed approved voice.",
-              files: {
-                script: path.join(folder, "tts-input.txt"),
-                incoming: path.join(folder, "incoming"),
-                episode: path.join(folder, "episode.json"),
-              },
-              log: preparation.log,
-              publishing: "manual-review-required; nothing was published",
-            };
-          }
-          // Child renderer repeats the remote-main check immediately before rendering.
-          const render = await runScript("render-episode.mjs", item.id);
-          const renderedStatus = await readStatus(item.id);
-          return {
-            date,
-            episodeId: item.id,
-            reviewFolder: folder,
-            sourceRevision,
-            files: {
-              video: path.join(folder, "video.mp4"),
-              subtitles: path.join(folder, "captions.srt"),
-              postText: path.join(folder, "post.md"),
-              script: path.join(folder, "episode.json"),
-              status: path.join(folder, "status.json"),
-              platforms: renderedStatus.platformPackages,
-            },
-            status: renderedStatus,
-            stages: [render.script],
-            publishing: "manual-review-required; nothing was published",
-          };
+        const needsVoice =
+          !episode.audioSrc ||
+          episode.voiceProfileId !== voiceProfile.profileId ||
+          episode.captionSource !== "gemini-word-timestamps" ||
+          !episode.captions?.length;
+        const stages = [];
+        if (needsVoice) {
+          const voice = await runScript("generate-voice-gemini.mjs", runItem.id);
+          stages.push(voice.script);
         }
-        throw new Error(
-          "Неподдерживаемый голосовой провайдер. По правилам HSK AI можно использовать только профиль text-to-speech.online.",
-        );
+        // Child renderer repeats the remote-main check immediately before rendering.
+        const render = await runScript("render-episode.mjs", item.id);
+        stages.push(render.script);
+        const renderedStatus = await readStatus(item.id);
+        return {
+          date,
+          episodeId: item.id,
+          reviewFolder: folder,
+          sourceRevision,
+          files: {
+            video: path.join(folder, "video.mp4"),
+            subtitles: path.join(folder, "captions.srt"),
+            postText: path.join(folder, "post.md"),
+            script: path.join(folder, "episode.json"),
+            status: path.join(folder, "status.json"),
+            platforms: renderedStatus.platformPackages,
+          },
+          status: renderedStatus,
+          stages,
+          publishing: "manual-review-required; nothing was published",
+        };
   }
 
   server.registerTool(
@@ -799,7 +776,7 @@ const createServer = () => {
     {
       title: "Prepare complete video package for a date",
       description:
-        "Готовит review-пакет для даты по единому профилю text-to-speech.online. Если голосовых файлов нет, агент должен сам продолжить через browser automation по content/WORKFLOW.md (§3: выбор браузера и экспорт) и скачать MP3+word-level SRT/VTT; не просите владельца экспортировать/переносить файлы. Затем импортируйте, соберите и проверьте Remotion-пакет на соответствие полному сценарию. Фиксированного ограничения длительности нет. Ничего не публикуется.",
+        "Автоматически генерирует Gemini TTS MP3, запрашивает у Gemini Transcribe word-level timestamps, сверяет каждый токен сценария, импортирует звук и собирает Remotion review-пакет для Instagram и YouTube. Продолжительность определяется сценарием и голосом; фиксированного лимита нет. Ничего не публикуется.",
       inputSchema: z.object({ date: dateSchema }),
     },
     async ({ date }) => withToolErrors(() => prepareReviewForDate(date)),
