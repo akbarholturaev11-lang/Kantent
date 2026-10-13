@@ -19,6 +19,12 @@ This is the shared edit and caption standard for every HSK AI short. The rendere
 
 For a future, unapproved HSK lesson, a `scene.storyboard` can select an original illustrated location and character treatment; the renderer draws all shapes procedurally, without pretending they are documentary footage. Keep context art secondary in the upper part of the vertical canvas, Hanzi/pinyin/Russian meaning readable in the open central stage, and the existing word-timed caption layer at its approved position. Animate only from Remotion frames. Do not use storyboard on CTA scenes or the existing approved/published lesson snapshots; keep the existing single focus, timings, approved screenshots and central CTA intact. Pilot layouts live in `content/visual-system.json#storyboardLayout` and format selection in `content/creative-formats.json`. Before claiming a lesson is complete, inspect real rendered frames and verify the approved voice + SRT/VTT export.
 
+Apply these defaults when creating cinematic teaching scenes or making owner-requested revisions:
+
+- Make the illustrated frame feel alive with gentle camera drift, character bob/sway and narration-relevant gestures. Combine one dominant teaching action with restrained ambient movement, keeping the words readable. Read motion amounts from `content/visual-system.json#storyboardLayout`.
+- Give Chinese teaching text a short, decaying entrance quiver and a settled reading hold. Use the canonical `heroQuiverPx` and `heroQuiverDeg` tokens. When a beat uses a drawing or text reveal, let the reveal unfold visibly in time with its spoken cue before holding the completed form.
+- Keep 在 and all other Hanzi compact and lower in the teaching composition, with pinyin and Russian meaning grouped below. The active `hanziScale` and `heroTopPx` tokens in `content/visual-system.json#storyboardLayout` own their size and vertical position; apply them consistently to every Chinese teaching beat. Preserve caption separation and phone readability.
+
 ## Motion and effects
 
 | Moment        | Rule                                                                                                                                                                                                        |
@@ -47,4 +53,4 @@ For a future, unapproved HSK lesson, a `scene.storyboard` can select an original
 
 ## Review before delivery
 
-For each render, check cue-accurate cutaways, a hook-matched first frame, consistent caption styles, correctly paired Chinese examples and pinyin, safe audio levels, a readable CTA, and that the full scenario and narration finish cleanly. There is no fixed duration cap. A visual, caption, or sound edit invalidates the previous MP4 and package approval; render and review the new version before approval.
+For each render, check cue-accurate cutaways, a hook-matched first frame, consistent caption styles, correctly paired Chinese examples and pinyin, safe audio levels, a readable CTA, and that the full scenario and narration finish cleanly. For cinematic scenes, also inspect the living context motion, timed entrances/reveals, and compact lower Hanzi placement against the canonical storyboard tokens. There is no fixed duration cap. A visual, caption, or sound edit invalidates the previous MP4 and package approval; render and review the new version before approval.

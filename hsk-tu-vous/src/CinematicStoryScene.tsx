@@ -60,9 +60,10 @@ const Building: React.FC<{setting:Storyboard['setting']; sign?:string}> = ({sett
 
 const Human: React.FC<{character:Storyboard['character'];mood:Storyboard['mood'];frame:number}> = ({character,mood,frame}) => {
  const {coat,skin,hair}=characterPalette[character];
- const bob=Math.sin(frame/17)*2;
- const wave=mood==='question'?Math.sin(frame/12)*7:0;
- return <g transform={`translate(770 ${570+bob})`}>
+ const bob=Math.sin(frame/17)*layout.characterBobAmplitudePx;
+ const sway=Math.sin(frame/27)*layout.characterSwayDeg;
+ const wave=mood==='question'?Math.sin(frame/12)*layout.characterQuestionWavePx:0;
+ return <g transform={`translate(770 ${570+bob}) rotate(${sway} 0 -170)`}>
    <ellipse cx="0" cy="154" rx="110" ry="18" fill="#40352D" fillOpacity=".12"/>
    <path d="M-94 -10 Q-68 -66 -38 -70L38 -70Q75 -60 92 -10L76 154H-81Z" fill={coat}/>
    <path d="M-40 -69 0 -20 40 -69" fill="none" stroke="#FFF8E8" strokeWidth="18" strokeLinecap="round"/>
@@ -87,7 +88,14 @@ export const CinematicStoryScene:React.FC<{
  const rise=interpolate(beatFrame,[0,16],[18,0],clamp);
  const pan=interpolate(frame,[0,150],[0,-18],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
  const isChinese=beat.chinese || /[\u3400-\u9fff]/u.test(beat.hero);
- const fontSize=isChinese?(beat.hero.length<=2?198:beat.hero.length<=6?138:99):(beat.hero.length>20?67:82);
+ const cameraDrift=Math.sin(frame/31)*layout.cameraDriftPx;
+ const quiver=interpolate(beatFrame,[0,2,5,10],[0,1,0.45,0],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
+ const heroShakeX=isChinese?Math.sin(beatFrame*2.5)*layout.heroQuiverPx*quiver:0;
+ const heroShakeY=isChinese?Math.cos(beatFrame*2.1)*layout.heroQuiverPx*0.35*quiver:0;
+ const heroTilt=isChinese?Math.sin(beatFrame*2.5)*layout.heroQuiverDeg*quiver:0;
+ const baseHanziSize=beat.hero.length<=2?198:beat.hero.length<=6?138:99;
+ const fontSize=isChinese?Math.round(baseHanziSize*layout.hanziScale):(beat.hero.length>20?67:82);
+ const heroScale=isChinese&&!isHook?interpolate(beatFrame,[0,7,15],[0.94,1.025,1],clamp):1;
  const meaning=beat.meaning;
  const quiz=storyboard.formatId==='speed-quiz' && Boolean(storyboard.options?.length);
  const isSeries=storyboard.formatId==='micro-series';
@@ -99,8 +107,9 @@ export const CinematicStoryScene:React.FC<{
      : isFix ? `radial-gradient(ellipse at 56% 30%, ${colors.brandRed}19 0%, transparent 50%),linear-gradient(160deg,#FFF9F2 0%,#F1DACC 70%,#FDF9F0 100%)`
      : `radial-gradient(ellipse at 56% 30%, ${colors.brandGold}21 0%, transparent 50%),linear-gradient(160deg,#FFF8E9 0%,#F6E7D2 70%,#FDF9F0 100%)`}}/>
    <svg viewBox="0 0 1080 790" style={{position:'absolute',top:layout.environmentTopPx,left:0,width:1080,height:layout.environmentHeightPx,overflow:'visible'}} aria-hidden>
-      <g transform={`translate(${pan} 0)`}>
-        <ellipse cx="828" cy="144" rx="114" ry="114" fill="#F0C47B" fillOpacity=".45"/>
+      <g transform={`translate(${pan+cameraDrift} 0)`}>
+        <ellipse cx="828" cy="144" rx="114" ry="114" fill="#F0C47B" fillOpacity=".45"
+          transform={`translate(828 144) scale(${1+Math.sin(frame/34)*0.035}) translate(-828 -144)`}/>
         <path d="M-70 648Q180 570 380 642Q625 562 1150 654V800H-70Z" fill="#E2D5B8"/>
         <Building setting={storyboard.setting} sign={storyboard.sign}/>
         <path d="M0 718H1080V790H0Z" fill="#DFC8A6"/>
@@ -127,10 +136,10 @@ export const CinematicStoryScene:React.FC<{
         </div>)}
       </div>}
     <div style={{position:'absolute',left:layout.safeSidePx,right:layout.safeSidePx,top:layout.heroTopPx,
-      textAlign:'center',opacity:lead,translate:`0px ${rise}px`}}>
+      textAlign:'center',opacity:lead,translate:`${heroShakeX}px ${rise+heroShakeY}px`,rotate:`${heroTilt}deg`,scale:heroScale}}>
       <div style={{fontSize,fontWeight:900,letterSpacing:isChinese?'.025em':'-.032em',
          lineHeight:1.15,wordBreak:'break-word',textWrap:'balance',color:colors.foreground,
-         textShadow:'0 5px 20px #FFF6E4'}}>
+         textShadow:isChinese?'0 5px 20px #E9A91644, 0 3px 12px #FFF6E4':'0 5px 20px #FFF6E4'}}>
         {beat.hero}
       </div>
       {beat.pinyin&&<div style={{marginTop:17,fontSize:layout.pinyinFontPx,fontWeight:700,color:colors.brandRed,
