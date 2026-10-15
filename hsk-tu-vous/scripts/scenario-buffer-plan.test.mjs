@@ -34,4 +34,6 @@ test('proposal never creates placeholder episodes in memory',()=>{
  const result=proposeBuffer(c,{today:'2026-10-10'});
  assert.equal(c.items.length,count);
  assert.equal(result.proposalsAreScripts,false);
+ assert.equal(result.writeDestination,'main');
+ assert.equal(result.mustWriteToFeatureBranch,false);
 });
