@@ -34,7 +34,7 @@ export function proposeBuffer(calendar, {today, episodeIsReady=()=>true}={}) {
   }
   if(propose.length!==count)throw Error('Failed to propose enough calendar dates within one year');
   return {date:today,timeZone:calendar.timezone,buffer:audit,repair,propose,
-    mustWriteToFeatureBranch:true,publishedMediaChangeAllowed:false,proposalsAreScripts:false,
+    writeDestination:'main',mustWriteToFeatureBranch:false,publishedMediaChangeAllowed:false,proposalsAreScripts:false,
     note:'Date suggestions only. Author full, verified, CTA-free source JSON before registering a new calendar item.'};
 }
 export function runCli(args=process.argv.slice(2),dir=root) {
