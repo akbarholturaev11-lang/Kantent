@@ -123,7 +123,7 @@ test("TikTok keyword auto-DM requires actual verification before approval", () =
   assert.equal(cloned.audioSrc, undefined);
   assert.equal(cloned.voiceTextHash, undefined);
   assert.equal(cloned.captions, undefined);
-  assert.equal(cloned.captionSource, "pending-tts-export");
+  assert.equal(cloned.captionSource, "pending-gemini-generation");
   assert.equal(cloned.publishingStatus, "pending-owner-review");
   assert.equal(cloned.scenes[0].durationFrames, undefined);
 });
@@ -138,7 +138,7 @@ test("a platform CTA wording change invalidates shared speech and word timings",
   assert.equal(draft.audioSrc, undefined);
   assert.equal(draft.voiceTextHash, undefined);
   assert.equal(draft.captions, undefined);
-  assert.equal(draft.captionSource, "pending-tts-export");
+  assert.equal(draft.captionSource, "pending-gemini-generation");
 });
 
 test("approved YouTube CTA can render with matching speech artifacts", () => {
