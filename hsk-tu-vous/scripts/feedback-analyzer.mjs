@@ -10,7 +10,7 @@ const iso = v => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(v) && !Numb
 export function validateObservation(o) {
   if (!o || typeof o !== 'object' || Array.isArray(o)) return ['observation must be object'];
   const errors=[];
-  if(!['instagram','tiktok'].includes(o.platform)) errors.push('invalid platform');
+  if(!['instagram','tiktok','youtube'].includes(o.platform)) errors.push('invalid platform');
   if(typeof o.platformPostId!=='string' || !/^[a-zA-Z0-9_-]{6,100}$/.test(o.platformPostId)) errors.push('invalid platformPostId');
   if(typeof o.accountUsername!=='string' || !o.accountUsername.trim()) errors.push('missing accountUsername');
   if(!iso(o.publishedAt)||!iso(o.observedAt)) errors.push('invalid timestamps');
@@ -23,7 +23,7 @@ export function validateObservation(o) {
       Date.parse(o.observedAt)-Date.parse(o.publishedAt)<ageRequiredHours*3600000)
     errors.push('window '+o.window+' claimed before required post age');
   if(o.source?.provider!=='Zernio'||!iso(o.source?.syncedAt)||!o.source?.endpoint) errors.push('missing Zernio provenance');
-  if(o.postUrl!=null && (typeof o.postUrl!=='string'||!/^https:\/\/(www\.)?(instagram\.com|tiktok\.com)\//.test(o.postUrl))) errors.push('invalid postUrl');
+  if(o.postUrl!=null && (typeof o.postUrl!=='string'||!/^https:\/\/(www\.)?(instagram\.com|tiktok\.com|youtube\.com)\//.test(o.postUrl))) errors.push('invalid postUrl');
   if(o.episodeId!=null && (typeof o.episodeId!=='string'||!/^[a-z0-9-]+$/.test(o.episodeId))) errors.push('invalid episodeId');
   if(o.hookFormat!=null && !['question','contrast','scenario'].includes(o.hookFormat)) errors.push('invalid hookFormat');
   if(o.hskLevel!=null && (typeof o.hskLevel!=='string'||!/^HSK\s*[1-6](?:\s*[-–]\s*[1-6])?$/.test(o.hskLevel))) errors.push('invalid hskLevel');
@@ -32,7 +32,11 @@ export function validateObservation(o) {
     errors.push('creativeFormatId requires valid ID and verified episode/hook/HSK mapping');
   for(const name of fields){
     const v=o.metrics?.[name];
-    if(!Object.hasOwn(o.metrics||{},name) || !(v===null||(typeof v==='number'&&Number.isFinite(v)&&v>=0))) errors.push('invalid metric '+name);
+    // YouTube's provider omits reach and skip rate entirely; preserve them
+    // as unknown rather than manufacturing zeros or rejecting sourced posts.
+    const absent = !Object.hasOwn(o.metrics || {}, name);
+    const optionalYouTube = o.platform === 'youtube' && ['reach','skipRatePercent'].includes(name);
+    if ((absent && !optionalYouTube) || (!absent && !(v===null || (typeof v==='number' && Number.isFinite(v) && v>=0)))) errors.push('invalid metric '+name);
     if(['views','reach','likes','comments','saves','shares'].includes(name) && v!==null && !Number.isInteger(v)) errors.push('count not integer: '+name);
   }
   if(o.metrics?.skipRatePercent!=null && o.metrics.skipRatePercent>100) errors.push('skipRatePercent out of bounds');
@@ -62,7 +66,7 @@ export function deriveMetrics(o){
     platform:o.platform,postId:o.platformPostId,episodeId:o.episodeId,
     hookFormat:o.hookFormat,hskLevel:o.hskLevel,creativeFormatId:o.creativeFormatId??null,window:o.window,
     observedAt:o.observedAt,publishedAt:o.publishedAt,
-    durationBand:durationBand(durationSeconds),views,skipRatePercent,
+    durationBand:durationBand(durationSeconds),views,skipRatePercent:skipRatePercent??null,
     averageWatchSeconds:avgWatchMs==null?null:+(avgWatchMs/1000).toFixed(3),
     averageWatchRatio:avgWatchMs==null||!durationSeconds?null:+(avgWatchMs/1000/durationSeconds).toFixed(4),
     savesPer1000Views:saves==null||!views?null:+(1000*saves/views).toFixed(2),
