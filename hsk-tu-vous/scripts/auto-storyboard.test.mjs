@@ -40,8 +40,15 @@ test("dated production loader gets auto storyboard BEFORE central CTA, without c
     assert.equal(episode.scenes.filter(s=>s.kind==="cta").length,1);
     assert.equal(episode.autoStoryboard.status,"generated-for-review");
     assert.equal(episode.voiceProvider,"text-to-speech.online");
-    assert.equal(validateCtaEpisode(episode,ctaLab).valid, date!=="2026-10-23",
-      "pre-existing stale CTA registration stays stale");
+    const registration = validateCtaEpisode(episode, ctaLab);
+    if (episode.ctaExperiment) {
+      assert.equal(registration.valid, true,
+        "Only a snapshot matching current copy, context and owner policy may stay registered");
+    } else {
+      assert.equal(registration.valid, false);
+      assert.ok(registration.errors.some(error => error.includes("Register this CTA")),
+        "Old CTA snapshots must not be silently reused after owner policy changes");
+    }
     assert.ok(episode.scenes.filter(s=>s.kind!=="cta").every(s=>s.storyboard?.formatId===episode.creativeFormatId));
   }
 });
