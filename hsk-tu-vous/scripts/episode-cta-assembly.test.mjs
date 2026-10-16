@@ -38,12 +38,24 @@ for (const [date, id] of future) {
       lab.platformVariants.instagram.sceneTemplate.visualBeats);
     validateEpisode(episode);
     const ctaValidation = validateCtaEpisode(episode, lab);
-    if (id === "le-first-look") {
-      assert.equal(ctaValidation.valid, false,
-        "Edited narration/cards must invalidate the previously registered CTA snapshot");
-    } else {
+    if (episode.ctaExperiment) {
+      // A historical registration is only reusable if the episode, CTA copy,
+      // context and current owner-policy version all still match.
+      assert.ok(lab.experiments.some((entry) =>
+        entry.episodeId === episode.id && entry.id === episode.ctaExperiment.id));
       assert.equal(ctaValidation.valid, true,
-        "Unchanged lesson should retain its registered central CTA snapshot");
+        "A bound registration must pass full immutable CTA validation");
+    } else {
+      // CTA policy v10 supersedes many old v8 registrations. Hydration must
+      // leave those drafts unregistered, not silently reuse stale metadata.
+      assert.equal(ctaValidation.valid, false);
+      assert.ok(ctaValidation.errors.some((error) =>
+        error.includes("Register this CTA")),
+        "Changed copy, rules or lesson context must require a new CTA registration");
+    }
+    if (id === "le-first-look") {
+      assert.equal(episode.ctaExperiment, undefined,
+        "Edited narration/cards must invalidate the previously registered CTA snapshot");
     }
     const after = JSON.parse(await fs.readFile(
       path.join(root, "content/episodes", id + ".json"), "utf8",
