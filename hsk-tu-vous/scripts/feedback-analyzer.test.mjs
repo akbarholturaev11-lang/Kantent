@@ -89,3 +89,26 @@ test('missing episode mapping prevents format comparison',()=>{
  const out=analyzeObservations([r],{analysisLookbackDays:30},{asOf});
  assert.equal(out.comparableGroups.length,0);
 });
+
+test('YouTube lifetime posts accept absent reach/skip fields without inventing data', () => {
+ const o=source();
+ o.platform='youtube';
+ o.platformPostId='d_tEjT35RDE';
+ o.postUrl='https://www.youtube.com/watch?v=d_tEjT35RDE';
+ delete o.metrics.reach;
+ delete o.metrics.skipRatePercent;
+ o.metrics.saves=null;
+ o.metrics.shares=null;
+ o.metrics.avgWatchMs=null;
+ assert.deepEqual(validateObservation(o),[]);
+ const metrics=deriveMetrics(o);
+ assert.equal(metrics.skipRatePercent,null);
+ assert.equal(metrics.averageWatchRatio,null);
+ assert.equal(metrics.savesPer1000Views,null);
+ assert.equal(analyzeObservations([o],{}, {asOf:'2026-10-11T00:00:00.000Z'}).comparableGroups.length,0);
+ const invalid=structuredClone(o);
+ invalid.postUrl='https://example.org/watch?id=fake';
+ assert.match(validateObservation(invalid).join(' '),/invalid postUrl/);
+ delete invalid.metrics.likes;
+ assert.match(validateObservation(invalid).join(' '),/invalid metric likes/);
+});
