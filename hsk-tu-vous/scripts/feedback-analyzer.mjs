@@ -37,7 +37,7 @@ export function validateObservation(o) {
     const absent = !Object.hasOwn(o.metrics || {}, name);
     const optionalYouTube = o.platform === 'youtube' && ['reach','skipRatePercent'].includes(name);
     if ((absent && !optionalYouTube) || (!absent && !(v===null || (typeof v==='number' && Number.isFinite(v) && v>=0)))) errors.push('invalid metric '+name);
-    if(['views','reach','likes','comments','saves','shares'].includes(name) && v!==null && !Number.isInteger(v)) errors.push('count not integer: '+name);
+    if(!absent && ['views','reach','likes','comments','saves','shares'].includes(name) && v!==null && !Number.isInteger(v)) errors.push('count not integer: '+name);
   }
   if(o.metrics?.skipRatePercent!=null && o.metrics.skipRatePercent>100) errors.push('skipRatePercent out of bounds');
   if(o.metrics?.durationSeconds===0) errors.push('durationSeconds cannot be zero');
