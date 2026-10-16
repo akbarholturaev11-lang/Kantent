@@ -39,7 +39,8 @@ test("dated production loader gets auto storyboard BEFORE central CTA, without c
     assert.equal(episode.scenes.at(-1).storyboard,undefined);
     assert.equal(episode.scenes.filter(s=>s.kind==="cta").length,1);
     assert.equal(episode.autoStoryboard.status,"generated-for-review");
-    assert.equal(episode.voiceProvider,"text-to-speech.online");
+    assert.equal(episode.voiceProvider, baseline(episode.id).voiceProvider,
+      "Hydration must preserve the episode's authored voice provider");
     const registration = validateCtaEpisode(episode, ctaLab);
     if (episode.ctaExperiment) {
       assert.equal(registration.valid, true,
