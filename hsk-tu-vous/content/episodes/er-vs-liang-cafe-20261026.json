@@ -1,0 +1,224 @@
+{
+  "id": "er-vs-liang-cafe-20261026",
+  "date": "2026-10-26",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "二 или 两: как заказать две чашки чая",
+  "level": "HSK 1",
+  "topic": "二 и 两: число и количество перед счётным словом",
+  "durationTargetSec": 32,
+  "caption": "Два чая — 两杯茶 (liǎng bēi chá), но двадцать — 二十 (èrshí). Выбирайте форму по конструкции: количество со счётным словом или само число.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#грамматикакитайского"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "В обычной количественной конструкции перед счётным словом используют 两 (liǎng): 两杯茶 — две чашки чая, 两个人 — два человека.",
+    "В последовательном счёте и составных числах с десятками используют 二 (èr): 一、二、三 и 二十.",
+    "После порядкового показателя 第 используют 二: 第二 — второй; 两 здесь не заменяет 二.",
+    "Это практическое правило для показанных моделей, а не утверждение, что 二 и 两 всегда взаимозаменяемы или что 两 употребляется только со счётными словами."
+  ],
+  "examples": [
+    "二 èr — два (число)",
+    "两 liǎng — два (количество)",
+    "杯 bēi — счётное слово для чашек",
+    "两杯茶 liǎng bēi chá — две чашки чая",
+    "我要两杯茶。 Wǒ yào liǎng bēi chá. — Мне две чашки чая.",
+    "二十 èrshí — двадцать",
+    "第二 dì èr — второй"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "ДВА ЧАЯ: 二 ИЛИ 两?",
+      "narration": "В кафе нужны две чашки чая. Сказать 二 или 两? Правильный выбор — 两.",
+      "screenCaption": "Два чая → 两杯茶",
+      "editPlan": "0–5 с: покажите две чашки на стойке и крупную дилемму 二 / 两; на слове «两» быстро откройте ответ, без ложной паузы. Удерживайте ханцзы, тоновый пиньинь и русский смысл в безопасной зоне 9:16.",
+      "visualBeats": [
+        {
+          "hero": "两杯茶",
+          "pinyin": "liǎng bēi chá",
+          "meaning": "две чашки чая",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "两杯茶",
+          "pinyin": "liǎng bēi chá",
+          "meaning": "две чашки чая"
+        }
+      ]
+    },
+    {
+      "id": "classifier",
+      "kind": "vocabulary",
+      "durationSec": 7,
+      "headline": "两 ПЕРЕД СЧЁТНЫМ СЛОВОМ",
+      "narration": "Перед счётным словом 杯 используем 两. 两杯茶 — две чашки чая.",
+      "screenCaption": "两 + 杯 + 茶",
+      "editPlan": "5–12 с: поочерёдно выделите 两, затем 杯 и 茶; из трёх элементов соберите одну читаемую фразу, рядом покажите две чашки. Не изображайте реальное заведение.",
+      "visualBeats": [
+        {
+          "hero": "两",
+          "pinyin": "liǎng",
+          "meaning": "два, перед счётным словом",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "两杯茶",
+          "pinyin": "liǎng bēi chá",
+          "meaning": "две чашки чая",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "两",
+          "pinyin": "liǎng",
+          "meaning": "два, перед счётным словом"
+        },
+        {
+          "hanzi": "两杯茶",
+          "pinyin": "liǎng bēi chá",
+          "meaning": "две чашки чая"
+        }
+      ]
+    },
+    {
+      "id": "order",
+      "kind": "example",
+      "durationSec": 8,
+      "headline": "ЗАКАЗ В КАФЕ",
+      "narration": "Можно сказать: 我要两杯茶。 Это значит: «Мне две чашки чая». 两 показывает количество.",
+      "screenCaption": "我要两杯茶。",
+      "editPlan": "12–20 с: покажите простую иллюстрацию заказа, затем крупно предложение; подсветите 两杯 и оставьте перевод под ханцзы. Никаких придуманных скриншотов продукта.",
+      "visualBeats": [
+        {
+          "hero": "我要两杯茶。",
+          "pinyin": "Wǒ yào liǎng bēi chá.",
+          "meaning": "Мне две чашки чая.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我要两杯茶。",
+          "pinyin": "Wǒ yào liǎng bēi chá.",
+          "meaning": "Мне две чашки чая."
+        }
+      ]
+    },
+    {
+      "id": "numeral",
+      "kind": "context",
+      "durationSec": 7,
+      "headline": "А В ЧИСЛАХ — 二",
+      "narration": "Но двадцать — 二十. И «второй» — 第二. В этих конструкциях используем 二.",
+      "screenCaption": "二十 · 第二",
+      "editPlan": "20–27 с: смените две чашки на крупное число 20 и обозначение второго места. Подсветите 二 в 二十 и 第二; контрастируйте с 两杯, не выдавая правило за универсальное.",
+      "visualBeats": [
+        {
+          "hero": "二十",
+          "pinyin": "èrshí",
+          "meaning": "двадцать",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "第二",
+          "pinyin": "dì èr",
+          "meaning": "второй",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "二十",
+          "pinyin": "èrshí",
+          "meaning": "двадцать"
+        },
+        {
+          "hanzi": "第二",
+          "pinyin": "dì èr",
+          "meaning": "второй"
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "example",
+      "durationSec": 5,
+      "headline": "ЗАПОМНИТЕ РАЗНИЦУ",
+      "narration": "Две чашки — 两杯茶. Двадцать — 二十. Смотрите, что идёт после числа.",
+      "screenCaption": "两杯茶 ≠ 二十",
+      "editPlan": "27–32 с: удержите рядом две проверенные модели с тоновым пиньинем и переводом. Завершите на обучающем сравнении; CTA здесь не добавлять.",
+      "visualBeats": [
+        {
+          "hero": "两杯茶",
+          "pinyin": "liǎng bēi chá",
+          "meaning": "две чашки чая",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "二十",
+          "pinyin": "èrshí",
+          "meaning": "двадцать",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "两杯茶",
+          "pinyin": "liǎng bēi chá",
+          "meaning": "две чашки чая"
+        },
+        {
+          "hanzi": "二十",
+          "pinyin": "èrshí",
+          "meaning": "двадцать"
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "Basic rules to use '二' and '两' — China Daily via ECNS",
+      "url": "https://www.ecns.cn/learning-Chinese/2015/11-19/189362.shtml",
+      "checkedAt": "2026-10-16",
+      "supports": "China Daily's examples 两个苹果, 两本书 and 第二 and 二十二 confirm 两 before ordinary classifiers, 二 in ordinals and tens; also notes larger-unit exceptions, so the lesson frames this as a beginner model."
+    },
+    {
+      "title": "二 (èr) vs 两 (liǎng) — ChineseGrammar",
+      "url": "https://chinesegrammar.app/grammar/er-liang-numbers",
+      "checkedAt": "2026-10-16",
+      "supports": "Explains 两 + measure word + noun (including 两个人 and 两本书), 二 in 二十 and 第二, and why the following construction determines which form is used."
+    }
+  ],
+  "hookExperiment": {
+    "id": "er-vs-liang-cafe-20261026-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Начать с понятного заказа двух чашек чая и сразу раскрыть 两 должно удержать новичка до сравнения с 二十 и 第二 лучше, чем абстрактное объяснение двух форм числа два.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-16"
+  },
+  "audienceProblem": "Новичок знает 二 как «два» и ошибочно подставляет его перед счётным словом в заказе.",
+  "learningOutcome": "В типовом заказе сказать 两杯茶 и отличить это от 二十 и 第二."
+}
