@@ -111,6 +111,16 @@ const sceneFrames = (scene: LessonScene) =>
     1,
     scene.durationFrames ?? Math.ceil((scene.durationSec ?? 4) * FPS),
   );
+const episodeDurationFrames = (episode: LessonEpisode) => {
+  const sceneDuration = episode.scenes.reduce(
+    (total, scene) => total + sceneFrames(scene),
+    0,
+  );
+  const audioDuration = episode.audioDurationMs
+    ? Math.ceil((episode.audioDurationMs / 1000) * FPS)
+    : 0;
+  return Math.max(sceneDuration, audioDuration);
+};
 
 const clampEase = {
   extrapolateLeft: "clamp" as const,
@@ -1374,16 +1384,9 @@ export const EpisodeComposition: React.FC = () => (
     id="HSKAI-Episode"
     component={LessonVideo}
     defaultProps={{ episode: seedEpisode as LessonEpisode }}
-    durationInFrames={30 * FPS}
+    durationInFrames={episodeDurationFrames(seedEpisode as LessonEpisode)}
     calculateMetadata={({ props }) => {
-      const sceneDuration = props.episode.scenes.reduce(
-        (total, scene) => total + sceneFrames(scene),
-        0,
-      );
-      const audioDuration = props.episode.audioDurationMs
-        ? Math.ceil((props.episode.audioDurationMs / 1000) * FPS)
-        : 0;
-      return { durationInFrames: Math.max(sceneDuration, audioDuration) };
+      return { durationInFrames: episodeDurationFrames(props.episode) };
     }}
     fps={FPS}
     width={1080}

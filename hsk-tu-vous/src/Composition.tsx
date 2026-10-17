@@ -9,7 +9,48 @@ import {
 import "./index.css";
 
 const FPS = 30;
-const DURATION = 30 * FPS;
+type Greeting = {
+  hanzi: string;
+  pinyin: string;
+  meaning: string;
+  note: string;
+  color: string;
+};
+
+const greetings: Greeting[] = [
+  { hanzi: "你好！", pinyin: "Nǐ hǎo!", meaning: "Салом!", note: "ТУ · ҒАЙРИРАСМӢ", color: "#E04A40" },
+  { hanzi: "您好！", pinyin: "Nín hǎo!", meaning: "Салом!", note: "ШУМО · БО ЭҲТИРОМ", color: "#2FA06A" },
+  { hanzi: "你们好！", pinyin: "Nǐmen hǎo!", meaning: "Салом ба шумо!", note: "ШУМО · ЯКЧАНД НАФАР", color: "#E9A916" },
+];
+
+const SCENE_DURATIONS = {
+  intro: 90,
+  vocabulary: 150,
+  example: 100,
+  context: 210,
+  outro: 150,
+} as const;
+const EXAMPLE_DURATIONS = greetings.map(() => SCENE_DURATIONS.example);
+const TIMELINE_DURATIONS = [
+  SCENE_DURATIONS.intro,
+  SCENE_DURATIONS.vocabulary,
+  ...EXAMPLE_DURATIONS,
+  SCENE_DURATIONS.context,
+  SCENE_DURATIONS.outro,
+];
+const CONTEXT_INDEX = 2 + greetings.length;
+const OUTRO_INDEX = CONTEXT_INDEX + 1;
+const sceneStartFrame = (sceneIndex: number) =>
+  TIMELINE_DURATIONS.slice(0, sceneIndex).reduce((sum, duration) => sum + duration, 0);
+const DURATION = TIMELINE_DURATIONS.reduce((sum, duration) => sum + duration, 0);
+const EXAMPLE_DURATION = EXAMPLE_DURATIONS.reduce((sum, duration) => sum + duration, 0);
+const PROGRESS_DURATIONS = [
+  SCENE_DURATIONS.intro,
+  SCENE_DURATIONS.vocabulary,
+  EXAMPLE_DURATION,
+  SCENE_DURATIONS.context,
+  SCENE_DURATIONS.outro,
+];
 const CLAMP = {
   extrapolateLeft: "clamp" as const,
   extrapolateRight: "clamp" as const,
@@ -74,7 +115,7 @@ const Header: React.FC<SceneProps & { frame: number }> = ({
   duration,
   frame,
 }) => {
-  const lengths = [90, 150, 300, 210, 150];
+  const lengths = PROGRESS_DURATIONS;
   return (
     <div style={{ position: "absolute", inset: "58px 72px auto" }}>
       <div
@@ -166,7 +207,7 @@ const Intro: React.FC = () => {
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill>
-      <Header index={0} title="МАВЗӮИ ИМРӮЗА" duration={90} frame={frame} />
+      <Header index={0} title="МАВЗӮИ ИМРӮЗА" duration={SCENE_DURATIONS.intro} frame={frame} />
       <div
         style={{
           position: "absolute",
@@ -283,7 +324,7 @@ const Vocabulary: React.FC = () => {
   ];
   return (
     <AbsoluteFill>
-      <Header index={1} title="СЕ ТАРЗИ МУРОҶИАТ" duration={150} frame={frame} />
+      <Header index={1} title="СЕ ТАРЗИ МУРОҶИАТ" duration={SCENE_DURATIONS.vocabulary} frame={frame} />
       <div
         style={{
           position: "absolute",
@@ -385,14 +426,6 @@ const Vocabulary: React.FC = () => {
   );
 };
 
-type Greeting = {
-  hanzi: string;
-  pinyin: string;
-  meaning: string;
-  note: string;
-  color: string;
-};
-
 const Example: React.FC<Greeting & { number: string }> = ({
   hanzi,
   pinyin,
@@ -404,7 +437,7 @@ const Example: React.FC<Greeting & { number: string }> = ({
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill>
-      <Header index={2} title="MISOLLARDA KO‘RAMIZ" duration={300} frame={frame} />
+      <Header index={2} title="MISOLLARDA KO‘RAMIZ" duration={EXAMPLE_DURATION} frame={frame} />
       <div
         style={{
           position: "absolute",
@@ -521,7 +554,7 @@ const Context: React.FC = () => {
   const audiences = ["ОМӮЗГОР", "ШАХСИ КАЛОНСОЛ", "МУШТАРӢ"];
   return (
     <AbsoluteFill>
-      <Header index={3} title="КАЙ 您 ИСТИФОДА МЕШАВАД?" duration={210} frame={frame} />
+      <Header index={3} title="КАЙ 您 ИСТИФОДА МЕШАВАД?" duration={SCENE_DURATIONS.context} frame={frame} />
       <div
         style={{
           position: "absolute",
@@ -634,7 +667,7 @@ const Outro: React.FC = () => {
   const verbs = ["ГУШ КУНЕД", "ДАР ҶУМЛА БИНЕД", "БО МАШҚ МУСТАҲКАМ КУНЕД"];
   return (
     <AbsoluteFill>
-      <Header index={4} title="БО HSK AI ОМӮЗЕД" duration={150} frame={frame} />
+      <Header index={4} title="БО HSK AI ОМӮЗЕД" duration={SCENE_DURATIONS.outro} frame={frame} />
       <div
         style={{
           position: "absolute",
@@ -744,33 +777,28 @@ const Outro: React.FC = () => {
 };
 
 const LessonVideo: React.FC = () => {
-  const greetings: Greeting[] = [
-    { hanzi: "你好！", pinyin: "Nǐ hǎo!", meaning: "Салом!", note: "ТУ · ҒАЙРИРАСМӢ", color: "#E04A40" },
-    { hanzi: "您好！", pinyin: "Nín hǎo!", meaning: "Салом!", note: "ШУМО · БО ЭҲТИРОМ", color: "#2FA06A" },
-    { hanzi: "你们好！", pinyin: "Nǐmen hǎo!", meaning: "Салом ба шумо!", note: "ШУМО · ЯКЧАНД НАФАР", color: "#E9A916" },
-  ];
   return (
     <AbsoluteFill className="frame">
       <Background />
-      <Sequence durationInFrames={90}>
+      <Sequence durationInFrames={SCENE_DURATIONS.intro}>
         <Intro />
       </Sequence>
-      <Sequence from={90} durationInFrames={150}>
+      <Sequence from={sceneStartFrame(1)} durationInFrames={SCENE_DURATIONS.vocabulary}>
         <Vocabulary />
       </Sequence>
-      <Sequence from={240} durationInFrames={100}>
-        <Example {...greetings[0]} number="1" />
-      </Sequence>
-      <Sequence from={340} durationInFrames={100}>
-        <Example {...greetings[1]} number="2" />
-      </Sequence>
-      <Sequence from={440} durationInFrames={100}>
-        <Example {...greetings[2]} number="3" />
-      </Sequence>
-      <Sequence from={540} durationInFrames={210}>
+      {greetings.map((greeting, index) => (
+        <Sequence
+          key={greeting.hanzi}
+          from={sceneStartFrame(index + 2)}
+          durationInFrames={EXAMPLE_DURATIONS[index]}
+        >
+          <Example {...greeting} number={String(index + 1)} />
+        </Sequence>
+      ))}
+      <Sequence from={sceneStartFrame(CONTEXT_INDEX)} durationInFrames={SCENE_DURATIONS.context}>
         <Context />
       </Sequence>
-      <Sequence from={750} durationInFrames={150}>
+      <Sequence from={sceneStartFrame(OUTRO_INDEX)} durationInFrames={SCENE_DURATIONS.outro}>
         <Outro />
       </Sequence>
     </AbsoluteFill>
