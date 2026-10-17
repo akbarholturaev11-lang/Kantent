@@ -22,8 +22,19 @@ import {
 const API_ROOT = "https://generativelanguage.googleapis.com";
 const API_REVISION = "2026-05-20";
 const EPISODE_ID = process.argv[2];
-const RESUME_FOLDER_NAME =
-  process.argv[3] === "--resume" ? process.argv[4] : undefined;
+const CLI_OPTIONS = process.argv.slice(3);
+let PLATFORM;
+let RESUME_FOLDER_NAME;
+for (let index = 0; index < CLI_OPTIONS.length; index += 1) {
+  const option = CLI_OPTIONS[index];
+  if (option === "--platform" && !PLATFORM) {
+    PLATFORM = CLI_OPTIONS[++index];
+  } else if (option === "--resume" && !RESUME_FOLDER_NAME) {
+    RESUME_FOLDER_NAME = CLI_OPTIONS[++index];
+  } else {
+    throw new Error("Use [--platform tiktok] [--resume <generation-folder>].");
+  }
+}
 
 function requireEpisodeId(value) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value ?? "")) {
@@ -597,12 +608,10 @@ async function archiveRejectedFile(filePath) {
 }
 
 requireEpisodeId(EPISODE_ID);
-if (process.argv[3] && process.argv[3] !== "--resume") {
-  throw new Error(
-    "Use --resume followed by the existing Gemini production folder name.",
-  );
+if (PLATFORM && PLATFORM !== "tiktok") {
+  throw new Error("Only the local tiktok review variant is supported here.");
 }
-if (process.argv[3] === "--resume" && !RESUME_FOLDER_NAME) {
+if (CLI_OPTIONS.includes("--resume") && !RESUME_FOLDER_NAME) {
   throw new Error("--resume requires an existing Gemini production folder name.");
 }
 if (
@@ -620,7 +629,13 @@ if (voiceProfile.provider !== "gemini-api") {
   throw new Error("Faol ovoz profili Gemini API provayderiga mos emas.");
 }
 const config = await loadGeminiEnvironment(voiceProfile);
-const { episode: rawEpisode, filePath: episodePath } = await getEpisode(EPISODE_ID);
+const targetReviewDir = PLATFORM
+  ? path.join(reviewDir(EPISODE_ID), PLATFORM)
+  : reviewDir(EPISODE_ID);
+const episodePath = PLATFORM
+  ? path.join(targetReviewDir, "episode.json")
+  : (await getEpisode(EPISODE_ID)).filePath;
+const rawEpisode = await readJson(episodePath);
 const episode = normalizeEpisode(rawEpisode);
 if (episode.id !== EPISODE_ID) {
   throw new Error("Review episode ID does not match the requested episode.");
@@ -644,7 +659,7 @@ if (
   throw new Error("Approved or published episode voice cannot be replaced.");
 }
 try {
-  await fs.access(path.join(reviewDir(EPISODE_ID), "approval.json"));
+  await fs.access(path.join(targetReviewDir, "approval.json"));
   throw new Error("An owner approval record exists; voice regeneration is blocked.");
 } catch (error) {
   if (error?.code !== "ENOENT") throw error;
@@ -655,9 +670,15 @@ if (episode.voiceTextHash && episode.voiceTextHash !== narrationHash(episode)) {
   );
 }
 
-const narration = episode.scenes
-  .map((scene) => scene.narration.trim())
-  .join(" ")
+const tiktokCtaScene = PLATFORM
+  ? episode.scenes.find((scene) => scene.kind === "cta")
+  : null;
+if (PLATFORM && !tiktokCtaScene) {
+  throw new Error("TikTok review variant is missing its CTA scene.");
+}
+const narration = (PLATFORM
+  ? tiktokCtaScene.narration
+  : episode.scenes.map((scene) => scene.narration.trim()).join(" "))
   .replace(/\s+/g, " ")
   .trim();
 if (!narration) throw new Error("Episode has no narration to voice.");
@@ -667,8 +688,11 @@ if (episode.voiceTextHash && episode.voiceTextHash !== currentNarrationHash) {
 }
 episode.voiceTextHash = currentNarrationHash;
 await writeJson(episodePath, episode);
-await fs.writeFile(path.join(reviewDir(EPISODE_ID), "tts-input.txt"), `${narration}\n`, "utf8");
-await writeStatus(EPISODE_ID, {
+await fs.writeFile(path.join(targetReviewDir, "tts-input.txt"), `${narration}\n`, "utf8");
+const writeTargetStatus = (status) => PLATFORM
+  ? writeJson(path.join(targetReviewDir, "status.json"), status)
+  : writeStatus(EPISODE_ID, status);
+await writeTargetStatus({
   stage: "gemini-voice-generating",
   sourceRevision,
   updatedAt: new Date().toISOString(),
@@ -679,7 +703,7 @@ await writeStatus(EPISODE_ID, {
 });
 
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-const productionRoot = path.join(reviewDir(EPISODE_ID), "gemini-production");
+const productionRoot = path.join(targetReviewDir, "gemini-production");
 const outputDir = path.join(productionRoot, RESUME_FOLDER_NAME ?? timestamp);
 await fs.mkdir(outputDir, { recursive: true });
 const wavPath = path.join(outputDir, "voice.wav");
@@ -693,6 +717,7 @@ if (RESUME_FOLDER_NAME) {
   if (
     metadata?.production !== true ||
     metadata.episodeId !== EPISODE_ID ||
+    (metadata.platform ?? undefined) !== PLATFORM ||
     metadata.provider !== "gemini-api" ||
     metadata.narrationTextHash !== textHash
   ) {
@@ -719,6 +744,7 @@ if (RESUME_FOLDER_NAME) {
     production: true,
     status: "starting",
     episodeId: EPISODE_ID,
+    ...(PLATFORM ? { platform: PLATFORM } : {}),
     episodeNarrationHash: narrationHash(episode),
     narrationTextHash: textHash,
     sourceRevision,
@@ -733,7 +759,9 @@ if (RESUME_FOLDER_NAME) {
 }
 
 const ffmpegRuntime = await resolveFfmpegRuntime();
-const ttsChunks = createTtsChunks(episode);
+const ttsChunks = createTtsChunks(
+  PLATFORM ? { ...episode, scenes: [tiktokCtaScene] } : episode,
+);
 if (!ttsChunks.length) throw new Error("No narration chunks were created.");
 if (RESUME_FOLDER_NAME && metadata.ttsChunkCount !== ttsChunks.length) {
   throw new Error("Saved generation chunk count does not match the current narration.");
@@ -1093,6 +1121,7 @@ try {
       EPISODE_ID,
       mp3Path,
       path.join(outputDir, "captions.vtt"),
+      ...(PLATFORM ? ["--platform", PLATFORM] : []),
     ],
     { cwd: PROJECT_ROOT, stdio: "inherit" },
   );

@@ -32,6 +32,8 @@
     "content:draft": "node scripts/generate-draft.mjs",
     "content:voice": "node scripts/generate-voice-gemini.mjs",
     "content:voice:gemini": "node scripts/generate-voice-gemini.mjs",
+    "content:tiktok:prepare": "node scripts/prepare-tiktok-review.mjs",
+    "content:tiktok:render": "node scripts/render-tiktok-review.mjs",
     "content:render": "node scripts/render-episode.mjs",
     "content:make": "node scripts/make-episode.mjs",
     "content:approve": "node scripts/approve-package.mjs",

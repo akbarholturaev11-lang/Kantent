@@ -9,21 +9,34 @@ import {
   narrationHash,
   PROJECT_ROOT,
   requireApprovedVoiceProfile,
+  normalizeEpisode,
   readStatus,
   reviewDir,
+  readJson,
   writeJson,
   writeStatus,
   validateEpisode,
 } from "./lib.mjs";
 
-const [id, audioInput, captionsInput] = process.argv.slice(2);
+const [id, audioInput, captionsInput, ...options] = process.argv.slice(2);
+let platform;
+for (let index = 0; index < options.length; index += 1) {
+  if (options[index] === "--platform" && !platform) {
+    platform = options[++index];
+  } else {
+    throw new Error("Use [--platform tiktok] for a separate local TikTok review package.");
+  }
+}
+if (platform && platform !== "tiktok") {
+  throw new Error("Only the local tiktok review variant is supported here.");
+}
 if (!id || !audioInput || !captionsInput) {
   throw new Error(
     "Foydalanish: node scripts/import-voice.mjs <episode-ID> <audio.mp3> <captions.srt|captions.vtt>",
   );
 }
 
-const audioPath = path.resolve(audioInput);
+let audioPath = path.resolve(audioInput);
 const captionsPath = path.resolve(captionsInput);
 const captionsExtension = path.extname(captionsPath).toLowerCase();
 if (![".mp3", ".wav"].includes(path.extname(audioPath).toLowerCase())) {
@@ -39,7 +52,15 @@ if (![".srt", ".vtt"].includes(captionsExtension)) {
 
 const sourceRevision = requireFreshGitMain();
 assertNotPreviouslyPublished(id);
-const { episode, filePath } = await getEpisode(id);
+const targetReviewDir = platform
+  ? path.join(reviewDir(id), platform)
+  : reviewDir(id);
+const { episode, filePath } = platform
+  ? {
+      episode: normalizeEpisode(await readJson(path.join(targetReviewDir, "episode.json"))),
+      filePath: path.join(targetReviewDir, "episode.json"),
+    }
+  : await getEpisode(id);
 validateEpisode(episode);
 const visualSystem = JSON.parse(
   await fs.readFile(
@@ -70,7 +91,7 @@ if (
   throw new Error("Tasdiqlangan yoki e’lon qilingan episode ovozini import orqali almashtirib bo‘lmaydi.");
 }
 try {
-  await fs.access(path.join(reviewDir(id), "approval.json"));
+  await fs.access(path.join(targetReviewDir, "approval.json"));
   throw new Error("Owner approval fayli mavjud. Ovoz almashtirishdan oldin paket egasi tomonidan bekor qilinishi kerak.");
 } catch (error) {
   if (error?.code !== "ENOENT") throw error;
@@ -93,7 +114,7 @@ const parseTime = (value) => {
 };
 
 const rawSrt = await fs.readFile(captionsPath, "utf8");
-const captions = rawSrt
+let captions = rawSrt
   .replace(/^\uFEFF/, "")
   .replace(/\r/g, "")
   .split(/\n\s*\n/)
@@ -143,20 +164,66 @@ if (perWordCueCount / captions.length < 0.8) {
   );
 }
 
-const audioBuffer = await fs.readFile(audioPath);
-if (!audioBuffer.length) throw new Error("Audio fayli bo‘sh.");
-const audioInfo = spawnSync("afinfo", [audioPath], { encoding: "utf8" });
-let durationMs = 0;
-if (!audioInfo.error && audioInfo.status === 0) {
-  const durationMatch = `${audioInfo.stdout}\n${audioInfo.stderr}`.match(
+const readDurationMs = (filePath) => {
+  const info = spawnSync("afinfo", [filePath], { encoding: "utf8" });
+  if (info.error || info.status !== 0) return 0;
+  const match = `${info.stdout}\n${info.stderr}`.match(
     /(?:estimated\s+)?duration:\s*([\d.]+)\s*sec/i,
   );
-  if (durationMatch) durationMs = Math.round(Number(durationMatch[1]) * 1000);
-}
-durationMs ||= Math.max(...captions.map((caption) => caption.endMs));
+  return match ? Math.round(Number(match[1]) * 1000) : 0;
+};
+let durationMs = readDurationMs(audioPath) || Math.max(...captions.map((caption) => caption.endMs));
 if (!Number.isFinite(durationMs) || durationMs <= 0) {
   throw new Error("Audio davomiyligini aniqlab bo‘lmadi.");
 }
+const ctaCaptionEndMs = Math.max(...captions.map((caption) => caption.endMs));
+if (ctaCaptionEndMs > durationMs + 250) {
+  throw new Error("Subtitr audio davomiyligidan keyin tugayapti.");
+}
+
+if (platform === "tiktok") {
+  const baseEpisode = await readJson(path.join(reviewDir(id), "episode.json"));
+  if (baseEpisode.captionSource !== "gemini-word-timestamps" || !baseEpisode.captions?.length || !baseEpisode.audioSrc) {
+    throw new Error("TikTok review needs the existing verified lesson audio and word cues.");
+  }
+  const baseCtaScene = baseEpisode.scenes.find((scene) => scene.kind === "cta");
+  const ctaStartMs = baseCtaScene?.startMs;
+  if (!Number.isFinite(ctaStartMs) || ctaStartMs <= 0) {
+    throw new Error("The verified lesson CTA boundary is missing.");
+  }
+  const lessonCaptions = baseEpisode.captions.filter((caption) => caption.endMs <= ctaStartMs);
+  if (!lessonCaptions.length || lessonCaptions.at(-1).endMs > ctaStartMs) {
+    throw new Error("Verified lesson captions do not end before the CTA boundary.");
+  }
+  const lessonAudioPath = path.join(PROJECT_ROOT, "public", baseEpisode.audioSrc);
+  const composedAudioPath = path.join(path.dirname(captionsPath), "voice-full.mp3");
+  const ffmpeg = spawnSync("ffmpeg", [
+    "-hide_banner", "-loglevel", "error", "-nostdin", "-y",
+    "-i", lessonAudioPath,
+    "-i", audioPath,
+    "-filter_complex",
+    `[0:a]atrim=end=${(ctaStartMs / 1000).toFixed(3)},asetpts=PTS-STARTPTS[lesson];[1:a]asetpts=PTS-STARTPTS[ending];[lesson][ending]concat=n=2:v=0:a=1[out]`,
+    "-map", "[out]", "-c:a", "libmp3lame", "-b:a", `${voiceProfile.mp3BitrateKbps}k`,
+    "-ar", String(voiceProfile.sampleRateHz), "-ac", String(voiceProfile.channels),
+    "-map_metadata", "-1", "-f", "mp3", composedAudioPath,
+  ], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+  if (ffmpeg.error) throw ffmpeg.error;
+  if (ffmpeg.status !== 0) throw new Error(`TikTok voice composition failed: ${ffmpeg.stderr || ffmpeg.stdout}`);
+  captions = [
+    ...lessonCaptions,
+    ...captions.map((caption) => ({
+      ...caption,
+      startMs: caption.startMs + ctaStartMs,
+      endMs: caption.endMs + ctaStartMs,
+      timestampMs: caption.timestampMs + ctaStartMs,
+    })),
+  ];
+  audioPath = composedAudioPath;
+  durationMs = readDurationMs(audioPath) || ctaStartMs + durationMs;
+}
+
+const audioBuffer = await fs.readFile(audioPath);
+if (!audioBuffer.length) throw new Error("Audio fayli bo‘sh.");
 const lastCaptionEndMs = Math.max(...captions.map((caption) => caption.endMs));
 if (lastCaptionEndMs > durationMs + 250) {
   throw new Error("Subtitr audio davomiyligidan keyin tugayapti.");
@@ -297,25 +364,32 @@ const outputDurationSec = Math.max(
   sceneDurationSec,
   effectiveDurationMs / 1000,
 );
-const folder = reviewDir(id);
-const assetFolder = path.join(
-  path.dirname(filePath),
-  "..",
-  "..",
-  "public",
-  "generated",
-  id,
-);
+const folder = targetReviewDir;
+const assetFolder = path.join(PROJECT_ROOT, "public", "generated", id, ...(platform ? [platform] : []));
 await fs.mkdir(assetFolder, { recursive: true });
 const audioFilename = `voice${path.extname(audioPath).toLowerCase()}`;
 const destinationAudio = path.join(assetFolder, audioFilename);
 await fs.copyFile(audioPath, destinationAudio);
-await fs.copyFile(
-  captionsPath,
-  path.join(folder, `gemini-word-timestamps${captionsExtension}`),
-);
+const importedCaptionsPath = path.join(folder, `gemini-word-timestamps${captionsExtension}`);
+if (platform === "tiktok") {
+  const vttTime = (ms) => {
+    const value = Math.max(0, Math.round(ms));
+    const hours = Math.floor(value / 3_600_000);
+    const minutes = Math.floor((value % 3_600_000) / 60_000);
+    const seconds = Math.floor((value % 60_000) / 1000);
+    const milliseconds = value % 1000;
+    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${String(milliseconds).padStart(3, "0")}`;
+  };
+  await fs.writeFile(
+    importedCaptionsPath,
+    `WEBVTT\n\n${captions.map((caption) => `${vttTime(caption.startMs)} --> ${vttTime(caption.endMs)}\n${caption.text}`).join("\n\n")}\n`,
+    "utf8",
+  );
+} else {
+  await fs.copyFile(captionsPath, importedCaptionsPath);
+}
 
-episode.audioSrc = `generated/${id}/${audioFilename}`;
+episode.audioSrc = `generated/${id}/${platform ? `${platform}/` : ""}${audioFilename}`;
 episode.voiceProfileId = voiceProfile.profileId;
 episode.voiceProvider = voiceProfile.provider;
 episode.sourceAudioDurationMs = durationMs;
@@ -327,7 +401,7 @@ episode.publishingStatus = "pending-owner-review";
 await writeJson(filePath, episode);
 
 const durationSec = Number(outputDurationSec.toFixed(2));
-await writeStatus(id, {
+const statusRecord = {
   sourceRevision,
   stage: "voice-and-captions-imported",
   updatedAt: new Date().toISOString(),
@@ -344,7 +418,9 @@ await writeStatus(id, {
   trimmedTailMs: Math.round(durationMs - effectiveDurationMs),
   captionCount: captions.length,
   timingSource: `Gemini Transcribe word timestamps; exact normalized token match; ${captionsExtension.slice(1).toUpperCase()}`,
-});
+};
+if (platform) await writeJson(path.join(targetReviewDir, "status.json"), statusRecord);
+else await writeStatus(id, statusRecord);
 
 console.log(`MP3 va subtitrlar import qilindi: ${folder}`);
 console.log(

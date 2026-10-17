@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 57,
+  "revision": 58,
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
     "id": "hsk-ai-profile-link-download-v1",
@@ -183,6 +183,21 @@
       "supersedes": [
         "cta-correction-0009"
       ],
+      "effect": "mandatory-owner-policy",
+      "performanceEvidence": "not-a-performance-result"
+    },
+    {
+      "id": "cta-correction-0011",
+      "ruleVersion": "cta-policy-v11",
+      "createdAt": "2026-10-17T02:12:31.258Z",
+      "source": "owner-correction",
+      "ownerWording": "tok toka CTA qosh mazmuni shunday bulsin profilni och lichkaga hsk dep yoz yuklab olish xavolasini yuboraman degan\ntik toka uchunam video tayorlansi!! unga kadrlar urniga mos efektlardan foydalansin",
+      "rule": "For the TikTok manual-DM format, invite viewers in Russian to visit the profile, message the exact keyword HSK, and say the owner will manually send the download link. Prepare a local TikTok review video with cue-synced kinetic typography and restrained type-reveal, slide-match, or mask-reveal effects instead of screenshots. Do not simulate a real sent message, automated DM, verified link, or completed download. TikTok publishing remains unauthorized.",
+      "scope": {
+        "type": "format",
+        "formatId": "tiktok-manual-dm"
+      },
+      "supersedes": [],
       "effect": "mandatory-owner-policy",
       "performanceEvidence": "not-a-performance-result"
     }
@@ -7759,15 +7774,70 @@
       }
     },
     "tiktok": {
-      "status": "pending-owner-configuration",
+      "status": "approved",
       "copySource": "platform",
-      "canonicalRussian": null,
-      "visualBeats": null,
-      "deliveryMode": null,
+      "canonicalRussian": "Попробуй HSK AI. Зайди в мой профиль и напиши мне в личные сообщения «HSK» — я пришлю ссылку, чтобы скачать HSK AI.",
+      "deliveryMode": "manual-dm",
       "destinationVerified": false,
       "automationVerified": false,
       "publishingAuthorized": false,
-      "notes": "TikTok copy/assets remain pending, and TikTok is not an authorized publishing destination under current policy."
+      "notes": "Owner-approved TikTok CTA and effect-led local review scene. The owner sends download links manually; no automated DM, real sent-message simulation, verified destination, or TikTok publishing authorization is implied.",
+      "sceneTemplate": {
+        "id": "cta",
+        "kind": "cta",
+        "captionStyleId": "pill",
+        "durationSec": 11,
+        "headline": "ПРОФИЛЬ • HSK В ЛИЧНЫЕ",
+        "screenCaption": "Напиши HSK — пришлю ссылку",
+        "editPlan": "TikTok CTA без скриншотов и имитации реального интерфейса. Одна открытая центральная композиция. На «Попробуй» — кинетическая типографика HSK AI; на «профиль» — плавный сдвиг к слову ПРОФИЛЬ; на «напиши» — типографический reveal «ЛИЧНЫЕ СООБЩЕНИЯ»; на «HSK» — крупный набор слова с мягким раскрытием; на «пришлю» и «скачать» — текст «ССЫЛКА ДЛЯ СКАЧИВАНИЯ». Все переходы синхронизированы с точными словами, без имитации отправленного сообщения, автоматического DM или завершённой загрузки.",
+        "visualBeats": [
+          {
+            "hero": "HSK AI",
+            "meaning": "ПОПРОБУЙ",
+            "brandLogo": true,
+            "motion": "reveal",
+            "syncCueText": "Попробуй",
+            "transitionStyle": "type-reveal"
+          },
+          {
+            "hero": "ПРОФИЛЬ",
+            "meaning": "ЗАЙДИ В МОЙ ПРОФИЛЬ",
+            "motion": "slide",
+            "syncCueText": "профиль",
+            "transitionStyle": "slide-match"
+          },
+          {
+            "hero": "ЛИЧНЫЕ СООБЩЕНИЯ",
+            "meaning": "НАПИШИ МНЕ",
+            "motion": "reveal",
+            "syncCueText": "напиши",
+            "transitionStyle": "type-reveal"
+          },
+          {
+            "hero": "HSK",
+            "meaning": "НАПИШИ В ЛИЧНЫЕ СООБЩЕНИЯ",
+            "motion": "pop",
+            "syncCueText": "HSK",
+            "transitionStyle": "mask-reveal"
+          },
+          {
+            "hero": "ССЫЛКА ДЛЯ СКАЧИВАНИЯ",
+            "meaning": "Я ПРИШЛЮ",
+            "motion": "slide",
+            "syncCueText": "пришлю",
+            "transitionStyle": "slide-match"
+          },
+          {
+            "hero": "HSK AI",
+            "meaning": "ССЫЛКА, ЧТОБЫ СКАЧАТЬ",
+            "brandLogo": true,
+            "motion": "reveal",
+            "syncCueText": "скачать",
+            "transitionStyle": "type-reveal"
+          }
+        ]
+      },
+      "keyword": "HSK"
     },
     "youtube": {
       "status": "approved",

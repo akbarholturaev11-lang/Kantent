@@ -883,7 +883,7 @@ const createServer = () => {
     {
       title: "Inspect platform-specific CTA readiness",
       description:
-        "Read the single canonical CTA Lab for Instagram, TikTok and YouTube. Reports which variant is owner-approved and which is blocked pending final copy, screenshots and verified delivery mechanism. Instagram Reels and YouTube Shorts are the authorized publishing destinations; TikTok is not. Never sends a DM, publishes, or fabricates a variant.",
+        "Read the single canonical CTA Lab for Instagram, TikTok and YouTube. Reports each variant's copy/scene readiness separately from publication authorization. TikTok's owner-approved manual-DM variant has an effect-led local review scene; it does not verify a link, automate DMs, or authorize TikTok publishing. Instagram Reels and YouTube Shorts remain the only authorized publishing destinations. Never sends a DM or publishes.",
       inputSchema: z.object({
         platform: z.enum(["instagram", "tiktok", "youtube"]).optional(),
       }),
