@@ -1,7 +1,7 @@
 {
   "profileId": "ru-gemini-kore-v1",
   "revision": 1,
-  "status": "pending-owner-approval",
+  "status": "approved",
   "provider": "gemini-api",
   "serviceName": "Google Gemini API",
   "locale": "ru-RU",
@@ -17,5 +17,10 @@
   "sampleEpisodeId": "zai-location-cinematic-v2",
   "sampleAudio": "review/zai-location-cinematic-v2/gemini-audition/2026-10-12T03-15-35-002Z/voice.mp3",
   "sampleCaptions": "review/zai-location-cinematic-v2/gemini-audition/2026-10-12T03-15-35-002Z/captions.vtt",
-  "changeRule": "This Gemini voice is pending owner approval. Only the sample episode may be produced until the owner approves the sample; a later voice or provider change requires a new sample."
+  "approval": {
+    "approvedAt": "2026-10-14T16:30:16Z",
+    "approvedBy": "owner",
+    "basis": "Owner explicitly approved Kore as the main fixed voice for all Russian HSK videos on 2026-10-15 Asia/Shanghai."
+  },
+  "changeRule": "Use this owner-approved profile as the fixed voice for every Russian HSK video. Do not ask the owner to identify or reconfirm it per episode. A later voice or provider change requires an explicit owner decision and a freshly approved sample."
 }

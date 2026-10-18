@@ -1,0 +1,36 @@
+
+> check
+> npx --yes hyperframes@0.8.148 check
+
+◆  Checking hsk-ai-voice-promo
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)")
+
+Lint
+  ◇ 0 errors, 0 warnings
+
+Runtime
+  ◇ 0 errors, 0 warnings
+
+Layout
+  ℹ t=11.875s content_overlap #f-01-hook-shot > div:nth-of-type(1) > span:nth-of-type(1) inside #f-02-study-shot > div:nth-of-type(1) > span:nth-of-type(1) "HSK AI" — Two text blocks overlap and may render unreadable.
+        Fix: Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.
+  ℹ t=19.25s content_overlap #f-02-study-shot > div:nth-of-type(1) > span:nth-of-type(1) inside #f-03-ai-voice-shot > div:nth-of-type(1) > span:nth-of-type(1) "HSK AI" — Two text blocks overlap and may render unreadable.
+        Fix: Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.
+  ℹ t=19.25s content_overlap h1.course-title inside h1.voice-title "УРОКИ · СЛОВА · ТЕСТЫ" — Two text blocks overlap and may render unreadable.
+        Fix: Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.
+  ℹ t=49.875s content_overlap p.helper inside p.cta-copy "Подсказки, ответы и исправления в одном разговоре" — Two text blocks overlap and may render unreadable.
+        Fix: Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.
+  0 error(s), 0 warning(s), 4 info(s)
+
+Motion
+  ◇ 0 errors, 0 warnings
+
+Contrast
+  ✗ div > div:nth-of-type(5) > div > div:nth-of-type(2) > p 1:1 (need 3:1, t=3.333s)
+    Try rgb(107,104,100); source compositions/captions.html
+  0 error(s), 1 warning(s), 0 info(s)
+
+Snapshots
+  ◇ disabled
+
+◇  Check passed

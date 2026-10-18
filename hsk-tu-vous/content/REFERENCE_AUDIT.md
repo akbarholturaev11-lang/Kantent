@@ -11,7 +11,7 @@
 
 В HSK AI сохраняются логотип, тёплая бумажная основа и cinnabar/jade/gold акценты из source palette владельца. Субтитры используют тёмный ink без подложки, группами максимум по два слова. Текущая layered-card motion — собственная Remotion-анимация, а не заявленная копия конкретного поста.
 
-Production voice uses Gemini TTS and Gemini Transcribe through the owner-authorized API profile in `content/voice-profile.json`. The workflow sends narration and generated audio to Google, checks the transcript against the script, and imports only exact word matches. The rendered sample remains pending owner voice approval; only its designated episode can use the pending profile.
+Production voice uses the owner-approved Gemini profile in `content/voice-profile.json` and Gemini word-timestamp transcription. The workflow sends narration and generated audio to Google, checks the transcript against the script, and imports only exact word matches. The approved profile is the fixed series voice; the cinematic sample's separate review package remains pending owner media review.
 
 Из трёх роликов пользователя нельзя вывести доступ к чужим MCP, аккаунтам или API. Интеграция локального HSK MCP и HeroUI MCP настроена отдельно в проектной конфигурации; Pinterest и posts.design — только ссылки-референсы.
 

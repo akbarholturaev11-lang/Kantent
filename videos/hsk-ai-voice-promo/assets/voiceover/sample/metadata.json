@@ -1,0 +1,20 @@
+{
+  "status": "audio-generated",
+  "mode": "sample",
+  "provider": "gemini-api",
+  "model": "gemini-3.8-flash-lite-tts",
+  "voice": "Kore",
+  "sourceProfile": "ru-gemini-kore-v1",
+  "ownerInstruction": "gemini API orqaliy ishlat",
+  "textSha256": "bd4c845e64c6cc73e62c02508f7b11d5abae51591ccbf078b84d37bc38bf387e",
+  "durationSeconds": 9.936,
+  "streams": [
+    {
+      "codec_name": "mp3",
+      "sample_rate": "24000",
+      "channels": 1
+    }
+  ],
+  "reviewApprovalPending": true,
+  "documentation": "https://ai.google.dev/gemini-api/docs/speech-generation"
+}

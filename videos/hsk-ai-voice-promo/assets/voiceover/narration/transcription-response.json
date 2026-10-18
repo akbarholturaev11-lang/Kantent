@@ -1,0 +1,889 @@
+{
+  "id": "v1_ChdhRmJNYXYtdUdLZlJ6N0lQeHNfVXlBMBIXYUZiTWF2LXVHS2ZSejdJUHhzX1V5QTA",
+  "status": "completed",
+  "usage": {
+    "total_tokens": 1450,
+    "total_input_tokens": 1261,
+    "input_tokens_by_modality": [
+      {
+        "modality": "audio",
+        "tokens": 1260
+      },
+      {
+        "modality": "text",
+        "tokens": 1
+      }
+    ],
+    "total_cached_tokens": 0,
+    "total_output_tokens": 189,
+    "total_tool_use_tokens": 0,
+    "total_thought_tokens": 0,
+    "raw_prompt_token": 1508,
+    "model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 248
+          },
+          {
+            "modality": "audio",
+            "tokens": 1260
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 189
+          }
+        ]
+      }
+    ],
+    "non_grounding_model_invocation_token_counts": [
+      {
+        "prompt_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 248
+          },
+          {
+            "modality": "audio",
+            "tokens": 1260
+          }
+        ],
+        "candidates_tokens_details": [
+          {
+            "modality": "text",
+            "tokens": 189
+          }
+        ]
+      }
+    ]
+  },
+  "created": "2026-10-12T03:39:22Z",
+  "updated": "2026-10-12T03:39:22Z",
+  "service_tier": "standard",
+  "steps": [
+    {
+      "content": [
+        {
+          "text": "Знаешь китайские слова, но когда нужно ответить, теряешься? С HSK AI переходи от изучения слов к разговорной практике. Проходи уроки, повторяй лексику и проверяй себя v тестах. Затем используй знакомые слова в разговоре. Открой AI Voice. Здесь ты практикуешь китайский с AI собеседником на своём уровне HSK. Запиши фразу голосом. Собеседник ответит по-китайски и продолжит разговор коротким вопросом. Не знаешь, что сказать? Посмотри подсказки - китайскую фразу, пиньинь с тонами и перевод. AI помогает заметить важные ошибки. После разговора посмотри исправления и попробуй ответить иначе. Попробуй HSK AI. Зайди в профиль, открой ссылку, скачай HSK AI и учи китайский каждый день.",
+          "annotations": [
+            {
+              "start_index": 0,
+              "end_index": 12,
+              "text": "Знаешь",
+              "start_offset": "0.300s",
+              "end_offset": "0.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 13,
+              "end_index": 31,
+              "text": "китайские",
+              "start_offset": "0.700s",
+              "end_offset": "1.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 32,
+              "end_index": 43,
+              "text": "слова,",
+              "start_offset": "1.200s",
+              "end_offset": "1.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 44,
+              "end_index": 48,
+              "text": "но",
+              "start_offset": "1.700s",
+              "end_offset": "2s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 49,
+              "end_index": 59,
+              "text": "когда",
+              "start_offset": "2s",
+              "end_offset": "2.300s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 60,
+              "end_index": 70,
+              "text": "нужно",
+              "start_offset": "2.300s",
+              "end_offset": "2.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 71,
+              "end_index": 88,
+              "text": "ответить,",
+              "start_offset": "2.700s",
+              "end_offset": "3.400s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 89,
+              "end_index": 108,
+              "text": "теряешься?",
+              "start_offset": "3.400s",
+              "end_offset": "4.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 109,
+              "end_index": 111,
+              "text": "С",
+              "start_offset": "5s",
+              "end_offset": "5.100s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 112,
+              "end_index": 115,
+              "text": "HSK",
+              "start_offset": "5.100s",
+              "end_offset": "5.800s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 116,
+              "end_index": 118,
+              "text": "AI",
+              "start_offset": "5.800s",
+              "end_offset": "6s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 119,
+              "end_index": 135,
+              "text": "переходи",
+              "start_offset": "6s",
+              "end_offset": "6.600s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 136,
+              "end_index": 140,
+              "text": "от",
+              "start_offset": "6.600s",
+              "end_offset": "6.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 141,
+              "end_index": 157,
+              "text": "изучения",
+              "start_offset": "6.700s",
+              "end_offset": "7.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 158,
+              "end_index": 166,
+              "text": "слов",
+              "start_offset": "7.200s",
+              "end_offset": "7.600s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 167,
+              "end_index": 169,
+              "text": "к",
+              "start_offset": "7.600s",
+              "end_offset": "7.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 170,
+              "end_index": 192,
+              "text": "разговорной",
+              "start_offset": "7.700s",
+              "end_offset": "8.500s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 193,
+              "end_index": 210,
+              "text": "практике.",
+              "start_offset": "8.500s",
+              "end_offset": "9s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 211,
+              "end_index": 225,
+              "text": "Проходи",
+              "start_offset": "9.600s",
+              "end_offset": "10s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 226,
+              "end_index": 237,
+              "text": "уроки,",
+              "start_offset": "10s",
+              "end_offset": "10.400s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 238,
+              "end_index": 254,
+              "text": "повторяй",
+              "start_offset": "10.400s",
+              "end_offset": "11s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 255,
+              "end_index": 269,
+              "text": "лексику",
+              "start_offset": "11s",
+              "end_offset": "11.600s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 270,
+              "end_index": 272,
+              "text": "и",
+              "start_offset": "11.600s",
+              "end_offset": "11.800s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 273,
+              "end_index": 289,
+              "text": "проверяй",
+              "start_offset": "11.800s",
+              "end_offset": "12.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 290,
+              "end_index": 298,
+              "text": "себя",
+              "start_offset": "12.200s",
+              "end_offset": "12.500s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 299,
+              "end_index": 300,
+              "text": "v",
+              "start_offset": "12.500s",
+              "end_offset": "12.600s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 301,
+              "end_index": 314,
+              "text": "тестах.",
+              "start_offset": "12.600s",
+              "end_offset": "13s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 315,
+              "end_index": 325,
+              "text": "Затем",
+              "start_offset": "3.600s",
+              "end_offset": "14.100s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 326,
+              "end_index": 344,
+              "text": "используй",
+              "start_offset": "14.100s",
+              "end_offset": "14.600s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 345,
+              "end_index": 361,
+              "text": "знакомые",
+              "start_offset": "14.600s",
+              "end_offset": "15s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 362,
+              "end_index": 372,
+              "text": "слова",
+              "start_offset": "15s",
+              "end_offset": "15.300s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 373,
+              "end_index": 375,
+              "text": "в",
+              "start_offset": "15.300s",
+              "end_offset": "15.500s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 376,
+              "end_index": 395,
+              "text": "разговоре.",
+              "start_offset": "15.500s",
+              "end_offset": "16.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 396,
+              "end_index": 408,
+              "text": "Открой",
+              "start_offset": "16.500s",
+              "end_offset": "17s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 409,
+              "end_index": 411,
+              "text": "AI",
+              "start_offset": "17s",
+              "end_offset": "17.300s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 412,
+              "end_index": 418,
+              "text": "Voice.",
+              "start_offset": "17.300s",
+              "end_offset": "17.800s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 419,
+              "end_index": 429,
+              "text": "Здесь",
+              "start_offset": "18s",
+              "end_offset": "18.300s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 430,
+              "end_index": 434,
+              "text": "ты",
+              "start_offset": "18.300s",
+              "end_offset": "18.400s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 435,
+              "end_index": 457,
+              "text": "практикуешь",
+              "start_offset": "18.400s",
+              "end_offset": "19s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 458,
+              "end_index": 476,
+              "text": "китайский",
+              "start_offset": "19s",
+              "end_offset": "19.600s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 477,
+              "end_index": 479,
+              "text": "с",
+              "start_offset": "19.600s",
+              "end_offset": "19.800s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 480,
+              "end_index": 482,
+              "text": "AI",
+              "start_offset": "19.800s",
+              "end_offset": "20s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 483,
+              "end_index": 507,
+              "text": "собеседником",
+              "start_offset": "20s",
+              "end_offset": "21s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 508,
+              "end_index": 512,
+              "text": "на",
+              "start_offset": "21s",
+              "end_offset": "21.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 513,
+              "end_index": 523,
+              "text": "своём",
+              "start_offset": "21.200s",
+              "end_offset": "21.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 524,
+              "end_index": 536,
+              "text": "уровне",
+              "start_offset": "21.700s",
+              "end_offset": "22.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 537,
+              "end_index": 541,
+              "text": "HSK.",
+              "start_offset": "22.200s",
+              "end_offset": "22.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 542,
+              "end_index": 554,
+              "text": "Запиши",
+              "start_offset": "23.200s",
+              "end_offset": "23.600s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 555,
+              "end_index": 565,
+              "text": "фразу",
+              "start_offset": "23.600s",
+              "end_offset": "23.900s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 566,
+              "end_index": 581,
+              "text": "голосом.",
+              "start_offset": "23.900s",
+              "end_offset": "24.300s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 582,
+              "end_index": 602,
+              "text": "Собеседник",
+              "start_offset": "25s",
+              "end_offset": "25.500s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 603,
+              "end_index": 617,
+              "text": "ответит",
+              "start_offset": "25.500s",
+              "end_offset": "25.900s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 618,
+              "end_index": 639,
+              "text": "по-китайски",
+              "start_offset": "25.900s",
+              "end_offset": "26.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 640,
+              "end_index": 642,
+              "text": "и",
+              "start_offset": "26.700s",
+              "end_offset": "26.800s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 643,
+              "end_index": 661,
+              "text": "продолжит",
+              "start_offset": "26.800s",
+              "end_offset": "27.300s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 662,
+              "end_index": 678,
+              "text": "разговор",
+              "start_offset": "27.300s",
+              "end_offset": "27.800s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 679,
+              "end_index": 695,
+              "text": "коротким",
+              "start_offset": "27.800s",
+              "end_offset": "28.300s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 696,
+              "end_index": 713,
+              "text": "вопросом.",
+              "start_offset": "28.300s",
+              "end_offset": "28.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 714,
+              "end_index": 718,
+              "text": "Не",
+              "start_offset": "29.600s",
+              "end_offset": "29.800s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 719,
+              "end_index": 732,
+              "text": "знаешь,",
+              "start_offset": "29.800s",
+              "end_offset": "30s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 733,
+              "end_index": 739,
+              "text": "что",
+              "start_offset": "30s",
+              "end_offset": "30.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 740,
+              "end_index": 755,
+              "text": "сказать?",
+              "start_offset": "30.200s",
+              "end_offset": "30.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 756,
+              "end_index": 772,
+              "text": "Посмотри",
+              "start_offset": "31.100s",
+              "end_offset": "31.400s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 773,
+              "end_index": 791,
+              "text": "подсказки",
+              "start_offset": "31.400s",
+              "end_offset": "32.100s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 792,
+              "end_index": 793,
+              "text": "-",
+              "start_offset": "32.400s",
+              "end_offset": "32.500s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 794,
+              "end_index": 812,
+              "text": "китайскую",
+              "start_offset": "32.500s",
+              "end_offset": "33s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 813,
+              "end_index": 824,
+              "text": "фразу,",
+              "start_offset": "33s",
+              "end_offset": "33.600s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 825,
+              "end_index": 839,
+              "text": "пиньинь",
+              "start_offset": "33.600s",
+              "end_offset": "34s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 840,
+              "end_index": 842,
+              "text": "с",
+              "start_offset": "34s",
+              "end_offset": "34s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 843,
+              "end_index": 855,
+              "text": "тонами",
+              "start_offset": "34s",
+              "end_offset": "34.600s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 856,
+              "end_index": 858,
+              "text": "и",
+              "start_offset": "34.700s",
+              "end_offset": "34.900s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 859,
+              "end_index": 874,
+              "text": "перевод.",
+              "start_offset": "34.900s",
+              "end_offset": "35.300s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 875,
+              "end_index": 877,
+              "text": "AI",
+              "start_offset": "36.400s",
+              "end_offset": "36.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 878,
+              "end_index": 894,
+              "text": "помогает",
+              "start_offset": "36.700s",
+              "end_offset": "37.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 895,
+              "end_index": 911,
+              "text": "заметить",
+              "start_offset": "37.200s",
+              "end_offset": "37.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 912,
+              "end_index": 924,
+              "text": "важные",
+              "start_offset": "37.700s",
+              "end_offset": "38.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 925,
+              "end_index": 938,
+              "text": "ошибки.",
+              "start_offset": "38.200s",
+              "end_offset": "38.800s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 939,
+              "end_index": 949,
+              "text": "После",
+              "start_offset": "39s",
+              "end_offset": "39.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 950,
+              "end_index": 968,
+              "text": "разговора",
+              "start_offset": "39.200s",
+              "end_offset": "39.800s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 969,
+              "end_index": 985,
+              "text": "посмотри",
+              "start_offset": "39.800s",
+              "end_offset": "40.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 986,
+              "end_index": 1008,
+              "text": "исправления",
+              "start_offset": "40.200s",
+              "end_offset": "40.900s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1009,
+              "end_index": 1011,
+              "text": "и",
+              "start_offset": "41.100s",
+              "end_offset": "41.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1012,
+              "end_index": 1028,
+              "text": "попробуй",
+              "start_offset": "41.200s",
+              "end_offset": "41.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1029,
+              "end_index": 1045,
+              "text": "ответить",
+              "start_offset": "41.700s",
+              "end_offset": "42.100s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1046,
+              "end_index": 1057,
+              "text": "иначе.",
+              "start_offset": "42.100s",
+              "end_offset": "42.500s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1058,
+              "end_index": 1074,
+              "text": "Попробуй",
+              "start_offset": "43.300s",
+              "end_offset": "43.800s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1075,
+              "end_index": 1078,
+              "text": "HSK",
+              "start_offset": "43.800s",
+              "end_offset": "44.400s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1079,
+              "end_index": 1082,
+              "text": "AI.",
+              "start_offset": "44.400s",
+              "end_offset": "44.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1083,
+              "end_index": 1093,
+              "text": "Зайди",
+              "start_offset": "44.900s",
+              "end_offset": "45.200s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1094,
+              "end_index": 1096,
+              "text": "в",
+              "start_offset": "45.200s",
+              "end_offset": "45.300s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1097,
+              "end_index": 1112,
+              "text": "профиль,",
+              "start_offset": "45.300s",
+              "end_offset": "45.800s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1113,
+              "end_index": 1125,
+              "text": "открой",
+              "start_offset": "45.800s",
+              "end_offset": "46.100s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1126,
+              "end_index": 1139,
+              "text": "ссылку,",
+              "start_offset": "46.100s",
+              "end_offset": "46.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1140,
+              "end_index": 1152,
+              "text": "скачай",
+              "start_offset": "47s",
+              "end_offset": "47.500s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1153,
+              "end_index": 1156,
+              "text": "HSK",
+              "start_offset": "47.500s",
+              "end_offset": "48.100s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1157,
+              "end_index": 1159,
+              "text": "AI",
+              "start_offset": "48.100s",
+              "end_offset": "48.500s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1160,
+              "end_index": 1162,
+              "text": "и",
+              "start_offset": "48.600s",
+              "end_offset": "48.700s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1163,
+              "end_index": 1169,
+              "text": "учи",
+              "start_offset": "48.700s",
+              "end_offset": "49s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1170,
+              "end_index": 1188,
+              "text": "китайский",
+              "start_offset": "49s",
+              "end_offset": "49.600s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1189,
+              "end_index": 1201,
+              "text": "каждый",
+              "start_offset": "49.600s",
+              "end_offset": "50s",
+              "type": "word_info"
+            },
+            {
+              "start_index": 1202,
+              "end_index": 1211,
+              "text": "день.",
+              "start_offset": "50s",
+              "end_offset": "50.200s",
+              "type": "word_info"
+            }
+          ],
+          "type": "text"
+        }
+      ],
+      "type": "model_output"
+    }
+  ],
+  "object": "interaction",
+  "model": "gemini-3.5-transcribe"
+}

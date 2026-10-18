@@ -346,7 +346,11 @@ export function validateCtaEpisode(
         `${field}: remove unverified automation, speed, guarantee, or free-offer claims.`,
       );
   }
-  if (/(коммент|директ|личн.*сообщ|пришл.*ссылк|отправл.*ссылк)/iu.test(spoken))
+  const approvedTikTokManualDm = episode.ctaPlatform === "tiktok" &&
+    lab.platformVariants?.tiktok?.status === "approved" &&
+    lab.platformVariants?.tiktok?.deliveryMode === "manual-dm";
+  if (!approvedTikTokManualDm &&
+      /(коммент|директ|личн.*сообщ|пришл.*ссылк|отправл.*ссылк)/iu.test(spoken))
     errors.push("CTA narration: remove the superseded comment/DM route.");
   if (active.some((item) => item.id === "cta-correction-0008")) {
     const screenshots = snapshot.scenes[0]?.visualBeats
@@ -417,9 +421,9 @@ export function validateCtaEpisode(
   warnings.push(
     "Text checks do not prove visual/audio sync. Review each active owner correction against the actual narration and rendered frames.",
   );
-  warnings.push(
-    "The CTA directs viewers to the profile link and website; text checks do not verify current site availability or actual downloads.",
-  );
+  warnings.push(episode.ctaPlatform === "tiktok"
+    ? "TikTok's manual-DM CTA does not prove a DM was sent or verify the download link; TikTok publishing is not authorized."
+    : "The CTA directs viewers to the profile link and website; text checks do not verify current site availability or actual downloads.");
   return {
     valid: errors.length === 0,
     errors,

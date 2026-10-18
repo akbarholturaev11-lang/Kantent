@@ -1,0 +1,40 @@
+{
+  "model": "gemini-3.5-transcribe",
+  "words": [
+    {
+      "text": "Затем",
+      "startOffset": "0.600s",
+      "endOffset": "1.100s"
+    },
+    {
+      "text": "используй",
+      "startOffset": "1.100s",
+      "endOffset": "1.600s"
+    },
+    {
+      "text": "знакомые",
+      "startOffset": "1.600s",
+      "endOffset": "2s"
+    },
+    {
+      "text": "слова",
+      "startOffset": "2s",
+      "endOffset": "2.400s"
+    },
+    {
+      "text": "в",
+      "startOffset": "2.400s",
+      "endOffset": "2.400s"
+    },
+    {
+      "text": "разговоре.",
+      "startOffset": "2.400s",
+      "endOffset": "3.100s"
+    },
+    {
+      "text": "Открой",
+      "startOffset": "3.400s",
+      "endOffset": "4s"
+    }
+  ]
+}

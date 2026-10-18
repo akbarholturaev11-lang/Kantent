@@ -1,0 +1,526 @@
+{
+  "ok": true,
+  "errorCount": 0,
+  "warningCount": 52,
+  "infoCount": 0,
+  "findings": [
+    {
+      "code": "caption_track_kind_missing",
+      "severity": "warning",
+      "message": "<div id=\"el-captions\"> looks like captions but is not marked as such, so the timeline cannot group it on the caption track.",
+      "elementId": "el-captions",
+      "fixHint": "Add data-track-kind=\"captions\" to <div id=\"el-captions\">.",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/index.html",
+      "line": 189,
+      "column": 7
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"0.300000\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"0.300000\" data-duration=\"1.700000\" data-track-index=\"1\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 1,
+      "column": 600
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"2.000000\" data-track-index=\"2\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"2.000000\" data-duration=\"1.400000\" data-track-index=\"2\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 2,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"3.400000\" data-track-index=\"3\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"3.400000\" data-duration=\"0.830000\" data-track-index=\"3\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 3,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"6.189000\" data-track-index=\"4\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"6.189000\" data-duration=\"1.600000\" data-track-index=\"4\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 4,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"7.789000\" data-track-index=\"5\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"7.789000\" data-duration=\"1.100000\" data-track-index=\"5\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 5,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"8.889000\" data-track-index=\"6\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"8.889000\" data-duration=\"1.330000\" data-track-index=\"6\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 6,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"11.897000\" data-track-index=\"7\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"11.897000\" data-duration=\"1.400000\" data-track-index=\"7\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 7,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"13.297000\" data-track-index=\"8\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"13.297000\" data-duration=\"1.500000\" data-track-index=\"8\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 8,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"14.797000\" data-track-index=\"9\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"14.797000\" data-duration=\"2.100000\" data-track-index=\"9\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 9,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"16.897000\" data-track-index=\"10\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"16.897000\" data-duration=\"1.630000\" data-track-index=\"10\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 10,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"19.097000\" data-track-index=\"11\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"19.097000\" data-duration=\"1.800000\" data-track-index=\"11\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 11,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"20.897000\" data-track-index=\"12\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"20.897000\" data-duration=\"1.500000\" data-track-index=\"12\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 12,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"22.397000\" data-track-index=\"13\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"22.397000\" data-duration=\"1.900000\" data-track-index=\"13\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 13,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"24.297000\" data-track-index=\"14\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"24.297000\" data-duration=\"1.030000\" data-track-index=\"14\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 14,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"27.794000\" data-track-index=\"15\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"27.794000\" data-duration=\"1.130000\" data-track-index=\"15\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 15,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"29.594000\" data-track-index=\"16\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"29.594000\" data-duration=\"0.900000\" data-track-index=\"16\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 16,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"30.494000\" data-track-index=\"17\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"30.494000\" data-duration=\"1.400000\" data-track-index=\"17\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 17,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"31.894000\" data-track-index=\"18\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"31.894000\" data-duration=\"1.430000\" data-track-index=\"18\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 18,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"35.706000\" data-track-index=\"19\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"35.706000\" data-duration=\"1.130000\" data-track-index=\"19\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 19,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"37.206000\" data-track-index=\"20\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"37.206000\" data-duration=\"1.030000\" data-track-index=\"20\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 20,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"38.606000\" data-track-index=\"21\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"38.606000\" data-duration=\"1.500000\" data-track-index=\"21\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 21,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"40.106000\" data-track-index=\"22\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"40.106000\" data-duration=\"1.330000\" data-track-index=\"22\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 22,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"42.806000\" data-track-index=\"23\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"42.806000\" data-duration=\"1.800000\" data-track-index=\"23\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 23,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"44.606000\" data-track-index=\"24\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"44.606000\" data-duration=\"1.600000\" data-track-index=\"24\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 24,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"46.206000\" data-track-index=\"25\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"46.206000\" data-duration=\"1.400000\" data-track-index=\"25\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 25,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"47.606000\" data-track-index=\"26\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"47.606000\" data-duration=\"1.330000\" data-track-index=\"26\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 26,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"50.006000\" data-track-index=\"27\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"50.006000\" data-duration=\"1.900000\" data-track-index=\"27\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 27,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"51.906000\" data-track-index=\"28\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"51.906000\" data-duration=\"1.530000\" data-track-index=\"28\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 28,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"53.706000\" data-track-index=\"29\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"53.706000\" data-duration=\"1.700000\" data-track-index=\"29\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 29,
+      "column": 1
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-group\" data-start=\"55.406000\" data-track-index=\"30\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-group\" data-start=\"55.406000\" data-duration=\"1.530000\" data-track-index=\"30\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html",
+      "line": 30,
+      "column": 1
+    },
+    {
+      "code": "overlapping_gsap_tweens",
+      "severity": "warning",
+      "message": "GSAP tweens overlap on \"#cap-8-0\" for color between 14.86s and 14.86s.",
+      "selector": "#cap-8-0",
+      "fixHint": "Shorten the earlier tween, move the later tween, or add `overwrite: \"auto\"`.",
+      "snippet": "tl.fromTo(\"#cap-8-0\", { color: \"#E04A40\", duration: 0.06 }, 14.797) tl.to(\"#cap-8-0\", { color: \"#211D17\", duration: 0.06 }, 14.857)",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html"
+    },
+    {
+      "code": "overlapping_gsap_tweens",
+      "severity": "warning",
+      "message": "GSAP tweens overlap on \"#cap-20-3\" for color between 40.17s and 40.17s.",
+      "selector": "#cap-20-3",
+      "fixHint": "Shorten the earlier tween, move the later tween, or add `overwrite: \"auto\"`.",
+      "snippet": "tl.fromTo(\"#cap-20-3\", { color: \"#E04A40\", duration: 0.06 }, 40.106) tl.to(\"#cap-20-3\", { color: \"#211D17\", duration: 0.06 }, 40.166)",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/captions.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"ground\" data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip ground f1\" data-start=\"0\" data-duration=\"6.089\" data-track-index=\"0\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/01-question.html",
+      "line": 15,
+      "column": 117
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"content\" data-start=\"0\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip content\" data-start=\"0\" data-duration=\"6.089\" data-track-index=\"1\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/01-question.html",
+      "line": 15,
+      "column": 209
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"ground\" data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip ground f2\" data-start=\"0\" data-duration=\"6.108\" data-track-index=\"0\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/02-benefit.html",
+      "line": 15,
+      "column": 116
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"content\" data-start=\"0\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip content\" data-start=\"0\" data-duration=\"6.108\" data-track-index=\"1\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/02-benefit.html",
+      "line": 15,
+      "column": 208
+    },
+    {
+      "code": "duplicate_media_discovery_risk",
+      "severity": "warning",
+      "message": "Detected 2 matching img entries with the same source/start/duration.",
+      "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation.",
+      "snippet": "img src=assets/brand-logo.png data-start= data-duration=",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/02-benefit.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"ground\" data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip ground f3\" data-start=\"0\" data-duration=\"7.65\" data-track-index=\"0\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/03-practice.html",
+      "line": 15,
+      "column": 116
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"content\" data-start=\"0\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip content\" data-start=\"0\" data-duration=\"7.65\" data-track-index=\"1\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/03-practice.html",
+      "line": 15,
+      "column": 207
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"ground\" data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip ground f4\" data-start=\"0\" data-duration=\"8.897\" data-track-index=\"0\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/04-ai-voice.html",
+      "line": 15,
+      "column": 117
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"content\" data-start=\"0\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip content\" data-start=\"0\" data-duration=\"8.897\" data-track-index=\"1\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/04-ai-voice.html",
+      "line": 15,
+      "column": 209
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"ground\" data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip ground f5\" data-start=\"0\" data-duration=\"8.012\" data-track-index=\"0\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/05-speak.html",
+      "line": 15,
+      "column": 114
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"content\" data-start=\"0\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip content\" data-start=\"0\" data-duration=\"8.012\" data-track-index=\"1\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/05-speak.html",
+      "line": 15,
+      "column": 206
+    },
+    {
+      "code": "duplicate_media_discovery_risk",
+      "severity": "warning",
+      "message": "Detected 2 matching img entries with the same source/start/duration.",
+      "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation.",
+      "snippet": "img src=assets/product/voice.png data-start= data-duration=",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/05-speak.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"ground\" data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip ground f6\" data-start=\"0\" data-duration=\"7.3\" data-track-index=\"0\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/06-help.html",
+      "line": 15,
+      "column": 111
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"content\" data-start=\"0\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip content\" data-start=\"0\" data-duration=\"7.3\" data-track-index=\"1\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/06-help.html",
+      "line": 15,
+      "column": 201
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"ground\" data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip ground f7\" data-start=\"0\" data-duration=\"7.65\" data-track-index=\"0\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/07-retry.html",
+      "line": 15,
+      "column": 113
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"content\" data-start=\"0\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip content\" data-start=\"0\" data-duration=\"7.65\" data-track-index=\"1\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/07-retry.html",
+      "line": 15,
+      "column": 204
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"ground\" data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip ground f8\" data-start=\"0\" data-duration=\"10.394000\" data-track-index=\"0\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/08-profile-link.html",
+      "line": 15,
+      "column": 125
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"content\" data-start=\"0\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip content\" data-start=\"0\" data-duration=\"10.394000\" data-track-index=\"1\">",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/08-profile-link.html",
+      "line": 15,
+      "column": 221
+    },
+    {
+      "code": "duplicate_media_discovery_risk",
+      "severity": "warning",
+      "message": "Detected 4 matching img entries with the same source/start/duration.",
+      "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation.",
+      "snippet": "img src=assets/brand-logo.png data-start= data-duration=",
+      "file": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/08-profile-link.html"
+    }
+  ],
+  "filesScanned": 10,
+  "_meta": {
+    "version": "0.8.148",
+    "latestVersion": "0.8.149",
+    "updateAvailable": true
+  }
+}

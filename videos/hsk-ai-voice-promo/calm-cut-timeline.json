@@ -1,0 +1,70 @@
+{
+  "duration": 60,
+  "voice": "Kore",
+  "sourceDuration": 50.448,
+  "timestampRepairs": [
+    {
+      "text": "Затем",
+      "originalStart": "3.600s",
+      "verifiedStart": "13.6s",
+      "source": "timing-repair-timestamps.json",
+      "clipSourceStart": 13
+    }
+  ],
+  "normalization": [
+    "Latin v → Russian в in ASR only",
+    "Hyphenated words normalized into lexical parts",
+    "ё/е equivalent in matching",
+    "One zero-length ASR cue expanded to the minimum 1 ms"
+  ],
+  "frames": [
+    {
+      "id": 1,
+      "title": "Speaking pause",
+      "start": 0,
+      "end": 11.597,
+      "duration": 11.597,
+      "src": "compositions/frames/01-hook.html",
+      "voiceFrames": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Course to conversation",
+      "start": 11.597,
+      "end": 18.947,
+      "duration": 7.35,
+      "src": "compositions/frames/02-study.html",
+      "voiceFrames": [
+        3
+      ]
+    },
+    {
+      "id": 3,
+      "title": "AI Voice demonstration",
+      "start": 18.947,
+      "end": 49.606,
+      "duration": 30.659000000000002,
+      "src": "compositions/frames/03-ai-voice.html",
+      "voiceFrames": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Download HSK AI",
+      "start": 49.606,
+      "end": 60,
+      "duration": 10.393999999999998,
+      "src": "compositions/frames/04-cta.html",
+      "voiceFrames": [
+        8
+      ]
+    }
+  ]
+}

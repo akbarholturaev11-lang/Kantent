@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "1.0",
+  "operation": "environment.inspect",
+  "status": "completed",
+  "ok": true,
+  "context": "codex",
+  "requestId": "3d351956-8b26-48e2-88b7-5255ba4c43d5",
+  "startedAt": "2026-10-12T04:33:52.935Z",
+  "finishedAt": "2026-10-12T04:33:53.069Z",
+  "durationMs": 132.479917,
+  "input": {
+    "action": "probe",
+    "input": "renders/hsk-ai-ai-voice-60s.mp4",
+    "ffmpegPath": "/opt/homebrew/bin/ffmpeg",
+    "ffprobePath": "/opt/homebrew/bin/ffprobe"
+  },
+  "output": {
+    "source": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/renders/hsk-ai-ai-voice-60s.mp4",
+    "planned": false,
+    "media": {
+      "source": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/renders/hsk-ai-ai-voice-60s.mp4",
+      "format": {
+        "formatName": "mov,mp4,m4a,3gp,3g2,mj2",
+        "formatLongName": "QuickTime / MOV",
+        "durationSeconds": 60,
+        "sizeBytes": 3893637,
+        "bitrate": 519151,
+        "tags": {
+          "minor_version": "512;512",
+          "major_brand": "isom;isom",
+          "compatible_brands": "isomiso2avc1mp41;isomiso2avc1mp41",
+          "hyperframes_version": "0.8.148",
+          "hyperframes_renderer": "hyperframes",
+          "encoder": "Lavf63.1.102"
+        }
+      },
+      "streams": [
+        {
+          "index": 0,
+          "codecType": "video",
+          "codecName": "h264",
+          "codecLongName": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+          "durationSeconds": 60,
+          "timeBase": "1/15360",
+          "startTimeSeconds": 0,
+          "bitrate": 347963,
+          "tags": {
+            "language": "und",
+            "handler_name": "VideoHandler",
+            "encoder": "Lavc63.1.102 libx264"
+          },
+          "width": 1080,
+          "height": 1920,
+          "pixelFormat": "yuv420p",
+          "sampleAspectRatio": "1:1",
+          "displayAspectRatio": "9:16",
+          "averageFrameRate": "30/1",
+          "realFrameRate": "30/1",
+          "fieldOrder": "progressive"
+        },
+        {
+          "index": 1,
+          "codecType": "audio",
+          "codecName": "aac",
+          "codecLongName": "AAC (Advanced Audio Coding)",
+          "durationSeconds": 60,
+          "timeBase": "1/48000",
+          "startTimeSeconds": 0,
+          "bitrate": 163986,
+          "tags": {
+            "language": "und",
+            "handler_name": "SoundHandler"
+          },
+          "sampleRate": 48000,
+          "channels": 2,
+          "channelLayout": "stereo",
+          "sampleFormat": "fltp"
+        }
+      ],
+      "video": [
+        {
+          "index": 0,
+          "codecType": "video",
+          "codecName": "h264",
+          "codecLongName": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+          "durationSeconds": 60,
+          "timeBase": "1/15360",
+          "startTimeSeconds": 0,
+          "bitrate": 347963,
+          "tags": {
+            "language": "und",
+            "handler_name": "VideoHandler",
+            "encoder": "Lavc63.1.102 libx264"
+          },
+          "width": 1080,
+          "height": 1920,
+          "pixelFormat": "yuv420p",
+          "sampleAspectRatio": "1:1",
+          "displayAspectRatio": "9:16",
+          "averageFrameRate": "30/1",
+          "realFrameRate": "30/1",
+          "fieldOrder": "progressive"
+        }
+      ],
+      "audio": [
+        {
+          "index": 1,
+          "codecType": "audio",
+          "codecName": "aac",
+          "codecLongName": "AAC (Advanced Audio Coding)",
+          "durationSeconds": 60,
+          "timeBase": "1/48000",
+          "startTimeSeconds": 0,
+          "bitrate": 163986,
+          "tags": {
+            "language": "und",
+            "handler_name": "SoundHandler"
+          },
+          "sampleRate": 48000,
+          "channels": 2,
+          "channelLayout": "stereo",
+          "sampleFormat": "fltp"
+        }
+      ]
+    },
+    "invocation": "/opt/homebrew/bin/ffprobe -v error -show_format -show_streams -of json '/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/renders/hsk-ai-ai-voice-60s.mp4'",
+    "execution": {
+      "binary": "/opt/homebrew/bin/ffprobe",
+      "args": [
+        "-v",
+        "error",
+        "-show_format",
+        "-show_streams",
+        "-of",
+        "json",
+        "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/renders/hsk-ai-ai-voice-60s.mp4"
+      ],
+      "exitCode": 0,
+      "durationMs": 128.22362499999997,
+      "stdout": "{\n    \"streams\": [\n        {\n            \"index\": 0,\n            \"codec_name\": \"h264\",\n            \"codec_long_name\": \"H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10\",\n            \"profile\": \"High\",\n            \"codec_type\": \"video\",\n            \"codec_tag_string\": \"avc1\",\n            \"codec_tag\": \"0x31637661\",\n            \"mime_codec_string\": \"avc1.640032\",\n            \"width\": 1080,\n            \"height\": 1920,\n            \"coded_width\": 1080,\n            \"coded_height\": 1920,\n            \"has_b_frames\": 0,\n            \"sample_aspect_ratio\": \"1:1\",\n            \"display_aspect_ratio\": \"9:16\",\n            \"pix_fmt\": \"yuv420p\",\n            \"level\": 50,\n            \"color_range\": \"tv\",\n            \"color_space\": \"bt709\",\n            \"color_transfer\": \"bt709\",\n            \"color_primaries\": \"bt709\",\n            \"chroma_location\": \"left\",\n            \"field_order\": \"progressive\",\n            \"is_avc\": \"true\",\n            \"nal_length_size\": \"4\",\n            \"id\": \"0x1\",\n            \"r_frame_rate\": \"30/1\",\n            \"avg_frame_rate\": \"30/1\",\n            \"time_base\": \"1/15360\",\n            \"start_pts\": 0,\n            \"start_time\": \"0.000000\",\n            \"duration_ts\": 921600,\n            \"duration\": \"60.000000\",\n            \"bit_rate\": \"347963\",\n            \"bits_per_raw_sample\": \"8\",\n            \"nb_frames\": \"1800\",\n            \"extradata_size\": 50,\n            \"disposition\": {\n                \"default\": 1,\n                \"dub\": 0,\n                \"original\": 0,\n                \"comment\": 0,\n                \"lyrics\": 0,\n                \"karaoke\": 0,\n                \"forced\": 0,\n                \"hearing_impaired\": 0,\n                \"visual_impaired\": 0,\n                \"clean_effects\": 0,\n                \"attached_pic\": 0,\n                \"timed_thumbnails\": 0,\n                \"non_diegetic\": 0,\n                \"captions\": 0,\n                \"descriptions\": 0,\n                \"metadata\": 0,\n                \"dependent\": 0,\n                \"still_image\": 0,\n                \"multilayer\": 0\n            },\n            \"tags\": {\n                \"language\": \"und\",\n                \"handler_name\": \"VideoHandler\",\n                \"encoder\": \"Lavc63.1.102 libx264\"\n            }\n        },\n        {\n            \"index\": 1,\n            \"codec_name\": \"aac\",\n            \"codec_long_name\": \"AAC (Advanced Audio Coding)\",\n            \"profile\": \"LC\",\n            \"codec_type\": \"audio\",\n            \"codec_tag_string\": \"mp4a\",\n            \"codec_tag\": \"0x6134706d\",\n            \"mime_codec_string\": \"mp4a.40.2\",\n            \"sample_fmt\": \"fltp\",\n            \"sample_rate\": \"48000\",\n            \"channels\": 2,\n            \"channel_layout\": \"stereo\",\n            \"bits_per_sample\": 0,\n            \"initial_padding\": 1024,\n            \"id\": \"0x2\",\n            \"r_frame_rate\": \"0/0\",\n            \"avg_frame_rate\": \"0/0\",\n            \"time_base\": \"1/48000\",\n            \"start_pts\": 0,\n            \"start_time\": \"0.000000\",\n            \"duration_ts\": 2880000,\n            \"duration\": \"60.000000\",\n            \"bit_rate\": \"163986\",\n            \"nb_frames\": \"2814\",\n            \"extradata_size\": 5,\n            \"disposition\": {\n                \"default\": 1,\n                \"dub\": 0,\n                \"original\": 0,\n                \"comment\": 0,\n                \"lyrics\": 0,\n                \"karaoke\": 0,\n                \"forced\": 0,\n                \"hearing_impaired\": 0,\n                \"visual_impaired\": 0,\n                \"clean_effects\": 0,\n                \"attached_pic\": 0,\n                \"timed_thumbnails\": 0,\n                \"non_diegetic\": 0,\n                \"captions\": 0,\n                \"descriptions\": 0,\n                \"metadata\": 0,\n                \"dependent\": 0,\n                \"still_image\": 0,\n                \"multilayer\": 0\n            },\n            \"tags\": {\n                \"language\": \"und\",\n                \"handler_name\": \"SoundHandler\"\n            }\n        }\n    ],\n    \"format\": {\n        \"filename\": \"/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/renders/hsk-ai-ai-voice-60s.mp4\",\n        \"nb_streams\": 2,\n        \"nb_programs\": 0,\n        \"nb_stream_groups\": 0,\n        \"format_name\": \"mov,mp4,m4a,3gp,3g2,mj2\",\n        \"format_long_name\": \"QuickTime / MOV\",\n        \"start_time\": \"0.000000\",\n        \"duration\": \"60.000000\",\n        \"size\": \"3893637\",\n        \"bit_rate\": \"519151\",\n        \"probe_score\": 100,\n        \"tags\": {\n            \"minor_version\": \"512;512\",\n            \"major_brand\": \"isom;isom\",\n            \"compatible_brands\": \"isomiso2avc1mp41;isomiso2avc1mp41\",\n            \"hyperframes_version\": \"0.8.148\",\n            \"hyperframes_renderer\": \"hyperframes\",\n            \"encoder\": \"Lavf63.1.102\"\n        }\n    }\n}\n",
+      "stderr": "",
+      "executed": true,
+      "stdoutTruncated": false,
+      "stderrTruncated": false
+    }
+  },
+  "artifacts": [],
+  "warnings": [],
+  "next": [
+    "Use the matching domain Skill after the required capability or media metadata is confirmed."
+  ],
+  "error": null
+}

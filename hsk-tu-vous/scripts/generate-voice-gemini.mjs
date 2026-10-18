@@ -79,23 +79,38 @@ async function loadGeminiEnvironment(profile) {
 }
 
 async function requestJson(url, options, label) {
-  const response = await fetch(url, options);
-  const text = await response.text();
-  let data = {};
-  if (text) {
-    try {
-      data = JSON.parse(text);
-    } catch {
-      throw new Error(`${label}: Gemini returned a non-JSON response.`);
+  const maxAttempts = 4;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const response = await fetch(url, {
+      ...options,
+      signal: options.signal ?? AbortSignal.timeout(120_000),
+    });
+    const text = await response.text();
+    let data = {};
+    if (text) {
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error(`${label}: Gemini returned a non-JSON response.`);
+      }
     }
-  }
-  if (!response.ok) {
+    if (response.ok) return { data, headers: response.headers };
+
     const detail = data?.error?.message;
+    const retryable = response.status === 429 || response.status >= 500;
+    if (retryable && attempt < maxAttempts) {
+      const delayMs = 1000 * 2 ** attempt;
+      console.warn(
+        `${label} returned HTTP ${response.status}; retrying in ${delayMs / 1000}s (${attempt}/${maxAttempts - 1}).`,
+      );
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+      continue;
+    }
     throw new Error(
       `${label} failed (HTTP ${response.status})${detail ? `: ${detail}` : ""}`,
     );
   }
-  return { data, headers: response.headers };
+  throw new Error(`${label} failed after ${maxAttempts} attempts.`);
 }
 
 function getAudioData(interaction) {
@@ -132,11 +147,32 @@ function parseOffsetMs(offset) {
   throw new Error(`Gemini word timestamp format not recognized: ${offset}`);
 }
 
+const wordTokenPattern = /[\p{L}\p{N}]+(?:[-‐‑‒–—][\p{L}\p{N}]+)*/gu;
+
 function tokenParts(value) {
-  const transcriptionAliases = { цай: "цзай", тя: "цзя" };
-  return (value.match(/[\p{L}\p{N}]+/gu) ?? []).map((token) => {
+  const transcriptionAliases = {
+    цай: "цзай",
+    тя: "цзя",
+    我: "во",
+    想: "сян",
+    喝: "хэ",
+    茶: "ча",
+    要: "яо",
+    一: "и",
+    杯: "бэй",
+    水: "шуй",
+  };
+  return (value.match(wordTokenPattern) ?? []).flatMap((token) => {
     const normalized = token.toLocaleLowerCase("ru-RU").replaceAll("ё", "е");
-    return transcriptionAliases[normalized] ?? normalized;
+    // Mandarin transcripts may time each Hanzi syllable separately even when
+    // the written narration has no spaces. Keep the source phrase as one
+    // caption word while aligning its characters against those timed units.
+    if (/^\p{Script=Han}+$/u.test(normalized)) {
+      return Array.from(normalized, (character) =>
+        transcriptionAliases[character] ?? character,
+      );
+    }
+    return [transcriptionAliases[normalized] ?? normalized];
   });
 }
 
@@ -148,7 +184,7 @@ function spokenParts(token) {
 }
 
 function sourceWords(text) {
-  const matches = [...text.matchAll(/[\p{L}\p{N}]+/gu)];
+  const matches = [...text.matchAll(wordTokenPattern)];
   return matches.map((match, index) => {
     const end =
       index + 1 < matches.length ? matches[index + 1].index : text.length;
@@ -156,19 +192,22 @@ function sourceWords(text) {
     const punctuation = gap.match(/^[»”"']*([,.!?;:…])/u)?.[1] ?? "";
     return {
       display: `${match[0]}${punctuation}`,
-      normalized: tokenParts(match[0])[0],
+      normalized: tokenParts(match[0]),
     };
   });
 }
 
 function flattenExpected(words) {
   return words.flatMap((word, wordIndex) =>
-    spokenParts(word.normalized).map((text) => ({ text, wordIndex })),
+    word.normalized.flatMap((token) =>
+      spokenParts(token).map((text) => ({ text, wordIndex })),
+    ),
   );
 }
 
 function flattenRecognized(annotations, audioDurationMs, timingRepairs) {
   let previousStartMs = -1;
+  let previousEndMs = -1;
   return annotations.flatMap((annotation, index) => {
     const rawStartMs = parseOffsetMs(
       annotation.start_offset ?? annotation.startOffset,
@@ -182,12 +221,27 @@ function flattenRecognized(annotations, audioDurationMs, timingRepairs) {
     ) {
       throw new Error("Gemini returned an invalid word timing.");
     }
-    const startMs = Math.max(rawStartMs, previousStartMs);
-    if (startMs !== rawStartMs) {
-      const correctionMs = startMs - rawStartMs;
-      if (correctionMs > 250)
+    let startMs = rawStartMs;
+    if (rawStartMs < previousStartMs) {
+      const correctionMs = previousStartMs - rawStartMs;
+      if (correctionMs <= 250) {
+        startMs = previousStartMs;
+        timingRepairs.push({ index, field: "start", correctionMs });
+      } else if (
+        previousEndMs >= 0 &&
+        rawEndMs >= previousEndMs &&
+        rawEndMs - previousEndMs <= 250
+      ) {
+        startMs = previousEndMs;
+        timingRepairs.push({
+          index,
+          field: "start",
+          correctionMs: startMs - rawStartMs,
+          reason: "repaired-from-adjacent-word-boundary",
+        });
+      } else {
         throw new Error("Gemini word timings moved backwards by more than 250 ms.");
-      timingRepairs.push({ index, field: "start", correctionMs });
+      }
     }
     let endMs = rawEndMs;
     if (endMs <= startMs) {
@@ -200,6 +254,7 @@ function flattenRecognized(annotations, audioDurationMs, timingRepairs) {
     if (endMs > audioDurationMs + 100)
       throw new Error("Gemini word timing ends after the generated audio.");
     previousStartMs = startMs;
+    previousEndMs = endMs;
     return tokenParts(annotation.text).flatMap((token) =>
       spokenParts(token).map((text) => ({
         text,
@@ -682,6 +737,7 @@ const narration = (PLATFORM
   .replace(/\s+/g, " ")
   .trim();
 if (!narration) throw new Error("Episode has no narration to voice.");
+const transcriptionLanguages = ["ru-RU", "zh-CN"];
 const currentNarrationHash = narrationHash(episode);
 if (episode.voiceTextHash && episode.voiceTextHash !== currentNarrationHash) {
   throw new Error("Saved voice script fingerprint no longer matches the narration.");
@@ -738,7 +794,7 @@ if (RESUME_FOLDER_NAME) {
   metadata.sourceRevision = sourceRevision;
   metadata.transcriptionModel = config.transcribeModel;
   metadata.wordAlignment =
-    "Gemini Transcribe verbatim; word timestamps; normalized-token gate (цай→цзай, тя→цзя, сюэсяо→сюэ сяо; HSK/AI spoken letters)";
+    `Gemini Transcribe verbatim with ${transcriptionLanguages.join(" and ")} language hints; word timestamps; normalized-token gate (цай→цзай, тя→цзя, сюэсяо→сюэ сяо; Mandarin Hanzi-to-script phonetic aliases; HSK/AI acronym recognition)`;
 } else {
   metadata = {
     production: true,
@@ -754,7 +810,7 @@ if (RESUME_FOLDER_NAME) {
     voice: config.voice,
     transcriptionModel: config.transcribeModel,
     wordAlignment:
-      "Gemini Transcribe verbatim; word timestamps; normalized-token gate (цай→цзай, тя→цзя, сюэсяо→сюэ сяо; HSK/AI spoken letters)",
+      `Gemini Transcribe verbatim with ${transcriptionLanguages.join(" and ")} language hints; word timestamps; normalized-token gate (цай→цзай, тя→цзя, сюэсяо→сюэ сяо; Mandarin Hanzi-to-script phonetic aliases; HSK/AI acronym recognition)`,
   };
 }
 
@@ -917,7 +973,7 @@ try {
               }],
               generation_config: {
                 transcription_config: {
-                  language_codes: ["ru-RU"],
+                  language_codes: transcriptionLanguages,
                   mode: { type: "verbatim", timestamp_granularities: ["word"] },
                 },
               },
@@ -1106,6 +1162,13 @@ try {
       `Gemini transcript differs from the narration in ${alignment.mismatches.length} place(s); audio was kept, VTT was not written.`,
     );
   }
+  if (metadata.lastTranscriptionMismatch) {
+    metadata.previousRejectedTranscription ??= metadata.lastTranscriptionMismatch;
+    delete metadata.lastTranscriptionMismatch;
+  }
+  delete metadata.transcriptMismatchCount;
+  delete metadata.firstTranscriptMismatches;
+  delete metadata.lastTranscriptionError;
   await fs.writeFile(
     path.join(outputDir, "captions.vtt"),
     writeVtt(alignment.captions),

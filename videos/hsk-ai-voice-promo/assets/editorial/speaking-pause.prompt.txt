@@ -1,0 +1,10 @@
+Use case: photorealistic-natural
+Asset type: full-screen vertical opening still for a 60-second HSK AI language-learning advertisement
+Scene/backdrop: a quiet contemporary study café beside a window, warm natural daylight, a young adult Central Asian Chinese-language learner pausing over a notebook while a classmate sits softly out of focus across the table
+Subject: one real-looking adult learner, composed and thoughtful, caught in a small natural moment of hesitation before speaking; understated expression, candid posture, ordinary modern clothing
+Style/medium: premium documentary lifestyle photography, realistic skin and fabric texture, natural lens perspective, restrained and believable
+Composition/framing: vertical 9:16 portrait, medium shot, learner in the upper-middle of frame, calm room detail around them, bottom quarter kept visually quiet for later subtitle overlay
+Lighting/mood: soft window light, cinematic depth of field, reflective and human rather than dramatic
+Color palette: warm wood, muted charcoal and cream with a small restrained red accent in the environment; natural believable colors
+Text (verbatim): none
+Constraints: no visible readable words, no logos, no flags, no phone screen or invented app interface, no watermark; one person in focus; no exaggerated embarrassment, cartoon reaction, staged pointing, or glossy stock-photo posing

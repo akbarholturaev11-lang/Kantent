@@ -1,0 +1,38 @@
+{
+  "bgm": null,
+  "voices": [
+    {
+      "frame": 1,
+      "path": "assets/voiceover/narration/scene-01.wav"
+    },
+    {
+      "frame": 2,
+      "path": "assets/voiceover/narration/scene-02.wav"
+    },
+    {
+      "frame": 3,
+      "path": "assets/voiceover/narration/scene-03.wav"
+    },
+    {
+      "frame": 4,
+      "path": "assets/voiceover/narration/scene-04.wav"
+    },
+    {
+      "frame": 5,
+      "path": "assets/voiceover/narration/scene-05.wav"
+    },
+    {
+      "frame": 6,
+      "path": "assets/voiceover/narration/scene-06.wav"
+    },
+    {
+      "frame": 7,
+      "path": "assets/voiceover/narration/scene-07.wav"
+    },
+    {
+      "frame": 8,
+      "path": "assets/voiceover/narration/scene-08.wav"
+    }
+  ],
+  "sfx": []
+}

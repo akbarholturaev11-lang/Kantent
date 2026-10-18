@@ -180,6 +180,18 @@
       "url": "https://chinesegrammar.app/grammar/yao-xiang-dasuan",
       "checkedAt": "2026-10-11",
       "supports": "想 and 要 can both convey desire or intention; strength and interpretation depend on context."
+    },
+    {
+      "title": "Elementary Chinese Grammar 基础汉语语法 — University of Oxford CTCFL",
+      "url": "https://www.ctcfl.ox.ac.uk/media/pages/pdf/lang-work_grammar-database_grammar-database-for-hard-copy.pdf",
+      "checkedAt": "2026-10-15",
+      "supports": "Lists 要 yào as want/ask for/wish/desire and 想 xiǎng as want to/would like to/feel like, supporting the core meanings and tone-marked pinyin."
+    },
+    {
+      "title": "Teacher’s Guide: Modal verbs 想 and 要 — Palacký University Chingram",
+      "url": "https://chingram.upol.cz/grammar/uber%EF%BC%9Amodal-verb-yao-%E8%A6%81-want-to-desire-to-need-to-have-to/teachers-guide-modal-verbs-%E6%83%B3-and-%E8%A6%81",
+      "checkedAt": "2026-10-15",
+      "supports": "Explains that 想 + verb expresses a softer wish (e.g. 我想喝一杯水), while 要 + noun can be a more direct request (e.g. 我要一杯水); interpretation depends on context."
     }
   ],
   "hookExperiment": {

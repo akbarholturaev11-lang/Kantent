@@ -1,0 +1,510 @@
+{
+  "model": "gemini-3.5-transcribe",
+  "words": [
+    {
+      "text": "Знаешь",
+      "startOffset": "0.300s",
+      "endOffset": "0.700s"
+    },
+    {
+      "text": "китайские",
+      "startOffset": "0.700s",
+      "endOffset": "1.200s"
+    },
+    {
+      "text": "слова,",
+      "startOffset": "1.200s",
+      "endOffset": "1.700s"
+    },
+    {
+      "text": "но",
+      "startOffset": "1.700s",
+      "endOffset": "2s"
+    },
+    {
+      "text": "когда",
+      "startOffset": "2s",
+      "endOffset": "2.300s"
+    },
+    {
+      "text": "нужно",
+      "startOffset": "2.300s",
+      "endOffset": "2.700s"
+    },
+    {
+      "text": "ответить,",
+      "startOffset": "2.700s",
+      "endOffset": "3.400s"
+    },
+    {
+      "text": "теряешься?",
+      "startOffset": "3.400s",
+      "endOffset": "4.200s"
+    },
+    {
+      "text": "С",
+      "startOffset": "5s",
+      "endOffset": "5.100s"
+    },
+    {
+      "text": "HSK",
+      "startOffset": "5.100s",
+      "endOffset": "5.800s"
+    },
+    {
+      "text": "AI",
+      "startOffset": "5.800s",
+      "endOffset": "6s"
+    },
+    {
+      "text": "переходи",
+      "startOffset": "6s",
+      "endOffset": "6.600s"
+    },
+    {
+      "text": "от",
+      "startOffset": "6.600s",
+      "endOffset": "6.700s"
+    },
+    {
+      "text": "изучения",
+      "startOffset": "6.700s",
+      "endOffset": "7.200s"
+    },
+    {
+      "text": "слов",
+      "startOffset": "7.200s",
+      "endOffset": "7.600s"
+    },
+    {
+      "text": "к",
+      "startOffset": "7.600s",
+      "endOffset": "7.700s"
+    },
+    {
+      "text": "разговорной",
+      "startOffset": "7.700s",
+      "endOffset": "8.500s"
+    },
+    {
+      "text": "практике.",
+      "startOffset": "8.500s",
+      "endOffset": "9s"
+    },
+    {
+      "text": "Проходи",
+      "startOffset": "9.600s",
+      "endOffset": "10s"
+    },
+    {
+      "text": "уроки,",
+      "startOffset": "10s",
+      "endOffset": "10.400s"
+    },
+    {
+      "text": "повторяй",
+      "startOffset": "10.400s",
+      "endOffset": "11s"
+    },
+    {
+      "text": "лексику",
+      "startOffset": "11s",
+      "endOffset": "11.600s"
+    },
+    {
+      "text": "и",
+      "startOffset": "11.600s",
+      "endOffset": "11.800s"
+    },
+    {
+      "text": "проверяй",
+      "startOffset": "11.800s",
+      "endOffset": "12.200s"
+    },
+    {
+      "text": "себя",
+      "startOffset": "12.200s",
+      "endOffset": "12.500s"
+    },
+    {
+      "text": "v",
+      "startOffset": "12.500s",
+      "endOffset": "12.600s"
+    },
+    {
+      "text": "тестах.",
+      "startOffset": "12.600s",
+      "endOffset": "13s"
+    },
+    {
+      "text": "Затем",
+      "startOffset": "3.600s",
+      "endOffset": "14.100s"
+    },
+    {
+      "text": "используй",
+      "startOffset": "14.100s",
+      "endOffset": "14.600s"
+    },
+    {
+      "text": "знакомые",
+      "startOffset": "14.600s",
+      "endOffset": "15s"
+    },
+    {
+      "text": "слова",
+      "startOffset": "15s",
+      "endOffset": "15.300s"
+    },
+    {
+      "text": "в",
+      "startOffset": "15.300s",
+      "endOffset": "15.500s"
+    },
+    {
+      "text": "разговоре.",
+      "startOffset": "15.500s",
+      "endOffset": "16.200s"
+    },
+    {
+      "text": "Открой",
+      "startOffset": "16.500s",
+      "endOffset": "17s"
+    },
+    {
+      "text": "AI",
+      "startOffset": "17s",
+      "endOffset": "17.300s"
+    },
+    {
+      "text": "Voice.",
+      "startOffset": "17.300s",
+      "endOffset": "17.800s"
+    },
+    {
+      "text": "Здесь",
+      "startOffset": "18s",
+      "endOffset": "18.300s"
+    },
+    {
+      "text": "ты",
+      "startOffset": "18.300s",
+      "endOffset": "18.400s"
+    },
+    {
+      "text": "практикуешь",
+      "startOffset": "18.400s",
+      "endOffset": "19s"
+    },
+    {
+      "text": "китайский",
+      "startOffset": "19s",
+      "endOffset": "19.600s"
+    },
+    {
+      "text": "с",
+      "startOffset": "19.600s",
+      "endOffset": "19.800s"
+    },
+    {
+      "text": "AI",
+      "startOffset": "19.800s",
+      "endOffset": "20s"
+    },
+    {
+      "text": "собеседником",
+      "startOffset": "20s",
+      "endOffset": "21s"
+    },
+    {
+      "text": "на",
+      "startOffset": "21s",
+      "endOffset": "21.200s"
+    },
+    {
+      "text": "своём",
+      "startOffset": "21.200s",
+      "endOffset": "21.700s"
+    },
+    {
+      "text": "уровне",
+      "startOffset": "21.700s",
+      "endOffset": "22.200s"
+    },
+    {
+      "text": "HSK.",
+      "startOffset": "22.200s",
+      "endOffset": "22.700s"
+    },
+    {
+      "text": "Запиши",
+      "startOffset": "23.200s",
+      "endOffset": "23.600s"
+    },
+    {
+      "text": "фразу",
+      "startOffset": "23.600s",
+      "endOffset": "23.900s"
+    },
+    {
+      "text": "голосом.",
+      "startOffset": "23.900s",
+      "endOffset": "24.300s"
+    },
+    {
+      "text": "Собеседник",
+      "startOffset": "25s",
+      "endOffset": "25.500s"
+    },
+    {
+      "text": "ответит",
+      "startOffset": "25.500s",
+      "endOffset": "25.900s"
+    },
+    {
+      "text": "по-китайски",
+      "startOffset": "25.900s",
+      "endOffset": "26.700s"
+    },
+    {
+      "text": "и",
+      "startOffset": "26.700s",
+      "endOffset": "26.800s"
+    },
+    {
+      "text": "продолжит",
+      "startOffset": "26.800s",
+      "endOffset": "27.300s"
+    },
+    {
+      "text": "разговор",
+      "startOffset": "27.300s",
+      "endOffset": "27.800s"
+    },
+    {
+      "text": "коротким",
+      "startOffset": "27.800s",
+      "endOffset": "28.300s"
+    },
+    {
+      "text": "вопросом.",
+      "startOffset": "28.300s",
+      "endOffset": "28.700s"
+    },
+    {
+      "text": "Не",
+      "startOffset": "29.600s",
+      "endOffset": "29.800s"
+    },
+    {
+      "text": "знаешь,",
+      "startOffset": "29.800s",
+      "endOffset": "30s"
+    },
+    {
+      "text": "что",
+      "startOffset": "30s",
+      "endOffset": "30.200s"
+    },
+    {
+      "text": "сказать?",
+      "startOffset": "30.200s",
+      "endOffset": "30.700s"
+    },
+    {
+      "text": "Посмотри",
+      "startOffset": "31.100s",
+      "endOffset": "31.400s"
+    },
+    {
+      "text": "подсказки",
+      "startOffset": "31.400s",
+      "endOffset": "32.100s"
+    },
+    {
+      "text": "-",
+      "startOffset": "32.400s",
+      "endOffset": "32.500s"
+    },
+    {
+      "text": "китайскую",
+      "startOffset": "32.500s",
+      "endOffset": "33s"
+    },
+    {
+      "text": "фразу,",
+      "startOffset": "33s",
+      "endOffset": "33.600s"
+    },
+    {
+      "text": "пиньинь",
+      "startOffset": "33.600s",
+      "endOffset": "34s"
+    },
+    {
+      "text": "с",
+      "startOffset": "34s",
+      "endOffset": "34s"
+    },
+    {
+      "text": "тонами",
+      "startOffset": "34s",
+      "endOffset": "34.600s"
+    },
+    {
+      "text": "и",
+      "startOffset": "34.700s",
+      "endOffset": "34.900s"
+    },
+    {
+      "text": "перевод.",
+      "startOffset": "34.900s",
+      "endOffset": "35.300s"
+    },
+    {
+      "text": "AI",
+      "startOffset": "36.400s",
+      "endOffset": "36.700s"
+    },
+    {
+      "text": "помогает",
+      "startOffset": "36.700s",
+      "endOffset": "37.200s"
+    },
+    {
+      "text": "заметить",
+      "startOffset": "37.200s",
+      "endOffset": "37.700s"
+    },
+    {
+      "text": "важные",
+      "startOffset": "37.700s",
+      "endOffset": "38.200s"
+    },
+    {
+      "text": "ошибки.",
+      "startOffset": "38.200s",
+      "endOffset": "38.800s"
+    },
+    {
+      "text": "После",
+      "startOffset": "39s",
+      "endOffset": "39.200s"
+    },
+    {
+      "text": "разговора",
+      "startOffset": "39.200s",
+      "endOffset": "39.800s"
+    },
+    {
+      "text": "посмотри",
+      "startOffset": "39.800s",
+      "endOffset": "40.200s"
+    },
+    {
+      "text": "исправления",
+      "startOffset": "40.200s",
+      "endOffset": "40.900s"
+    },
+    {
+      "text": "и",
+      "startOffset": "41.100s",
+      "endOffset": "41.200s"
+    },
+    {
+      "text": "попробуй",
+      "startOffset": "41.200s",
+      "endOffset": "41.700s"
+    },
+    {
+      "text": "ответить",
+      "startOffset": "41.700s",
+      "endOffset": "42.100s"
+    },
+    {
+      "text": "иначе.",
+      "startOffset": "42.100s",
+      "endOffset": "42.500s"
+    },
+    {
+      "text": "Попробуй",
+      "startOffset": "43.300s",
+      "endOffset": "43.800s"
+    },
+    {
+      "text": "HSK",
+      "startOffset": "43.800s",
+      "endOffset": "44.400s"
+    },
+    {
+      "text": "AI.",
+      "startOffset": "44.400s",
+      "endOffset": "44.700s"
+    },
+    {
+      "text": "Зайди",
+      "startOffset": "44.900s",
+      "endOffset": "45.200s"
+    },
+    {
+      "text": "в",
+      "startOffset": "45.200s",
+      "endOffset": "45.300s"
+    },
+    {
+      "text": "профиль,",
+      "startOffset": "45.300s",
+      "endOffset": "45.800s"
+    },
+    {
+      "text": "открой",
+      "startOffset": "45.800s",
+      "endOffset": "46.100s"
+    },
+    {
+      "text": "ссылку,",
+      "startOffset": "46.100s",
+      "endOffset": "46.700s"
+    },
+    {
+      "text": "скачай",
+      "startOffset": "47s",
+      "endOffset": "47.500s"
+    },
+    {
+      "text": "HSK",
+      "startOffset": "47.500s",
+      "endOffset": "48.100s"
+    },
+    {
+      "text": "AI",
+      "startOffset": "48.100s",
+      "endOffset": "48.500s"
+    },
+    {
+      "text": "и",
+      "startOffset": "48.600s",
+      "endOffset": "48.700s"
+    },
+    {
+      "text": "учи",
+      "startOffset": "48.700s",
+      "endOffset": "49s"
+    },
+    {
+      "text": "китайский",
+      "startOffset": "49s",
+      "endOffset": "49.600s"
+    },
+    {
+      "text": "каждый",
+      "startOffset": "49.600s",
+      "endOffset": "50s"
+    },
+    {
+      "text": "день.",
+      "startOffset": "50s",
+      "endOffset": "50.200s"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "stage": "complete",
+  "durationSeconds": 60,
+  "canvas": [
+    1080,
+    1920
+  ],
+  "fps": 30,
+  "voice": "Gemini Kore",
+  "voiceApproval": "voice-approval.json",
+  "narrationVerified": true,
+  "narrationWords": 99,
+  "sourceMode": "One illustrative opening photograph; all HSK AI product screens are genuine existing screenshots.",
+  "productUiLanguage": "Existing AI Voice screenshot is Tajik; Russian editorial text and narration",
+  "productResultsInvented": false,
+  "captionWordsFile": "captions.vtt",
+  "captionPhrasesFile": "captions.srt",
+  "checks": {
+    "lint": {
+      "ok": true,
+      "errorCount": 0,
+      "warningCount": 0
+    },
+    "runtime": {
+      "ok": true,
+      "errorCount": 0,
+      "warningCount": 0
+    },
+    "layout": {
+      "ok": true,
+      "errorCount": 0,
+      "warningCount": 0,
+      "informationalOverlaps": 2,
+      "overlapReason": "Intentional crop while the opening still and real AI Voice screen slowly push in."
+    },
+    "contrast": {
+      "ok": true,
+      "errorCount": 0,
+      "warningCount": 0,
+      "note": "All 12 sampled text elements passed WCAG AA contrast in the final build check."
+    },
+    "motion": {
+      "ok": true,
+      "errorCount": 0,
+      "warningCount": 0
+    }
+  },
+  "reviewedWarnings": "Two informational overflows are intentional slow zoom crops in the opening still and genuine AI Voice screenshot; no check errors or warnings.",
+  "appLanguageRestored": true,
+  "publishingAuthorized": false,
+  "mediaValidation": {
+    "durationSeconds": 60,
+    "dimensions": [
+      1080,
+      1920
+    ],
+    "videoCodec": "h264",
+    "pixelFormat": "yuv420p",
+    "fps": 30,
+    "audioCodec": "aac",
+    "sampleRate": 48000,
+    "decodePassed": true,
+    "voiceChanged": false,
+    "aacTrackBitstreamUnchanged": true,
+    "visualScenes": 4,
+    "encodedFramesReviewed": 6,
+    "captionsBurnedIn": true,
+    "aacTruePeakCheck": "Passed by HyperFrames final audio normalization pipeline",
+    "sizeBytes": 36621690,
+    "sha256": "e1dc7d82163dcf2f370f5d9385fc0d7b9f18ded284a4dfd60b6ca0792e9a67ce"
+  },
+  "render": {
+    "engine": "HyperFrames 0.8.148",
+    "capture": "drawElement",
+    "gpu": "Apple M2 hardware",
+    "ffmpeg": "Homebrew 9.0.2",
+    "log": ".hyperframes/calm-cut-render.log"
+  },
+  "browserReview": {
+    "durationSeconds": 60,
+    "readyState": 4,
+    "error": null,
+    "dimensions": [
+      1080,
+      1920
+    ]
+  },
+  "visualVersion": 6,
+  "visualScenes": 4,
+  "audioChanged": false,
+  "audioVerification": {
+    "oldFinalAacSha256": "980d0ce50566b2160fd00519795c6e91ced5a981ac0fc498778ccbcd0109ed9c",
+    "newFinalAacSha256": "980d0ce50566b2160fd00519795c6e91ced5a981ac0fc498778ccbcd0109ed9c",
+    "identical": true
+  }
+}

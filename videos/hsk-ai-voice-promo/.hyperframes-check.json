@@ -1,0 +1,811 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 3,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "duplicate_media_discovery_risk",
+        "severity": "warning",
+        "message": "Detected 2 matching img entries with the same source/start/duration.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/02-benefit.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation."
+      },
+      {
+        "code": "duplicate_media_discovery_risk",
+        "severity": "warning",
+        "message": "Detected 2 matching img entries with the same source/start/duration.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/05-speak.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation."
+      },
+      {
+        "code": "duplicate_media_discovery_risk",
+        "severity": "warning",
+        "message": "Detected 4 matching img entries with the same source/start/duration.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/kaijimima1234/Documents/ChatGPT/HSK AI Kantent/videos/hsk-ai-voice-promo/compositions/frames/08-profile-link.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation."
+      }
+    ],
+    "filesScanned": 10
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 17,
+    "findings": [
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 3.333,
+        "selector": "div.motif.speech",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -64.8,
+          "top": 403.19,
+          "right": 1144.8,
+          "bottom": 1228.78,
+          "width": 1209.59,
+          "height": 825.59
+        },
+        "containerSelector": "div.stage.f1",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 64.8,
+          "right": 64.8
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-question.html",
+        "bbox": {
+          "x": -64.8,
+          "y": 403.19,
+          "width": 1209.59,
+          "height": 825.59
+        },
+        "firstSeen": 3.333,
+        "lastSeen": 3.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.333
+        ]
+      },
+      {
+        "code": "panel_out_of_canvas",
+        "severity": "info",
+        "time": 3.333,
+        "selector": "div.motif.speech",
+        "message": "Painted panel extends outside the composition canvas.",
+        "rect": {
+          "left": -64.8,
+          "top": 403.19,
+          "right": 1144.8,
+          "bottom": 1228.78,
+          "width": 1209.59,
+          "height": 825.59
+        },
+        "containerSelector": "#root",
+        "text": "",
+        "fixHint": "Move the panel inward, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 64.8,
+          "right": 64.8
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-question.html",
+        "bbox": {
+          "x": -64.8,
+          "y": 403.19,
+          "width": 1209.59,
+          "height": 825.59
+        },
+        "firstSeen": 3.333,
+        "lastSeen": 3.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.333
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 10,
+        "selector": "div.stage.f2 > div:nth-of-type(2)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -129.59,
+          "top": 825.59,
+          "right": 799.41,
+          "bottom": 1365.59,
+          "width": 929,
+          "height": 540
+        },
+        "containerSelector": "div.stage.f2",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 129.59
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/02-benefit.html",
+        "bbox": {
+          "x": -129.59,
+          "y": 825.59,
+          "width": 929,
+          "height": 540
+        },
+        "firstSeen": 10,
+        "lastSeen": 10,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          10
+        ]
+      },
+      {
+        "code": "panel_out_of_canvas",
+        "severity": "info",
+        "time": 10,
+        "selector": "div.stage.f2 > div:nth-of-type(2)",
+        "message": "Painted panel extends outside the composition canvas.",
+        "rect": {
+          "left": -129.59,
+          "top": 825.59,
+          "right": 799.41,
+          "bottom": 1365.59,
+          "width": 929,
+          "height": 540
+        },
+        "containerSelector": "#root",
+        "text": "",
+        "fixHint": "Move the panel inward, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 129.59
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/02-benefit.html",
+        "bbox": {
+          "x": -129.59,
+          "y": 825.59,
+          "width": 929,
+          "height": 540
+        },
+        "firstSeen": 10,
+        "lastSeen": 10,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          10
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 11.75,
+        "selector": "div.stage.f2 > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 214,
+          "top": 246.39,
+          "right": 354.73,
+          "bottom": 298.39,
+          "width": 140.73,
+          "height": 52
+        },
+        "containerSelector": "div.stage.f3 > div:nth-of-type(1) > span:nth-of-type(1)",
+        "text": "HSK AI",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/02-benefit.html",
+        "bbox": {
+          "x": 214,
+          "y": 246.39,
+          "width": 140.73,
+          "height": 52
+        },
+        "firstSeen": 11.75,
+        "lastSeen": 11.75,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          11.75
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 16.667,
+        "selector": "div.motif.sheet",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 124.83,
+          "top": 783.5,
+          "right": 1171.54,
+          "bottom": 1515.68,
+          "width": 1046.71,
+          "height": 732.18
+        },
+        "containerSelector": "div.stage.f3",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "right": 91.54
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-practice.html",
+        "bbox": {
+          "x": 124.83,
+          "y": 783.5,
+          "width": 1046.71,
+          "height": 732.18
+        },
+        "firstSeen": 16.667,
+        "lastSeen": 16.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          16.667
+        ]
+      },
+      {
+        "code": "panel_out_of_canvas",
+        "severity": "info",
+        "time": 16.667,
+        "selector": "div.motif.sheet",
+        "message": "Painted panel extends outside the composition canvas.",
+        "rect": {
+          "left": 124.83,
+          "top": 783.5,
+          "right": 1171.54,
+          "bottom": 1515.68,
+          "width": 1046.71,
+          "height": 732.18
+        },
+        "containerSelector": "#root",
+        "text": "",
+        "fixHint": "Move the panel inward, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "right": 91.54
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-practice.html",
+        "bbox": {
+          "x": 124.83,
+          "y": 783.5,
+          "width": 1046.71,
+          "height": 732.18
+        },
+        "firstSeen": 16.667,
+        "lastSeen": 16.667,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          16.667
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 19.125,
+        "selector": "div.stage.f3 > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 214,
+          "top": 246.39,
+          "right": 354.73,
+          "bottom": 298.39,
+          "width": 140.73,
+          "height": 52
+        },
+        "containerSelector": "div.stage.f4 > div:nth-of-type(1) > span:nth-of-type(1)",
+        "text": "HSK AI",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-practice.html",
+        "bbox": {
+          "x": 214,
+          "y": 246.39,
+          "width": 140.73,
+          "height": 52
+        },
+        "firstSeen": 19.125,
+        "lastSeen": 19.125,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.125
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 19.125,
+        "selector": "div.stage.f3 > h1:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 108,
+          "top": 431.59,
+          "right": 357.45,
+          "bottom": 567.59,
+          "width": 249.45,
+          "height": 136
+        },
+        "containerSelector": "div.stage.f4 > h1:nth-of-type(1)",
+        "text": "УЧИ.",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-practice.html",
+        "bbox": {
+          "x": 108,
+          "y": 431.59,
+          "width": 249.45,
+          "height": 136
+        },
+        "firstSeen": 19.125,
+        "lastSeen": 19.125,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.125
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 23.333,
+        "selector": "#f-04-ai-voice-image-2",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 0,
+          "top": 242.19,
+          "right": 1080,
+          "bottom": 2583.55,
+          "width": 1080,
+          "height": 2341.36
+        },
+        "containerSelector": "div.media.avatar",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 108,
+          "top": 787.19,
+          "right": 972,
+          "bottom": 1382.38,
+          "width": 864,
+          "height": 595.19
+        },
+        "overflow": {
+          "left": 108,
+          "right": 108,
+          "top": 545,
+          "bottom": 1201.17
+        },
+        "dataAttributes": {
+          "data-hf-authored-opacity": ""
+        },
+        "sourceFile": "compositions/frames/04-ai-voice.html",
+        "bbox": {
+          "x": 0,
+          "y": 242.19,
+          "width": 1080,
+          "height": 2341.36
+        },
+        "firstSeen": 23.333,
+        "lastSeen": 23.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          23.333
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "info",
+        "time": 23.333,
+        "selector": "#f-04-ai-voice-image-2",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": 0,
+          "top": 242.19,
+          "right": 1080,
+          "bottom": 2583.55,
+          "width": 1080,
+          "height": 2341.36
+        },
+        "containerSelector": "div.media.avatar",
+        "text": "",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 108,
+          "top": 787.19,
+          "right": 972,
+          "bottom": 1382.38,
+          "width": 864,
+          "height": 595.19
+        },
+        "dataAttributes": {
+          "data-hf-authored-opacity": ""
+        },
+        "sourceFile": "compositions/frames/04-ai-voice.html",
+        "bbox": {
+          "x": 0,
+          "y": 242.19,
+          "width": 1080,
+          "height": 2341.36
+        },
+        "firstSeen": 23.333,
+        "lastSeen": 23.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          23.333
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 27.75,
+        "selector": "div.stage.f4 > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 214,
+          "top": 246.39,
+          "right": 354.73,
+          "bottom": 298.39,
+          "width": 140.73,
+          "height": 52
+        },
+        "containerSelector": "div.stage.f5 > div:nth-of-type(1) > span:nth-of-type(1)",
+        "text": "HSK AI",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-ai-voice.html",
+        "bbox": {
+          "x": 214,
+          "y": 246.39,
+          "width": 140.73,
+          "height": 52
+        },
+        "firstSeen": 27.75,
+        "lastSeen": 27.75,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.75
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 27.75,
+        "selector": "div.stage.f4 > h1:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 108,
+          "top": 406.39,
+          "right": 273.2,
+          "bottom": 588.39,
+          "width": 165.2,
+          "height": 182
+        },
+        "containerSelector": "div.stage.f5 > h1:nth-of-type(1) > span:nth-of-type(1)",
+        "text": "AI VOICE",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-ai-voice.html",
+        "bbox": {
+          "x": 108,
+          "y": 406.39,
+          "width": 165.2,
+          "height": 182
+        },
+        "firstSeen": 27.75,
+        "lastSeen": 27.75,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.75
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 27.75,
+        "selector": "div.stage.f4 > h1:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 273.2,
+          "top": 406.39,
+          "right": 705.06,
+          "bottom": 588.39,
+          "width": 431.86,
+          "height": 182
+        },
+        "containerSelector": "div.stage.f5 > h1:nth-of-type(1) > span:nth-of-type(1)",
+        "text": "VOICE",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-ai-voice.html",
+        "bbox": {
+          "x": 273.2,
+          "y": 406.39,
+          "width": 431.86,
+          "height": 182
+        },
+        "firstSeen": 27.75,
+        "lastSeen": 27.75,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.75
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 30,
+        "selector": "#f-05-speak-image-2",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -586,
+          "top": -3343,
+          "right": 1665,
+          "bottom": 1537.02,
+          "width": 2251,
+          "height": 4880.02
+        },
+        "containerSelector": "div.microphone",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 330,
+          "top": 825,
+          "right": 750,
+          "bottom": 1245,
+          "width": 420,
+          "height": 420
+        },
+        "overflow": {
+          "left": 916,
+          "right": 915,
+          "top": 4168,
+          "bottom": 292.02
+        },
+        "dataAttributes": {
+          "data-hf-authored-opacity": ""
+        },
+        "sourceFile": "compositions/frames/05-speak.html",
+        "bbox": {
+          "x": -586,
+          "y": -3343,
+          "width": 2251,
+          "height": 4880.02
+        },
+        "firstSeen": 30,
+        "lastSeen": 30,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          30
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "info",
+        "time": 30,
+        "selector": "#f-05-speak-image-2",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": -586,
+          "top": -3343,
+          "right": 1665,
+          "bottom": 1537.02,
+          "width": 2251,
+          "height": 4880.02
+        },
+        "containerSelector": "div.microphone",
+        "text": "",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 330,
+          "top": 825,
+          "right": 750,
+          "bottom": 1245,
+          "width": 420,
+          "height": 420
+        },
+        "dataAttributes": {
+          "data-hf-authored-opacity": ""
+        },
+        "sourceFile": "compositions/frames/05-speak.html",
+        "bbox": {
+          "x": -586,
+          "y": -3343,
+          "width": 2251,
+          "height": 4880.02
+        },
+        "firstSeen": 30,
+        "lastSeen": 30,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          30
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 49.75,
+        "selector": "div.stage.f7 > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 214,
+          "top": 246.39,
+          "right": 354.73,
+          "bottom": 298.39,
+          "width": 140.73,
+          "height": 52
+        },
+        "containerSelector": "div.stage.f8 > div:nth-of-type(1) > span:nth-of-type(1)",
+        "text": "HSK AI",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/07-retry.html",
+        "bbox": {
+          "x": 214,
+          "y": 246.39,
+          "width": 140.73,
+          "height": 52
+        },
+        "firstSeen": 49.75,
+        "lastSeen": 49.75,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          49.75
+        ]
+      }
+    ],
+    "duration": 60,
+    "samples": [
+      3.333,
+      10,
+      16.667,
+      23.333,
+      30,
+      36.667,
+      43.333,
+      50,
+      56.667
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 17,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      3.333,
+      16.667,
+      30,
+      43.333,
+      56.667
+    ],
+    "checked": 35,
+    "passed": 35
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  },
+  "_meta": {
+    "version": "0.8.148",
+    "latestVersion": "0.8.149",
+    "updateAvailable": true
+  }
+}
