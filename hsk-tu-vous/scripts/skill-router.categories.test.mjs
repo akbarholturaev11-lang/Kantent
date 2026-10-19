@@ -105,3 +105,10 @@ test("the Instagram copy advisor never replaces timed subtitles or exports", () 
   assert.equal(recommendSkills("Добавь субтитры в HSK2 видео").engine, "remotion");
   assert.ok(!recommendSkills("Видео ясаб бер").skills.some((s) => s.category === "social"));
 });
+
+test("existing Instagram video edits do not load the Reel planning advisor", () => {
+  const result = recommendSkills("Исправь существующий HSK2 Instagram Reel и субтитры", { existingEngine: "remotion" });
+  assert.equal(result.engine, "remotion");
+  assert.ok(result.skills.some((s) => s.name === "remotion-best-practices"));
+  assert.ok(!result.skills.some((s) => s.name === "ig-reel-planning"));
+});
