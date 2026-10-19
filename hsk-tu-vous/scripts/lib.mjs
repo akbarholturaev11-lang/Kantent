@@ -11,6 +11,7 @@ import { readCtaLab, validateCtaEpisode } from "./cta-lab.mjs";
 import { assertCanonicalLessonSource, composeLessonCta } from "./episode-cta-assembly.mjs";
 import { decorateCanonicalLesson, compareAuthorialContent } from "./auto-storyboard.mjs";
 import { validateStoryboardScene } from "./storyboard-validation.mjs";
+import { validateSemanticVisualEpisode } from "./semantic-visual-plan.mjs";
 
 export const PROJECT_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -141,6 +142,7 @@ export async function invalidateReviewArtifacts(
     "captions.srt",
     "post.md",
     "render-props.json",
+    "visual-timeline.json",
     "approval.json",
   ];
   if (narrationChanged) files.push("tts-input.txt");
@@ -371,6 +373,8 @@ export function captionsToSrt(captions, captionStyle, sections) {
 
 export function validateEpisode(episode) {
   normalizeEpisode(episode);
+  const semanticErrors = validateSemanticVisualEpisode(episode);
+  if (semanticErrors.length) throw new Error(semanticErrors.join("\n"));
   if (
     !episode?.id ||
     !episode.title ||
