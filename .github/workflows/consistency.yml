@@ -41,6 +41,8 @@ jobs:
           npx remotion still src/index.ts HSKAI-Episode /tmp/semantic-planned-hook.png --props /tmp/semantic-planned-props.json --frame=10
           npx remotion still src/index.ts HSKAI-Episode /tmp/semantic-planned-next.png --props /tmp/semantic-planned-props.json --frame=160
           test -s /tmp/semantic-planned-hook.png && test -s /tmp/semantic-planned-next.png
+      - name: Real semantic Instagram/YouTube MP4 smoke with synthetic test tone
+        run: node scripts/semantic-mp4-smoke.mjs /tmp/semantic-mp4-smoke
       - name: Render semantic come/go frames and confirm visual difference
         run: |
           node scripts/semantic-render-fixture.mjs /tmp/semantic-props.json
