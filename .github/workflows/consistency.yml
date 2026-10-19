@@ -27,8 +27,17 @@ jobs:
           node --test scripts/semantic-visual-plan.test.mjs scripts/semantic-visual-cli.test.mjs
       - name: Validate active source references and config
         run: npm run check:consistency
-      - name: Typecheck existing renderer without activating semantics
+      - name: Typecheck existing renderer and semantic opt-in preview
         run: npm ci --no-audit --no-fund && npm run lint
+      - name: Render semantic come/go frames and confirm visual difference
+        run: |
+          node scripts/semantic-render-fixture.mjs /tmp/semantic-props.json
+          npx remotion still src/index.ts HSKAI-Episode /tmp/semantic-before.png --props /tmp/semantic-props.json --frame=18
+          npx remotion still src/index.ts HSKAI-Episode /tmp/semantic-approaching.png --props /tmp/semantic-props.json --frame=43
+          npx remotion still src/index.ts HSKAI-Episode /tmp/semantic-arrived.png --props /tmp/semantic-props.json --frame=55
+          npx remotion still src/index.ts HSKAI-Episode /tmp/semantic-departing.png --props /tmp/semantic-props.json --frame=86
+          npx remotion still src/index.ts HSKAI-Episode /tmp/semantic-left.png --props /tmp/semantic-props.json --frame=107
+          node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const names=['before','approaching','arrived','departing','left'];const hashes=names.map(n=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/semantic-'+n+'.png')).digest('hex'));if(new Set(hashes).size!==hashes.length)throw Error('Semantic motion did not vary by cue frame');"
 
   consistency:
     runs-on: ubuntu-latest
