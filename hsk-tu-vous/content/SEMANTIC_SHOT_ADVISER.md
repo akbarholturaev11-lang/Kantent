@@ -1,4 +1,4 @@
-# P3 — Semantic shot intent adviser (read-only)
+# P3 shot adviser (read-only) and approved clean-draft applicator
 
 The canonical vocabulary of evidence patterns and action proposals is
 `content/semantic-shot-intents.json`. This is a *proposal* registry, not an additional
@@ -45,19 +45,16 @@ npm run content:semantic-plan -- hui-vs-neng-pool-20261028
 
 Connected local HSK AI MCP: `preview_semantic_shots({date:"2026-10-28"})`.
 Both entrypoints **read** canonical planned lessons; they do not change them.
-Production semantic renderer stays disabled while a true audio/MP4 pilot has not
-passed review.
+Automatic semantic **review video** rendering is now wired for eligible clean future drafts; social publishing remains disabled until real audio/MP4 QA and owner approval.
 
 ## Editorial QA example
 
 The 2026-10-28 会/能 lesson can suggest a pool environment and a closed-gate
 warning on the narrator's `закрыт` word. It must **not** fake swimming,
 infer a motion from `会`/ `不能` alone, or claim Chinese-language correctness
-without source review. The agent selects/edits a proposal only for an eligible
-unapproved future lesson, checks actual narration and language facts, then
-uses already imported Gemini exact-word cues to resolve the chosen action.
+without source review. The auto-applicator can choose a supported motion automatically for an eligible clean future review draft only if its spoken cue is unnegated, unique and unambiguously attached to a beat. Real Gemini exact-word cue timing still gates the render; unmatched cues stop rather than making up the motion.
 
 Approved/published snapshots and CTA histories remain untouchable. Any
 owner-selected visual edit invalidates old video and exact preview approval,
 but voice/caption timing is reusable if narration and its fingerprint stay
-unchanged. Do not enable production rendering just because proposal tests pass.
+unchanged. A planned draft's review MP4 is not social publication approval. Do not enable semantic social publishing just because proposal tests pass.

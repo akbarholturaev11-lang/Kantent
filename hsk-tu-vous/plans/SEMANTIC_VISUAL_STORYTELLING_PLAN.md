@@ -19,6 +19,12 @@ Goal: Each lesson's **context, actors/objects, camera motion, and meaning-bearin
 - P3 **read-only semantic shot adviser** added in stacked development branch `codex/semantic-visual-intent-planner-20261019`: new suggestion vocabulary (`content/semantic-shot-intents.json`), non-mutating scene-level evidence/action candidates, a CLI and MCP read-only tool, protected-review gating, regression tests and CI. Human review remains mandatory: action proposals are NOT executable semantic metadata and do NOT invent Gemini word times.
 - Active CTA, voice, approved/published snapshots and existing automatic broad creative-format cycling are unchanged; production semantic MP4 remains disabled. P4 real-voice/visual QA and P5 rollout are still unimplemented.
 
+### P4 connection fix (2026-10-19)
+
+- Added `scripts/semantic-review-integration.mjs` and automatic clean-draft semantic shot application in `auto-storyboard.mjs` after compatible creative-format selection. Future dated planned review drafts gain shot diversity without default student characters; narration, CTA and canonical sources remain unchanged.
+- Standard `render-episode.mjs` now compiles exact imported Gemini cues and forwards its single timeline through shared Instagram/YouTube Remotion review MP4 exports. No missing cue fallback or synthetic word-time substitutions are authorized.
+- Publishing remains blocked by `productionEnabled:false` until real Gemini MP4 owner QA. Existing prepared voice and approved/published versions are not silently migrated. This is a wiring fix, not evidence of P4 full-real-media acceptance until a real narrated pilot is inspected.
+
 ## 1. Confirmed current implementation (source audit)
 
 - `scripts/auto-storyboard.mjs` selects one of four creative formats and chooses `street|cafe|campus|home` by light text matching. It assigns `student` to newly decorated scenes; no rich per-action scene direction is inferred. Eligible CTA-free future source lessons are decorated in working review copies only.

@@ -221,7 +221,19 @@ export function synchronizeAutoStoryboard(saved, planned, status = {stage:"plann
     throw Error("Review-copy date/episode mismatch; refused creative migration");
   const current=saved.creativeFormatId;
   const formats=saved.scenes.filter(s=>s.kind!=="cta");
-  if(current===wanted && formats.every(s=>s.storyboard?.formatId===wanted)) return saved;
+  // An older clean review draft may already have the correct broad format,
+  // but still lack the newly required semantic scene contract. Migrate only
+  // before voice; never rewrite an approved, rendered or manually edited copy.
+  const semanticSync = JSON.stringify({
+    marker:saved.semanticVisual,
+    scenes:saved.scenes.filter(s=>s.kind!=="cta").map(s=>({shot:s.semanticShot,
+      actions:(s.visualBeats??[]).map(b=>b.semanticAction)}))
+  }) === JSON.stringify({
+    marker:planned.semanticVisual,
+    scenes:planned.scenes.filter(s=>s.kind!=="cta").map(s=>({shot:s.semanticShot,
+      actions:(s.visualBeats??[]).map(b=>b.semanticAction)}))
+  });
+  if(current===wanted && formats.every(s=>s.storyboard?.formatId===wanted) && semanticSync) return saved;
   const protectedStages=["rendered-pending-owner-approval","owner-approved-for-zernio-publishing",
     "zernio-published","zernio-scheduled","zernio-publication-processing",
     "zernio-publication-partial","zernio-publication-failed"];

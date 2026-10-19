@@ -24,7 +24,10 @@ jobs:
           node --check scripts/semantic-visual-plan.mjs
           node --check scripts/prepare-semantic-visual.mjs
           node --check scripts/mcp-server.mjs
-          node --test scripts/semantic-visual-plan.test.mjs scripts/semantic-visual-cli.test.mjs scripts/semantic-shot-adviser.test.mjs
+          node --test scripts/semantic-visual-plan.test.mjs scripts/semantic-visual-cli.test.mjs scripts/semantic-shot-adviser.test.mjs scripts/semantic-review-integration.test.mjs
+          node --test scripts/auto-storyboard.test.mjs
+          node --check scripts/semantic-review-integration.mjs
+          node --check scripts/semantic-planned-fixture.mjs
           node --check scripts/semantic-shot-adviser.mjs
           node --check scripts/preview-semantic-shots.mjs
           node scripts/preview-semantic-shots.mjs hui-vs-neng-pool-20261028 > /tmp/semantic-p3-plan.json
@@ -32,6 +35,20 @@ jobs:
         run: npm run check:consistency
       - name: Typecheck existing renderer and semantic opt-in preview
         run: npm ci --no-audit --no-fund && npm run lint
+      - name: Verify real dated plan selects semantic renderer, not static school template
+        run: |
+          node scripts/semantic-planned-fixture.mjs /tmp/semantic-planned-props.json
+          npx remotion still src/index.ts HSKAI-Episode /tmp/semantic-planned-hook.png --props /tmp/semantic-planned-props.json --frame=10
+          npx remotion still src/index.ts HSKAI-Episode /tmp/semantic-planned-next.png --props /tmp/semantic-planned-props.json --frame=160
+          test -s /tmp/semantic-planned-hook.png && test -s /tmp/semantic-planned-next.png
+      - name: Install FFmpeg tools for full MP4 validation
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Real semantic Instagram/YouTube MP4 smoke with synthetic test tone
+        run: node scripts/semantic-mp4-smoke.mjs /tmp/semantic-mp4-smoke
       - name: Render semantic come/go frames and confirm visual difference
         run: |
           node scripts/semantic-render-fixture.mjs /tmp/semantic-props.json

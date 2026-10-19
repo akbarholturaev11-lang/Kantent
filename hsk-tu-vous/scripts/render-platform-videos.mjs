@@ -5,8 +5,13 @@ import { PROJECT_ROOT, FPS, writeJson } from "./lib.mjs";
 import { assertSharedLesson, sharedRenderRanges } from "./platform-exports.mjs";
 
 function run(args) {
-  const binary = path.join(PROJECT_ROOT, "node_modules", ".bin", "remotion");
-  const result = spawnSync(binary, args, {
+  // Remotion handles composition; ffmpeg/ffprobe are separate executables.
+  // Never invoke a nonexistent `remotion ffmpeg` or `remotion ffprobe`.
+  const mediaTool = args[0] === "ffmpeg" || args[0] === "ffprobe";
+  const binary = mediaTool ? args[0] :
+    path.join(PROJECT_ROOT, "node_modules", ".bin", "remotion");
+  const cliArgs = mediaTool ? args.slice(1) : args;
+  const result = spawnSync(binary, cliArgs, {
     cwd: PROJECT_ROOT,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
@@ -69,6 +74,7 @@ export async function renderSharedPlatformVideos({
   outputs,
   workDir,
   renderOptions = [],
+  semanticTimeline = null,
   execute = run,
   log = console.log,
 }) {
@@ -80,7 +86,9 @@ export async function renderSharedPlatformVideos({
   const props = {};
   for (const [platform, episode] of Object.entries(episodes)) {
     props[platform] = path.join(workDir, `${platform}-props.json`);
-    await writeJson(props[platform], { episode });
+    // Platform-specific CTA differs, but assertSharedLesson already proves
+    // narration/timing/lesson body matches the single exact-cue timeline.
+    await writeJson(props[platform], { episode, ...(semanticTimeline ? {semanticTimeline} : {}) });
   }
   const browser = process.env.HSK_REMOTION_BROWSER_EXECUTABLE
     ? ["--browser-executable", process.env.HSK_REMOTION_BROWSER_EXECUTABLE]
