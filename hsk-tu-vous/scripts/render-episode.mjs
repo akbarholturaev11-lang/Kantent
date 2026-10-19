@@ -11,6 +11,7 @@ import {
   videoHash,
 } from "./platform-exports.mjs";
 import { renderSharedPlatformVideos } from "./render-platform-videos.mjs";
+import { prepareSemanticRender } from "./semantic-review-integration.mjs";
 import {
   getEpisode,
   episodeContentHash,
@@ -32,11 +33,6 @@ if (!id) throw new Error("Foydalanish: npm run content:render -- <mavzu-ID>");
 const sourceRevision = requireFreshGitMain();
 assertNotPreviouslyPublished(id);
 const { episode, filePath } = await getEpisode(id);
-// P0/P1 defines cues, not executable semantic animation. Never silently
-// render semantic-tagged lessons with legacy storyboards before P2 exists.
-if (episode.semanticVisual) throw new Error(
-  "Semantic renderer is not implemented (P2); use the review-only visual timeline command.",
-);
 const visualSystem = await readJson(
   path.join(PROJECT_ROOT, "content", "visual-system.json"),
 );
@@ -75,6 +71,9 @@ if (perWordCueCount / episode.captions.length < 0.8) {
     "Gemini word-level caption cues are incomplete; rerun voice generation.",
   );
 }
+// Verify every spoken action against real Gemini word captions BEFORE writing
+// working copies, CTA registrations or production packages.
+const semanticTimeline = prepareSemanticRender(episode);
 const folder = reviewDir(id);
 await fs.mkdir(folder, { recursive: true });
 episode.publishingStatus = "pending-owner-review";
@@ -86,6 +85,7 @@ if (registrations.length) {
 }
 await writeJson(filePath, episode);
 await invalidateReviewArtifacts(id);
+if (semanticTimeline) await writeJson(path.join(folder, "visual-timeline.json"), semanticTimeline);
 await writeStatus(id, {
   stage: "rendering",
   sourceRevision,
@@ -117,6 +117,7 @@ try {
       Object.entries(paths).map(([platform, files]) => [platform, files.video]),
     ),
     workDir: path.join(folder, ".render-work"),
+    semanticTimeline,
   });
   for (const [platform, variant] of Object.entries(episodes)) {
     const files = paths[platform];
@@ -161,6 +162,8 @@ await writeStatus(id, {
   post: paths.instagram.post,
   platformPackages,
   sharedLessonRenderedOnce: true,
+  semanticReviewRendered: Boolean(semanticTimeline),
+  semanticPublicationGate: semanticTimeline ? "owner-preview-required" : null,
   voiceProfileId: voiceProfile.profileId,
   voice: voiceProfile.voiceName,
   hookExperimentId: episode.hookExperiment.id,
