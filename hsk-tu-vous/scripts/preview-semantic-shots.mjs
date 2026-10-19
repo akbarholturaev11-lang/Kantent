@@ -16,6 +16,9 @@ if(!/^episodes\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/.test(item.episodeFile??""))
 const episode=JSON.parse(fs.readFileSync(path.join(contentDir,item.episodeFile),"utf8"));
 if(episode.id!==item.id || episode.date!==item.date)
   throw Error("Calendar identity mismatch");
-const result=suggestSemanticShots(episode,{eligibility:item.status});
+const statusPath=path.join(root,"review",id,"status.json");
+const status=fs.existsSync(statusPath) ? JSON.parse(fs.readFileSync(statusPath,"utf8")) : {stage:"planned"};
+const eligibility=item.status==="planned" ? status.stage : item.status;
+const result=suggestSemanticShots(episode,{eligibility});
 process.stdout.write(JSON.stringify(result,null,2)+"\n");
 // Read-only: never create a working review file, alter a lesson, or publish.
