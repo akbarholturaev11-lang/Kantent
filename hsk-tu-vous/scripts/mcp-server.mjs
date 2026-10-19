@@ -343,9 +343,9 @@ const createServer = () => {
   server.registerTool(
     "recommend_skills",
     {
-      title: "Recommend task-appropriate video skills",
+      title: "Recommend task-appropriate video and Instagram editorial skills",
       description:
-        "Call before starting a video creation/edit/render task. Uses content/SKILLS.md to choose relevant skills and preserve the Remotion lesson/HyperFrames standalone promo boundary. Returns recommendations only; never runs or installs a skill. For a task that is not a video, it may return none.",
+        "Call before a video creation/edit/render task or explicit Instagram hook, post-caption or competitor-research task. Uses content/SKILLS.md to choose scoped skills and preserve the Remotion/HyperFrames boundary. Returns recommendations only; never runs, installs, publishes or changes a canonical CTA.",
       inputSchema: z.object({
         task: z.string().min(3).max(2000),
         existingEngine: z.enum(["unknown", "remotion", "hyperframes"]).optional(),

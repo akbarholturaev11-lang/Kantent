@@ -20,6 +20,7 @@ Do not keep a second skill-by-skill list in this Markdown file. Use `scripts/ski
 - `editing` — existing-footage enhancement, interactive slides and covers.
 - `export` — reframing and encoding to requested formats.
 - `migration` — explicit framework migration only.
+- `social` — Instagram editorial advice only: lesson hook planning, post-copy review, read-only competitor research. This is not a video engine or subtitle format.
 
 Each skill belongs to **one** category. Categories may have different *workflows*, but do not create another skill for the same responsibility unless the engine or actual deliverable differs.
 
@@ -38,6 +39,15 @@ The recipes in `skill-catalog.json` have `lesson`, `premium` and `special` branc
 | Export | Remotion video render with its existing audio | `hyperframes-cli` validation | `reel-export` only for video reframe/encoding |
 
 For data visualizations, educational explainers, social content, and special existing-footage edits, use the corresponding **named capability** under `skill-catalog.json`; they remain registered without becoming default steps for every video.
+
+## Selected Instagram advisors (no wholesale third-party installation)
+
+Three HSK-specific, project-local `social` skills are registered as ordinary `.agents/skills/<name>/SKILL.md` modules:
+- `ig-reel-planning`: `social_hook/lesson`, advice before the approved Hook Lab + storyboard + actual Gemini cue workflow; automatically offered only for explicitly Instagram-scoped HSK lesson video tasks.
+- `ig-caption-quality`: `social_caption/special`, for **Instagram publication copy**, not baked-in captions/subtitles.
+- `ig-competitor-research`: `social_research/special`, read-only source-backed competitor benchmarking. Never scrape, claim access to private metrics or feed invented results into the Hook Lab.
+
+Each advisor is reachable through `recommend_skills` for its own task phrasing. It does not create another CTA source, replace `content/WORKFLOW.md`, make external requests, install Python tools, alter the current Remotion scene renderer, or authorize publishing. Inspiration: [Jakeschincariol/instagram-agent-skill](https://github.com/Jakeschincariol/instagram-agent-skill) (MIT); no complete upstream skill bundle is copied.
 
 ## Non-negotiable precedence
 

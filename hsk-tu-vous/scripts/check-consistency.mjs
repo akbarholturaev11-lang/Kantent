@@ -77,7 +77,7 @@ export function validateSkillRegistry(root = projectRoot) {
   }
   const routes = new Set(["remotion-default", "hyperframes-only", "conditional"]);
   const branchNames = new Set(["lesson", "premium", "special"]);
-  const categoryNames = new Set(["engine","layout","effects","captions","audio","brand","promo","teaching","data","editing","export","migration"]);
+  const categoryNames = new Set(["engine","layout","effects","captions","audio","brand","promo","teaching","data","editing","export","migration","social"]);
   const skills = catalog.skills;
   const entries = Object.entries(skills);
   for (const name of installed) {
@@ -123,6 +123,16 @@ export function validateSkillRegistry(root = projectRoot) {
         if (branch === "lesson" && skills[helper]?.route === "hyperframes-only") errors.push("HyperFrames helper in lesson: " + step + "/" + helper);
       }
       if (typeof recipe.notes !== "string" || recipe.notes.length < 15) errors.push("Missing recipe notes: " + step + "/" + branch);
+    }
+  }
+  // Dedicated social editorial phases are individually owned; they cannot
+  // masquerade as Remotion subtitles or alter publication authorization.
+  for (const [step, branch] of Object.entries({
+    social_hook: "lesson", social_caption: "special", social_research: "special",
+  })) {
+    const owner = catalog.recipes[step]?.[branch]?.owner;
+    if (!owner || skills[owner]?.category !== "social" || skills[owner]?.route !== "conditional") {
+      errors.push("Missing/invalid social editorial owner: " + step + "/" + branch);
     }
   }
   return errors;
