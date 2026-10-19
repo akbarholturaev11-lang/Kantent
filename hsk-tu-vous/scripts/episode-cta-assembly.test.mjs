@@ -77,11 +77,20 @@ test("an unregistered new CTA text is populated from central source but needs fr
   assert.equal(validateCtaEpisode(assembled, modified).valid, false);
 });
 
-test("pending TikTok cannot assemble, while approved YouTube uses the canonical CTA and replaced frames", async () => {
+test("approved TikTok local draft stays separate and unauthorized for publishing; YouTube uses canonical CTA", async () => {
   const source = JSON.parse(await fs.readFile(
     path.join(root, "content/episodes", "zhe-na-ge.json"), "utf8",
   ));
-  assert.throws(() => composeLessonCta(source, lab, { platform: "tiktok" }), /not approved/);
+  const tiktok = composeLessonCta(source, lab, { platform: "tiktok" });
+  assert.equal(tiktok.ctaPlatform, "tiktok");
+  assert.equal(tiktok.cta, lab.platformVariants.tiktok.canonicalRussian);
+  assert.notEqual(tiktok.cta, lab.offer.canonicalRussian, "TikTok manual-DM copy must not inherit Instagram CTA");
+  assert.deepEqual(tiktok.scenes.at(-1).visualBeats,
+    lab.platformVariants.tiktok.sceneTemplate.visualBeats);
+  assert.equal(lab.platformVariants.tiktok.publishingAuthorized, false,
+    "Local TikTok CTA approval must never grant publishing authorization");
+  assert.deepEqual(source.scenes.some((scene) => scene.kind === "cta"), false,
+    "Assembly must not mutate CTA-free canonical lesson");
   const assembled = composeLessonCta(source, lab, { platform: "youtube" });
   assert.equal(assembled.cta, lab.offer.canonicalRussian);
   assert.equal(assembled.ctaPlatform, "youtube");
