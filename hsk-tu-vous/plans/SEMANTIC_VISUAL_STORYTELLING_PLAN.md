@@ -1,4 +1,6 @@
-# Semantic Visual Storytelling — integration plan (PROPOSAL; NOT IMPLEMENTED)
+# Semantic Visual Storytelling — integration plan (historical staged roadmap)
+
+**Current status (2026-10-20):** Semantic renderer and strict Gemini cue pipeline exist on `main`. The owner reports testing a real video satisfactorily and explicitly authorizes `content/semantic-visual-system.json#productionEnabled:true`. Platform publication still requires exact-video owner preview approval; all old stage/PR states below describe historical phases.
 
 Status: **design only / pending owner review before executable code**  
 Repository: `akbarholturaev11-lang/Kantent`, base `main` at `40a115494c952be45ec6be1e894384056c99ee13` (2026-10-19).  
