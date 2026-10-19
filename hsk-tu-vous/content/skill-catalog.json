@@ -217,6 +217,24 @@
       "route": "hyperframes-only",
       "branch": "special",
       "purpose": "Only explicit Remotion-to-HyperFrames migration"
+    },
+    "ig-reel-planning": {
+      "category": "social",
+      "route": "conditional",
+      "branch": "lesson",
+      "purpose": "Instagram Reel hook/beat-sheet advisory for verified HSK lesson drafts; never edits canonical Hook Lab or cues"
+    },
+    "ig-caption-quality": {
+      "category": "social",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Review Instagram post caption and its first visible line without editing the central platform CTA"
+    },
+    "ig-competitor-research": {
+      "category": "social",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Read-only, source-traceable competitor Reel analysis without scraping or fabricated engagement data"
     }
   },
   "recipes": {
@@ -355,6 +373,24 @@
       "special": {
         "owner": "reel-export",
         "notes": "For horizontal-to-vertical exports. Preserve existing audio; preview safe areas rather than applying universal y=360-1420."
+      }
+    },
+    "social_hook": {
+      "lesson": {
+        "owner": "ig-reel-planning",
+        "notes": "Preproduction-only hook and beat planning for an explicitly Instagram HSK lesson; Hook Lab remains authoritative."
+      }
+    },
+    "social_caption": {
+      "special": {
+        "owner": "ig-caption-quality",
+        "notes": "Post-copy review phase only; no subtitle/caption timing, CTA change or social publishing."
+      }
+    },
+    "social_research": {
+      "special": {
+        "owner": "ig-competitor-research",
+        "notes": "Read-only Instagram competitor research with verifiable source, window and metric limitations."
       }
     }
   }

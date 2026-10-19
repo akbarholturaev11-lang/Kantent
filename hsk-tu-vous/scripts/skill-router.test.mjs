@@ -49,3 +49,13 @@ test("every returned skill has an actual registered entry", () => {
     }
   }
 });
+
+test("social advisory skill inventory remains conditional and scoped", () => {
+  for (const name of ["ig-reel-planning","ig-caption-quality","ig-competitor-research"]) {
+    assert.equal(registeredSkills().get(name), "conditional");
+  }
+  const output = recommendSkills("Instagram рақиб Reels benchmark");
+  assert.equal(output.engine, "none");
+  assert.equal(output.skills.length, 1);
+  assert.equal(output.skills[0].name, "ig-competitor-research");
+});

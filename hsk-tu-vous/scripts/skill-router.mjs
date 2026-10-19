@@ -47,6 +47,14 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
     sourceQuestion: /^(нима|қандай|кандай|почему|что такое|what is|how does|difference|фарқ|фарк|разница|объясни|тушунтир)/iu,
   };
   const flags = Object.fromEntries(Object.entries(re).map(([k,v]) => [k, has(t,v)]));
+  // These are editorial phases, not an alternative renderer, subtitle track or
+  // publishing integration. Only explicitly Instagram-scoped tasks may route here.
+  const igTask = /instagram|инстаграм|инста|\breels?\b|рилс|рилз/iu.test(t);
+  const socialResearch = /конкурент|рақиб|ракиб|рақобат|ракобат|competitor|benchmark|ниша.*(?:анализ|таҳлил|тахлил)|соперник/iu.test(t);
+  const socialCaption = /\bcaption\b|подпись|описани[ея]|пост матни|пост учун матн|хештег|хэштег|hashtags?|post copy/iu.test(t)
+    && !/субтитр|\bsubtitle\b|\bsrt\b|\bvtt\b/iu.test(t);
+  const socialHook = /\bhooks?\b|хук|зацепк|илмоқ|илмок|первые.{0,12}секунд|биринчи.{0,12}секунд/iu.test(t);
+  const mediaExecution = /рендер|render|экспорт|export|монтаж|собери видео|видеони тайёрла|видео ясаб|видео ярат|ролик ясаб/iu.test(t);
   const activeStageIds = [];
   const helperSkills = [];
 
@@ -90,6 +98,16 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
   if (!t) return make("clarify", [], "The video task is unspecified.", "low", true);
   // Do not treat a question about a technique as a request to create a video.
   if (flags.sourceQuestion && !flags.video) return make("none", [], "Question only: do not execute skills.");
+  if (igTask && socialResearch && !mediaExecution) {
+    return withStages("none", "special", null, ["social_research"], "Read-only Instagram competitor analysis; do not scrape, publish or overwrite HSK performance data.");
+  }
+  if (igTask && socialCaption && !mediaExecution) {
+    return withStages("none", "special", null, ["social_caption"], "Review platform post copy only, not Gemini word-level video subtitles or the approved CTA.");
+  }
+  if (igTask && socialHook && !mediaExecution &&
+      /напиш|придум|предлож|вариант|сценар|ёз|ёзиб|таклиф|режа|план|plan|draft|write|analy|анализ|таҳлил|тахлил/iu.test(t)) {
+    return withStages("none", "lesson", null, ["social_hook"], "Plan Instagram lesson hooks before production; preserve canonical Hook Lab and narration timing.");
+  }
   if (flags.migrate && flags.remotion && flags.hyper) return make("approval-required", ["remotion-to-hyperframes"], "Explicit framework migration requires owner confirmation of scope.", "high", true);
   if (flags.remotion && flags.hyper) return make("clarify", [], "Both engines named without migration instruction.", "low", true);
   if (existingEngine === "remotion" && flags.hyper) return make("approval-required", [], "Switching an existing Remotion project requires a separate decision.", "high", true);
@@ -144,6 +162,7 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
   // Both engine branches route the same *stage* to different owners.
   if (chosen === "remotion") {
     const ids = [];
+    if (igTask && actualLesson && flags.video && !flags.editing) ids.push("social_hook");
     if (flags.layout || flags.ui || (flags.video && !flags.captions && !flags.effects)) ids.push("layout");
     if (flags.effects || (flags.video && !flags.captions && !flags.layout)) ids.push("effects");
     if (flags.captions || (flags.video && !flags.effects && !flags.layout)) ids.push("captions");

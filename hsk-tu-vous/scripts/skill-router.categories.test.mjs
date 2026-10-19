@@ -4,11 +4,11 @@ import { recommendSkills, loadSkillCatalog } from "./skill-router.mjs";
 
 const catalog = loadSkillCatalog();
 
-test("all 36 retained skills have one categorized owner", () => {
+test("all 36 original skills plus 3 scoped Instagram advisors have one categorized owner", () => {
   const entries = Object.entries(catalog.skills);
-  assert.equal(entries.length, 36);
+  assert.equal(entries.length, 39);
   assert.ok(!catalog.skills["launch-video"], "generic launch skill must not reappear");
-  assert.equal(new Set(entries.map(([name]) => name)).size, 36);
+  assert.equal(new Set(entries.map(([name]) => name)).size, 39);
   for (const [name, item] of entries) {
     assert.ok(item.category && item.branch && item.route && item.purpose, name);
   }
@@ -79,4 +79,36 @@ test("recipe owners and stage references follow the requested branch", () => {
     assert.equal(step.branch, "lesson");
     if (step.owner) assert.notEqual(catalog.skills[step.owner].route, "hyperframes-only");
   }
+});
+
+test("Instagram preproduction and social copy/research route to their own stages", () => {
+  const input = [
+    ["Создай Instagram Reel HSK 2 урок про 来/去", "remotion", "lesson", "ig-reel-planning", "social_hook"],
+    ["Напиши Instagram hook варианты для HSK 2", "none", "lesson", "ig-reel-planning", "social_hook"],
+    ["Напиши Instagram caption для нового ролика", "none", "special", "ig-caption-quality", "social_caption"],
+    ["Instagram конкурентов анализ Reels", "none", "special", "ig-competitor-research", "social_research"],
+  ];
+  for (const [task, engine, branch, skill, stage] of input) {
+    const result = recommendSkills(task);
+    assert.equal(result.engine, engine, task);
+    assert.equal(result.branch, branch, task);
+    assert.ok(result.skills.some((s) => s.name === skill), task);
+    assert.ok(result.selectedStages.some((s) => s.step === stage), task);
+  }
+});
+
+test("the Instagram copy advisor never replaces timed subtitles or exports", () => {
+  const subtitle = recommendSkills("Сделай HSK2 урок Instagram Reels с субтитрами");
+  assert.equal(subtitle.engine, "remotion");
+  assert.ok(subtitle.skills.some((s) => s.name === "remotion-best-practices"));
+  assert.ok(!subtitle.skills.some((s) => s.name === "ig-caption-quality"));
+  assert.equal(recommendSkills("Добавь субтитры в HSK2 видео").engine, "remotion");
+  assert.ok(!recommendSkills("Видео ясаб бер").skills.some((s) => s.category === "social"));
+});
+
+test("existing Instagram video edits do not load the Reel planning advisor", () => {
+  const result = recommendSkills("Исправь существующий HSK2 Instagram Reel и субтитры", { existingEngine: "remotion" });
+  assert.equal(result.engine, "remotion");
+  assert.ok(result.skills.some((s) => s.name === "remotion-best-practices"));
+  assert.ok(!result.skills.some((s) => s.name === "ig-reel-planning"));
 });
