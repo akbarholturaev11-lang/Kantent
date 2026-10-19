@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "mode": "suggestions-only",
+  "autoApply": false,
+  "productionEnabled": false,
+  "purpose": "Deterministic, evidence-linked visual suggestions. No new spoken words, timing, semantic episode edits, MP4 or publishing.",
+  "contexts": [
+    {
+      "id": "pool",
+      "terms": [
+        "бассейн",
+        "游泳",
+        "плавать",
+        "плавания"
+      ],
+      "shotHint": "wide"
+    },
+    {
+      "id": "transport-stop",
+      "terms": [
+        "автобус",
+        "остановк",
+        "公交",
+        "метро",
+        "车站"
+      ],
+      "shotHint": "wide"
+    },
+    {
+      "id": "cafe",
+      "terms": [
+        "кафе",
+        "чай",
+        "кофе",
+        "餐厅",
+        "咖啡",
+        "茶",
+        "чашк"
+      ],
+      "shotHint": "object-focus"
+    },
+    {
+      "id": "campus",
+      "terms": [
+        "школ",
+        "учеб",
+        "университет",
+        "学校",
+        "学生"
+      ],
+      "shotHint": "wide"
+    },
+    {
+      "id": "home",
+      "terms": [
+        "дома",
+        "домой",
+        "доме",
+        "家里",
+        "在家",
+        "我的家"
+      ],
+      "shotHint": "medium"
+    },
+    {
+      "id": "street",
+      "terms": [
+        "улиц",
+        "идти",
+        "идёт",
+        "идет",
+        "дорог",
+        "街",
+        "走路"
+      ],
+      "shotHint": "medium"
+    }
+  ],
+  "actions": [
+    {
+      "id": "approach-camera",
+      "cueForms": [
+        "приходит",
+        "подходит",
+        "приближается",
+        "приблизился",
+        "подошёл",
+        "подошел"
+      ],
+      "actor": true,
+      "hanzi": [
+        "来"
+      ]
+    },
+    {
+      "id": "move-away",
+      "cueForms": [
+        "уходит",
+        "удаляется",
+        "уехал",
+        "уходит",
+        "отдаляется"
+      ],
+      "actor": true,
+      "hanzi": [
+        "去"
+      ]
+    },
+    {
+      "id": "enter",
+      "cueForms": [
+        "входит",
+        "зашёл",
+        "зашел",
+        "заходит"
+      ],
+      "actor": true,
+      "hanzi": [
+        "进"
+      ]
+    },
+    {
+      "id": "exit",
+      "cueForms": [
+        "выходит",
+        "вышел"
+      ],
+      "actor": true,
+      "hanzi": [
+        "出"
+      ]
+    },
+    {
+      "id": "show-blocked",
+      "cueForms": [
+        "закрыт",
+        "закрыто",
+        "закрыли",
+        "закрыта"
+      ],
+      "actor": false,
+      "needsContext": "pool",
+      "objectId": "pool-gate",
+      "hanzi": [
+        "不能"
+      ]
+    }
+  ],
+  "policy": {
+    "onlyExactNarrationTokens": true,
+    "neverApplyWithoutOwnerReview": true,
+    "verifyAgainstImportedGeminiWordCues": true,
+    "requireHumanReviewForNegation": true,
+    "avoidUniformCharacterDefault": true,
+    "maxSuggestionsPerScene": 3
+  }
+}
