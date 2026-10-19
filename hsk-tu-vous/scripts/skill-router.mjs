@@ -49,11 +49,11 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
   const flags = Object.fromEntries(Object.entries(re).map(([k,v]) => [k, has(t,v)]));
   // These are editorial phases, not an alternative renderer, subtitle track or
   // publishing integration. Only explicitly Instagram-scoped tasks may route here.
-  const igTask = /instagram|инстаграм|инста|\\breels?\\b|рилс|рилз/iu.test(t);
+  const igTask = /instagram|инстаграм|инста|\breels?\b|рилс|рилз/iu.test(t);
   const socialResearch = /конкурент|рақиб|ракиб|рақобат|ракобат|competitor|benchmark|ниша.*(?:анализ|таҳлил|тахлил)|соперник/iu.test(t);
-  const socialCaption = /\\bcaption\\b|подпись|описани[ея]|пост матни|пост учун матн|хештег|хэштег|hashtags?|post copy/iu.test(t)
-    && !/субтитр|\\bsubtitle\\b|\\bsrt\\b|\\bvtt\\b/iu.test(t);
-  const socialHook = /\\bhooks?\\b|хук|зацепк|илмоқ|илмок|первые.{0,12}секунд|биринчи.{0,12}секунд/iu.test(t);
+  const socialCaption = /\bcaption\b|подпись|описани[ея]|пост матни|пост учун матн|хештег|хэштег|hashtags?|post copy/iu.test(t)
+    && !/субтитр|\bsubtitle\b|\bsrt\b|\bvtt\b/iu.test(t);
+  const socialHook = /\bhooks?\b|хук|зацепк|илмоқ|илмок|первые.{0,12}секунд|биринчи.{0,12}секунд/iu.test(t);
   const mediaExecution = /рендер|render|экспорт|export|монтаж|собери видео|видеони тайёрла|видео ясаб|видео ярат|ролик ясаб/iu.test(t);
   const activeStageIds = [];
   const helperSkills = [];
