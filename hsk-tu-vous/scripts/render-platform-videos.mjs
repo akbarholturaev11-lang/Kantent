@@ -5,8 +5,13 @@ import { PROJECT_ROOT, FPS, writeJson } from "./lib.mjs";
 import { assertSharedLesson, sharedRenderRanges } from "./platform-exports.mjs";
 
 function run(args) {
-  const binary = path.join(PROJECT_ROOT, "node_modules", ".bin", "remotion");
-  const result = spawnSync(binary, args, {
+  // Remotion handles composition; ffmpeg/ffprobe are separate executables.
+  // Never invoke a nonexistent `remotion ffmpeg` or `remotion ffprobe`.
+  const mediaTool = args[0] === "ffmpeg" || args[0] === "ffprobe";
+  const binary = mediaTool ? args[0] :
+    path.join(PROJECT_ROOT, "node_modules", ".bin", "remotion");
+  const cliArgs = mediaTool ? args.slice(1) : args;
+  const result = spawnSync(binary, cliArgs, {
     cwd: PROJECT_ROOT,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
