@@ -2,6 +2,10 @@
 
 The calendar is the index. Each calendar item points to one CTA-free planned JSON lesson in `content/episodes/` for new dates. CTA text and cue-synced visuals live **only** in the canonical CTA Lab. The assembly of an active *review copy* happens in `scripts/episode-cta-assembly.mjs` when the agent opens or creates the dated production plan. Older historical source files may retain previously registered CTA snapshots; do not rewrite published or approved history.
 
+## Semantic visual planning (v1; review-only)
+
+A separate additive contract for future unapproved lessons is defined in [SEMANTIC_VISUAL_SCHEMA.md](SEMANTIC_VISUAL_SCHEMA.md) with enumerations in `semantic-visual-system.json`. This phase implements strictly validated semantic intent and spoken-word-to-frame timing; it is **not** a working semantic renderer and never changes the central CTA. Opted-in semantic plans are prohibited from falling through to the legacy rendering path until P2 is implemented. Existing episodes without `semanticVisual` remain unchanged.
+
 ## Cinematic storyboard treatment (optional)
 
 Unapproved future *lesson* scenes may opt in through `scene.storyboard = {formatId, setting, character, mood, sign?}`. Allowed `formatId` values are owned by `content/creative-formats.json`, not by CTA Lab. `setting` supports `street`, `cafe`, `campus`, `home`; `character` supports `student`, `shopkeeper`; and `mood` supports `question`, `mistake`, `answer`, `practice`. For `speed-quiz`, include 2–3 short `options`. Only source-supported or harmless general context labels are allowed. The 12 October `zai-location` episode is the first visual-only pilot; its existing narrator text, hook experiment and approved voice provider must stay unchanged.
