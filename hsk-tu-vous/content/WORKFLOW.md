@@ -12,7 +12,7 @@ The canonical calendar permits only one episode per date, so the recut is a new 
 
 ## Semantic shot planner — review-only foundation
 
-The optional schema and strict Gemini-cue-to-frame timeline compiler are documented in `content/SEMANTIC_VISUAL_SCHEMA.md`. Only eligible unapproved *review* episodes with explicitly authored semantic metadata may run `node scripts/prepare-semantic-visual.mjs <episode-id>` after importing verified Gemini word timestamps. It writes a noncanonical `review/<id>/visual-timeline.json`. The semantic renderer is not implemented in P0/P1: the normal production renderer refuses semantic-tagged episodes instead of silently outputting the old illustration. Do not enable semantic video production, touch CTA, or publish until the separate P2 renderer and visual review are complete.
+The optional schema and strict Gemini-cue-to-frame timeline compiler are documented in `content/SEMANTIC_VISUAL_SCHEMA.md`. Only eligible unapproved *review* episodes with explicitly authored semantic metadata may run `node scripts/prepare-semantic-visual.mjs <episode-id>` after importing verified Gemini word timestamps. It writes a noncanonical `review/<id>/visual-timeline.json`. P2 adds a preview-only Remotion scene renderer (`src/SemanticStoryScene.tsx`) fed by a strict compiled timeline; the normal production renderer still refuses semantic-tagged episodes until an end-to-end real-voice pilot and production flag migration have passed. Do not enable semantic video production, touch CTA, or publish until an actual narrated semantic MP4 passes owner review and the production rollout is separately authorized.
 
 ## Published-video deduplication (verified Zernio evidence)
 

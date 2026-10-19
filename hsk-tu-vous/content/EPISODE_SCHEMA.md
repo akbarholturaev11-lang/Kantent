@@ -4,7 +4,7 @@ The calendar is the index. Each calendar item points to one CTA-free planned JSO
 
 ## Semantic visual planning (v1; review-only)
 
-A separate additive contract for future unapproved lessons is defined in [SEMANTIC_VISUAL_SCHEMA.md](SEMANTIC_VISUAL_SCHEMA.md) with enumerations in `semantic-visual-system.json`. This phase implements strictly validated semantic intent and spoken-word-to-frame timing; it is **not** a working semantic renderer and never changes the central CTA. Opted-in semantic plans are prohibited from falling through to the legacy rendering path until P2 is implemented. Existing episodes without `semanticVisual` remain unchanged.
+A separate additive contract for future unapproved lessons is defined in [SEMANTIC_VISUAL_SCHEMA.md](SEMANTIC_VISUAL_SCHEMA.md) with enumerations in `semantic-visual-system.json`. This phase implements strictly validated semantic intent and spoken-word-to-frame timing; P2 provides an **opt-in preview-only Remotion semantic renderer**, not a publishable semantic production flow, and never changes the central CTA. Production rendering of opted-in semantic episodes is blocked until real-voice end-to-end QA and an explicit rollout migration. Existing episodes without `semanticVisual` remain unchanged.
 
 ## Cinematic storyboard treatment (optional)
 

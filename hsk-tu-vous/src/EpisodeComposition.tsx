@@ -17,6 +17,7 @@ import visualSystem from "../content/visual-system.json";
 import { CaptionOverlay, type TimedCaption } from "./CaptionOverlay";
 import { BoldMotionScene } from "./BoldMotionScene";
 import { CinematicStoryScene, type Storyboard } from "./CinematicStoryScene";
+import { SemanticStoryScene, type SemanticShot, type SemanticTimeline, type SemanticTimelineScene } from "./SemanticStoryScene";
 import { NarrativeVisual, type VisualFocus } from "./NarrativeVisual";
 
 type LessonCard = {
@@ -33,6 +34,7 @@ type LessonScene = {
   screenCaption?: string;
   editPlan?: string;
   storyboard?: Storyboard;
+  semanticShot?: SemanticShot;
   visualBeats?: VisualBeat[];
   durationSec?: number;
   durationFrames?: number;
@@ -50,6 +52,7 @@ type LessonEpisode = {
   title: string;
   level: string;
   topic: string;
+  semanticVisual?: { schemaVersion: 1; mode: "review-only" };
   durationTargetSec?: number;
   scenes: LessonScene[];
   audioSrc?: string;
@@ -61,7 +64,7 @@ type LessonEpisode = {
   captionSource?: string;
 };
 
-type EpisodeProps = { episode: LessonEpisode };
+type EpisodeProps = { episode: LessonEpisode; semanticTimeline?: SemanticTimeline };
 export type VisualBeat = {
   hero: string;
   pinyin?: string;
@@ -978,7 +981,13 @@ const LessonSlide: React.FC<{
   durationFrames: number;
   timelineStartMs: number;
   captions: TimedCaption[];
-}> = ({ episodeId, scene, index, sceneCount, durationFrames, timelineStartMs, captions }) => {
+  semanticScene?: SemanticTimelineScene;
+}> = ({ episodeId, scene, index, sceneCount, durationFrames, timelineStartMs, captions, semanticScene }) => {
+  // A semantic scene must be bound to a compiled, exact-cue timeline.
+  if (scene.semanticShot && (!semanticScene || semanticScene.sceneId !== scene.id))
+    throw new Error("Semantic scene missing a matching audio-cue timeline: " + scene.id);
+  if (!scene.semanticShot && semanticScene)
+    throw new Error("Unmatched semantic timeline in " + scene.id);
   const frame = useCurrentFrame();
   const motionDesign = episodeId === "zhe-na-ge";
   const fadeIn = index === 0
@@ -1150,7 +1159,15 @@ const LessonSlide: React.FC<{
         opacity: sceneOpacity,
       }}
     >
-      {motionDesign ? (
+      {scene.semanticShot && semanticScene ? (
+        <SemanticStoryScene
+          shot={scene.semanticShot}
+          timeline={semanticScene}
+          beats={beats}
+          frame={frame}
+          sceneStartFrame={Math.round((timelineStartMs / 1000) * FPS)}
+        />
+      ) : motionDesign ? (
         <BoldMotionScene
           sceneId={scene.id}
           beat={beat}
@@ -1217,7 +1234,7 @@ const LessonSlide: React.FC<{
         HSK <span style={{ color: accent, marginLeft: -9 }}>AI</span>
       </div>}
 
-      {!motionDesign && !scene.storyboard && shouldCrossfadeBeat && previousBeat && (
+      {!motionDesign && !scene.storyboard && !scene.semanticShot && shouldCrossfadeBeat && previousBeat && (
         <BeatText
           key={`${scene.id}-${beatIndex - 1}-outgoing`}
           beat={previousBeat}
@@ -1231,7 +1248,7 @@ const LessonSlide: React.FC<{
           isOutgoing
         />
       )}
-      {!motionDesign && !scene.storyboard && <BeatText
+      {!motionDesign && !scene.storyboard && !scene.semanticShot && <BeatText
         key={`${scene.id}-${beatIndex}`}
         beat={beat}
         localFrame={localBeatFrame}
@@ -1259,7 +1276,7 @@ const LessonSlide: React.FC<{
           />
         </Sequence>
       )}
-      {scene.kind !== "hook" &&
+      {scene.kind !== "hook" && !scene.semanticShot &&
         beats.slice(1, SOUND.maxBeatCuesPerScene + 1).map((_, beatOffset) => (
           <Sequence
             key={`${scene.id}-sfx-${beatOffset}`}
@@ -1283,8 +1300,18 @@ const LessonSlide: React.FC<{
   );
 };
 
-const LessonVideo: React.FC<EpisodeProps> = ({ episode }) => {
+const LessonVideo: React.FC<EpisodeProps> = ({ episode, semanticTimeline }) => {
   const { durationInFrames } = useVideoConfig();
+  if (episode.semanticVisual) {
+    if (!semanticTimeline || semanticTimeline.episodeId !== episode.id ||
+        semanticTimeline.schemaVersion !== 1 || semanticTimeline.fps !== FPS)
+      throw new Error("Semantic episode requires matching v1 word-cue render props");
+  } else if (semanticTimeline) {
+    throw new Error("Semantic timeline supplied to nonsemantic episode");
+  }
+  if (episode.semanticVisual && episode.scenes.some(scene => scene.kind !== "cta" &&
+    scene.semanticShot && !semanticTimeline?.scenes.some(s => s.sceneId === scene.id)))
+    throw new Error("Missing compiled timeline for semantic shot");
   const captionSections = useMemo(
     () => buildCaptionSections(episode.scenes, FPS),
     [episode.scenes],
@@ -1318,6 +1345,7 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode }) => {
             durationFrames={durationFrames}
             timelineStartMs={(from / FPS) * 1000}
             captions={episode.captions ?? []}
+            semanticScene={semanticTimeline?.scenes.find(item => item.sceneId === scene.id)}
           />
         </Sequence>
       ))}

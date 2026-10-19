@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "productionEnabled": false,
-  "status": "planning-and-cue-validation-only",
-  "editorial": "No auto-generated semantic actions; reviewed intent is required. Existing renderer must reject semantic opt-in until P2.",
+  "status": "preview-renderer-ready-production-disabled",
+  "editorial": "P2 Remotion preview renderer available for validated cue-bound motions only; production semantic MP4 and social publication remain disabled pending real audio/video owner review.",
   "environments": [
     "street",
     "home",
@@ -49,5 +49,34 @@
     "minActionDurationMs": 160,
     "maxActionDurationMs": 2500,
     "maxAdjacentCueGapMs": 400
-  }
+  },
+  "previewSupportedActions": [
+    "approach-camera",
+    "move-away",
+    "enter",
+    "exit",
+    "open",
+    "close",
+    "appear",
+    "disappear",
+    "show-blocked",
+    "hold"
+  ],
+  "previewActorActions": [
+    "approach-camera",
+    "move-away",
+    "enter",
+    "exit",
+    "appear",
+    "disappear",
+    "hold"
+  ],
+  "previewObjectActions": [
+    "open",
+    "close",
+    "appear",
+    "disappear",
+    "show-blocked",
+    "hold"
+  ]
 }

@@ -1,6 +1,6 @@
 # Semantic visual contract (v1; review-only foundation)
 
-Current state: **schema, validation and strict audio-cue resolver only**. The Remotion semantic renderer has not been built. Do not claim semantic MP4s exist. See `plans/SEMANTIC_VISUAL_STORYTELLING_PLAN.md` for P0–P5.
+Current state: **P0/P1 validation plus P2 opt-in Remotion still-frame preview renderer**. Production semantic MP4, live Gemini validation and publishing remain disabled. Do not claim publishable semantic MP4s exist. See `plans/SEMANTIC_VISUAL_STORYTELLING_PLAN.md` for P0–P5.
 
 The single source for allowed semantic enumerations, limits and rollout status is `content/semantic-visual-system.json`; this file explains their usage. Broad format selection remains `content/creative-formats.json`, layout numbers remain `content/visual-system.json`, and the editorial shot method remains `content/EDITING_SPEC.md`. No changes to CTA policy.
 
@@ -30,8 +30,8 @@ This is a structural example, NOT a real production Chinese transcript; `syncCue
 - All semantic action start frames are computed as `ceil(startMs * fps / 1000)`. Composition can be visible early, but meaningful motion **never** starts before the spoken cue. Nonsemantic legacy `beatEntryLeadFrames` is unchanged.
 - Repeated spoken words require explicit occurrence, overlapping incompatible actions are rejected, action durations must fit the scene, and captions crossing scene bounds or containing multiple unseparated words are rejected for semantic scenes.
 - Imported Gemini exact-token/narration validation is still performed by the existing code before any real render. No synthesis of missing cues. The compilation produces a review-only sidecar, not finished animation.
-- `scripts/semantic-visual-plan.mjs` exports `validateSemanticVisualEpisode` and `compileSemanticVisualTimeline`; `scripts/prepare-semantic-visual.mjs` is an **explicit standalone review command**. It will not run in normal production yet. Semantic-tagged episodes cannot accidentally render with legacy visuals: production render must block them until P2.
+- `scripts/semantic-visual-plan.mjs` exports `validateSemanticVisualEpisode` and `compileSemanticVisualTimeline`; `scripts/prepare-semantic-visual.mjs` is an **explicit standalone review command**. It will not run in normal production yet. Semantic-tagged episodes cannot accidentally render with legacy visuals: production render blocks them until real-voice end-to-end verification and explicit production rollout approval.
 - Review output: `review/<episode-id>/visual-timeline.json` stores time/frame anchors, shot metadata, cue occurrence/index and separate source/timing SHA-256 fingerprints. This generated review sidecar is not canonical lesson data or an approval record.
 - Modifying only semantic visual metadata invalidates both video exports and owner approval while retaining unchanged verified voice/cues. Approved or published records remain historical and untouched. Rendering and publication still require exact-preview owner approval.
 
-The root config `productionEnabled:false` is deliberate. Do not switch it on before implementing and testing the P2 semantic renderer and a real audio+video pilot.
+The root config `productionEnabled:false` is deliberate. P2's renderer supports the explicitly listed `previewSupportedActions` only and currently illustrates object IDs containing `door` or `gate`; unsupported actions/objects fail closed. Use `node scripts/semantic-render-fixture.mjs /tmp/semantic-props.json` and Remotion `still` for a **synthetic, non-publishable** 来/去 review. Do not switch on production until an actual audio+video pilot and owner review have passed.
