@@ -38,13 +38,6 @@ jobs:
           npx remotion still src/index.ts HSKAI-Episode /tmp/semantic-departing.png --props /tmp/semantic-props.json --frame=86
           npx remotion still src/index.ts HSKAI-Episode /tmp/semantic-left.png --props /tmp/semantic-props.json --frame=107
           node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const names=['before','approaching','arrived','departing','left'];const hashes=names.map(n=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/semantic-'+n+'.png')).digest('hex'));if(new Set(hashes).size!==hashes.length)throw Error('Semantic motion did not vary by cue frame');"
-      - name: Attach synthetic preview stills for owner QA (not publishable)
-        uses: actions/upload-artifact@v4
-        with:
-          name: semantic-come-go-preview
-          path: /tmp/semantic-*.png
-          if-no-files-found: error
-          retention-days: 7
 
   consistency:
     runs-on: ubuntu-latest
