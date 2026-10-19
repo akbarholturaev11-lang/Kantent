@@ -54,6 +54,7 @@ test("repeated spoken word requires explicit occurrence; supports selected secon
  const e=lesson();e.captions[2].text="приходит";
  assert.throws(()=>compileSemanticVisualTimeline(e),/ambiguous cue/);
  e.scenes[0].visualBeats[0].syncCueOccurrence=2;
+ e.scenes[0].visualBeats[0].semanticAction.durationMs=1100;
  assert.throws(()=>compileSemanticVisualTimeline(e),/overlapping or out-of-order/);
  e.scenes[0].visualBeats[0].semanticAction.durationMs=160;
  // Second occurrence at 1600, ends before outgoing action at 2500.
