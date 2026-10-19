@@ -152,14 +152,15 @@ const ObjectMark:React.FC<{id:string;index:number;frame:number;actions:ResolvedS
   const x=260+index*245;
   const opening=actions.filter(a=>a.subjectId===id && (a.action==="open"||a.action==="close"))
     .reduce((v,a)=>a.action==="open"?semanticActionProgress(frame,a):1-semanticActionProgress(frame,a),0);
-  const blocked=actions.some(a=>a.subjectId===id && a.action==="show-blocked" && frame>=a.startFrame);
+  const blocked=actions.filter(a=>a.subjectId===id && a.action==="show-blocked")
+    .reduce((amount,a)=>Math.max(amount,semanticActionProgress(frame,a)),0);
   return <g aria-label={id} transform={`translate(${x+pose.x} 445) scale(${pose.scale})`} opacity={pose.opacity}>
     <ellipse cx="0" cy="118" rx="87" ry="14" fill="#554431" fillOpacity=".12"/>
     <rect x="-70" y="-105" width="140" height="215" rx="13" fill="#D4AD88" stroke="#8F6754" strokeWidth="8"/>
     <path d={`M${-58+opening*106} -86h${110-opening*103}v179h${-110+opening*103}Z`}
       fill="#876250" stroke="#6E4B40" strokeWidth="7"/>
     <circle cx={36+opening*13} cy="12" r="9" fill="#F7D682"/>
-    {blocked&&<g><circle cy="-150" r="64" stroke={COLORS.brandRed} strokeWidth="15" fill="#FFF9F0" fillOpacity=".92"/>
+    {blocked>0&&<g opacity={blocked}><circle cy="-150" r="64" stroke={COLORS.brandRed} strokeWidth="15" fill="#FFF9F0" fillOpacity=".92"/>
       <path d="M-36 -187 36 -115" stroke={COLORS.brandRed} strokeWidth="13"/></g>}
   </g>;
 };
