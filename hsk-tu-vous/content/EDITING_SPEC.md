@@ -17,7 +17,7 @@ This is the shared edit and caption standard for every HSK AI short. The rendere
 
 ## Semantic actions (P0/P1 foundation only)
 
-The proposed semantic shot/action vocabulary and strict cue-time contract are defined in `content/SEMANTIC_VISUAL_SCHEMA.md`. This phase supports *review-only timeline planning*, **not semantic MP4 rendering**. Distinguish composition appearing before a cue (permitted) from movement that *depicts* the spoken verb (must begin on the confirmed cue frame, not on the early storyboard beat lead). Reject unmatched/ambiguous cues; do not approximate them by equal scene division. Do not apply to CTA, prior approvals or published episodes.
+The proposed semantic shot/action vocabulary and strict cue-time contract are defined in `content/SEMANTIC_VISUAL_SCHEMA.md`. P0/P1 support strict timeline planning, and P2 adds a **review-only Remotion still-frame preview**. A publishable semantic MP4 is **not** yet authorized. Distinguish composition appearing before a cue (permitted) from movement that *depicts* the spoken verb (must begin on the confirmed cue frame, not on the early storyboard beat lead). Reject unmatched/ambiguous cues; do not approximate them by equal scene division. Do not apply to CTA, prior approvals or published episodes.
 
 ## Cinematic storyboard scenes (opt-in)
 
