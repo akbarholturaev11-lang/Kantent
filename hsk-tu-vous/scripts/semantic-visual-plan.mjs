@@ -10,7 +10,7 @@ export const SEMANTIC_VISUAL_SCHEMA_VERSION = 1;
 const identifier = /^[a-z][a-z0-9-]{0,63}$/;
 const includes = (key, value) => registry[key].includes(value);
 const sha256 = value => createHash("sha256").update(JSON.stringify(value)).digest("hex");
-const tokens = text => String(text ?? "").normalize("NFKC").toLocaleLowerCase("ru-RU").match(/[\\p{L}\\p{M}\\p{N}]+/gu) ?? [];
+const tokens = text => String(text ?? "").normalize("NFKC").toLocaleLowerCase("ru-RU").match(/[\p{L}\p{M}\p{N}]+/gu) ?? [];
 const finite = value => typeof value === "number" && Number.isFinite(value);
 const hasSemantic = scene => Boolean(scene.semanticShot || (scene.visualBeats ?? []).some(beat => beat.semanticAction || beat.syncCueOccurrence !== undefined));
 
