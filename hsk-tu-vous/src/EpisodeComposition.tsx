@@ -52,6 +52,7 @@ type LessonEpisode = {
   title: string;
   level: string;
   topic: string;
+  semanticVisual?: { schemaVersion: 1; mode: "review-only" };
   durationTargetSec?: number;
   scenes: LessonScene[];
   audioSrc?: string;
@@ -1233,7 +1234,7 @@ const LessonSlide: React.FC<{
         HSK <span style={{ color: accent, marginLeft: -9 }}>AI</span>
       </div>}
 
-      {!motionDesign && !scene.storyboard && shouldCrossfadeBeat && previousBeat && (
+      {!motionDesign && !scene.storyboard && !scene.semanticShot && shouldCrossfadeBeat && previousBeat && (
         <BeatText
           key={`${scene.id}-${beatIndex - 1}-outgoing`}
           beat={previousBeat}
@@ -1247,7 +1248,7 @@ const LessonSlide: React.FC<{
           isOutgoing
         />
       )}
-      {!motionDesign && !scene.storyboard && <BeatText
+      {!motionDesign && !scene.storyboard && !scene.semanticShot && <BeatText
         key={`${scene.id}-${beatIndex}`}
         beat={beat}
         localFrame={localBeatFrame}
@@ -1275,7 +1276,7 @@ const LessonSlide: React.FC<{
           />
         </Sequence>
       )}
-      {scene.kind !== "hook" &&
+      {scene.kind !== "hook" && !scene.semanticShot &&
         beats.slice(1, SOUND.maxBeatCuesPerScene + 1).map((_, beatOffset) => (
           <Sequence
             key={`${scene.id}-sfx-${beatOffset}`}
