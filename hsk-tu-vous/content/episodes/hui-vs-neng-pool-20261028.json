@@ -1,0 +1,253 @@
+{
+  "id": "hui-vs-neng-pool-20261028",
+  "date": "2026-10-28",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "会 и 能: умею плавать, но сегодня не могу",
+  "level": "HSK 2",
+  "topic": "会 и 能: освоенный навык против возможности в конкретной ситуации",
+  "durationTargetSec": 31,
+  "caption": "«Я умею плавать» — 我会游泳 (Wǒ huì yóuyǒng). «Сегодня я не могу плавать» — 我今天不能游泳 (Wǒ jīntiān bù néng yóuyǒng). В чём разница между 会 и 能?",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK2",
+    "#китайскаяграмматика"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "会 (huì) перед глаголом может обозначать освоенный навык: 我会游泳 — «Я умею плавать».",
+    "能 (néng) перед глаголом может обозначать физическую или ситуационную возможность: 我今天不能游泳 — «Сегодня я не могу плавать».",
+    "Отрицание 能 — 不能 (bù néng); невозможность сегодня не означает, что человек разучился плавать.",
+    "Это полезное противопоставление для начинающих, не исчерпывающее значения: 会 также может выражать прогноз, а 能 может пересекаться с 可以 в контекстах возможности или разрешения."
+  ],
+  "examples": [
+    "会 huì — уметь (освоенный навык)",
+    "能 néng — мочь (возможность в ситуации)",
+    "游泳 yóuyǒng — плавать",
+    "我会游泳。 Wǒ huì yóuyǒng. — Я умею плавать.",
+    "我今天不能游泳。 Wǒ jīntiān bù néng yóuyǒng. — Сегодня я не могу плавать.",
+    "不能 bù néng — не могу (по обстоятельствам)"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "УМЕЮ ПЛАВАТЬ — НО СЕГОДНЯ НЕ МОГУ?",
+      "narration": "Ты умеешь плавать, но сегодня бассейн закрыт. Как сказать «могу» по-китайски? Здесь важно различать 会 и 能.",
+      "screenCaption": "Умею ≠ могу сегодня",
+      "editPlan": "0–5 с: сразу покажите человека у закрытого бассейна, затем крупно 会 и 不能; визуал обозначает вымышленную бытовую ситуацию, не реальное место. На первом beat выделите освоенный навык, на втором — сегодняшнее ограничение. Читаемые пиньинь и перевод держать в safe-area 9:16.",
+      "visualBeats": [
+        {
+          "hero": "会",
+          "pinyin": "huì",
+          "meaning": "умею (научился)",
+          "chinese": true,
+          "motion": "pop"
+        },
+        {
+          "hero": "不能",
+          "pinyin": "bù néng",
+          "meaning": "сегодня нет возможности",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "会",
+          "pinyin": "huì",
+          "meaning": "умею (освоенный навык)"
+        },
+        {
+          "hanzi": "不能",
+          "pinyin": "bù néng",
+          "meaning": "не могу в этой ситуации"
+        }
+      ]
+    },
+    {
+      "id": "skill",
+      "kind": "example",
+      "durationSec": 7,
+      "headline": "会 — Я УМЕЮ",
+      "narration": "我会游泳。 — «Я умею плавать». 会 показывает навык: человек научился плавать. Это умение никуда не исчезло.",
+      "screenCaption": "会 + действие = освоенный навык",
+      "editPlan": "5–12 с: покажите нейтральную иллюстрацию плавания, затем целое 我会游泳。 с тоновым пиньинем. Подсветите 会, не разделяя грамматически связанную фразу на нечитабельные части.",
+      "visualBeats": [
+        {
+          "hero": "会",
+          "pinyin": "huì",
+          "meaning": "умею, научился",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "我会游泳。",
+          "pinyin": "Wǒ huì yóuyǒng.",
+          "meaning": "Я умею плавать.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "会",
+          "pinyin": "huì",
+          "meaning": "умею"
+        },
+        {
+          "hanzi": "我会游泳。",
+          "pinyin": "Wǒ huì yóuyǒng.",
+          "meaning": "Я умею плавать."
+        }
+      ]
+    },
+    {
+      "id": "conditions",
+      "kind": "example",
+      "durationSec": 7,
+      "headline": "能 — МОГУ В ЭТОЙ СИТУАЦИИ",
+      "narration": "我今天不能游泳。 — «Сегодня я не могу плавать». Бассейн закрыт: дело не в навыке, а в обстоятельствах.",
+      "screenCaption": "不能 = сейчас нет возможности",
+      "editPlan": "12–19 с: верните схему закрытого бассейна, покажите всю фразу и выделите 今天 и 不能. Не добавляйте графику запрета, якобы взятую из реального бассейна.",
+      "visualBeats": [
+        {
+          "hero": "不能",
+          "pinyin": "bù néng",
+          "meaning": "не могу сейчас",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "我今天不能游泳。",
+          "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+          "meaning": "Сегодня я не могу плавать.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "不能",
+          "pinyin": "bù néng",
+          "meaning": "не могу в этой ситуации"
+        },
+        {
+          "hanzi": "我今天不能游泳。",
+          "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+          "meaning": "Сегодня я не могу плавать."
+        }
+      ]
+    },
+    {
+      "id": "contrast",
+      "kind": "context",
+      "durationSec": 7,
+      "headline": "НАВЫК ОСТАЛСЯ, УСЛОВИЯ ИЗМЕНИЛИСЬ",
+      "narration": "Сравните: 我会游泳 — я умею плавать. 我今天不能游泳 — сегодня не могу. 会 — про навык; 能 — про возможность в условиях.",
+      "screenCaption": "会: навык · 能: возможность",
+      "editPlan": "19–26 с: два равных кадра — человек умеет плавать / закрытый бассейн. Подписи 会 и 不能 выделяйте по очереди, но оставляйте одновременно оба примера, пиньинь и перевод.",
+      "visualBeats": [
+        {
+          "hero": "我会游泳。",
+          "pinyin": "Wǒ huì yóuyǒng.",
+          "meaning": "Я умею плавать.",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "我今天不能游泳。",
+          "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+          "meaning": "Сегодня я не могу плавать.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我会游泳。",
+          "pinyin": "Wǒ huì yóuyǒng.",
+          "meaning": "Я умею плавать."
+        },
+        {
+          "hanzi": "我今天不能游泳。",
+          "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+          "meaning": "Сегодня я не могу плавать."
+        }
+      ]
+    },
+    {
+      "id": "recall",
+      "kind": "example",
+      "durationSec": 5,
+      "headline": "ДВА ЗНАЧЕНИЯ — ДВА СЛОВА",
+      "narration": "Повторите: 我会游泳。 Я умею плавать. 我今天不能游泳。 Сегодня не могу. Одно дело — навык, другое — ситуация.",
+      "screenCaption": "会 ≠ 能 в этом контексте",
+      "editPlan": "26–31 с: последовательный учебный recall: сначала фраза про навык, затем фраза про сегодняшнюю невозможность. Без призыва к подписке, скачиванию или любому другому CTA.",
+      "visualBeats": [
+        {
+          "hero": "会",
+          "pinyin": "huì",
+          "meaning": "умею",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "不能",
+          "pinyin": "bù néng",
+          "meaning": "не могу сейчас",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "我会游泳。",
+          "pinyin": "Wǒ huì yóuyǒng.",
+          "meaning": "Я умею плавать."
+        },
+        {
+          "hanzi": "我今天不能游泳。",
+          "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+          "meaning": "Сегодня я не могу плавать."
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "会 vs 能 vs 可以 — Elon.io Chinese Grammar",
+      "url": "https://elon.io/grammar/chinese-mandarin/choosing/hui-vs-neng-vs-keyi",
+      "checkedAt": "2026-10-19",
+      "supports": "Examples 我会游泳 and 我今天不能来 establish 会 as learned skill and 能 as situational capacity; explains contexts and overlap with 可以."
+    },
+    {
+      "title": "能愿动词：会、能 — PandaBoo",
+      "url": "https://www.pandaboo.app/grammar/hsk1/grammar-hsk1-002",
+      "checkedAt": "2026-10-19",
+      "supports": "Defines 会 as learned ability, 能 as physical/situational ability, and Subject + 会/能 + verb, with 我会说中文 and 今天我不能去."
+    },
+    {
+      "title": "会 / 能 / 可以 — ChineseGrammar.app",
+      "url": "https://chinesegrammar.app/grammar/hui-neng-keyi",
+      "checkedAt": "2026-10-19",
+      "supports": "Confirms 我会游泳 represents learned swimming skill, situational inability uses 不能, and the distinction is a contextual default rather than an absolute non-overlap."
+    }
+  ],
+  "hookExperiment": {
+    "id": "hui-vs-neng-pool-20261028-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Немедленное столкновение знакомого навыка с закрытым бассейном может удержать русскоязычного новичка до контраста 会/能 лучше, чем вводное перечисление модальных глаголов.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-19"
+  },
+  "audienceProblem": "Начинающий переводит русское «могу» всегда одним китайским словом и не отличает умение от возможности сейчас.",
+  "learningOutcome": "Сказать «Я умею плавать» через 会 и «Сегодня я не могу плавать» через 不能 в двух типичных контекстах."
+}
