@@ -14,6 +14,11 @@ Goal: Each lesson's **context, actors/objects, camera motion, and meaning-bearin
 - Independent CI `semantic-foundation` covers logic, CLI, source consistency and lint. The separate legacy CTA assembly test on `main` was already red at `episode-cta-assembly.test.mjs:84`; do not relabel aggregate CI green or silently merge production code.
 - **P2 renderer preview now staged in stacked Draft PR #17**: `src/SemanticStoryScene.tsx` renders varied settings/shot compositions and a minimum set of cue-driven actor/object actions; `EpisodeComposition.tsx` accepts an optional compiled semantic timeline, and synthetic 来/去 Remotion still-frame QA runs in CI. Production flag remains OFF; no publishable real-Gemini semantic MP4 or actual post exists. P3–P5 remain unimplemented; next is a real-source and real-audio pilot with stronger semantic asset coverage.
 
+### P3 implementation tracking (2026-10-19)
+
+- P3 **read-only semantic shot adviser** added in stacked development branch `codex/semantic-visual-intent-planner-20261019`: new suggestion vocabulary (`content/semantic-shot-intents.json`), non-mutating scene-level evidence/action candidates, a CLI and MCP read-only tool, protected-review gating, regression tests and CI. Human review remains mandatory: action proposals are NOT executable semantic metadata and do NOT invent Gemini word times.
+- Active CTA, voice, approved/published snapshots and existing automatic broad creative-format cycling are unchanged; production semantic MP4 remains disabled. P4 real-voice/visual QA and P5 rollout are still unimplemented.
+
 ## 1. Confirmed current implementation (source audit)
 
 - `scripts/auto-storyboard.mjs` selects one of four creative formats and chooses `street|cafe|campus|home` by light text matching. It assigns `student` to newly decorated scenes; no rich per-action scene direction is inferred. Eligible CTA-free future source lessons are decorated in working review copies only.

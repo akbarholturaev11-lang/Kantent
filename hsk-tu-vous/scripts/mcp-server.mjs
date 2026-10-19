@@ -4,6 +4,7 @@ import { spawn } from "node:child_process";
 import { McpServer } from "@modelcontextprotocol/server";
 import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { recommendSkills } from "./skill-router.mjs";
+import { suggestSemanticShots } from "./semantic-shot-adviser.mjs";
 import { CTA_PLATFORMS, getPlatformCtaStatus } from "./platform-cta.mjs";
 import { requirePlatformPackage, requireApprovedPlatformPackages } from "./platform-exports.mjs";
 import {
@@ -352,6 +353,22 @@ const createServer = () => {
     },
     async ({ task, existingEngine }) =>
       withToolErrors(async () => recommendSkills(task, { existingEngine })),
+  );
+
+  server.registerTool(
+    "preview_semantic_shots",
+    {
+      title: "Review semantic shot candidates without editing lesson files",
+      description:
+        "P3 read-only suggestions: scene-specific environments, framing, and narration-supported action candidates. Never writes episodes, creates Gemini cues, changes CTA or permits publication. Human review plus imported word cue verification required.",
+      inputSchema: z.object({date: dateSchema}),
+    },
+    async ({date}) => withToolErrors(async () => {
+      const {item,episode} = await getPlannedEpisode(date);
+      const status = await readStatus(item.id);
+      const eligibility = item.status === "planned" ? status.stage : item.status;
+      return suggestSemanticShots(episode,{eligibility});
+    }),
   );
 
   server.registerTool(
