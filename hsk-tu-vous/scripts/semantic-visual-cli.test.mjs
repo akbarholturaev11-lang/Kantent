@@ -16,7 +16,7 @@ const makeEpisode=id=>({
   captions:[{text:"идёт",startMs:500,endMs:900}]
 });
 async function fixture(status) {
- const id="semantic-cli-fixture-"+process.pid;
+ const id="semantic-cli-fixture-"+status+"-"+process.pid;
  const dir=path.join(root,"review",id);
  await fs.mkdir(dir,{recursive:true});
  await fs.writeFile(path.join(dir,"episode.json"),JSON.stringify(makeEpisode(id)));
