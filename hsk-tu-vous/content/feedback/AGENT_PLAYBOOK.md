@@ -14,6 +14,15 @@ Use the **connected GitHub connector's write actions** when changing repository 
 
 The repository's 2026-10-11 [PR #5](https://github.com/akbarholturaev11-lang/Kantent/pull/5) demonstrates branch → file SHA → sequential update → PR → checks → merge. The owner's October 14 instruction governs only feedback-data/report delivery through review PRs. A separate October 15 owner instruction permits tightly scoped, verified daily scenario-reserve source writes directly to `main`, using `content/WORKFLOW.md`; neither instruction authorizes changes to CTA, voice, renderer, publishing or approved history.
 
+## Skill boundary for the Monday/Wednesday/Friday scheduled run
+
+At the start of each run, read the latest `main` canonical catalog and `content/SKILLS.md`. The agent's main job remains **own-account Instagram/YouTube feedback** using the connected Zernio account and real post data; it is not a competitor scraping task or automatic content publisher.
+
+- For analysis of existing *owned* posts, apply `content/hook-lab.json`, `content/feedback/` and the current analyzer. Do not misroute owned analytics to `ig-competitor-research`, which is explicitly for independently sourced competitor observations.
+- If the agent has directly supplied/authorized external competitor Reels with independently verifiable measurements, use `.agents/skills/ig-competitor-research/SKILL.md` to write **optional read-only hypotheses** in a clearly separate research section. No observed competitor data is pasted as HSK AI results or counted in Hook Lab.
+- When proposing a new Instagram publication caption to the owner (not when measuring historical post metrics), apply `.agents/skills/ig-caption-quality/SKILL.md`. Keep such proposed copy separate from canonical CTA and never silently mutate published packages or episodes.
+- `ig-reel-planning` is for **new lesson editorial drafts** during Calendar Reserve, not the analytics run; do not author new scripts as a side effect of this job. If the evidence suggests a test, report a proposed hypothesis for a future separately authorized lesson.
+
 ## Analysis run (proposed cadence: Monday / Wednesday / Friday, Asia/Shanghai)
 
 1. Fetch the latest GitHub `main` SHA and read the **current** `hsk-tu-vous/AGENTS.md`, `AI_RULES.md`, `content/calendar.json`, `content/hook-lab.json`, `content/cta-lab.json` and this playbook. Check all pending feedback PRs plus current `main` observation/report files first. Avoid repeated or missing historical report snapshots.
