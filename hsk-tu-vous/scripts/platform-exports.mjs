@@ -215,6 +215,13 @@ export async function requireApprovedPlatformPackages(
   approval,
   { lab } = {},
 ) {
+  // Preview MP4 is not publication permission. P4 end-to-end owner signoff
+  // must explicitly enable semantic publishing in the canonical config.
+  if (base.semanticVisual) {
+    const flag = await readJson(path.join(path.dirname(new URL(import.meta.url).pathname), "..", "content", "semantic-visual-system.json"));
+    if (flag.productionEnabled !== true)
+      throw new Error("Semantic video is review-only; production publishing remains disabled.");
+  }
   for (const target of approval.publicationIntent.platforms) {
     const current = await requirePlatformPackage(
       base,
