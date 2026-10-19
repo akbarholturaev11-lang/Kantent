@@ -365,7 +365,9 @@ const createServer = () => {
     },
     async ({date}) => withToolErrors(async () => {
       const {item,episode} = await getPlannedEpisode(date);
-      return suggestSemanticShots(episode,{eligibility:item.status});
+      const status = await readStatus(item.id);
+      const eligibility = item.status === "planned" ? status.stage : item.status;
+      return suggestSemanticShots(episode,{eligibility});
     }),
   );
 
