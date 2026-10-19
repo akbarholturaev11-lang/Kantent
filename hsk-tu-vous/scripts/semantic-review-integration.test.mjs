@@ -4,6 +4,7 @@ import { getPlannedEpisode, synchronizeAutoStoryboard } from "./lib.mjs";
 import { applySemanticReviewDraft, prepareSemanticRender } from "./semantic-review-integration.mjs";
 import { validateSemanticVisualEpisode } from "./semantic-visual-plan.mjs";
 import { renderSharedPlatformVideos } from "./render-platform-videos.mjs";
+import { requireApprovedPlatformPackages } from "./platform-exports.mjs";
 import { mkdtemp, rm, readFile } from "node:fs/promises";
 import fs from "node:fs";
 import os from "node:os";
@@ -105,4 +106,12 @@ test("synthetic shared-platform review renders carry same semantic timeline in b
     assert.ok((await readFile(path.join(folder,"insta.mp4"))).length>0);
     assert.ok((await readFile(path.join(folder,"yt.mp4"))).length>0);
   }finally{await rm(folder,{recursive:true,force:true});}
+});
+
+test("social publication stays blocked even for an owner-approved semantic review while production flag is off",async()=>{
+  await assert.rejects(()=>requireApprovedPlatformPackages(
+    {id:"semantic-reviewed",semanticVisual:{schemaVersion:1,mode:"review-only"}},
+    {stage:"owner-approved-for-zernio-publishing"},
+    {publicationIntent:{platforms:[]}}
+  ),/review-only; production publishing remains disabled/);
 });
