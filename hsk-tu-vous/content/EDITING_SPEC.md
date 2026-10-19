@@ -19,6 +19,10 @@ This is the shared edit and caption standard for every HSK AI short. The rendere
 
 The proposed semantic shot/action vocabulary and strict cue-time contract are defined in `content/SEMANTIC_VISUAL_SCHEMA.md`. P0/P1 support strict timeline planning, and P2 adds a **review-only Remotion still-frame preview**. A publishable semantic MP4 is **not** yet authorized. Distinguish composition appearing before a cue (permitted) from movement that *depicts* the spoken verb (must begin on the confirmed cue frame, not on the early storyboard beat lead). Reject unmatched/ambiguous cues; do not approximate them by equal scene division. Do not apply to CTA, prior approvals or published episodes.
 
+### P3 semantic shot recommendations
+
+A read-only adviser may propose scene-specific environments, framing and meaningful movements backed by actual authored narration; see `content/SEMANTIC_SHOT_ADVISER.md`. Visual variety does not justify random gestures. An unimplemented action (e.g. swimming) must be flagged for a new asset/renderer pass rather than faked using another gesture. Do not apply an advised `syncCueText` as verified until it matches imported Gemini word timestamps. This planning does not alter production rules or render approval.
+
 ## Cinematic storyboard scenes (opt-in)
 
 For a future, unapproved HSK lesson, a `scene.storyboard` can select an original illustrated location and character treatment; the renderer draws all shapes procedurally, without pretending they are documentary footage. Keep context art secondary in the upper part of the vertical canvas, Hanzi/pinyin/Russian meaning readable in the open central stage, and the existing word-timed caption layer at its approved position. Animate only from Remotion frames. Do not use storyboard on CTA scenes or the existing approved/published lesson snapshots; keep the existing single focus, timings, approved screenshots and central CTA intact. Pilot layouts live in `content/visual-system.json#storyboardLayout` and format selection in `content/creative-formats.json`. Before claiming a lesson is complete, inspect real rendered frames and verify the approved voice + SRT/VTT export.
