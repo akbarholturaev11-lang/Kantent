@@ -12,7 +12,7 @@ Goal: Each lesson's **context, actors/objects, camera motion, and meaning-bearin
 - Added `content/semantic-visual-system.json`, `content/SEMANTIC_VISUAL_SCHEMA.md`, `scripts/semantic-visual-plan.mjs`, a standalone cue-timeline preview CLI and Node tests. Integrated metadata validation in `lib.mjs` and the MCP review editor, and a fail-closed production renderer guard while P2 is absent.
 - Semantic feature is **off for production**, with legacy episodes and central CTA preserved. Timeline compilation requires imported true spoken word cues; unmatched/ambiguous cues abort rather than using proportional timing.
 - Independent CI `semantic-foundation` covers logic, CLI, source consistency and lint. The separate legacy CTA assembly test on `main` was already red at `episode-cta-assembly.test.mjs:84`; do not relabel aggregate CI green or silently merge production code.
-- **Next coding stage = P2**, only after reviewing P0/P1 diff and tests: semantic renderer, actual visual motion and cue-accurate illustrated 来 / 去 pilot. P3–P5 remain unimplemented.
+- **P2 renderer preview now staged in stacked Draft PR #17**: `src/SemanticStoryScene.tsx` renders varied settings/shot compositions and a minimum set of cue-driven actor/object actions; `EpisodeComposition.tsx` accepts an optional compiled semantic timeline, and synthetic 来/去 Remotion still-frame QA runs in CI. Production flag remains OFF; no publishable real-Gemini semantic MP4 or actual post exists. P3–P5 remain unimplemented; next is a real-source and real-audio pilot with stronger semantic asset coverage.
 
 ## 1. Confirmed current implementation (source audit)
 
