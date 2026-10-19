@@ -6,6 +6,10 @@ The calendar is the index. Each calendar item points to one CTA-free planned JSO
 
 A separate additive contract for future unapproved lessons is defined in [SEMANTIC_VISUAL_SCHEMA.md](SEMANTIC_VISUAL_SCHEMA.md) with enumerations in `semantic-visual-system.json`. This phase implements strictly validated semantic intent and spoken-word-to-frame timing; P2 provides an **opt-in preview-only Remotion semantic renderer**, not a publishable semantic production flow, and never changes the central CTA. Production rendering of opted-in semantic episodes is blocked until real-voice end-to-end QA and an explicit rollout migration. Existing episodes without `semanticVisual` remain unchanged.
 
+### P3 read-only scene advice
+
+Before choosing a future scene's `semanticShot`/`semanticAction`, agents may request *read-only* shot/gesture proposals using `scripts/semantic-shot-adviser.mjs` or `preview_semantic_shots`; the rule registry is `content/semantic-shot-intents.json`, explained in `content/SEMANTIC_SHOT_ADVISER.md`. `proposedCueText` is narration evidence **not** imported Gemini word timing. No proposal is executable, no CTA is modified and no reviewed/published episode is rewritten without explicit owner selection, source check and cue validation.
+
 ## Cinematic storyboard treatment (optional)
 
 Unapproved future *lesson* scenes may opt in through `scene.storyboard = {formatId, setting, character, mood, sign?}`. Allowed `formatId` values are owned by `content/creative-formats.json`, not by CTA Lab. `setting` supports `street`, `cafe`, `campus`, `home`; `character` supports `student`, `shopkeeper`; and `mood` supports `question`, `mistake`, `answer`, `practice`. For `speed-quiz`, include 2–3 short `options`. Only source-supported or harmless general context labels are allowed. The 12 October `zai-location` episode is the first visual-only pilot; its existing narrator text, hook experiment and approved voice provider must stay unchanged.
