@@ -69,6 +69,7 @@ export async function renderSharedPlatformVideos({
   outputs,
   workDir,
   renderOptions = [],
+  semanticTimeline = null,
   execute = run,
   log = console.log,
 }) {
@@ -80,7 +81,9 @@ export async function renderSharedPlatformVideos({
   const props = {};
   for (const [platform, episode] of Object.entries(episodes)) {
     props[platform] = path.join(workDir, `${platform}-props.json`);
-    await writeJson(props[platform], { episode });
+    // Platform-specific CTA differs, but assertSharedLesson already proves
+    // narration/timing/lesson body matches the single exact-cue timeline.
+    await writeJson(props[platform], { episode, ...(semanticTimeline ? {semanticTimeline} : {}) });
   }
   const browser = process.env.HSK_REMOTION_BROWSER_EXECUTABLE
     ? ["--browser-executable", process.env.HSK_REMOTION_BROWSER_EXECUTABLE]
