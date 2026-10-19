@@ -34,11 +34,12 @@ test("three platform entries expose safe CTA states", () => {
   assert.deepEqual(validatePlatformCtaConfig(lab), []);
   assert.equal(getPlatformCtaStatus(lab, "instagram").readyForRendering, true);
   const tiktok = getPlatformCtaStatus(lab, "tiktok");
-  assert.equal(tiktok.status, "pending-owner-configuration");
-  assert.equal(tiktok.readyForDraft, false);
-  assert.equal(tiktok.readyForRendering, false);
-  assert.equal(tiktok.copy, null);
-  assert.ok(tiktok.missing.length > 0);
+  assert.equal(tiktok.status, "approved");
+  assert.equal(tiktok.readyForDraft, true, "Owner-approved manual-DM CTA may be previewed locally");
+  assert.equal(tiktok.readyForRendering, false, "TikTok must never enter automatic shared-platform rendering");
+  assert.equal(tiktok.copy, lab.platformVariants.tiktok.canonicalRussian);
+  assert.equal(tiktok.deliveryMode, "manual-dm");
+  assert.deepEqual(tiktok.missing, []);
   assert.equal(tiktok.publishingAuthorized, false);
   const youtube = getPlatformCtaStatus(lab, "youtube");
   assert.equal(youtube.status, "approved");
@@ -59,11 +60,19 @@ test("Instagram CTA copy is centrally read from offer and not duplicated", () =>
   assert.notEqual(retained, baseEpisode);
 });
 
-test("pending TikTok cannot silently inherit Instagram copy", () => {
-  assert.throws(
-    () => preparePlatformCtaDraft(baseEpisode, lab, "tiktok"),
-    /CTA is not ready/,
-  );
+test("approved TikTok preview uses its own spoken CTA, resets stale audio and cannot authorize publishing", () => {
+  const draft = preparePlatformCtaDraft(baseEpisode, lab, "tiktok");
+  assert.equal(draft.ctaPlatform, "tiktok");
+  assert.equal(draft.cta, lab.platformVariants.tiktok.canonicalRussian);
+  assert.notEqual(draft.cta, lab.offer.canonicalRussian);
+  assert.deepEqual(draft.scenes.at(-1).visualBeats, lab.platformVariants.tiktok.sceneTemplate.visualBeats);
+  assert.equal(draft.audioSrc, undefined, "Different TikTok narration must invalidate earlier voice");
+  assert.equal(draft.voiceTextHash, undefined);
+  assert.equal(draft.captionSource, "pending-gemini-generation");
+  assert.equal(draft.ctaExperiment, undefined, "TikTok requires a distinct CTA version");
+  assert.equal(draft.publishingStatus, "pending-owner-review");
+  assert.equal(getPlatformCtaStatus(lab, "tiktok").publishingAuthorized, false);
+  assert.equal(baseEpisode.cta, lab.offer.canonicalRussian, "Source remains unchanged");
 });
 
 test("YouTube reuses Instagram copy and changes only the two supplied screenshot frames", () => {
