@@ -9,6 +9,27 @@ permissions:
   contents: read
 
 jobs:
+  semantic-foundation:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check semantic contract, spoken word cues and legacy compatibility
+        run: |
+          node --check scripts/semantic-visual-plan.mjs
+          node --check scripts/prepare-semantic-visual.mjs
+          node --check scripts/mcp-server.mjs
+          node --test scripts/semantic-visual-plan.test.mjs
+      - name: Validate active source references and config
+        run: npm run check:consistency
+      - name: Typecheck existing renderer without activating semantics
+        run: npm ci --no-audit --no-fund && npm run lint
+
   consistency:
     runs-on: ubuntu-latest
     defaults:
