@@ -36,6 +36,7 @@ Do **not** use this README as a second configuration file. `AGENTS.md` lists eve
 - Hook testing: `content/hook-lab.json` and its Lab documentation.
 - Design tokens: `content/visual-system.json`.
 - Runtime details: `PROJECT_MEMORY.md`.
+- Registered skills and stage selection: `content/skill-catalog.json`, `content/SKILLS.md` and MCP `recommend_skills`. Instagram lesson-hook, post-copy and competitor-research advisors are intentionally phase-specific.
 
 ## Automatic cinematic formats for upcoming video commands
 
@@ -53,11 +54,11 @@ The 12 October `zai-location` recut opts into a per-scene procedural cinematic i
 
 Run `npm run content:buffer` to check the next planned canonical episodes in the calendar timezone; run `npm run content:buffer -- --json` for a machine-readable report. Calendar coverage thresholds are owned by `content/calendar.json#planningBuffer`. A report below minimum exits with code 2. Neither command writes, generates, publishes, edits CTA, nor calls any external API.
 
-`content/feedback/README.md` defines the evidence format and safeguards for future Zernio-to-ChatGPT analysis. Automatic Zernio ingestion, scheduled execution, script rewriting, and new calendar-date generation are **not** implemented in this phase; the owner-preview gate remains unchanged.
+`content/feedback/README.md` defines the evidence format and safeguards for future Zernio-to-ChatGPT analysis. Repository-local automatic Zernio ingestion and unattended scheduling are **not** implemented in this Node.js package. Separate **ChatGPT scheduled agents** perform the daily scenario reserve and Monday/Wednesday/Friday feedback, when enabled, through the existing GitHub/Zernio connectors under `content/WORKFLOW.md` and `content/feedback/AGENT_PLAYBOOK.md`. These external agent schedules are not automatic social posting; the owner-preview gate remains unchanged.
 
 ## Agent scenario reserve
 
-`npm run content:scenario-buffer -- --json` proposes next publication dates for a shortfall (canonical `calendar.json#planningBuffer`, `planningWeekdays`). It creates **no** empty placeholder lessons and changes **no** repo files. ChatGPT may author the full, evidence-checked CTA-free future lesson JSON and register new dates/IDs in a review PR, subject to the active production rules. This is independent of video publishing.
+`npm run content:scenario-buffer -- --json` proposes next publication dates for a shortfall (canonical `calendar.json#planningBuffer`, `planningWeekdays`). It creates **no** empty placeholder lessons and changes **no** repo files. Under the owner-approved daily Calendar Reserve procedure, ChatGPT can author a full, source-checked future CTA-free lesson and register dates/IDs **directly in `main` via the GitHub connector** after all checks in `content/WORKFLOW.md`. New shared Instagram/YouTube lesson drafting consults the registered `ig-reel-planning` advisor for hook/storyboard suggestions only; the Hook Lab remains authoritative. This is independent of video rendering and publishing.
 
 ## GitHub freshness before every video
 
@@ -69,7 +70,7 @@ Before creating a draft, preparing/importing speech, or rendering, the relevant 
 
 ## Zernio feedback evidence (no extra API)
 
-`npm run content:feedback` validates snapshots in `content/feedback/observations/` and prints descriptive performance metrics. Add `-- --json` for a machine-readable report. These snapshots come from the connected Zernio service, not from a separate API token or from HSK AI's learner application. `content/feedback/AGENT_PLAYBOOK.md` is the future ChatGPT ↔ Zernio ↔ GitHub execution protocol; unattended scheduling is not deployed yet.
+`npm run content:feedback` validates snapshots in `content/feedback/observations/` and prints descriptive performance metrics. Add `-- --json` for a machine-readable report. These snapshots come from the connected Zernio service, not from a separate API token or from HSK AI's learner application. `content/feedback/AGENT_PLAYBOOK.md` is the separate ChatGPT ↔ Zernio ↔ GitHub feedback protocol, scheduled for Monday/Wednesday/Friday by an external ChatGPT automation when enabled. The code itself does not provide a headless scheduler or posting daemon.
 
 ## Changing a rule
 
