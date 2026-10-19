@@ -1,5 +1,6 @@
 import { AbsoluteFill, Easing } from "remotion";
 import visual from "../content/visual-system.json";
+import semanticConfig from "../content/semantic-visual-system.json";
 import type { VisualBeat } from "./EpisodeComposition";
 
 export type SemanticShot = {
@@ -168,6 +169,25 @@ export const SemanticStoryScene:React.FC<{
   sceneStartFrame:number;frame:number;
 }> = ({shot,timeline,beats,sceneStartFrame,frame}) => {
   const absoluteFrame=sceneStartFrame+frame;
+  // P2 refuses actions/subjects for which a truthful motion visual does not
+  // yet exist. The broader registry is a future planning vocabulary, not a
+  // promise of implemented effects.
+  for (const id of shot.objectIds ?? []) {
+    if (!/(door|gate)/i.test(id))
+      throw new Error("P2 preview has no accurate object illustration for: " + id);
+  }
+  for (const action of timeline.actions) {
+    if (!semanticConfig.previewSupportedActions.includes(action.action))
+      throw new Error("P2 preview cannot illustrate semantic action: " + action.action);
+    const isActor = (shot.actorIds ?? []).includes(action.subjectId);
+    const isObject = (shot.objectIds ?? []).includes(action.subjectId);
+    if (isActor && !semanticConfig.previewActorActions.includes(action.action))
+      throw new Error("Action requires an object, not actor: " + action.action);
+    if (isObject && !semanticConfig.previewObjectActions.includes(action.action))
+      throw new Error("Action requires an actor, not object: " + action.action);
+    if (!isActor && !isObject)
+      throw new Error("Semantic motion subject missing from shot: " + action.subjectId);
+  }
   const elapsedActions=timeline.actions.filter(a=>absoluteFrame>=a.startFrame);
   const selected=elapsedActions[elapsedActions.length-1];
   const beat=beats[selected?.beatIndex ?? 0];
