@@ -10,7 +10,7 @@ export const SEMANTIC_VISUAL_SCHEMA_VERSION = 1;
 const identifier = /^[a-z][a-z0-9-]{0,63}$/;
 const includes = (key, value) => registry[key].includes(value);
 const sha256 = value => createHash("sha256").update(JSON.stringify(value)).digest("hex");
-const tokens = text => String(text ?? "").normalize("NFKC").toLocaleLowerCase("ru-RU").match(/[\p{L}\p{M}\p{N}]+/gu) ?? [];
+const tokens = text => String(text ?? "").normalize("NFKC").toLocaleLowerCase("ru-RU").replace(/ё/g,"е").match(/[\p{L}\p{M}\p{N}]+/gu) ?? [];
 const finite = value => typeof value === "number" && Number.isFinite(value);
 const hasSemantic = scene => Boolean(scene.semanticShot || (scene.visualBeats ?? []).some(beat => beat.semanticAction || beat.syncCueOccurrence !== undefined));
 
@@ -125,7 +125,10 @@ export function compileSemanticVisualTimeline(episode) {
     if (!hasSemantic(scene) || scene.kind === "cta") continue;
     if (!finite(scene.startMs) || !finite(scene.endMs) || scene.endMs <= scene.startMs)
       throw Error(scene.id + ": imported scene startMs/endMs are required");
-    const words = sceneWords(episode,scene);
+    // Background-only semantic scenes need no word anchors; do not reject
+    // harmless caption boundary rounding where no action is synchronized.
+    const words = (scene.visualBeats ?? []).some(beat=>beat.semanticAction)
+      ? sceneWords(episode,scene) : [];
     const actions = [];
     for (const [index,beat] of (scene.visualBeats ?? []).entries()) {
       if (!beat.semanticAction) continue;
