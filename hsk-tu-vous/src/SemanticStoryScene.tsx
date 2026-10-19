@@ -1,4 +1,4 @@
-import { AbsoluteFill, Easing, interpolate } from "remotion";
+import { AbsoluteFill, Easing } from "remotion";
 import visual from "../content/visual-system.json";
 import type { VisualBeat } from "./EpisodeComposition";
 
