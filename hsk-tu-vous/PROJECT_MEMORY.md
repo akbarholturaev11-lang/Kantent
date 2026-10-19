@@ -13,6 +13,10 @@ This file is **not another policy document**. Keep only architecture, current te
 - The publication integration uses the existing connected social MCP. `mcp-server.mjs` records the approved preview and returned post IDs/status under each episode's review package. It does not store platform credentials or provide direct social-platform API authentication.
 - Installed skills, functional categories and the lesson/premium/special stage-owner recipes live in `content/skill-catalog.json`. `content/SKILLS.md` explains the policy, and `scripts/skill-router.mjs` powers the MCP `recommend_skills` tool. Remotion remains the dated lesson renderer; a separate standalone premium/special project can use HyperFrames. HeroUI is a design reference only.
 
+## Semantic visual foundation status (P0/P1 only)
+
+`content/semantic-visual-system.json` owns review-only allowed shot/action values (production disabled). `scripts/semantic-visual-plan.mjs` validates declarative action plans and binds them strictly to already imported Gemini word cues; `scripts/prepare-semantic-visual.mjs` writes a fingerprinted review-only visual timeline. `lib.mjs` and the MCP draft editor recognize additive semantic fields. `render-episode.mjs` refuses semantic opt-in until the P2 renderer is implemented, to avoid a false claim of voiced semantic motion. Old episodes and CTA continue unchanged. For full field semantics see `content/SEMANTIC_VISUAL_SCHEMA.md` and for the phased roadmap see `plans/SEMANTIC_VISUAL_STORYTELLING_PLAN.md`.
+
 ## Known implementation details
 
 - Voice labels in older episode snapshots can differ in spelling from the provider ID in `voice-profile.json`. `normalizeVoiceProvider` in `scripts/lib.mjs` handles legacy labels; do not modify historical snapshots solely to make their labels match.

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "productionEnabled": false,
+  "status": "planning-and-cue-validation-only",
+  "editorial": "No auto-generated semantic actions; reviewed intent is required. Existing renderer must reject semantic opt-in until P2.",
+  "environments": [
+    "street",
+    "home",
+    "campus",
+    "cafe",
+    "pool",
+    "transport-stop",
+    "room",
+    "neutral"
+  ],
+  "shotTypes": [
+    "wide",
+    "medium",
+    "closeup",
+    "object-focus",
+    "split-contrast"
+  ],
+  "cameraStyles": [
+    "static",
+    "follow",
+    "push-in",
+    "pull-back",
+    "side-track"
+  ],
+  "actions": [
+    "approach-camera",
+    "move-away",
+    "enter",
+    "exit",
+    "give",
+    "take",
+    "open",
+    "close",
+    "appear",
+    "disappear",
+    "point-to",
+    "compare",
+    "show-blocked",
+    "hold"
+  ],
+  "timing": {
+    "fps": 30,
+    "defaultActionDurationMs": 700,
+    "minActionDurationMs": 160,
+    "maxActionDurationMs": 2500,
+    "maxAdjacentCueGapMs": 400
+  }
+}

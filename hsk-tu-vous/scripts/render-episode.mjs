@@ -32,6 +32,11 @@ if (!id) throw new Error("Foydalanish: npm run content:render -- <mavzu-ID>");
 const sourceRevision = requireFreshGitMain();
 assertNotPreviouslyPublished(id);
 const { episode, filePath } = await getEpisode(id);
+// P0/P1 defines cues, not executable semantic animation. Never silently
+// render semantic-tagged lessons with legacy storyboards before P2 exists.
+if (episode.semanticVisual) throw new Error(
+  "Semantic renderer is not implemented (P2); use the review-only visual timeline command.",
+);
 const visualSystem = await readJson(
   path.join(PROJECT_ROOT, "content", "visual-system.json"),
 );

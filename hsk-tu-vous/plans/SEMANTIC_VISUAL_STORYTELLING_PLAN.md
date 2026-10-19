@@ -6,6 +6,14 @@ Goal: Each lesson's **context, actors/objects, camera motion, and meaning-bearin
 
 **This document is a proposed implementation roadmap, not an active production policy.** The owning source documents (`AGENTS.md`, `AI_RULES.md`, `content/EDITING_SPEC.md`, `content/EPISODE_SCHEMA.md`, `content/visual-system.json`, etc.) must be migrated together **when code implementation begins**. Existing approved/published revisions must not be changed.
 
+## Implementation tracking — 2026-10-19
+
+- **P0 + P1 implemented on branch** `codex/semantic-visual-foundation-20261019`, [Draft PR #16](https://github.com/akbarholturaev11-lang/Kantent/pull/16). This is NOT merged into `main` and is NOT a production semantic renderer.
+- Added `content/semantic-visual-system.json`, `content/SEMANTIC_VISUAL_SCHEMA.md`, `scripts/semantic-visual-plan.mjs`, a standalone cue-timeline preview CLI and Node tests. Integrated metadata validation in `lib.mjs` and the MCP review editor, and a fail-closed production renderer guard while P2 is absent.
+- Semantic feature is **off for production**, with legacy episodes and central CTA preserved. Timeline compilation requires imported true spoken word cues; unmatched/ambiguous cues abort rather than using proportional timing.
+- Independent CI `semantic-foundation` covers logic, CLI, source consistency and lint. The separate legacy CTA assembly test on `main` was already red at `episode-cta-assembly.test.mjs:84`; do not relabel aggregate CI green or silently merge production code.
+- **Next coding stage = P2**, only after reviewing P0/P1 diff and tests: semantic renderer, actual visual motion and cue-accurate illustrated 来 / 去 pilot. P3–P5 remain unimplemented.
+
 ## 1. Confirmed current implementation (source audit)
 
 - `scripts/auto-storyboard.mjs` selects one of four creative formats and chooses `street|cafe|campus|home` by light text matching. It assigns `student` to newly decorated scenes; no rich per-action scene direction is inferred. Eligible CTA-free future source lessons are decorated in working review copies only.
@@ -123,6 +131,6 @@ Example teaching semantics:
 - `beatEntryLeadFrames` is a staging lead, not a license to play a meaning-bearing action before speech.
 - Feature work is separate from independent technical debt in existing CTA-related CI; isolate that baseline rather than hiding it.
 
-## 6. Next coding task (explicitly deferred)
+## 6. Original P0/P1 task instruction (historical; completed on Draft PR #16)
 
 Start with **P0 + P1 only**, on an isolated code branch/PR with a known `main` baseline: introduce the additive schema, validators, strict cue resolver and test fixtures. Do **not** switch on for production, edit past approved work or publish videos. Review the first diff and tests, then proceed to P2 renderer and subsequent pilot. No executable-code change is authorized by this planning document itself.

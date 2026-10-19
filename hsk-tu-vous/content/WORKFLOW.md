@@ -10,6 +10,10 @@ The canonical calendar permits only one episode per date, so the recut is a new 
 
 `prepare_today_video` skips the externally verified published old episode and selects this new unpublished slot before the regular upcoming videos; `content:make -- 2026-10-13` targets the new episode only. The exceptional recut **does not advance** the four-format rotation, so the following regular Speed Quiz stays a Speed Quiz. Do not reuse the original post ID, edit its published snapshot, clone its rendered preview approval, treat its lifetime views as new-format data or post the recut without exact owner preview approval.
 
+## Semantic shot planner — review-only foundation
+
+The optional schema and strict Gemini-cue-to-frame timeline compiler are documented in `content/SEMANTIC_VISUAL_SCHEMA.md`. Only eligible unapproved *review* episodes with explicitly authored semantic metadata may run `node scripts/prepare-semantic-visual.mjs <episode-id>` after importing verified Gemini word timestamps. It writes a noncanonical `review/<id>/visual-timeline.json`. The semantic renderer is not implemented in P0/P1: the normal production renderer refuses semantic-tagged episodes instead of silently outputting the old illustration. Do not enable semantic video production, touch CTA, or publish until the separate P2 renderer and visual review are complete.
+
 ## Published-video deduplication (verified Zernio evidence)
 
 `content/published-posts.json` holds narrowly scoped verification records keyed by the **calendar episode ID**, platform and real Zernio post ID. Records must come from an actual connected Zernio `posts_get` readback showing `published`; a scheduled timestamp or owner-approved local package alone is never publication evidence. The schedule time does not redefine the canonical calendar date. Publication evidence **does not prove** the post was generated with the current renderer; `creativeFormatVerified:false` is intentional until an audited exported MP4 is matched.

@@ -19,6 +19,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Creative packaging formats and pilot allocation | `content/creative-formats.json` |
 | Design tokens, caption numbers and motion parameters | `content/visual-system.json` |
 | Visual editorial method | `content/EDITING_SPEC.md` |
+| Semantic shot/action enumeration and rollout status | `content/semantic-visual-system.json`, explained by `content/SEMANTIC_VISUAL_SCHEMA.md` |
 | Episode schema and invalidation | `content/EPISODE_SCHEMA.md` |
 | Runtime architecture, limitations and known technical gotchas | `PROJECT_MEMORY.md` |
 | Developer startup commands | `README.md` |

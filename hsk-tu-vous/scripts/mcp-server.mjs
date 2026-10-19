@@ -107,6 +107,13 @@ const createServer = () => {
         ])
         .optional(),
       syncCueText: z.string().min(1).max(120).optional(),
+    syncCueOccurrence: z.number().int().min(1).max(100).optional(),
+    semanticAction: z.object({
+      type: z.enum(["approach-camera", "move-away", "enter", "exit", "give", "take", "open", "close", "appear", "disappear", "point-to", "compare", "show-blocked", "hold"]),
+      subjectId: z.string().regex(/^[a-z][a-z0-9-]{0,63}$/),
+      targetId: z.string().regex(/^[a-z][a-z0-9-]{0,63}$/).optional(),
+      durationMs: z.number().int().min(160).max(2500).optional(),
+    }).optional(),
       enterAtSceneStart: z.boolean().optional(),
       actionIcon: z
         .enum(["bookmark", "comment", "app-download", "direct-message"])
@@ -126,6 +133,13 @@ const createServer = () => {
     narration: z.string().min(1).max(1200).optional(),
     screenCaption: z.string().max(240).optional(),
     editPlan: z.string().max(1200).optional(),
+    semanticShot: z.object({
+      environmentId: z.enum(["street", "home", "campus", "cafe", "pool", "transport-stop", "room", "neutral"]),
+      shotType: z.enum(["wide", "medium", "closeup", "object-focus", "split-contrast"]),
+      cameraStyle: z.enum(["static", "follow", "push-in", "pull-back", "side-track"]),
+      actorIds: z.array(z.string().regex(/^[a-z][a-z0-9-]{0,63}$/)).max(12).optional(),
+      objectIds: z.array(z.string().regex(/^[a-z][a-z0-9-]{0,63}$/)).max(12).optional(),
+    }).optional(),
     visualBeats: z.array(visualBeatSchema).max(12).optional(),
     captionStyleId: z.enum(["headline", "pill", "highlight"]).optional(),
     durationSec: z.number().positive().optional(),
@@ -494,6 +508,7 @@ const createServer = () => {
         learningFactSources: z.array(factSourceSchema).max(12).optional(),
         hookExperiment: hookExperimentSchema.optional(),
         ctaExperiment: ctaExperimentSchema.optional(),
+        semanticVisual: z.object({schemaVersion: z.literal(1), mode: z.literal("review-only")}).optional(),
         sceneEdits: z.array(sceneEditSchema).max(12).optional(),
       }),
     },
@@ -505,6 +520,7 @@ const createServer = () => {
       learningFactSources,
       hookExperiment,
       ctaExperiment,
+      semanticVisual,
       sceneEdits = [],
     }) =>
       withToolErrors(async () => {
@@ -519,6 +535,7 @@ const createServer = () => {
         if (hookExperiment !== undefined)
           episode.hookExperiment = hookExperiment;
         if (ctaExperiment !== undefined) episode.ctaExperiment = ctaExperiment;
+        if (semanticVisual !== undefined) episode.semanticVisual = semanticVisual;
 
         for (const edit of sceneEdits) {
           const scene = episode.scenes.find(
@@ -533,6 +550,7 @@ const createServer = () => {
             "narration",
             "screenCaption",
             "editPlan",
+            "semanticShot",
             "visualBeats",
             "captionStyleId",
             "durationSec",
