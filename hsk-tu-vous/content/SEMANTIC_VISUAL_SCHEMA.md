@@ -2,6 +2,8 @@
 
 Current state: **P0/P1 validation plus P2 opt-in Remotion still-frame preview renderer**. Production semantic MP4, live Gemini validation and publishing remain disabled. Do not claim publishable semantic MP4s exist. See `plans/SEMANTIC_VISUAL_STORYTELLING_PLAN.md` for P0–P5.
 
+P3 provides only non-mutating editorial shot proposals from `content/semantic-shot-intents.json`, detailed in `content/SEMANTIC_SHOT_ADVISER.md`; source-script cue candidates are never automatically compiled or treated as imported Gemini timing.
+
 The single source for allowed semantic enumerations, limits and rollout status is `content/semantic-visual-system.json`; this file explains their usage. Broad format selection remains `content/creative-formats.json`, layout numbers remain `content/visual-system.json`, and the editorial shot method remains `content/EDITING_SPEC.md`. No changes to CTA policy.
 
 Opt-in for an **unapproved review-only** lesson:
