@@ -24,7 +24,7 @@ jobs:
           node --check scripts/semantic-visual-plan.mjs
           node --check scripts/prepare-semantic-visual.mjs
           node --check scripts/mcp-server.mjs
-          node --test scripts/semantic-visual-plan.test.mjs
+          node --test scripts/semantic-visual-plan.test.mjs scripts/semantic-visual-cli.test.mjs
       - name: Validate active source references and config
         run: npm run check:consistency
       - name: Typecheck existing renderer without activating semantics
