@@ -216,8 +216,9 @@ export async function requireApprovedPlatformPackages(
   approval,
   { lab } = {},
 ) {
-  // Preview MP4 is not publication permission. P4 end-to-end owner signoff
-  // must explicitly enable semantic publishing in the canonical config.
+  // The owner explicitly authorized this feature-flag rollout.
+  // The flag only lifts semantic-specific blocking. Valid platform exports,
+  // hashes, the exact-preview consent and publication guards still apply.
   if (base.semanticVisual) {
     const flag = await readJson(path.join(PROJECT_ROOT, "content", "semantic-visual-system.json"));
     if (flag.productionEnabled !== true)

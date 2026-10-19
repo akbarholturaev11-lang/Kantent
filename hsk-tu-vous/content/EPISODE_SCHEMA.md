@@ -2,9 +2,9 @@
 
 The calendar is the index. Each calendar item points to one CTA-free planned JSON lesson in `content/episodes/` for new dates. CTA text and cue-synced visuals live **only** in the canonical CTA Lab. The assembly of an active *review copy* happens in `scripts/episode-cta-assembly.mjs` when the agent opens or creates the dated production plan. Older historical source files may retain previously registered CTA snapshots; do not rewrite published or approved history.
 
-## Semantic visual planning (v1; review-only)
+## Semantic visual planning (v1; owner-authorized production)
 
-A separate additive contract for future unapproved lessons is defined in [SEMANTIC_VISUAL_SCHEMA.md](SEMANTIC_VISUAL_SCHEMA.md) with enumerations in `semantic-visual-system.json`. Eligible new future working drafts now receive semanticShot scenes and unambiguous narrator-supported actions automatically before TTS. The normal reviewer MP4 renderer receives exact Gemini word-anchored cue props, but social publishing remains disabled until a real-voice P4 quality gate and explicit rollout approval. Central CTA remains unchanged. Existing episodes without `semanticVisual` remain unchanged.
+A separate additive contract for future unapproved lessons is defined in [SEMANTIC_VISUAL_SCHEMA.md](SEMANTIC_VISUAL_SCHEMA.md) with enumerations in `semantic-visual-system.json`. Eligible new future working drafts now receive semanticShot scenes and unambiguous narrator-supported actions automatically before TTS. The normal reviewer MP4 renderer receives exact Gemini word-anchored cue props, but the owner has reported a successful real-video trial and authorized production on 2026-10-20. Each exact video still requires separate final-preview approval before publishing. Central CTA remains unchanged. Existing episodes without `semanticVisual` remain unchanged.
 
 ### P3 read-only scene advice
 

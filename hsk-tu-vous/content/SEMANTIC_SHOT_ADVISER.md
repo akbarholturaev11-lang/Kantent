@@ -45,7 +45,7 @@ npm run content:semantic-plan -- hui-vs-neng-pool-20261028
 
 Connected local HSK AI MCP: `preview_semantic_shots({date:"2026-10-28"})`.
 Both entrypoints **read** canonical planned lessons; they do not change them.
-Automatic semantic **review video** rendering is now wired for eligible clean future drafts; social publishing remains disabled until real audio/MP4 QA and owner approval.
+Automatic semantic **review video** rendering is now wired for eligible clean future drafts; social publishing is now eligible under the owner-authorized 2026-10-20 rollout, but each exact destination/video still requires separate final-preview owner approval.
 
 ## Editorial QA example
 
@@ -57,4 +57,4 @@ without source review. The auto-applicator can choose a supported motion automat
 Approved/published snapshots and CTA histories remain untouchable. Any
 owner-selected visual edit invalidates old video and exact preview approval,
 but voice/caption timing is reusable if narration and its fingerprint stay
-unchanged. A planned draft's review MP4 is not social publication approval. Do not enable semantic social publishing just because proposal tests pass.
+unchanged. A planned draft's review MP4 is not social publication approval. Production was enabled by explicit owner authorization, not merely proposal tests; exact-final-preview approval remains mandatory.

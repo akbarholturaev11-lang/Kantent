@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "productionEnabled": false,
-  "status": "review-auto-wired-production-publishing-unchanged",
-  "editorial": "Deterministic semantic shots are automatically applied only to clean, future, CTA-free review drafts since 2026-10-21. Exact movement cues must match imported Gemini word timings; otherwise review rendering fails closed. No published/approved review rewrite and no automatic social publication.",
+  "productionEnabled": true,
+  "status": "production-enabled-by-owner-2026-10-20",
+  "editorial": "Owner reported a satisfactory real-video test and explicitly authorized Semantic Visual production rollout on 2026-10-20. New automatic semantic shots remain restricted to clean future CTA-free review drafts from 2026-10-21. Exact Gemini word cues and supported shot/action checks still fail closed. This flag removes only the semantic-specific publication block: each real destination, export, caption and schedule still needs separate exact-final-preview owner approval, with current CTA and media hashes verified. No automatic social publication or retroactive rewrite of approved/published versions.",
   "environments": [
     "street",
     "home",

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { getPlannedEpisode, synchronizeAutoStoryboard } from "./lib.mjs";
+import { getPlannedEpisode, synchronizeAutoStoryboard, PROJECT_ROOT } from "./lib.mjs";
 import { applySemanticReviewDraft, prepareSemanticRender } from "./semantic-review-integration.mjs";
 import { validateSemanticVisualEpisode } from "./semantic-visual-plan.mjs";
 import { renderSharedPlatformVideos } from "./render-platform-videos.mjs";
@@ -108,10 +108,13 @@ test("synthetic shared-platform review renders carry same semantic timeline in b
   }finally{await rm(folder,{recursive:true,force:true});}
 });
 
-test("social publication stays blocked even for an owner-approved semantic review while production flag is off",async()=>{
+test("semantic production owner approval retains exact export safety gate",async()=>{
+  const config=JSON.parse(await readFile(path.join(PROJECT_ROOT,"content/semantic-visual-system.json"),"utf8"));
+  assert.equal(config.productionEnabled,true,"owner authorized rollout");
+  assert.equal(config.reviewAutoEnabled,true);
   await assert.rejects(()=>requireApprovedPlatformPackages(
     {id:"semantic-reviewed",semanticVisual:{schemaVersion:1,mode:"review-only"}},
-    {stage:"owner-approved-for-zernio-publishing"},
-    {publicationIntent:{platforms:[]}}
-  ),/review-only; production publishing remains disabled/);
+    {stage:"owner-approved-for-zernio-publishing",platformPackages:{}},
+    {publicationIntent:{platforms:[{platform:"youtube"}]},platformPackages:{}}
+  ),/YouTube export is missing/);
 });
