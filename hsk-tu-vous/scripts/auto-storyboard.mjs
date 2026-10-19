@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { recommendCreativeFormats } from "./viral-plan.mjs";
 import { validateStoryboardEpisode } from "./storyboard-validation.mjs";
+import { applySemanticReviewDraft } from "./semantic-review-integration.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (file) => JSON.parse(fs.readFileSync(path.join(root, "content", file), "utf8"));
@@ -17,7 +18,19 @@ export function compareAuthorialContent(a, b) {
     const copy = clone(episode);
     delete copy.creativeFormatId;
     delete copy.autoStoryboard;
-    for (const scene of copy.scenes ?? []) delete scene.storyboard;
+    delete copy.autoSemantic;
+    delete copy.semanticVisual;
+    for (const scene of copy.scenes ?? []) {
+      delete scene.storyboard;
+      delete scene.semanticShot;
+      for (const beat of scene.visualBeats ?? []) {
+        if (beat.semanticAction) {
+          delete beat.semanticAction;
+          delete beat.syncCueText;
+          delete beat.syncCueOccurrence;
+        }
+      }
+    }
     return JSON.stringify(copy);
   };
   return omit(a) === omit(b);
@@ -104,7 +117,7 @@ export function decorateFutureLesson(episode, {calendar,registry,episodeByFile})
     return {...scene,storyboard};
   });
   validateStoryboardEpisode(lesson);
-  return lesson;
+  return applySemanticReviewDraft(lesson);
 }
 
 export function decorateCanonicalLesson(episode) {
