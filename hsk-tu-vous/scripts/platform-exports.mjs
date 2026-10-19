@@ -18,6 +18,7 @@ import {
   readJson,
   reviewDir,
   FPS,
+  PROJECT_ROOT,
 } from "./lib.mjs";
 
 export function sharedRenderRanges(episode) {
@@ -218,7 +219,7 @@ export async function requireApprovedPlatformPackages(
   // Preview MP4 is not publication permission. P4 end-to-end owner signoff
   // must explicitly enable semantic publishing in the canonical config.
   if (base.semanticVisual) {
-    const flag = await readJson(path.join(path.dirname(new URL(import.meta.url).pathname), "..", "content", "semantic-visual-system.json"));
+    const flag = await readJson(path.join(PROJECT_ROOT, "content", "semantic-visual-system.json"));
     if (flag.productionEnabled !== true)
       throw new Error("Semantic video is review-only; production publishing remains disabled.");
   }
