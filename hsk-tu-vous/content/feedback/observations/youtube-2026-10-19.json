@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "description": "Append-only 2026-10-19 Zernio youtube connected-account provider lifetime measurement snapshot; not fixed 24h/7d.",
+  "collection": {
+    "collectedAt": "2026-10-19T00:42:28.329Z",
+    "analysisLookbackDays": 30,
+    "earliestPublishedAtIncluded": "2026-09-19T00:42:28.329Z",
+    "latestPublishedAtIncluded": "2026-10-19T00:42:28.329Z",
+    "sourceEndpoint": "Zernio analytics_get_analytics(platform=youtube,account_id=6ac96e053f8f4ffc10b0655f)",
+    "providerSyncAt": "2026-10-19T00:27:18.544Z",
+    "platform": "youtube",
+    "accountUsername": "hskai_app",
+    "accountId": "6ac96e053f8f4ffc10b0655f",
+    "platformAccountsConnected": [
+      "instagram",
+      "youtube"
+    ],
+    "providerReturnedTotal": 4,
+    "postsSaved": 4,
+    "earlySignalWindow": "24h",
+    "primaryDecisionWindow": "7d",
+    "primaryDecision": "insufficient-evidence"
+  },
+  "observations": [
+    {
+      "platform": "youtube",
+      "platformPostId": "BkKoFHKsiBI",
+      "accountUsername": "hskai_app",
+      "accountId": "6ac96e053f8f4ffc10b0655f",
+      "publishedAt": "2026-10-17T02:00:55.000Z",
+      "observedAt": "2026-10-19T00:42:28.329Z",
+      "window": "lifetime",
+      "postUrl": "https://www.youtube.com/watch?v=BkKoFHKsiBI",
+      "episodeId": null,
+      "hookFormat": null,
+      "hskLevel": null,
+      "effectStyle": null,
+      "creativeFormatId": null,
+      "zernioPostId": "6ad2d6abdfb3ed9d1041b458",
+      "providerRecordId": "6ad2dd6b147fe6d1bda01036",
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "avgWatchMs": "milliseconds",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 882,
+        "reach": null,
+        "likes": 3,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "avgWatchMs": null,
+        "durationSeconds": 34
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "analytics_get_analytics",
+        "accountId": "6ac96e053f8f4ffc10b0655f",
+        "syncedAt": "2026-10-19T00:27:18.544Z",
+        "providerMetricUpdatedAt": "2026-10-18 22:47:04",
+        "sourceType": "synced",
+        "query": {
+          "platform": "youtube",
+          "account_id": "6ac96e053f8f4ffc10b0655f",
+          "from_date": "2026-09-19",
+          "to_date": "2026-10-19",
+          "limit": 100,
+          "page": 1
+        }
+      },
+      "metricCaveat": "Only provider views/likes and positive comments are used; default zero fields for reach, saves, shares, watch, retention and funnel counts are null; no exact post-age 24h/7d analytics."
+    },
+    {
+      "platform": "youtube",
+      "platformPostId": "d_tEjT35RDE",
+      "accountUsername": "hskai_app",
+      "accountId": "6ac96e053f8f4ffc10b0655f",
+      "publishedAt": "2026-10-12T15:42:37.000Z",
+      "observedAt": "2026-10-19T00:42:28.329Z",
+      "window": "lifetime",
+      "postUrl": "https://www.youtube.com/watch?v=d_tEjT35RDE",
+      "episodeId": null,
+      "hookFormat": null,
+      "hskLevel": null,
+      "effectStyle": null,
+      "creativeFormatId": null,
+      "zernioPostId": "6accffd2636eeae262b68320",
+      "providerRecordId": "6acd1a59d7d8309b42b807a7",
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "avgWatchMs": "milliseconds",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 914,
+        "reach": null,
+        "likes": 6,
+        "comments": 1,
+        "shares": null,
+        "saves": null,
+        "avgWatchMs": null,
+        "durationSeconds": 31
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "analytics_get_analytics",
+        "accountId": "6ac96e053f8f4ffc10b0655f",
+        "syncedAt": "2026-10-19T00:27:18.544Z",
+        "providerMetricUpdatedAt": "2026-10-18 22:47:04",
+        "sourceType": "synced",
+        "query": {
+          "platform": "youtube",
+          "account_id": "6ac96e053f8f4ffc10b0655f",
+          "from_date": "2026-09-19",
+          "to_date": "2026-10-19",
+          "limit": 100,
+          "page": 1
+        }
+      },
+      "metricCaveat": "Only provider views/likes and positive comments are used; default zero fields for reach, saves, shares, watch, retention and funnel counts are null; no exact post-age 24h/7d analytics."
+    },
+    {
+      "platform": "youtube",
+      "platformPostId": "B23HMNI60FQ",
+      "accountUsername": "hskai_app",
+      "accountId": "6ac96e053f8f4ffc10b0655f",
+      "publishedAt": "2026-10-10T13:00:05.000Z",
+      "observedAt": "2026-10-19T00:42:28.329Z",
+      "window": "lifetime",
+      "postUrl": "https://www.youtube.com/watch?v=B23HMNI60FQ",
+      "episodeId": null,
+      "hookFormat": null,
+      "hskLevel": null,
+      "effectStyle": null,
+      "creativeFormatId": null,
+      "zernioPostId": "6ac9e2e6ea2139aa08cbd278",
+      "providerRecordId": "6aca57667f5a258b10244f17",
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "avgWatchMs": "milliseconds",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 471,
+        "reach": null,
+        "likes": 2,
+        "comments": null,
+        "shares": null,
+        "saves": null,
+        "avgWatchMs": null,
+        "durationSeconds": 31
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "analytics_get_analytics",
+        "accountId": "6ac96e053f8f4ffc10b0655f",
+        "syncedAt": "2026-10-19T00:27:18.544Z",
+        "providerMetricUpdatedAt": "2026-10-18 14:56:16",
+        "sourceType": "synced",
+        "query": {
+          "platform": "youtube",
+          "account_id": "6ac96e053f8f4ffc10b0655f",
+          "from_date": "2026-09-19",
+          "to_date": "2026-10-19",
+          "limit": 100,
+          "page": 1
+        }
+      },
+      "metricCaveat": "Only provider views/likes and positive comments are used; default zero fields for reach, saves, shares, watch, retention and funnel counts are null; no exact post-age 24h/7d analytics."
+    },
+    {
+      "platform": "youtube",
+      "platformPostId": "MZV5luCu5YE",
+      "accountUsername": "hskai_app",
+      "accountId": "6ac96e053f8f4ffc10b0655f",
+      "publishedAt": "2026-10-09T22:11:05.000Z",
+      "observedAt": "2026-10-19T00:42:28.329Z",
+      "window": "lifetime",
+      "postUrl": "https://www.youtube.com/watch?v=MZV5luCu5YE",
+      "episodeId": null,
+      "hookFormat": null,
+      "hskLevel": null,
+      "effectStyle": null,
+      "creativeFormatId": null,
+      "zernioPostId": null,
+      "providerRecordId": "6ac96e06617027177940da81",
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "avgWatchMs": "milliseconds",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 505,
+        "reach": null,
+        "likes": 3,
+        "comments": 1,
+        "shares": null,
+        "saves": null,
+        "avgWatchMs": null,
+        "durationSeconds": 33
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "analytics_get_analytics",
+        "accountId": "6ac96e053f8f4ffc10b0655f",
+        "syncedAt": "2026-10-19T00:27:18.544Z",
+        "providerMetricUpdatedAt": "2026-10-17 23:13:14",
+        "sourceType": "synced",
+        "query": {
+          "platform": "youtube",
+          "account_id": "6ac96e053f8f4ffc10b0655f",
+          "from_date": "2026-09-19",
+          "to_date": "2026-10-19",
+          "limit": 100,
+          "page": 1
+        }
+      },
+      "metricCaveat": "Only provider views/likes and positive comments are used; default zero fields for reach, saves, shares, watch, retention and funnel counts are null; no exact post-age 24h/7d analytics."
+    }
+  ],
+  "coverageLimitations": [
+    "Provider page 1 of reported totals only; 30-day completeness not independently established",
+    "All available metrics are cumulative lifetime across unequal post ages; no source-verified 24h or 7d post-age readbacks",
+    "Unverified episode/hook/level and creative links remain null; no causal claims",
+    "No HSK AI application or installation attribution and no TikTok connector"
+  ]
+}
