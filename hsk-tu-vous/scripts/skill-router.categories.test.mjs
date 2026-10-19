@@ -112,3 +112,34 @@ test("existing Instagram video edits do not load the Reel planning advisor", () 
   assert.ok(result.skills.some((s) => s.name === "remotion-best-practices"));
   assert.ok(!result.skills.some((s) => s.name === "ig-reel-planning"));
 });
+
+test("scheduled agents and publishing preview retain project-local Instagram skill handoffs", async () => {
+  const { readFileSync, existsSync } = await import("node:fs");
+  const { fileURLToPath } = await import("node:url");
+  const { dirname, resolve } = await import("node:path");
+  const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+  const read = (relative) => readFileSync(resolve(root, relative), "utf8");
+  const owner = read("AGENTS.md");
+  const workflow = read("content/WORKFLOW.md");
+  const feedback = read("content/feedback/AGENT_PLAYBOOK.md");
+  const guide = read("content/SKILLS.md");
+  const catalog = loadSkillCatalog();
+
+  for (const [name, recipe, variant] of [
+    ["ig-reel-planning", "social_hook", "lesson"],
+    ["ig-caption-quality", "social_caption", "special"],
+    ["ig-competitor-research", "social_research", "special"],
+  ]) {
+    assert.ok(existsSync(resolve(root, ".agents/skills", name, "SKILL.md")), name);
+    assert.equal(catalog.recipes[recipe][variant].owner, name);
+    assert.ok(guide.includes(name), name + " missing from canonical guide");
+    assert.ok(owner.includes(name), name + " missing from agent entrypoint");
+  }
+  assert.match(workflow, /ig-reel-planning/);
+  assert.match(workflow, /ig-caption-quality/);
+  assert.match(feedback, /ig-caption-quality/);
+  assert.match(feedback, /ig-competitor-research/);
+  assert.match(feedback, /Monday \/ Wednesday \/ Friday/);
+  assert.match(workflow, /direct `main` delivery/);
+  assert.match(feedback, /not a competitor scraping task or automatic content publisher/);
+});
