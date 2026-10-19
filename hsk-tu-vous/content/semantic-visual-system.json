@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "productionEnabled": false,
-  "status": "preview-renderer-ready-production-disabled",
-  "editorial": "P2 Remotion preview renderer available for validated cue-bound motions only; production semantic MP4 and social publication remain disabled pending real audio/video owner review.",
+  "status": "review-auto-wired-production-publishing-unchanged",
+  "editorial": "Deterministic semantic shots are automatically applied only to clean, future, CTA-free review drafts since 2026-10-21. Exact movement cues must match imported Gemini word timings; otherwise review rendering fails closed. No published/approved review rewrite and no automatic social publication.",
   "environments": [
     "street",
     "home",
@@ -78,5 +78,7 @@
     "disappear",
     "show-blocked",
     "hold"
-  ]
+  ],
+  "reviewAutoEnabled": true,
+  "reviewAutoFromDate": "2026-10-21"
 }
