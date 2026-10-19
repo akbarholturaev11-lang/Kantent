@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "mode": "suggestions-only",
-  "autoApply": false,
+  "autoApply": true,
   "productionEnabled": false,
-  "purpose": "Deterministic, evidence-linked visual suggestions. No new spoken words, timing, semantic episode edits, MP4 or publishing.",
+  "purpose": "Evidence-linked semantic shot composition in eligible fresh future review drafts; exact spoken movements resolve only after Gemini word-timed audio import; never auto-publish.",
   "contexts": [
     {
       "id": "pool",
@@ -148,10 +148,11 @@
   ],
   "policy": {
     "onlyExactNarrationTokens": true,
-    "neverApplyWithoutOwnerReview": true,
+    "neverApplyWithoutOwnerReview": false,
     "verifyAgainstImportedGeminiWordCues": true,
     "requireHumanReviewForNegation": true,
     "avoidUniformCharacterDefault": true,
-    "maxSuggestionsPerScene": 3
+    "maxSuggestionsPerScene": 3,
+    "requireOwnerFinalPreview": true
   }
 }
