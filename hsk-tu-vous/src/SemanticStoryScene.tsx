@@ -194,7 +194,10 @@ export const SemanticStoryScene:React.FC<{
   const beat=beats[selected?.beatIndex ?? 0];
   const hero=beat?.hero??"";
   const cameraScale=shot.shotType==="closeup"?1.10:shot.shotType==="wide"?0.90:1;
-  const pan=shot.cameraStyle==="side-track"?Math.min(frame,120)*-.15:0;
+  const leadActor=(shot.actorIds ?? [])[0];
+  const followOffset=leadActor ? semanticActorPose(leadActor,absoluteFrame,timeline.actions).x : 0;
+  const pan=shot.cameraStyle==="side-track"?Math.min(frame,120)*-.15:
+    shot.cameraStyle==="follow"?-followOffset*.5:0;
   const active=selected?semanticActionProgress(absoluteFrame,selected):0;
   const push=shot.cameraStyle==="push-in"?1+active*.035:shot.cameraStyle==="pull-back"?1-active*.035:1;
   return <AbsoluteFill style={{background:COLORS.background,overflow:"hidden",fontFamily:"'PingFang SC','Noto Sans CJK SC',sans-serif"}}>
