@@ -168,7 +168,8 @@ export const SemanticStoryScene:React.FC<{
   sceneStartFrame:number;frame:number;
 }> = ({shot,timeline,beats,sceneStartFrame,frame}) => {
   const absoluteFrame=sceneStartFrame+frame;
-  const selected=timeline.actions.filter(a=>absoluteFrame>=a.startFrame).at(-1);
+  const elapsedActions=timeline.actions.filter(a=>absoluteFrame>=a.startFrame);
+  const selected=elapsedActions[elapsedActions.length-1];
   const beat=beats[selected?.beatIndex ?? 0];
   const hero=beat?.hero??"";
   const cameraScale=shot.shotType==="closeup"?1.10:shot.shotType==="wide"?0.90:1;
