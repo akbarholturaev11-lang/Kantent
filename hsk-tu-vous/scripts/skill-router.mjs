@@ -162,7 +162,7 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
   // Both engine branches route the same *stage* to different owners.
   if (chosen === "remotion") {
     const ids = [];
-    if (igTask && actualLesson && flags.video) ids.push("social_hook");
+    if (igTask && actualLesson && flags.video && !flags.editing) ids.push("social_hook");
     if (flags.layout || flags.ui || (flags.video && !flags.captions && !flags.effects)) ids.push("layout");
     if (flags.effects || (flags.video && !flags.captions && !flags.layout)) ids.push("effects");
     if (flags.captions || (flags.video && !flags.effects && !flags.layout)) ids.push("captions");
