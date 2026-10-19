@@ -131,13 +131,13 @@ const SceneBackdrop: React.FC<{shot:SemanticShot}> = ({shot}) => {
 
 const Person:React.FC<{id:string;index:number;pose:ReturnType<typeof semanticActorPose>;shot:SemanticShot}> = ({id,index,pose,shot})=>{
   const x=shot.shotType==="split-contrast" ? 290+index*480 : 500+index*160;
-  const base=shot.shotType==="closeup"?1.24:shot.shotType==="wide"?.80:1;
+  const base=shot.shotType==="closeup"?1.24:shot.shotType==="wide"?0.80:1;
   const jacket=index%2===0?COLORS.brandRed:COLORS.brandTeal;
   return <g aria-label={id} transform={`translate(${x+pose.x} 527) scale(${base*pose.scale})`} opacity={pose.opacity}>
     <ellipse cy="135" rx="110" ry="16" fill="#4E4639" fillOpacity=".14"/>
     <path d="M-80 -10Q-72 -56 -27 -72H30Q70 -56 82 -10L70 130H-70Z" fill={jacket}/>
     <path d="M-32 -68L0 -30 32 -68" stroke="#FFF5E5" strokeWidth="13" fill="none"/>
-    <path d="M-75 4Q-113 35 -99 90M75 4Q109 39 ${96+pose.gesture*35} 90" fill="none" stroke={jacket} strokeWidth="24" strokeLinecap="round"/>
+    <path d={`M-75 4Q-113 35 -99 90M75 4Q109 39 ${96+pose.gesture*35} 90`} fill="none" stroke={jacket} strokeWidth="24" strokeLinecap="round"/>
     <path d="M-20 -77v-31M20 -77v-31" stroke="#DEAC85" strokeWidth="20"/>
     <ellipse cy="-164" rx="58" ry="70" fill="#DEAC85"/>
     <path d="M-58 -182Q-62 -249 7 -239Q66 -235 60 -180Q24 -202 -58 -182Z" fill="#30252A"/>
@@ -171,7 +171,7 @@ export const SemanticStoryScene:React.FC<{
   const selected=timeline.actions.filter(a=>absoluteFrame>=a.startFrame).at(-1);
   const beat=beats[selected?.beatIndex ?? 0];
   const hero=beat?.hero??"";
-  const cameraScale=shot.shotType==="closeup"?1.10:shot.shotType==="wide"?.90:1;
+  const cameraScale=shot.shotType==="closeup"?1.10:shot.shotType==="wide"?0.90:1;
   const pan=shot.cameraStyle==="side-track"?Math.min(frame,120)*-.15:0;
   const active=selected?semanticActionProgress(absoluteFrame,selected):0;
   const push=shot.cameraStyle==="push-in"?1+active*.035:shot.cameraStyle==="pull-back"?1-active*.035:1;
