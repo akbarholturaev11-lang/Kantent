@@ -1,6 +1,6 @@
 # Semantic visual contract (v1; review-only foundation)
 
-Current state: **schema, validation and strict audio-cue resolver only**. The Remotion semantic renderer has not been built. Do not claim semantic MP4s exist. See `plans/SEMANTIC_VISUAL_STORYTELLING_PLAN.md` for P0–P5.
+Current state: **P0/P1 validation plus P2 opt-in Remotion still-frame preview renderer**. Production semantic MP4, live Gemini validation and publishing remain disabled. Do not claim publishable semantic MP4s exist. See `plans/SEMANTIC_VISUAL_STORYTELLING_PLAN.md` for P0–P5.
 
 The single source for allowed semantic enumerations, limits and rollout status is `content/semantic-visual-system.json`; this file explains their usage. Broad format selection remains `content/creative-formats.json`, layout numbers remain `content/visual-system.json`, and the editorial shot method remains `content/EDITING_SPEC.md`. No changes to CTA policy.
 
