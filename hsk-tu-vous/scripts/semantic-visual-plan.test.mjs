@@ -73,9 +73,13 @@ test("semantics are prohibited in central CTA",()=>{
  const e=lesson();e.scenes[1].semanticShot={environmentId:"home",shotType:"medium",cameraStyle:"static"};
  assert.match(validateSemanticVisualEpisode(e).join(" "),/forbidden in CTA/);
 });
-test("no per-word precision from multiword caption",()=>{
+test("selected motion word requires its own timestamp, not a multiword caption",()=>{
  const e=lesson(); e.captions[1].text="он приходит";
- assert.throws(()=>compileSemanticVisualTimeline(e),/one word per imported caption/);
+ assert.throws(()=>compileSemanticVisualTimeline(e),/selected cue is inside a multiword caption/);
+});
+test("irrelevant grouped captions do not invalidate exact action cues",()=>{
+ const e=lesson(); e.captions[0].text="один человек";
+ assert.equal(compileSemanticVisualTimeline(e).scenes[0].actions[0].startMs,1000);
 });
 test("cue frame always starts on or after fractional millisecond offset",()=>{
  const e=lesson(); e.captions[1].startMs=1010;
