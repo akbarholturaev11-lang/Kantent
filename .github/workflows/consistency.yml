@@ -24,7 +24,10 @@ jobs:
           node --check scripts/semantic-visual-plan.mjs
           node --check scripts/prepare-semantic-visual.mjs
           node --check scripts/mcp-server.mjs
-          node --test scripts/semantic-visual-plan.test.mjs scripts/semantic-visual-cli.test.mjs
+          node --test scripts/semantic-visual-plan.test.mjs scripts/semantic-visual-cli.test.mjs scripts/semantic-shot-adviser.test.mjs
+          node --check scripts/semantic-shot-adviser.mjs
+          node --check scripts/preview-semantic-shots.mjs
+          node scripts/preview-semantic-shots.mjs hui-vs-neng-pool-20261028 > /tmp/semantic-p3-plan.json
       - name: Validate active source references and config
         run: npm run check:consistency
       - name: Typecheck existing renderer and semantic opt-in preview
