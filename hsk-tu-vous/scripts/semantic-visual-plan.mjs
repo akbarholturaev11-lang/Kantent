@@ -95,9 +95,12 @@ function sceneWords(episode, scene) {
     if (caption.startMs < scene.startMs || caption.endMs > scene.endMs)
       throw Error(scene.id + ": cue crosses scene boundary at caption " + index);
     const cueTokens = tokens(caption.text);
-    if (cueTokens.length !== 1)
-      throw Error(scene.id + ": semantic timing requires one word per imported caption (index " + index + ")");
-    words.push({text:cueTokens[0],startMs:caption.startMs,endMs:caption.endMs,captionIndex:index});
+    // The legacy importer accepts >=80% single-word cues. A multiword caption
+    // unrelated to the selected action is harmless, but cannot anchor motion.
+    if (!cueTokens.length) continue;
+    words.push({text:cueTokens.length === 1 ? cueTokens[0] : null,
+      rawTokens:cueTokens,opaque:cueTokens.length !== 1,
+      startMs:caption.startMs,endMs:caption.endMs,captionIndex:index});
   }
   for(let i=1;i<words.length;i++)
     if(words[i].startMs < words[i-1].endMs)
@@ -135,7 +138,11 @@ export function compileSemanticVisualTimeline(episode) {
         matches.push({start:words[i],end:words[i+cue.length-1]});
       }
       const occurrence=beat.syncCueOccurrence;
-      if (!matches.length) throw Error(scene.id + "/beat[" + index + "]: spoken cue not found: " + beat.syncCueText);
+      if (!matches.length) {
+        if (words.some(word => word.opaque && cue.some(token => word.rawTokens.includes(token))))
+          throw Error(scene.id + "/beat[" + index + "]: selected cue is inside a multiword caption; exact word timing required");
+        throw Error(scene.id + "/beat[" + index + "]: spoken cue not found: " + beat.syncCueText);
+      }
       if (occurrence === undefined && matches.length !== 1)
         throw Error(scene.id + "/beat[" + index + "]: ambiguous cue; provide syncCueOccurrence");
       if (occurrence !== undefined && occurrence > matches.length)
