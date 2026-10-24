@@ -1,0 +1,222 @@
+{
+  "id": "haishi-vs-huozhe-tea-20261102",
+  "date": "2026-11-02",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "还是 и 或者: спросить «чай или кофе?» и перечислить варианты",
+  "level": "HSK 2",
+  "topic": "还是 в прямом вопросе с выбором и 或者 в утверждении с вариантами",
+  "durationTargetSec": 31,
+  "caption": "«Чай или кофе?» — 你喝茶还是喝咖啡？ «Чай или кофе — оба подойдут» — 茶或者咖啡都行。 Вопрос с выбором и утверждение используют разные «или».",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK2",
+    "#китайскаяграмматика"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "В прямом вопросе, который просит выбрать A или B, обычно используют 还是 (háishi): 你喝茶还是喝咖啡？",
+    "В утверждении, которое перечисляет допустимые варианты, обычно используют 或者 (huòzhě): 茶或者咖啡都行。",
+    "В таком вопросе с 还是 не нужно добавлять 吗; правило относится к этому типу вопроса, поскольку 还是 имеет и другие значения и встречается во вложенных вопросах."
+  ],
+  "examples": [
+    "还是 háishi — или (в прямом вопросе с выбором)",
+    "或者 huòzhě — или (в утверждении о вариантах)",
+    "茶 chá — чай",
+    "咖啡 kāfēi — кофе",
+    "你喝茶还是喝咖啡？ Nǐ hē chá háishi hē kāfēi? — Ты пьёшь чай или кофе?",
+    "茶或者咖啡都行。 Chá huòzhě kāfēi dōu xíng. — Чай или кофе — любой вариант подойдёт."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "ЧАЙ ИЛИ КОФЕ?",
+      "narration": "В кафе спрашивают: «Чай или кофе?» По-китайски здесь нужно 还是, а не 或者. Почему?",
+      "screenCaption": "Вопрос → 还是",
+      "editPlan": "0–5 с: два условных стакана с подписями 茶 и 咖啡, знак вопроса и быстрый выбор 还是; никаких логотипов или задержки ответа.",
+      "visualBeats": [
+        {
+          "hero": "还是",
+          "pinyin": "háishi",
+          "meaning": "или (вопрос с выбором)",
+          "chinese": true,
+          "motion": "pop"
+        },
+        {
+          "hero": "茶 / 咖啡",
+          "pinyin": "chá / kāfēi",
+          "meaning": "чай / кофе",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "还是",
+          "pinyin": "háishi",
+          "meaning": "или (вопрос с выбором)"
+        },
+        {
+          "hanzi": "茶 / 咖啡",
+          "pinyin": "chá / kāfēi",
+          "meaning": "чай / кофе"
+        }
+      ]
+    },
+    {
+      "id": "choice",
+      "kind": "example",
+      "durationSec": 7,
+      "headline": "还是 — ВОПРОС С ВЫБОРОМ",
+      "narration": "你喝茶还是喝咖啡？ — «Ты пьёшь чай или кофе?» 还是 соединяет два варианта, между которыми просят выбрать.",
+      "screenCaption": "A 还是 B？",
+      "editPlan": "5–12 с: рука указывает сначала на чай, затем на кофе; крупная фраза с подсветкой 还是. Два варианта параллельны, пиньинь и перевод остаются читаемыми.",
+      "visualBeats": [
+        {
+          "hero": "你喝茶还是喝咖啡？",
+          "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+          "meaning": "Ты пьёшь чай или кофе?",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你喝茶还是喝咖啡？",
+          "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+          "meaning": "Ты пьёшь чай или кофе?"
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "kind": "example",
+      "durationSec": 7,
+      "headline": "或者 — ПРОСТО ВАРИАНТЫ",
+      "narration": "А теперь ответ: 茶或者咖啡都行。 Это значит: «Чай или кофе — любой вариант подойдёт». Здесь 或者.",
+      "screenCaption": "A 或者 B 都行。",
+      "editPlan": "12–19 с: два напитка остаются на экране, между ними появляется 或者; персонаж показывает, что оба варианта подходят. Не изображать уже сделанный заказ.",
+      "visualBeats": [
+        {
+          "hero": "茶或者咖啡都行。",
+          "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+          "meaning": "Чай или кофе — любой вариант подойдёт.",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "茶或者咖啡都行。",
+          "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+          "meaning": "Чай или кофе — любой вариант подойдёт."
+        }
+      ]
+    },
+    {
+      "id": "contrast",
+      "kind": "context",
+      "durationSec": 7,
+      "headline": "ВОПРОС И УТВЕРЖДЕНИЕ",
+      "narration": "Сравните: 还是 — спрашиваем, что выбрать. 或者 — перечисляем варианты в утверждении. В вопросе с 还是 частица 吗 не нужна.",
+      "screenCaption": "还是？ / 或者。",
+      "editPlan": "19–26 с: верхняя карточка со знаком вопроса, нижняя — утверждение; выделить разные союзы. Не утверждать, что 还是 встречается только в прямых вопросах.",
+      "visualBeats": [
+        {
+          "hero": "还是",
+          "pinyin": "háishi",
+          "meaning": "или — выбор в вопросе",
+          "chinese": true,
+          "motion": "pop"
+        },
+        {
+          "hero": "或者",
+          "pinyin": "huòzhě",
+          "meaning": "или — варианты в утверждении",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "还是",
+          "pinyin": "háishi",
+          "meaning": "или — выбор в вопросе"
+        },
+        {
+          "hanzi": "或者",
+          "pinyin": "huòzhě",
+          "meaning": "или — варианты в утверждении"
+        }
+      ]
+    },
+    {
+      "id": "recall",
+      "kind": "example",
+      "durationSec": 5,
+      "headline": "ПОВТОРИТЕ ДВЕ ФРАЗЫ",
+      "narration": "Чай или кофе? 你喝茶还是喝咖啡？ Оба варианта подходят: 茶或者咖啡都行。",
+      "screenCaption": "Выбор: 还是 · Варианты: 或者",
+      "editPlan": "26–31 с: быстро повторить два контекста, сохранить иероглифы, пиньинь и переводы. Закончить учебным выводом, без CTA.",
+      "visualBeats": [
+        {
+          "hero": "你喝茶还是喝咖啡？",
+          "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+          "meaning": "Ты пьёшь чай или кофе?",
+          "chinese": true,
+          "motion": "pop"
+        },
+        {
+          "hero": "茶或者咖啡都行。",
+          "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+          "meaning": "Чай или кофе — любой вариант подойдёт.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "你喝茶还是喝咖啡？",
+          "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+          "meaning": "Ты пьёшь чай или кофе?"
+        },
+        {
+          "hanzi": "茶或者咖啡都行。",
+          "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+          "meaning": "Чай или кофе — любой вариант подойдёт."
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "还是 vs 或者 — ChineseGrammar",
+      "url": "https://chinesegrammar.app/grammar/haishi-huozhe",
+      "checkedAt": "2026-10-24",
+      "supports": "Explains 还是 for questions requesting a choice, 或者 for declarative alternatives; provides 你喝茶还是咖啡 and 茶或者咖啡都行 as patterns."
+    },
+    {
+      "title": "Choice Questions with 还是 — Elon.io",
+      "url": "https://elon.io/grammar/chinese-mandarin/questions/haishi-choice",
+      "checkedAt": "2026-10-24",
+      "supports": "Independent grammar guide gives 你喝茶还是喝咖啡？ and 茶或者咖啡都行。 with tone-marked pinyin; notes no 吗 and the limitation that 还是 can occur in embedded questions."
+    }
+  ],
+  "hookExperiment": {
+    "id": "haishi-vs-huozhe-tea-20261102-hook-v1",
+    "formatId": "contrast",
+    "hypothesis": "Немедленный контраст вопроса о напитке и утверждения с двумя допустимыми вариантами может прояснить функцию 还是/或者 быстрее, чем объяснение терминов; это не обещание метрик.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-24"
+  },
+  "audienceProblem": "Новичок переносит одно русское «или» в любой китайский вопрос и утверждение.",
+  "learningOutcome": "Сформулировать прямой вопрос с выбором через 还是 и перечислить допустимые варианты через 或者."
+}
