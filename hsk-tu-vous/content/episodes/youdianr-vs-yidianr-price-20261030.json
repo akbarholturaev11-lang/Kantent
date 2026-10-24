@@ -1,0 +1,240 @@
+{
+  "id": "youdianr-vs-yidianr-price-20261030",
+  "date": "2026-10-30",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "有点儿 или 一点儿: как сказать «дороговато» и попросить дешевле",
+  "level": "HSK 2",
+  "topic": "有点儿 перед прилагательным и 一点儿 после прилагательного в просьбе о небольшом изменении",
+  "durationTargetSec": 32,
+  "caption": "Этот товар дороговат: 这个有点儿贵。 Хотите чуть дешевле: 便宜一点儿，可以吗？ В этой ситуации позиция «немного» меняет смысл.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK2",
+    "#грамматикакитайского"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "В контексте цены 有点儿 (yǒudiǎnr) ставят перед прилагательным 贵: 这个有点儿贵 — «Это дороговато»; часто слышится мягкое недовольство.",
+    "В просьбе сделать дешевле 一点儿 (yìdiǎnr) ставят после 便宜: 便宜一点儿，可以吗？ — «Можно немного дешевле?»",
+    "Здесь это две функции и две позиции: 有点儿 + прилагательное описывает степень; прилагательное + 一点儿 просит небольшое изменение. Это не исчерпывает все употребления 一点儿, которое также может обозначать небольшое количество."
+  ],
+  "examples": [
+    "有点儿 yǒudiǎnr — немного, слегка (перед прилагательным)",
+    "一点儿 yìdiǎnr — немного (после прилагательного для изменения степени)",
+    "贵 guì — дорогой",
+    "便宜 piányi — дешёвый",
+    "这个有点儿贵。 Zhège yǒudiǎnr guì. — Это дороговато.",
+    "便宜一点儿，可以吗？ Piányi yìdiǎnr, kěyǐ ma? — Можно немного дешевле?"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "ЦЕНА НЕ УСТРАИВАЕТ?",
+      "narration": "Представьте: на рынке вещь дороговата. Как сказать это мягко по-китайски? 这个有点儿贵。",
+      "screenCaption": "Дороговато → 有点儿贵",
+      "editPlan": "0–5 с: крупный условный ценник и реакция покупателя; ценник без реальных брендов. Появляется 有点儿贵 с пиньинем и переводом сразу после вопроса. Не показывать ложную скидку.",
+      "visualBeats": [
+        {
+          "hero": "这个有点儿贵。",
+          "pinyin": "Zhège yǒudiǎnr guì.",
+          "meaning": "Это дороговато.",
+          "chinese": true,
+          "motion": "pop"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "这个有点儿贵。",
+          "pinyin": "Zhège yǒudiǎnr guì.",
+          "meaning": "Это дороговато."
+        }
+      ]
+    },
+    {
+      "id": "reaction",
+      "kind": "vocabulary",
+      "durationSec": 7,
+      "headline": "有点儿 — ПЕРЕД ПРИЛАГАТЕЛЬНЫМ",
+      "narration": "有点儿 стоит перед 贵, «дорогой». 这个有点儿贵 — «Это немного дороговато». Это оценка цены.",
+      "screenCaption": "有点儿 + 贵",
+      "editPlan": "5–12 с: подсветить сначала 有点儿, затем 贵 на одном условном ценнике; показать читаемую связку и её значение, без движения, противоречащего словам.",
+      "visualBeats": [
+        {
+          "hero": "有点儿贵",
+          "pinyin": "yǒudiǎnr guì",
+          "meaning": "дороговато",
+          "chinese": true,
+          "motion": "pop"
+        },
+        {
+          "hero": "这个有点儿贵。",
+          "pinyin": "Zhège yǒudiǎnr guì.",
+          "meaning": "Это дороговато.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "有点儿贵",
+          "pinyin": "yǒudiǎnr guì",
+          "meaning": "дороговато"
+        },
+        {
+          "hanzi": "这个有点儿贵。",
+          "pinyin": "Zhège yǒudiǎnr guì.",
+          "meaning": "Это дороговато."
+        }
+      ]
+    },
+    {
+      "id": "request",
+      "kind": "example",
+      "durationSec": 7,
+      "headline": "А КАК ПОПРОСИТЬ ДЕШЕВЛЕ?",
+      "narration": "Теперь просьба продавцу: 便宜一点儿，可以吗？ Это значит: «Можно немного дешевле?»",
+      "screenCaption": "便宜 + 一点儿",
+      "editPlan": "12–19 с: покупатель обращается к продавцу, без изображения состоявшейся сделки. В тексте выделить 一点儿 после 便宜; показать всю фразу с тоном и переводом.",
+      "visualBeats": [
+        {
+          "hero": "便宜一点儿",
+          "pinyin": "piányi yìdiǎnr",
+          "meaning": "немного дешевле",
+          "chinese": true,
+          "motion": "pop"
+        },
+        {
+          "hero": "便宜一点儿，可以吗？",
+          "pinyin": "Piányi yìdiǎnr, kěyǐ ma?",
+          "meaning": "Можно немного дешевле?",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "便宜一点儿",
+          "pinyin": "piányi yìdiǎnr",
+          "meaning": "немного дешевле"
+        },
+        {
+          "hanzi": "便宜一点儿，可以吗？",
+          "pinyin": "Piányi yìdiǎnr, kěyǐ ma?",
+          "meaning": "Можно немного дешевле?"
+        }
+      ]
+    },
+    {
+      "id": "contrast",
+      "kind": "context",
+      "durationSec": 8,
+      "headline": "ПОЗИЦИЯ МЕНЯЕТ СМЫСЛ",
+      "narration": "Сравните: 有点儿贵 — говорим, что дороговато. 便宜一点儿 — просим чуть дешевле. Смотрите, где стоит 一点儿.",
+      "screenCaption": "Оценка ≠ просьба",
+      "editPlan": "19–27 с: разделённый экран: слева реакция на ценник, справа вежливая просьба. Сохранить оба ханцзы, пиньинь и русский смысл; стрелки обозначают порядок слов, не обещание изменения цены.",
+      "visualBeats": [
+        {
+          "hero": "有点儿贵",
+          "pinyin": "yǒudiǎnr guì",
+          "meaning": "дороговато",
+          "chinese": true,
+          "motion": "pop"
+        },
+        {
+          "hero": "便宜一点儿",
+          "pinyin": "piányi yìdiǎnr",
+          "meaning": "немного дешевле",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "有点儿贵",
+          "pinyin": "yǒudiǎnr guì",
+          "meaning": "дороговато"
+        },
+        {
+          "hanzi": "便宜一点儿",
+          "pinyin": "piányi yìdiǎnr",
+          "meaning": "немного дешевле"
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "example",
+      "durationSec": 5,
+      "headline": "ПРОВЕРЬТЕ СЕБЯ",
+      "narration": "Дороговато — 有点儿贵. Можно дешевле? 便宜一点儿，可以吗？ Запомните две позиции.",
+      "screenCaption": "有点儿 + 贵 / 便宜 + 一点儿",
+      "editPlan": "27–32 с: короткое повторение двух моделей с контрастной подсветкой позиции. Закончить учебным выводом; никаких CTA, загрузок или обещаний.",
+      "visualBeats": [
+        {
+          "hero": "有点儿贵",
+          "pinyin": "yǒudiǎnr guì",
+          "meaning": "дороговато",
+          "chinese": true,
+          "motion": "pop"
+        },
+        {
+          "hero": "便宜一点儿，可以吗？",
+          "pinyin": "Piányi yìdiǎnr, kěyǐ ma?",
+          "meaning": "Можно немного дешевле?",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "有点儿贵",
+          "pinyin": "yǒudiǎnr guì",
+          "meaning": "дороговато"
+        },
+        {
+          "hanzi": "便宜一点儿，可以吗？",
+          "pinyin": "Piányi yìdiǎnr, kěyǐ ma?",
+          "meaning": "Можно немного дешевле?"
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "有点儿 vs 一点儿 — ChineseGrammar",
+      "url": "https://chinesegrammar.app/grammar/youdianr-yidianr",
+      "checkedAt": "2026-10-24",
+      "supports": "Documents 有点儿 + adjective with 这个有点儿贵 and adjective + 一点儿 with 请便宜一点儿, tone-marked examples and nonabsolute pragmatic nuance."
+    },
+    {
+      "title": "有点儿 vs 一点儿 — GoEast Mandarin",
+      "url": "https://goeastmandarin.com/youdianr-versus-yidianr/",
+      "checkedAt": "2026-10-24",
+      "supports": "Independent language-school explanation of 有点儿 before an adjective as degree/evaluation and 一点儿 after adjective as small adjustment; market-price scenario and pinyin."
+    },
+    {
+      "title": "一点儿 vs 有点儿 — The Pure Language",
+      "url": "https://www.thepurelanguage.com/chinese-grammar/yidianr-vs-youdianr",
+      "checkedAt": "2026-10-24",
+      "supports": "Confirms 有点儿贵 as mildly expensive and 便宜一点儿，可以吗？ as a request for a small reduction."
+    }
+  ],
+  "hookExperiment": {
+    "id": "youdianr-vs-yidianr-price-20261030-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Реальная задача с ценником и коротким диалогом даст зрителю понятную причину досмотреть до различия позиции 有点儿 и 一点儿; это редакционная гипотеза, не прогноз охвата.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-24"
+  },
+  "audienceProblem": "Начинающий переводит русское «немного» одинаково и не знает, как отличить оценку цены от просьбы сделать дешевле.",
+  "learningOutcome": "Сказать 这个有点儿贵 и 便宜一点儿，可以吗？ с верным порядком слов в ситуации покупки."
+}
