@@ -1,0 +1,251 @@
+{
+  "id": "bi-comparison-height-20261104",
+  "date": "2026-11-04",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "比: как сказать «он выше меня» без лишнего 很",
+  "level": "HSK 2",
+  "topic": "Базовое сравнение: A 比 B + прилагательное",
+  "durationTargetSec": 31,
+  "caption": "«Он выше меня» — 他比我高 (Tā bǐ wǒ gāo). В простой конструкции сравнения используйте A 比 B + признак — без 很 перед прилагательным.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK2",
+    "#грамматикакитайского"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "В простом сравнении двух людей или предметов употребляют A + 比 (bǐ) + B + прилагательное: 他比我高 — «Он выше меня».",
+    "В этой базовой сравнительной конструкции перед прилагательным не ставят 很 (hěn): 他比我高, не 他比我很高.",
+    "Та же конструкция применима к двум дням: 今天比昨天冷 — «Сегодня холоднее, чем вчера». Урок ограничен базовым сравнением и не объясняет другие сравнительные конструкции."
+  ],
+  "examples": [
+    "比 bǐ — показатель сравнения, «чем» в конструкции",
+    "高 gāo — высокий; в сравнении «выше»",
+    "冷 lěng — холодный; в сравнении «холоднее»",
+    "他比我高。 Tā bǐ wǒ gāo. — Он выше меня.",
+    "今天比昨天冷。 Jīntiān bǐ zuótiān lěng. — Сегодня холоднее, чем вчера."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "ОН ВЫШЕ МЕНЯ: 比 ИЛИ 很?",
+      "narration": "Он выше меня. Как сказать это по-китайски: с 比 или с 很? Посмотрите на двух людей и выберите.",
+      "screenCaption": "«Выше, чем» — где 比?",
+      "editPlan": "Сразу два схематичных человека разного роста и выбор 比 / 很; никаких логотипов и вступлений. Сначала покажите оба китайских варианта с пиньинем, затем правильную целую фразу. Все подписи в безопасной зоне.",
+      "visualBeats": [
+        {
+          "hero": "比",
+          "pinyin": "bǐ",
+          "meaning": "сравнение",
+          "chinese": true,
+          "motion": "pop"
+        },
+        {
+          "hero": "他比我高。",
+          "pinyin": "Tā bǐ wǒ gāo.",
+          "meaning": "Он выше меня.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "比",
+          "pinyin": "bǐ",
+          "meaning": "сравнение"
+        },
+        {
+          "hanzi": "他比我高。",
+          "pinyin": "Tā bǐ wǒ gāo.",
+          "meaning": "Он выше меня."
+        }
+      ]
+    },
+    {
+      "id": "answer",
+      "kind": "example",
+      "durationSec": 7,
+      "headline": "ПРАВИЛЬНО: 他比我高",
+      "narration": "Правильно: 他比我高。 Он выше меня. Сначала он, потом 比, затем я и признак 高 — высокий.",
+      "screenCaption": "A + 比 + B + признак",
+      "editPlan": "Разложите подтверждённую фразу на четыре читаемых смысловых блока: 他 / 比 / 我 / 高. Высокий персонаж и низкий персонаж остаются одной контекстной сценой; подсветите 比 при его объяснении.",
+      "visualBeats": [
+        {
+          "hero": "比",
+          "pinyin": "bǐ",
+          "meaning": "чем, в сравнении",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "他比我高。",
+          "pinyin": "Tā bǐ wǒ gāo.",
+          "meaning": "Он выше меня.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "比",
+          "pinyin": "bǐ",
+          "meaning": "сравнение"
+        },
+        {
+          "hanzi": "他比我高。",
+          "pinyin": "Tā bǐ wǒ gāo.",
+          "meaning": "Он выше меня."
+        }
+      ]
+    },
+    {
+      "id": "without-hen",
+      "kind": "context",
+      "durationSec": 6,
+      "headline": "БЕЗ ЛИШНЕГО 很",
+      "narration": "В простом сравнении с 比 не добавляйте 很 перед прилагательным. Здесь достаточно сказать: 他比我高。",
+      "screenCaption": "С 比 перед 高 не нужно 很",
+      "editPlan": "Покажите короткую схему A 比 B 高. Отдельное 很 появится как зачёркнутая подсказка рядом со схемой, но не внутри учебной карточки с правильной китайской фразой. Верните полную корректную фразу.",
+      "visualBeats": [
+        {
+          "hero": "比",
+          "pinyin": "bǐ",
+          "meaning": "сравнение",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "他比我高。",
+          "pinyin": "Tā bǐ wǒ gāo.",
+          "meaning": "Он выше меня.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "比",
+          "pinyin": "bǐ",
+          "meaning": "показатель сравнения"
+        },
+        {
+          "hanzi": "他比我高。",
+          "pinyin": "Tā bǐ wǒ gāo.",
+          "meaning": "Он выше меня."
+        }
+      ]
+    },
+    {
+      "id": "weather",
+      "kind": "example",
+      "durationSec": 7,
+      "headline": "ТАК ЖЕ С ПОГОДОЙ",
+      "narration": "То же правило с погодой: 今天比昨天冷。 Сегодня холоднее, чем вчера. Снова: первый день, 比, второй день и признак 冷.",
+      "screenCaption": "今天 比 昨天 冷",
+      "editPlan": "В одном кадре две схематичные погодные иконки: сегодня холоднее вчерашнего дня. По очереди подсветите 今天, 比, 昨天, 冷; покажите цельную фразу с тоновым пиньинем и переводом.",
+      "visualBeats": [
+        {
+          "hero": "比",
+          "pinyin": "bǐ",
+          "meaning": "сравниваем два дня",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "今天比昨天冷。",
+          "pinyin": "Jīntiān bǐ zuótiān lěng.",
+          "meaning": "Сегодня холоднее, чем вчера.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "比",
+          "pinyin": "bǐ",
+          "meaning": "сравнение"
+        },
+        {
+          "hanzi": "今天比昨天冷。",
+          "pinyin": "Jīntiān bǐ zuótiān lěng.",
+          "meaning": "Сегодня холоднее, чем вчера."
+        }
+      ]
+    },
+    {
+      "id": "recall",
+      "kind": "example",
+      "durationSec": 6,
+      "headline": "ОДНА ФОРМУЛА — ДВА ПРИМЕРА",
+      "narration": "Проверьте себя. Он выше меня — 他比我高。 Сегодня холоднее, чем вчера — 今天比昨天冷。 Формула одна: A 比 B плюс признак.",
+      "screenCaption": "A 比 B + прилагательное",
+      "editPlan": "Сначала два человека и первая полная фраза, затем два погодных дня и вторая. В конце только учебная формула и оба корректных примера. Никаких CTA, подписок или просьб о комментариях.",
+      "visualBeats": [
+        {
+          "hero": "他比我高。",
+          "pinyin": "Tā bǐ wǒ gāo.",
+          "meaning": "Он выше меня.",
+          "chinese": true,
+          "motion": "slide"
+        },
+        {
+          "hero": "今天比昨天冷。",
+          "pinyin": "Jīntiān bǐ zuótiān lěng.",
+          "meaning": "Сегодня холоднее, чем вчера.",
+          "chinese": true,
+          "motion": "slide"
+        }
+      ],
+      "cards": [
+        {
+          "hanzi": "他比我高。",
+          "pinyin": "Tā bǐ wǒ gāo.",
+          "meaning": "Он выше меня."
+        },
+        {
+          "hanzi": "今天比昨天冷。",
+          "pinyin": "Jīntiān bǐ zuótiān lěng.",
+          "meaning": "Сегодня холоднее, чем вчера."
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "比字句 — Be Chinese (中文语法)",
+      "url": "https://be-chinese.com/zh/hsk/grammar/comparison-bi",
+      "checkedAt": "2026-10-26",
+      "supports": "Chinese-language explanation verifies A + 比 + B + adjective, 他比我高, 今天比昨天冷, tone-marked pinyin and the correction of 他比我很高."
+    },
+    {
+      "title": "比 (basic comparison) — OtterDict HSK 2",
+      "url": "https://otterdict.com/en/grammar/bi-comparison",
+      "checkedAt": "2026-10-26",
+      "supports": "Independently verifies the simple 比 comparison word order, 他比我高 with Tā bǐ wǒ gāo, and omission of 很 before the adjective."
+    },
+    {
+      "title": "The 比 (bǐ) Comparison — ChineseGrammar",
+      "url": "https://chinesegrammar.app/grammar/bi-comparison",
+      "checkedAt": "2026-10-26",
+      "supports": "Confirms the HSK 2 A 比 B + adjective pattern, 今天比昨天冷 with Jīntiān bǐ zuótiān lěng, and the basic-pattern restriction on 很."
+    }
+  ],
+  "hookExperiment": {
+    "id": "bi-comparison-height-20261104-hook-v1",
+    "formatId": "question",
+    "hypothesis": "Вопрос «Он выше меня: 比 или 很?» с видимыми персонажами и быстрым показом 他比我高 может помочь новичку удержать структуру A 比 B + прилагательное; эффективность ещё не измерена.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-26"
+  },
+  "audienceProblem": "Начинающий знает 很 для прилагательных, но вставляет его в сравнение и путает порядок слов в конструкции с 比.",
+  "learningOutcome": "Составить базовое сравнение A 比 B + прилагательное без лишнего 很 на примерах роста и погоды."
+}
