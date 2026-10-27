@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { recommendCreativeFormats } from "./viral-plan.mjs";
 import { validateStoryboardEpisode } from "./storyboard-validation.mjs";
 import { applySemanticReviewDraft } from "./semantic-review-integration.mjs";
+import { validateStorytellingEpisode } from "./storytelling-plan.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (file) => JSON.parse(fs.readFileSync(path.join(root, "content", file), "utf8"));
@@ -105,10 +106,16 @@ export function decorateFutureLesson(episode, {calendar,registry,episodeByFile})
     requestedFormatId:chosen.creativeFormatId,
     reason:chosen.creativeFormatId!==formatId ? "missing-authored-quiz-options-fallback" : "compatible-hook-and-existing-lesson"
   };
+  if (lesson.storytelling) {
+    const errors = validateStorytellingEpisode(lesson);
+    if (errors.length) throw Error("Adaptive storytelling metadata invalid: " + errors.join("; "));
+  }
+  const reHooks = new Set(lesson.storytelling?.reHooks?.map(x => x.sceneId) ?? []);
+  const payoffs = new Set(lesson.storytelling?.reHooks?.map(x => x.payoffSceneId) ?? []);
   lesson.scenes=lesson.scenes.map((scene,index)=>{
     const existing=scene.storyboard;
     const setting=existing?.setting ?? chooseSetting(lesson,scene);
-    const mood=existing?.mood ?? (index===0 ? "question" : scene.kind==="example" ? "answer" : "practice");
+    const mood=existing?.mood ?? (reHooks.has(scene.id) ? "question" : payoffs.has(scene.id) ? "answer" : index===0 ? "question" : scene.kind==="example" ? "answer" : "practice");
     const storyboard=existing ?? {
       formatId,setting,character:"student",mood,
       ...(formatId==="speed-quiz"&&index===0 ? {options} : {})
