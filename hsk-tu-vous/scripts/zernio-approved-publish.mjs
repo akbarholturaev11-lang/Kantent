@@ -15,7 +15,7 @@ import {
 
 const API_ROOT = "https://zernio.com/api/v1";
 const self = fileURLToPath(import.meta.url);
-const RECEIPT = process.env.PUBLICATION_RECEIPT_DIR || "/tmp/hsk-zernio-receipt";
+
 
 function requestEnv(env) {
   let details;
@@ -92,9 +92,10 @@ async function uploadExactVideo(token,video,episodeId,language,platform) {
   return data.publicUrl;
 }
 
-async function writeReceipt(value) {
-  await fs.mkdir(RECEIPT,{recursive:true});
-  await fs.writeFile(path.join(RECEIPT,"receipt.json"),JSON.stringify(value,null,2)+"\n");
+async function writeReceipt(value,env=process.env) {
+  const receiptDir=env.PUBLICATION_RECEIPT_DIR || "/tmp/hsk-zernio-receipt";
+  await fs.mkdir(receiptDir,{recursive:true});
+  await fs.writeFile(path.join(receiptDir,"receipt.json"),JSON.stringify(value,null,2)+"\n");
 }
 
 export async function executeApprovedPublication(root,env=process.env) {
@@ -129,9 +130,9 @@ export async function executeApprovedPublication(root,env=process.env) {
     idempotencyKey,
     state:"validated-owner-approval-awaiting-upload",
   };
-  await writeReceipt(safeReceipt);
+  await writeReceipt(safeReceipt,env);
   const publicUrl=await uploadExactVideo(zernio.secret,expectedVideo,manifest.episodeId,approval.language,approval.platform);
-  await writeReceipt({...safeReceipt,state:"media-uploaded-post-not-created"});
+  await writeReceipt({...safeReceipt,state:"media-uploaded-post-not-created"},env);
   // This is the only social POST. Owner has supplied exact video and text hashes,
   // target, platform policy and mode, and typed a mode-specific confirmation.
   const payload=publicationBody(approval,publicUrl);
@@ -142,7 +143,7 @@ export async function executeApprovedPublication(root,env=process.env) {
   });
   const rawId=created.data?.post?._id??created.data?.post?.id??null;
   await writeReceipt({...safeReceipt,state:"post-created-awaiting-verification",
-    postId:rawId,reportedStatus:created.data?.post?.status??null});
+    postId:rawId,reportedStatus:created.data?.post?.status??null},env);
   const result=parseZernioPostReply(created.data,approval);
   // Do not infer actual publication from HTTP 201 alone: require GET readback.
   const readback=await jsonRequest(API_ROOT+"/posts/"+encodeURIComponent(result.postId),{token:zernio.secret});
@@ -151,7 +152,7 @@ export async function executeApprovedPublication(root,env=process.env) {
   const receipt={...safeReceipt,state:validated.status,postId:validated.postId,
     platformPostId:validated.platformPostId,platformPostUrl:validated.platformPostUrl,
     resultVerifiedBy:"Zernio GET /v1/posts/{id}",updatedAt:new Date().toISOString()};
-  await writeReceipt(receipt);
+  await writeReceipt(receipt,env);
   console.log("Zernio readback verified: "+receipt.language+"/"+receipt.platform+
     " status="+receipt.state+" postId="+receipt.postId);
   return receipt;
