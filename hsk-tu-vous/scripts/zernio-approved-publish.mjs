@@ -18,16 +18,24 @@ const self = fileURLToPath(import.meta.url);
 const RECEIPT = process.env.PUBLICATION_RECEIPT_DIR || "/tmp/hsk-zernio-receipt";
 
 function requestEnv(env) {
+  let details;
+  try { details = JSON.parse(env.APPROVED_POST_JSON ?? ""); }
+  catch { throw Error("Invalid approved_post_json: it must be valid JSON."); }
+  if (!details || typeof details !== "object" || Array.isArray(details))
+    throw Error("approved_post_json must be one JSON object.");
+  if (Object.keys(details).some(key => !["content","title","visibility","madeForKids",
+    "containsSyntheticMedia","shareToFeed","scheduledFor"].includes(key)))
+    throw Error("approved_post_json has unsupported fields.");
   return {
     runId: env.APPROVED_RUN_ID, language: env.APPROVED_LANGUAGE,
     platform: env.APPROVED_PLATFORM, mode: env.APPROVED_MODE,
     videoSha256: env.APPROVED_VIDEO_SHA256, postSha256: env.APPROVED_POST_SHA256,
-    confirmation: env.APPROVAL_CONFIRMATION, content: env.APPROVED_CONTENT,
-    title: env.APPROVED_YOUTUBE_TITLE, visibility: env.APPROVED_YOUTUBE_VISIBILITY,
-    madeForKids: env.APPROVED_YOUTUBE_KIDS,
-    containsSyntheticMedia: env.APPROVED_YOUTUBE_SYNTHETIC,
-    shareToFeed: env.APPROVED_IG_SHARE_TO_FEED,
-    scheduledFor: env.APPROVED_SCHEDULED_FOR, accountId: env.APPROVED_ACCOUNT_ID,
+    confirmation: env.APPROVAL_CONFIRMATION, content: details.content,
+    title: details.title, visibility: details.visibility,
+    madeForKids: details.madeForKids,
+    containsSyntheticMedia: details.containsSyntheticMedia,
+    shareToFeed: details.shareToFeed,
+    scheduledFor: details.scheduledFor ?? "", accountId: env.APPROVED_ACCOUNT_ID,
   };
 }
 
