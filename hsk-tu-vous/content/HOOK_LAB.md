@@ -32,6 +32,13 @@ Bu qoida HSK AI’ning oldingi juda umumiy yoki darslikka o‘xshab ketgan hookl
 
 Oldingi renderdagi aniq kamchilik tuzatildi: dars uch shaklni va’da qilganida birinchi vizual endi 你 · 您 · 你们 uchalasini ko‘rsatadi. Ovoz matni o‘zgarmadi, shu sabab TTS va subtitr vaqtlarini yangilash shart bo‘lmadi; video vizual o‘zgarish bilan qayta render qilindi.
 
+## Adaptive o‘rta-qism dramaturgiyasi (2026-10-27)
+
+Boshlang‘ich Hook Lab siyosati o‘zgarishsiz qoladi: birinchi foydali javob erta berilishi kerak. Kelajakdagi **tasdiqlanmagan** ssenariylarda ikkinchi savol / re-hook faqat boshqa haqiqiy amaliy farq ochilsa qo‘shiladi. Birinchi Hook’ni takrorlash, o‘quv javobini videoning oxiriga ataylab yashirish yoki ma’nosiz suspense yasash mumkin emas. Ba’zi mavzularda re-hook bo‘lmagani yaxshiroq; sakkiz qismli tuzilma majburiy emas.
+
+Adaptive hikoya naqshlari va minimal ma’lumot kontraktining yagona manbasi `content/creative-formats.json#storytellingPolicy` va `content/EPISODE_SCHEMA.md`. Re-hook metadata’si faqat allaqachon yozilgan ovoz matnidagi so‘zma-so‘z cue va keyingi payoff’ga havola qiladi; bu retention isboti emas. `npm run content:storytelling-plan -- <episode-id>` faqat maslahat beradi, JSON yoki audio/video o‘zgartirmaydi. Hook tajribasining haqiqiy g‘olibini 7d bir xil oynali platforma dalillari bo‘lmaguncha e’lon qilmang.
+
+
 ## Har bir hook uchun oldindan yoziladigan narsa
 
 Har bir dars uchun hook alohida va mavzuga mos bo‘ladi; bitta jumlani barcha roliklarga ko‘chirmang. Uni `content/calendar.json` ichidagi `planningBuffer` ko‘rsatgan kelgusi epizodlar zaxirasi bilan birga, ovoz yozish va montajdan oldin yozing. Joriy playbook, egasining faol tuzatishlari va mavjud readbacklardan foydalaning. Oddiy roliklarda egadan hook tanlashni so‘ramang.

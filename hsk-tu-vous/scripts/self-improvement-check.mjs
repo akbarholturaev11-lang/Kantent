@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validateStorytellingEpisode } from './storytelling-plan.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -79,7 +80,8 @@ export function isDraftReady(rootDirectory, item) {
         scene.cards.every(card =>
           typeof card.hanzi === 'string' && card.hanzi.trim() &&
           typeof card.pinyin === 'string' && card.pinyin.trim() &&
-          typeof card.meaning === 'string' && card.meaning.trim()));
+          typeof card.meaning === 'string' && card.meaning.trim())) &&
+      validateStorytellingEpisode(episode).length === 0;
   } catch {
     return false;
   }

@@ -57,6 +57,8 @@ test('counts only complete sourced CTA-free drafts with matching identity', () =
     const write = (episode) => fs.writeFileSync(file, JSON.stringify(episode));
     write(complete);
     assert.equal(Boolean(isDraftReady(tmp, item)), true);
+    write({ ...complete, storytelling: { schemaVersion: 1, pattern: 'single-rehook', firstPayoff: {sceneId: 'missing', cueText:'invented'}, reHooks:[] } });
+    assert.equal(Boolean(isDraftReady(tmp, item)), false, 'invalid optional storytelling is not draft-ready');
     write({ ...complete, learningFactSources: [] });
     assert.equal(Boolean(isDraftReady(tmp, item)), false, 'no checked source means not ready');
     write({ ...complete, scenes: [{ kind: 'hook', narration: 'Что?' }] });

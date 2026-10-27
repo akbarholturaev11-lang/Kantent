@@ -162,5 +162,41 @@
     "appliesTo": "CTA-free planned episodes, working copies only",
     "quizFallback": "problem-fix when no two authored vocabulary choices",
     "reviewSafety": "never rewrite an existing approved/voice-prepared/owner-edited review"
+  },
+  "storytellingPolicy": {
+    "schemaVersion": 1,
+    "status": "advisory-opt-in",
+    "allowedPatterns": [
+      "direct",
+      "single-rehook",
+      "layered"
+    ],
+    "maxRehooks": 2,
+    "firstPayoffLatestRatio": 0.3,
+    "durationHintsSec": {
+      "shortMax": 20,
+      "standardMax": 35
+    },
+    "rolePolicy": {
+      "direct": "Give an early truthful answer and finish with useful context or recall. No invented suspense.",
+      "singleRehook": "After an early answer, pose one genuinely different problem and resolve it later in the existing teaching narration.",
+      "layered": "For complex long lessons only, up to two source-supported later questions, each resolved before recall."
+    },
+    "validationNotes": [
+      "The existing Hook Lab and its real metrics remain authoritative.",
+      "Recommended structure is a heuristic proposal, not guaranteed retention uplift.",
+      "An optional scene cue must already occur in the written narration.",
+      "CTA, audio, timing, semantic shots and published/approved records are unaffected."
+    ],
+    "aiDraft": {
+      "status": "explicit-opt-in-and-human-review",
+      "model": "gemini-3.8-flash",
+      "provider": "Gemini generateContent",
+      "callsPerProposal": 2,
+      "requiresFlag": "HSK_AI_ALLOW_GEMINI_SCRIPT",
+      "doesNotWriteCanonicalFiles": true,
+      "sourceLanguageReviewRequired": true,
+      "existingVoiceAndCtaUnaffected": true
+    }
   }
 }

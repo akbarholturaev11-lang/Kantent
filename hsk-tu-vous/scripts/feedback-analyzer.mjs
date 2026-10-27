@@ -30,6 +30,9 @@ export function validateObservation(o) {
   if(o.effectStyle!=null && (typeof o.effectStyle!=='string'||o.effectStyle.length>80)) errors.push('invalid effectStyle');
   if(o.creativeFormatId!=null && (!/^[a-z][a-z0-9-]{2,80}$/.test(o.creativeFormatId) || !o.episodeId || !o.hookFormat || !o.hskLevel))
     errors.push('creativeFormatId requires valid ID and verified episode/hook/HSK mapping');
+  if(o.storytellingPattern!=null && (!['direct','single-rehook','layered'].includes(o.storytellingPattern) ||
+      !o.episodeId || !o.hookFormat || !o.hskLevel || !o.creativeFormatId))
+    errors.push('storytellingPattern requires a verified episode, hook, HSK and creative format attribution');
   for(const name of fields){
     const v=o.metrics?.[name];
     // YouTube's provider omits reach and skip rate entirely; preserve them
@@ -64,7 +67,8 @@ export function deriveMetrics(o){
   const {views,saves,shares,avgWatchMs,skipRatePercent,durationSeconds}=o.metrics;
   return {
     platform:o.platform,postId:o.platformPostId,episodeId:o.episodeId,
-    hookFormat:o.hookFormat,hskLevel:o.hskLevel,creativeFormatId:o.creativeFormatId??null,window:o.window,
+    hookFormat:o.hookFormat,hskLevel:o.hskLevel,creativeFormatId:o.creativeFormatId??null,
+    storytellingPattern:o.storytellingPattern??null,window:o.window,
     observedAt:o.observedAt,publishedAt:o.publishedAt,
     durationBand:durationBand(durationSeconds),views,skipRatePercent:skipRatePercent??null,
     averageWatchSeconds:avgWatchMs==null?null:+(avgWatchMs/1000).toFixed(3),
@@ -107,7 +111,8 @@ export function analyzeObservations(observations,policy={}, {asOf = new Date()} 
     if(![earlyWindow,primaryWindow].includes(p.window) ||
         !p.episodeId || !p.hookFormat || !p.hskLevel ||
         p.averageWatchRatio==null) continue;
-    const key=[p.platform,p.window,p.hskLevel,p.durationBand,p.hookFormat].join('|');
+    const key=[p.platform,p.window,p.hskLevel,p.durationBand,p.hookFormat,
+      p.storytellingPattern??'storytelling-unverified'].join('|');
     if(!cohorts.has(key)) cohorts.set(key,[]);
     cohorts.get(key).push(p);
   }

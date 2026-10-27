@@ -31,6 +31,17 @@ jobs:
           node --check scripts/semantic-shot-adviser.mjs
           node --check scripts/preview-semantic-shots.mjs
           node scripts/preview-semantic-shots.mjs hui-vs-neng-pool-20261028 > /tmp/semantic-p3-plan.json
+      - name: Test read-only adaptive storytelling and legacy plan compatibility
+        run: |
+          node --check scripts/storytelling-plan.mjs
+          node --test scripts/storytelling-plan.test.mjs
+          node --check scripts/storytelling-generator.mjs
+          node --check scripts/storytelling-gemini.mjs
+          node --test scripts/storytelling-generator.test.mjs
+          node --test scripts/storytelling-timing.test.mjs
+          node --check scripts/storytelling-timing.mjs
+          node scripts/storytelling-gemini.mjs youdianr-vs-yidianr-price-20261030 > /tmp/adaptive-brief.json
+          node scripts/storytelling-plan.mjs er-vs-liang-cafe-20261026 > /tmp/adaptive-storytelling.json
       - name: Validate active source references and config
         run: npm run check:consistency
       - name: Typecheck existing renderer and semantic opt-in preview
