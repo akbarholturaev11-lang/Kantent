@@ -383,6 +383,31 @@
       "status": "planned"
     },
     {
+      "id": "bukeqi-vs-meiguanxi-20261027",
+      "date": "2026-10-27",
+      "week": 5,
+      "level": "HSK 1",
+      "pillar": "Сравниваем слова",
+      "topic": "不客气 и 没关系: разные ответы на благодарность и извинение",
+      "format": "Adaptive Storytelling — ситуация, ранний ответ и один смысловой re-hook",
+      "targetItems": [
+        "谢谢 xièxie",
+        "不客气 bú kèqi",
+        "对不起 duìbuqǐ",
+        "没关系 méi guānxi",
+        "谢谢！— 不客气。",
+        "对不起！— 没关系。"
+      ],
+      "referenceFacts": [
+        "На 谢谢 («спасибо») обычно отвечают 不客气 («не за что», «пожалуйста»).",
+        "На 对不起 («извините») уместен ответ 没关系 («ничего страшного»).",
+        "Два типичных речевых контекста, а не абсолютный запрет на другие ответы."
+      ],
+      "episodeFile": "episodes/bukeqi-vs-meiguanxi-20261027.json",
+      "status": "planned",
+      "planningNote": "Owner explicitly requested this extra Tuesday 2026-10-27 scenario. Existing Mon/Wed/Fri calendar dates and episodes are preserved. Script only; no audio/video generation or publication is authorized."
+    },
+    {
       "id": "hui-vs-neng-pool-20261028",
       "date": "2026-10-28",
       "week": 5,
