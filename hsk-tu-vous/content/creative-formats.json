@@ -221,6 +221,8 @@
       "reviewedAt": "2026-10-27",
       "observed": "Cafe laptop scene, a suspicious interruption, a product demonstration and phone notification, then a restrained brand ending. One dominant visual action, brief narration captions, simple backgrounds, cutout-like objects and close views.",
       "adaptation": "Borrow the situation-to-demonstration storytelling and visual restraint. Create original HSK AI scenes in the existing brand palette; do not copy Upsi branding, security features, footage, UI or exact story."
-    }
+    },
+    "languageSource": "content/languages.json#defaultProductionLanguages",
+    "languageRule": "Ordinary ad requests cover every configured default production language. Each version has source-bound translated narration/claims/cue words, its own approved voice, central CTA, word timings, isolated media files and exact publication approval. Missing or stale translations never fall back to another language."
   }
 }

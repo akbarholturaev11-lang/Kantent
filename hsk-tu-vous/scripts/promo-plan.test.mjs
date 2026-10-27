@@ -88,7 +88,7 @@ test('one caption, a real subject/action and exact spoken anchor cannot be repla
 test('CTA/voice/approval cannot be smuggled into an ad source or copied across languages',()=>{
   const p=fixture();p.cta='Old closing';p.audioSrc='old-voice.mp3';p.approval={approved:true};
   assert.match(errors(p),/cannot carry CTA/);
-  assert.throws(()=>reviewPromoPlan('speaking-cafe-example',{language:'tg'}),/another language/);
+  assert.equal(reviewPromoPlan('speaking-cafe-example',{language:'tg'}).plan.languageCode,'tg-TJ');
   const translated=fixture();translated.language='tg';translated.languageCode='ru-RU';
   assert.match(errors(translated),/languageCode/);
 });
@@ -131,7 +131,9 @@ test('the CLI validates read-only and never produces voice, a render or publicat
   const result=spawnSync(process.execPath,[path.join(root,'scripts/promo-plan.mjs'),'speaking-cafe-example'],{encoding:'utf8'});
   assert.equal(result.status,0,result.stderr);
   const r=JSON.parse(result.stdout);
-  assert.equal(r.mode,'read-only-promo-planning');
+  assert.equal(r.mode,'read-only-multilingual-promo-planning');
+  assert.deepEqual(r.requestedLanguages,['ru','tg']);
+  assert.equal(r.plansComplete,true);
   assert.equal(r.renderReady,false);
   assert.equal(r.publicationAuthorized,false);
   assert.equal(fs.readFileSync(source,'utf8'),before);

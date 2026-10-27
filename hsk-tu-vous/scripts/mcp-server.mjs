@@ -7,7 +7,7 @@ import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { recommendSkills } from "./skill-router.mjs";
 import { MOTION_KINDS } from "./motion-design-plan.mjs";
 import { graphicSceneSchema } from "./graphic-scene-schema.mjs";
-import { reviewPromoPlan } from "./promo-plan.mjs";
+import { reviewPromoVariants } from "./promo-plan.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { suggestSemanticShots } from "./semantic-shot-adviser.mjs";
 import { CTA_PLATFORMS, getPlatformCtaStatus } from "./platform-cta.mjs";
@@ -70,8 +70,8 @@ export const createServer = () => {
     { name: "hsk-ai-content", version: "1.0.0" },
     {
       instructions:
-      "Для новых рекламных роликов читайте content/PROMO_WORKFLOW.md и creativeGuidance из recommend_skills. Сценарий строится на жизненной ситуации и доказанной пользе продукта; минималистичный кадр и один субтитр определяет content/visual-system.json#promoPresentation. Перед медиа вызовите get_promo_plan. Этот запрос не расширяет полномочия Calendar Reserve на рекламу. " +
-      "При написании новых сценариев выбирайте структуру по content/creative-formats.json#storytellingPolicy и задаче ученика, а не по длине: никаких обязательных восьми блоков. Серии планируйте по content/calendar.json#seriesPolicy и content/WORKFLOW.md. " +
+      "Для новых рекламных роликов читайте content/PROMO_WORKFLOW.md и creativeGuidance из recommend_skills. Сценарий строится на жизненной ситуации и доказанной пользе продукта; минималистичный кадр и один субтитр определяет content/visual-system.json#promoPresentation. Перед медиа вызовите get_promo_plan: по умолчанию он проверяет все языки из content/languages.json, включая отдельные переведённые реплики и cueText. Этот запрос не расширяет полномочия Calendar Reserve на рекламу. " +
+      "При написании новых учебных сценариев выбирайте структуру по content/creative-formats.json#storytellingPolicy и задаче ученика, а не по длине: никаких обязательных восьми блоков. Серии планируйте по content/calendar.json#seriesPolicy и content/WORKFLOW.md. " +
       "Для новых рисунков и действий читайте content/GRAPHIC_SCENES.md. Сценарий и рисунки пишет агент по content/WORKFLOW.md: Calendar Reserve для резерва, вызывающий AI-агент для ручного запроса; не используйте отдельную Gemini-модель сценариста. Используйте kind:graphic и декларативные nodes/tracks, когда готовых объектов недостаточно; автор обязан нарисовать смысловой кадр и привязать его к словам выбранного языка до озвучки. Смена метаданных не считается сменой видимого кадра. " +
       "Перед подготовкой нового HSK-урока читайте content/EDITING_SPEC.md и content/EPISODE_SCHEMA.md. Утверждённый формат выбирается из content/visual-system.json#lessonPresentation. Автор должен заполнить смысловые motionBeats каждой сцены через update_production_plan до voice/render и зарегистрировать изменившийся CTA-контекст. Если prepare_today_video вернул action-plan-required, продолжайте планирование самостоятельно по указанным правилам и повторите подготовку после заполнения плана. " +
       "На команду «Бугунги видеони тайёрла» вызывайте prepare_today_video: по умолчанию он готовит все языки из content/languages.json для одного календарного урока. Для чтения, редактирования, регистрации и approval каждой версии передавайте language ru или tg. Не подменяйте перевод, аудио или approval другим языком. Если на сегодня нет слота, выберите ближайший следующий planned по timezone календаря и сообщите дату. Явно названная дата обрабатывается строго. Перед видео вызывайте recommend_skills и читайте выбранный SKILL.md с content/SKILLS.md; обычный урок остаётся Remotion. До hook/CTA edits читайте соответствующий Lab, active language corrections и регистрируйте новый immutable CTA context до voice/render. Ovoz faqat tanlangan tilning voice-profile.json profilidan tayyorlanadi. modelDecisionRequired bo‘lsa egasining aniq model qarorisiz API chaqirmang; pending-owner-approval faqat designated sample uchun. Exact-token tekshiruvi va haqiqiy word timestamp saqlansin. Boshqa TTS/transkripsiya provayderiga o‘tmang. Har bir tilning to‘liq review paketini tekshiring; qisman natijani ikki til tayyor deb aytmang. Публикуйте только через подключённый Zernio MCP после отдельного явного подтверждения каждого exact language/platform preview с аккаунтом, metadata/settings и временем. Instagram Reels и YouTube Shorts разрешены; TikTok publishing не разрешён.",
@@ -85,11 +85,11 @@ export const createServer = () => {
       "Используйте дату YYYY-MM-DD, часовой пояс календаря — Asia/Shanghai.",
     );
 
-  // Every read/edit/approval is scoped independently; production tools default
-  // to both languages and manage their own per-language scopes below.
+  // Lesson reads/edits/approvals are scoped independently. Batch production
+  // and promo planning own their full configured language set below.
   const registerTool = server.registerTool.bind(server);
   server.registerTool = (name, config, handler) => {
-    if (["prepare_video_for_date", "prepare_today_video"].includes(name))
+    if (["prepare_video_for_date", "prepare_today_video", "get_promo_plan"].includes(name))
       return registerTool(name, config, handler);
     return registerTool(name, {
       ...config,
@@ -397,10 +397,10 @@ export const createServer = () => {
     "get_promo_plan",
     {
       title: "Read an original promo story and its minimal frame plan",
-      description: "Read-only validation of content/promos/<id>.json using the canonical advertising policy. Reports evidence, drawings and media work still required; never generates voice, renders, schedules or publishes.",
-      inputSchema: z.object({id:z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)}),
+      description: "Read-only validation of a shared promo and its source-bound translations. Defaults to every production language in content/languages.json; reports each missing/stale version separately, without language fallback. Never generates voice, renders, schedules or publishes.",
+      inputSchema: z.object({id:z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),language:z.enum(["all","ru","tg"]).optional()}),
     },
-    async ({id})=>withToolErrors(async()=>reviewPromoPlan(id,{language:activeLanguage()})),
+    async ({id,language="all"})=>withToolErrors(async()=>reviewPromoVariants(id,{language})),
   );
 
   server.registerTool(

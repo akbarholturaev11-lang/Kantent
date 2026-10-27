@@ -53,7 +53,7 @@ jobs:
       - name: Validate standalone ad stories and minimalist frame planning
         run: |
           node --check scripts/promo-plan.mjs
-          node --test scripts/promo-plan.test.mjs
+          node --test scripts/promo-plan.test.mjs scripts/promo-localization.test.mjs
           npm run content:promo-plan -- speaking-cafe-example > /tmp/promo-story-plan.json
       - name: Typecheck existing renderer and semantic opt-in preview
         run: npm run lint

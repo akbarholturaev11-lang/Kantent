@@ -56,7 +56,7 @@ export function inspectStorytelling(episode, policy = readStorytellingPolicy()) 
       endSec: cursor, hasChinese: /[\u3400-\u9fff]/u.test(scene.narration ?? "") };
   });
   const candidates = timeline.filter((p, index) => index > 0 && index < timeline.length - 1 &&
-    /(?:\?|？|почему|но |а теперь|сравните|а как|что если|однако)/iu.test(scenes[index].narration ?? ""));
+    /(?:\?|？|почему|но |а теперь|сравните|а как|что если|однако|чаро|аммо|агар|акнун|муқоиса)/iu.test(scenes[index].narration ?? ""));
   const shortMax = policy.durationHintsSec?.shortMax ?? 20;
   const standardMax = policy.durationHintsSec?.standardMax ?? 35;
   const firstChineseScene = timeline.find(p => p.hasChinese);

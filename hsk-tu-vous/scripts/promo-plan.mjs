@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {validateGraphicScene} from './graphic-scene.mjs';
+import {readLanguages,lessonSourceHash} from './language-context.mjs';
 
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const idPattern=/^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -11,14 +12,46 @@ const load=file=>JSON.parse(fs.readFileSync(file,'utf8'));
 export function readPromoRules(root=ROOT) {
   const policy=load(path.join(root,'content/creative-formats.json')).promoPolicy;
   const visual=load(path.join(root,'content/visual-system.json'));
-  const languages=load(path.join(root,'content/languages.json')).languages;
+  const {languages,defaultProductionLanguages}=readLanguages(root);
+  const sourceLanguage=Object.keys(languages).find(language=>languages[language].contentRoot==='content');
+  if(!sourceLanguage)throw Error('A canonical promo content root is required');
   const presentation=visual.promoPresentation;
   if(policy?.schemaVersion!==1 || !Array.isArray(policy.formats) || !Array.isArray(policy.beatRoles) ||
       policy.styleId!==presentation?.styleId || presentation.maximumFocalSubjects!==1 ||
       presentation.maximumNarrativeTextLayers!==1 || !Array.isArray(presentation.backgroundTokens) ||
       presentation.backgroundTokens.some(token=>!visual.colors?.[token]))
     throw Error('Missing/invalid canonical promo policy or minimal presentation');
-  return {policy,presentation,languages};
+  return {policy,presentation,languages,defaultProductionLanguages,sourceLanguage};
+}
+
+export const promoSourceHash=lessonSourceHash;
+
+export function assertLocalizedPromoPlan(plan,canonical) {
+  if(plan.language===canonical.language)return;
+  const binding=plan.localization;
+  if(binding?.language!==plan.language || binding.sourcePromoId!==canonical.id ||
+      binding.sourceHash!==promoSourceHash(canonical) || binding.status!=='draft' ||
+      !/^\d{4}-\d{2}-\d{2}$/.test(binding.authoredOn??''))
+    throw Error('PROMO_LOCALIZATION_REQUIRED: translation must bind to the current canonical promo source');
+  const structure=p=>({id:p.id,kind:p.kind,styleId:p.styleId,formatId:p.formatId,storyType:p.storyType,
+    claims:p.claims.map(c=>({id:c.id,evidenceIds:c.evidenceIds})),
+    evidence:p.evidence.map(e=>({id:e.id,kind:e.kind,sourcePath:e.sourcePath})),
+    beats:p.beats.map(b=>({id:b.id,role:b.role,claimIds:b.claimIds,
+      visualType:b.visual.type,continuityKey:b.visual.continuityKey,
+      spokenChinese:b.narration.match(/\p{Script=Han}+/gu)??[]}))});
+  if(JSON.stringify(structure(plan))!==JSON.stringify(structure(canonical)))
+    throw Error('PROMO_LOCALIZATION_REQUIRED: preserve the shared story, verified claims and Chinese examples');
+  const copied=(value,original)=>/[\p{Script=Cyrillic}]{3,}/u.test(original??'') && value===original;
+  if(copied(plan.title,canonical.title) || copied(plan.benefit,canonical.benefit) ||
+      plan.beats.some((beat,index)=>copied(beat.narration,canonical.beats[index]?.narration)) ||
+      plan.claims.some((claim,index)=>copied(claim.text,canonical.claims[index]?.text)))
+    throw Error('PROMO_LOCALIZATION_REQUIRED: copied source explanation is not a complete translated promo');
+}
+
+function promoFile(root,rules,language,id) {
+  const entry=rules.languages[language];
+  if(!entry || !/^content(?:\/locales\/[a-z]{2})?$/.test(entry.contentRoot))throw Error('Unsupported promo language/content root');
+  return path.join(root,entry.contentRoot,'promos',id+'.json');
 }
 
 export function validatePromoPlan(plan,{policy,presentation,languages}=readPromoRules()) {
@@ -100,16 +133,29 @@ function containedFile(root,relative) {
 export function reviewPromoPlan(id,{root=ROOT,language}={}) {
   if(!idPattern.test(id??''))throw Error('Use a lowercase hyphenated promo ID');
   const rules=readPromoRules(root);
-  const plan=load(path.join(root,'content/promos',id+'.json'));
+  const selected=language??rules.sourceLanguage;
+  const canonical=load(promoFile(root,rules,rules.sourceLanguage,id));
+  const canonicalErrors=validatePromoPlan(canonical,rules);
+  if(canonicalErrors.length || canonical.language!==rules.sourceLanguage)
+    throw Error('Invalid canonical promo source: '+canonicalErrors.join('\n'));
+  let plan;
+  try {plan=selected===rules.sourceLanguage?canonical:load(promoFile(root,rules,selected,id));}
+  catch(error){
+    if(error.code==='ENOENT')throw Error(`PROMO_LOCALIZATION_REQUIRED: ${selected} translation is missing; author it without substituting another language`);
+    throw error;
+  }
   if(plan.id!==id)throw Error('Promo ID does not match its file');
-  if(language && plan.language!==language)throw Error('Promo belongs to another language; select its actual version');
+  if(plan.language!==selected)throw Error('Promo belongs to another language; select its actual version');
   const errors=validatePromoPlan(plan,rules);
   if(errors.length)throw Error(errors.join('\n'));
+  assertLocalizedPromoPlan(plan,canonical);
   for(const item of plan.evidence)containedFile(root,item.sourcePath);
   for(const beat of plan.beats)if(beat.visual.assetPath)containedFile(root,beat.visual.assetPath);
   return {mode:'read-only-promo-planning',plan,structurallyValid:true,
+    sourcePlan:path.posix.join(rules.languages[selected].contentRoot,'promos',id+'.json'),
     ctaSource:path.posix.join(rules.languages[plan.language].contentRoot,'cta-lab.json'),
     voiceSource:path.posix.join(rules.languages[plan.language].contentRoot,'voice-profile.json'),
+    outputPaths:{review:`review/promos/${id}/${selected}`,media:`public/generated/promos/${id}/${selected}`},
     requiredBeforeMedia:[
       ...plan.beats.filter(beat=>beat.visual.type==='illustration' && !beat.visual.assetPath && !beat.visual.graphic)
         .map(beat=>`${beat.id}: build and inspect the original drawing; a prose brief is not a rendered frame`),
@@ -120,10 +166,32 @@ export function reviewPromoPlan(id,{root=ROOT,language}={}) {
     ],voiceGenerated:false,renderReady:false,publicationAuthorized:false};
 }
 
+export function reviewPromoVariants(id,{root=ROOT,language='all'}={}) {
+  const rules=readPromoRules(root);
+  const requested=language==='all'?rules.defaultProductionLanguages:[language];
+  if(requested.some(item=>!rules.languages[item]))throw Error('Language must be all or a configured production language');
+  const variants={};
+  for(const selected of requested) {
+    try {variants[selected]={stage:'plan-validated',...reviewPromoPlan(id,{root,language:selected})};}
+    catch(error){variants[selected]={stage:'blocked',language:selected,error:error.message};}
+  }
+  const ready=Object.values(variants).filter(variant=>variant.structurallyValid).length;
+  return {mode:'read-only-multilingual-promo-planning',stage:ready===requested.length?'plans-validated':ready?'partial':'blocked',
+    plansComplete:ready===requested.length,requestedLanguages:requested,variants,
+    voiceGenerated:false,renderReady:false,publicationAuthorized:false};
+}
+
+export function runPromoCli(args=process.argv.slice(2),{root=ROOT,write=console.log}={}) {
+  const [id,...options]=args;
+  if(!idPattern.test(id??'') || (options.length && (options.length!==2 || options[0]!=='--language')))
+    throw Error('Usage: npm run content:promo-plan -- <promo-id> [--language all|ru|tg]');
+  const report=reviewPromoVariants(id,{root,language:options.length?options[1]:'all'});
+  write(JSON.stringify(report,null,2));
+  return report.plansComplete?0:1;
+}
+
 if(process.argv[1] && path.resolve(process.argv[1])===fileURLToPath(import.meta.url)) {
   try {
-    const [id,...extra]=process.argv.slice(2);
-    if(extra.length)throw Error('Usage: npm run content:promo-plan -- <promo-id>');
-    console.log(JSON.stringify(reviewPromoPlan(id),null,2));
+    process.exitCode=runPromoCli();
   } catch(error){console.error(error.message);process.exitCode=1;}
 }

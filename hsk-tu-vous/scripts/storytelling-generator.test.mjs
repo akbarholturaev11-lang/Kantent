@@ -78,3 +78,40 @@ test("approved, voiced or CTA-filled sources are never eligible",()=>{
     assert.throws(()=>makeAdaptiveBrief({...e,...field}),/unapproved CTA-free/);
   }
 });
+
+function tajikProposal() {
+  const source=JSON.parse(fs.readFileSync(path.join(root,'content/locales/tg/episodes/er-vs-liang-cafe-20261026.json'),'utf8'));
+  const brief=makeAdaptiveBrief(source);
+  const narration=source.scenes.find(scene=>scene.id==='numeral').narration.replace('Аммо бист','Аммо дар таркиби адад бист');
+  return {source,brief,proposal:{schemaVersion:1,episodeId:source.id,languageCode:'tg-TJ',originalSha256:brief.originalSha256,
+    narrationEdits:[{sceneId:'numeral',narration}],storytelling:{schemaVersion:1,pattern:'single-rehook',
+      firstPayoff:{sceneId:'hook',cueText:'Ҷавоби дуруст — 两.'},reHooks:[{
+        sceneId:'numeral',cueText:'Аммо дар таркиби адад бист — 二十.',
+        payoffSceneId:'recap',payoffCueText:'Ду пиёла — 两杯茶.',
+        reason:'Ҳамон фарқро дар таркиби адад ва миқдори пиёлаҳо нишон медиҳад.'}]}}};
+}
+
+test('adaptive briefs and source-bound proposals support Tajik narration and its actual contrast cues',()=>{
+  const {source,brief,proposal}=tajikProposal(),before=JSON.stringify(source);
+  assert.equal(brief.language,'tg');
+  assert.equal(brief.languageCode,'tg-TJ');
+  assert.match(brief.lessonLanguage,/Тоҷикӣ/);
+  assert.ok(brief.candidateSceneIds.includes('numeral'));
+  assert.ok(!brief.constraints.some(rule=>rule.includes('only Russian')));
+  const result=evaluateAdaptiveCandidate(source,proposal);
+  assert.equal(result.valid,true,result.errors.join('; '));
+  assert.equal(result.draft.languageCode,'tg-TJ');
+  assert.match(result.draft.scenes.find(scene=>scene.id==='numeral').narration,/таркиби адад/);
+  assert.equal(JSON.stringify(source),before);
+});
+
+test('Tajik proposals cannot borrow Russian language identity or add a Tajik in-lesson CTA',()=>{
+  const {source,proposal}=tajikProposal();
+  proposal.languageCode='ru-RU';
+  assert.match(evaluateAdaptiveCandidate(source,proposal).errors.join(' '),/languageCode/);
+  delete proposal.languageCode;
+  assert.match(evaluateAdaptiveCandidate(source,proposal).errors.join(' '),/languageCode/);
+  proposal.languageCode='tg-TJ';
+  proposal.narrationEdits[0].narration+=' Ба профил даро ва HSK AI-ро боргирӣ кун!';
+  assert.match(evaluateAdaptiveCandidate(source,proposal).errors.join(' '),/CTA/);
+});

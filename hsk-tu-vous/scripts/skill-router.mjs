@@ -71,7 +71,7 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
         policy:'content/creative-formats.json#promoPolicy',
         presentation:'content/visual-system.json#promoPresentation',
         workflow:'content/PROMO_WORKFLOW.md',
-        nextAction:'Author the original situation-led promo and cue-linked visuals, then validate it with content:promo-plan or get_promo_plan before media production.',
+        nextAction:'Author the shared original promo and source-bound versions with independently translated cue-linked visuals for every defaultProductionLanguages entry, then validate all of them with content:promo-plan or get_promo_plan before media production. An explicit language request narrows the set.',
       }} : {}),
       skills: unique.map((name) => ({
         name,

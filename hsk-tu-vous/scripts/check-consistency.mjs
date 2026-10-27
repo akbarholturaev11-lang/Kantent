@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { validatePlatformCtaConfig } from "./platform-cta.mjs";
 import { readLanguages, lessonSourceHash, ctaSourceHash } from "./language-context.mjs";
 import { validateSeriesCalendar } from "./series-plan.mjs";
-import { readPromoRules, reviewPromoPlan } from "./promo-plan.mjs";
+import { readPromoRules, reviewPromoPlan, reviewPromoVariants } from "./promo-plan.mjs";
 
 export const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -150,9 +150,18 @@ export function validateConsistency(root = projectRoot) {
   const hook = readJson(root, "content/hook-lab.json", errors);
   const visual = readJson(root, "content/visual-system.json", errors);
   try {
-    readPromoRules(root);
-    for (const file of fs.readdirSync(path.join(root,"content/promos")).filter(file=>file.endsWith(".json")))
-      reviewPromoPlan(file.slice(0,-5),{root});
+    const promoRules=readPromoRules(root);
+    for (const file of fs.readdirSync(path.join(root,"content/promos")).filter(file=>file.endsWith(".json"))) {
+      const report=reviewPromoVariants(file.slice(0,-5),{root});
+      for (const [language,variant] of Object.entries(report.variants))
+        if(variant.stage==='blocked')errors.push(`Advertising ${file}/${language}: ${variant.error}`);
+    }
+    for (const [language,entry] of Object.entries(promoRules.languages)) {
+      if(language===promoRules.sourceLanguage)continue;
+      const folder=path.join(root,entry.contentRoot,"promos");
+      if(fs.existsSync(folder))for(const file of fs.readdirSync(folder).filter(file=>file.endsWith(".json")))
+        reviewPromoPlan(file.slice(0,-5),{root,language});
+    }
   } catch(error) {errors.push(`Advertising policy/plans: ${error.message}`);}
   try {
     const languages = readLanguages(root);
