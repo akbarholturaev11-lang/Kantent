@@ -21,6 +21,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Language-specific CTA wording and active corrections | `cta-lab.json` in that language's configured content root, explained by `content/CTA_LAB.md` |
 | Language-specific hook rules, hypotheses and readbacks | `hook-lab.json` in that language's configured content root, explained by `content/HOOK_LAB.md` |
 | Creative packaging formats and pilot allocation | `content/creative-formats.json` |
+| Standalone advertising stories, minimalist presentation and production procedure | `content/creative-formats.json#promoPolicy`, `content/visual-system.json#promoPresentation` and `content/PROMO_WORKFLOW.md` |
 | Design tokens, active lesson presentation/date, full-video duration, caption numbers and motion parameters | `content/visual-system.json` |
 | Visual editorial method | `content/EDITING_SPEC.md` |
 | Semantic shot/action enumeration and rollout status | `content/semantic-visual-system.json`, explained by `content/SEMANTIC_VISUAL_SCHEMA.md` |

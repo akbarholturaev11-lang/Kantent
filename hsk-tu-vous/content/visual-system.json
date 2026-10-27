@@ -262,5 +262,23 @@
     "secondary": "#29313E",
     "foreground": "#FFF5DF",
     "muted": "#D2C6B4"
+  },
+  "promoPresentation": {
+    "styleId": "minimal-story-v1",
+    "scope": "New standalone advertisements, independent of the dated lesson presentation",
+    "maximumFocalSubjects": 1,
+    "maximumNarrativeTextLayers": 1,
+    "backgroundTokens": [
+      "background",
+      "surface",
+      "foreground"
+    ],
+    "colorSource": "colors",
+    "layoutSource": "shape.safeMarginPx",
+    "captionSource": "Existing language-specific narration and verified word-timed caption styling",
+    "direction": "One open composition, generous empty space, one meaningful subject/action, original simple vector or cutout-like objects and restrained depth. A genuine product crop replaces the narrative object when its function is spoken.",
+    "motion": "Preserve object continuity between beats. Move, reveal, crop or reframe only to explain the spoken action; transitions follow the actual voice cues. No decorative motion loops, busy collages, flashing backgrounds or title-only slides.",
+    "text": "One narration-synced text layer. No parallel headline, duplicate sentence or extra teaching stack. Text intrinsic to a genuine captured product UI is source evidence, not another authored headline.",
+    "background": "Choose a quiet light or dark brand background for the scene meaning. Accents come from the existing palette. Do not rotate colors on a timer or copy a reference palette."
   }
 }

@@ -2,6 +2,8 @@
 
 This file describes **the sequence of operations**, not the values of production settings. Start with `AGENTS.md` and `AI_RULES.md`. Read current values from the canonical files listed in `AGENTS.md`; never substitute remembered dates, voice profiles or CTA wording.
 
+For a new standalone advertisement, enter `content/PROMO_WORKFLOW.md` before authoring. `recommend_skills` returns those advertising references as `creativeGuidance`, and `get_promo_plan` / `content:promo-plan` validates its original story and frame plan read-only. Dated lesson commands and Calendar Reserve keep their existing scope below.
+
 ## Language-scoped production contract
 
 Read `content/languages.json` for the default production language set and content roots. Both `prepare_today_video` and `prepare_video_for_date`, plus `content:make -- today|YYYY-MM-DD|episode-ID`, prepare every default language for the same calendar lesson. Production accepts `language all|ru|tg` (CLI `--language`); all other MCP operations accept `language ru|tg`, defaulting to the original series. Individual CLI stages inherit `HSK_CONTENT_LANGUAGE`. Always carry the selected language through planning, CTA registration, voice, render, status and approval.

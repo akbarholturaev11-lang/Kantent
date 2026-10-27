@@ -50,6 +50,11 @@ jobs:
           node scripts/storytelling-plan.mjs er-vs-liang-cafe-20261026 > /tmp/adaptive-storytelling.json
       - name: Validate active source references and config
         run: npm run check:consistency
+      - name: Validate standalone ad stories and minimalist frame planning
+        run: |
+          node --check scripts/promo-plan.mjs
+          node --test scripts/promo-plan.test.mjs
+          npm run content:promo-plan -- speaking-cafe-example > /tmp/promo-story-plan.json
       - name: Typecheck existing renderer and semantic opt-in preview
         run: npm run lint
       - name: Verify real dated plan selects semantic renderer, not static school template

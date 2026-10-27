@@ -2,6 +2,8 @@
 
 This is the shared edit and caption standard for every HSK AI short. The renderer values live in `content/visual-system.json`; `src/EpisodeComposition.tsx`, `src/NarrativeVisual.tsx`, and `src/CaptionOverlay.tsx` read those values directly.
 
+For new standalone advertisements, use `PROMO_WORKFLOW.md`, `creative-formats.json#promoPolicy` and `visual-system.json#promoPresentation` for the life-story treatment and minimalist frame. The dated lesson presentation below remains its own production path; do not force a teaching stack or a fixed lesson scene sequence onto a commercial. Keep actual voice cues, genuine product evidence and the shared review/publication rules.
+
 ## Frame and lesson layout
 
 For new objects/actions outside the built-in library, the AI author must complete an actual declarative drawing and motion plan using `GRAPHIC_SCENES.md` before voice production. Never substitute an unrelated object or an empty background. Follow the visible-state coverage/date and hold limit in `visual-system.json#lessonPresentation`; changing planning text alone is insufficient. Inspect the drawing's poses, transitions and fit to the actual narration. If the contract cannot depict an idea accurately, repair the asset/renderer before delivery.

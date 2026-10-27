@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "id": "speaking-cafe-example",
+  "kind": "advertisement",
+  "status": "draft",
+  "title": "Слова знакомы. А сказать вслух?",
+  "language": "ru",
+  "languageCode": "ru-RU",
+  "styleId": "minimal-story-v1",
+  "formatId": "life-friction-demo",
+  "benefit": "Возможность попробовать знакомые слова в разговорной практике HSK AI; без обещания реального результата.",
+  "situation": {
+    "setting": "Кафе перед заказом",
+    "learnerGoal": "Произнести выбранную фразу вслух",
+    "friction": "Знакомые слова пока не складываются в ответ"
+  },
+  "storyType": "illustrative",
+  "storyDisclosure": "Представь",
+  "evidence": [
+    {
+      "id": "voice-practice",
+      "kind": "product-source",
+      "sourcePath": "../reports/HSK_AI_AI_Voice_Reklama_60s.md",
+      "checkedAt": "2026-10-27",
+      "supports": "The existing owner-approved production report documents AI Voice conversation practice, voice input, real source screens and its underlying product source references. This is not evidence of a learner outcome."
+    }
+  ],
+  "claims": [
+    {
+      "id": "practice-mode",
+      "text": "В HSK AI есть AI Voice для разговорной практики.",
+      "evidenceIds": [
+        "voice-practice"
+      ]
+    },
+    {
+      "id": "voice-input",
+      "text": "Здесь можно попробовать сказать фразу голосом.",
+      "evidenceIds": [
+        "voice-practice"
+      ]
+    }
+  ],
+  "beats": [
+    {
+      "id": "cafe",
+      "role": "situation",
+      "narration": "Представь: ты в кафе. Заказ уже выбрал, а сказать вслух трудно.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Чашка и край меню перед одной рукой ученика",
+        "action": "Рука открывает меню; чашка сдвигается в тот же центр, когда звучит место действия.",
+        "continuityKey": "same-learner-cafe-phone",
+        "cueText": "в кафе",
+        "backgroundToken": "background",
+        "drawingBrief": "Оригинальная простая иллюстрация стола, чашки и одной руки; без вывесок, надписей меню и чужих фотографий."
+      }
+    },
+    {
+      "id": "pause",
+      "role": "complication",
+      "narration": "Знакомые слова вспоминаются. Но готовой фразы пока нет.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Та же рука рядом с чашкой",
+        "action": "Рука останавливается перед заказом; два простых значка мысли приближаются и замирают, показывая паузу.",
+        "continuityKey": "same-learner-cafe-phone",
+        "cueText": "готовой фразы",
+        "backgroundToken": "surface",
+        "drawingBrief": "Сохранить ту же чашку и руку. Значки мысли без читаемых слов; единственный текст — субтитр."
+      }
+    },
+    {
+      "id": "try",
+      "role": "attempt",
+      "narration": "Перед следующей попыткой можно спокойно потренироваться.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Телефон в той же руке",
+        "action": "Вместо меню рука поднимает телефон; камера следует за одним предметом к крупному плану.",
+        "continuityKey": "same-learner-cafe-phone",
+        "cueText": "потренироваться",
+        "backgroundToken": "background",
+        "drawingBrief": "Оригинальный силуэт телефона без выдуманного интерфейса; перед настоящим продуктом он служит только переходом."
+      }
+    },
+    {
+      "id": "product",
+      "role": "product-demo",
+      "narration": "В HSK AI есть AI Voice для разговорной практики.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Хорошо читаемый фрагмент настоящего AI Voice",
+        "action": "Иллюстрация телефона сменяется подлинным экраном; камера выделяет разговор и сохраняет исходные сообщения.",
+        "continuityKey": "same-learner-cafe-phone",
+        "cueText": "AI Voice",
+        "backgroundToken": "surface",
+        "assetPath": "../videos/hsk-ai-explained/assets/ai-voice-conversation.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "tg-TJ",
+        "limitations": "The available genuine capture has Tajik UI. Obtain a current matching Russian capture or explicitly retain the documented existing-screen treatment for this new ad. Crop the historical response counter and Telegram status chrome. A still is not evidence of a newly recorded conversation."
+      },
+      "claimIds": [
+        "practice-mode"
+      ]
+    },
+    {
+      "id": "microphone",
+      "role": "product-demo",
+      "narration": "Здесь можно попробовать сказать фразу голосом.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Микрофон на том же настоящем экране",
+        "action": "Камера переводит фокус на существующий микрофон. Не имитировать нажатие, новую запись или ответ, которых нет в источнике.",
+        "continuityKey": "same-learner-cafe-phone",
+        "cueText": "голосом",
+        "backgroundToken": "foreground",
+        "assetPath": "../videos/hsk-ai-explained/assets/ai-voice-conversation.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "tg-TJ",
+        "limitations": "The available genuine capture has Tajik UI. Obtain a current matching Russian capture or explicitly retain the documented existing-screen treatment for this new ad. Crop the historical response counter and Telegram status chrome. A still is not evidence of a newly recorded conversation."
+      },
+      "claimIds": [
+        "voice-input"
+      ]
+    },
+    {
+      "id": "return",
+      "role": "resolution",
+      "narration": "У следующей попытки теперь есть подготовка: сначала пробуешь фразу в приложении.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Та же чашка рядом с телефоном",
+        "action": "Возврат к исходному столу: телефон опускается рядом с чашкой. Итог — возможность подготовиться, без показа выдуманного успешного заказа.",
+        "continuityKey": "same-learner-cafe-phone",
+        "cueText": "подготовка",
+        "backgroundToken": "background",
+        "drawingBrief": "Повторно использовать исходные предметы и руку; новый результат разговора не изображать."
+      }
+    }
+  ]
+}

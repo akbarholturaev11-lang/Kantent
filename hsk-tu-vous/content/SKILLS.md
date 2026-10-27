@@ -40,6 +40,8 @@ The recipes in `skill-catalog.json` have `lesson`, `premium` and `special` branc
 
 For data visualizations, educational explainers, social content, and special existing-footage edits, use the corresponding **named capability** under `skill-catalog.json`; they remain registered without becoming default steps for every video.
 
+For new advertisements, `recommend_skills` also returns `creativeGuidance` pointing to the canonical promo policy, minimal presentation and `PROMO_WORKFLOW.md`. Read those before writing the scenario. This is editorial guidance across both existing engine branches, not a new skill, another renderer or a migration permission. The lesson/storytelling rules and autonomous Calendar Reserve scope remain separate.
+
 ## Selected Instagram advisors (no wholesale third-party installation)
 
 Three HSK-specific, project-local `social` skills are registered as ordinary `.agents/skills/<name>/SKILL.md` modules:

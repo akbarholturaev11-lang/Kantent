@@ -28,6 +28,8 @@ The new locale profile is a candidate: read its model-decision and sample/approv
 
 ## Scenario authoring architecture
 
+New standalone ads have an engine-independent story/presentation contract in `creative-formats.json#promoPolicy`, `visual-system.json#promoPresentation` and `PROMO_WORKFLOW.md`. Drafts under `content/promos/` bind life situations, narrated cues, product claims and genuine capture/source paths. `scripts/promo-plan.mjs`, `content:promo-plan` and MCP `get_promo_plan` validate/read them without writing or generating media; the skill router returns the owning references for promo requests. A structural pass still lists missing original drawings, language/privacy work and actual voice/render QA, and never marks a plan render-ready or approved. Calendar Reserve remains a lesson-only writer; existing ad engines and historical approvals remain independent.
+
 `scripts/graphic-voice-proof.mjs` renders an isolated technical drawing check using a language-scoped review's existing matching voice/cues. It records exact anchor frames and the original audio hash, preserves a complete boundary-crossing last word and stops before the next phrase. Diagnostic outputs remain separate from production episodes, platform exports and approvals; this helper never generates audio or rewrites the lesson.
 
 `scripts/series-plan.mjs` proposes consecutive calendar parts read-only and validates complete numbered sets against `calendar.json#seriesPolicy`. The scenario buffer, consistency checker and production calendar readers share this validation; a missing remaining draft prevents counting that series as ready. Calendar metadata owns the relationship, while lesson/source identity and per-language publication approvals remain independent.

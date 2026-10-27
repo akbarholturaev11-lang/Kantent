@@ -347,14 +347,14 @@
     "promotion": {
       "lesson": {
         "owner": "remotion-best-practices",
-        "notes": "Standard low-complexity promo remains Remotion."
+        "notes": "Standard low-complexity promo remains Remotion. For new ads follow content/PROMO_WORKFLOW.md and canonical promo story/presentation sources; preserve the current engine."
       },
       "premium": {
         "owner": "product-launch-video",
         "helpers": [
           "hyperframes-animation"
         ],
-        "notes": "Independent HyperFrames commercial. Respect approved CTA, provider and exact preview approval."
+        "notes": "Independent HyperFrames commercial. Respect approved CTA, provider and exact preview approval. For new ads follow content/PROMO_WORKFLOW.md and canonical promo story/presentation sources; preserve the current engine."
       },
       "special": {
         "owner": "apple-launch-film",

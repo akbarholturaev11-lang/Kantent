@@ -31,9 +31,9 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
     editing: /existing|current|already|fix |update |edit\b|мавжуд|ҳозирги|хозирги|олдинги|тузат|ўзгартир|узгартир|исправ|существующ|передел|таҳрир|тахрир/iu,
     lesson: /дарс|урок|lesson|курс виде|учебн|грамматик|иероглиф|hanzi|pinyin|пиньин|луғат|лугат|словар|слова китай|vocabulary|вокабул/iu,
     hskNumber: /hsk[\s.-]*[1-6](?:\.0)?/iu,
-    promo: /promo|промо|реклама|advert|marketing|product launch|launch film|тизер|trailer|трейлер|реклам|продвижен|презентац.*продукт/iu,
+    promo: /promo|промо|реклама|reklama|advert|marketing|product launch|launch film|тизер|trailer|трейлер|реклам|продвижен|презентац.*продукт/iu,
     premium: /premium|премиум|махсус|special|кинематограф|cinematic|brand film|complex|мураккаб|сложн|advanced|продвинут|motion graphic/iu,
-    video: /video|видео|ролик|reel|shorts?|animation|анимац|монтаж|render|рендер|export|экспорт|яс[ао]|ярат|сделай|создай|create|generate|produce|тайёрла|таерла|тайёр|таёр|собери/iu,
+    video: /video|видео|ролик|rolik|reel|shorts?|animation|анимац|монтаж|render|рендер|export|экспорт|яс[ао]|yasa|ярат|сделай|создай|create|generate|produce|тайёрла|таерла|тайёр|таёр|tayyorla|tayorla|собери/iu,
     captions: /caption|subtitle|субтитр|титр|vtt|srt|captions?/iu,
     layout: /layout|жойлаш|располож|композиц|позици|overlap|перекры|экран|screen layout|шрифт|типограф|font size|text size/iu,
     ui: /\bui\b|interface|интерфейс|heroui|кнопка|button|modal/iu,
@@ -67,6 +67,12 @@ export function recommendSkills(task, { existingEngine = "unknown", root = DEFAU
     return {
       engine, branch, confidence, needsClarification, reason,
       selectedStages: activeStageIds,
+      ...(flags.promo ? {creativeGuidance: {
+        policy:'content/creative-formats.json#promoPolicy',
+        presentation:'content/visual-system.json#promoPresentation',
+        workflow:'content/PROMO_WORKFLOW.md',
+        nextAction:'Author the original situation-led promo and cue-linked visuals, then validate it with content:promo-plan or get_promo_plan before media production.',
+      }} : {}),
       skills: unique.map((name) => ({
         name,
         category: known[name].category,

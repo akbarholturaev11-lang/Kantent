@@ -2,6 +2,8 @@
 
 A local AI-assisted production system for short HSK lesson videos. It plans episodes from a calendar, prepares narration, imports timed voice/captions, renders through Remotion, validates a review package, and prepares an **owner-approved** social publication. This is the content studio, not the HSK AI learner app.
 
+New standalone advertisements follow [PROMO_WORKFLOW.md](content/PROMO_WORKFLOW.md): an original life situation, a supported product demonstration and a minimalist frame. `npm run content:promo-plan -- speaking-cafe-example` (MCP `get_promo_plan`) reads and validates the example story, sources and outstanding artwork/media work. This planning command does not generate or publish a video; the selected existing engine, approved voice, central CTA and exact final-preview process still apply.
+
 ## Start locally
 
 Requires Node.js 20+.

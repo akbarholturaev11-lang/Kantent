@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { validatePlatformCtaConfig } from "./platform-cta.mjs";
 import { readLanguages, lessonSourceHash, ctaSourceHash } from "./language-context.mjs";
 import { validateSeriesCalendar } from "./series-plan.mjs";
+import { readPromoRules, reviewPromoPlan } from "./promo-plan.mjs";
 
 export const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -20,6 +21,7 @@ const activeDocs = [
   "content/HOOK_LAB.md",
   "content/EDITING_SPEC.md",
   "content/EPISODE_SCHEMA.md",
+  "content/PROMO_WORKFLOW.md",
   "content/REFERENCE_AUDIT.md",
   "content/reference-sources.md",
 ];
@@ -147,6 +149,11 @@ export function validateConsistency(root = projectRoot) {
   const cta = readJson(root, "content/cta-lab.json", errors);
   const hook = readJson(root, "content/hook-lab.json", errors);
   const visual = readJson(root, "content/visual-system.json", errors);
+  try {
+    readPromoRules(root);
+    for (const file of fs.readdirSync(path.join(root,"content/promos")).filter(file=>file.endsWith(".json")))
+      reviewPromoPlan(file.slice(0,-5),{root});
+  } catch(error) {errors.push(`Advertising policy/plans: ${error.message}`);}
   try {
     const languages = readLanguages(root);
     const roots = new Set();

@@ -190,5 +190,37 @@
       "An optional scene cue must already occur in the written narration.",
       "CTA, audio, timing, semantic shots and published/approved records are unaffected."
     ]
+  },
+  "promoPolicy": {
+    "schemaVersion": 1,
+    "status": "default-for-new-advertisements",
+    "styleId": "minimal-story-v1",
+    "scope": "New, unapproved standalone HSK AI advertisements; dated teaching lessons keep their own storytelling policy.",
+    "workflowSource": "content/PROMO_WORKFLOW.md",
+    "presentationSource": "content/visual-system.json#promoPresentation",
+    "formats": [
+      "life-friction-demo",
+      "small-mistake",
+      "unfinished-task"
+    ],
+    "beatRoles": [
+      "situation",
+      "complication",
+      "attempt",
+      "discovery",
+      "product-demo",
+      "resolution"
+    ],
+    "storyRule": "Start with a recognisable life task and a person trying to do it. Develop only tension relevant to one supported product benefit, show the actual useful action and resolve that task. Choose the number of scenes from the story; no fixed eight-block template or forced re-hooks.",
+    "truthRule": "Illustrative stories are introduced as imagined situations. First-person experiences and testimonials require documented owner-provided evidence. Product capabilities need checked source receipts and genuine captures; never invent UI, conversations, outcomes, metrics or guarantees.",
+    "author": "The invoking AI agent writes the story and visual actions before approved voice generation. Calendar Reserve remains authorised for dated lesson reserves only; no new ad scheduler or separate Gemini text writer.",
+    "closingSource": "The selected language and platform CTA Lab; no copied CTA text or automatic publication.",
+    "reference": {
+      "fileName": "-6684566936130931710.mp4",
+      "sha256": "5a40051426eff57db066b301046e17235b50ed8986388dc98656a2ce239ac912",
+      "reviewedAt": "2026-10-27",
+      "observed": "Cafe laptop scene, a suspicious interruption, a product demonstration and phone notification, then a restrained brand ending. One dominant visual action, brief narration captions, simple backgrounds, cutout-like objects and close views.",
+      "adaptation": "Borrow the situation-to-demonstration storytelling and visual restraint. Create original HSK AI scenes in the existing brand palette; do not copy Upsi branding, security features, footage, UI or exact story."
+    }
   }
 }

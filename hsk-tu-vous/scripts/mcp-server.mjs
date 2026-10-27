@@ -7,6 +7,7 @@ import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { recommendSkills } from "./skill-router.mjs";
 import { MOTION_KINDS } from "./motion-design-plan.mjs";
 import { graphicSceneSchema } from "./graphic-scene-schema.mjs";
+import { reviewPromoPlan } from "./promo-plan.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { suggestSemanticShots } from "./semantic-shot-adviser.mjs";
 import { CTA_PLATFORMS, getPlatformCtaStatus } from "./platform-cta.mjs";
@@ -69,6 +70,7 @@ export const createServer = () => {
     { name: "hsk-ai-content", version: "1.0.0" },
     {
       instructions:
+      "Для новых рекламных роликов читайте content/PROMO_WORKFLOW.md и creativeGuidance из recommend_skills. Сценарий строится на жизненной ситуации и доказанной пользе продукта; минималистичный кадр и один субтитр определяет content/visual-system.json#promoPresentation. Перед медиа вызовите get_promo_plan. Этот запрос не расширяет полномочия Calendar Reserve на рекламу. " +
       "При написании новых сценариев выбирайте структуру по content/creative-formats.json#storytellingPolicy и задаче ученика, а не по длине: никаких обязательных восьми блоков. Серии планируйте по content/calendar.json#seriesPolicy и content/WORKFLOW.md. " +
       "Для новых рисунков и действий читайте content/GRAPHIC_SCENES.md. Сценарий и рисунки пишет агент по content/WORKFLOW.md: Calendar Reserve для резерва, вызывающий AI-агент для ручного запроса; не используйте отдельную Gemini-модель сценариста. Используйте kind:graphic и декларативные nodes/tracks, когда готовых объектов недостаточно; автор обязан нарисовать смысловой кадр и привязать его к словам выбранного языка до озвучки. Смена метаданных не считается сменой видимого кадра. " +
       "Перед подготовкой нового HSK-урока читайте content/EDITING_SPEC.md и content/EPISODE_SCHEMA.md. Утверждённый формат выбирается из content/visual-system.json#lessonPresentation. Автор должен заполнить смысловые motionBeats каждой сцены через update_production_plan до voice/render и зарегистрировать изменившийся CTA-контекст. Если prepare_today_video вернул action-plan-required, продолжайте планирование самостоятельно по указанным правилам и повторите подготовку после заполнения плана. " +
@@ -389,6 +391,16 @@ export const createServer = () => {
     },
     async ({ task, existingEngine }) =>
       withToolErrors(async () => recommendSkills(task, { existingEngine })),
+  );
+
+  server.registerTool(
+    "get_promo_plan",
+    {
+      title: "Read an original promo story and its minimal frame plan",
+      description: "Read-only validation of content/promos/<id>.json using the canonical advertising policy. Reports evidence, drawings and media work still required; never generates voice, renders, schedules or publishes.",
+      inputSchema: z.object({id:z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)}),
+    },
+    async ({id})=>withToolErrors(async()=>reviewPromoPlan(id,{language:activeLanguage()})),
   );
 
   server.registerTool(
