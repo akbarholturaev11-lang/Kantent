@@ -21,7 +21,8 @@ export function proposeBuffer(calendar, {today, episodeIsReady=()=>true}={}) {
      calendar.planningWeekdays.length!==calendar.cadencePerWeek ||
      calendar.planningWeekdays.some(d=>!names.includes(d))) throw Error('Invalid calendar planningWeekdays or cadencePerWeek');
   const audit=auditPlanningBuffer(calendar,{today,episodeIsReady});
-  const repair=audit.missing.map(x=>({type:'repair-existing-plan',date:x.date,id:x.id,reason:x.reason}));
+  const repair=audit.missing.map(x=>({type:'repair-existing-plan',date:x.date,id:x.id,reason:x.reason,
+    ...(x.languages ? { languages: x.languages } : {})}));
   const count=Math.max(0,audit.shortfallToTarget-repair.length);
   const occupied=new Set(calendar.items.map(x=>x.date));
   const allDates=[today,...calendar.items.map(x=>x.date).filter(x=>pattern.test(x))].sort();

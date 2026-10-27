@@ -1,5 +1,7 @@
 # Adaptive Storytelling v1 — implementation contract (2026-10-27)
 
+**Historical planning snapshot, not current agent instructions.** The `main` SHA below records the original baseline only; for active workflow and current code see `AGENTS.md`, `content/WORKFLOW.md` and `content/creative-formats.json`.
+
 ## Baseline (read-only)
 - Source: `main` @ `01523dac540ab0ea8d9d589e43ecdf7f45821ce6`.
 - Existing model: CTA-free dated lesson scenes, registered Hook Lab, central platform CTA hydration, Gemini word-timed narration, semantic Remotion and owner-approved social publishing.

@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { validatePlatformCtaConfig } from "./platform-cta.mjs";
 import { readLanguages, lessonSourceHash, ctaSourceHash } from "./language-context.mjs";
 import { validateSeriesCalendar } from "./series-plan.mjs";
+import { auditPlanningBuffer, inspectDraftReadiness, dateInTimezone } from "./self-improvement-check.mjs";
 import { readPromoRules, reviewPromoPlan, reviewPromoVariants } from "./promo-plan.mjs";
 
 export const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -142,6 +143,21 @@ export function validateSkillRegistry(root = projectRoot) {
   return errors;
 }
 
+/**
+ * Explicit strict content-readiness diagnostic for preproduction/release review.
+ * Historical drafts are not rewritten. The ordinary structural CI check stays
+ * nonblocking for pre-existing source backlog; CI prints a separate warning.
+ */
+export function validateFutureContentReadiness(root = projectRoot, { today } = {}) {
+  const calendar = JSON.parse(fs.readFileSync(path.join(root, "content/calendar.json"), "utf8"));
+  const date = today ?? dateInTimezone(new Date(), calendar.timezone);
+  const report = auditPlanningBuffer(calendar, { today: date,
+    episodeIsReady: item => inspectDraftReadiness(root, item) });
+  const errors = report.missing.map(item =>
+    'content/calendar.json/' + item.id + ' (' + item.date + '): ' + item.reason);
+  return { report, errors };
+}
+
 export function validateConsistency(root = projectRoot) {
   const errors = validateSkillRegistry(root);
   const calendar = readJson(root, "content/calendar.json", errors);
@@ -269,11 +285,23 @@ export function validateConsistency(root = projectRoot) {
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const errors = validateConsistency();
-  if (errors.length) {
-    console.error("Consistency check failed:\n" + errors.map((e) => " - " + e).join("\n"));
-    process.exitCode = 1;
-  } else {
-    console.log("Consistency check passed: canonical settings, calendar and all registered skill routes are consistent.");
-  }
+  try {
+    const args = process.argv.slice(2);
+    let date;
+    const strict = args.includes('--future-readiness');
+    for (let i=0;i<args.length;i++) {
+      if (args[i]==='--date' && args[i+1]) date=args[++i];
+      else if (args[i]!=='--future-readiness') throw Error('Unknown option '+args[i]);
+    }
+    const errors = validateConsistency();
+    if (strict) errors.push(...validateFutureContentReadiness(projectRoot,{today:date}).errors);
+    if (errors.length) {
+      console.error("Consistency check failed:\n" + errors.map((e) => " - " + e).join("\n"));
+      process.exitCode = 1;
+    } else {
+      console.log("Consistency check passed: " + (strict
+        ? "canonical files and current bilingual future content are complete."
+        : "canonical settings, calendar and all registered skill routes are consistent."));
+    }
+  } catch (error) { console.error("Consistency check failed: "+error.message); process.exitCode=1; }
 }
