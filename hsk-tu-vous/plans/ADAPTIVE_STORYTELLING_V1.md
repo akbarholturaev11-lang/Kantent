@@ -68,7 +68,7 @@ All cues must appear verbatim in the existing narration. A re-hook cannot refer 
 
 | Responsibility | Existing owner | Corrected operation |
 | --- | --- | --- |
-| Today's date, episode selection, review execution | MCP `prepare_today_video`, calendar, `scripts/mcp-server.mjs` | Preserve strict date/published-dedup rules; agent drives tool |
+| Today's date, episode selection, review execution | MCP `preview_today_video_selection` (read-only) + `get_production_plan`, followed by unchanged `prepare_today_video` production, calendar, `scripts/mcp-server.mjs` | Same shared `resolveTodayVideo` rules; agent inspects selected script before voice/render; preserve strict date/published-dedup rules |
 | Fact-checked lesson writing, adaptive pattern selection, Russian narration and independent editorial review | The invoking **Codex/Claude Code agent** under `AGENTS.md`, `AI_RULES.md`, `content/WORKFLOW.md` | No added Gemini text-generation model or service |
 | Hook/CTA policy and immutable registration | Existing Hook Lab, CTA Lab and episode assembler | Preserve as sole authorities; no in-lesson CTA |
 | Storytelling heuristics / source-bound proposal guardrails | `storytelling-plan.mjs`, **existing** `storytelling-generator.mjs` | Local-only brief and offline validation, agent decides editorial content |
