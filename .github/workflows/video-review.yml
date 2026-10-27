@@ -87,7 +87,7 @@ jobs:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       REQUESTED_EPISODE: ${{ github.event.inputs.episode || 'today' }}
       REQUESTED_LANGUAGE: ${{ github.event.inputs.language || 'all' }}
-      CI_PACKAGE_DIR: ${{ runner.temp }}/hsk-ai-video-review
+      CI_PACKAGE_DIR: /tmp/hsk-ai-video-review
     steps:
       - uses: actions/checkout@v4
         with:
@@ -136,7 +136,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: hsk-review-${{ steps.episode.outputs.episode_id }}-${{ github.run_id }}
-          path: ${{ runner.temp }}/hsk-ai-video-review/
+          path: /tmp/hsk-ai-video-review/
           if-no-files-found: error
           retention-days: 7
 
