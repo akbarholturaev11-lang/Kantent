@@ -102,9 +102,7 @@ jobs:
       GEMINI_API_KEY_BACKUP_1: ${{ secrets.GEMINI_API_KEY_BACKUP_1 }}
       GEMINI_API_KEY_BACKUP_2: ${{ secrets.GEMINI_API_KEY_BACKUP_2 }}
       GEMINI_API_KEY_BACKUP_3: ${{ secrets.GEMINI_API_KEY_BACKUP_3 }}
-      # Default OFF. Rate-limit rotation is not allowed without verified
-      # independently billed/isolated Google projects. Same-project keys share quota.
-      GEMINI_DISTINCT_PROJECTS_VERIFIED: ${{ vars.GEMINI_DISTINCT_PROJECTS_VERIFIED || 'false' }}
+      # HTTP 429 quota limits are never bypassed by rotating Google accounts.
       REQUESTED_EPISODE: ${{ github.event.inputs.episode || 'today' }}
       REQUESTED_LANGUAGE: ${{ github.event.inputs.language || 'all' }}
       CI_PACKAGE_DIR: /tmp/hsk-ai-video-review
