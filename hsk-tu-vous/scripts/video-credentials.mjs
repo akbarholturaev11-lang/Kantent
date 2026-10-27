@@ -84,6 +84,34 @@ export async function withGeminiKeyFailover(state, operation) {
   }
 }
 
+/**
+ * Enabled social destinations are intentionally asymmetric until the owner
+ * connects a Tajik YouTube channel. Never infer that a missing account ID
+ * may be substituted with the Russian YouTube channel.
+ */
+export const VIDEO_PLATFORM_TARGETS = Object.freeze({
+  ru: Object.freeze(["instagram", "youtube"]),
+  tg: Object.freeze(["instagram"]),
+});
+
+export function enabledVideoPlatforms(language) {
+  const platforms = VIDEO_PLATFORM_TARGETS[language];
+  if (!platforms) throw Error("Unsupported video language " + language);
+  return [...platforms];
+}
+
+export function zernioTargetAccount(language, platform, env = process.env) {
+  if (!enabledVideoPlatforms(language).includes(platform)) {
+    throw Error("Zernio " + language + "/" + platform + " is not enabled or has no connected destination.");
+  }
+  const variable = "ZERNIO_" + language.toUpperCase() + "_" + platform.toUpperCase() + "_ACCOUNT_ID";
+  const accountId = typeof env[variable] === "string" ? env[variable].trim() : "";
+  if (!/^[a-f0-9]{24}$/.test(accountId)) {
+    throw Error("Missing/invalid " + variable + " Actions variable; never guess an account or cross language.");
+  }
+  return { language, platform, accountId, variable };
+}
+
 export function zernioRoute(language, env = process.env) {
   if (language !== "ru" && language !== "tg") throw Error("Unsupported Zernio content language: " + language);
   const names = ZERNIO_SECRET_NAMES[language];
