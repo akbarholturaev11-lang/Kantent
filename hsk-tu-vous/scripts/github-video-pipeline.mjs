@@ -9,6 +9,7 @@ import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { readLanguages, withLanguage } from "./language-context.mjs";
+import { enabledVideoPlatforms } from "./video-credentials.mjs";
 import { requestedLanguages } from "./bilingual-production.mjs";
 import { confirmedPublishedFor, confirmedPublishedInAllLanguages } from "./published-evidence.mjs";
 import { resolveTodayVideo } from "./resolve-production-date.mjs";
@@ -18,7 +19,6 @@ import { PROJECT_ROOT, readJson, readStatus, reviewDir, safeId } from "./lib.mjs
 const scriptPath = fileURLToPath(import.meta.url);
 const DEFAULT_OUT = path.join(PROJECT_ROOT, "review", "github-review-bundle");
 const SHA = /^[0-9a-f]{64}$/;
-const PLATFORMS = ["instagram", "youtube"];
 
 export function validateInput(value, language = "all") {
   if (value !== "today" &&
@@ -151,12 +151,13 @@ export async function packageReview(episodeId, languages, outputDir = DEFAULT_OU
   if (!Array.isArray(languages) || !languages.length || languages.some(x=>!["ru","tg"].includes(x))) {
     throw new Error("Invalid requested language set.");
   }
-  // Validate *every* export BEFORE staging any artifact. Partial is never called complete.
+  // Validate every ENABLED destination before staging any artifact. A not-yet-
+  // connected Tajik YouTube channel is never a required package or target.
   const checked = {};
   for (const language of languages) {
     checked[language] = await withLanguage(language, async () => {
       const result = {};
-      for (const platform of PLATFORMS) {
+      for (const platform of enabledVideoPlatforms(language)) {
         result[platform] = await verifyReviewPackage(episodeId, language, platform);
       }
       return result;
