@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Install dependencies for semantic and graphic validation
+        run: npm ci --no-audit --no-fund
       - name: Check semantic contract, spoken word cues and legacy compatibility
         run: |
           node --check scripts/semantic-visual-plan.mjs
@@ -49,7 +51,7 @@ jobs:
       - name: Validate active source references and config
         run: npm run check:consistency
       - name: Typecheck existing renderer and semantic opt-in preview
-        run: npm ci --no-audit --no-fund && npm run lint
+        run: npm run lint
       - name: Verify real dated plan selects semantic renderer, not static school template
         run: |
           node scripts/semantic-planned-fixture.mjs /tmp/semantic-planned-props.json
