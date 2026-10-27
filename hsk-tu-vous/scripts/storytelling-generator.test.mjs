@@ -103,15 +103,35 @@ test("Gemini API requires explicit opt-in and does not leak an API key in errors
 
 test("mocked Gemini returns a candidate; only reviewed proposal goes forward",async()=>{
   const p=proposal();
+  let calls=0;
   const http=async(_url,options)=>{
     assert.equal(options.method,"POST");
-    return {ok:true,text:async()=>JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(p)}]}}]})};
+    calls++;
+    const payload = calls===1 ? p :
+      {decision:"approve",examinedSourceFacts:true,distinctPayoff:true,russianClear:true,findings:[]};
+    return {ok:true,text:async()=>JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(payload)}]}}]})};
   };
   const result=await executeAdaptive(load(),{
     runAi:true,env:{GEMINI_API_KEY:"test-key",HSK_AI_ALLOW_GEMINI_SCRIPT:"true"},http
   });
-  assert.equal(result.status,"requires-source-review-and-owner-preview");
+  assert.equal(result.status,"requires-human-language-review-and-owner-preview");
+  assert.equal(calls,2);
+  assert.equal(result.secondPass.status,"ai-second-pass-approved-pending-human");
   assert.equal(result.narrationChanged,true);
   assert.equal(result.draft.storytelling.pattern,"single-rehook");
   assert.equal(result.draft.cta,undefined);
+});
+
+test("independent model rejection blocks generated scenario",async()=>{
+  let calls=0;
+  const http=async()=>{
+    calls++;
+    const obj=calls===1?proposal():{decision:"reject",examinedSourceFacts:false,
+      distinctPayoff:false,russianClear:true,findings:["Needs source review"]};
+    return {ok:true,text:async()=>JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(obj)}]}}]})};
+  };
+  await assert.rejects(()=>executeAdaptive(load(),{
+    runAi:true,env:{GEMINI_API_KEY:"test-key",HSK_AI_ALLOW_GEMINI_SCRIPT:"true"},http
+  }),/Independent AI editorial check failed/);
+  assert.equal(calls,2);
 });
