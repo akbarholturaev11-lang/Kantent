@@ -40,83 +40,415 @@
       "captionStyleId": "highlight",
       "motionBeats": [
         {
-          "id": "skill-question",
-          "kind": "choice",
+          "id": "hook-action-1",
+          "kind": "graphic",
           "cueText": "Шиновариро",
           "visual": {
-            "title": "кадом маъно?",
-            "hanzi": "会 / 能",
-            "pinyin": "huì / néng",
-            "meaning": "кадом маъно?",
-            "choices": [
-              "会",
-              "能"
-            ]
+            "title": "маҳорат",
+            "hanzi": "会",
+            "pinyin": "huì",
+            "meaning": "маҳорат",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 288,
+                    "y1": 171,
+                    "x2": 355,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "Introduce the learned-skill versus current-opportunity distinction."
+          "explains": "Ҳолати шиноварии омӯхташуда дар муқобили монеа."
         },
         {
-          "id": "closed-today",
-          "kind": "phrase",
+          "id": "hook-action-2",
+          "kind": "graphic",
           "cueText": "имрӯз",
           "visual": {
-            "title": "Имрӯз ман шино карда наметавонам.",
-            "hanzi": "我今天不能游泳。",
-            "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
-            "meaning": "Имрӯз ман шино карда наметавонам.",
-            "parts": [
-              "我",
-              "今天",
-              "不能",
-              "游泳"
-            ],
-            "focus": "不能"
+            "title": "дар ин шароит наметавонам",
+            "hanzi": "不能",
+            "pinyin": "bù néng",
+            "meaning": "дар ин шароит наметавонам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-a",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 203,
+                    "y1": 148,
+                    "x2": 393,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-b",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 393,
+                    "y1": 148,
+                    "x2": 203,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "Use the authored sentence to show the situational limitation; no unsupported pool graphic."
+          "explains": "Нишон додани маҳдудияти имрӯза ва вазъияти дигар."
         },
         {
-          "id": "show-contrast",
-          "kind": "comparison",
+          "id": "hook-action-3",
+          "kind": "graphic",
           "cueText": "Фарқашонро",
           "visual": {
-            "title": "маҳорат / имконият",
-            "hanzi": "会 / 能",
-            "pinyin": "huì / néng",
-            "meaning": "маҳорат / имконият",
-            "models": [
-              {
-                "kind": "phrase",
-                "title": "Ман шиновариро медонам.",
-                "hanzi": "我会游泳。",
-                "pinyin": "Wǒ huì yóuyǒng.",
-                "meaning": "Ман шиновариро медонам.",
-                "parts": [
-                  "我",
-                  "会",
-                  "游泳"
-                ],
-                "focus": "会"
-              },
-              {
-                "kind": "phrase",
-                "title": "Имрӯз ман шино карда наметавонам.",
-                "hanzi": "我今天不能游泳。",
-                "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
-                "meaning": "Имрӯз ман шино карда наметавонам.",
-                "parts": [
-                  "我",
-                  "今天",
-                  "不能",
-                  "游泳"
-                ],
-                "focus": "不能"
-              }
-            ]
+            "title": "маҳорат",
+            "hanzi": "会",
+            "pinyin": "huì",
+            "meaning": "маҳорат",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "left-pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 58,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "left-pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 183,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "left-pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 173,
+                    "y1": 171,
+                    "x2": 240,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "second",
+                  "type": "rect",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 346,
+                    "y": 142,
+                    "width": 214,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "closed-a",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 360,
+                    "y1": 145,
+                    "x2": 545,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "closed-b",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 540,
+                    "y1": 145,
+                    "x2": 360,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "Present the two genuine models."
+          "explains": "Муқоисаи намоёни маҳорат ва имкони ҳозира."
         }
       ],
-      "editPlan": "Use neutral sentence/action models; do not invent a pool asset or borrow Russian cues."
+      "cards": [
+        {
+          "hanzi": "会",
+          "pinyin": "huì",
+          "meaning": "маҳорат"
+        },
+        {
+          "hanzi": "不能",
+          "pinyin": "bù néng",
+          "meaning": "дар ин шароит наметавонам"
+        }
+      ]
     },
     {
       "id": "skill",
@@ -128,84 +460,414 @@
       "captionStyleId": "highlight",
       "motionBeats": [
         {
-          "id": "skill-sentence",
-          "kind": "phrase",
+          "id": "skill-action-1",
+          "kind": "graphic",
           "cueText": "我会游泳",
           "visual": {
-            "title": "Ман шиновариро медонам.",
-            "hanzi": "我会游泳。",
-            "pinyin": "Wǒ huì yóuyǒng.",
-            "meaning": "Ман шиновариро медонам.",
-            "parts": [
-              "我",
-              "会",
-              "游泳"
-            ],
-            "focus": "会"
+            "title": "маҳорати омӯхташуда",
+            "hanzi": "会",
+            "pinyin": "huì",
+            "meaning": "маҳорати омӯхташуда",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 288,
+                    "y1": 171,
+                    "x2": 355,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "Assemble the exact spoken sentence."
+          "explains": "Ҳолати шиноварии омӯхташуда дар муқобили монеа."
         },
         {
-          "id": "skill-meaning",
-          "kind": "phrase",
+          "id": "skill-action-2",
+          "kind": "graphic",
           "cueText": "маҳорати",
           "visual": {
             "title": "Ман шиновариро медонам.",
             "hanzi": "我会游泳。",
             "pinyin": "Wǒ huì yóuyǒng.",
-            "meaning": "маҳорати омӯхташуда",
-            "parts": [
-              "我",
-              "会",
-              "游泳"
-            ],
-            "focus": "会"
+            "meaning": "Ман шиновариро медонам.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "left-pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 58,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "left-pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 183,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "left-pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 173,
+                    "y1": 171,
+                    "x2": 240,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "second",
+                  "type": "rect",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 346,
+                    "y": 142,
+                    "width": 214,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "closed-a",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 360,
+                    "y1": 145,
+                    "x2": 545,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "closed-b",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 540,
+                    "y1": 145,
+                    "x2": 360,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "Focus the learned-skill modal during its explanation."
+          "explains": "Нишон додани маҳдудияти имрӯза ва вазъияти дигар."
         },
         {
-          "id": "skill-remains",
-          "kind": "comparison",
+          "id": "skill-action-3",
+          "kind": "graphic",
           "cueText": "Баста будани",
           "visual": {
-            "title": "маҳорат / имконият",
-            "hanzi": "会 / 能",
-            "pinyin": "huì / néng",
-            "meaning": "маҳорат / имконият",
-            "models": [
-              {
-                "kind": "phrase",
-                "title": "Ман шиновариро медонам.",
-                "hanzi": "我会游泳。",
-                "pinyin": "Wǒ huì yóuyǒng.",
-                "meaning": "Ман шиновариро медонам.",
-                "parts": [
-                  "我",
-                  "会",
-                  "游泳"
-                ],
-                "focus": "会"
-              },
-              {
-                "kind": "phrase",
-                "title": "Имрӯз ман шино карда наметавонам.",
-                "hanzi": "我今天不能游泳。",
-                "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
-                "meaning": "Имрӯз ман шино карда наметавонам.",
-                "parts": [
-                  "我",
-                  "今天",
-                  "不能",
-                  "游泳"
-                ],
-                "focus": "不能"
-              }
-            ]
+            "title": "маҳорати омӯхташуда",
+            "hanzi": "会",
+            "pinyin": "huì",
+            "meaning": "маҳорати омӯхташуда",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 288,
+                    "y1": 171,
+                    "x2": 355,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "The situational limit does not remove the skill."
+          "explains": "Муқоисаи намоёни маҳорат ва имкони ҳозира."
         }
       ],
-      "editPlan": "Build the full sentence and emphasize 会. Keep its pinyin in the single caption block."
+      "cards": [
+        {
+          "hanzi": "会",
+          "pinyin": "huì",
+          "meaning": "маҳорати омӯхташуда"
+        },
+        {
+          "hanzi": "我会游泳。",
+          "pinyin": "Wǒ huì yóuyǒng.",
+          "meaning": "Ман шиновариро медонам."
+        }
+      ]
     },
     {
       "id": "conditions",
@@ -217,64 +879,415 @@
       "captionStyleId": "highlight",
       "motionBeats": [
         {
-          "id": "today-sentence",
-          "kind": "phrase",
+          "id": "conditions-action-1",
+          "kind": "graphic",
           "cueText": "我今天不能游泳",
           "visual": {
-            "title": "Имрӯз ман шино карда наметавонам.",
-            "hanzi": "我今天不能游泳。",
-            "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
-            "meaning": "Имрӯз ман шино карда наметавонам.",
-            "parts": [
-              "我",
-              "今天",
-              "不能",
-              "游泳"
-            ],
-            "focus": "不能"
+            "title": "имрӯз наметавонам",
+            "hanzi": "不能",
+            "pinyin": "bù néng",
+            "meaning": "имрӯз наметавонам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 288,
+                    "y1": 171,
+                    "x2": 355,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "Assemble the situational inability sentence."
+          "explains": "Ҳолати шиноварии омӯхташуда дар муқобили монеа."
         },
         {
-          "id": "today-time",
-          "kind": "phrase",
+          "id": "conditions-action-2",
+          "kind": "graphic",
           "cueText": "Ҳавз баста",
           "visual": {
             "title": "Имрӯз ман шино карда наметавонам.",
             "hanzi": "我今天不能游泳。",
             "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
             "meaning": "Имрӯз ман шино карда наметавонам.",
-            "parts": [
-              "我",
-              "今天",
-              "不能",
-              "游泳"
-            ],
-            "focus": "今天"
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-a",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 203,
+                    "y1": 148,
+                    "x2": 393,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-b",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 393,
+                    "y1": 148,
+                    "x2": 203,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "The closed-pool situation concerns today."
+          "explains": "Нишон додани маҳдудияти имрӯза ва вазъияти дигар."
         },
         {
-          "id": "cannot-now",
-          "kind": "phrase",
+          "id": "conditions-action-3",
+          "kind": "graphic",
           "cueText": "Дар ин ҷумла",
           "visual": {
-            "title": "Имрӯз ман шино карда наметавонам.",
-            "hanzi": "我今天不能游泳。",
-            "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
-            "meaning": "Имрӯз ман шино карда наметавонам.",
-            "parts": [
-              "我",
-              "今天",
-              "不能",
-              "游泳"
-            ],
-            "focus": "不能"
+            "title": "имрӯз наметавонам",
+            "hanzi": "不能",
+            "pinyin": "bù néng",
+            "meaning": "имрӯз наметавонам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "left-pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 58,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "left-pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 183,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "left-pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 173,
+                    "y1": 171,
+                    "x2": 240,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "second",
+                  "type": "rect",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 346,
+                    "y": 142,
+                    "width": 214,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "closed-a",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 360,
+                    "y1": 145,
+                    "x2": 545,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "closed-b",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 540,
+                    "y1": 145,
+                    "x2": 360,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "Focus the situational inability modal."
+          "explains": "Муқоисаи намоёни маҳорат ва имкони ҳозира."
         }
       ],
-      "editPlan": "Show 今天 and 不能 through exact translated cue words. Avoid real-place or prohibition claims."
+      "cards": [
+        {
+          "hanzi": "不能",
+          "pinyin": "bù néng",
+          "meaning": "имрӯз наметавонам"
+        },
+        {
+          "hanzi": "我今天不能游泳。",
+          "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+          "meaning": "Имрӯз ман шино карда наметавонам."
+        }
+      ]
     },
     {
       "id": "contrast",
@@ -286,85 +1299,415 @@
       "captionStyleId": "highlight",
       "motionBeats": [
         {
-          "id": "compare-skill",
-          "kind": "phrase",
+          "id": "contrast-action-1",
+          "kind": "graphic",
           "cueText": "我会游泳",
           "visual": {
             "title": "Ман шиновариро медонам.",
             "hanzi": "我会游泳。",
             "pinyin": "Wǒ huì yóuyǒng.",
             "meaning": "Ман шиновариро медонам.",
-            "parts": [
-              "我",
-              "会",
-              "游泳"
-            ],
-            "focus": "会"
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 288,
+                    "y1": 171,
+                    "x2": 355,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "Recall learned skill."
+          "explains": "Ҳолати шиноварии омӯхташуда дар муқобили монеа."
         },
         {
-          "id": "compare-conditions",
-          "kind": "phrase",
+          "id": "contrast-action-2",
+          "kind": "graphic",
           "cueText": "我今天不能游泳",
           "visual": {
             "title": "Имрӯз ман шино карда наметавонам.",
             "hanzi": "我今天不能游泳。",
             "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
             "meaning": "Имрӯз ман шино карда наметавонам.",
-            "parts": [
-              "我",
-              "今天",
-              "不能",
-              "游泳"
-            ],
-            "focus": "不能"
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-a",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 203,
+                    "y1": 148,
+                    "x2": 393,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-b",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 393,
+                    "y1": 148,
+                    "x2": 203,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "Recall current conditions."
+          "explains": "Нишон додани маҳдудияти имрӯза ва вазъияти дигар."
         },
         {
-          "id": "compare-together",
-          "kind": "comparison",
+          "id": "contrast-action-3",
+          "kind": "graphic",
           "cueText": "Дар ин мисол",
           "visual": {
-            "title": "маҳорат / имконият",
-            "hanzi": "会 / 能",
-            "pinyin": "huì / néng",
-            "meaning": "маҳорат / имконият",
-            "models": [
-              {
-                "kind": "phrase",
-                "title": "Ман шиновариро медонам.",
-                "hanzi": "我会游泳。",
-                "pinyin": "Wǒ huì yóuyǒng.",
-                "meaning": "Ман шиновариро медонам.",
-                "parts": [
-                  "我",
-                  "会",
-                  "游泳"
-                ],
-                "focus": "会"
-              },
-              {
-                "kind": "phrase",
-                "title": "Имрӯз ман шино карда наметавонам.",
-                "hanzi": "我今天不能游泳。",
-                "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
-                "meaning": "Имрӯз ман шино карда наметавонам.",
-                "parts": [
-                  "我",
-                  "今天",
-                  "不能",
-                  "游泳"
-                ],
-                "focus": "不能"
-              }
-            ]
+            "title": "Ман шиновариро медонам.",
+            "hanzi": "我会游泳。",
+            "pinyin": "Wǒ huì yóuyǒng.",
+            "meaning": "Ман шиновариро медонам.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "left-pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 58,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "left-pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 183,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "left-pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 173,
+                    "y1": 171,
+                    "x2": 240,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "second",
+                  "type": "rect",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 346,
+                    "y": 142,
+                    "width": 214,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "closed-a",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 360,
+                    "y1": 145,
+                    "x2": 545,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "closed-b",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 540,
+                    "y1": 145,
+                    "x2": 360,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "Show both meanings together, without claiming absolute exclusivity."
+          "explains": "Муқоисаи намоёни маҳорат ва имкони ҳозира."
         }
       ],
-      "editPlan": "Keep both full models readable in a comparison, preserve grammar and the shared learning outcome."
+      "cards": [
+        {
+          "hanzi": "我会游泳。",
+          "pinyin": "Wǒ huì yóuyǒng.",
+          "meaning": "Ман шиновариро медонам."
+        },
+        {
+          "hanzi": "我今天不能游泳。",
+          "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+          "meaning": "Имрӯз ман шино карда наметавонам."
+        }
+      ]
     },
     {
       "id": "recall",
@@ -376,85 +1719,415 @@
       "captionStyleId": "highlight",
       "motionBeats": [
         {
-          "id": "recall-skill",
-          "kind": "phrase",
+          "id": "recall-action-1",
+          "kind": "graphic",
           "cueText": "我会游泳",
           "visual": {
             "title": "Ман шиновариро медонам.",
             "hanzi": "我会游泳。",
             "pinyin": "Wǒ huì yóuyǒng.",
             "meaning": "Ман шиновариро медонам.",
-            "parts": [
-              "我",
-              "会",
-              "游泳"
-            ],
-            "focus": "会"
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 288,
+                    "y1": 171,
+                    "x2": 355,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "Recall the whole learned-skill sentence."
+          "explains": "Ҳолати шиноварии омӯхташуда дар муқобили монеа."
         },
         {
-          "id": "recall-conditions",
-          "kind": "phrase",
+          "id": "recall-action-2",
+          "kind": "graphic",
           "cueText": "我今天不能游泳",
           "visual": {
             "title": "Имрӯз ман шино карда наметавонам.",
             "hanzi": "我今天不能游泳。",
             "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
             "meaning": "Имрӯз ман шино карда наметавонам.",
-            "parts": [
-              "我",
-              "今天",
-              "不能",
-              "游泳"
-            ],
-            "focus": "不能"
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-a",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 203,
+                    "y1": 148,
+                    "x2": 393,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-b",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 393,
+                    "y1": 148,
+                    "x2": 203,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "Recall the whole situational inability sentence."
+          "explains": "Нишон додани маҳдудияти имрӯза ва вазъияти дигар."
         },
         {
-          "id": "recall-models",
-          "kind": "comparison",
+          "id": "recall-action-3",
+          "kind": "graphic",
           "cueText": "Як чиз",
           "visual": {
-            "title": "маҳорат / имконият",
-            "hanzi": "会 / 能",
-            "pinyin": "huì / néng",
-            "meaning": "маҳорат / имконият",
-            "models": [
-              {
-                "kind": "phrase",
-                "title": "Ман шиновариро медонам.",
-                "hanzi": "我会游泳。",
-                "pinyin": "Wǒ huì yóuyǒng.",
-                "meaning": "Ман шиновариро медонам.",
-                "parts": [
-                  "我",
-                  "会",
-                  "游泳"
-                ],
-                "focus": "会"
-              },
-              {
-                "kind": "phrase",
-                "title": "Имрӯз ман шино карда наметавонам.",
-                "hanzi": "我今天不能游泳。",
-                "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
-                "meaning": "Имрӯз ман шино карда наметавонам.",
-                "parts": [
-                  "我",
-                  "今天",
-                  "不能",
-                  "游泳"
-                ],
-                "focus": "不能"
-              }
-            ]
+            "title": "Ман шиновариро медонам.",
+            "hanzi": "我会游泳。",
+            "pinyin": "Wǒ huì yóuyǒng.",
+            "meaning": "Ман шиновариро медонам.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "left-pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 58,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "left-pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 183,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "left-pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 173,
+                    "y1": 171,
+                    "x2": 240,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "second",
+                  "type": "rect",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 346,
+                    "y": 142,
+                    "width": 214,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "closed-a",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 360,
+                    "y1": 145,
+                    "x2": 545,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "closed-b",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 540,
+                    "y1": 145,
+                    "x2": 360,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
           },
-          "explains": "Close the lesson with the contrast, without an embedded CTA."
+          "explains": "Муқоисаи намоёни маҳорат ва имкони ҳозира."
         }
       ],
-      "editPlan": "Recall both phrases at their actual Mandarin cues and finish with the contrast. The central CTA remains separate."
+      "cards": [
+        {
+          "hanzi": "我会游泳。",
+          "pinyin": "Wǒ huì yóuyǒng.",
+          "meaning": "Ман шиновариро медонам."
+        },
+        {
+          "hanzi": "我今天不能游泳。",
+          "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+          "meaning": "Имрӯз ман шино карда наметавонам."
+        }
+      ]
     }
   ],
   "captions": [],
@@ -496,8 +2169,23 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "hui-vs-neng-pool-20261028",
-    "sourceHash": "1dd8c3afde05fea9ebcd83709ebacab958af414c00b5f011410f73938886992f",
-    "authoredOn": "2026-10-26",
+    "sourceHash": "c4560a404f0cd62e81e6cbb8acdc949709205656ac807c26ed80c48337b624b7",
+    "authoredOn": "2026-10-28",
     "status": "draft-awaiting-audio-review"
+  },
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Шахс шиновариро медонад, вале ҳавзи имрӯза баста аст",
+      "learnerGoal": "Маҳорати шиноварӣ ва имконияти имрӯзаро фарқ кардан",
+      "obstacle": "Ҳарду ҳолат бо «тавонистан» тарҷума мешавад, аммо маъно дигар аст"
+    },
+    "selectionReason": "Муҳофизати омӯзиши як қоида бо ҷавоби барвақтӣ ва мисоли ҳаётӣ; re-hook иловагӣ даркор нест",
+    "firstPayoff": {
+      "sceneId": "skill",
+      "cueText": "我会游泳"
+    },
+    "reHooks": []
   }
 }
