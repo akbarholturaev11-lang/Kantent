@@ -52,6 +52,38 @@ export function geminiRotationDecision({ httpStatus, reason = "", separateProjec
   return { rotate: false, classification: "not-safe-to-rotate" };
 }
 
+/**
+ * Rotate only at a safe standalone request boundary (not between a Gemini
+ * upload and its transcription or cleanup). Never retry after any successful
+ * TTS response: this prevents two different generated voice takes.
+ * Caller supplies its current progress object and a single API operation.
+ */
+export async function withGeminiKeyFailover(state, operation, {separateProjectsVerified = false} = {}) {
+  if (!state || !Array.isArray(state.slots) || !state.slots.length)
+    throw Error("Missing configured Gemini keyring.");
+  if (!Number.isInteger(state.index) || state.index < 0 || state.index >= state.slots.length)
+    throw Error("Invalid Gemini credential selection.");
+  for (;;) {
+    const slot = state.slots[state.index];
+    try {
+      return await operation(slot.secret, slot.name);
+    } catch (error) {
+      const match = String(error?.message ?? "").match(/\bHTTP (\d{3})\b/);
+      const httpStatus = Number(error?.httpStatus ?? match?.[1]) || 0;
+      const choice = geminiRotationDecision({
+        httpStatus,
+        reason: String(error?.message ?? ""),
+        separateProjectsVerified,
+      });
+      if (!choice.rotate || state.index + 1 >= state.slots.length) throw error;
+      state.index++;
+      // No secret values or full error responses in logs.
+      console.warn("Gemini " + choice.classification + ": moving to credential " +
+        state.slots[state.index].name + " for a new standalone request.");
+    }
+  }
+}
+
 export function zernioRoute(language, env = process.env) {
   if (language !== "ru" && language !== "tg") throw Error("Unsupported Zernio content language: " + language);
   const names = ZERNIO_SECRET_NAMES[language];
