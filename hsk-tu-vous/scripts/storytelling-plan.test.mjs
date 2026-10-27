@@ -83,6 +83,20 @@ test("reject invented cues, unsupported structure, missing proof and CTA rehooks
   assert.match(validateStorytellingEpisode(e).join(" "), /order must be/);
 });
 
+test("overlapping open loops and recycled opening cues are refused", () => {
+  const repeated = annotated();
+  repeated.scenes[0].narration += " Но двадцать — 二十.";
+  assert.match(validateStorytellingEpisode(repeated).join(" "), /recycle the original hook/);
+  const e = annotated();
+  e.storytelling.pattern = "layered";
+  e.storytelling.reHooks.push({
+    sceneId: "recap", cueText: "Две чашки — 两杯茶.",
+    payoffSceneId: "recap", payoffCueText: "Две чашки — 两杯茶.",
+    reason: "Try to stack another suspense loop before the first resolves."
+  });
+  assert.match(validateStorytellingEpisode(e).join(" "), /resolve the previous reHook|order must be/);
+});
+
 test("first payoff cannot start after first 30% of lesson", () => {
   const e = annotated();
   e.storytelling.firstPayoff = { sceneId: "order", cueText: "Можно сказать: 我要两杯茶。" };
