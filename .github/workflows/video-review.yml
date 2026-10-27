@@ -11,6 +11,10 @@ on:
       - hsk-tu-vous/scripts/video-credentials.mjs
       - hsk-tu-vous/scripts/video-credentials.test.mjs
       - hsk-tu-vous/scripts/generate-voice-gemini.mjs
+      - .github/workflows/zernio-approved-publish.yml
+      - hsk-tu-vous/scripts/zernio-publication-core.mjs
+      - hsk-tu-vous/scripts/zernio-publication-core.test.mjs
+      - hsk-tu-vous/scripts/zernio-approved-publish.mjs
   pull_request:
     paths:
       - .github/workflows/video-review.yml
@@ -19,6 +23,10 @@ on:
       - hsk-tu-vous/scripts/video-credentials.mjs
       - hsk-tu-vous/scripts/video-credentials.test.mjs
       - hsk-tu-vous/scripts/generate-voice-gemini.mjs
+      - .github/workflows/zernio-approved-publish.yml
+      - hsk-tu-vous/scripts/zernio-publication-core.mjs
+      - hsk-tu-vous/scripts/zernio-publication-core.test.mjs
+      - hsk-tu-vous/scripts/zernio-approved-publish.mjs
       - hsk-tu-vous/docs/GITHUB_VIDEO_REVIEW.md
   workflow_dispatch:
     inputs:
@@ -72,6 +80,9 @@ jobs:
           node --check scripts/video-credentials.mjs
           node --check scripts/video-credentials.test.mjs
           node --check scripts/generate-voice-gemini.mjs
+          node --check scripts/zernio-publication-core.mjs
+          node --check scripts/zernio-publication-core.test.mjs
+          node --check scripts/zernio-approved-publish.mjs
           npm run check:consistency
       - name: Install FFmpeg and FFprobe for real synthetic MP4 tests
         run: |
@@ -79,7 +90,7 @@ jobs:
           sudo apt-get install -y -qq ffmpeg
           ffprobe -version | head -n 1
       - name: Test exact-date safety, isolation and actual FFmpeg MP4/SRT verification
-        run: node --test scripts/github-video-pipeline.test.mjs scripts/video-credentials.test.mjs
+        run: node --test scripts/github-video-pipeline.test.mjs scripts/video-credentials.test.mjs scripts/zernio-publication-core.test.mjs
 
   render-review:
     name: Gemini narration -> Remotion -> verified private review artifact
