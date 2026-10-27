@@ -46,6 +46,8 @@ export function makeAdaptiveBrief(source, policy = readStorytellingPolicy()) {
     suggestedPattern: summary.suggestedPattern,
     candidateSceneIds: summary.possibleRehookSceneIds,
     constraints: [
+      "Choose direct, single-rehook or layered by the real-life learner task and distinct verified questions, never by duration or question-mark count. No fixed block count.",
+      "For new authoring record storytelling.situation {setting, learnerGoal, obstacle} and selectionReason; layered needs exactly two justified later questions.",
       "One accurate HSK 1-2 learning outcome; no novel Chinese claims, testimonials, product features or fabricated statistics.",
       "Preserve the entire hook narration and hookExperiment registration verbatim.",
       "Preserve all Chinese character runs in the same order, scene by scene.",

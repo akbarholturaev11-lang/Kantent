@@ -1,0 +1,698 @@
+{
+  "episodeId": "er-vs-liang-cafe-20261026",
+  "sceneId": "hook",
+  "status": "technical-real-voice-proof-only",
+  "motionBeats": [
+    {
+      "id": "cafe",
+      "kind": "graphic",
+      "cueText": "В кафе",
+      "explains": "Establish the tea context.",
+      "visual": {
+        "title": "",
+        "hanzi": "",
+        "pinyin": "",
+        "meaning": "",
+        "graphic": {
+          "width": 820,
+          "height": 360,
+          "nodes": [
+            {
+              "id": "cup-1",
+              "type": "g",
+              "attrs": {},
+              "x": 410,
+              "y": 180
+            },
+            {
+              "id": "cup-1-shadow",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": 84,
+                "rx": 100,
+                "ry": 13,
+                "fill": "secondary"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-body",
+              "type": "path",
+              "attrs": {
+                "d": "M-65 -20 H60 L50 49 Q45 77 0 77 Q-45 77 -51 49 Z",
+                "fill": "foreground"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-handle",
+              "type": "path",
+              "attrs": {
+                "d": "M58 -9 C114 -21 115 65 53 47",
+                "stroke": "foreground",
+                "strokeWidth": 14
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-rim",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -20,
+                "rx": 63,
+                "ry": 15,
+                "fill": "gold"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-tea",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -22,
+                "rx": 50,
+                "ry": 8,
+                "fill": "secondary"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-steam",
+              "type": "path",
+              "attrs": {
+                "d": "M-20 -53 Q-32 -70 -20 -88 M15 -53 Q27 -70 15 -88",
+                "stroke": "muted",
+                "strokeWidth": 4
+              },
+              "parentId": "cup-1"
+            }
+          ],
+          "tracks": []
+        }
+      }
+    },
+    {
+      "id": "quantity",
+      "kind": "graphic",
+      "cueText": "две",
+      "explains": "Reveal a second actual cup exactly when the word for two is spoken.",
+      "visual": {
+        "title": "",
+        "hanzi": "",
+        "pinyin": "",
+        "meaning": "",
+        "graphic": {
+          "width": 820,
+          "height": 360,
+          "nodes": [
+            {
+              "id": "cup-1",
+              "type": "g",
+              "attrs": {},
+              "x": 285,
+              "y": 180
+            },
+            {
+              "id": "cup-1-shadow",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": 84,
+                "rx": 100,
+                "ry": 13,
+                "fill": "secondary"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-body",
+              "type": "path",
+              "attrs": {
+                "d": "M-65 -20 H60 L50 49 Q45 77 0 77 Q-45 77 -51 49 Z",
+                "fill": "foreground"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-handle",
+              "type": "path",
+              "attrs": {
+                "d": "M58 -9 C114 -21 115 65 53 47",
+                "stroke": "foreground",
+                "strokeWidth": 14
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-rim",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -20,
+                "rx": 63,
+                "ry": 15,
+                "fill": "gold"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-tea",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -22,
+                "rx": 50,
+                "ry": 8,
+                "fill": "secondary"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-steam",
+              "type": "path",
+              "attrs": {
+                "d": "M-20 -53 Q-32 -70 -20 -88 M15 -53 Q27 -70 15 -88",
+                "stroke": "muted",
+                "strokeWidth": 4
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-2",
+              "type": "g",
+              "attrs": {},
+              "x": 535,
+              "y": 180
+            },
+            {
+              "id": "cup-2-shadow",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": 84,
+                "rx": 100,
+                "ry": 13,
+                "fill": "secondary"
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-body",
+              "type": "path",
+              "attrs": {
+                "d": "M-65 -20 H60 L50 49 Q45 77 0 77 Q-45 77 -51 49 Z",
+                "fill": "foreground"
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-handle",
+              "type": "path",
+              "attrs": {
+                "d": "M58 -9 C114 -21 115 65 53 47",
+                "stroke": "foreground",
+                "strokeWidth": 14
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-rim",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -20,
+                "rx": 63,
+                "ry": 15,
+                "fill": "gold"
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-tea",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -22,
+                "rx": 50,
+                "ry": 8,
+                "fill": "secondary"
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-steam",
+              "type": "path",
+              "attrs": {
+                "d": "M-20 -53 Q-32 -70 -20 -88 M15 -53 Q27 -70 15 -88",
+                "stroke": "muted",
+                "strokeWidth": 4
+              },
+              "parentId": "cup-2"
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "cup-2",
+              "property": "opacity",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 200,
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "nodeId": "cup-1",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 410
+                },
+                {
+                  "atMs": 200,
+                  "value": 285
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "construction",
+      "kind": "graphic",
+      "cueText": "Сказать",
+      "explains": "Group the two cups while the spoken form is being chosen.",
+      "visual": {
+        "title": "",
+        "hanzi": "二 / 两",
+        "pinyin": "èr / liǎng",
+        "meaning": "",
+        "graphic": {
+          "width": 820,
+          "height": 360,
+          "nodes": [
+            {
+              "id": "cup-1",
+              "type": "g",
+              "attrs": {},
+              "x": 285,
+              "y": 180
+            },
+            {
+              "id": "cup-1-shadow",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": 84,
+                "rx": 100,
+                "ry": 13,
+                "fill": "secondary"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-body",
+              "type": "path",
+              "attrs": {
+                "d": "M-65 -20 H60 L50 49 Q45 77 0 77 Q-45 77 -51 49 Z",
+                "fill": "foreground"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-handle",
+              "type": "path",
+              "attrs": {
+                "d": "M58 -9 C114 -21 115 65 53 47",
+                "stroke": "foreground",
+                "strokeWidth": 14
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-rim",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -20,
+                "rx": 63,
+                "ry": 15,
+                "fill": "gold"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-tea",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -22,
+                "rx": 50,
+                "ry": 8,
+                "fill": "secondary"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-steam",
+              "type": "path",
+              "attrs": {
+                "d": "M-20 -53 Q-32 -70 -20 -88 M15 -53 Q27 -70 15 -88",
+                "stroke": "muted",
+                "strokeWidth": 4
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-2",
+              "type": "g",
+              "attrs": {},
+              "x": 535,
+              "y": 180
+            },
+            {
+              "id": "cup-2-shadow",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": 84,
+                "rx": 100,
+                "ry": 13,
+                "fill": "secondary"
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-body",
+              "type": "path",
+              "attrs": {
+                "d": "M-65 -20 H60 L50 49 Q45 77 0 77 Q-45 77 -51 49 Z",
+                "fill": "foreground"
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-handle",
+              "type": "path",
+              "attrs": {
+                "d": "M58 -9 C114 -21 115 65 53 47",
+                "stroke": "foreground",
+                "strokeWidth": 14
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-rim",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -20,
+                "rx": 63,
+                "ry": 15,
+                "fill": "gold"
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-tea",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -22,
+                "rx": 50,
+                "ry": 8,
+                "fill": "secondary"
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-steam",
+              "type": "path",
+              "attrs": {
+                "d": "M-20 -53 Q-32 -70 -20 -88 M15 -53 Q27 -70 15 -88",
+                "stroke": "muted",
+                "strokeWidth": 4
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "quantity-bracket",
+              "type": "path",
+              "attrs": {
+                "d": "M180 285 V303 H640 V285",
+                "stroke": "gold",
+                "strokeWidth": 5
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "quantity-bracket",
+              "property": "opacity",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 200,
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "answer",
+      "kind": "graphic",
+      "cueText": "两",
+      "explains": "Confirm the answer only on its final spoken occurrence.",
+      "visual": {
+        "title": "",
+        "hanzi": "两",
+        "pinyin": "liǎng",
+        "meaning": "",
+        "graphic": {
+          "width": 820,
+          "height": 360,
+          "nodes": [
+            {
+              "id": "cup-1",
+              "type": "g",
+              "attrs": {},
+              "x": 285,
+              "y": 180
+            },
+            {
+              "id": "cup-1-shadow",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": 84,
+                "rx": 100,
+                "ry": 13,
+                "fill": "secondary"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-body",
+              "type": "path",
+              "attrs": {
+                "d": "M-65 -20 H60 L50 49 Q45 77 0 77 Q-45 77 -51 49 Z",
+                "fill": "foreground"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-handle",
+              "type": "path",
+              "attrs": {
+                "d": "M58 -9 C114 -21 115 65 53 47",
+                "stroke": "foreground",
+                "strokeWidth": 14
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-rim",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -20,
+                "rx": 63,
+                "ry": 15,
+                "fill": "gold"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-tea",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -22,
+                "rx": 50,
+                "ry": 8,
+                "fill": "secondary"
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-1-steam",
+              "type": "path",
+              "attrs": {
+                "d": "M-20 -53 Q-32 -70 -20 -88 M15 -53 Q27 -70 15 -88",
+                "stroke": "muted",
+                "strokeWidth": 4
+              },
+              "parentId": "cup-1"
+            },
+            {
+              "id": "cup-2",
+              "type": "g",
+              "attrs": {},
+              "x": 535,
+              "y": 180
+            },
+            {
+              "id": "cup-2-shadow",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": 84,
+                "rx": 100,
+                "ry": 13,
+                "fill": "secondary"
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-body",
+              "type": "path",
+              "attrs": {
+                "d": "M-65 -20 H60 L50 49 Q45 77 0 77 Q-45 77 -51 49 Z",
+                "fill": "foreground"
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-handle",
+              "type": "path",
+              "attrs": {
+                "d": "M58 -9 C114 -21 115 65 53 47",
+                "stroke": "foreground",
+                "strokeWidth": 14
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-rim",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -20,
+                "rx": 63,
+                "ry": 15,
+                "fill": "gold"
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-tea",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 0,
+                "cy": -22,
+                "rx": 50,
+                "ry": 8,
+                "fill": "secondary"
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "cup-2-steam",
+              "type": "path",
+              "attrs": {
+                "d": "M-20 -53 Q-32 -70 -20 -88 M15 -53 Q27 -70 15 -88",
+                "stroke": "muted",
+                "strokeWidth": 4
+              },
+              "parentId": "cup-2"
+            },
+            {
+              "id": "quantity-bracket",
+              "type": "path",
+              "attrs": {
+                "d": "M180 285 V303 H640 V285",
+                "stroke": "gold",
+                "strokeWidth": 5
+              }
+            },
+            {
+              "id": "answer-disc",
+              "type": "circle",
+              "attrs": {
+                "cx": 710,
+                "cy": 78,
+                "r": 35,
+                "fill": "teal"
+              }
+            },
+            {
+              "id": "answer-check",
+              "type": "path",
+              "attrs": {
+                "d": "M691 77 L705 91 L730 61",
+                "stroke": "foreground",
+                "strokeWidth": 7
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "answer-disc",
+              "property": "opacity",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 200,
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "nodeId": "answer-check",
+              "property": "opacity",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 200,
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "cueOccurrence": 2
+    }
+  ]
+}

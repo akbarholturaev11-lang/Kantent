@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { validatePlatformCtaConfig } from "./platform-cta.mjs";
 import { readLanguages, lessonSourceHash, ctaSourceHash } from "./language-context.mjs";
+import { validateSeriesCalendar } from "./series-plan.mjs";
 
 export const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -179,6 +180,7 @@ export function validateConsistency(root = projectRoot) {
   } catch (error) { errors.push(`Language configuration: ${error.message}`); }
 
   if (calendar) {
+    errors.push(...validateSeriesCalendar(calendar).map(error => `content/calendar.json: ${error}`));
     if (!calendar.timezone || !Array.isArray(calendar.items) || calendar.items.length === 0) {
       errors.push("content/calendar.json: missing timezone or episodes");
     } else {

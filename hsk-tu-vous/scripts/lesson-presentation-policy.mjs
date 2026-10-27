@@ -2,7 +2,10 @@ import {validateActionLesson} from "./action-design-plan.mjs";
 
 function applies(episode, policy) {
   if (policy?.styleId !== "explain-actions-v1" ||
-      !/^\d{4}-\d{2}-\d{2}$/.test(policy.effectiveFromDate ?? "")) {
+      !/^\d{4}-\d{2}-\d{2}$/.test(policy.effectiveFromDate ?? "") ||
+      !/^\d{4}-\d{2}-\d{2}$/.test(policy.visibleStateValidationFromDate ?? "") ||
+      policy.visibleStateValidationFromDate < policy.effectiveFromDate ||
+      !Number.isFinite(policy.maximumVisualHoldSec) || policy.maximumVisualHoldSec <= 0) {
     throw Error("Invalid content/visual-system.json#lessonPresentation policy.");
   }
   if (!/^\d{4}-\d{2}-\d{2}$/.test(episode.date ?? "")) {
@@ -29,5 +32,6 @@ export function validateLessonPresentation(episode, policy) {
   if (episode.motionDesign !== true || episode.motionDesignStyle !== policy.styleId) {
     throw Error("The approved lesson format is required. Read content/EDITING_SPEC.md and author explain-actions-v1 motionBeats for every lesson scene before voice/render.");
   }
-  return validateActionLesson(episode);
+  return validateActionLesson(episode, {requireVisibleChange:
+    episode.date >= policy.visibleStateValidationFromDate});
 }

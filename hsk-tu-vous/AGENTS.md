@@ -10,10 +10,9 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Production procedure and error handling | `content/WORKFLOW.md` |
 | Default production languages, locale codes and per-language content roots | `content/languages.json` |
 | Dates, IDs, cadence, episode references | `content/calendar.json` |
-| Future publishing weekdays and autonomous draft reserve | `content/calendar.json#planningWeekdays` and `#planningBuffer` |
+| Future publishing weekdays, consecutive series parts and autonomous draft reserve | `content/calendar.json#planningWeekdays`, `#seriesPolicy` and `#planningBuffer` |
 | Future planned episode buffer (minimum/target) | `content/calendar.json#planningBuffer` |
-| Optional Gemini text-drafting model and explicit opt-in | `content/creative-formats.json#storytellingPolicy.aiDraft`; workflow in `content/WORKFLOW.md` |
-| Optional adaptive story structure and editorial policy | `content/creative-formats.json#storytellingPolicy`; optional annotations in `content/EPISODE_SCHEMA.md` |
+| Topic-based adaptive story selection and editorial policy | `content/creative-formats.json#storytellingPolicy`; optional annotations in `content/EPISODE_SCHEMA.md` |
 
 | Raw external Zernio performance observations and optimizer audit notes | `content/feedback/` (not the canonical Hook/CTA Labs) |
 | Shared CTA-free lesson source; approved/published legacy snapshots kept immutable | `content/episodes/*.json` |
@@ -27,6 +26,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Semantic shot/action enumeration and rollout status | `content/semantic-visual-system.json`, explained by `content/SEMANTIC_VISUAL_SCHEMA.md` |
 | P3 evidence-based shot suggestion rules | `content/semantic-shot-intents.json`, explained by `content/SEMANTIC_SHOT_ADVISER.md` |
 | Episode schema and invalidation | `content/EPISODE_SCHEMA.md` |
+| Declarative teaching-drawing payload and authoring procedure | `content/GRAPHIC_SCENES.md` |
 | Runtime architecture, limitations and known technical gotchas | `PROJECT_MEMORY.md` |
 | Developer startup commands | `README.md` |
 | Installed skill inventory, functional categories and per-branch owners | `content/skill-catalog.json` |

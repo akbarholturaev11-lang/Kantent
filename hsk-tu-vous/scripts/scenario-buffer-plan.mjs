@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { auditPlanningBuffer, isDraftReady, dateInTimezone } from './self-improvement-check.mjs';
+import { proposeSeries } from './series-plan.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const names = ['SU','MO','TU','WE','TH','FR','SA'];
@@ -38,16 +39,22 @@ export function proposeBuffer(calendar, {today, episodeIsReady=()=>true}={}) {
     note:'Date suggestions only. Author full, verified, CTA-free source JSON before registering a new calendar item.'};
 }
 export function runCli(args=process.argv.slice(2),dir=root) {
-  let requested=null,json=false;
+  let requested=null,json=false,seriesId=null,startDate=null,totalParts=null;
   for(let i=0;i<args.length;i++) {
     if(args[i]==='--date')requested=args[++i];
     else if(args[i]==='--json')json=true;
+    else if(args[i]==='--series-id')seriesId=args[++i];
+    else if(args[i]==='--start-date')startDate=args[++i];
+    else if(args[i]==='--parts')totalParts=Number(args[++i]);
     else throw Error('Unknown option '+args[i]);
   }
   const calendar=JSON.parse(fs.readFileSync(path.join(dir,'content/calendar.json'),'utf8'));
   const today=requested||dateInTimezone(new Date(),calendar.timezone);
-  const result=proposeBuffer(calendar,{today,episodeIsReady:item=>isDraftReady(dir,item)});
+  const seriesRequested=args.some(arg=>['--series-id','--start-date','--parts'].includes(arg));
+  const result=seriesRequested ? proposeSeries(calendar,{seriesId,startDate,totalParts,today}) :
+    proposeBuffer(calendar,{today,episodeIsReady:item=>isDraftReady(dir,item)});
   if(json)console.log(JSON.stringify(result,null,2));
+  else if(seriesRequested)console.log('Series '+result.seriesId+': '+result.propose.map(x=>x.date).join(', ')+' (proposal only)');
   else console.log('Buffer='+result.buffer.readyFutureEpisodes+', repairs='+result.repair.length+', future dates to author='+result.propose.map(x=>x.date).join(', '));
   return 0; // returning a proposed plan is not an assertion that drafts have been created
 }

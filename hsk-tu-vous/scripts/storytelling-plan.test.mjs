@@ -3,6 +3,7 @@ import test from "node:test";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { spawnSync } from "node:child_process";
 import { inspectStorytelling, validateStorytellingEpisode, readStorytellingPolicy } from "./storytelling-plan.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -122,4 +123,63 @@ test("opt-in metadata is not part of scene kinds or measured watch performance",
   const v = inspectStorytelling(e);
   assert.equal(v.firstChineseSceneId, "hook");
   assert.equal(Object.hasOwn(v, "predictedRetention"), false);
+});
+
+test("duration or question count never chooses a narrative pattern", () => {
+  for (const durationSec of [2, 25]) {
+    const e = fixture();
+    for (const scene of e.scenes) {
+      scene.durationSec = durationSec;
+      scene.narration += " А почему? Что если?";
+    }
+    const result = inspectStorytelling(e);
+    assert.equal(result.suggestedPattern, null);
+    assert.equal(result.patternSource, "author-decision-required");
+    assert.ok(result.authoringGaps.length > 0);
+    e.storytelling = {schemaVersion:1,pattern:"direct",
+      firstPayoff:{sceneId:"hook",cueText:"Правильный выбор — 两."},reHooks:[],
+      situation:{setting:"Кафе",learnerGoal:"Заказать два чая",obstacle:"Две формы числительного"},
+      selectionReason:"The one practical distinction is complete without another question."};
+    const authored = inspectStorytelling(e);
+    assert.equal(authored.suggestedPattern, "direct");
+    assert.equal(authored.patternSource, "authored-topic-decision");
+    assert.deepEqual(authored.authoringGaps, []);
+  }
+});
+
+test("layered requires two independently justified and resolved later questions", () => {
+  const e = {scenes:[
+    {id:"hook",kind:"hook",narration:"First useful answer.",durationSec:2},
+    {id:"q-one",kind:"context",narration:"First new question?",durationSec:2},
+    {id:"a-one",kind:"example",narration:"Answer one.",durationSec:2},
+    {id:"q-two",kind:"context",narration:"Second new question?",durationSec:2},
+    {id:"a-two",kind:"example",narration:"Answer two.",durationSec:2},
+  ],storytelling:{schemaVersion:1,pattern:"layered",
+    firstPayoff:{sceneId:"hook",cueText:"First useful answer."},reHooks:[
+      {sceneId:"q-one",cueText:"First new question?",payoffSceneId:"a-one",payoffCueText:"Answer one.",reason:"Apply the same learning point to the first practical complication."},
+      {sceneId:"q-two",cueText:"Second new question?",payoffSceneId:"a-two",payoffCueText:"Answer two.",reason:"Resolve another genuinely distinct complication of the same point."},
+    ]}};
+  assert.deepEqual(validateStorytellingEpisode(e), []);
+  assert.equal(inspectStorytelling(e).suggestedPattern, "layered");
+  e.storytelling.reHooks.pop();
+  assert.match(validateStorytellingEpisode(e).join(" "), /exactly two/);
+});
+
+test("incomplete life context and empty selection reasons cannot pass as authored evidence", () => {
+  const e = annotated();
+  e.storytelling.selectionReason = "filler";
+  e.storytelling.situation = {setting:"Кафе",learnerGoal:"Заказать чай",obstacle:""};
+  assert.match(validateStorytellingEpisode(e).join(" "), /selectionReason/);
+  assert.match(validateStorytellingEpisode(e).join(" "), /situation/);
+  assert.equal(inspectStorytelling(e).suggestedPattern, null);
+});
+
+test("strict new-draft CLI reports missing authoring decisions without rewriting a legacy plan", () => {
+  const id = "er-vs-liang-cafe-20261026";
+  const file = path.join(root,"content/episodes",id+".json");
+  const before = fs.readFileSync(file,"utf8");
+  const result = spawnSync(process.execPath,[path.join(root,"scripts/storytelling-plan.mjs"),id,"--new-draft"],{encoding:"utf8"});
+  assert.equal(result.status,1,result.stderr);
+  assert.ok(JSON.parse(result.stdout).authoringGaps.length > 0);
+  assert.equal(fs.readFileSync(file,"utf8"),before);
 });

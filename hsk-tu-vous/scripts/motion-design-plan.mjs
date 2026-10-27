@@ -1,4 +1,4 @@
-import {ACTION_KINDS, validateActionLesson} from "./action-design-plan.mjs";
+import {ACTION_KINDS, validateActionLesson, validateVisualHold} from "./action-design-plan.mjs";
 // Visual changes are anchored to verified spoken words, never equal scene slices.
 export const MOTION_KINDS = [
   "question", "two-meanings", "compare-preview", "example", "purchase",
@@ -53,7 +53,7 @@ export function resolveMotionBeats(scene, captions, fps = 30, locale = "ru-RU") 
   });
 }
 
-export function compileMotionDesignTimeline(episode) {
+export function compileMotionDesignTimeline(episode, presentationPolicy) {
   const scenes = episode.scenes.filter(scene => scene.motionBeats?.length);
   if(!scenes.length && episode.motionDesignStyle!=="explain-actions-v1") return null;
   if(episode.motionDesign!==true || episode.captionSource!=="gemini-word-timestamps" || !episode.captions?.length)
@@ -66,5 +66,11 @@ export function compileMotionDesignTimeline(episode) {
     throw Error("Reusable actions require explain-actions-v1; legacy styles cannot silently render them.");
   return {schemaVersion:1,episodeId:episode.id,style:episode.motionDesignStyle,timingSource:episode.captionSource,
     ...(coverage ? {coverage} : {}),
-    scenes:scenes.map(scene=>({sceneId:scene.id,beats:resolveMotionBeats(scene,episode.captions,30,episode.languageCode)}))};
+    scenes:scenes.map(scene=>{
+      const beats=resolveMotionBeats(scene,episode.captions,30,episode.languageCode);
+      const visualHold = presentationPolicy && episode.motionDesignStyle==="explain-actions-v1" &&
+        episode.date >= presentationPolicy.visibleStateValidationFromDate
+        ? validateVisualHold(scene,beats,presentationPolicy.maximumVisualHoldSec) : undefined;
+      return {sceneId:scene.id,beats,...(visualHold ? {visualHold} : {})};
+    })};
 }

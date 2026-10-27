@@ -2,6 +2,7 @@ import {AbsoluteFill, Easing, Img, interpolate, staticFile} from "remotion";
 import type {ActionModel} from "../scripts/action-design-plan.mjs";
 import type {ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
 import visual from "../content/visual-system.json";
+import {GraphicScene} from "./GraphicScene";
 
 const C=visual.colors;
 const L=visual.narratedMotionLayout;
@@ -14,6 +15,7 @@ const enter=(frame:number,start=0)=>interpolate(frame,[start,start+L.actionFrame
 const ObjectGlyph:React.FC<{object:string;frame:number}>=({object,frame})=>{
   if(object==="book")return <g><rect x="-62" y="-81" width="124" height="162" rx="12" fill={C.brandTeal}/><path d="M-43-76V76M-24-41H38M-24-16H22" stroke={P.foreground} strokeWidth="7" strokeLinecap="round"/></g>;
   if(object==="apple")return <g><path d="M0-46C-98-109-101 62-25 78Q0 65 25 78C101 62 98-109 0-46" fill={C.brandRed}/><path d="M0-41Q-3-75 14-90" stroke={P.foreground} strokeWidth="8"/><path d="M9-70Q61-105 59-61Q36-39 9-70" fill={C.brandTeal}/></g>;
+  if(object!=="tea-cup") throw Error("Unsupported object; author a declarative graphic instead of substituting a cup.");
   return <g>
     <ellipse cy="78" rx="104" ry="16" fill={P.foreground} opacity=".12"/>
     <path d="M-74-24H69L58 47Q52 77 0 78Q-50 77-59 47Z" fill={P.foreground}/>
@@ -70,6 +72,7 @@ const OrdinalStage:React.FC<{model:ActionModel;frame:number;compact?:boolean}>=(
 </svg>;
 
 const ModelStage:React.FC<{model:ActionModel;kind:string;frame:number;compact?:boolean}>=({model,kind,frame,compact=false})=><>
+  {kind==="graphic"&&model.graphic&&<GraphicScene plan={model.graphic} frame={frame} height={compact?A.comparisonObjectHeightPx:A.graphicHeightPx}/>}
   {(kind==="quantity"||model.count)&&<QuantityStage model={model} frame={frame} compact={compact}/>}
   {kind==="numeral"&&<NumberStage model={model} frame={frame} compact={compact}/>}
   {kind==="ordinal"&&<OrdinalStage model={model} frame={frame} compact={compact}/>}

@@ -13,6 +13,7 @@ import { decorateCanonicalLesson, compareAuthorialContent } from "./auto-storybo
 import { validateStoryboardScene } from "./storyboard-validation.mjs";
 import { validateSemanticVisualEpisode } from "./semantic-visual-plan.mjs";
 import { validateStorytellingEpisode } from "./storytelling-plan.mjs";
+import { validateSeriesCalendar } from "./series-plan.mjs";
 import { activeLanguage, languageSettings, generatedVoicePath, assertLocalizedLessonSource, assertEpisodeLanguage } from "./language-context.mjs";
 
 export const PROJECT_ROOT = path.resolve(
@@ -173,6 +174,8 @@ export async function invalidateReviewArtifacts(
 
 export async function getCalendarItem(id) {
   const calendar = await readJson(CALENDAR_PATH);
+  const errors = validateSeriesCalendar(calendar);
+  if (errors.length) throw Error(errors.join("\n"));
   const item = calendar.items.find((entry) => entry.id === safeId(id));
   if (!item) throw new Error(`Taqvimda “${id}” IDli mavzu topilmadi.`);
   return item;
@@ -192,6 +195,8 @@ export async function getCalendarItemByDate(date) {
     throw new Error("Kiritilgan sana haqiqiy kalendar sanasi emas.");
   }
   const calendar = await readJson(CALENDAR_PATH);
+  const errors = validateSeriesCalendar(calendar);
+  if (errors.length) throw Error(errors.join("\n"));
   const item = calendar.items.find((entry) => entry.date === date);
   if (!item) {
     const dates = calendar.items.map((entry) => entry.date).join(", ");

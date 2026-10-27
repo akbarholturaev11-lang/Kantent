@@ -9,6 +9,7 @@ import { readCtaLab, validateCtaEpisode } from "./cta-lab.mjs";
 import { prepareSemanticRender } from "./semantic-review-integration.mjs";
 import { validateProductionDuration } from "./duration-policy.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
+import { compileMotionDesignTimeline } from "./motion-design-plan.mjs";
 import {
   buildCaptionSections,
 } from "./caption-utils.mjs";
@@ -63,6 +64,7 @@ if (perWordCueCount / episode.captions.length < 0.8) {
   throw new Error("TikTok review captions are not word-timed.");
 }
 const semanticTimeline = prepareSemanticRender(episode);
+const motionTimeline = compileMotionDesignTimeline(episode,visualSystem.lessonPresentation);
 await fs.access(path.join(PROJECT_ROOT, "public", episode.audioSrc));
 try {
   await fs.access(path.join(folder, "approval.json"));
@@ -77,6 +79,7 @@ const videoPath = path.join(folder, "video.mp4");
 if (semanticTimeline) {
   await writeJson(path.join(folder, "visual-timeline.json"), semanticTimeline);
 }
+if (motionTimeline) await writeJson(path.join(folder, "motion-timeline.json"), motionTimeline);
 await writeJson(propsPath, { episode, ...(semanticTimeline ? { semanticTimeline } : {}) });
 const remotion = path.join(PROJECT_ROOT, "node_modules", ".bin", "remotion");
 const render = spawnSync(

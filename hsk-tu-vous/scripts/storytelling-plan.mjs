@@ -59,16 +59,21 @@ export function inspectStorytelling(episode, policy = readStorytellingPolicy()) 
     /(?:\?|？|почему|но |а теперь|сравните|а как|что если|однако)/iu.test(scenes[index].narration ?? ""));
   const shortMax = policy.durationHintsSec?.shortMax ?? 20;
   const standardMax = policy.durationHintsSec?.standardMax ?? 35;
-  const suggestedPattern = !useExplicitTimes || total <= shortMax || candidates.length === 0
-    ? "direct" : total > standardMax && candidates.length >= 2 ? "layered" : "single-rehook";
   const firstChineseScene = timeline.find(p => p.hasChinese);
   const errors = validateStorytellingEpisode(episode, policy);
+  const authored = episode?.storytelling != null && errors.length === 0;
   return {
     episodeId: episode?.id ?? null,
     mode: "read-only-editorial-advice",
     durationSec: useExplicitTimes ? +total.toFixed(2) : null,
     durationBand: useExplicitTimes ? (total <= shortMax ? "short" : total <= standardMax ? "standard" : "long") : "unknown",
-    suggestedPattern,
+    suggestedPattern: authored ? episode.storytelling.pattern : null,
+    patternSource: authored ? "authored-topic-decision" : "author-decision-required",
+    authoringGaps: [
+      ...(!authored ? ["Author a topic-based storytelling decision with exact payoff cues."] : []),
+      ...(!episode?.storytelling?.situation ? ["Describe the setting, learner goal and obstacle."] : []),
+      ...(!episode?.storytelling?.selectionReason ? ["Explain why this topic needs the selected pattern."] : []),
+    ],
     possibleRehookSceneIds: candidates.map(p => p.id),
     firstChineseSceneId: firstChineseScene?.id ?? null,
     firstChineseSceneStartRatio: firstChineseScene && total
@@ -79,6 +84,7 @@ export function inspectStorytelling(episode, policy = readStorytellingPolicy()) 
       "Scene text heuristics are not a model of viewer retention or semantic correctness.",
       "Chinese characters do not prove that the correct answer was delivered.",
       "A candidate re-hook is not approved until an editor checks novelty, payoff and instructional truth.",
+      "Duration and lexical question candidates never choose a story pattern automatically.",
       "Scene boundaries are approximate; only imported Gemini word cues prove final spoken timing.",
       "No narration, scene, CTA, voice, canonical file or publication has been changed."
     ]
@@ -96,6 +102,13 @@ export function validateStorytellingEpisode(episode, policy = null) {
   const cue = (sceneId, text) => hasExactCue(scenes[getIndex(sceneId)], text);
   if (info.schemaVersion !== 1) errors.push("storytelling.schemaVersion must be 1");
   if (!rules.allowedPatterns.includes(info.pattern)) errors.push("storytelling.pattern is unsupported");
+  if (info.selectionReason !== undefined &&
+      (typeof info.selectionReason !== "string" || info.selectionReason.trim().length < 15))
+    errors.push("storytelling.selectionReason must explain the topic-based editorial choice");
+  if (info.situation !== undefined && (!info.situation ||
+      ["setting", "learnerGoal", "obstacle"].some(key =>
+        typeof info.situation[key] !== "string" || info.situation[key].trim().length < 3)))
+    errors.push("storytelling.situation needs a concrete setting, learnerGoal and obstacle");
   if (!info.firstPayoff || getIndex(info.firstPayoff.sceneId) < 0 ||
       !cue(info.firstPayoff.sceneId, info.firstPayoff.cueText)) {
     errors.push("storytelling.firstPayoff must reference an existing teaching scene and verbatim narration cue");
@@ -116,6 +129,7 @@ export function validateStorytellingEpisode(episode, policy = null) {
   if (info.pattern === "direct" && info.reHooks.length !== 0) errors.push("direct pattern cannot include reHooks");
   if (["single-rehook", "layered"].includes(info.pattern) && info.reHooks.length === 0) errors.push("re-engagement pattern needs a real reHook");
   if (info.pattern === "single-rehook" && info.reHooks.length !== 1) errors.push("single-rehook requires exactly one reHook");
+  if (info.pattern === "layered" && info.reHooks.length !== 2) errors.push("layered requires exactly two justified reHooks");
   const used = new Set();
   let lastIndex = firstIndex;
   for (const [n, item] of info.reHooks.entries()) {
@@ -146,14 +160,16 @@ export function validateStorytellingEpisode(episode, policy = null) {
 }
 
 function main() {
-  const id = process.argv[2];
-  if (!id || !/^[a-z0-9-]+$/.test(id)) throw Error("Usage: npm run content:storytelling-plan -- <episode-id>");
+  const [id, flag, ...extra] = process.argv.slice(2);
+  if (!id || !/^[a-z0-9-]+$/.test(id) || extra.length ||
+      (flag !== undefined && flag !== "--new-draft"))
+    throw Error("Usage: npm run content:storytelling-plan -- <episode-id> [--new-draft]");
   const file = path.join(ROOT, "content", "episodes", id + ".json");
   const episode = JSON.parse(fs.readFileSync(file, "utf8"));
   if (episode.id !== id) throw Error("Episode ID does not match file");
   const plan = inspectStorytelling(episode);
   process.stdout.write(JSON.stringify(plan, null, 2) + "\n");
-  if (plan.validationErrors.length > 0) process.exitCode = 1;
+  if (plan.validationErrors.length > 0 || (flag === "--new-draft" && plan.authoringGaps.length > 0)) process.exitCode = 1;
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

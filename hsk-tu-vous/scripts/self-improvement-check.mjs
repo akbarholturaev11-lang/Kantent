@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateStorytellingEpisode } from './storytelling-plan.mjs';
 import { validateLessonPresentation } from './lesson-presentation-policy.mjs';
+import { validateSeriesCalendar } from './series-plan.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -18,6 +19,8 @@ export function dateInTimezone(now, timeZone) {
 
 export function auditPlanningBuffer(calendar, { today, episodeIsReady = () => true } = {}) {
   if (!calendar || !Array.isArray(calendar.items)) throw new Error('Missing calendar.items');
+  const seriesErrors = validateSeriesCalendar(calendar);
+  if (seriesErrors.length) throw Error(seriesErrors.join('\n'));
   if (!ISO_DATE.test(today ?? '')) throw new Error('today must be YYYY-MM-DD');
   const min = calendar.planningBuffer?.minimumFutureEpisodes;
   const target = calendar.planningBuffer?.targetFutureEpisodes;
@@ -32,6 +35,9 @@ export function auditPlanningBuffer(calendar, { today, episodeIsReady = () => tr
   for (const item of future) {
     if (typeof item.episodeFile !== 'string' || !/^episodes\/[a-z0-9][a-z0-9-]*\.json$/.test(item.episodeFile)) {
       missing.push({ date: item.date, id: item.id, reason: 'invalid episode path' });
+    } else if (item.series && calendar.items.some(peer => peer.series?.id === item.series.id &&
+        peer.status === 'planned' && peer.date > today && !episodeIsReady(peer))) {
+      missing.push({ date: item.date, id: item.id, reason: 'series draft set incomplete; repair all remaining parts before counting the series ready' });
     } else if (!episodeIsReady(item)) {
       missing.push({ date: item.date, id: item.id, reason: 'episode missing or not draft-ready' });
     } else {

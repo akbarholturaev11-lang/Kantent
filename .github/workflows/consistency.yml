@@ -31,16 +31,20 @@ jobs:
           node --check scripts/semantic-shot-adviser.mjs
           node --check scripts/preview-semantic-shots.mjs
           node scripts/preview-semantic-shots.mjs hui-vs-neng-pool-20261028 > /tmp/semantic-p3-plan.json
+      - name: Test declarative graphics, exact voice cues and visible coverage
+        run: |
+          node --check scripts/graphic-scene.mjs
+          node --check scripts/graphic-voice-proof.mjs
+          node --test scripts/graphic-scene.test.mjs scripts/graphic-voice-proof.test.mjs scripts/action-design-plan.test.mjs scripts/action-text-layout.test.mjs scripts/motion-design-plan.test.mjs scripts/lesson-presentation-policy.test.mjs
       - name: Test read-only adaptive storytelling and legacy plan compatibility
         run: |
           node --check scripts/storytelling-plan.mjs
           node --test scripts/storytelling-plan.test.mjs
           node --check scripts/storytelling-generator.mjs
-          node --check scripts/storytelling-gemini.mjs
           node --test scripts/storytelling-generator.test.mjs
           node --test scripts/storytelling-timing.test.mjs
           node --check scripts/storytelling-timing.mjs
-          node scripts/storytelling-gemini.mjs youdianr-vs-yidianr-price-20261030 > /tmp/adaptive-brief.json
+          node scripts/storytelling-plan.mjs youdianr-vs-yidianr-price-20261030 > /tmp/adaptive-brief.json
           node scripts/storytelling-plan.mjs er-vs-liang-cafe-20261026 > /tmp/adaptive-storytelling.json
       - name: Validate active source references and config
         run: npm run check:consistency
@@ -134,7 +138,7 @@ jobs:
       - name: Test source freshness guards
         run: node --test scripts/git-freshness.test.mjs && node --check scripts/git-freshness.mjs
       - name: Test scenario buffer date proposals
-        run: node --test scripts/scenario-buffer-plan.test.mjs && npm run content:scenario-buffer -- --json > /tmp/scenario-proposal.json
+        run: node --test scripts/scenario-buffer-plan.test.mjs scripts/series-plan.test.mjs && npm run content:scenario-buffer -- --json > /tmp/scenario-proposal.json
       - name: Parse MCP server
         run: node --check scripts/mcp-server.mjs
       - name: Verify canonical files and avoid duplicated active settings

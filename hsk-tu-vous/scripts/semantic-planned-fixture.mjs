@@ -6,7 +6,9 @@ import { getPlannedEpisode } from "./lib.mjs";
 import { prepareSemanticRender } from "./semantic-review-integration.mjs";
 const outfile=process.argv[2];
 if(!outfile) throw Error("Usage: node scripts/semantic-planned-fixture.mjs /tmp/props.json");
-const {episode}=await getPlannedEpisode("2026-10-21");
+// Exercise the retained semantic path; newer action lessons have separate tests.
+const {episode}=await getPlannedEpisode("2026-10-23");
+if(episode.motionDesign===true) throw Error("Legacy semantic fixture selected an action lesson");
 if(!episode.semanticVisual || !episode.autoSemantic)
   throw Error("Normal production loader failed to apply semantic shot plan");
 let frame=0;

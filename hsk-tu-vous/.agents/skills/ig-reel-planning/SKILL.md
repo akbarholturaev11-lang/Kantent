@@ -13,15 +13,15 @@ description: HSK-specific Instagram Reel hook and editorial beat planning, befor
 3. `content/EPISODE_SCHEMA.md`, `content/EDITING_SPEC.md`, `content/SEMANTIC_VISUAL_SCHEMA.md` for storyboards and cue-matched shots.
 
 ## Procedure
-1. Identify one **verified** HSK 1–2 Chinese teaching fact for the current Russian-speaking series (Hanzi + tone-marked pinyin + Russian meaning). Reject invented usage examples, app results and statistics.
+1. Identify one **verified** HSK 1–2 Chinese teaching fact for the selected audience language from `content/languages.json` (Hanzi + tone-marked pinyin + that audience's meaning). Reject invented usage examples, app results and statistics.
 2. Propose **three genuinely different** first-line hook ideas from the currently approved Hook Lab formats; never replace its registered `hookExperiment` or promote an unmeasured alternative. Note the specific beginner problem, the accurate payoff, and what *visual event* would appear immediately.
 3. Screen each hook for clarity, specificity, truthfulness, relevance to the one teaching point and consistency with the scene. These are editorial checks, **not predictive scores or promised virality**.
-4. Produce a short beat-by-beat **proposal**: spoken Russian text, a corresponding visual action, Chinese text with pinyin, and a final payoff. Keep current HSK AI CTA *outside* this lesson proposal; central `cta-lab.json` assembles it later.
+4. Produce a short beat-by-beat **proposal**: spoken text in the selected explanation language, a corresponding visual action, Chinese text with pinyin, and a final payoff. Keep current HSK AI CTA *outside* this lesson proposal; central `cta-lab.json` assembles it later.
 5. For real production, hand the selected treatment to existing `auto-storyboard`, approved `content/episodes` flow and Remotion. Use actual Gemini word timestamps to validate semantic movement and subtitles; rough planning durations are not cue timestamps. Do not rewrite approved/published lessons.
 
-## Adaptive story option (future, unapproved scripts)
+## Topic-based story selection (future, unapproved scripts)
 
-After verifying one teachable HSK fact and checking the three hook proposals, inspect the relevant episode's existing narrative beats with `npm run content:storytelling-plan -- <episode-id>` when a canonical episode exists. Its re-hook hints are lexical, not semantic proof. If the lesson naturally has a second useful beginner problem after the first truthful answer, recommend a single re-hook and a later verbatim narrated payoff; otherwise prefer a direct explanation. Do not force a second open loop or hide the first answer. Follow the sole `content/creative-formats.json#storytellingPolicy` and `content/EPISODE_SCHEMA.md` for an optional metadata annotation, not an alternative Hook Lab. Never add a re-hook to voiced, approved or published artifacts.
+After verifying one teachable HSK fact and checking the three hook proposals, inspect the relevant episode's existing narrative beats with `npm run content:storytelling-plan -- <episode-id>` when a canonical episode exists. Its re-hook hints are lexical, not semantic proof or a pattern choice. Read `content/creative-formats.json#storytellingPolicy` and use the topic-based authoring procedure and context fields in `content/WORKFLOW.md` / `content/EPISODE_SCHEMA.md`; never choose from duration or punctuation alone. Series timing is separately owned by `content/calendar.json#seriesPolicy`. Do not force a question or hide the first answer. These annotations are not an alternative Hook Lab. Never add a re-hook to voiced, approved or published artifacts.
 
 
 ## Output

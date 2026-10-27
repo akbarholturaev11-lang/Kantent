@@ -110,7 +110,7 @@
           "goal": "Show the immediate outcome, not a forced cliffhanger"
         }
       ],
-      "editorial": "Do not claim an unscheduled next episode exists or use an invented real testimonial."
+      "editorial": "Follow content/calendar.json#seriesPolicy and content/WORKFLOW.md for consecutive parts. Each part resolves its own useful task; only mention a continuation whose complete draft and exact calendar date exist. Do not invent real testimonials."
     },
     {
       "id": "problem-fix",
@@ -147,7 +147,7 @@
     }
   ],
   "productionGuardrails": [
-    "Russian Cyrillic voice/copy for current beginner HSK 1–2 series",
+    "Use the selected production language and content roots from content/languages.json for narration, subtitles and copy",
     "One verified Chinese learning point per video",
     "Use existing episode hookExperiment formatId; do not auto-rewrite it",
     "CTA remains owned by content/cta-lab.json and platform export rules",
@@ -165,7 +165,9 @@
   },
   "storytellingPolicy": {
     "schemaVersion": 1,
-    "status": "advisory-opt-in",
+    "status": "default-for-new-agent-authored-scripts",
+    "selectionBasis": "Choose by the learner's real-life task and distinct teaching questions. Duration and question marks alone never select the pattern; no fixed eight-block structure.",
+    "authoringContext": "Record situation {setting, learnerGoal, obstacle} and selectionReason in new storytelling annotations. Every part teaches one complete useful point and links its spoken beats to relevant visual actions.",
     "allowedPatterns": [
       "direct",
       "single-rehook",
@@ -180,23 +182,13 @@
     "rolePolicy": {
       "direct": "Give an early truthful answer and finish with useful context or recall. No invented suspense.",
       "singleRehook": "After an early answer, pose one genuinely different problem and resolve it later in the existing teaching narration.",
-      "layered": "For complex long lessons only, up to two source-supported later questions, each resolved before recall."
+      "layered": "For a genuinely more complex teaching point, exactly two distinct source-supported later questions, each resolved before opening the next or finishing the lesson. Length alone is not a reason to add them."
     },
     "validationNotes": [
       "The existing Hook Lab and its real metrics remain authoritative.",
       "Recommended structure is a heuristic proposal, not guaranteed retention uplift.",
       "An optional scene cue must already occur in the written narration.",
       "CTA, audio, timing, semantic shots and published/approved records are unaffected."
-    ],
-    "aiDraft": {
-      "status": "explicit-opt-in-and-human-review",
-      "model": "gemini-3.8-flash",
-      "provider": "Gemini generateContent",
-      "callsPerProposal": 2,
-      "requiresFlag": "HSK_AI_ALLOW_GEMINI_SCRIPT",
-      "doesNotWriteCanonicalFiles": true,
-      "sourceLanguageReviewRequired": true,
-      "existingVoiceAndCtaUnaffected": true
-    }
+    ]
   }
 }

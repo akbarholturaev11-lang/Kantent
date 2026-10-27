@@ -486,5 +486,11 @@
     "MO",
     "WE",
     "FR"
-  ]
+  ],
+  "seriesPolicy": {
+    "schemaVersion": 1,
+    "continuationGapDays": 1,
+    "allowContinuationOutsidePlanningWeekdays": true,
+    "requireCompleteDraftSet": true
+  }
 }

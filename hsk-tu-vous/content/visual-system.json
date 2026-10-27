@@ -2,7 +2,9 @@
   "name": "HSK AI open-stage lessons",
   "lessonPresentation": {
     "styleId": "explain-actions-v1",
-    "effectiveFromDate": "2026-10-24"
+    "effectiveFromDate": "2026-10-24",
+    "visibleStateValidationFromDate": "2026-10-27",
+    "maximumVisualHoldSec": 6
   },
   "duration": {
     "effectiveFromDate": "2026-10-23",

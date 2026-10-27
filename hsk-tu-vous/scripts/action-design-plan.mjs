@@ -1,6 +1,7 @@
 // Content-driven teaching actions. No episode IDs, Chinese examples or narration
 // are embedded in the renderer contract.
-export const ACTION_KINDS = ["quantity", "phrase", "numeral", "ordinal", "comparison", "choice"];
+import {validateGraphicScene,graphicFingerprint} from "./graphic-scene.mjs";
+export const ACTION_KINDS = ["quantity", "phrase", "numeral", "ordinal", "comparison", "choice", "graphic"];
 export const ACTION_OBJECTS = ["tea-cup", "book", "apple"];
 
 export function validateActionVisual(beat) {
@@ -10,6 +11,12 @@ export function validateActionVisual(beat) {
   for (const key of ["title", "hanzi", "pinyin", "meaning"])
     if (typeof v[key] !== "string" || v[key].length > 180)
       throw Error(beat.id + ": invalid visual " + key);
+  if (beat.kind === "graphic") {
+    validateGraphicScene(v.graphic);
+    if (["object","count","models","choices","value"].some(key => v[key] !== undefined))
+      throw Error(beat.id + ": graphic must own its drawing without conflicting legacy models");
+  }
+  else if (v.graphic !== undefined) throw Error(beat.id + ": declarative drawing requires the graphic kind");
   if (v.count !== undefined && (!Number.isInteger(v.count) || v.count < 1 || v.count > 6))
     throw Error(beat.id + ": visible object count must be 1–6");
   if (v.object !== undefined && !ACTION_OBJECTS.includes(v.object))
@@ -41,7 +48,20 @@ export function validateActionVisual(beat) {
   }
 }
 
-export function validateActionLesson(episode) {
+function visibleModel(kind, model, context) {
+  const quantity = model.count ? {object:model.object,count:model.count,grouped:!!model.grouped} : null;
+  if (kind === "graphic") return {graphic:graphicFingerprint(model.graphic)};
+  if (kind === "quantity") return {quantity};
+  if (kind === "phrase") return quantity ? {quantity} : context ?
+    {quantity:{object:context.object,count:context.count,grouped:!!(model.grouped ?? context.grouped)}} : null;
+  if (kind === "numeral" || kind === "ordinal") return {kind,value:model.value,quantity};
+  if (kind === "choice") return quantity || context ?
+    {quantity:quantity ?? {object:context.object,count:1},selected:!!model.selected} : null;
+  if (kind === "comparison") return {models:model.models.map(entry => visibleModel(entry.kind,entry))};
+  return null;
+}
+
+export function validateActionLesson(episode, {requireVisibleChange = false} = {}) {
   const lessons = episode.scenes.filter(s => s.kind !== "cta");
   for (const scene of lessons) {
     if (scene.motionBeats?.length < 2 || !scene.motionBeats?.length)
@@ -59,7 +79,37 @@ export function validateActionLesson(episode) {
     }
     if (new Set(scene.motionBeats.map(b => JSON.stringify(b.visual))).size < 2)
       throw Error(scene.id + ": repeated identical visuals do not explain a new meaning");
+    if (requireVisibleChange) {
+      const states = visibleActionStates(scene);
+      if (states.some(state => state === null || state.models?.some(model => model === null)))
+        throw Error(scene.id + ": missing drawable details; author a graphic scene for this spoken idea");
+      if (new Set(states.map(state => JSON.stringify(state))).size < 2)
+        throw Error(scene.id + ": no visible state change; changing titles, Hanzi or planning text is insufficient");
+    }
   }
   return {sceneCount:lessons.length, actionCount:lessons.reduce((n,s)=>n+s.motionBeats.length,0),
     note:"Structural coverage only. Watch the rendered video to assess teaching accuracy, legibility and taste."};
+}
+
+export function visibleActionStates(scene) {
+  const context = scene.motionBeats.map(beat => beat.visual).find(model => model.object && model.count);
+  return scene.motionBeats.map(beat => visibleModel(beat.kind,beat.visual,context));
+}
+
+export function validateVisualHold(scene, resolvedBeats, maximumSec) {
+  if (!Number.isFinite(maximumSec) || maximumSec <= 0) throw Error("Invalid maximum visual hold policy");
+  const states = visibleActionStates(scene).map(state => JSON.stringify(state));
+  let from = scene.startMs, state = states[0];
+  const intervals = [];
+  for (let index = 1; index < resolvedBeats.length; index++) {
+    if (states[index] === state) continue;
+    intervals.push({fromMs:from,toMs:resolvedBeats[index].startMs});
+    from = resolvedBeats[index].startMs;
+    state = states[index];
+  }
+  intervals.push({fromMs:from,toMs:scene.endMs});
+  const longestMs = Math.max(...intervals.map(interval => interval.toMs - interval.fromMs));
+  if (longestMs > maximumSec * 1000)
+    throw Error(`${scene.id}: unchanged visual holds ${(longestMs/1000).toFixed(2)}s; maximum ${maximumSec}s. Add a meaning-linked graphic change at an existing spoken cue; do not add decorative filler.`);
+  return {longestHoldMs:longestMs,intervals};
 }

@@ -79,7 +79,7 @@ if (perWordCueCount / episode.captions.length < 0.8) {
 // working copies, CTA registrations or production packages.
 const durationValidation = validateProductionDuration(episode, visualSystem.duration);
 const semanticTimeline = prepareSemanticRender(episode);
-const motionTimeline = compileMotionDesignTimeline(episode);
+const motionTimeline = compileMotionDesignTimeline(episode, visualSystem.lessonPresentation);
 const folder = reviewDir(id);
 await fs.mkdir(folder, { recursive: true });
 episode.publishingStatus = "pending-owner-review";

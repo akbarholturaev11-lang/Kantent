@@ -4,6 +4,8 @@ This is the shared edit and caption standard for every HSK AI short. The rendere
 
 ## Frame and lesson layout
 
+For new objects/actions outside the built-in library, the AI author must complete an actual declarative drawing and motion plan using `GRAPHIC_SCENES.md` before voice production. Never substitute an unrelated object or an empty background. Follow the visible-state coverage/date and hold limit in `visual-system.json#lessonPresentation`; changing planning text alone is insufficient. Inspect the drawing's poses, transitions and fit to the actual narration. If the contract cannot depict an idea accurately, repair the asset/renderer before delivery.
+
 The owner approved the reusable-action presentation as the default for subsequent HSK lessons. The active style and effective date are in `content/visual-system.json#lessonPresentation`. Plan a visible event for each teaching change before voice production: what object/quantity/form is shown, what changes and which exact spoken cue triggers it. Use `EPISODE_SCHEMA.md`'s `explain-actions-v1` payload instead of episode-specific renderer branches. A different camera framing alone is not evidence that a new meaning was illustrated. The coverage gate runs before voice and rendering; exact imported cues and real MP4 inspection remain mandatory. Preserve approved/published historical snapshots.
 
 - Use the production canvas specified by the active renderer/global rules and the safe margins from `content/visual-system.json`. Keep all important text within those safe areas.
@@ -26,7 +28,7 @@ The proposed semantic shot/action vocabulary and strict cue-time contract are de
 
 ### P3 semantic shot recommendations
 
-A read-only adviser may propose scene-specific environments, framing and meaningful movements backed by actual authored narration; see `content/SEMANTIC_SHOT_ADVISER.md`. Visual variety does not justify random gestures. An unimplemented action (e.g. swimming) must be flagged for a new asset/renderer pass rather than faked using another gesture. Do not apply an advised `syncCueText` as verified until it matches imported Gemini word timestamps. This planning does not alter production rules or render approval.
+A read-only adviser may propose scene-specific environments, framing and meaningful movements backed by actual authored narration; see `content/SEMANTIC_SHOT_ADVISER.md`. Visual variety does not justify random gestures. A gesture missing from that legacy adviser must be flagged rather than faked; new action lessons can author it through `GRAPHIC_SCENES.md` when the drawing accurately depicts the meaning. Do not apply an advised `syncCueText` as verified until it matches imported Gemini word timestamps. This planning does not alter production rules or render approval.
 
 ## Legacy cinematic storyboard scenes
 

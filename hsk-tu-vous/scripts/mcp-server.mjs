@@ -6,6 +6,7 @@ import { McpServer } from "@modelcontextprotocol/server";
 import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { recommendSkills } from "./skill-router.mjs";
 import { MOTION_KINDS } from "./motion-design-plan.mjs";
+import { graphicSceneSchema } from "./graphic-scene-schema.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { suggestSemanticShots } from "./semantic-shot-adviser.mjs";
 import { CTA_PLATFORMS, getPlatformCtaStatus } from "./platform-cta.mjs";
@@ -68,6 +69,8 @@ export const createServer = () => {
     { name: "hsk-ai-content", version: "1.0.0" },
     {
       instructions:
+      "При написании новых сценариев выбирайте структуру по content/creative-formats.json#storytellingPolicy и задаче ученика, а не по длине: никаких обязательных восьми блоков. Серии планируйте по content/calendar.json#seriesPolicy и content/WORKFLOW.md. " +
+      "Для новых рисунков и действий читайте content/GRAPHIC_SCENES.md. Сценарий и рисунки пишет агент по content/WORKFLOW.md: Calendar Reserve для резерва, вызывающий AI-агент для ручного запроса; не используйте отдельную Gemini-модель сценариста. Используйте kind:graphic и декларативные nodes/tracks, когда готовых объектов недостаточно; автор обязан нарисовать смысловой кадр и привязать его к словам выбранного языка до озвучки. Смена метаданных не считается сменой видимого кадра. " +
       "Перед подготовкой нового HSK-урока читайте content/EDITING_SPEC.md и content/EPISODE_SCHEMA.md. Утверждённый формат выбирается из content/visual-system.json#lessonPresentation. Автор должен заполнить смысловые motionBeats каждой сцены через update_production_plan до voice/render и зарегистрировать изменившийся CTA-контекст. Если prepare_today_video вернул action-plan-required, продолжайте планирование самостоятельно по указанным правилам и повторите подготовку после заполнения плана. " +
       "На команду «Бугунги видеони тайёрла» вызывайте prepare_today_video: по умолчанию он готовит все языки из content/languages.json для одного календарного урока. Для чтения, редактирования, регистрации и approval каждой версии передавайте language ru или tg. Не подменяйте перевод, аудио или approval другим языком. Если на сегодня нет слота, выберите ближайший следующий planned по timezone календаря и сообщите дату. Явно названная дата обрабатывается строго. Перед видео вызывайте recommend_skills и читайте выбранный SKILL.md с content/SKILLS.md; обычный урок остаётся Remotion. До hook/CTA edits читайте соответствующий Lab, active language corrections и регистрируйте новый immutable CTA context до voice/render. Ovoz faqat tanlangan tilning voice-profile.json profilidan tayyorlanadi. modelDecisionRequired bo‘lsa egasining aniq model qarorisiz API chaqirmang; pending-owner-approval faqat designated sample uchun. Exact-token tekshiruvi va haqiqiy word timestamp saqlansin. Boshqa TTS/transkripsiya provayderiga o‘tmang. Har bir tilning to‘liq review paketini tekshiring; qisman natijani ikki til tayyor deb aytmang. Публикуйте только через подключённый Zernio MCP после отдельного явного подтверждения каждого exact language/platform preview с аккаунтом, metadata/settings и временем. Instagram Reels и YouTube Shorts разрешены; TikTok publishing не разрешён.",
     },
@@ -154,11 +157,12 @@ export const createServer = () => {
     });
 
   const actionModelSchema = z.object({
-    kind:z.enum(["quantity","phrase","numeral","ordinal"]).optional(),
+    kind:z.enum(["quantity","phrase","numeral","ordinal","graphic"]).optional(),
     title:z.string().max(180),hanzi:z.string().max(180),pinyin:z.string().max(180),meaning:z.string().max(180),
     object:z.enum(["tea-cup","book","apple"]).optional(),count:z.number().int().min(1).max(6).optional(),
     grouped:z.boolean().optional(),focus:z.string().max(32).optional(),
     parts:z.array(z.string().min(1).max(32)).min(2).max(6).optional(),value:z.number().int().min(1).max(30).optional(),
+    graphic:graphicSceneSchema.optional(),
   });
   const sceneEditSchema = z.object({
     sceneId: z.string().min(1).max(64),
@@ -416,12 +420,14 @@ export const createServer = () => {
         const calendar = await readJson(CALENDAR_PATH);
         return {
           timezone: calendar.timezone,
+          seriesPolicy: calendar.seriesPolicy,
           dates: await Promise.all(
             calendar.items.map(async (item) => ({
               date: item.date,
               id: item.id,
               topic: item.topic,
               level: item.level,
+              ...(item.series ? {series:item.series} : {}),
               status: await readStatus(item.id),
             })),
           ),
@@ -583,6 +589,15 @@ export const createServer = () => {
         semanticVisual: z.object({schemaVersion: z.literal(1), mode: z.literal("review-only")}).optional(),
         motionDesign: z.boolean().optional(),
         motionDesignStyle: z.enum(["le-context-v1","explain-actions-v1"]).optional(),
+        storytelling: z.object({
+          schemaVersion: z.literal(1),
+          pattern: z.enum(["direct", "single-rehook", "layered"]),
+          situation: z.object({setting:z.string().min(3),learnerGoal:z.string().min(3),obstacle:z.string().min(3)}).optional(),
+          selectionReason: z.string().min(15).optional(),
+          firstPayoff: z.object({sceneId:z.string().min(1),cueText:z.string().min(1)}),
+          reHooks: z.array(z.object({sceneId:z.string().min(1),cueText:z.string().min(1),
+            payoffSceneId:z.string().min(1),payoffCueText:z.string().min(1),reason:z.string().min(15)})).max(2),
+        }).optional(),
         sceneEdits: z.array(sceneEditSchema).max(12).optional(),
       }),
     },
@@ -597,6 +612,7 @@ export const createServer = () => {
       semanticVisual,
       motionDesign,
       motionDesignStyle,
+      storytelling,
       sceneEdits = [],
     }) =>
       withToolErrors(async () => {
@@ -614,6 +630,7 @@ export const createServer = () => {
         if (semanticVisual !== undefined) episode.semanticVisual = semanticVisual;
         if (motionDesign !== undefined) episode.motionDesign = motionDesign;
         if (motionDesignStyle !== undefined) episode.motionDesignStyle = motionDesignStyle;
+        if (storytelling !== undefined) episode.storytelling = storytelling;
 
         for (const edit of sceneEdits) {
           const scene = episode.scenes.find(
@@ -843,7 +860,7 @@ export const createServer = () => {
             stage: "action-plan-required",
             reason: error.message,
             episode,
-            nextAgentAction: "Read content/EDITING_SPEC.md and content/EPISODE_SCHEMA.md, author the complete scene motionBeats with update_production_plan, register the new immutable CTA context, then retry preparation. No additional format approval is needed.",
+            nextAgentAction: "Read content/EDITING_SPEC.md, content/EPISODE_SCHEMA.md and content/GRAPHIC_SCENES.md. Author every scene's complete meaning-linked motionBeats with update_production_plan. Use graphic nodes/tracks for new drawings/actions instead of substituting a cup or leaving a blank stage. Register the new immutable CTA context, then retry preparation. No additional format approval is needed.",
             publishing: "nothing was published",
           };
         }

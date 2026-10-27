@@ -1,0 +1,300 @@
+{
+  "status": "technical-drawing-example-not-a-voiced-episode",
+  "states": [
+    {
+      "id": "swim",
+      "explains": "Show an acquired swimming skill with actual coordinated arm and leg motion.",
+      "graphic": {
+        "width": 820,
+        "height": 400,
+        "nodes": [
+          {
+            "id": "pool",
+            "type": "rect",
+            "attrs": {
+              "x": 35,
+              "y": 195,
+              "width": 750,
+              "height": 160,
+              "rx": 32,
+              "fill": "secondary",
+              "stroke": "teal",
+              "strokeWidth": 5
+            }
+          },
+          {
+            "id": "water",
+            "type": "path",
+            "attrs": {
+              "d": "M55 230 Q90 213 125 230 T195 230 T265 230 T335 230 T405 230 T475 230 T545 230 T615 230 T685 230 T755 230",
+              "stroke": "teal",
+              "strokeWidth": 7
+            }
+          },
+          {
+            "id": "lane",
+            "type": "path",
+            "attrs": {
+              "d": "M65 305 H755",
+              "stroke": "teal",
+              "strokeWidth": 3
+            }
+          },
+          {
+            "id": "swimmer",
+            "type": "g",
+            "attrs": {},
+            "x": 300,
+            "y": 209
+          },
+          {
+            "id": "body",
+            "type": "path",
+            "attrs": {
+              "d": "M-68 1 Q-14 -19 54 -3",
+              "stroke": "gold",
+              "strokeWidth": 23
+            },
+            "parentId": "swimmer"
+          },
+          {
+            "id": "head",
+            "type": "circle",
+            "attrs": {
+              "cx": 80,
+              "cy": -19,
+              "r": 23,
+              "fill": "foreground"
+            },
+            "parentId": "swimmer"
+          },
+          {
+            "id": "goggles",
+            "type": "path",
+            "attrs": {
+              "d": "M67 -24 H92",
+              "stroke": "teal",
+              "strokeWidth": 8
+            },
+            "parentId": "swimmer"
+          },
+          {
+            "id": "arm",
+            "type": "g",
+            "attrs": {},
+            "x": 28,
+            "y": -5,
+            "parentId": "swimmer"
+          },
+          {
+            "id": "arm-shape",
+            "type": "path",
+            "attrs": {
+              "d": "M0 0 L-39 -57 L-95 -37",
+              "stroke": "foreground",
+              "strokeWidth": 15
+            },
+            "parentId": "arm"
+          },
+          {
+            "id": "front-arm",
+            "type": "path",
+            "attrs": {
+              "d": "M33 7 L91 21 L137 -4",
+              "stroke": "muted",
+              "strokeWidth": 12
+            },
+            "parentId": "swimmer"
+          },
+          {
+            "id": "kick",
+            "type": "g",
+            "attrs": {},
+            "x": -65,
+            "y": 0,
+            "parentId": "swimmer"
+          },
+          {
+            "id": "kick-shape",
+            "type": "path",
+            "attrs": {
+              "d": "M0 0 L-49 -18 L-103 -5 M0 0 L-47 27 L-97 21",
+              "stroke": "gold",
+              "strokeWidth": 11
+            },
+            "parentId": "kick"
+          },
+          {
+            "id": "splash",
+            "type": "path",
+            "attrs": {
+              "d": "M143 22 L155 9 M139 40 L158 36 M-135 28 L-154 19",
+              "stroke": "teal",
+              "strokeWidth": 5
+            },
+            "parentId": "swimmer"
+          }
+        ],
+        "tracks": [
+          {
+            "nodeId": "swimmer",
+            "property": "x",
+            "keyframes": [
+              {
+                "atMs": 0,
+                "value": 290
+              },
+              {
+                "atMs": 2800,
+                "value": 490
+              }
+            ]
+          },
+          {
+            "nodeId": "arm",
+            "property": "rotate",
+            "loop": true,
+            "keyframes": [
+              {
+                "atMs": 0,
+                "value": -22
+              },
+              {
+                "atMs": 550,
+                "value": 28
+              },
+              {
+                "atMs": 1100,
+                "value": -22
+              }
+            ]
+          },
+          {
+            "nodeId": "kick",
+            "property": "rotate",
+            "loop": true,
+            "keyframes": [
+              {
+                "atMs": 0,
+                "value": -8
+              },
+              {
+                "atMs": 400,
+                "value": 12
+              },
+              {
+                "atMs": 800,
+                "value": -8
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "closed-pool",
+      "explains": "Show an unavailable pool as a closed gate, with no swimmer in the water.",
+      "graphic": {
+        "width": 820,
+        "height": 400,
+        "nodes": [
+          {
+            "id": "pool",
+            "type": "rect",
+            "attrs": {
+              "x": 35,
+              "y": 195,
+              "width": 750,
+              "height": 160,
+              "rx": 32,
+              "fill": "secondary",
+              "stroke": "teal",
+              "strokeWidth": 5
+            }
+          },
+          {
+            "id": "water",
+            "type": "path",
+            "attrs": {
+              "d": "M55 230 Q90 213 125 230 T195 230 T265 230 T335 230 T405 230 T475 230 T545 230 T615 230 T685 230 T755 230",
+              "stroke": "teal",
+              "strokeWidth": 7
+            }
+          },
+          {
+            "id": "lane",
+            "type": "path",
+            "attrs": {
+              "d": "M65 305 H755",
+              "stroke": "teal",
+              "strokeWidth": 3
+            }
+          },
+          {
+            "id": "gate",
+            "type": "g",
+            "attrs": {},
+            "y": -90
+          },
+          {
+            "id": "bar-top",
+            "type": "path",
+            "parentId": "gate",
+            "attrs": {
+              "d": "M165 75 H655 V330 H165 Z",
+              "stroke": "foreground",
+              "strokeWidth": 8
+            }
+          },
+          {
+            "id": "bars",
+            "type": "path",
+            "parentId": "gate",
+            "attrs": {
+              "d": "M245 75 V330 M325 75 V330 M410 75 V330 M495 75 V330 M575 75 V330",
+              "stroke": "muted",
+              "strokeWidth": 7
+            }
+          },
+          {
+            "id": "stop",
+            "type": "circle",
+            "parentId": "gate",
+            "attrs": {
+              "cx": 410,
+              "cy": 200,
+              "r": 64,
+              "fill": "red"
+            }
+          },
+          {
+            "id": "cross",
+            "type": "path",
+            "parentId": "gate",
+            "attrs": {
+              "d": "M384 174 L436 226 M436 174 L384 226",
+              "stroke": "foreground",
+              "strokeWidth": 12
+            }
+          }
+        ],
+        "tracks": [
+          {
+            "nodeId": "gate",
+            "property": "y",
+            "keyframes": [
+              {
+                "atMs": 0,
+                "value": -90
+              },
+              {
+                "atMs": 650,
+                "value": 0
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

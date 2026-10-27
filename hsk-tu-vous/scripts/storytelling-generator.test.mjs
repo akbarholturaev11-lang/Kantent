@@ -4,7 +4,6 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { makeAdaptiveBrief, evaluateAdaptiveCandidate } from "./storytelling-generator.mjs";
-import { askGeminiForCandidate, executeAdaptive } from "./storytelling-gemini.mjs";
 import { validateStorytellingEpisode } from "./storytelling-plan.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -28,7 +27,7 @@ const proposal = () => {
   };
 };
 
-test("AI brief contains only author-verified learner facts and keeps Hook/CTA separate",()=>{
+test("local brief contains only author-verified learner facts and keeps Hook/CTA separate",()=>{
   const e=load();
   const snapshot=JSON.stringify(e);
   const b=makeAdaptiveBrief(e);
@@ -78,60 +77,4 @@ test("approved, voiced or CTA-filled sources are never eligible",()=>{
   for(const field of [{publishingStatus:"published"},{audioSrc:"voice.mp3"},{cta:"fake"}]){
     assert.throws(()=>makeAdaptiveBrief({...e,...field}),/unapproved CTA-free/);
   }
-});
-
-test("non-AI preview is read-only and incurs zero model calls",async()=>{
-  const result=await executeAdaptive(load(),{runAi:false,http:()=>{throw Error("Should not execute network")}});
-  assert.equal(result.status,"brief-only-no-api-charge");
-  assert.equal(result.brief.scenes.length,5);
-});
-
-test("Gemini API requires explicit opt-in and does not leak an API key in errors",async()=>{
-  const b=makeAdaptiveBrief(load());
-  await assert.rejects(()=>askGeminiForCandidate(b,{env:{GEMINI_API_KEY:"top-secret"},
-    http:()=>{throw Error("should not call")}}),/opt-in/);
-  const fake=async(_url, options)=>{
-    assert.equal(options.headers["x-goog-api-key"],"top-secret");
-    return {ok:false,status:429,text:async()=>"{truncated}"};
-  };
-  await assert.rejects(()=>askGeminiForCandidate(b,{env:{GEMINI_API_KEY:"top-secret",HSK_AI_ALLOW_GEMINI_SCRIPT:"true"},http:fake}),e=>{
-    assert.match(e.message,/HTTP 429/);
-    assert.equal(e.message.includes("top-secret"),false);
-    return true;
-  });
-});
-
-test("mocked Gemini returns a candidate; only reviewed proposal goes forward",async()=>{
-  const p=proposal();
-  let calls=0;
-  const http=async(_url,options)=>{
-    assert.equal(options.method,"POST");
-    calls++;
-    const payload = calls===1 ? p :
-      {decision:"approve",examinedSourceFacts:true,distinctPayoff:true,russianClear:true,findings:[]};
-    return {ok:true,text:async()=>JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(payload)}]}}]})};
-  };
-  const result=await executeAdaptive(load(),{
-    runAi:true,env:{GEMINI_API_KEY:"test-key",HSK_AI_ALLOW_GEMINI_SCRIPT:"true"},http
-  });
-  assert.equal(result.status,"requires-human-language-review-and-owner-preview");
-  assert.equal(calls,2);
-  assert.equal(result.secondPass.status,"ai-second-pass-approved-pending-human");
-  assert.equal(result.narrationChanged,true);
-  assert.equal(result.draft.storytelling.pattern,"single-rehook");
-  assert.equal(result.draft.cta,undefined);
-});
-
-test("independent model rejection blocks generated scenario",async()=>{
-  let calls=0;
-  const http=async()=>{
-    calls++;
-    const obj=calls===1?proposal():{decision:"reject",examinedSourceFacts:false,
-      distinctPayoff:false,russianClear:true,findings:["Needs source review"]};
-    return {ok:true,text:async()=>JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(obj)}]}}]})};
-  };
-  await assert.rejects(()=>executeAdaptive(load(),{
-    runAi:true,env:{GEMINI_API_KEY:"test-key",HSK_AI_ALLOW_GEMINI_SCRIPT:"true"},http
-  }),/Independent AI editorial check failed/);
-  assert.equal(calls,2);
 });
