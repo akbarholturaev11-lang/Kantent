@@ -3,8 +3,7 @@ import test from "node:test";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { makeAdaptiveBrief, evaluateAdaptiveCandidate } from "./storytelling-generator.mjs";
-import { prepareAgentStorytellingBrief, validateAgentStorytellingProposal } from "./storytelling-agent.mjs";
+import { makeAdaptiveBrief, evaluateAdaptiveCandidate, prepareAgentStorytellingBrief, validateAgentStorytellingProposal } from "./storytelling-generator.mjs";
 import { validateStorytellingEpisode } from "./storytelling-plan.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
