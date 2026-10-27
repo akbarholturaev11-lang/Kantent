@@ -36,7 +36,7 @@ Oldingi renderdagi aniq kamchilik tuzatildi: dars uch shaklni va’da qilganida 
 
 Boshlang‘ich Hook Lab siyosati o‘zgarishsiz qoladi: birinchi foydali javob erta berilishi kerak. Kelajakdagi **tasdiqlanmagan** ssenariylarda ikkinchi savol / re-hook faqat boshqa haqiqiy amaliy farq ochilsa qo‘shiladi. Birinchi Hook’ni takrorlash, o‘quv javobini videoning oxiriga ataylab yashirish yoki ma’nosiz suspense yasash mumkin emas. Ba’zi mavzularda re-hook bo‘lmagani yaxshiroq; sakkiz qismli tuzilma majburiy emas.
 
-Adaptive hikoya naqshlari va minimal ma’lumot kontraktining yagona manbasi \`content/creative-formats.json#storytellingPolicy\` va \`content/EPISODE_SCHEMA.md\`. Re-hook metadata’si faqat allaqachon yozilgan ovoz matnidagi so‘zma-so‘z cue va keyingi payoff’ga havola qiladi; bu retention isboti emas. \`npm run content:storytelling-plan -- <episode-id>\` faqat maslahat beradi, JSON yoki audio/video o‘zgartirmaydi. Hook tajribasining haqiqiy g‘olibini 7d bir xil oynali platforma dalillari bo‘lmaguncha e’lon qilmang.
+Adaptive hikoya naqshlari va minimal ma’lumot kontraktining yagona manbasi `content/creative-formats.json#storytellingPolicy` va `content/EPISODE_SCHEMA.md`. Re-hook metadata’si faqat allaqachon yozilgan ovoz matnidagi so‘zma-so‘z cue va keyingi payoff’ga havola qiladi; bu retention isboti emas. `npm run content:storytelling-plan -- <episode-id>` faqat maslahat beradi, JSON yoki audio/video o‘zgartirmaydi. Hook tajribasining haqiqiy g‘olibini 7d bir xil oynali platforma dalillari bo‘lmaguncha e’lon qilmang.
 
 
 ## Har bir hook uchun oldindan yoziladigan narsa
