@@ -12,7 +12,6 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Dates, IDs, cadence, episode references | `content/calendar.json` |
 | Future publishing weekdays and autonomous draft reserve | `content/calendar.json#planningWeekdays` and `#planningBuffer` |
 | Future planned episode buffer (minimum/target) | `content/calendar.json#planningBuffer` |
-| Optional Gemini text-drafting model and explicit opt-in | `content/creative-formats.json#storytellingPolicy.aiDraft`; workflow in `content/WORKFLOW.md` |
 | Optional adaptive story structure and editorial policy | `content/creative-formats.json#storytellingPolicy`; optional annotations in `content/EPISODE_SCHEMA.md` |
 
 | Raw external Zernio performance observations and optimizer audit notes | `content/feedback/` (not the canonical Hook/CTA Labs) |
@@ -53,6 +52,12 @@ The existing daily Calendar Reserve and the Monday/Wednesday/Friday feedback age
 - **Calendar Reserve:** when authoring or repairing a future, unapproved HSK 1–2 lesson for the shared Instagram Reels/YouTube Shorts body, consult `.agents/skills/ig-reel-planning/SKILL.md` *during editorial hook/storyboard planning only*. This must not replace `content/hook-lab.json`, fabricate Chinese facts or add a CTA to canonical episode source.
 - **Feedback (Mon/Wed/Fri):** Instagram caption review uses `ig-caption-quality` only for *proposed future publication copy* when that is explicitly part of the report; competitor benchmarking uses `ig-competitor-research` only when real authorized external references and comparable evidence are available. Neither is a prerequisite to own-account Zernio analysis, and no social-post or message is automatically sent.
 - Regular voice, semantic cue validation, Remotion rendering, CTA and final-publication approval remain unchanged.
+
+## Adaptive Storytelling — agent-authored scripts only
+
+For new or eligible unapproved, unvoiced HSK 1–2 lesson drafts, the **invoking Codex or Claude Code agent** writes and independently critiques the actual spoken scenario. Follow the single canonical scriptwriting procedure in `content/WORKFLOW.md`, existing Hook Lab and `content/creative-formats.json#storytellingPolicy`. Start from a verified beginner language problem, give a true early payoff, and add a later re-hook only for a genuinely new useful learner question. No extra script model, generator service, fixed eight-beat template or performance claim. `scripts/storytelling-generator.mjs` is a *local, read-only brief and validation helper*; it cannot write the lesson or verify Mandarin.
+
+The Russian shared-source script and any Tajik localization remain **language-scoped** under `content/languages.json` and the source-hash requirements in `content/EPISODE_SCHEMA.md`. A Russian-language structural review does not constitute Tajik translation, language accuracy, audio or owner approval. Keep the present Gemini **TTS and transcription**, dated MCP production, semantic/action motion, CTA, calendar and publication architecture unchanged.
 
 ## Central CTA assembly for future lessons
 
