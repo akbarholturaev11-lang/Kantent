@@ -37,22 +37,6 @@
       "narration": "В кафе спрашивают: «Чай или кофе?» По-китайски здесь нужно 还是, а не 或者. Почему?",
       "screenCaption": "Вопрос → 还是",
       "editPlan": "0–5 с: два условных стакана с подписями 茶 и 咖啡, знак вопроса и быстрый выбор 还是; никаких логотипов или задержки ответа.",
-      "visualBeats": [
-        {
-          "hero": "还是",
-          "pinyin": "háishi",
-          "meaning": "или (вопрос с выбором)",
-          "chinese": true,
-          "motion": "pop"
-        },
-        {
-          "hero": "茶 / 咖啡",
-          "pinyin": "chá / kāfēi",
-          "meaning": "чай / кофе",
-          "chinese": true,
-          "motion": "slide"
-        }
-      ],
       "cards": [
         {
           "hanzi": "还是",
@@ -64,6 +48,518 @@
           "pinyin": "chá / kāfēi",
           "meaning": "чай / кофе"
         }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "Чай или кофе",
+          "visual": {
+            "title": "или (вопрос с выбором)",
+            "hanzi": "还是",
+            "pinyin": "háishi",
+            "meaning": "или (вопрос с выбором)",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "divide",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 303,
+                    "y1": 110,
+                    "x2": 303,
+                    "y2": 300,
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "hook: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Показать исходную учебную ситуацию. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "还是",
+          "visual": {
+            "title": "чай / кофе",
+            "hanzi": "茶 / 咖啡",
+            "pinyin": "chá / kāfēi",
+            "meaning": "чай / кофе",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-halo",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 158,
+                    "cy": 194,
+                    "r": 80,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "choice-line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 285,
+                    "y1": 130,
+                    "x2": 340,
+                    "y2": 130,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "hook: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Изменить видимое состояние в момент объяснения. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
+        },
+        {
+          "id": "hook-action-3",
+          "kind": "graphic",
+          "cueText": "Почему",
+          "visual": {
+            "title": "или (вопрос с выбором)",
+            "hanzi": "还是",
+            "pinyin": "háishi",
+            "meaning": "или (вопрос с выбором)",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-coffee",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "417,280 441,300 472,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "hook: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Сопоставить результат с правильным примером. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
+        }
       ]
     },
     {
@@ -74,20 +570,511 @@
       "narration": "你喝茶还是喝咖啡？ — «Ты пьёшь чай или кофе?» 还是 соединяет два варианта, между которыми просят выбрать.",
       "screenCaption": "A 还是 B？",
       "editPlan": "5–12 с: рука указывает сначала на чай, затем на кофе; крупная фраза с подсветкой 还是. Два варианта параллельны, пиньинь и перевод остаются читаемыми.",
-      "visualBeats": [
-        {
-          "hero": "你喝茶还是喝咖啡？",
-          "pinyin": "Nǐ hē chá háishi hē kāfēi?",
-          "meaning": "Ты пьёшь чай или кофе?",
-          "chinese": true,
-          "motion": "pop"
-        }
-      ],
       "cards": [
         {
           "hanzi": "你喝茶还是喝咖啡？",
           "pinyin": "Nǐ hē chá háishi hē kāfēi?",
           "meaning": "Ты пьёшь чай или кофе?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "choice-action-1",
+          "kind": "graphic",
+          "cueText": "你喝茶还是喝咖啡",
+          "visual": {
+            "title": "Ты пьёшь чай или кофе?",
+            "hanzi": "你喝茶还是喝咖啡？",
+            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+            "meaning": "Ты пьёшь чай или кофе?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "divide",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 303,
+                    "y1": 110,
+                    "x2": 303,
+                    "y2": 300,
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "choice: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Показать исходную учебную ситуацию. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
+        },
+        {
+          "id": "choice-action-2",
+          "kind": "graphic",
+          "cueText": "Ты пьёшь",
+          "visual": {
+            "title": "Ты пьёшь чай или кофе?",
+            "hanzi": "你喝茶还是喝咖啡？",
+            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+            "meaning": "Ты пьёшь чай или кофе?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-halo",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 158,
+                    "cy": 194,
+                    "r": 80,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "choice-line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 285,
+                    "y1": 130,
+                    "x2": 340,
+                    "y2": 130,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "choice: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Изменить видимое состояние в момент объяснения. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
+        },
+        {
+          "id": "choice-action-3",
+          "kind": "graphic",
+          "cueText": "выбрать",
+          "visual": {
+            "title": "Ты пьёшь чай или кофе?",
+            "hanzi": "你喝茶还是喝咖啡？",
+            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+            "meaning": "Ты пьёшь чай или кофе?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "divide",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 303,
+                    "y1": 110,
+                    "x2": 303,
+                    "y2": 300,
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "choice: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Сопоставить результат с правильным примером. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
         }
       ]
     },
@@ -99,20 +1086,523 @@
       "narration": "А теперь ответ: 茶或者咖啡都行。 Это значит: «Чай или кофе — любой вариант подойдёт». Здесь 或者.",
       "screenCaption": "A 或者 B 都行。",
       "editPlan": "12–19 с: два напитка остаются на экране, между ними появляется 或者; персонаж показывает, что оба варианта подходят. Не изображать уже сделанный заказ.",
-      "visualBeats": [
-        {
-          "hero": "茶或者咖啡都行。",
-          "pinyin": "Chá huòzhě kāfēi dōu xíng.",
-          "meaning": "Чай или кофе — любой вариант подойдёт.",
-          "chinese": true,
-          "motion": "pop"
-        }
-      ],
       "cards": [
         {
           "hanzi": "茶或者咖啡都行。",
           "pinyin": "Chá huòzhě kāfēi dōu xíng.",
           "meaning": "Чай или кофе — любой вариант подойдёт."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "options-action-1",
+          "kind": "graphic",
+          "cueText": "ответ",
+          "visual": {
+            "title": "Чай или кофе — любой вариант подойдёт.",
+            "hanzi": "茶或者咖啡都行。",
+            "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+            "meaning": "Чай или кофе — любой вариант подойдёт.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "divide",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 303,
+                    "y1": 110,
+                    "x2": 303,
+                    "y2": 300,
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "options: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Показать исходную учебную ситуацию. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
+        },
+        {
+          "id": "options-action-2",
+          "kind": "graphic",
+          "cueText": "茶或者咖啡都行",
+          "visual": {
+            "title": "Чай или кофе — любой вариант подойдёт.",
+            "hanzi": "茶或者咖啡都行。",
+            "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+            "meaning": "Чай или кофе — любой вариант подойдёт.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-coffee",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "417,280 441,300 472,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "options: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Изменить видимое состояние в момент объяснения. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
+        },
+        {
+          "id": "options-action-3",
+          "kind": "graphic",
+          "cueText": "或者",
+          "visual": {
+            "title": "Чай или кофе — любой вариант подойдёт.",
+            "hanzi": "茶或者咖啡都行。",
+            "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+            "meaning": "Чай или кофе — любой вариант подойдёт.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-halo",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 158,
+                    "cy": 194,
+                    "r": 80,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "choice-line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 285,
+                    "y1": 130,
+                    "x2": 340,
+                    "y2": 130,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "options: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Сопоставить результат с правильным примером. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
         }
       ]
     },
@@ -124,22 +1614,6 @@
       "narration": "Сравните: 还是 — спрашиваем, что выбрать. 或者 — перечисляем варианты в утверждении. В вопросе с 还是 частица 吗 не нужна.",
       "screenCaption": "还是？ / 或者。",
       "editPlan": "19–26 с: верхняя карточка со знаком вопроса, нижняя — утверждение; выделить разные союзы. Не утверждать, что 还是 встречается только в прямых вопросах.",
-      "visualBeats": [
-        {
-          "hero": "还是",
-          "pinyin": "háishi",
-          "meaning": "или — выбор в вопросе",
-          "chinese": true,
-          "motion": "pop"
-        },
-        {
-          "hero": "或者",
-          "pinyin": "huòzhě",
-          "meaning": "или — варианты в утверждении",
-          "chinese": true,
-          "motion": "slide"
-        }
-      ],
       "cards": [
         {
           "hanzi": "还是",
@@ -151,6 +1625,518 @@
           "pinyin": "huòzhě",
           "meaning": "или — варианты в утверждении"
         }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "contrast-action-1",
+          "kind": "graphic",
+          "cueText": "还是",
+          "visual": {
+            "title": "или — выбор в вопросе",
+            "hanzi": "还是",
+            "pinyin": "háishi",
+            "meaning": "или — выбор в вопросе",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-halo",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 158,
+                    "cy": 194,
+                    "r": 80,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "choice-line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 285,
+                    "y1": 130,
+                    "x2": 340,
+                    "y2": 130,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "contrast: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Показать исходную учебную ситуацию. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
+        },
+        {
+          "id": "contrast-action-2",
+          "kind": "graphic",
+          "cueText": "或者",
+          "visual": {
+            "title": "или — варианты в утверждении",
+            "hanzi": "或者",
+            "pinyin": "huòzhě",
+            "meaning": "или — варианты в утверждении",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-coffee",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "417,280 441,300 472,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "contrast: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Изменить видимое состояние в момент объяснения. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
+        },
+        {
+          "id": "contrast-action-3",
+          "kind": "graphic",
+          "cueText": "吗 не нужна",
+          "visual": {
+            "title": "или — выбор в вопросе",
+            "hanzi": "还是",
+            "pinyin": "háishi",
+            "meaning": "или — выбор в вопросе",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "divide",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 303,
+                    "y1": 110,
+                    "x2": 303,
+                    "y2": 300,
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "contrast: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Сопоставить результат с правильным примером. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
+        }
       ]
     },
     {
@@ -161,22 +2147,6 @@
       "narration": "Чай или кофе? 你喝茶还是喝咖啡？ Оба варианта подходят: 茶或者咖啡都行。",
       "screenCaption": "Выбор: 还是 · Варианты: 或者",
       "editPlan": "26–31 с: быстро повторить два контекста, сохранить иероглифы, пиньинь и переводы. Закончить учебным выводом, без CTA.",
-      "visualBeats": [
-        {
-          "hero": "你喝茶还是喝咖啡？",
-          "pinyin": "Nǐ hē chá háishi hē kāfēi?",
-          "meaning": "Ты пьёшь чай или кофе?",
-          "chinese": true,
-          "motion": "pop"
-        },
-        {
-          "hero": "茶或者咖啡都行。",
-          "pinyin": "Chá huòzhě kāfēi dōu xíng.",
-          "meaning": "Чай или кофе — любой вариант подойдёт.",
-          "chinese": true,
-          "motion": "slide"
-        }
-      ],
       "cards": [
         {
           "hanzi": "你喝茶还是喝咖啡？",
@@ -187,6 +2157,518 @@
           "hanzi": "茶或者咖啡都行。",
           "pinyin": "Chá huòzhě kāfēi dōu xíng.",
           "meaning": "Чай или кофе — любой вариант подойдёт."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recall-action-1",
+          "kind": "graphic",
+          "cueText": "Чай или кофе",
+          "visual": {
+            "title": "Ты пьёшь чай или кофе?",
+            "hanzi": "你喝茶还是喝咖啡？",
+            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+            "meaning": "Ты пьёшь чай или кофе?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "divide",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 303,
+                    "y1": 110,
+                    "x2": 303,
+                    "y2": 300,
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Показать исходную учебную ситуацию. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
+        },
+        {
+          "id": "recall-action-2",
+          "kind": "graphic",
+          "cueText": "你喝茶还是喝咖啡",
+          "visual": {
+            "title": "Чай или кофе — любой вариант подойдёт.",
+            "hanzi": "茶或者咖啡都行。",
+            "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+            "meaning": "Чай или кофе — любой вариант подойдёт.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-halo",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 158,
+                    "cy": 194,
+                    "r": 80,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "choice-line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 285,
+                    "y1": 130,
+                    "x2": 340,
+                    "y2": 130,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Изменить видимое состояние в момент объяснения. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
+        },
+        {
+          "id": "recall-action-3",
+          "kind": "graphic",
+          "cueText": "茶或者咖啡都行",
+          "visual": {
+            "title": "Ты пьёшь чай или кофе?",
+            "hanzi": "你喝茶还是喝咖啡？",
+            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+            "meaning": "Ты пьёшь чай или кофе?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-coffee",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "417,280 441,300 472,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Сопоставить результат с правильным примером. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
         }
       ]
     }
@@ -218,5 +2700,22 @@
     "registeredAt": "2026-10-24"
   },
   "audienceProblem": "Новичок переносит одно русское «или» в любой китайский вопрос и утверждение.",
-  "learningOutcome": "Сформулировать прямой вопрос с выбором через 还是 и перечислить допустимые варианты через 或者."
+  "learningOutcome": "Сформулировать прямой вопрос с выбором через 还是 и перечислить допустимые варианты через 或者.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят",
+      "learnerGoal": "Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе",
+      "obstacle": "Русское «или» одинаково переводится в вопросе и утверждении, но китайские конструкции различаются"
+    },
+    "selectionReason": "Простой диалог «выбираешь?» против «любой подходит» даёт два разных коммуникативных действия без дополнительных повторных зацепок",
+    "firstPayoff": {
+      "sceneId": "choice",
+      "cueText": "你喝茶还是喝咖啡"
+    },
+    "reHooks": []
+  }
 }
