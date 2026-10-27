@@ -57,9 +57,9 @@ async function verifyReviewOrigin(runId, expectedCommit, token) {
   const {data}=await jsonRequest(url,{token,headers:{"X-GitHub-Api-Version":"2022-11-28"}});
   if(data?.repository?.full_name!=="akbarholturaev11-lang/Kantent" ||
       data?.path!==".github/workflows/video-review.yml" ||
-      data?.head_branch!=="main" || data?.event!=="workflow_dispatch" ||
+      data?.head_branch!=="main" || !["workflow_dispatch","schedule"].includes(data?.event) ||
       data?.conclusion!=="success" || data?.head_sha!==expectedCommit) {
-    throw Error("Review media not produced by successful manual video-review workflow on trusted main; refuse post.");
+    throw Error("Review media not produced by successful owner-eligible video-review workflow on trusted main; refuse post.");
   }
   return {sourceRunId:Number(runId),sourceCommit:data.head_sha,sourceUrl:data.html_url};
 }
