@@ -57,15 +57,17 @@ export function inspectStorytelling(episode, policy = readStorytellingPolicy()) 
   });
   const candidates = timeline.filter((p, index) => index > 0 && index < timeline.length - 1 &&
     /(?:\?|？|почему|но |а теперь|сравните|а как|что если|однако)/iu.test(scenes[index].narration ?? ""));
-  const suggestedPattern = !useExplicitTimes || total <= 20 || candidates.length === 0
-    ? "direct" : total > 35 && candidates.length >= 2 ? "layered" : "single-rehook";
+  const shortMax = policy.durationHintsSec?.shortMax ?? 20;
+  const standardMax = policy.durationHintsSec?.standardMax ?? 35;
+  const suggestedPattern = !useExplicitTimes || total <= shortMax || candidates.length === 0
+    ? "direct" : total > standardMax && candidates.length >= 2 ? "layered" : "single-rehook";
   const firstChineseScene = timeline.find(p => p.hasChinese);
   const errors = validateStorytellingEpisode(episode, policy);
   return {
     episodeId: episode?.id ?? null,
     mode: "read-only-editorial-advice",
     durationSec: useExplicitTimes ? +total.toFixed(2) : null,
-    durationBand: useExplicitTimes ? (total <= 20 ? "short" : total <= 35 ? "standard" : "long") : "unknown",
+    durationBand: useExplicitTimes ? (total <= shortMax ? "short" : total <= standardMax ? "standard" : "long") : "unknown",
     suggestedPattern,
     possibleRehookSceneIds: candidates.map(p => p.id),
     firstChineseSceneId: firstChineseScene?.id ?? null,
