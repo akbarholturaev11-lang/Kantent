@@ -11,7 +11,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Dates, IDs, cadence, episode references | `content/calendar.json` |
 | Future publishing weekdays and autonomous draft reserve | `content/calendar.json#planningWeekdays` and `#planningBuffer` |
 | Future planned episode buffer (minimum/target) | `content/calendar.json#planningBuffer` |
-| Optional Gemini text-drafting model and explicit opt-in | `content/creative-formats.json#storytellingPolicy.aiDraft`; workflow in `content/WORKFLOW.md` |
+| Adaptive script drafting and critical review by Codex/Claude Code | `content/WORKFLOW.md`; local proposal validator in `scripts/storytelling-generator.mjs` |
 | Optional adaptive story structure and editorial policy | `content/creative-formats.json#storytellingPolicy`; optional annotations in `content/EPISODE_SCHEMA.md` |
 
 | Raw external Zernio performance observations and optimizer audit notes | `content/feedback/` (not the canonical Hook/CTA Labs) |
@@ -51,6 +51,10 @@ The existing daily Calendar Reserve and the Monday/Wednesday/Friday feedback age
 - **Calendar Reserve:** when authoring or repairing a future, unapproved HSK 1–2 lesson for the shared Instagram Reels/YouTube Shorts body, consult `.agents/skills/ig-reel-planning/SKILL.md` *during editorial hook/storyboard planning only*. This must not replace `content/hook-lab.json`, fabricate Chinese facts or add a CTA to canonical episode source.
 - **Feedback (Mon/Wed/Fri):** Instagram caption review uses `ig-caption-quality` only for *proposed future publication copy* when that is explicitly part of the report; competitor benchmarking uses `ig-competitor-research` only when real authorized external references and comparable evidence are available. Neither is a prerequisite to own-account Zernio analysis, and no social-post or message is automatically sent.
 - Regular voice, semantic cue validation, Remotion rendering, CTA and final-publication approval remain unchanged.
+
+## Adaptive storytelling agent ownership
+
+When the owner says «Бугунги видеони тайёрла», Codex or Claude Code remains the active editorial and production agent: it verifies Chinese sources, makes any authorized unapproved scenario improvements and independently checks the narrative against Hook/CTA and storytelling rules. The existing MCP `prepare_today_video` and production/owner-preview flow remain authoritative. For a complete unapproved canonical draft, `npm run content:storytelling-generate -- <episode-id>` prepares a **read-only** brief and `--validate <local-proposal.json>` checks an agent-authored proposal; neither generates or publishes. Never use Gemini for scenario composition, second-pass text review or hook decisions. Gemini is reserved for its approved TTS and verbatim audio word-timestamp transcription workflow in `content/voice-profile.json` and `content/WORKFLOW.md`. Avoid automatic rewriting of approved, voiced, scheduled or published scenarios; keep source edits and MP3/MP4 regeneration under the existing safety gates.
 
 ## Central CTA assembly for future lessons
 
