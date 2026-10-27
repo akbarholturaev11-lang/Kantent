@@ -4,6 +4,7 @@ import {
   GEMINI_SECRET_NAMES, geminiKeySlots, requireGeminiKeySlots,
   initialGeminiCredential, geminiRotationDecision,
   zernioRoute, credentialReadiness, withGeminiKeyFailover,
+  enabledVideoPlatforms, zernioTargetAccount,
 } from "./video-credentials.mjs";
 
 test("four Gemini slots remain ordered and duplicates never masquerade as spare quota", () => {
@@ -88,4 +89,25 @@ test("bounded Gemini fallback happens only on permitted failed standalone reques
   const bad={slots:state.slots,index:0};
   await assert.rejects(withGeminiKeyFailover(bad,async()=>{throw new Error("network failed");}),/network failed/);
   assert.equal(bad.index,0);
+});
+
+test("disabled Tajik YouTube is never inferred from Russian credentials or optional account IDs", () => {
+  assert.deepEqual(enabledVideoPlatforms("ru"), ["instagram", "youtube"]);
+  assert.deepEqual(enabledVideoPlatforms("tg"), ["instagram"]);
+  assert.throws(() => enabledVideoPlatforms("zh"));
+  const env = {
+    ZERNIO_RU_INSTAGRAM_ACCOUNT_ID: "6a411e989d9472faae10a430",
+    ZERNIO_RU_YOUTUBE_ACCOUNT_ID: "6ac96e053f8f4ffc10b0655f",
+    ZERNIO_TG_INSTAGRAM_ACCOUNT_ID: "6ab31e989d9472faae10a4af",
+  };
+  assert.equal(zernioTargetAccount("ru", "youtube", env).accountId, env.ZERNIO_RU_YOUTUBE_ACCOUNT_ID);
+  assert.equal(zernioTargetAccount("tg", "instagram", env).accountId, env.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID);
+  assert.throws(() => zernioTargetAccount("tg", "youtube", env), /not enabled/);
+  assert.throws(() => zernioTargetAccount("tg", "youtube", {
+    ...env,ZERNIO_TG_YOUTUBE_ACCOUNT_ID:"6ac96e053f8f4ffc10b0655f"
+  }),/not enabled/);
+  assert.throws(() => zernioTargetAccount("tg", "instagram",{
+    ZERNIO_RU_INSTAGRAM_ACCOUNT_ID:env.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID
+  }),/Missing\/invalid ZERNIO_TG_INSTAGRAM_ACCOUNT_ID/);
+  assert.throws(() => zernioTargetAccount("ru", "instagram", {}),/Missing\/invalid/);
 });
