@@ -19,6 +19,11 @@ description: HSK-specific Instagram Reel hook and editorial beat planning, befor
 4. Produce a short beat-by-beat **proposal**: spoken Russian text, a corresponding visual action, Chinese text with pinyin, and a final payoff. Keep current HSK AI CTA *outside* this lesson proposal; central `cta-lab.json` assembles it later.
 5. For real production, hand the selected treatment to existing `auto-storyboard`, approved `content/episodes` flow and Remotion. Use actual Gemini word timestamps to validate semantic movement and subtitles; rough planning durations are not cue timestamps. Do not rewrite approved/published lessons.
 
+## Adaptive story option (future, unapproved scripts)
+
+After verifying one teachable HSK fact and checking the three hook proposals, inspect the relevant episode's existing narrative beats with \`npm run content:storytelling-plan -- <episode-id>\` when a canonical episode exists. Its re-hook hints are lexical, not semantic proof. If the lesson naturally has a second useful beginner problem after the first truthful answer, recommend a single re-hook and a later verbatim narrated payoff; otherwise prefer a direct explanation. Do not force a second open loop or hide the first answer. Follow the sole \`content/creative-formats.json#storytellingPolicy\` and \`content/EPISODE_SCHEMA.md\` for an optional metadata annotation, not an alternative Hook Lab. Never add a re-hook to voiced, approved or published artifacts.
+
+
 ## Output
 Three candidate hooks with editorial weaknesses; one recommended hook **for owner review**; beat/storyboard suggestion compatible with existing scene fields; list of Chinese sources and unresolved uncertainties. No MP3/MP4, unapproved edits, CTA replacements or social posting.
 
