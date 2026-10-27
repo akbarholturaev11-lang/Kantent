@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {
   GEMINI_SECRET_NAMES, geminiKeySlots, requireGeminiKeySlots,
   initialGeminiCredential, geminiRotationDecision,
-  zernioRoute, credentialReadiness,
+  zernioRoute, credentialReadiness, withGeminiKeyFailover,
 } from "./video-credentials.mjs";
 
 test("four Gemini slots remain ordered and duplicates never masquerade as spare quota", () => {
@@ -52,4 +52,48 @@ test("Russian and Tajik Zernio credentials never cross-map", () => {
   assert.throws(()=>zernioRoute("ru",{ZERNIO_API_KEY:"a",ZERNIO_RU_API_KEY:"b"}),/conflicting/);
   assert.equal(zernioRoute("ru",{ZERNIO_API_KEY:"a",ZERNIO_RU_API_KEY:"a"}).secretName,"ZERNIO_RU_API_KEY");
   assert.doesNotMatch(JSON.stringify(credentialReadiness(env)),/only-fake/);
+});
+
+test("bounded Gemini fallback happens only on permitted failed standalone requests", async () => {
+  const state={slots:[
+    {name:"GEMINI_API_KEY",secret:"primary-private"},
+    {name:"GEMINI_API_KEY_BACKUP_1",secret:"backup-private"},
+    {name:"GEMINI_API_KEY_BACKUP_2",secret:"last-private"},
+  ],index:0};
+  const attempted=[];
+  const oldWarn=console.warn;
+  const logged=[];
+  console.warn=(...args)=>logged.push(args.join(" "));
+  try {
+    const value=await withGeminiKeyFailover(state,async(key,name)=>{
+      attempted.push(name);
+      if(key==="primary-private")throw new Error("Gemini request failed (HTTP 401)");
+      return "audio-bytes";
+    });
+    assert.equal(value,"audio-bytes");
+    assert.deepEqual(attempted,["GEMINI_API_KEY","GEMINI_API_KEY_BACKUP_1"]);
+    assert.equal(state.index,1);
+    assert.doesNotMatch(logged.join(" "),/private/);
+  }finally{console.warn=oldWarn;}
+
+  const quota={slots:state.slots,index:0};
+  let invoked=0;
+  await assert.rejects(withGeminiKeyFailover(quota,async()=>{
+    invoked++;throw new Error("Gemini request failed (HTTP 429): quota exhausted");
+  }),/HTTP 429/);
+  assert.equal(invoked,1);
+  assert.equal(quota.index,0);
+  const quotaApproved={slots:state.slots,index:0};
+  const prior=console.warn;console.warn=()=>{};
+  try{
+    const result=await withGeminiKeyFailover(quotaApproved,async(_,name)=>{
+      if(name==="GEMINI_API_KEY")throw new Error("Gemini request failed (HTTP 429)");
+      return "audio";
+    },{separateProjectsVerified:true});
+    assert.equal(result,"audio");
+    assert.equal(quotaApproved.index,1);
+  }finally{console.warn=prior;}
+  const bad={slots:state.slots,index:0};
+  await assert.rejects(withGeminiKeyFailover(bad,async()=>{throw new Error("network failed");}),/network failed/);
+  assert.equal(bad.index,0);
 });
