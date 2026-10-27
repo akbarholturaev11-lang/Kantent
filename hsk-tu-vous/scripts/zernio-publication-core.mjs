@@ -30,7 +30,7 @@ export function validateApprovedIntent(raw, env = process.env, now = Date.now())
     throw Error("Owner must supply exact 64-character video and post preview SHA-256 hashes.");
   const content = String(raw.content ?? "");
   if (content !== content.trim() || !content || content.length > (platform === "instagram" ? 2200 : 5000) ||
-      /\bпакет готов к ручной проверке\b|баста барои баррасии дастӣ|package ready for manual review/iu.test(content)) {
+      /пакет готов к ручной проверке|баста барои баррасии дастӣ|package ready for manual review/iu.test(content)) {
     throw Error("Approved post caption is empty, contains internal review labels or exceeds target length.");
   }
   const scheduledFor = String(raw.scheduledFor ?? "");
