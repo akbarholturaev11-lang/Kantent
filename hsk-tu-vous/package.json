@@ -47,7 +47,7 @@
     "content:scenario-buffer": "node scripts/scenario-buffer-plan.mjs",
     "content:import-voice": "node scripts/import-voice.mjs",
     "content:storytelling-plan": "node scripts/storytelling-plan.mjs",
-    "content:storytelling-generate": "node scripts/storytelling-gemini.mjs"
+    "content:storytelling-generate": "node scripts/storytelling-generator.mjs"
   },
   "sideEffects": [
     "*.css"

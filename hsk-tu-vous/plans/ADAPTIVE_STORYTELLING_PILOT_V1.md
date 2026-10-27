@@ -19,6 +19,24 @@ Date: 2026-10-27. This document is **not** approval to edit the episodes, synthe
 2. **Candidate re-hook (30 Oct):** Candidate learner problem *after* initial payoff: “Теперь вы можете сказать «дороговато». А как попросить сделать чуть дешевле?” New promise is resolved with the verified `便宜一点儿，可以吗？` example; does not hide the first answer. Original lesson unchanged until explicit editorial approval.
 3. **Candidate re-hook (2 Nov):** Candidate learner problem after `还是` question answer: “А если вы не спрашиваете, а разрешаете любой из двух вариантов?” Resolve using the existing statement `茶或者咖啡都行。` Avoid misleading claims that 还是 never occurs in another context.
 
+## Authored Russian scenario proposal — 30 October price lesson
+
+**Scope:** an editorial **script-only** proposal, not a source or runtime edit. It preserves the existing October 30 lesson's five scenes, registered opening Hook, verified Chinese character sequences, topic, dates and central CTA separation. **Only Russian spoken narration in non-hook teaching scenes is proposed for change.** The agent must recheck the genuine language sources and hear the text read aloud before accepting it.
+
+| Scene (existing ID) | Spoken script (Russian, with the existing verified Mandarin) | Narrative function |
+| --- | --- | --- |
+| `hook` — retained verbatim | **Представьте: на рынке вещь дороговата. Как сказать это мягко по-китайски? 这个有点儿贵。** | A real buyer problem and *immediate first answer*; leave the registered hook untouched |
+| `reaction` | **有点儿 ставят перед 贵: 这个有点儿贵 — «дороговато». Это оценка цены, а не просьба.** | Clarify the learner's first result with the verified model |
+| `request` | **А попросить цену снизить? 便宜一点儿，可以吗？ — «Можно чуть дешевле?» Почему порядок другой?** | Give the second usable phrase; introduce a **different** question about word order |
+| `contrast` | **Сравните: 有点儿贵 — оценка цены, 便宜一点儿 — просьба. Поэтому 一点儿 идёт после «дешевле»: просим изменить цену немного.** | Actually answer the new word-order question with the same verified Chinese facts |
+| `recap` | **Быстрая проверка: «дороговато» — 有点儿贵. «Можно чуть дешевле?» — 便宜一点儿，可以吗？** | Active-recall contrast, without a platform CTA |
+
+**Optional annotation if, and only if, the editor adopts those exact lines:** `pattern: single-rehook`; `firstPayoff: {sceneId: "hook", cueText: "这个有点儿贵。"}`; `reHooks: [{sceneId: "request", cueText: "Почему порядок другой?", payoffSceneId: "contrast", payoffCueText: "Поэтому 一点儿 идёт после «дешевле»", reason: "Source-supported contrast: evaluation before adjective vs request for a small change after it"}]`. Cues must be verbatim; do not annotate the unchanged canonical source before adopting the new narration.
+
+**Fact-check:** the core distinction in this proposal is independently explained by [ChineseGrammar](https://chinesegrammar.app/grammar/youdianr-yidianr), [Elon.io](https://elon.io/grammar/chinese-mandarin/verbs/youdianr-verb-adj) and the [Russian Chinese grammar guide](https://ruschinese.com/post/2013/03/%E6%9C%89%E7%82%B9%E5%84%BF-%E4%B8%80%E7%82%B9%E5%84%BF/): `有点儿 + adjective` evaluates an unwanted degree; `adjective + 一点儿` expresses a small comparative adjustment in this context. The teaching example is a *contextual beginner distinction*, not a universal claim covering all uses of 一点儿.
+
+**QA to perform before adoption:** source/Hanzi/pinyin verification, normal spoken cadence against existing short scene targets, no re-hook duplication, consistent Chinese cards/visual beats, no hidden second learning goal. If the question “Почему порядок другой?” feels artificial in read-aloud, **drop it and use the direct version** rather than inventing suspense. No actual lesson JSON, media, timeline, approved copy or analytics are modified by this proposal.
+
 ## Pilot safety and measurement
 - Initial comparison is **editorial**, not a claim that these topics or creative format variants are matched experiments; videos are not yet proven equivalent.
 - Before controlled publication, pre-register each hook version and narrative pattern; preserve the same central CTA, approved voice profile, verified Chinese facts and normal owner preview sign-off. Do not rewrite existing published/approved artifacts.
