@@ -187,6 +187,16 @@
       "Recommended structure is a heuristic proposal, not guaranteed retention uplift.",
       "An optional scene cue must already occur in the written narration.",
       "CTA, audio, timing, semantic shots and published/approved records are unaffected."
-    ]
+    ],
+    "aiDraft": {
+      "status": "explicit-opt-in-and-human-review",
+      "model": "gemini-3.8-flash",
+      "provider": "Gemini generateContent",
+      "callsPerProposal": 2,
+      "requiresFlag": "HSK_AI_ALLOW_GEMINI_SCRIPT",
+      "doesNotWriteCanonicalFiles": true,
+      "sourceLanguageReviewRequired": true,
+      "existingVoiceAndCtaUnaffected": true
+    }
   }
 }
