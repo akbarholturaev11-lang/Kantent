@@ -34,9 +34,9 @@ At the start of each run, read the latest `main` canonical catalog and `content/
 7. **Do not modify scripts, future plans or creative policy as a feedback side effect.** For an eligible primary fixed-age `7d` cohort with verified post-to-episode/hook/HSK/format provenance, calculate descriptive matched comparisons and document the Hook Lab sample/lift/secondary-metric criteria; these are still not proof of causality. Record a proposed future experiment and seek separate owner approval/authoring authority before any production rule change. If data are lifetime-only or unlinked, mark `insufficient-evidence`. Never modify CTA wording, voice, approved/published snapshots, render code, calendar or social publication.
 8. Commit through a branch/PR, run or inspect repository tests/CI (always disclose test gaps and existing baseline failures), and for validated feedback-only data/reports complete the controlled `main` integration described above. Finally fetch all reported file paths from `main` and verify its commit SHA, and summarize Instagram/YouTube metrics, provenance gaps, exact changed files, PR, merge commit, CI conclusion and whether main contains every file. Never claim unattended execution unless the scheduled task actually confirmed it.
 
-## Before each new video
+## Production handoff only (not a Feedback-agent action)
 
-Fetch the latest `main` SHA and current episode, Hook Lab, CTA Lab and voice/visual rules immediately before preparing working media. Capture the SHA used in production metadata. If relevant source files change before render/review, invalidate the old working preview and refresh the appropriate dependencies.
+When a separately owner-invoked **video production agent** prepares media, that agent re-reads the current `main`, matching episode, language-specific Hook/CTA Lab and voice/visual rules and captures the source SHA. Changed sources invalidate stale previews and require fresh review under `content/WORKFLOW.md`. **The Feedback agent must not start production, generate voice, alter reviews or invalidate media during an analytics run.**
 
 ## Storytelling pattern evidence
 
