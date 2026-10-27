@@ -37,17 +37,18 @@ export function initialGeminiCredential(env = process.env) {
 
 /**
  * Errors must not cause blind re-tries or rotate credentials just to exceed a
- * shared Google project quota. Auth rejection can try another configured key.
- * Quota fallback is off unless independently validated project isolation has
- * explicitly been configured; never assume keys imply separate quotas.
+ * Google API quota. Auth rejection can try another configured key.
+ * The provider forbids bypassing API usage limits through multiple accounts
+ * or projects. HTTP 429 never rotates credentials; use backoff and authorized
+ * quota increases instead.
  */
-export function geminiRotationDecision({ httpStatus, reason = "", separateProjectsVerified = false } = {}) {
+export function geminiRotationDecision({ httpStatus, reason = "" } = {}) {
   if (httpStatus === 401) return { rotate: true, classification: "invalid-credential" };
   if (httpStatus === 403 && /API_KEY_INVALID|API_KEY_REVOKED|API_KEY_EXPIRED|PERMISSION_DENIED|key (?:invalid|expired|revoked)/i.test(reason)) {
     return { rotate: true, classification: "credential-rejected" };
   }
   if (httpStatus === 429) {
-    return { rotate: separateProjectsVerified === true, classification: "quota-exceeded" };
+    return { rotate: false, classification: "quota-exceeded" };
   }
   return { rotate: false, classification: "not-safe-to-rotate" };
 }
@@ -58,7 +59,7 @@ export function geminiRotationDecision({ httpStatus, reason = "", separateProjec
  * TTS response: this prevents two different generated voice takes.
  * Caller supplies its current progress object and a single API operation.
  */
-export async function withGeminiKeyFailover(state, operation, {separateProjectsVerified = false} = {}) {
+export async function withGeminiKeyFailover(state, operation) {
   if (!state || !Array.isArray(state.slots) || !state.slots.length)
     throw Error("Missing configured Gemini keyring.");
   if (!Number.isInteger(state.index) || state.index < 0 || state.index >= state.slots.length)
@@ -73,7 +74,6 @@ export async function withGeminiKeyFailover(state, operation, {separateProjectsV
       const choice = geminiRotationDecision({
         httpStatus,
         reason: String(error?.message ?? ""),
-        separateProjectsVerified,
       });
       if (!choice.rotate || state.index + 1 >= state.slots.length) throw error;
       state.index++;
