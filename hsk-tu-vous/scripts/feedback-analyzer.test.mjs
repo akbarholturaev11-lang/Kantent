@@ -33,6 +33,7 @@ test('lifetime results cannot produce comparability verdicts',()=>{
 });
 test('fixed-window cohorts keep HSK level separate',()=>{
  const a=source();a.window='24h';a.hookFormat='question';a.hskLevel='HSK 1';a.episodeId='sample-hsk1';
+ attachExactWindow(a);
  const b=structuredClone(a);b.platformPostId='17961571305238268';b.hskLevel='HSK 2';b.episodeId='sample-hsk2';
  const r=analyzeObservations([a,b]);assert.equal(r.comparableGroups.length,2);assert.ok(r.comparableGroups.every(x=>x.readiness==='insufficient-sample'));
 });
@@ -41,10 +42,21 @@ test('provider watch time is milliseconds',()=>{
 });
 
 const asOf = '2026-10-10T20:11:11.872Z';
+// Test-only example of explicit metric-period provenance. Ordinary Zernio
+// analytics_get_analytics and calendar-day timelines NEVER provide this proof.
+function attachExactWindow(o) {
+ const hours={'24h':24,'72h':72,'7d':168}[o.window];
+ if (!hours) return o;
+ o.source.endpoint='provider_exact_post_age_insights';
+ o.source.windowEvidence={kind:'provider-exact-post-age',window:o.window,
+   startAt:o.publishedAt,endAt:new Date(Date.parse(o.publishedAt)+hours*3600000).toISOString(),
+   providerRecordId:'native-fixed-window-example'};
+ return o;
+}
 function fixed({id='17961571305238269',date='2026-10-01T10:31:38.000Z',window='7d',format='question',level='HSK 1'}={}){
  const o=source();o.platformPostId=id;o.publishedAt=date;o.window=window;
  o.episodeId='episode-'+id;o.hookFormat=format;o.hskLevel=level;
- return o;
+ return attachExactWindow(o);
 }
 test('rolling 30 days filters by publication date, not Zernio collection date',()=>{
  const included=fixed({id:'17961571305238269',date:'2026-09-12T10:31:38.000Z'});
@@ -127,4 +139,27 @@ test("adaptive retention cohorts require verified pattern-to-episode attribution
  assert.match(validateObservation(missing).join(' '),/storytellingPattern/);
  const fake=structuredClone(baseline);fake.storytellingPattern='8block-viral-magic';
  assert.match(validateObservation(fake).join(' '),/storytellingPattern/);
+});
+
+test('a seven-day-old lifetime snapshot cannot be promoted to 7d without native period evidence',()=>{
+ const o=fixed();
+ delete o.source.windowEvidence;
+ assert.match(validateObservation(o).join(' '),/missing exact provider-fixed-window evidence/);
+ const cumulative=fixed();cumulative.source.endpoint='analytics_get_analytics';
+ assert.match(validateObservation(cumulative).join(' '),/missing exact provider-fixed-window evidence/);
+ const calendar=fixed();calendar.source.endpoint='analytics_get_daily_metrics';
+ assert.match(validateObservation(calendar).join(' '),/missing exact provider-fixed-window evidence/);
+});
+test('fixed-window receipts must cover the exact post-age interval and end by observation',()=>{
+ const o=fixed();
+ assert.deepEqual(validateObservation(o),[]);
+ const forged=structuredClone(o);forged.source.windowEvidence.endAt='2026-10-08T00:00:00.000Z';
+ assert.match(validateObservation(forged).join(' '),/missing exact provider-fixed-window evidence/);
+});
+test('different verified creative formats never share a comparison group',()=>{
+ const a=fixed({id:'17961571305238269'}),b=fixed({id:'17961571305238268'});
+ a.creativeFormatId='street-situation';b.creativeFormatId='speed-quiz';
+ const r=analyzeObservations([a,b],{minimumPostsPerFormat:2},{asOf});
+ assert.equal(r.comparableGroups.length,2);
+ assert.equal(r.comparableGroups.every(group=>group.readiness==='insufficient-sample'),true);
 });
