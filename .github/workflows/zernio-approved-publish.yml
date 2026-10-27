@@ -30,10 +30,6 @@ on:
         description: "EXACT post preview sha256 from verified review manifest"
         required: true
         type: string
-      post_caption:
-        description: "Exact final post caption/description you have READ and APPROVE (no internal preview labels)"
-        required: true
-        type: string
       mode:
         description: "Choose DRAFT or explicitly request publishing/scheduling"
         required: true
