@@ -40,40 +40,12 @@ on:
         type: choice
         options: [draft, scheduled, now]
         default: draft
-      scheduled_for_shanghai:
-        description: "Only if scheduled: e.g. 2026-11-01T18:30:00+08:00 (20min ahead)"
-        required: false
+      approved_post_json:
+        description: 'JSON: {"content":"caption","title":"YouTube title","visibility":"unlisted","madeForKids":false,"containsSyntheticMedia":true,"shareToFeed":true,"scheduledFor":""}'
+        required: true
         type: string
-      youtube_title:
-        description: "Only YouTube: exact approved title"
-        required: false
-        type: string
-      youtube_visibility:
-        description: "YouTube visibility (ignored for Instagram)"
-        required: true
-        type: choice
-        options: [private, unlisted, public]
-        default: unlisted
-      youtube_made_for_kids:
-        description: "Is this content directed to children? YouTube only"
-        required: true
-        type: choice
-        options: ['false', 'true']
-        default: 'false'
-      youtube_contains_synthetic_media:
-        description: "Disclosure for realistic synthetic media. YouTube only"
-        required: true
-        type: choice
-        options: ['false', 'true']
-        default: 'true'
-      instagram_share_to_feed:
-        description: "Instagram Reel also shown on regular feed?"
-        required: true
-        type: choice
-        options: ['true', 'false']
-        default: 'true'
       approval_confirmation:
-        description: "Type EXACT phrase: SAVE_EXACT_VIDEO_AS_DRAFT / APPROVE_EXACT_VIDEO_AND_SCHEDULE / APPROVE_EXACT_VIDEO_AND_PUBLISH_NOW"
+        description: "Type mode phrase: SAVE_EXACT_VIDEO_AS_DRAFT / APPROVE_EXACT_VIDEO_AND_SCHEDULE / APPROVE_EXACT_VIDEO_AND_PUBLISH_NOW"
         required: true
         type: string
 
@@ -109,14 +81,8 @@ jobs:
       APPROVED_ACCOUNT_ID: ${{ inputs.target_account_id }}
       APPROVED_VIDEO_SHA256: ${{ inputs.video_sha256 }}
       APPROVED_POST_SHA256: ${{ inputs.post_sha256 }}
-      APPROVED_CONTENT: ${{ inputs.post_caption }}
+      APPROVED_POST_JSON: ${{ inputs.approved_post_json }}
       APPROVED_MODE: ${{ inputs.mode }}
-      APPROVED_SCHEDULED_FOR: ${{ inputs.scheduled_for_shanghai }}
-      APPROVED_YOUTUBE_TITLE: ${{ inputs.youtube_title }}
-      APPROVED_YOUTUBE_VISIBILITY: ${{ inputs.youtube_visibility }}
-      APPROVED_YOUTUBE_KIDS: ${{ inputs.youtube_made_for_kids }}
-      APPROVED_YOUTUBE_SYNTHETIC: ${{ inputs.youtube_contains_synthetic_media }}
-      APPROVED_IG_SHARE_TO_FEED: ${{ inputs.instagram_share_to_feed }}
       APPROVAL_CONFIRMATION: ${{ inputs.approval_confirmation }}
       PUBLICATION_RECEIPT_DIR: /tmp/hsk-zernio-receipt
     steps:
