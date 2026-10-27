@@ -88,7 +88,7 @@ test("real MP4/SRT verifier stages RU Instagram/YouTube and TG Instagram without
     assert.equal(createHash("sha256").update(await fs.readFile(path.join(bundle, "ru", "instagram", "video.mp4"))).digest("hex"), sha);
     assert.equal((await fs.readFile(path.join(bundle, "manifest.json"), "utf8")).includes("published\": false"), true);
     // Hash tamper test: existing artifact must never be marked complete.
-    await fs.appendFile(path.join(sourceDir, "tg", "instagram", "video.mp4"), "tamper");
+    await fs.appendFile(path.join(sourceDir, "tg", "video.mp4"), "tamper");
     await assert.rejects(packageReview(id, ["ru", "tg"], path.join(temp, "unsafe")), /does not match/);
     await assert.rejects(fs.stat(path.join(temp, "unsafe", "manifest.json")), { code: "ENOENT" });
   } finally {
