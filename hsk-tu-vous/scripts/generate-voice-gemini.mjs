@@ -528,7 +528,6 @@ async function generateTtsWav(config, text) {
       },
       "Gemini speech generation",
     ),
-    { separateProjectsVerified: process.env.GEMINI_DISTINCT_PROJECTS_VERIFIED === "true" },
   );
   config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
   const wav = getAudioData(tts.data);
@@ -1016,7 +1015,6 @@ try {
           transcriptionAudioPath,
           `hsk-production-${EPISODE_ID}-${index + 1}-attempt-${attempts}`,
         ),
-        { separateProjectsVerified: process.env.GEMINI_DISTINCT_PROJECTS_VERIFIED === "true" },
       );
       config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
       try {
