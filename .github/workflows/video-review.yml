@@ -64,6 +64,11 @@ jobs:
           node --check scripts/github-video-pipeline.mjs
           node --check scripts/github-video-pipeline.test.mjs
           npm run check:consistency
+      - name: Install FFmpeg and FFprobe for real synthetic MP4 tests
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          ffprobe -version | head -n 1
       - name: Test exact-date safety, isolation and actual FFmpeg MP4/SRT verification
         run: node --test scripts/github-video-pipeline.test.mjs
 
@@ -105,8 +110,10 @@ jobs:
           fi
       - name: Install production dependencies
         run: npm ci --no-audit --no-fund
-      - name: Check FFmpeg and FFprobe
+      - name: Install FFmpeg and FFprobe for real production MP4 validation
         run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
           ffmpeg -version | head -n 1
           ffprobe -version | head -n 1
       - name: Resolve exact lesson and fail closed for protected approved audio
