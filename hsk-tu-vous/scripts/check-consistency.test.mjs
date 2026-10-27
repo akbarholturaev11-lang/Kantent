@@ -1,6 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { findDuplicatedValues } from "./check-consistency.mjs";
+import { findDuplicatedValues, validateFutureContentReadiness } from "./check-consistency.mjs";
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 
 const settings = {
   voice: {
@@ -35,4 +38,21 @@ test("hard-coded calendar counts are rejected", () => {
     findDuplicatedValues("Plan contains 12 episodes.", settings),
     ["hard-coded episode count; read content/calendar.json instead"],
   );
+});
+
+test('strict future readiness reports missing or unbound translations by episode ID', () => {
+ const tmp=fs.mkdtempSync(path.join(os.tmpdir(),'hsk-consistency-languages-'));
+ try {
+  fs.mkdirSync(path.join(tmp,'content'),{recursive:true});
+  fs.writeFileSync(path.join(tmp,'content/calendar.json'),JSON.stringify({
+   timezone:'Asia/Shanghai',planningBuffer:{minimumFutureEpisodes:1,targetFutureEpisodes:2},
+   items:[{id:'untranslated-future',date:'2026-11-03',status:'planned',
+     episodeFile:'episodes/untranslated-future.json'}]
+  }));
+  const result=validateFutureContentReadiness(tmp,{today:'2026-10-28'});
+  assert.equal(result.report.readyFutureEpisodes,0);
+  assert.equal(result.errors.length,1);
+  assert.match(result.errors[0],/untranslated-future/);
+  assert.match(result.errors[0],/source\/configuration/);
+ } finally {fs.rmSync(tmp,{recursive:true,force:true});}
 });
