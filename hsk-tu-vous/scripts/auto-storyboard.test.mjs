@@ -102,6 +102,22 @@ test("safe-sync only clean, pre-voice review; never clobber published/owner-edit
   assert.throws(()=>synchronizeAutoStoryboard(stale,desired,{stage:"rendered-pending-owner-approval"}),/review copy differs/i);
   assert.strictEqual(synchronizeAutoStoryboard(desired,desired,{stage:"rendered-pending-owner-approval"}),desired);
 });
+test("opt-in rehook annotates existing storyboard mood without editing narration or cards",()=>{
+  const base=baseline("youdianr-vs-yidianr-price-20261030");
+  const episode=structuredClone(base);
+  episode.storytelling={schemaVersion:1,pattern:"single-rehook",
+    firstPayoff:{sceneId:"hook",cueText:"这个有点儿贵。"},
+    reHooks:[{sceneId:"request",cueText:"Теперь просьба продавцу:",
+      payoffSceneId:"contrast",payoffCueText:"便宜一点儿 — просим чуть дешевле.",
+      reason:"A distinct request to bargain after the initial price evaluation"}]};
+  const source=JSON.stringify(episode);
+  const copy=decorateFutureLesson(episode,{calendar,registry,episodeByFile:byFile});
+  assert.equal(JSON.stringify(episode),source);
+  assert.equal(copy.scenes.find(s=>s.id==="request").storyboard.mood,"question");
+  assert.equal(copy.scenes.find(s=>s.id==="contrast").storyboard.mood,"answer");
+  assert.deepEqual(copy.scenes.map(s=>s.narration),episode.scenes.map(s=>s.narration));
+});
+
 test("explicit approval and legacy videos remain unmodified",()=>{
   const old=baseline("name-question");
   assert.deepEqual(decorateCanonicalLesson(old),old);
