@@ -61,7 +61,7 @@ const createServer = () => {
     { name: "hsk-ai-content", version: "1.0.0" },
     {
       instructions:
-      "На команду «Бугунги видеони тайёрла» агент Codex/Claude Code сначала вызывает recommend_skills, читает AGENTS.md, AI_RULES.md и content/WORKFLOW.md, затем вызывает preview_today_video_selection (тот же read-only календарный resolver, что использует производство) и get_production_plan для selectedDate. Агент ДО синтеза голоса проверяет китайские источники, русский сценарий, Hook Lab и optional storytelling; любые разрешённые правки выполняет через существующий редакционный workflow с инвалидацией прежних audio/render. Только после проверки вызывайте prepare_today_video; тот инструмент СРАЗУ запускает существующие Gemini TTS/Remotion и САМ не является AI-редактором. Если слот или публикационный статус изменился между preview и подготовкой, не продолжайте со старым источником без повторной проверки. Явно указанная владельцем дата обрабатывается строго, без замены. Явно названная дата обрабатывается строго без подмены. Для создания или редактирования видео сначала вызывайте recommend_skills, затем читайте выбранные SKILL.md и текущие правила из content/SKILLS.md. Не запускайте HyperFrames для обычного HSK-урока и не меняйте движок без разрешения владельца. Работайте по AGENTS.md и AI_RULES.md. До hook edits читайте content/HOOK_LAB.md и get_hook_learning_status; пишите отдельный topic-specific hook до производства, сохраняйте точные слова владельца через record_hook_correction и не выдумывайте результаты без platform readback. До CTA edits читайте content/CTA_LAB.md и get_cta_learning_status; используйте единый CTA серии, сохраняйте точные слова владельца через record_cta_correction, регистрируйте датированный неизменный снимок до voice/render. Production voice берiladi фақат content/voice-profile.json dagi Gemini API profilidan; `content:voice` Gemini TTS orqali MP3 yaratadi, Gemini Transcribe so‘zma-so‘z timestamp beradi, exact-token tekshiruvidan keyin audio/caption avtomatik import qilinadi. HSK_AI_ALLOW_GEMINI_API=true va GEMINI_API_KEY lokal sozlanadi; matn va audio Google API ga yuborilishini hisobga oling. Yangi Gemini profilining egasi tinglaydigan bitta sample epizodidan tashqari boshqa epizodlar faqat profil tasdiqlangandan keyin tayyorlanadi. Boshqa TTS yoki transkripsiya provayderiga o‘tmang. Burned-in captions’ni tekshirib, Remotion review paketini yig‘ing. Публикуйте только через подключённый Zernio MCP и только после явного подтверждения владельца финального preview с точным роликом, целевым аккаунтом, caption/description, YouTube title/visibility/audience/synthetic-media settings, Instagram Reel settings и временем. Разрешённые платформы: Instagram Reels и YouTube Shorts. TikTok’га нашр қилманг.",
+      "На команду «Бугунги видеони тайёрла» сначала вызывайте prepare_today_video; если на сегодня нет слота, инструмент выберет ближайший следующий planned по timezone календаря и сообщит дату. Явно названная дата обрабатывается строго без подмены. Для создания или редактирования видео сначала вызывайте recommend_skills, затем читайте выбранные SKILL.md и текущие правила из content/SKILLS.md. Не запускайте HyperFrames для обычного HSK-урока и не меняйте движок без разрешения владельца. Работайте по AGENTS.md и AI_RULES.md. До hook edits читайте content/HOOK_LAB.md и get_hook_learning_status; пишите отдельный topic-specific hook до производства, сохраняйте точные слова владельца через record_hook_correction и не выдумывайте результаты без platform readback. До CTA edits читайте content/CTA_LAB.md и get_cta_learning_status; используйте единый CTA серии, сохраняйте точные слова владельца через record_cta_correction, регистрируйте датированный неизменный снимок до voice/render. Production voice берiladi фақат content/voice-profile.json dagi Gemini API profilidan; `content:voice` Gemini TTS orqali MP3 yaratadi, Gemini Transcribe so‘zma-so‘z timestamp beradi, exact-token tekshiruvidan keyin audio/caption avtomatik import qilinadi. HSK_AI_ALLOW_GEMINI_API=true va GEMINI_API_KEY lokal sozlanadi; matn va audio Google API ga yuborilishini hisobga oling. Yangi Gemini profilining egasi tinglaydigan bitta sample epizodidan tashqari boshqa epizodlar faqat profil tasdiqlangandan keyin tayyorlanadi. Boshqa TTS yoki transkripsiya provayderiga o‘tmang. Burned-in captions’ni tekshirib, Remotion review paketini yig‘ing. Публикуйте только через подключённый Zernio MCP и только после явного подтверждения владельца финального preview с точным роликом, целевым аккаунтом, caption/description, YouTube title/visibility/audience/synthetic-media settings, Instagram Reel settings и временем. Разрешённые платформы: Instagram Reels и YouTube Shorts. TikTok’га нашр қилманг.",
     },
   );
 
@@ -815,30 +815,6 @@ const createServer = () => {
       inputSchema: z.object({ date: dateSchema }),
     },
     async ({ date }) => withToolErrors(() => prepareReviewForDate(date)),
-  );
-
-  // Share the exact existing calendar/published-post resolver with the authoring
-  // agent before any TTS or render. This is a read-only preflight, not a writer.
-  server.registerTool(
-    "preview_today_video_selection",
-    {
-      title: "Resolve today's selected HSK episode before production",
-      description:
-        "Read-only: run the same calendar-local date and externally verified published-post selection as prepare_today_video. Use selectedDate with get_production_plan for Codex/Claude Code editorial/source QA before calling prepare_today_video. Never generates audio, media or publications.",
-      inputSchema: z.object({}),
-    },
-    async () =>
-      withToolErrors(async () => {
-        const selected = resolveTodayVideo(await readJson(CALENDAR_PATH), new Date(), {
-          confirmedPublishedEpisodeIds: confirmedPublishedIds(),
-        });
-        return {
-          ...selected,
-          nextAgentAction:
-            "Call get_production_plan for selectedDate and inspect lesson facts, narrative and Hook/CTA rules before calling prepare_today_video. Reconfirm date at execution because calendar or publication state may change.",
-          didGenerateMedia: false,
-        };
-      }),
   );
 
   server.registerTool(
