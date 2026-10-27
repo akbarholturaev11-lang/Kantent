@@ -36,6 +36,7 @@
         "sceneId": "numeral",
         "cueText": "Но двадцать — 二十.",
         "payoffSceneId": "recap",
+        "payoffCueText": "Две чашки — 两杯茶.",
         "reason": "A meaningful additional distinction, not the opening repeated"
       }
     ]
