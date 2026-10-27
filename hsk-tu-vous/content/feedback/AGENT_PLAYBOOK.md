@@ -38,6 +38,10 @@ At the start of each run, read the latest `main` canonical catalog and `content/
 
 Fetch the latest `main` SHA and current episode, Hook Lab, CTA Lab and voice/visual rules immediately before preparing working media. Capture the SHA used in production metadata. If relevant source files change before render/review, invalidate the old working preview and refresh the appropriate dependencies.
 
+## Storytelling pattern evidence
+
+For adaptive script comparisons, an optional observation `storytellingPattern` can be `direct`, `single-rehook` or `layered` only **after** proving the published media corresponds to the exact episode/narration story version and verified Hook, HSK level and creative format. Save that provenance with source records, not guesses based on thumbnail or lesson topic. Missing mappings remain `null`, not defaulted to direct. `feedback-analyzer.mjs` isolates eligible 7d cohorts by this verified pattern, platform, level, duration band and Hook format; it never treats provider lifetime metrics as fixed post-age observations. Owner sign-off remains necessary before any learned policy is promoted.
+
 ## Non-goals
 
 No customer-install attribution, no separate social API token, no user data extraction, no causal claim from views alone, no automatic winner declaration, no autonomous publishing. Existing owner approval of the exact final preview remains mandatory.
