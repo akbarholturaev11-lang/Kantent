@@ -1,6 +1,6 @@
 # Content planning guide
 
-The live production calendar is **`calendar.json`**. It owns dates, episode IDs, per-date topics, the timezone and publishing cadence. Do not mirror its rows or hard-code episode counts here.
+The live production calendar is **`calendar.json`**. It owns dates, episode IDs, per-date topics, the timezone and scenario planning cadence. Do not mirror its rows or hard-code episode counts here.
 
 For each scheduled episode, maintain one shared canonical lesson at `episodes/<episode-id>.json` and complete localized CTA-free versions under the content roots configured by `languages.json`. Keep IDs/dates/Chinese examples consistent and bind each translation to the current canonical raw JSON with `localization.sourceHash`. Missing or stale translations are production blockers for their language, never a reason to substitute original-language media. Apply the current global rules (`../AI_RULES.md`), active hook corrections (`HOOK_LAB.md` and `hook-lab.json`), and current CTA configuration (`cta-lab.json`).
 
