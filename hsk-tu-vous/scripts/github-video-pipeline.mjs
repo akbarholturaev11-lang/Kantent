@@ -141,7 +141,8 @@ async function verifyReviewPackage(episodeId, language, platform) {
     throw new Error("Missing valid SRT captions for " + language + "/" + platform);
   if (!(await fs.readFile(paths.post, "utf8")).trim())
     throw new Error("Empty post text for " + language + "/" + platform);
-  return { paths, sha256: hash, bytes: size, ...ffprobe(paths.video),
+  const postSha256 = createHash("sha256").update(await fs.readFile(paths.post)).digest("hex");
+  return { paths, sha256: hash, postSha256, bytes: size, ...ffprobe(paths.video),
     ctaExperimentId: stored.platformPackages[platform].ctaExperimentId,
     contentHash: stored.platformPackages[platform].contentHash };
 }
@@ -186,9 +187,11 @@ export async function packageReview(episodeId, languages, outputDir = DEFAULT_OU
       ]) await fs.copyFile(source, path.join(target, name));
       const copiedHash = createHash("sha256").update(await fs.readFile(path.join(target, "video.mp4"))).digest("hex");
       if (copiedHash !== verified.sha256) throw new Error("Artifact copy changed MP4 bytes.");
+      const copiedPostSha = createHash("sha256").update(await fs.readFile(path.join(target, "post.md"))).digest("hex");
+      if (copiedPostSha !== verified.postSha256) throw new Error("Artifact copy changed proposed post preview text.");
       manifest.languages[language][platform] = {
         video: language + "/" + platform + "/video.mp4",
-        sha256: verified.sha256, bytes: verified.bytes,
+        sha256: verified.sha256, postSha256: copiedPostSha, bytes: verified.bytes,
         width: verified.width, height: verified.height, durationSec: verified.durationSec,
         ctaExperimentId: verified.ctaExperimentId, contentHash: verified.contentHash,
       };
