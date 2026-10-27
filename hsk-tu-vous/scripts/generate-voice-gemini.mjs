@@ -29,6 +29,14 @@ import {
 
 const API_ROOT = "https://generativelanguage.googleapis.com";
 const API_REVISION = "2026-05-20";
+const GEMINI_API_KEY_ENV_NAMES = [
+  "GEMINI_API_KEY",
+  "GEMINI_API_KEY_2",
+  "GEMINI_API_KEY_3",
+  "GEMINI_API_KEY_4",
+];
+let geminiApiKeySlots = [];
+let activeGeminiApiKeySlot;
 const EPISODE_ID = process.argv[2];
 const CLI_OPTIONS = process.argv.slice(3);
 let PLATFORM;
@@ -55,7 +63,8 @@ function requireEpisodeId(value) {
 
 async function loadGeminiEnvironment(profile) {
   if (
-    (!process.env.GEMINI_API_KEY || !process.env.HSK_AI_ALLOW_GEMINI_API) &&
+    (GEMINI_API_KEY_ENV_NAMES.some((name) => !process.env[name]) ||
+      !process.env.HSK_AI_ALLOW_GEMINI_API) &&
     typeof process.loadEnvFile === "function"
   ) {
     try {
@@ -69,13 +78,26 @@ async function loadGeminiEnvironment(profile) {
       "Gemini production TTS uchun .env.local ichida HSK_AI_ALLOW_GEMINI_API=true bo‘lishi kerak.",
     );
   }
-  if (!process.env.GEMINI_API_KEY) {
+  const configuredKeys = GEMINI_API_KEY_ENV_NAMES
+    .map((name, index) => ({
+      slot: index + 1,
+      key: process.env[name]?.trim(),
+    }))
+    .filter(({ key }) => key);
+  const seenKeys = new Set();
+  geminiApiKeySlots = configuredKeys.filter(({ key }) => {
+    if (seenKeys.has(key)) return false;
+    seenKeys.add(key);
+    return true;
+  });
+  if (!geminiApiKeySlots.length) {
     throw new Error(
-      "GEMINI_API_KEY yo‘q. Kalitni .env.local ga kiriting; uni kodga yoki logga yozmang.",
+      "Gemini API kalitlari topilmadi. GEMINI_API_KEY yoki GEMINI_API_KEY_2–4 ni .env.local ga kiriting; ularni kodga yoki logga yozmang.",
     );
   }
+  activeGeminiApiKeySlot = geminiApiKeySlots[0].slot;
   return {
-    apiKey: process.env.GEMINI_API_KEY,
+    apiKeyCount: geminiApiKeySlots.length,
     ttsModel: profile.ttsModel,
     voice: profile.voiceName,
     transcribeModel: profile.transcriptionModel,
@@ -86,37 +108,82 @@ async function loadGeminiEnvironment(profile) {
   };
 }
 
-async function requestJson(url, options, label) {
-  const maxAttempts = 4;
-  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    const response = await fetch(url, {
-      ...options,
-      signal: options.signal ?? AbortSignal.timeout(120_000),
-    });
-    const text = await response.text();
-    let data = {};
-    if (text) {
-      try {
-        data = JSON.parse(text);
-      } catch {
-        throw new Error(`${label}: Gemini returned a non-JSON response.`);
-      }
-    }
-    if (response.ok) return { data, headers: response.headers };
+function getGeminiApiKey(slot) {
+  return geminiApiKeySlots.find((entry) => entry.slot === slot)?.key;
+}
 
-    const detail = data?.error?.message;
-    const retryable = response.status === 429 || response.status >= 500;
-    if (retryable && attempt < maxAttempts) {
-      const delayMs = 1000 * 2 ** attempt;
-      console.warn(
-        `${label} returned HTTP ${response.status}; retrying in ${delayMs / 1000}s (${attempt}/${maxAttempts - 1}).`,
-      );
-      await new Promise((resolve) => setTimeout(resolve, delayMs));
-      continue;
+function orderedGeminiApiKeySlots(startSlot = activeGeminiApiKeySlot) {
+  const startIndex = geminiApiKeySlots.findIndex((entry) => entry.slot === startSlot);
+  if (startIndex < 0) return geminiApiKeySlots.map((entry) => entry.slot);
+  return [
+    ...geminiApiKeySlots.slice(startIndex),
+    ...geminiApiKeySlots.slice(0, startIndex),
+  ].map((entry) => entry.slot);
+}
+
+function createGeminiHttpError(label, status, detail, quotaLimit = false) {
+  const error = new Error(
+    `${label} failed (HTTP ${status})${detail ? `: ${detail}` : ""}`,
+  );
+  error.httpStatus = status;
+  error.geminiQuotaLimit = quotaLimit;
+  return error;
+}
+
+async function requestJson(url, options, label, { keySlots } = {}) {
+  const maxAttempts = 4;
+  const slotsToTry = keySlots ?? orderedGeminiApiKeySlots();
+  let lastQuotaError;
+  for (const [keyIndex, keySlot] of slotsToTry.entries()) {
+    const apiKey = getGeminiApiKey(keySlot);
+    if (!apiKey) throw new Error(`Gemini API key slot ${keySlot} is not configured.`);
+    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+      const headers = new Headers(options.headers ?? {});
+      headers.set("x-goog-api-key", apiKey);
+      const response = await fetch(url, {
+        ...options,
+        headers,
+        signal: options.signal ?? AbortSignal.timeout(120_000),
+      });
+      const text = await response.text();
+      let data = {};
+      if (text) {
+        try {
+          data = JSON.parse(text);
+        } catch {
+          throw new Error(`${label}: Gemini returned a non-JSON response.`);
+        }
+      }
+      if (response.ok) {
+        activeGeminiApiKeySlot = keySlot;
+        return { data, headers: response.headers, apiKeySlot: keySlot };
+      }
+
+      const detail = data?.error?.message;
+      if (response.status === 429) {
+        lastQuotaError = createGeminiHttpError(label, response.status, detail, true);
+        if (keyIndex < slotsToTry.length - 1) {
+          console.warn(
+            `${label} reached a Gemini rate/quota limit on key slot ${keySlot}; trying backup slot ${slotsToTry[keyIndex + 1]}.`,
+          );
+        }
+        break;
+      }
+      if (response.status >= 500 && attempt < maxAttempts) {
+        const delayMs = 1000 * 2 ** attempt;
+        console.warn(
+          `${label} returned HTTP ${response.status}; retrying in ${delayMs / 1000}s (${attempt}/${maxAttempts - 1}).`,
+        );
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
+        continue;
+      }
+      throw createGeminiHttpError(label, response.status, detail);
     }
-    throw new Error(
-      `${label} failed (HTTP ${response.status})${detail ? `: ${detail}` : ""}`,
-    );
+  }
+  if (lastQuotaError) {
+    const slots = slotsToTry.map((slot) => `GEMINI_API_KEY${slot === 1 ? "" : `_${slot}`}`);
+    lastQuotaError.message = `${label} failed: Gemini returned HTTP 429 for key slot(s) ${slots.join(", ")}.`;
+    throw lastQuotaError;
   }
   throw new Error(`${label} failed after ${maxAttempts} attempts.`);
 }
@@ -512,7 +579,6 @@ async function generateTtsWav(config, text) {
     {
       method: "POST",
       headers: {
-        "x-goog-api-key": config.apiKey,
         "Content-Type": "application/json",
         "Api-Revision": API_REVISION,
       },
@@ -535,7 +601,7 @@ async function generateTtsWav(config, text) {
   return wav;
 }
 
-async function uploadForTranscription(apiKey, filePath, displayName) {
+async function uploadForTranscription(apiKeySlot, filePath, displayName) {
   const bytes = await fs.readFile(filePath);
   const mimeType = audioMimeType(filePath);
   const start = await requestJson(
@@ -543,7 +609,6 @@ async function uploadForTranscription(apiKey, filePath, displayName) {
     {
       method: "POST",
       headers: {
-        "x-goog-api-key": apiKey,
         "X-Goog-Upload-Protocol": "resumable",
         "X-Goog-Upload-Command": "start",
         "X-Goog-Upload-Header-Content-Length": String(bytes.length),
@@ -554,6 +619,7 @@ async function uploadForTranscription(apiKey, filePath, displayName) {
       body: JSON.stringify({ file: { display_name: displayName } }),
     },
     "Gemini file upload initialization",
+    { keySlots: [apiKeySlot] },
   );
   const uploadUrl = start.headers.get("x-goog-upload-url");
   const uploadOrigin = uploadUrl ? new URL(uploadUrl) : undefined;
@@ -569,6 +635,7 @@ async function uploadForTranscription(apiKey, filePath, displayName) {
     {
       method: "POST",
       headers: {
+        "x-goog-api-key": getGeminiApiKey(apiKeySlot),
         "Content-Length": String(bytes.length),
         "X-Goog-Upload-Offset": "0",
         "X-Goog-Upload-Command": "upload, finalize",
@@ -577,6 +644,7 @@ async function uploadForTranscription(apiKey, filePath, displayName) {
       body: bytes,
     },
     "Gemini audio upload",
+    { keySlots: [apiKeySlot] },
   );
   const file = finalized.data.file ?? finalized.data;
   if (!/^files\/[a-z0-9-]+$/.test(file?.name ?? "") || !file?.uri) {
@@ -584,14 +652,14 @@ async function uploadForTranscription(apiKey, filePath, displayName) {
       "Gemini file upload did not return a valid file reference.",
     );
   }
-  return { name: file.name, uri: file.uri };
+  return { name: file.name, uri: file.uri, apiKeySlot };
 }
 
-async function deleteGeminiFile(apiKey, name) {
+async function deleteGeminiFile(apiKeySlot, name) {
   const response = await fetch(`${API_ROOT}/v1beta/${name}`, {
     method: "DELETE",
     headers: {
-      "x-goog-api-key": apiKey,
+      "x-goog-api-key": getGeminiApiKey(apiKeySlot),
       "Api-Revision": API_REVISION,
     },
   });
@@ -610,10 +678,11 @@ async function deleteGeminiFile(apiKey, name) {
 }
 
 function safeErrorMessage(error) {
-  return String(error?.message ?? error).replace(
-    /(?:AIza)[A-Za-z0-9_-]{20,}/g,
-    "[redacted]",
-  );
+  let message = String(error?.message ?? error);
+  for (const { key } of geminiApiKeySlots) {
+    message = message.replaceAll(key, "[redacted]");
+  }
+  return message.replace(/(?:AIza|AQ\.)[A-Za-z0-9._-]{20,}/g, "[redacted]");
 }
 
 async function findVerifiedSampleFallback({ episodeId, episode, narration, textHash, profile }) {
@@ -1001,82 +1070,101 @@ try {
     let attempts = metadata.transcriptionAttempts?.[index] ?? (transcription ? 1 : 0);
     while (!chunkAlignment?.captions && attempts < 3) {
       attempts += 1;
-      const uploadedFile = await uploadForTranscription(
-        config.apiKey,
-        transcriptionAudioPath,
-        `hsk-production-${EPISODE_ID}-${index + 1}-attempt-${attempts}`,
-      );
-      try {
-        const response = await requestJson(
-          `${API_ROOT}/v1beta/interactions`,
-          {
-            method: "POST",
-            headers: {
-              "x-goog-api-key": config.apiKey,
-              "Content-Type": "application/json",
-              "Api-Revision": API_REVISION,
-            },
-            body: JSON.stringify({
-              model: config.transcribeModel,
-              input: [{
-                type: "audio",
-                uri: uploadedFile.uri,
-                mime_type: audioMimeType(transcriptionAudioPath),
-              }],
-              generation_config: {
-                transcription_config: {
-                  language_codes: transcriptionLanguages,
-                  mode: { type: "verbatim", timestamp_granularities: ["word"] },
-                },
-              },
-            }),
-          },
-          "Gemini word transcription",
-        );
-        const annotations = getWordAnnotations(response.data);
-        const transcriptText = response.data.output_text ??
-          (response.data.steps ?? [])
-            .filter((step) => step.type === "model_output")
-            .flatMap((step) => step.content ?? [])
-            .filter((block) => block.type === "text")
-            .map((block) => block.text ?? "")
-            .join("");
-        transcription = {
-          transcript: transcriptText,
-          wordAnnotations: annotations.map((word) => ({
-            text: word.text,
-            startOffset: word.start_offset,
-            endOffset: word.end_offset,
-          })),
-        };
-      } finally {
+      let responseData;
+      const keySlots = orderedGeminiApiKeySlots();
+      for (const [keyIndex, apiKeySlot] of keySlots.entries()) {
+        let uploadedFile;
         try {
-          await deleteGeminiFile(config.apiKey, uploadedFile.name);
-          metadata.transcriptionUploadCleanupResults.push({
-            chunk: index + 1,
-            attempt: attempts,
-            deleted: true,
-          });
+          uploadedFile = await uploadForTranscription(
+            apiKeySlot,
+            transcriptionAudioPath,
+            `hsk-production-${EPISODE_ID}-${index + 1}-attempt-${attempts}`,
+          );
+          try {
+            const response = await requestJson(
+              `${API_ROOT}/v1beta/interactions`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Api-Revision": API_REVISION,
+                },
+                body: JSON.stringify({
+                  model: config.transcribeModel,
+                  input: [{
+                    type: "audio",
+                    uri: uploadedFile.uri,
+                    mime_type: audioMimeType(transcriptionAudioPath),
+                  }],
+                  generation_config: {
+                    transcription_config: {
+                      language_codes: transcriptionLanguages,
+                      mode: { type: "verbatim", timestamp_granularities: ["word"] },
+                    },
+                  },
+                }),
+              },
+              "Gemini word transcription",
+              { keySlots: [apiKeySlot] },
+            );
+            responseData = response.data;
+          } finally {
+            try {
+              await deleteGeminiFile(uploadedFile.apiKeySlot, uploadedFile.name);
+              metadata.transcriptionUploadCleanupResults.push({
+                chunk: index + 1,
+                attempt: attempts,
+                apiKeySlot,
+                deleted: true,
+              });
+            } catch (error) {
+              metadata.transcriptionUploadCleanupResults.push({
+                chunk: index + 1,
+                attempt: attempts,
+                apiKeySlot,
+                deleted: false,
+                error: safeErrorMessage(error),
+              });
+              metadata.transcriptionUploadCleanupErrors ??= [];
+              metadata.transcriptionUploadCleanupErrors.push({
+                chunk: index + 1,
+                attempt: attempts,
+                fileName: uploadedFile.name,
+                error: safeErrorMessage(error),
+              });
+            }
+            metadata.transcriptionUploadDeleted = metadata.transcriptionUploadCleanupResults.every(
+              (result) => result.deleted === true,
+            );
+            await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
+          }
+          break;
         } catch (error) {
-          metadata.transcriptionUploadCleanupResults.push({
-            chunk: index + 1,
-            attempt: attempts,
-            deleted: false,
-            error: safeErrorMessage(error),
-          });
-          metadata.transcriptionUploadCleanupErrors ??= [];
-          metadata.transcriptionUploadCleanupErrors.push({
-            chunk: index + 1,
-            attempt: attempts,
-            fileName: uploadedFile.name,
-            error: safeErrorMessage(error),
-          });
+          if (!error.geminiQuotaLimit || keyIndex === keySlots.length - 1) throw error;
+          console.warn(
+            `Gemini transcription reached a limit on key slot ${apiKeySlot}; retrying the upload and transcription with backup slot ${keySlots[keyIndex + 1]}.`,
+          );
         }
-        metadata.transcriptionUploadDeleted = metadata.transcriptionUploadCleanupResults.every(
-          (result) => result.deleted === true,
-        );
-        await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
       }
+      if (!responseData) {
+        throw new Error("Gemini transcription did not return a response.");
+      }
+      const annotations = getWordAnnotations(responseData);
+      const transcriptText = responseData.output_text ??
+        (responseData.steps ?? [])
+          .filter((step) => step.type === "model_output")
+          .flatMap((step) => step.content ?? [])
+          .filter((block) => block.type === "text")
+          .map((block) => block.text ?? "")
+          .join("");
+      transcription = {
+        transcript: transcriptText,
+        wordAnnotations: annotations.map((word) => ({
+          text: word.text,
+          startOffset: word.start_offset,
+          endOffset: word.end_offset,
+        })),
+      };
       const attemptPath = path.join(
         outputDir,
         `transcription-part-${chunkNumber}-attempt-${attempts}.json`,
