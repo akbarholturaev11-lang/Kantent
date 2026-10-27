@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import fs from "node:fs";
 import { resolveTodayVideo } from "./resolve-production-date.mjs";
-import { verifiedPublishedRecords, confirmedPublishedIds, confirmedPublishedFor, assertNotPreviouslyPublished } from "./published-evidence.mjs";
+import { verifiedPublishedRecords, confirmedPublishedIds, confirmedPublishedFor, confirmedPublishedInAllLanguages, assertNotPreviouslyPublished } from "./published-evidence.mjs";
+import { withLanguage } from "./language-context.mjs";
 const calendar=JSON.parse(fs.readFileSync(new URL("../content/calendar.json",import.meta.url),"utf8"));
 const verified=verifiedPublishedRecords();
 
@@ -41,4 +42,56 @@ test("scheduled, approved or unverified entries cannot count as published",()=>{
 test("when all future episodes are published, no stale episode is repeated",()=>{
  const ids=new Set(calendar.items.filter(item=>item.date>="2026-10-11").map(item=>item.id));
  assert.throws(()=>resolveTodayVideo(calendar,new Date("2026-10-11T03:30:00Z"),{confirmedPublishedEpisodeIds:ids}),/no upcoming planned video/);
+});
+
+test("legacy publication evidence protects only the Russian version",()=>{
+  const records=[{...verified[0]}];
+  delete records[0].language;
+  withLanguage("ru",()=>{
+    assert.equal(confirmedPublishedFor("zai-location",records).length,1);
+    assert.deepEqual([...confirmedPublishedIds(records)],["zai-location"]);
+    assert.throws(()=>assertNotPreviouslyPublished("zai-location",records),/already has externally VERIFIED/);
+  });
+  withLanguage("tg",()=>{
+    assert.equal(confirmedPublishedFor("zai-location",records).length,0);
+    assert.equal(confirmedPublishedIds(records).size,0);
+    assert.doesNotThrow(()=>assertNotPreviouslyPublished("zai-location",records));
+  });
+  assert.equal(records[0].language,undefined,"reading history must not rewrite it");
+});
+
+test("explicit Tajik publications protect Tajik without blocking Russian",()=>{
+  const records=[{...verified[0],episodeId:"tajik-only",language:"tg"}];
+  withLanguage("ru",()=>assert.doesNotThrow(()=>assertNotPreviouslyPublished("tajik-only",records)));
+  withLanguage("tg",()=>{
+    assert.deepEqual([...confirmedPublishedIds(records)],["tajik-only"]);
+    assert.throws(()=>assertNotPreviouslyPublished("tajik-only",records),/already has externally VERIFIED/);
+  });
+  // Explicit record arguments and language selection remain usable by callers.
+  assert.equal(confirmedPublishedFor("tajik-only",records,"tg").length,1);
+  assert.equal(confirmedPublishedFor("tajik-only",records,"ru").length,0);
+});
+
+test("bilingual calendar skips only episodes published in all requested languages",()=>{
+  const records=[
+    {...verified[0],episodeId:"ru-only"},
+    {...verified[0],episodeId:"both",language:"ru"},
+    {...verified[0],episodeId:"both",language:"tg"},
+    {...verified[0],episodeId:"tg-only",language:"tg"},
+  ];
+  withLanguage("tg",()=>{
+    assert.deepEqual([...confirmedPublishedInAllLanguages(["ru","tg"],records)],["both"]);
+    assert.deepEqual([...confirmedPublishedInAllLanguages(["ru"],records)],["ru-only","both"]);
+  });
+  assert.throws(()=>confirmedPublishedInAllLanguages([],records),/At least one/);
+  assert.throws(()=>confirmedPublishedInAllLanguages(["uz"],records),/Language must be/);
+});
+
+test("publication evidence rejects unknown languages and duplicate provider IDs across languages",()=>{
+  const record={...verified[0],language:"uz"};
+  assert.throws(()=>verifiedPublishedRecords({schemaVersion:1,records:[record]}),/Unverified/);
+  assert.throws(()=>verifiedPublishedRecords({schemaVersion:1,records:[
+    {...verified[0],language:"ru"},
+    {...verified[0],language:"tg"},
+  ]}),/Duplicate published post ID/);
 });

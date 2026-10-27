@@ -1,0 +1,67 @@
+{
+  "profileId": "tg-gemini-kore-v1",
+  "revision": 1,
+  "status": "approved",
+  "modelDecisionRequired": false,
+  "provider": "gemini-api",
+  "serviceName": "Google Gemini API",
+  "locale": "tg-TJ",
+  "voiceName": "Kore",
+  "ttsModel": "gemini-3.8-flash-tts",
+  "transcriptionModel": "gemini-3.5-transcribe",
+  "spokenStyle": "",
+  "outputFormat": "MP3",
+  "mp3BitrateKbps": 128,
+  "sampleRateHz": 24000,
+  "channels": 1,
+  "scope": "Tajik HSK AI videos; owner-approved Gemini Kore series voice",
+  "sampleEpisodeId": "er-vs-liang-cafe-20261026",
+  "approval": {
+    "approvedAt": "2026-10-27T08:43:54.394Z",
+    "approvedBy": "owner"
+  },
+  "capabilityEvidence": {
+    "checkedOn": "2026-10-26",
+    "ttsSource": "https://ai.google.dev/gemini-api/docs/speech-generation",
+    "transcriptionSource": "https://ai.google.dev/gemini-api/docs/transcribe",
+    "finding": "Google lists Tajik for Gemini 3.8 Flash TTS and tg-TJ for Gemini 3.5 Transcribe. Gemini 3.8 Flash-Lite TTS, used by the Russian profile, does not list Tajik support."
+  },
+  "changeRule": "Use this owner-approved profile as the fixed voice for Tajik HSK videos. A later voice, model or provider change requires an explicit owner decision and a freshly approved Tajik sample. Never reuse this profile for Russian videos.",
+  "modelDecision": {
+    "approvedBy": "owner",
+    "approvedAt": "2026-10-26T14:32:06.419Z",
+    "ttsModel": "gemini-3.8-flash-tts"
+  },
+  "auditionApproval": {
+    "approvedBy": "owner",
+    "approvedAt": "2026-10-26T14:39:37.592Z",
+    "ownerWording": "chotka menga yoqdi. 🔥",
+    "sampleAudio": "review/er-vs-liang-cafe-20261026/tg/gemini-production/2026-10-26T14-33-20-669Z/voice.mp3",
+    "voiceProfileId": "tg-gemini-kore-v1",
+    "ttsModel": "gemini-3.8-flash-tts",
+    "voiceName": "Kore",
+    "locale": "tg-TJ",
+    "validationStatus": "owner-approved-sample-exact-captions-verified",
+    "sampleAudioSha256": "46644b064bddde3cf3639b98a56cc8e26729e6a20c4504f78368063620fff3b6"
+  },
+  "sampleAudio": "review/er-vs-liang-cafe-20261026/tg/gemini-production/2026-10-26T14-33-20-669Z/voice.mp3",
+  "captionValidation": {
+    "status": "passed",
+    "validatedAt": "2026-10-27T08:44:20.000Z",
+    "reason": "All 143 normalized narration tokens have exact same-model word timestamps; the standalone Mandarin liǎng homophone was timed from a same-model segment and matched to the saved voice audio.",
+    "evidenceDirectory": "review/er-vs-liang-cafe-20261026/tg/gemini-production/2026-10-26T14-33-20-669Z/recovery-diagnostic",
+    "expectedNormalizedTokens": 143,
+    "recognizedNormalizedTokens": 143,
+    "unresolvedTokens": [],
+    "recoveredWord": {
+      "raw": "量",
+      "canonicalLessonCharacter": "两",
+      "sceneId": "order",
+      "startMs": 31650,
+      "endMs": 32050,
+      "model": "gemini-3.5-transcribe"
+    },
+    "audioMustNotBeRegeneratedForTranscription": true
+  },
+  "sampleCaptions": "review/er-vs-liang-cafe-20261026/tg/gemini-production/2026-10-26T14-33-20-669Z/captions.vtt"
+}

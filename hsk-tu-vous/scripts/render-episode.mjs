@@ -12,6 +12,9 @@ import {
 } from "./platform-exports.mjs";
 import { renderSharedPlatformVideos } from "./render-platform-videos.mjs";
 import { prepareSemanticRender } from "./semantic-review-integration.mjs";
+import { validateProductionDuration } from "./duration-policy.mjs";
+import { compileMotionDesignTimeline } from "./motion-design-plan.mjs";
+import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import {
   getEpisode,
   episodeContentHash,
@@ -37,6 +40,7 @@ const visualSystem = await readJson(
   path.join(PROJECT_ROOT, "content", "visual-system.json"),
 );
 validateEpisode(episode);
+validateLessonPresentation(episode, visualSystem.lessonPresentation);
 const ctaValidation = await requireCurrentCta(episode);
 const voiceProfile = await requireApprovedVoiceProfile(id);
 if (episode.voiceProvider !== voiceProfile.provider)
@@ -73,7 +77,9 @@ if (perWordCueCount / episode.captions.length < 0.8) {
 }
 // Verify every spoken action against real Gemini word captions BEFORE writing
 // working copies, CTA registrations or production packages.
+const durationValidation = validateProductionDuration(episode, visualSystem.duration);
 const semanticTimeline = prepareSemanticRender(episode);
+const motionTimeline = compileMotionDesignTimeline(episode);
 const folder = reviewDir(id);
 await fs.mkdir(folder, { recursive: true });
 episode.publishingStatus = "pending-owner-review";
@@ -86,6 +92,7 @@ if (registrations.length) {
 await writeJson(filePath, episode);
 await invalidateReviewArtifacts(id);
 if (semanticTimeline) await writeJson(path.join(folder, "visual-timeline.json"), semanticTimeline);
+if (motionTimeline) await writeJson(path.join(folder, "motion-timeline.json"), motionTimeline);
 await writeStatus(id, {
   stage: "rendering",
   sourceRevision,
@@ -132,7 +139,10 @@ try {
       "utf8",
     );
     const hashtags = (variant.hashtags || []).join(" ");
-    const postText = `${variant.caption || variant.title}\n\n${hashtags}\n\n${variant.cta}\n\nТема: ${variant.title}\nПлатформа: ${platform}\nСтатус: пакет готов к ручной проверке HSK AI`;
+    const labels = variant.languageCode === "tg-TJ"
+      ? { topic: "Мавзӯъ", platform: "Платформа", status: "Ҳолат", ready: "баста барои баррасии дастӣ омода аст" }
+      : { topic: "Тема", platform: "Платформа", status: "Статус", ready: "пакет готов к ручной проверке" };
+    const postText = `${variant.caption || variant.title}\n\n${hashtags}\n\n${variant.cta}\n\n${labels.topic}: ${variant.title}\n${labels.platform}: ${platform}\n${labels.status}: ${labels.ready} HSK AI`;
     await fs.writeFile(files.post, `${postText}\n`, "utf8");
     platformPackages[platform] = {
       ...files,
@@ -162,7 +172,9 @@ await writeStatus(id, {
   post: paths.instagram.post,
   platformPackages,
   sharedLessonRenderedOnce: true,
-  semanticReviewRendered: Boolean(semanticTimeline),
+  semanticReviewRendered: Boolean(semanticTimeline) && !motionTimeline,
+  motionDesignRendered: Boolean(motionTimeline),
+  motionBeatCount: motionTimeline?.scenes.reduce((sum,scene)=>sum+scene.beats.length,0) ?? 0,
   semanticPublicationGate: semanticTimeline ? "owner-preview-required" : null,
   voiceProfileId: voiceProfile.profileId,
   voice: voiceProfile.voiceName,
@@ -180,6 +192,7 @@ await writeStatus(id, {
     : "source-audit-needed",
   burnedInCaptions: true,
   timingSource: episode.captionSource,
+  durationValidation,
   durationSec: Number(
     (
       episode.scenes.reduce(

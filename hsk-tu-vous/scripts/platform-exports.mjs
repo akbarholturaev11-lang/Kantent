@@ -55,6 +55,7 @@ export function assertSharedLesson(base, variant) {
       JSON.stringify(variant.scenes.slice(0, -1)) ||
     narrationHash(base) !== narrationHash(variant) ||
     [
+      "languageCode",
       "audioSrc",
       "voiceTextHash",
       "voiceProfileId",

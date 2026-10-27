@@ -10,6 +10,7 @@ import {
   type TimedCaption,
 } from "../scripts/caption-utils.mjs";
 import visualSystem from "../content/visual-system.json";
+import { actionTextAtFrame, actionSubtitlePresentation, type ActionCaptionScene } from "../scripts/action-text-layout.mjs";
 
 export type { TimedCaption } from "../scripts/caption-utils.mjs";
 
@@ -40,7 +41,9 @@ export const CaptionOverlay: React.FC<{
   captions: TimedCaption[];
   sceneSections: CaptionSceneSection[];
   motionDesign?: boolean;
-}> = ({ captions, sceneSections, motionDesign = false }) => {
+  plainMotionDesign?: boolean;
+  actionCaptionScenes?: ActionCaptionScene[];
+}> = ({ captions, sceneSections, motionDesign = false, plainMotionDesign = false, actionCaptionScenes = [] }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const pages = useMemo(
@@ -62,6 +65,10 @@ export const CaptionOverlay: React.FC<{
   const variant = (variants[page.styleId as keyof typeof variants] ??
     variants.pill) as CaptionVariant;
   const isCtaFooter = page.styleId === "ctaFooter";
+  const actionText = isCtaFooter ? null : actionTextAtFrame(actionCaptionScenes, frame);
+  const presentation = actionSubtitlePresentation(page.text, actionText);
+  const displayText = presentation.text;
+  if (!displayText) return null;
 
   const pageStartFrame = (page.startMs / 1000) * fps;
   const entryFrame = Math.max(0, frame - pageStartFrame);
@@ -94,7 +101,8 @@ export const CaptionOverlay: React.FC<{
           top: motionDesign
             ? isCtaFooter
               ? variant.topInsetPx
-              : 1490
+              : actionText ? visualSystem.narratedActionLayout.subtitleTopPx
+                : plainMotionDesign ? visualSystem.narratedMotionLayout.captionTopPx : 1490
             : variant.topInsetPx,
           display: "flex",
           justifyContent: "center",
@@ -112,19 +120,21 @@ export const CaptionOverlay: React.FC<{
         }}
       >
         <div
+          data-subtitle-block
           style={{
             maxWidth: motionDesign ? 960 : CAPTION_STYLE.maxWidthPx,
-            padding: motionDesign
+            padding: motionDesign && !plainMotionDesign
               ? "12px 26px"
               : `${variant.verticalPaddingPx}px ${variant.horizontalPaddingPx}px`,
-            borderRadius: motionDesign ? 999 : variant.borderRadiusPx,
-            border: motionDesign ? "2px solid rgba(255,255,255,.42)" : variant.border,
-            background: motionDesign ? "rgba(24,20,25,.86)" : variant.background,
-            boxShadow: motionDesign
+            borderRadius: motionDesign && !plainMotionDesign ? 999 : variant.borderRadiusPx,
+            border: motionDesign && !plainMotionDesign ? "2px solid rgba(255,255,255,.42)" : variant.border,
+            background: motionDesign && !plainMotionDesign ? "rgba(24,20,25,.86)" : variant.background,
+            boxShadow: motionDesign && !plainMotionDesign
               ? "0 20px 56px rgba(0,0,0,.32)"
               : variant.boxShadow,
             color: motionDesign ? "#FFF5DF" : CAPTION_STYLE.foreground,
-            fontSize: motionDesign ? Math.max(variant.fontSizePx, 48) : variant.fontSizePx,
+            fontSize: actionText ? visualSystem.narratedActionLayout.subtitleFontPx
+              : motionDesign ? Math.max(variant.fontSizePx, 48) : variant.fontSizePx,
             fontWeight: variant.fontWeight,
             lineHeight: CAPTION_STYLE.lineHeight,
             textAlign: variant.textAlign,
@@ -133,7 +143,21 @@ export const CaptionOverlay: React.FC<{
             overflowWrap: "anywhere",
           }}
         >
-          {page.text}
+          <span data-subtitle-text>{presentation.focus
+            ? displayText.split(presentation.focus).map((part, index) => <span key={index}>
+                {index > 0 && <span style={{color: visualSystem.colors.brandGold}}>{presentation.focus}</span>}{part}
+              </span>)
+            : displayText}</span>
+          {presentation.pinyin && <span data-subtitle-pinyin style={{marginLeft: 20,
+            fontSize: visualSystem.narratedMotionLayout.pinyinFontPx,
+            color: visualSystem.colors.brandGold}}>{presentation.pinyin}</span>}
+          {presentation.examples.map((example, index) => <span key={index} data-subtitle-example
+            style={{display: "inline-block", marginLeft: 20}}>
+            {index > 0 && <span style={{marginRight: 20}}>·</span>}
+            {example.focus ? example.text.split(example.focus).map((part, partIndex) => <span key={partIndex}>
+              {partIndex > 0 && <span style={{color: visualSystem.colors.brandGold}}>{example.focus}</span>}{part}
+            </span>) : example.text}
+          </span>)}
         </div>
       </div>
     </AbsoluteFill>

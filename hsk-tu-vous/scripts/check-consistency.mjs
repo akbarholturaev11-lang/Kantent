@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { validatePlatformCtaConfig } from "./platform-cta.mjs";
+import { readLanguages, lessonSourceHash, ctaSourceHash } from "./language-context.mjs";
 
 export const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -145,6 +146,37 @@ export function validateConsistency(root = projectRoot) {
   const cta = readJson(root, "content/cta-lab.json", errors);
   const hook = readJson(root, "content/hook-lab.json", errors);
   const visual = readJson(root, "content/visual-system.json", errors);
+  try {
+    const languages = readLanguages(root);
+    const roots = new Set();
+    for (const [language, entry] of Object.entries(languages.languages)) {
+      if (!["ru", "tg"].includes(language) || !entry.languageCode ||
+          typeof entry.contentRoot !== "string" || !/^content(?:\/locales\/[a-z]{2})?$/.test(entry.contentRoot) || roots.has(entry.contentRoot)) {
+        errors.push(`content/languages.json: invalid/duplicate content root or locale for ${language}`);
+        continue;
+      }
+      roots.add(entry.contentRoot);
+      const profile = readJson(root, `${entry.contentRoot}/voice-profile.json`, errors);
+      const localeCta = readJson(root, `${entry.contentRoot}/cta-lab.json`, errors);
+      const localeHook = readJson(root, `${entry.contentRoot}/hook-lab.json`, errors);
+      if (profile?.locale !== entry.languageCode) errors.push(`${language}: voice locale does not match language config`);
+      if (language !== "ru") {
+        if (localeCta?.languageCode !== entry.languageCode || localeHook?.languageCode !== entry.languageCode)
+          errors.push(`${language}: CTA/Hook lab language mismatch`);
+        if (localeCta && cta && localeCta.localization?.sourceHash !== ctaSourceHash(cta))
+          errors.push(`${language}: translated CTA needs review against the current shared direction/rules`);
+        if (localeCta) errors.push(...validatePlatformCtaConfig(localeCta).map(issue => `${language}: ${issue}`));
+        const episodesDir = path.join(root, entry.contentRoot, "episodes");
+        for (const filename of fs.readdirSync(episodesDir).filter(name => name.endsWith(".json"))) {
+          const episode = readJson(root, `${entry.contentRoot}/episodes/${filename}`, errors);
+          const original = readJson(root, `content/episodes/${filename}`, errors);
+          if (episode && original && (episode.languageCode !== entry.languageCode || episode.id !== original.id || episode.date !== original.date ||
+              episode.localization?.sourceHash !== lessonSourceHash(original) || episode.localization?.sourceEpisodeId !== original.id || episode.localization?.language !== language))
+            errors.push(`${language}/${filename}: invalid/stale localized lesson binding`);
+        }
+      }
+    }
+  } catch (error) { errors.push(`Language configuration: ${error.message}`); }
 
   if (calendar) {
     if (!calendar.timezone || !Array.isArray(calendar.items) || calendar.items.length === 0) {

@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "baselineFormatId": "question",
+  "status": "awaiting-first-platform-readback",
+  "platformsConfigured": [],
+  "policy": {
+    "readbackWindows": [
+      "24h",
+      "7d"
+    ],
+    "compareWithinSamePlatformWindowMetricLevelAndDurationBand": true,
+    "minimumPostsPerFormat": 3,
+    "minimumViewsPerPost": 500,
+    "minimumRelativeLiftPercent": 10,
+    "maximumSecondaryIntentDropPercent": 10,
+    "secondaryIntentMetrics": [
+      "savesPer1000Views",
+      "sharesPer1000Views"
+    ],
+    "promotionRequiresOwnerDecision": true,
+    "thresholdNote": "Initial operating thresholds to avoid deciding from tiny samples; they are not a promise of statistical significance and should be recalibrated after the first 12 published episodes.",
+    "distinctTopicSpecificHookPerEpisode": true,
+    "planningBufferSource": "content/calendar.json#planningBuffer",
+    "analysisLookbackDays": 30,
+    "earlySignalWindow": "24h",
+    "primaryDecisionWindow": "7d",
+    "missingPrimaryWindowDecision": "insufficient-evidence",
+    "analysisScope": "publishedAt-rolling-window",
+    "localizedGuardrails": [
+      "Write a distinct topic-specific hook with a real beginner problem and an early truthful payoff.",
+      "Do not infer Tajik audience performance from Russian observations."
+    ]
+  },
+  "formats": [
+    {
+      "id": "question",
+      "name": "Savol / sinov",
+      "description": "Birinchi soniyalarda tomoshabinga aniq savol bering va javobni kutishga sabab yarating."
+    },
+    {
+      "id": "contrast",
+      "name": "Tezkor taqqoslash",
+      "description": "Ikki yoki uch shaklni yonma-yon ko‘rsatib, bitta farqni oching."
+    },
+    {
+      "id": "scenario",
+      "name": "Hayotiy vaziyat",
+      "description": "Tanish vaziyat yoki juda qisqa dialog bilan boshlang; darsdagi iborani darhol eshittiring."
+    }
+  ],
+  "readbacks": [],
+  "ownerCorrections": [],
+  "revision": 1,
+  "languageCode": "tg-TJ",
+  "localization": {
+    "source": "content/hook-lab.json",
+    "authoredOn": "2026-10-26"
+  }
+}

@@ -1,0 +1,540 @@
+{
+  "id": "er-vs-liang-cafe-20261026",
+  "date": "2026-10-26",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "tg-TJ",
+  "title": "二 ё 两: ду пиёла чойро чӣ тавр фармоиш диҳем",
+  "level": "HSK 1",
+  "topic": "二 ва 两: адад ва миқдор пеш аз калимаи ҳисобӣ",
+  "durationTargetSec": 50,
+  "caption": "Ду пиёла чой — 两杯茶 (liǎng bēi chá), аммо бист — 二十 (èrshí). Пеш аз калимаи ҳисобӣ 两 меояд; дар 二十 ва 第二 шакли 二 истифода мешавад.",
+  "hashtags": [
+    "#HSKAI",
+    "#забоничинӣ",
+    "#HSK1",
+    "#омӯзишичинӣ"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "Дар таркиби маъмулии миқдорӣ пеш аз калимаи ҳисобӣ 两 (liǎng) истифода мешавад: 两杯茶 — ду пиёла чой, 两个人 — ду нафар.",
+    "Ҳангоми шуморидан ва дар ададҳои даҳӣ 二 (èr) истифода мешавад: 一、二、三 ва 二十.",
+    "Баъд аз нишондиҳандаи тартибии 第 шакли 二 меояд: 第二 — дуюм. Дар ин таркиб 两 ҷойи 二-ро намегирад.",
+    "Ин қоидаи амалӣ барои таркибҳои дарс аст. 二 ва 两 дар ҳама ҷо ивазшаванда нестанд ва истифодаи 两 танҳо бо калимаҳои ҳисобӣ маҳдуд намешавад."
+  ],
+  "examples": [
+    "二 èr — ду, ҳамчун адад",
+    "两 liǎng — ду, ҳамчун миқдор",
+    "杯 bēi — калимаи ҳисобӣ барои пиёла",
+    "两杯茶 liǎng bēi chá — ду пиёла чой",
+    "我要两杯茶。 Wǒ yào liǎng bēi chá. — Ба ман ду пиёла чой диҳед.",
+    "二十 èrshí — бист",
+    "第二 dì èr — дуюм"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "ДУ ПИЁЛА ЧОЙ: 二 Ё 两?",
+      "narration": "Дар қаҳвахона ду пиёла чой мехоҳӣ. 二 ё 两? Ҷавоби дуруст — 两.",
+      "screenCaption": "Ду пиёла чой → 两杯茶",
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "cafe-question",
+          "kind": "choice",
+          "cueText": "Дар қаҳвахона",
+          "visual": {
+            "title": "кадом шакл?",
+            "hanzi": "二 / 两",
+            "pinyin": "èr / liǎng",
+            "meaning": "кадом шакл?",
+            "choices": [
+              "二",
+              "两"
+            ]
+          },
+          "explains": "The same numeral choice as the source lesson."
+        },
+        {
+          "id": "two-cups",
+          "kind": "quantity",
+          "cueText": "ду пиёла",
+          "visual": {
+            "title": "кадом шакл барои ду пиёла?",
+            "hanzi": "?",
+            "pinyin": "",
+            "meaning": "кадом шакл барои ду пиёла?",
+            "object": "tea-cup",
+            "count": 2
+          },
+          "explains": "Show exactly two cups when their quantity is spoken."
+        },
+        {
+          "id": "correct-form",
+          "kind": "choice",
+          "cueText": "两",
+          "visual": {
+            "title": "ду пиёла чой",
+            "hanzi": "两",
+            "pinyin": "liǎng",
+            "meaning": "ду пиёла чой",
+            "choices": [
+              "二",
+              "两"
+            ],
+            "selected": "两",
+            "object": "tea-cup",
+            "count": 2
+          },
+          "explains": "Resolve the answer on its second spoken occurrence.",
+          "cueOccurrence": 2
+        }
+      ],
+      "editPlan": "Show the question, then two cups; resolve the answer only at the authored Tajik/Mandarin cues. No separate title stack."
+    },
+    {
+      "id": "classifier",
+      "kind": "vocabulary",
+      "durationSec": 12,
+      "headline": "两 ПЕШ АЗ КАЛИМАИ ҲИСОБӢ",
+      "narration": "Пеш аз калимаи ҳисобии 杯 шакли 两 меояд. 两杯茶 — ду пиёла чой. 两 миқдорро нишон медиҳад, 杯 пиёларо мешуморад, 茶 бошад чой аст. Ин се қисм як ибора месозанд.",
+      "screenCaption": "两 + 杯 + 茶",
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "classifier-focus",
+          "kind": "phrase",
+          "cueText": "Пеш аз",
+          "visual": {
+            "title": "ду пиёла чой",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "ду пиёла чой",
+            "parts": [
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "杯"
+          },
+          "explains": "Locate the classifier slot."
+        },
+        {
+          "id": "quantity-focus",
+          "kind": "phrase",
+          "cueText": "шакли",
+          "visual": {
+            "title": "ду пиёла чой",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "ду пиёла чой",
+            "parts": [
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "两"
+          },
+          "explains": "Locate the quantity before the classifier."
+        },
+        {
+          "id": "group-cups",
+          "kind": "quantity",
+          "cueText": "两杯茶",
+          "visual": {
+            "title": "ду пиёла чой",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "ду пиёла чой",
+            "object": "tea-cup",
+            "count": 2,
+            "grouped": true
+          },
+          "explains": "Bind the Mandarin phrase to two visible cups."
+        },
+        {
+          "id": "quantity-part",
+          "kind": "phrase",
+          "cueText": "миқдорро",
+          "visual": {
+            "title": "ду пиёла чой",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "ду пиёла чой",
+            "parts": [
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "两"
+          },
+          "explains": "Explain quantity."
+        },
+        {
+          "id": "cup-part",
+          "kind": "phrase",
+          "cueText": "пиёларо",
+          "visual": {
+            "title": "ду пиёла чой",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "ду пиёла чой",
+            "parts": [
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "杯"
+          },
+          "explains": "Explain the cup classifier."
+        },
+        {
+          "id": "tea-part",
+          "kind": "phrase",
+          "cueText": "чой аст",
+          "visual": {
+            "title": "ду пиёла чой",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "ду пиёла чой",
+            "parts": [
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "茶"
+          },
+          "explains": "Explain the noun."
+        },
+        {
+          "id": "assemble-phrase",
+          "kind": "phrase",
+          "cueText": "Ин се қисм",
+          "visual": {
+            "title": "ду пиёла чой",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "ду пиёла чой",
+            "parts": [
+              "两",
+              "杯",
+              "茶"
+            ]
+          },
+          "explains": "Assemble the full phrase after its parts are explained."
+        }
+      ],
+      "editPlan": "Follow the translated exact-word cues through classifier, quantity, cups and assembled phrase. Do not reuse Russian timing."
+    },
+    {
+      "id": "order",
+      "kind": "example",
+      "durationSec": 9,
+      "headline": "ФАРМОИШ ДАР ҚАҲВАХОНА",
+      "narration": "Масалан, бигӯ: 我要两杯茶。 Яъне: «Ба ман ду пиёла чой диҳед». Дар ин ҷумла 两 миқдори пиёлаҳоро нишон медиҳад.",
+      "screenCaption": "我要两杯茶。",
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "order-context",
+          "kind": "quantity",
+          "cueText": "Масалан",
+          "visual": {
+            "title": "ду пиёла чой",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "ду пиёла чой",
+            "object": "tea-cup",
+            "count": 2,
+            "grouped": true
+          },
+          "explains": "Introduce the same two-cup order."
+        },
+        {
+          "id": "spoken-order",
+          "kind": "phrase",
+          "cueText": "我要两杯茶",
+          "visual": {
+            "title": "Ба ман ду пиёла чой диҳед.",
+            "hanzi": "我要两杯茶。",
+            "pinyin": "Wǒ yào liǎng bēi chá.",
+            "meaning": "Ба ман ду пиёла чой диҳед.",
+            "parts": [
+              "我要",
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "两"
+          },
+          "explains": "Assemble exactly the spoken Mandarin sentence."
+        },
+        {
+          "id": "translated-order",
+          "kind": "quantity",
+          "cueText": "Ба ман",
+          "visual": {
+            "title": "ду пиёла чой",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "ду пиёла чой",
+            "object": "tea-cup",
+            "count": 2,
+            "grouped": true
+          },
+          "explains": "Show the same quantity during its Tajik meaning."
+        },
+        {
+          "id": "quantity-in-order",
+          "kind": "phrase",
+          "cueText": "миқдори",
+          "visual": {
+            "title": "миқдори пиёлаҳо",
+            "hanzi": "我要两杯茶。",
+            "pinyin": "Wǒ yào liǎng bēi chá.",
+            "meaning": "миқдори пиёлаҳо",
+            "parts": [
+              "我要",
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "两"
+          },
+          "explains": "Identify quantity in the whole sentence."
+        }
+      ],
+      "editPlan": "Keep the ordered cups visible, construct the full sentence, then focus the quantity. Use the existing reusable action stage."
+    },
+    {
+      "id": "numeral",
+      "kind": "context",
+      "durationSec": 8,
+      "headline": "ДАР АДАДҲО — 二",
+      "narration": "Аммо бист — 二十. Дуюм бошад — 第二. Дар ин таркибҳо 二 истифода мешавад. Яке худи адад аст, дигаре ҷойро дар тартиб нишон медиҳад.",
+      "screenCaption": "二十 · 第二",
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "twenty",
+          "kind": "numeral",
+          "cueText": "бист",
+          "visual": {
+            "title": "бист",
+            "hanzi": "二十",
+            "pinyin": "èrshí",
+            "meaning": "бист",
+            "value": 20
+          },
+          "explains": "Represent the number twenty."
+        },
+        {
+          "id": "er-in-twenty",
+          "kind": "numeral",
+          "cueText": "二十",
+          "visual": {
+            "title": "бист",
+            "hanzi": "二十",
+            "pinyin": "èrshí",
+            "meaning": "бист",
+            "value": 20,
+            "focus": "二"
+          },
+          "explains": "Locate 二 in twenty."
+        },
+        {
+          "id": "second-position",
+          "kind": "ordinal",
+          "cueText": "Дуюм",
+          "visual": {
+            "title": "дуюм",
+            "hanzi": "第二",
+            "pinyin": "dì èr",
+            "meaning": "дуюм",
+            "value": 2,
+            "focus": "二"
+          },
+          "explains": "Show the second position, not two objects."
+        },
+        {
+          "id": "er-models",
+          "kind": "comparison",
+          "cueText": "Дар ин",
+          "visual": {
+            "title": "адад / ҷой дар тартиб",
+            "hanzi": "二",
+            "pinyin": "èr",
+            "meaning": "адад / ҷой дар тартиб",
+            "models": [
+              {
+                "kind": "numeral",
+                "title": "бист",
+                "hanzi": "二十",
+                "pinyin": "èrshí",
+                "meaning": "бист",
+                "value": 20,
+                "focus": "二"
+              },
+              {
+                "kind": "ordinal",
+                "title": "дуюм",
+                "hanzi": "第二",
+                "pinyin": "dì èr",
+                "meaning": "дуюм",
+                "value": 2,
+                "focus": "二"
+              }
+            ]
+          },
+          "explains": "Compare the two licensed 二 constructions."
+        }
+      ],
+      "editPlan": "Move from twenty to the second ordinal position, then compare both forms. Do not claim this beginner rule is universal."
+    },
+    {
+      "id": "recap",
+      "kind": "example",
+      "durationSec": 7,
+      "headline": "БА ТАРКИБ НИГОҲ КУН",
+      "narration": "Ду пиёла — 两杯茶. Бист — 二十. Бубин, ки баъд аз адад чӣ меояд: калимаи ҳисобӣ ё қисми худи адад. Аз рӯйи ҳамин таркиб шаклро интихоб кун.",
+      "screenCaption": "两杯茶 ≠ 二十",
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recall-cups",
+          "kind": "quantity",
+          "cueText": "Ду пиёла",
+          "visual": {
+            "title": "ду пиёла чой",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "ду пиёла чой",
+            "object": "tea-cup",
+            "count": 2,
+            "grouped": true
+          },
+          "explains": "Recall the counted objects."
+        },
+        {
+          "id": "recall-twenty",
+          "kind": "numeral",
+          "cueText": "Бист",
+          "visual": {
+            "title": "бист",
+            "hanzi": "二十",
+            "pinyin": "èrshí",
+            "meaning": "бист",
+            "value": 20,
+            "focus": "二"
+          },
+          "explains": "Recall the numeral."
+        },
+        {
+          "id": "compare-models",
+          "kind": "comparison",
+          "cueText": "Бубин",
+          "visual": {
+            "title": "миқдор / адад",
+            "hanzi": "两 / 二",
+            "pinyin": "liǎng / èr",
+            "meaning": "миқдор / адад",
+            "models": [
+              {
+                "kind": "quantity",
+                "title": "ду пиёла чой",
+                "hanzi": "两杯茶",
+                "pinyin": "liǎng bēi chá",
+                "meaning": "ду пиёла чой",
+                "object": "tea-cup",
+                "count": 2,
+                "grouped": true
+              },
+              {
+                "kind": "numeral",
+                "title": "бист",
+                "hanzi": "二十",
+                "pinyin": "èrshí",
+                "meaning": "бист",
+                "value": 20
+              }
+            ]
+          },
+          "explains": "Compare the two constructions at the same scale."
+        },
+        {
+          "id": "look-after",
+          "kind": "comparison",
+          "cueText": "баъд аз адад",
+          "visual": {
+            "title": "миқдор / адад",
+            "hanzi": "两 / 二",
+            "pinyin": "liǎng / èr",
+            "meaning": "калимаи ҳисобӣ / қисми адад",
+            "models": [
+              {
+                "kind": "quantity",
+                "title": "ду пиёла чой",
+                "hanzi": "两杯茶",
+                "pinyin": "liǎng bēi chá",
+                "meaning": "ду пиёла чой",
+                "object": "tea-cup",
+                "count": 2,
+                "grouped": true,
+                "focus": "杯"
+              },
+              {
+                "kind": "numeral",
+                "title": "бист",
+                "hanzi": "二十",
+                "pinyin": "èrshí",
+                "meaning": "бист",
+                "value": 20,
+                "focus": "十"
+              }
+            ]
+          },
+          "explains": "Highlight what follows the chosen form."
+        }
+      ],
+      "editPlan": "Recall the cups and twenty, then hold the contrast with the following classifier/number part emphasized. CTA is assembled separately."
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "tg-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "Basic rules to use '二' and '两' — China Daily via ECNS",
+      "url": "https://www.ecns.cn/learning-Chinese/2015/11-19/189362.shtml",
+      "checkedAt": "2026-10-16",
+      "supports": "China Daily's examples 两个苹果, 两本书 and 第二 and 二十二 confirm 两 before ordinary classifiers, 二 in ordinals and tens; also notes larger-unit exceptions, so the lesson frames this as a beginner model."
+    },
+    {
+      "title": "二 (èr) vs 两 (liǎng) — ChineseGrammar",
+      "url": "https://chinesegrammar.app/grammar/er-liang-numbers",
+      "checkedAt": "2026-10-16",
+      "supports": "Explains 两 + measure word + noun (including 两个人 and 两本书), 二 in 二十 and 第二, and why the following construction determines which form is used."
+    }
+  ],
+  "hookExperiment": {
+    "id": "er-vs-liang-cafe-20261026-tg-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Вазъияти шиноси фармоиши ду пиёла чой ва ҷавоби барвақт бояд навомӯзи тоҷикзабонро то муқоисаи 两杯茶 бо 二十 нигоҳ дорад; натиҷа танҳо аз ченкунии воқеӣ маълум мешавад.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-26"
+  },
+  "audienceProblem": "Навомӯз 二-ро ҳамчун «ду» медонад ва онро иштибоҳан пеш аз калимаи ҳисобӣ дар фармоиш мегузорад.",
+  "learningOutcome": "Дар фармоиши маъмулӣ 两杯茶 бигӯяд ва онро аз 二十 ва 第二 фарқ кунад.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "localization": {
+    "language": "tg",
+    "sourceEpisodeId": "er-vs-liang-cafe-20261026",
+    "sourceHash": "caa585ad414cd559e3714b4a3d660e644806baa066387e622e267ee100988f1e",
+    "authoredOn": "2026-10-26",
+    "status": "draft-awaiting-audio-review"
+  }
+}

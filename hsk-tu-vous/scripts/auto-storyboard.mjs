@@ -5,6 +5,7 @@ import { recommendCreativeFormats } from "./viral-plan.mjs";
 import { validateStoryboardEpisode } from "./storyboard-validation.mjs";
 import { applySemanticReviewDraft } from "./semantic-review-integration.mjs";
 import { validateStorytellingEpisode } from "./storytelling-plan.mjs";
+import { applyLessonPresentationDefault } from "./lesson-presentation-policy.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (file) => JSON.parse(fs.readFileSync(path.join(root, "content", file), "utf8"));
@@ -77,7 +78,7 @@ function findChoice(registry, calendar, episodeByFile, targetId) {
 }
 
 export function decorateFutureLesson(episode, {calendar,registry,episodeByFile}) {
-  const lesson=clone(episode);
+  let lesson=clone(episode);
   const item=calendar.items.find(x=>x.id===lesson.id && x.date===lesson.date);
   if (!item || item.status!=="planned" || lesson.date < registry.automaticStoryboard.fromDate)
     return lesson;
@@ -85,6 +86,7 @@ export function decorateFutureLesson(episode, {calendar,registry,episodeByFile})
     return lesson;
   if (lesson.scenes?.some(s=>s.kind==="cta") || "cta" in lesson || "ctaExperiment" in lesson)
     throw Error("Automatic format selection accepts only CTA-free canonical lessons");
+  lesson=applyLessonPresentationDefault(lesson,read("visual-system.json").lessonPresentation);
   const chosen=findChoice(registry,calendar,episodeByFile,lesson.id);
   if (!chosen || chosen.status!=="creative-brief-only" || !chosen.creativeFormatId)
     throw Error(`No compatible creative format for ${lesson.id}: ${chosen?.status || "missing calendar plan"}`);

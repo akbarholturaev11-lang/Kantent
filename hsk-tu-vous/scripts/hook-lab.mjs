@@ -2,6 +2,7 @@ import { PROJECT_ROOT, readJson } from "./lib.mjs";
 import path from "node:path";
 import fs from "node:fs/promises";
 import { randomUUID } from "node:crypto";
+import { languageSettings } from "./language-context.mjs";
 
 export const HOOK_LAB_PATH = path.join(
   PROJECT_ROOT,
@@ -9,14 +10,14 @@ export const HOOK_LAB_PATH = path.join(
   "hook-lab.json",
 );
 
-export async function readHookLab(filePath = HOOK_LAB_PATH) {
+export async function readHookLab(filePath = languageSettings().hookLabPath) {
   const lab = await readJson(filePath);
   lab.ownerCorrections ??= [];
   lab.revision ??= 0;
   return lab;
 }
 
-export async function writeHookLab(lab, filePath = HOOK_LAB_PATH) {
+export async function writeHookLab(lab, filePath = languageSettings().hookLabPath) {
   if (!Number.isSafeInteger(lab.revision) || lab.revision < 0)
     throw new Error("Unsupported Hook Lab revision.");
   const lockPath = `${filePath}.lock`;

@@ -6,8 +6,9 @@
   "title": "不 и 没: как различать отрицания",
   "level": "HSK 1–2",
   "topic": "不 и 没: два способа отрицания",
-  "durationTargetSec": 30,
-  "caption": "不 часто подходит для привычки или намерения, а 没 — для отсутствия или действия, которое не произошло. Проверяйте контекст.",
+  "durationTargetSec": 48,
+  "motionDesign": true,
+  "caption": "不 — обычно не делаешь или не собираешься; 没 — действие не произошло. Выбирай по смыслу фразы.",
   "hashtags": [
     "#HSKAI",
     "#китайскийязык",
@@ -30,50 +31,54 @@
     {
       "id": "hook",
       "kind": "hook",
-      "durationSec": 4,
+      "durationSec": 5,
       "headline": "不 И 没 — РАЗНЫЕ ОТРИЦАНИЯ",
-      "narration": "Оба слова переводятся как «не», но контекст помогает выбрать нужное.",
+      "narration": "Оба слова означают «не». Какой вариант выбрать? Сравним два простых примера.",
       "screenCaption": "不 · 没",
-      "editPlan": "0–4 с. Откройте видео вопросом «不 И 没 — РАЗНЫЕ ОТРИЦАНИЯ». На первом ударе появляется крупный главный иероглиф с коротким pop; следующие beats быстро показывают контраст. Оставьте заголовок внутри безопасных полей 9:16.",
+      "editPlan": "В motion-style хуке два крупных иероглифа 不 и 没 появляются на слове «Оба» с коротким pop и тихим whoosh. Дальше типографика меняется по точным словам озвучки.",
       "visualBeats": [
         {
-          "hero": "不 ≠ 没",
-          "pinyin": "bù ≠ méi",
-          "meaning": "не · нет / не произошло",
+          "hero": "不·没",
+          "pinyin": "bù · méi",
+          "meaning": "два способа сказать «не»",
           "chinese": true,
-          "motion": "pop"
+          "motion": "pop",
+          "syncCueText": "Оба"
         }
       ],
       "cards": [
         {
-          "hanzi": "不 ≠ 没",
-          "pinyin": "bù ≠ méi",
-          "meaning": "не · нет / не произошло"
+          "hanzi": "不·没",
+          "pinyin": "bù · méi",
+          "meaning": "два способа сказать «не»"
         }
       ]
     },
     {
       "id": "bu",
       "kind": "vocabulary",
-      "durationSec": 6,
+      "durationSec": 10,
       "headline": "不: ПРИВЫЧКА ИЛИ НАМЕРЕНИЕ",
-      "narration": "不 часто используют для привычек или того, чего не собираются делать.",
+      "narration": "不 используют, когда говорят о том, чего обычно не делают или не собираются делать. Например: 我不喝咖啡 — «я не пью кофе». Здесь человек говорит о своей привычке.",
       "screenCaption": "我不喝咖啡。",
-      "editPlan": "4–10 с. Разберите понятие карточками в порядке: 不 → 我不喝咖啡。. Каждый новый иероглиф приходит отдельным slide; под ним сразу появляются пиньинь с тонами и русский смысл.",
+      "editPlan": "Покажите 不 на его произнесении. На точном cue 我不喝咖啡 появляется полная фраза; одновременно человек отводит чашку кофе, чтобы действие было видно.",
       "visualBeats": [
         {
           "hero": "不",
           "pinyin": "bù",
           "meaning": "не · часто привычка или намерение",
           "chinese": true,
-          "motion": "slide"
+          "motion": "pop",
+          "syncCueText": "不"
         },
         {
           "hero": "我不喝咖啡。",
           "pinyin": "Wǒ bù hē kāfēi.",
           "meaning": "Я не пью кофе.",
           "chinese": true,
-          "motion": "slide"
+          "motion": "slide",
+          "syncCueText": "我不喝咖啡",
+          "visualFocus": "coffee-refusal"
         }
       ],
       "cards": [
@@ -92,25 +97,27 @@
     {
       "id": "mei",
       "kind": "vocabulary",
-      "durationSec": 6,
+      "durationSec": 9,
       "headline": "没: НЕ СЛУЧИЛОСЬ",
-      "narration": "没 часто отрицает действие, которое не произошло: «я не ходил в школу».",
+      "narration": "没 используют, когда действие не произошло. Например: 我没去学校 — «я не ходил в школу». Речь о конкретном случае: человек не пошёл.",
       "screenCaption": "我没去学校。",
-      "editPlan": "4–10 с. Разберите понятие карточками в порядке: 没 → 我没去学校。. Каждый новый иероглиф приходит отдельным slide; под ним сразу появляются пиньинь с тонами и русский смысл.",
+      "editPlan": "Покажите 没 при его произнесении. Полная фраза 我没去学校 появляется на точном cue китайского примера и удерживается, пока читается перевод.",
       "visualBeats": [
         {
           "hero": "没",
           "pinyin": "méi",
           "meaning": "не произошло · не было",
           "chinese": true,
-          "motion": "slide"
+          "motion": "pop",
+          "syncCueText": "没"
         },
         {
           "hero": "我没去学校。",
           "pinyin": "Wǒ méi qù xuéxiào.",
           "meaning": "Я не ходил в школу.",
           "chinese": true,
-          "motion": "slide"
+          "motion": "slide",
+          "syncCueText": "我没去学校"
         }
       ],
       "cards": [
@@ -129,25 +136,27 @@
     {
       "id": "compare",
       "kind": "context",
-      "durationSec": 6,
+      "durationSec": 13,
       "headline": "ПОДСКАЗКА, НЕ ЖЁСТКОЕ ПРАВИЛО",
-      "narration": "我不喝咖啡 — обычно не пью кофе. 我没去学校 — не ходил в школу. Выбор зависит от смысла.",
+      "narration": "Запомни: «обычно не делаю» — 不. «Действие не произошло» — 没. Это подсказка, а не жёсткое правило: смотри на смысл всей фразы.",
       "screenCaption": "привычка · не произошло",
-      "editPlan": "5–11 с. Покажите связь между частями правила: 不喝 / 没去. Сначала выделите первую часть, затем вторую; русский вывод «привычка · не произошло» удерживайте в нижней зоне субтитров.",
+      "editPlan": "Сведите правило в два коротких motion-beat: 不喝 появляется на слове 不, затем 没去 — на слове 没. Не меняйте карточку между несвязанными репликами.",
       "visualBeats": [
         {
           "hero": "不喝",
           "pinyin": "bù hē",
-          "meaning": "не пью",
+          "meaning": "обычно не пью",
           "chinese": true,
-          "motion": "slide"
+          "motion": "pop",
+          "syncCueText": "不."
         },
         {
           "hero": "没去",
           "pinyin": "méi qù",
-          "meaning": "не ходил",
+          "meaning": "действие не произошло",
           "chinese": true,
-          "motion": "slide"
+          "motion": "pop",
+          "syncCueText": "没."
         }
       ],
       "cards": [
@@ -172,13 +181,13 @@
     {
       "title": "不 vs 没 — ChineseGrammar",
       "url": "https://chinesegrammar.app/grammar/bu-vs-mei",
-      "checkedAt": "2026-10-11",
+      "checkedAt": "2026-10-19",
       "supports": "不 for habitual or intended negation; 没(有) for an action that did not occur, as illustrated by 我不喝咖啡 and 我没去学校."
     },
     {
       "title": "不 vs 没有 — Hanyu Guide",
       "url": "https://hanyuguide.com/grammar/bu-vs-meiyou-negation",
-      "checkedAt": "2026-10-11",
+      "checkedAt": "2026-10-19",
       "supports": "Confirms common 没(有) negative patterns and contrasts them with 不."
     }
   ],

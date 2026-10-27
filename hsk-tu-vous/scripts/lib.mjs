@@ -13,6 +13,7 @@ import { decorateCanonicalLesson, compareAuthorialContent } from "./auto-storybo
 import { validateStoryboardScene } from "./storyboard-validation.mjs";
 import { validateSemanticVisualEpisode } from "./semantic-visual-plan.mjs";
 import { validateStorytellingEpisode } from "./storytelling-plan.mjs";
+import { activeLanguage, languageSettings, generatedVoicePath, assertLocalizedLessonSource, assertEpisodeLanguage } from "./language-context.mjs";
 
 export const PROJECT_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -32,14 +33,16 @@ export const VOICE_PROFILE_PATH = path.join(
 export const FPS = 30;
 
 export async function readVoiceProfile() {
-  const profile = await readJson(VOICE_PROFILE_PATH);
+  const settings = languageSettings();
+  const profile = await readJson(settings.voiceProfilePath);
+  const isRussian = activeLanguage() === "ru";
   if (
-    profile?.profileId !== "ru-gemini-kore-v1" ||
+    profile?.profileId !== (isRussian ? "ru-gemini-kore-v1" : "tg-gemini-kore-v1") ||
     profile.provider !== "gemini-api" ||
     profile.serviceName !== "Google Gemini API" ||
-    profile.locale !== "ru-RU" ||
+    profile.locale !== settings.languageCode ||
     profile.voiceName !== "Kore" ||
-    profile.ttsModel !== "gemini-3.8-flash-lite-tts" ||
+    profile.ttsModel !== (isRussian ? "gemini-3.8-flash-lite-tts" : "gemini-3.8-flash-tts") ||
     profile.transcriptionModel !== "gemini-3.5-transcribe" ||
     profile.outputFormat !== "MP3" ||
     profile.mp3BitrateKbps !== 128 ||
@@ -47,7 +50,7 @@ export async function readVoiceProfile() {
     profile.channels !== 1
   ) {
     throw new Error(
-      "content/voice-profile.json Gemini production sozlamalariga mos kelmaydi.",
+      settings.voiceProfilePath + " Gemini production sozlamalariga mos kelmaydi.",
     );
   }
   if (!["pending-owner-approval", "approved"].includes(profile.status)) {
@@ -67,6 +70,8 @@ export async function requireApprovedVoiceProfile(
   { allowPendingSample = true } = {},
 ) {
   const profile = await readVoiceProfile();
+  if (profile.modelDecisionRequired === true)
+    throw new Error("Tojikcha ovoz uchun Gemini 3.8 Flash TTS modeli bo‘yicha egasining bir martalik qarori kerak. Ruscha Flash-Lite modeli tojik tilini qo‘llamaydi; profil hali tasdiqlanmagan.");
   if (profile.status === "approved") return profile;
   if (
     allowPendingSample &&
@@ -75,6 +80,8 @@ export async function requireApprovedVoiceProfile(
   ) {
     return profile;
   }
+  if (profile.auditionApproval?.approvedBy === "owner")
+    throw new Error("Egasi tojikcha ovoz namunasini ma’qullagan; qayta tasdiq so‘ramang. So‘zma-so‘z subtitr tekshiruvi hali o‘tmagan. Saqlangan namunani tekshirib tugatmaguncha keyingi epizod uchun ovoz yaratish bloklangan.");
   throw new Error(
     "Doimiy ovoz hali tasdiqlanmagan. Hozirgi namuna: " +
       profile.voiceName +
@@ -94,7 +101,7 @@ export async function writeJson(filePath, value) {
 }
 
 export function reviewDir(id) {
-  return path.join(REVIEW_ROOT, safeId(id));
+  return path.join(REVIEW_ROOT, safeId(id), ...(activeLanguage() === "ru" ? [] : [activeLanguage()]));
 }
 
 export function safeId(value) {
@@ -144,6 +151,7 @@ export async function invalidateReviewArtifacts(
     "post.md",
     "render-props.json",
     "visual-timeline.json",
+    "motion-timeline.json",
     "approval.json",
   ];
   if (narrationChanged) files.push("tts-input.txt");
@@ -157,7 +165,7 @@ export async function invalidateReviewArtifacts(
   await fs.rm(path.join(folder, "youtube"), { recursive: true, force: true });
   await fs.rm(path.join(folder, ".render-work"), { recursive: true, force: true });
   if (narrationChanged)
-    await fs.rm(path.join(PROJECT_ROOT, "public", "generated", safeId(id)), {
+    await fs.rm(path.join(PROJECT_ROOT, "public", generatedVoicePath(safeId(id))), {
       recursive: true,
       force: true,
     });
@@ -196,8 +204,20 @@ export async function getCalendarItemByDate(date) {
 
 export async function getPlannedEpisode(date) {
   const item = await getCalendarItemByDate(date);
-  const filePath = path.join(PROJECT_ROOT, "content", item.episodeFile);
-  const sourceLesson = normalizeEpisode(await readJson(filePath));
+  if (!/^episodes\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/.test(item.episodeFile ?? ""))
+    throw new Error("Invalid canonical episode file path.");
+  const canonicalPath = path.join(PROJECT_ROOT, "content", item.episodeFile);
+  const canonical = await readJson(canonicalPath);
+  const filePath = path.join(languageSettings().contentRoot, item.episodeFile);
+  let source;
+  try { source = activeLanguage() === "ru" ? canonical : await readJson(filePath); }
+  catch (error) {
+    if (error.code !== "ENOENT") throw error;
+    throw new Error(`LOCALIZATION_REQUIRED: ${activeLanguage()} translation is missing: ${filePath}. Author the complete translated lesson; never reuse Russian text or audio.`);
+  }
+  assertLocalizedLessonSource(source, canonical);
+  const sourceLesson = normalizeEpisode(source);
+  assertEpisodeLanguage(sourceLesson);
   const ctaLab = await readCtaLab();
   assertCanonicalLessonSource(sourceLesson, ctaLab);
   const lesson = decorateCanonicalLesson(sourceLesson);
@@ -234,7 +254,12 @@ export function synchronizeAutoStoryboard(saved, planned, status = {stage:"plann
     scenes:planned.scenes.filter(s=>s.kind!=="cta").map(s=>({shot:s.semanticShot,
       actions:(s.visualBeats??[]).map(b=>b.semanticAction)}))
   });
-  if(current===wanted && formats.every(s=>s.storyboard?.formatId===wanted) && semanticSync) return saved;
+  // Authored action plans own their visuals. A change to the older automatic
+  // semantic adviser must not migrate an already prepared action review copy.
+  const authoredActions = saved.motionDesign === true &&
+    saved.motionDesignStyle === "explain-actions-v1" &&
+    planned.motionDesignStyle === saved.motionDesignStyle;
+  if(current===wanted && formats.every(s=>s.storyboard?.formatId===wanted) && (semanticSync || authoredActions)) return saved;
   const protectedStages=["rendered-pending-owner-approval","owner-approved-for-zernio-publishing",
     "zernio-published","zernio-scheduled","zernio-publication-processing",
     "zernio-publication-partial","zernio-publication-failed"];
@@ -254,6 +279,7 @@ export async function getRunEpisodeByDate(date) {
   const filePath = path.join(folder, "episode.json");
   try {
     const saved = normalizeEpisode(await readJson(filePath));
+    assertEpisodeLanguage(saved);
     const status = await readStatus(item.id);
     const episode = synchronizeAutoStoryboard(saved, plannedEpisode, status);
     if (episode !== saved) await writeJson(filePath, episode);
@@ -271,15 +297,17 @@ export async function getRunEpisodeByDate(date) {
 
 export function normalizeEpisode(episode) {
   if (!episode || typeof episode !== "object") return episode;
+  // Untagged historical records belong to the original Russian series.
   episode.languageCode ||= episode.voiceLocale || "ru-RU";
-  episode.title ||= episode.titleRu || episode.titleTg;
-  episode.caption ||= episode.captionRu || episode.captionTg;
+  const suffix = episode.languageCode === "tg-TJ" ? "Tg" : "Ru";
+  episode.title ||= episode[`title${suffix}`];
+  episode.caption ||= episode[`caption${suffix}`];
   for (const scene of episode.scenes ?? []) {
-    scene.headline ||= scene.headlineRu || scene.headlineTg;
-    scene.narration ||= scene.narrationRu || scene.narrationTg;
-    scene.screenCaption ||= scene.screenCaptionRu || scene.screenCaptionTg;
+    scene.headline ||= scene[`headline${suffix}`];
+    scene.narration ||= scene[`narration${suffix}`];
+    scene.screenCaption ||= scene[`screenCaption${suffix}`];
     for (const card of scene.cards ?? [])
-      card.meaning ||= card.meaningRu || card.meaningTg;
+      card.meaning ||= card[`meaning${suffix}`];
   }
   return episode;
 }
@@ -297,21 +325,9 @@ export async function getEpisode(id, { seed = true } = {}) {
 
   if (!seed)
     throw new Error(`Avval draft yarating: npm run content:draft -- ${id}`);
-  const seedPath = path.join(
-    PROJECT_ROOT,
-    "content",
-    "episodes",
-    `${safeId(id)}.json`,
-  );
   try {
-    const base = normalizeEpisode(await readJson(seedPath));
-    const ctaLab = await readCtaLab();
-    assertCanonicalLessonSource(base, ctaLab);
-    const lesson = decorateCanonicalLesson(base);
-    const episode = lesson.scenes.some((scene) => scene.kind === "cta")
-      ? lesson
-      : composeLessonCta(lesson, ctaLab);
-    validateEpisode(episode);
+    const item = await getCalendarItem(id);
+    const { episode } = await getPlannedEpisode(item.date);
     await writeJson(draft, episode);
     return { episode, filePath: draft, isSeed: true };
   } catch (error) {
@@ -388,6 +404,9 @@ export function validateEpisode(episode) {
   normalizeEpisode(episode);
   const storytellingErrors = validateStorytellingEpisode(episode);
   if (storytellingErrors.length) throw new Error(storytellingErrors.join("\n"));
+  if (!["ru-RU", "tg-TJ"].includes(episode.languageCode)) throw new Error("Unsupported episode language.");
+  if (episode.languageCode === "tg-TJ" && episode.motionDesignStyle === "le-context-v1")
+    throw new Error("The legacy le-context renderer contains Russian teaching text. Author a localized explain-actions-v1 plan for Tajik.");
   const semanticErrors = validateSemanticVisualEpisode(episode);
   if (semanticErrors.length) throw new Error(semanticErrors.join("\n"));
   if (
@@ -405,9 +424,10 @@ export function validateEpisode(episode) {
     throw new Error("Birinchi sahna hook bo‘lishi kerak.");
   }
   const hookFrames = hook.durationFrames ?? (hook.durationSec ?? 4) * FPS;
-  if (hookFrames > 180) {
+  const maxHookFrames = episode.languageCode === "tg-TJ" ? 240 : 180;
+  if (hookFrames > maxHookFrames) {
     throw new Error(
-      "Hook 6 soniyadan oshmasligi kerak; asosiy va’dani tez ko‘rsating.",
+      `Hook ${(maxHookFrames / FPS).toFixed(0)} soniyadan oshmasligi kerak; asosiy va’dani tez ko‘rsating.`,
     );
   }
   const experiment = episode.hookExperiment;
@@ -499,6 +519,7 @@ export function validateEpisode(episode) {
           "book",
           "person-with-book",
           "coffee",
+          "coffee-refusal",
           "empty-cup",
           "apple-near",
           "apple-far",

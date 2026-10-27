@@ -28,12 +28,21 @@ test(
         recursive: true,
         filter: (source) => !source.endsWith(".test.mjs"),
       });
+      // Import-time registries and language configuration belong to the fixture too.
+      await fs.cp(path.join(project, "content"), path.join(fixture, "content"), { recursive: true });
       // This isolated fixture has no GitHub remote; keep this test focused on
       // CTA invalidation rather than the separate live-remote freshness gate.
       await fs.writeFile(
         path.join(fixture, "scripts/git-freshness.mjs"),
         "export function requireFreshGitMain() { return { checkedAt: new Date().toISOString() }; }\n",
       );
+      // This integration exercises CTA gates and invalidation, not paid TTS.
+      await fs.writeFile(path.join(fixture, "scripts/generate-voice-gemini.mjs"), `
+import {getEpisode,requireCurrentCta,narrationHash,writeJson,writeStatus} from './lib.mjs';
+const id=process.argv[2]; const {episode,filePath}=await getEpisode(id);
+await requireCurrentCta(episode); episode.voiceTextHash=narrationHash(episode);
+await writeJson(filePath,episode); await writeStatus(id,{stage:'voice-script-ready'});
+`);
       await fs.symlink(
         path.join(project, "node_modules"),
         path.join(fixture, "node_modules"),
@@ -47,12 +56,16 @@ test(
       const cta = episode.scenes.find((scene) => scene.kind === "cta");
       cta.narration = "Сохраните урок и напишите ответ.";
       episode.cta = cta.narration;
-      episode.voiceProvider = "text-to-speech-online";
-      episode.voiceProfileId = "ru-dmitry-v1";
+      const voiceProfile = await read(path.join(project, "content/voice-profile.json"));
+      episode.voiceProvider = voiceProfile.provider;
+      episode.voiceProfileId = voiceProfile.profileId;
       delete episode.ctaExperiment;
       const lab = await read(path.join(project, "content/cta-lab.json"));
       Object.assign(lab, {
         revision: 0,
+        // This fixture exercises the historical screenshot-sequence rule;
+        // later owner rules supersede it in live production.
+        corrections: lab.corrections.slice(0, 8),
         experiments: [],
         readbacks: [],
         promotions: [],

@@ -11,6 +11,7 @@ export type VisualFocus =
   | "book"
   | "person-with-book"
   | "coffee"
+  | "coffee-refusal"
   | "empty-cup"
   | "apple-near"
   | "apple-far"
@@ -93,6 +94,70 @@ export const NarrativeVisual: React.FC<{
   motionHeight?: number;
 }> = ({ focus, localFrame, accent, motionDesign = false, motionHeight = 360 }) => {
   if (!focus) return null;
+
+  if (focus === "coffee-refusal") {
+    const refusal = interpolate(localFrame, [0, 10, 25], [0, 0.72, 1], {
+      ...clamp,
+      easing: Easing.bezier(0.16, 1, 0.3, 1),
+    });
+    const handX = 442 + refusal * 48;
+    const cupX = 520 + refusal * 55;
+    const steamOpacity = 1 - refusal * 0.85;
+    return (
+      <svg
+        viewBox="0 0 840 220"
+        width="100%"
+        height={motionHeight}
+        role="img"
+        aria-label="A person pushes a cup of coffee away"
+      >
+        <defs>
+          <radialGradient id="coffee-refusal-glow">
+            <stop offset="0" stopColor={accent} stopOpacity=".34" />
+            <stop offset="1" stopColor={accent} stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <ellipse cx="424" cy="148" rx="340" ry="84" fill="url(#coffee-refusal-glow)" />
+        <path d="M93 194H758" stroke={accent} strokeOpacity=".52" strokeWidth="4" strokeLinecap="round" />
+        <Figure x={225} baseline={194} scale={0.78} coat="#2FA06A" skin="#d9ad88" frame={localFrame} />
+        <path
+          d={`M252 133Q330 112 ${handX} 122`}
+          fill="none"
+          stroke="#2FA06A"
+          strokeWidth="19"
+          strokeLinecap="round"
+        />
+        <circle cx={handX} cy="122" r="15" fill="#d9ad88" stroke={COLORS.foreground} strokeWidth="3" />
+        <path
+          d={`M${handX} 111v-25m-10 29v-18m20 18V96m9 22v-17`}
+          fill="none"
+          stroke="#d9ad88"
+          strokeWidth="8"
+          strokeLinecap="round"
+        />
+        <g transform={`translate(${cupX} ${135 + Math.sin(localFrame / 18) * 2}) rotate(${refusal * 8})`}>
+          <ellipse cx="0" cy="63" rx="62" ry="9" fill="rgba(33,29,23,.16)" />
+          <path d="M-42 -34H31L24 30Q22 43 9 43H-23Q-36 42 -37 29Z" fill="#FFF9F0" stroke={COLORS.foreground} strokeWidth="5" strokeLinejoin="round" />
+          <path d="M-35 -19H28L24 1H-32Z" fill="#9C6138" />
+          <path d="M31 -18H41Q61 -18 61 1Q61 19 40 19H28" fill="none" stroke={COLORS.foreground} strokeWidth="5" strokeLinecap="round" />
+          <path d="M-50 51H49" stroke={accent} strokeWidth="7" strokeLinecap="round" />
+          <g opacity={steamOpacity} fill="none" stroke={COLORS.muted} strokeOpacity=".66" strokeWidth="4" strokeLinecap="round">
+            <path d="M-19 -43C-34 -57 -8 -65 -22 -82" />
+            <path d="M8 -43C-7 -57 19 -65 5 -82" />
+          </g>
+        </g>
+        <path
+          d={`M${handX + 24} 122Q${handX + 58} 94 ${cupX - 70} 98`}
+          fill="none"
+          stroke={accent}
+          strokeOpacity={refusal * 0.42}
+          strokeWidth="3"
+          strokeDasharray="7 10"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
 
   if (motionDesign && focus.startsWith("apple-")) {
     const nearTarget = focus === "apple-near"

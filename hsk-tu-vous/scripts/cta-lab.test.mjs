@@ -48,6 +48,24 @@ const episodeFor = (lab, id = "test-episode") => ({
     },
   ],
 });
+
+test("optional narrated motion binds fresh context without invalidating legacy style flags", () => {
+  const lab=fresh();
+  const episode=episodeFor(lab);
+  episode.scenes.unshift({id:"lesson",kind:"example",narration:"Я купил книгу.",visualBeats:[]});
+  const original=register(lab,episode).record;
+  episode.motionDesign=true;
+  episode.motionDesignStyle="le-context-v1";
+  assert.equal(validateCtaEpisode(episode,lab).valid,true,
+    "Existing legacy motionDesign flags must keep their prior registration.");
+  episode.scenes[0].motionBeats=[{id:"buy",kind:"purchase",cueText:"купил"}];
+  assert.equal(validateCtaEpisode(episode,lab).valid,false);
+  register(lab,episode,{id:"test-episode-cta-v2",supersedes:original.id});
+  assert.equal(validateCtaEpisode(episode,lab).valid,true);
+  episode.scenes[0].motionBeats[0].cueText="книгу";
+  assert.equal(validateCtaEpisode(episode,lab).valid,false,
+    "A changed motion cue must not reuse a stale visual-context registration.");
+});
 function register(lab, episode = episodeFor(lab), overrides = {}) {
   const record = createCtaExperiment({
     lab,

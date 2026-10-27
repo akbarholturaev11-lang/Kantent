@@ -6,6 +6,9 @@ import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { getPlatformCtaStatus } from "./platform-cta.mjs";
 import { readCtaLab, validateCtaEpisode } from "./cta-lab.mjs";
+import { prepareSemanticRender } from "./semantic-review-integration.mjs";
+import { validateProductionDuration } from "./duration-policy.mjs";
+import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import {
   buildCaptionSections,
 } from "./caption-utils.mjs";
@@ -31,6 +34,8 @@ assertNotPreviouslyPublished(id);
 const folder = path.join(reviewDir(id), "tiktok");
 const episodePath = path.join(folder, "episode.json");
 const episode = await readJson(episodePath);
+const visualSystem = await readJson(path.join(PROJECT_ROOT, "content", "visual-system.json"));
+validateLessonPresentation(episode, visualSystem.lessonPresentation);
 const lab = await readCtaLab();
 const platformCta = getPlatformCtaStatus(lab, "tiktok");
 if (!platformCta.readyForDraft || platformCta.publishingAuthorized) {
@@ -57,6 +62,7 @@ const perWordCueCount = episode.captions.filter(
 if (perWordCueCount / episode.captions.length < 0.8) {
   throw new Error("TikTok review captions are not word-timed.");
 }
+const semanticTimeline = prepareSemanticRender(episode);
 await fs.access(path.join(PROJECT_ROOT, "public", episode.audioSrc));
 try {
   await fs.access(path.join(folder, "approval.json"));
@@ -65,10 +71,13 @@ try {
   if (error?.code !== "ENOENT") throw error;
 }
 
-const visualSystem = await readJson(path.join(PROJECT_ROOT, "content", "visual-system.json"));
+const durationValidation = validateProductionDuration(episode, visualSystem.duration);
 const propsPath = path.join(folder, "render-props.json");
 const videoPath = path.join(folder, "video.mp4");
-await writeJson(propsPath, { episode });
+if (semanticTimeline) {
+  await writeJson(path.join(folder, "visual-timeline.json"), semanticTimeline);
+}
+await writeJson(propsPath, { episode, ...(semanticTimeline ? { semanticTimeline } : {}) });
 const remotion = path.join(PROJECT_ROOT, "node_modules", ".bin", "remotion");
 const render = spawnSync(
   remotion,
@@ -128,6 +137,7 @@ await writeJson(path.join(folder, "status.json"), {
   contentHash: episodeContentHash(episode),
   videoSha256,
   durationSec: Number((totalFrames / 30).toFixed(2)),
+  durationValidation,
   voiceProfileId: voiceProfile.profileId,
   timingSource: episode.captionSource,
 });

@@ -26,6 +26,9 @@ const colorField: Record<string, string> = {
   near: "#8E1A32",
   far: "#0D5142",
   measure: "#E9A916",
+  bu: "#8E1A32",
+  mei: "#0D5142",
+  compare: "#765313",
   cta: "#18151d",
 };
 
@@ -34,6 +37,9 @@ const accentFor = (sceneId: string, beat: VisualBeat) => {
   if (beat.visualFocus === "apple-near") return GOLD;
   if (beat.visualFocus === "apple-far") return "#F8D46A";
   if (sceneId === "hook") return RED;
+  if (sceneId === "bu") return RED;
+  if (sceneId === "mei") return TEAL;
+  if (sceneId === "compare") return beat.hero.startsWith("不") ? RED : TEAL;
   if (sceneId === "far") return "#F8D46A";
   if (sceneId === "measure") return beat.hero.startsWith("那") ? TEAL : RED;
   return GOLD;
@@ -58,6 +64,12 @@ const titleColorFor = (sceneId: string, character: string) => {
     if (character === "那") return TEAL;
     return INK;
   }
+  if (sceneId === "bu" && character === "不") return "#FFD15B";
+  if (sceneId === "mei" && character === "没") return "#FFD15B";
+  if (sceneId === "compare") {
+    if (character === "不") return RED;
+    if (character === "没") return TEAL;
+  }
   return CREAM;
 };
 
@@ -65,7 +77,13 @@ const heroPlacement = (sceneId: string, beat: VisualBeat) => {
   if (sceneId === "cta") {
     return beat.screenImage
       ? { top: 166, left: 46, right: 46, align: "center" as const, size: 118 }
-      : { top: 730, left: 40, right: 40, align: "center" as const, size: 172 };
+      : {
+          top: 700,
+          left: 40,
+          right: 40,
+          align: "center" as const,
+          size: beat.hero.length > 16 ? 76 : beat.hero.length > 10 ? 100 : 156,
+        };
   }
   if (sceneId === "hook") {
     return { top: 930, left: 22, right: 22, align: "center" as const, size: 286 };
@@ -75,6 +93,12 @@ const heroPlacement = (sceneId: string, beat: VisualBeat) => {
   }
   if (sceneId === "far") {
     return { top: 830, left: 44, right: 48, align: "right" as const, size: 250 };
+  }
+  if ((sceneId === "bu" || sceneId === "mei") && beat.hero.length > 3) {
+    return { top: 820, left: 36, right: 36, align: "center" as const, size: 140 };
+  }
+  if (sceneId === "compare") {
+    return { top: 830, left: 34, right: 34, align: "center" as const, size: 300 };
   }
   if (beat.hero === "个") {
     return { top: 600, left: 32, right: 32, align: "center" as const, size: 690 };
@@ -104,7 +128,9 @@ export const BoldMotionScene: React.FC<{
       ? "#0D5142"
       : colorField[sceneId] ?? colorField.hook;
   const wipe = interpolate(frame, [0, 23], [-28, 132], clamp);
-  const entryOpacity = interpolate(beatFrame, [0, 10], [0.35, 1], clamp);
+  const entryOpacity = interpolate(beatFrame, [0, 10], [0, 1], clamp);
+  const glyphMoveFrames = isCta ? 12 : 18;
+  const glyphDelayLimit = isCta ? 8 : Number.POSITIVE_INFINITY;
   const hero = heroPlacement(sceneId, beat);
   const heroSize = beat.hero === "个"
     ? hero.size
@@ -115,7 +141,7 @@ export const BoldMotionScene: React.FC<{
         : hero.size;
   const pinyinColor = sceneId === "measure" && beat.hero === "个"
     ? INK
-    : sceneId === "hook"
+    : ["hook", "bu", "mei", "compare"].includes(sceneId)
       ? CREAM
       : accent;
   const appleTop = sceneId === "measure" && beat.hero === "个" ? 210 : 220;
@@ -153,16 +179,18 @@ export const BoldMotionScene: React.FC<{
     >
       <AbsoluteFill
         style={{
-          background: field,
-          backgroundImage: sceneId === "measure" && beat.hero !== "个"
-            ? undefined
-            : `radial-gradient(circle at ${sceneId === "far" ? "80% 16%" : "18% 20%"}, ${sceneAccent}66, transparent 46%), linear-gradient(145deg, ${field} 0%, ${sceneId === "near" ? "#5D1428" : sceneId === "far" ? "#082E2A" : sceneId === "measure" ? "#F6D56C" : field} 100%)`,
-          clipPath: `polygon(0 0, ${wipe}% 0, ${wipe - 20}% 100%, 0 100%)`,
+          background: isCta ? "#171522" : field,
+          backgroundImage: isCta
+            ? "radial-gradient(ellipse at 23% 18%, rgba(233,169,22,.2), transparent 34%), radial-gradient(ellipse at 82% 78%, rgba(47,160,106,.17), transparent 38%), linear-gradient(145deg, #282234 0%, #171522 58%, #201a28 100%)"
+            : sceneId === "measure" && beat.hero !== "个"
+              ? undefined
+              : `radial-gradient(circle at ${sceneId === "far" ? "80% 16%" : "18% 20%"}, ${sceneAccent}66, transparent 46%), linear-gradient(145deg, ${field} 0%, ${sceneId === "near" ? "#5D1428" : sceneId === "far" ? "#082E2A" : sceneId === "measure" ? "#F6D56C" : field} 100%)`,
+          clipPath: isCta ? undefined : `polygon(0 0, ${wipe}% 0, ${wipe - 20}% 100%, 0 100%)`,
           zIndex: 0,
         }}
       />
 
-      <AbsoluteFill style={{ pointerEvents: "none", zIndex: 1 }}>
+      {!isCta && <AbsoluteFill style={{ pointerEvents: "none", zIndex: 1 }}>
         <svg viewBox="0 0 1080 1920" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
           <defs>
             <radialGradient id={`bold-halo-${sceneId}`}>
@@ -205,15 +233,6 @@ export const BoldMotionScene: React.FC<{
             strokeDasharray="10 28"
             strokeDashoffset={-frame * 2.2}
           />
-          <circle
-            cx={540 + Math.sin(frame / 13) * 240}
-            cy={960 + Math.cos(frame / 17) * 430}
-            r="14"
-            fill={sceneAccent}
-            stroke={CREAM}
-            strokeOpacity=".56"
-            strokeWidth="3"
-          />
           <path
             d={`M-80 ${430 + frame * 8} H1120`}
             fill="none"
@@ -222,9 +241,9 @@ export const BoldMotionScene: React.FC<{
             strokeWidth="5"
           />
         </svg>
-      </AbsoluteFill>
+      </AbsoluteFill>}
 
-      <div
+      {!isCta && <div
         aria-hidden="true"
         style={{
           position: "absolute",
@@ -249,9 +268,9 @@ export const BoldMotionScene: React.FC<{
         }}
       >
         {watermark}
-      </div>
+      </div>}
 
-      <div
+      {!isCta && <div
         style={{
           position: "absolute",
           zIndex: 8,
@@ -278,9 +297,9 @@ export const BoldMotionScene: React.FC<{
           }}
         />
         HSK <span style={{ color: GOLD, marginLeft: -10 }}>AI</span>
-      </div>
+      </div>}
 
-      {previousBeat && (
+      {previousBeat && !isCta && (
         <div
           aria-hidden="true"
           style={{
@@ -447,7 +466,9 @@ export const BoldMotionScene: React.FC<{
             }}
           >
             {Array.from(beat.hero).map((character, index) => {
-              const delay = index * 2;
+              const delay = isCta
+                ? Math.min(index * 0.5, glyphDelayLimit)
+                : index * 2;
               const xStart = index % 2 === 0 ? -420 : 420;
               const rotateStart = index % 2 === 0 ? -18 : 18;
               const glyphColor = beat.chinese
@@ -463,10 +484,10 @@ export const BoldMotionScene: React.FC<{
                   style={{
                     display: "inline-block",
                     color: glyphColor,
-                    opacity: interpolate(beatFrame, [delay, delay + 6], [0, 1], clamp),
-                    translate: `${interpolate(beatFrame, [delay, delay + 18], [xStart, 0], clamp)}px ${interpolate(beatFrame, [delay, delay + 18], [index % 2 ? -130 : 130, 0], clamp)}px`,
-                    scale: interpolate(beatFrame, [delay, delay + 9, delay + 19], [0.32, 1.12, 1], clamp),
-                    rotate: `${interpolate(beatFrame, [delay, delay + 18], [rotateStart, 0], clamp)}deg`,
+                    opacity: interpolate(beatFrame, [delay, delay + (isCta ? 4 : 6)], [0, 1], clamp),
+                    translate: `${interpolate(beatFrame, [delay, delay + glyphMoveFrames], [xStart, 0], clamp)}px ${interpolate(beatFrame, [delay, delay + glyphMoveFrames], [index % 2 ? -130 : 130, 0], clamp)}px`,
+                    scale: interpolate(beatFrame, [delay, delay + (isCta ? 6 : 9), delay + glyphMoveFrames], [0.32, 1.12, 1], clamp),
+                    rotate: `${interpolate(beatFrame, [delay, delay + glyphMoveFrames], [rotateStart, 0], clamp)}deg`,
                     transformOrigin: "50% 72%",
                     textShadow: `0 18px 0 rgba(0,0,0,.13), 0 34px 68px rgba(0,0,0,.24), 0 0 42px ${accent}88`,
                   }}
@@ -482,7 +503,7 @@ export const BoldMotionScene: React.FC<{
                 marginTop: 26,
                 color: pinyinColor,
                 fontFamily: "inherit",
-                fontSize: sceneId === "hook" ? 76 : 68,
+                fontSize: heroSize < 180 ? 46 : sceneId === "hook" ? 76 : 68,
                 fontWeight: 900,
                 letterSpacing: ".025em",
                 textShadow: "0 7px 22px rgba(0,0,0,.24)",
@@ -547,30 +568,6 @@ export const BoldMotionScene: React.FC<{
         </div>
       )}
 
-      {beat.brandLogo && isCta && (
-        <div
-          style={{
-            position: "absolute",
-            zIndex: 7,
-            top: 1010,
-            left: 40,
-            right: 40,
-            color: CREAM,
-            textAlign: "center",
-            fontSize: 156,
-            fontWeight: 950,
-            letterSpacing: "-.055em",
-            textShadow: `0 22px 70px rgba(0,0,0,.4), 0 0 38px ${RED}88`,
-          }}
-        >
-          {beat.hero}
-          {beat.meaning && (
-            <div style={{ marginTop: 26, fontSize: 54, color: GOLD, letterSpacing: ".08em" }}>
-              {beat.meaning}
-            </div>
-          )}
-        </div>
-      )}
     </AbsoluteFill>
   );
 };

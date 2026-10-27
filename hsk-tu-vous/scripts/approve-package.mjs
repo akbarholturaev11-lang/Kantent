@@ -10,7 +10,7 @@ import {
   writeJson,
   writeStatus,
 } from "./lib.mjs";
-import { validatePublicationTarget } from "./publication-policy.mjs";
+import { validatePublicationSchedule, validatePublicationTarget } from "./publication-policy.mjs";
 import { requirePlatformPackage } from "./platform-exports.mjs";
 
 const id = process.argv[2];
@@ -47,17 +47,8 @@ for (const target of publicationIntent.platforms) {
     );
   selectedPlatforms.add(target.platform);
 }
-if (publicationIntent.mode === "scheduled") {
-  if (
-    typeof publicationIntent.scheduledFor !== "string" ||
-    !/(Z|[+-]\d{2}:\d{2})$/i.test(publicationIntent.scheduledFor) ||
-    !Number.isFinite(Date.parse(publicationIntent.scheduledFor)) ||
-    Date.parse(publicationIntent.scheduledFor) <= Date.now()
-  )
-    throw new Error("Kelajakdagi aniq rejalashtirilgan vaqt talab qilinadi.");
-} else if (publicationIntent.scheduledFor !== undefined) {
-  throw new Error("Hozir joylash rejimida scheduledFor berilmaydi.");
-}
+const scheduleErrors = validatePublicationSchedule(publicationIntent);
+if (scheduleErrors.length) throw new Error(scheduleErrors.join("; "));
 
 const { episode } = await getEpisode(id, { seed: false });
 const ctaValidation = await requireCurrentCta(episode);

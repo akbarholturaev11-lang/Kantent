@@ -14,6 +14,7 @@ const objectActions=new Set(flags.previewObjectActions);
 export const reviewSemanticEligible=(episode)=>
   flags.reviewAutoEnabled===true &&
   episode.date>=flags.reviewAutoFromDate &&
+  episode.motionDesign!==true &&
   !episode.semanticVisual &&
   !episode.audioSrc && !episode.voiceTextHash && !(episode.captions?.length) &&
   !episode.scenes?.some(scene=>scene.kind==="cta") &&

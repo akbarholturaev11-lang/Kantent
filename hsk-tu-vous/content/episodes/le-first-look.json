@@ -6,7 +6,7 @@
   "title": "了: не только прошлое время",
   "level": "HSK 2",
   "topic": "了: завершённое действие и изменение ситуации",
-  "durationTargetSec": 30,
+  "durationTargetSec": 50,
   "caption": "了 зависит от позиции и контекста. Сравните завершённое действие 我买了一本书 и изменение решения 我不买了.",
   "hashtags": [
     "#HSKAI",
@@ -136,13 +136,13 @@
     {
       "title": "了 — Completed Action vs Change of State — The Pure Language",
       "url": "https://www.thepurelanguage.com/chinese-grammar/le-particle",
-      "checkedAt": "2026-10-11",
+      "checkedAt": "2026-10-23",
       "supports": "Verb-final 了 can mark a completed event; sentence-final 了 a changed state; 了 is not a past-tense suffix."
     },
     {
       "title": "不 Sandhi — Elon.io",
       "url": "https://elon.io/grammar/chinese-mandarin/pronunciation/bu-sandhi",
-      "checkedAt": "2026-10-11",
+      "checkedAt": "2026-10-23",
       "supports": "Before third-tone 买 (mǎi), 不 is pronounced bù, not bú."
     }
   ],

@@ -4,6 +4,14 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
+import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
+import { languageEnvironment, languageSettings } from "./language-context.mjs";
+import {
+  assertReusableVoiceMetadata,
+  assertVoiceEpisodeLanguage,
+  normalizeVoiceToken,
+  voiceTranscriptionLanguages,
+} from "./voice-language.mjs";
 import {
   PROJECT_ROOT,
   narrationHash,
@@ -161,9 +169,42 @@ function tokenParts(value) {
     一: "и",
     杯: "бэй",
     水: "шуй",
+    ...(voiceProfile.locale === "tg-TJ"
+      ? {
+          二: "эр",
+          两: "лян",
+          兩: "лян",
+          十: "ши",
+          第: "ди",
+          ...(EPISODE_ID === "er-vs-liang-cafe-20261026"
+            ? {
+                亮: "лян",
+                量: "лян",
+                мехоҳи: "мехоҳӣ",
+                дигари: "дигаре",
+                чи: "чӣ",
+                руи: "рӯйи",
+                руйи: "рӯйи",
+                кон: "кун",
+              }
+            : {}),
+        }
+      : {}),
   };
   return (value.match(wordTokenPattern) ?? []).flatMap((token) => {
-    const normalized = token.toLocaleLowerCase("ru-RU").replaceAll("ё", "е");
+    const normalized = normalizeVoiceToken(token, voiceProfile.locale);
+    if (
+      voiceProfile.locale === "tg-TJ" &&
+      /^hsk[-‐‑‒–—]?ai[-‐‑‒–—]?ро$/u.test(normalized)
+    ) {
+      return ["hsk", "ai", "ро"];
+    }
+    if (
+      voiceProfile.locale === "tg-TJ" &&
+      /^ai[-‐‑‒–—]?ро$/u.test(normalized)
+    ) {
+      return ["ai", "ро"];
+    }
     // Mandarin transcripts may time each Hanzi syllable separately even when
     // the written narration has no spaces. Keep the source phrase as one
     // caption word while aligning its characters against those timed units.
@@ -586,6 +627,11 @@ async function findVerifiedSampleFallback({ episodeId, episode, narration, textH
   ) return null;
   const sampleRoot = path.dirname(audioPath);
   const metadata = await readJson(path.join(sampleRoot, "metadata.json"));
+  try {
+    assertReusableVoiceMetadata(metadata, profile);
+  } catch {
+    return null;
+  }
   if (
     metadata.sampleOnly !== true ||
     metadata.status !== "ready-for-owner-audition" ||
@@ -692,10 +738,13 @@ const episodePath = PLATFORM
   : (await getEpisode(EPISODE_ID)).filePath;
 const rawEpisode = await readJson(episodePath);
 const episode = normalizeEpisode(rawEpisode);
+assertVoiceEpisodeLanguage(episode, voiceProfile);
 if (episode.id !== EPISODE_ID) {
   throw new Error("Review episode ID does not match the requested episode.");
 }
 validateEpisode(episode);
+const visualSystem = await readJson(path.join(PROJECT_ROOT, "content", "visual-system.json"));
+validateLessonPresentation(episode, visualSystem.lessonPresentation);
 await requireCurrentCta(episode);
 const previousStatus = await readStatus(EPISODE_ID);
 if (
@@ -737,7 +786,7 @@ const narration = (PLATFORM
   .replace(/\s+/g, " ")
   .trim();
 if (!narration) throw new Error("Episode has no narration to voice.");
-const transcriptionLanguages = ["ru-RU", "zh-CN"];
+const transcriptionLanguages = voiceTranscriptionLanguages(voiceProfile);
 const currentNarrationHash = narrationHash(episode);
 if (episode.voiceTextHash && episode.voiceTextHash !== currentNarrationHash) {
   throw new Error("Saved voice script fingerprint no longer matches the narration.");
@@ -770,6 +819,7 @@ const textHash = createHash("sha256").update(narration, "utf8").digest("hex");
 let metadata;
 if (RESUME_FOLDER_NAME) {
   metadata = await readJson(metadataPath);
+  assertReusableVoiceMetadata(metadata, voiceProfile);
   if (
     metadata?.production !== true ||
     metadata.episodeId !== EPISODE_ID ||
@@ -806,6 +856,8 @@ if (RESUME_FOLDER_NAME) {
     sourceRevision,
     createdAt: new Date().toISOString(),
     provider: "gemini-api",
+    languageCode: voiceProfile.locale,
+    voiceProfileId: voiceProfile.profileId,
     ttsModel: config.ttsModel,
     voice: config.voice,
     transcriptionModel: config.transcribeModel,
@@ -1016,6 +1068,7 @@ try {
           metadata.transcriptionUploadCleanupErrors.push({
             chunk: index + 1,
             attempt: attempts,
+            fileName: uploadedFile.name,
             error: safeErrorMessage(error),
           });
         }
@@ -1060,6 +1113,14 @@ try {
     }
     metadata.transcriptionAttempts ??= [];
     metadata.transcriptionAttempts[index] = attempts;
+    if (!chunkAlignment?.captions && transcription?.wordAnnotations?.length) {
+      metadata.lastTranscriptionMismatch = {
+        chunk: index + 1,
+        attempt: attempts,
+        mismatches: chunkAlignment?.mismatches?.slice(0, 12) ?? [],
+        error: metadata.lastTranscriptionError ?? null,
+      };
+    }
     if (!chunkAlignment?.captions) {
       metadata.status = "transcript-mismatch";
       metadata.transcriptMismatchCount = metadata.lastTranscriptionMismatch?.mismatches?.length ?? 1;
@@ -1186,10 +1247,18 @@ try {
       path.join(outputDir, "captions.vtt"),
       ...(PLATFORM ? ["--platform", PLATFORM] : []),
     ],
-    { cwd: PROJECT_ROOT, stdio: "inherit" },
+    { cwd: PROJECT_ROOT, stdio: "inherit", env: languageEnvironment() },
   );
   metadata.status = "imported";
   metadata.importedAt = new Date().toISOString();
+  if (!PLATFORM && voiceProfile.status === "pending-owner-approval" &&
+      voiceProfile.sampleEpisodeId === EPISODE_ID) {
+    metadata.sampleOnly = true;
+    metadata.status = "ready-for-owner-audition";
+    voiceProfile.sampleAudio = path.relative(PROJECT_ROOT, mp3Path);
+    voiceProfile.sampleCaptions = path.relative(PROJECT_ROOT, path.join(outputDir, "captions.vtt"));
+    await writeJson(languageSettings().voiceProfilePath, voiceProfile);
+  }
   await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
   console.log(`Gemini production voice imported: ${mp3Path}`);
   console.log(`Word-timed VTT: ${path.join(outputDir, "captions.vtt")}`);
@@ -1199,5 +1268,15 @@ try {
     metadata.status = "failed";
   metadata.error = safeErrorMessage(error);
   await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
+  await writeTargetStatus({
+    stage: "gemini-voice-blocked",
+    sourceRevision,
+    updatedAt: new Date().toISOString(),
+    voiceProfileId: voiceProfile.profileId,
+    voiceTextHash: currentNarrationHash,
+    reason: metadata.error,
+    metadataPath,
+    audioPreserved: Boolean(metadata.mp3Bytes),
+  });
   throw error;
 }

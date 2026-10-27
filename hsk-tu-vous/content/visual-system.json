@@ -1,5 +1,18 @@
 {
   "name": "HSK AI open-stage lessons",
+  "lessonPresentation": {
+    "styleId": "explain-actions-v1",
+    "effectiveFromDate": "2026-10-24"
+  },
+  "duration": {
+    "effectiveFromDate": "2026-10-23",
+    "targetSec": 50,
+    "targetRangeSec": [
+      45,
+      55
+    ],
+    "includesCta": true
+  },
   "source": {
     "designSystem": "HSK-AI-Bot app palette from app/static/course-v3.html and branding/README.md; HeroUI React v3 remains a reference only for in-video UI details",
     "ownerVideoExamples": [
@@ -182,6 +195,33 @@
       "fadeOutFrames": 24
     }
   },
+  "narratedMotionLayout": {
+    "titleTopPx": 448,
+    "headlineFontPx": 56,
+    "storyTopPx": 610,
+    "storyHeightPx": 300,
+    "heroTopPx": 960,
+    "hookFontPx": 320,
+    "phraseFontPx": 110,
+    "pinyinFontPx": 50,
+    "meaningFontPx": 44,
+    "captionTopPx": 1440,
+    "actionFrames": 24,
+    "actorBobPx": 2,
+    "cameraDriftPx": 3
+  },
+  "semanticAbstractLayout": {
+    "topPx": 520,
+    "headlineFontPx": 52,
+    "heroFontPx": 300,
+    "phraseFontPx": 112,
+    "comparisonFontPx": 110,
+    "comparisonPinyinFontPx": 46,
+    "comparisonMeaningFontPx": 40,
+    "rowGapPx": 36,
+    "sectionGapPx": 36,
+    "objectSizePx": 140
+  },
   "storyboardLayout": {
     "environmentTopPx": 250,
     "environmentHeightPx": 720,
@@ -196,5 +236,29 @@
     "characterQuestionWavePx": 12,
     "pinyinFontPx": 58,
     "meaningFontPx": 46
+  },
+  "narratedActionLayout": {
+    "stageTopPx": 640,
+    "stageHeightPx": 690,
+    "graphicHeightPx": 450,
+    "subtitleTopPx": 1190,
+    "subtitleFontPx": 72,
+    "objectHeightPx": 300,
+    "gapPx": 26,
+    "phraseGapPx": 32,
+    "numberFontPx": 260,
+    "choiceFontPx": 190,
+    "comparisonHanziFontPx": 80,
+    "comparisonPinyinFontPx": 36,
+    "comparisonMeaningFontPx": 34,
+    "comparisonNumberFontPx": 170,
+    "comparisonObjectHeightPx": 230,
+    "comparisonGapPx": 50
+  },
+  "narratedActionPalette": {
+    "background": "#161A23",
+    "secondary": "#29313E",
+    "foreground": "#FFF5DF",
+    "muted": "#D2C6B4"
   }
 }

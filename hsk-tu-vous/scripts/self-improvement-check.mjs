@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateStorytellingEpisode } from './storytelling-plan.mjs';
+import { validateLessonPresentation } from './lesson-presentation-policy.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -55,6 +56,8 @@ export function isDraftReady(rootDirectory, item) {
   const file = path.join(rootDirectory, 'content', item.episodeFile);
   try {
     const episode = JSON.parse(fs.readFileSync(file, 'utf8'));
+    const visualSystem = JSON.parse(fs.readFileSync(path.join(rootDirectory, 'content', 'visual-system.json'), 'utf8'));
+    validateLessonPresentation(episode, visualSystem.lessonPresentation);
     const sources = episode.learningFactSources;
     const scenes = episode.scenes;
     return episode.id === item.id && episode.date === item.date &&

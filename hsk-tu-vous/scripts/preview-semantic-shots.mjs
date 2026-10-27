@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { suggestSemanticShots } from "./semantic-shot-adviser.mjs";
+import { getPlannedEpisode, reviewDir } from "./lib.mjs";
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const id=process.argv[2];
@@ -13,10 +14,10 @@ const item=calendar.items.find(entry=>entry.id===id);
 if(!item) throw Error("Episode ID not present in canonical calendar: "+id);
 if(!/^episodes\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/.test(item.episodeFile??""))
   throw Error("Unsafe episode file reference in calendar");
-const episode=JSON.parse(fs.readFileSync(path.join(contentDir,item.episodeFile),"utf8"));
+const { episode } = await getPlannedEpisode(item.date);
 if(episode.id!==item.id || episode.date!==item.date)
   throw Error("Calendar identity mismatch");
-const statusPath=path.join(root,"review",id,"status.json");
+const statusPath=path.join(reviewDir(id),"status.json");
 const status=fs.existsSync(statusPath) ? JSON.parse(fs.readFileSync(statusPath,"utf8")) : {stage:"planned"};
 const eligibility=item.status==="planned" ? status.stage : item.status;
 const result=suggestSemanticShots(episode,{eligibility});

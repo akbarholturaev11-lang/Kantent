@@ -18,9 +18,18 @@ Open this `hsk-tu-vous/` directory in your coding agent. The local MCP server is
 npm run mcp
 ```
 
-A single owner request **«Бугунги видеони тайёрла»** routes through MCP `prepare_today_video`. It first checks the calendar-local date and, when today has no entry, takes the nearest future **planned** entry while disclosing its real date. Explicit YYYY-MM-DD requests remain strict. Gemini TTS and word-timed transcription run automatically from the current local voice profile; while a new profile awaits approval, only its designated sample may be produced. The complete Remotion review package is prepared before returning. The video review package is the stop point: publication still requires exact-preview approval.
+A single owner request **«Бугунги видеони тайёрла»** routes through MCP `prepare_today_video` and prepares every default language from `content/languages.json` for **one shared lesson**. An explicit dated request uses the same language set and keeps its exact date. If today has no eligible slot, select the nearest future planned slot and disclose its date. Each language returns its own review package or a concrete blocker; partial output is never reported as a completed multilingual job. Voice/model and exact publication-preview approval remain separate owner gates.
 
-Future canonical `content/episodes/*.json` files intentionally store shared lesson scenes *without* CTA. The normal production loader currently attaches the Instagram ending; `scripts/episode-cta-assembly.mjs` can prepare another approved ending from `content/cta-lab.json` without changing the shared lesson. Instagram and YouTube reuse the canonical offer wording, and YouTube replaces only the two profile/link screenshots. When CTA narration is unchanged, the approved audio and word-level captions are reused. This does not create a separate lesson for each platform. The normal `content:render` / `content:make` / MCP preparation flow now produces both final exports automatically. The shared lesson is rendered once; separate CTA endings are concatenated with those same encoded lesson frames and one continuous audio mix. Instagram stays at `review/<id>/video.mp4`; YouTube is at `review/<id>/youtube/video.mp4`, with its own episode snapshot, SRT and post copy. `status.platformPackages` binds each destination to its video hash and immutable CTA registration. YouTube is published only after an exact preview. TikTok is no longer an authorized publishing destination.
+```bash
+npm run content:make -- today
+npm run content:make -- YYYY-MM-DD
+npm run content:make -- YYYY-MM-DD --language ru
+npm run content:make -- YYYY-MM-DD --language tg
+```
+
+Production MCP tools accept `language: "all"` by default, or a specific language. Other MCP read/edit/status/registration/approval tools accept `language: "ru"` or `"tg"`, defaulting to the legacy series. Individual voice/render CLIs use `HSK_CONTENT_LANGUAGE=tg`; this setting is inherited by child processes. Never reuse audio, word cues, CTA registration or approval from another language. A new locale profile may need an explicit model decision before generating its designated voice sample; read the selected profile and use `approve_voice_model_for_sample` only after the owner's exact decision.
+
+Future canonical `content/episodes/*.json` files intentionally store shared lesson scenes *without* CTA. The normal production loader currently attaches the Instagram ending; `scripts/episode-cta-assembly.mjs` can prepare another approved ending from `content/cta-lab.json` without changing the shared lesson. Instagram and YouTube reuse the canonical offer wording, and YouTube replaces only the two profile/link screenshots. When CTA narration is unchanged, the approved audio and word-level captions are reused. This does not create a separate lesson for each platform. The normal `content:render` / `content:make` / MCP preparation flow now produces both final exports automatically. The shared lesson is rendered once; separate CTA endings are concatenated with those same encoded lesson frames and one continuous audio mix. Within the original series Instagram stays at `review/<id>/video.mp4`; YouTube is at `review/<id>/youtube/video.mp4`. The translated series has its own root at `review/<id>/tg/` with the same platform layout, with its own episode snapshot, SRT and post copy. `status.platformPackages` binds each destination to its video hash and immutable CTA registration. YouTube is published only after an exact preview. TikTok is no longer an authorized publishing destination.
 
 Typical tasks: list dates, read a dated production plan, prepare a video, inspect its review package, and explicitly approve a final publication preview. See `content/WORKFLOW.md` for the process and real external blockers.
 
@@ -30,17 +39,17 @@ Do **not** use this README as a second configuration file. `AGENTS.md` lists eve
 
 - Global guardrails: `AI_RULES.md`.
 - Production procedure: `content/WORKFLOW.md`.
-- Dates: `content/calendar.json`; episodes: `content/episodes/`.
-- Voice configuration and approval: `content/voice-profile.json`.
-- Current CTA: `content/cta-lab.json`; creative/analytics policy: its Lab documentation.
-- Hook testing: `content/hook-lab.json` and its Lab documentation.
+- Shared dates and lesson identity: `content/calendar.json`; canonical lesson: `content/episodes/`; localized scripts under each content root in `content/languages.json`.
+- Voice configuration and approval: the selected content root’s `voice-profile.json`.
+- Current CTA: the selected content root’s `cta-lab.json`; creative/analytics policy: its Lab documentation.
+- Hook testing: the selected content root’s `hook-lab.json` and shared Lab documentation.
 - Design tokens: `content/visual-system.json`.
 - Runtime details: `PROJECT_MEMORY.md`.
 - Registered skills and stage selection: `content/skill-catalog.json`, `content/SKILLS.md` and MCP `recommend_skills`. Instagram lesson-hook, post-copy and competitor-research advisors are intentionally phase-specific.
 
 ## Automatic cinematic formats for upcoming video commands
 
-The runtime now selects a hook-compatible visual format for every eligible future planned video and attaches storyboard fields before central CTA assembly. `prepare_today_video` uses this runtime path, as do `getPlannedEpisode`, `getEpisode` and the local production CLI; no need to manually add `storyboard` to upcoming canonical lesson files. Old clean plan-ready review copies are synced; voice-prepared, published, approved, and owner-edited copies fail closed instead of silently reverting to the old renderer. The calendar controls dates, `content/creative-formats.json` owns format assignment, and `content/cta-lab.json` remains the only CTA source. Gemini automatically generates narration and word-timed captions in the ordinary video workflow; voice profile approval, final MP4 approval and social publication remain owner gates. Test: `node --test scripts/auto-storyboard.test.mjs`.
+The runtime now selects a hook-compatible visual format for every eligible future planned video and attaches storyboard fields before central CTA assembly. `prepare_today_video` uses this runtime path, as do `getPlannedEpisode`, `getEpisode` and the local production CLI; no need to manually add `storyboard` to upcoming canonical lesson files. Old clean plan-ready review copies are synced; voice-prepared, published, approved, and owner-edited copies fail closed instead of silently reverting to the old renderer. The calendar controls dates, `content/creative-formats.json` owns format assignment, and the selected language’s `cta-lab.json` remains its only CTA source. Gemini automatically generates narration and word-timed captions in the ordinary video workflow; voice profile approval, final MP4 approval and social publication remain owner gates. Test: `node --test scripts/auto-storyboard.test.mjs`.
 
 ## Cinematic story renderer — first pilot
 

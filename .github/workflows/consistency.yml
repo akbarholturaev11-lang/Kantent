@@ -106,6 +106,8 @@ jobs:
         run: node --test scripts/storyboard-validation.test.mjs scripts/auto-storyboard.test.mjs
       - name: Install Remotion dependencies and typecheck cinematic renderer
         run: npm ci --no-audit --no-fund && npm run lint
+      - name: Test independent language production, exact Tajik cues and scoped MCP tools
+        run: node --test scripts/language-production.test.mjs scripts/voice-language.test.mjs scripts/cta-mcp.test.mjs
       - name: Generate multi-format visual stills without publishing
         run: |
           node --input-type=module -e "import fs from 'node:fs'; import {getPlannedEpisode} from './scripts/lib.mjs'; for (const date of ['2026-10-14','2026-10-16','2026-10-19']) {const {episode}=await getPlannedEpisode(date);fs.writeFileSync('/tmp/story-'+date+'.json',JSON.stringify({episode}));}"

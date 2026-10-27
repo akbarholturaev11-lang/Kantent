@@ -25,4 +25,4 @@ await writeStatus(id, {
   sourceRevision,
   updatedAt: new Date().toISOString(),
 });
-console.log(`Русский сценарий скопирован для редактирования: ${outputPath}`);
+console.log(`Сценарий скопирован для редактирования: ${outputPath}`);

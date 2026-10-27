@@ -36,6 +36,7 @@ test('counts only complete sourced CTA-free drafts with matching identity', () =
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'hsk-feedback-'));
   try {
     fs.mkdirSync(path.join(tmp, 'content/episodes'), { recursive: true });
+    fs.copyFileSync(new URL('../content/visual-system.json', import.meta.url), path.join(tmp, 'content/visual-system.json'));
     const item = { id: 'ep', date: '2026-10-12', episodeFile: 'episodes/ep.json' };
     const file = path.join(tmp, 'content/episodes/ep.json');
     const card = { hanzi: '我在家。', pinyin: 'Wǒ zài jiā.', meaning: 'Я дома.' };
@@ -59,6 +60,9 @@ test('counts only complete sourced CTA-free drafts with matching identity', () =
     assert.equal(Boolean(isDraftReady(tmp, item)), true);
     write({ ...complete, storytelling: { schemaVersion: 1, pattern: 'single-rehook', firstPayoff: {sceneId: 'missing', cueText:'invented'}, reHooks:[] } });
     assert.equal(Boolean(isDraftReady(tmp, item)), false, 'invalid optional storytelling is not draft-ready');
+    const futureItem = {...item, date: '2026-11-02'};
+    write({...complete, date: futureItem.date});
+    assert.equal(Boolean(isDraftReady(tmp, futureItem)), false, 'new lessons without authored action plans are not ready');
     write({ ...complete, learningFactSources: [] });
     assert.equal(Boolean(isDraftReady(tmp, item)), false, 'no checked source means not ready');
     write({ ...complete, scenes: [{ kind: 'hook', narration: 'Что?' }] });

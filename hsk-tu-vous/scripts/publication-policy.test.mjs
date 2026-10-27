@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   APPROVED_PUBLICATION_PLATFORMS,
+  publicationScheduledFor,
+  validatePublicationSchedule,
   validatePublicationTarget,
 } from "./publication-policy.mjs";
 
@@ -25,6 +27,44 @@ const youtube = {
     containsSyntheticMedia: false,
   },
 };
+
+const clock = Date.parse("2026-10-23T00:00:00Z");
+const igTime = "2026-10-24T20:00:00+08:00";
+const ytTime = "2026-10-24T10:00:00+08:00";
+
+test("separate account schedules preserve the exact approved instants", () => {
+  const intent = { mode: "scheduled", platforms: [
+    { ...instagram, scheduledFor: igTime },
+    { ...youtube, scheduledFor: ytTime },
+  ] };
+  assert.deepEqual(validatePublicationSchedule(intent, clock), []);
+  assert.equal(publicationScheduledFor(intent, "instagram"), igTime);
+  assert.equal(publicationScheduledFor(intent, "youtube"), ytTime);
+  assert.notEqual(Date.parse(publicationScheduledFor(intent, "instagram")), Date.parse(ytTime));
+});
+
+test("legacy shared schedules and explicit per-account overrides remain compatible", () => {
+  const intent = { mode: "scheduled", scheduledFor: igTime, platforms: [instagram, youtube] };
+  assert.deepEqual(validatePublicationSchedule(intent, clock), []);
+  assert.equal(publicationScheduledFor(intent, "youtube"), igTime);
+  intent.platforms = [instagram, { ...youtube, scheduledFor: ytTime }];
+  assert.deepEqual(validatePublicationSchedule(intent, clock), []);
+  assert.equal(publicationScheduledFor(intent, "youtube"), ytTime);
+});
+
+test("one missing or invalid account schedule blocks the whole preview", () => {
+  for (const time of [undefined, "2026-10-24T10:00:00", "invalid", null, "2026-10-22T10:00:00Z"]) {
+    assert.ok(validatePublicationSchedule({ mode: "scheduled", platforms: [
+      { ...instagram, scheduledFor: igTime }, { ...youtube, scheduledFor: time },
+    ] }, clock).length > 0);
+  }
+});
+
+test("publish-now cannot carry a schedule at either level", () => {
+  assert.deepEqual(validatePublicationSchedule({ mode: "now", platforms: [instagram] }, clock), []);
+  assert.ok(validatePublicationSchedule({ mode: "now", scheduledFor: igTime, platforms: [instagram] }, clock).length);
+  assert.ok(validatePublicationSchedule({ mode: "now", platforms: [{ ...youtube, scheduledFor: ytTime }] }, clock).length);
+});
 
 test("only Instagram Reels and YouTube Shorts are authorized publication targets", () => {
   assert.deepEqual(APPROVED_PUBLICATION_PLATFORMS, ["instagram", "youtube"]);

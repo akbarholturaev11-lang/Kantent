@@ -6,6 +6,32 @@ export const APPROVED_PUBLICATION_PLATFORMS = Object.freeze([
 const isNonEmptyString = (value) =>
   typeof value === "string" && value.trim().length > 0;
 
+/** Resolve the selected account's exact approved time; retain legacy shared schedules. */
+export function publicationScheduledFor(intent, platform) {
+  return intent.platforms?.find((target) => target.platform === platform)?.scheduledFor
+    ?? intent.scheduledFor;
+}
+
+export function validatePublicationSchedule(intent, now = Date.now()) {
+  const errors = [];
+  const explicitTimes = [intent.scheduledFor, ...(intent.platforms ?? []).map((target) => target.scheduledFor)]
+    .filter((value) => value !== undefined);
+  if (intent.mode === "now") {
+    if (explicitTimes.length) errors.push("Omit scheduledFor when publishing now.");
+    return errors;
+  }
+  for (const value of explicitTimes) {
+    if (typeof value !== "string" || !/(Z|[+-]\d{2}:\d{2})$/i.test(value) ||
+        !Number.isFinite(Date.parse(value)) || Date.parse(value) <= now)
+      errors.push("Every scheduledFor must be an exact future timestamp with an offset.");
+  }
+  for (const target of intent.platforms ?? []) {
+    if (!publicationScheduledFor(intent, target.platform))
+      errors.push(`${target.platform} needs an exact scheduledFor timestamp.`);
+  }
+  return errors;
+}
+
 /** Validate the exact per-platform settings stored in an owner-approved preview. */
 export function validatePublicationTarget(target) {
   const errors = [];

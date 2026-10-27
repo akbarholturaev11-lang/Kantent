@@ -3,6 +3,7 @@ import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { validatePlatformCtaConfig } from "./platform-cta.mjs";
+import { languageSettings, activeLanguage, ctaSourceHash } from "./language-context.mjs";
 
 export const CTA_LAB_PATH = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -145,14 +146,20 @@ function validateLab(lab) {
   }
 }
 
-export async function readCtaLab(filePath = CTA_LAB_PATH) {
+export async function readCtaLab(filePath = languageSettings().ctaLabPath) {
   const lab = JSON.parse(await fs.readFile(filePath, "utf8"));
   validateLab(lab);
+  if (activeLanguage() !== "ru" && filePath === languageSettings().ctaLabPath) {
+    if (lab.languageCode !== languageSettings().languageCode) throw new Error("CTA Lab language mismatch.");
+    const shared = JSON.parse(await fs.readFile(CTA_LAB_PATH, "utf8"));
+    if (lab.localization?.sourceHash !== ctaSourceHash(shared))
+      throw new Error("LOCALIZATION_REQUIRED: central CTA direction/rules changed. Review the translated CTA and cue words before production.");
+  }
   return lab;
 }
 
 // Append-only ledger plus revision check prevents two MCP clients losing corrections.
-export async function writeCtaLab(lab, filePath = CTA_LAB_PATH) {
+export async function writeCtaLab(lab, filePath = languageSettings().ctaLabPath) {
   validateLab(lab);
   const lockPath = `${filePath}.lock`;
   let lock;
@@ -288,6 +295,7 @@ export function ctaContextSnapshot(episode) {
     visualBeats: clone(scene.visualBeats ?? []),
     cards: clone(scene.cards ?? []),
     editPlan: clean(scene.editPlan),
+    ...(scene.motionBeats?.length ? {motionBeats:clone(scene.motionBeats)} : {}),
   }));
   return {
     level: episode.level ?? null,
@@ -296,6 +304,8 @@ export function ctaContextSnapshot(episode) {
     voiceProfileId: episode.voiceProfileId ?? null,
     voiceProvider: episode.voiceProvider ?? null,
     nonCtaContentHash: digest(nonCtaContent),
+    ...(episode.scenes?.some(scene=>scene.motionBeats?.length)
+      ? {motionDesign:episode.motionDesign === true,motionDesignStyle:episode.motionDesignStyle ?? null} : {}),
   };
 }
 
@@ -319,18 +329,21 @@ export function validateCtaEpisode(
   if (snapshot.scenes.length !== 1)
     errors.push("Exactly one CTA scene is required.");
   const spoken = snapshot.scenes.map((scene) => scene.narration).join(" ");
+  const tajik = episode.languageCode === "tg-TJ";
+  if (lab.languageCode && episode.languageCode !== lab.languageCode)
+    errors.push("CTA lab language must match the episode language.");
   for (const [field, text] of [
     ["cta", snapshot.cta],
     ["CTA narration", spoken],
   ]) {
-    if (!/попроб/iu.test(text)) errors.push(`${field}: invite viewers to try HSK AI.`);
+    if (!(tajik ? /санҷ|озмо/iu : /попроб/iu).test(text)) errors.push(`${field}: invite viewers to try HSK AI.`);
     if (!/HSK\s+AI/u.test(text)) errors.push(`${field}: name HSK AI exactly.`);
-    if (!/профил/iu.test(text)) errors.push(`${field}: direct viewers to the profile.`);
-    if (!/ссылк/iu.test(text)) errors.push(`${field}: ask viewers to open the profile link.`);
-    if (!/скача/iu.test(text))
+    if (!(tajik ? /профил|саҳифа/iu : /профил/iu).test(text)) errors.push(`${field}: direct viewers to the profile.`);
+    if (!(tajik ? /пайванд/iu : /ссылк/iu).test(text)) errors.push(`${field}: ask viewers to open the profile link.`);
+    if (!(tajik ? /боргир|зеркаш/iu : /скача/iu).test(text))
       errors.push(`${field}: direct viewers to download HSK AI.`);
     if (
-      /(сохран[иите]|подпиш|постав[ььте].*лайк|напиши(?:те)?\s+ответ|ответь)/iu.test(
+      (tajik ? /захира\s+кун|обуна\s+шав|лайк\s+мон|ҷавоб\s+навис/iu : /(сохран[иите]|подпиш|постав[ььте].*лайк|напиши(?:те)?\s+ответ|ответь)/iu).test(
         text,
       )
     )
@@ -338,7 +351,7 @@ export function validateCtaEpisode(
         `${field}: remove competing save/follow/quiz actions from the main CTA.`,
       );
     if (
-      /(автоматич|мгновенн|гарантир|за\s+\d+\s+(?:дн|недел|час)|бесплатн)/iu.test(
+      (tajik ? /худкор|фавр[иӣ]|кафолат|ройгон|дар\s+\d+\s+(?:рӯз|ҳафта|соат)/iu : /(автоматич|мгновенн|гарантир|за\s+\d+\s+(?:дн|недел|час)|бесплатн)/iu).test(
         text,
       )
     )
@@ -350,7 +363,7 @@ export function validateCtaEpisode(
     lab.platformVariants?.tiktok?.status === "approved" &&
     lab.platformVariants?.tiktok?.deliveryMode === "manual-dm";
   if (!approvedTikTokManualDm &&
-      /(коммент|директ|личн.*сообщ|пришл.*ссылк|отправл.*ссылк)/iu.test(spoken))
+      (tajik ? /шарҳ\s+навис|директ|паём[иӣ]?\s+шахс|пайванд.*мефирист/iu : /(коммент|директ|личн.*сообщ|пришл.*ссылк|отправл.*ссылк)/iu).test(spoken))
     errors.push("CTA narration: remove the superseded comment/DM route.");
   if (active.some((item) => item.id === "cta-correction-0008")) {
     const screenshots = snapshot.scenes[0]?.visualBeats

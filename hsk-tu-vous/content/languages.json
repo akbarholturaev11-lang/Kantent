@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "defaultProductionLanguages": ["ru", "tg"],
+  "languages": {
+    "ru": { "languageCode": "ru-RU", "name": "Русский", "contentRoot": "content" },
+    "tg": { "languageCode": "tg-TJ", "name": "Тоҷикӣ", "contentRoot": "content/locales/tg" }
+  }
+}

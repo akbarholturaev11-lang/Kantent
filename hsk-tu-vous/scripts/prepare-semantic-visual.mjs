@@ -2,13 +2,16 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { compileSemanticVisualTimeline } from "./semantic-visual-plan.mjs";
+import { reviewDir } from "./lib.mjs";
+import { assertEpisodeLanguage } from "./language-context.mjs";
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const id=process.argv[2];
 if (!id || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id))
   throw Error("Usage: node scripts/prepare-semantic-visual.mjs <review-episode-id>");
-const folder=path.join(root,"review",id);
+const folder=reviewDir(id);
 const episode=JSON.parse(await fs.readFile(path.join(folder,"episode.json"),"utf8"));
+assertEpisodeLanguage(episode);
 if (episode.id!==id) throw Error("Review episode ID/path mismatch");
 const status=await fs.readFile(path.join(folder,"status.json"),"utf8").then(JSON.parse).catch(err=>{
   if(err.code==="ENOENT") return {stage:"plan-ready"};

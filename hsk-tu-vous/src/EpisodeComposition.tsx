@@ -16,6 +16,11 @@ import seedEpisode from "../content/episodes/ni-nin-nimen-20260928.json";
 import visualSystem from "../content/visual-system.json";
 import { CaptionOverlay, type TimedCaption } from "./CaptionOverlay";
 import { BoldMotionScene } from "./BoldMotionScene";
+import { NarratedMotionScene } from "./NarratedMotionScene";
+import { NarratedActionScene } from "./NarratedActionScene";
+import {validateActionLesson} from "../scripts/action-design-plan.mjs";
+import type {MotionBeat} from "../scripts/motion-design-plan.mjs";
+import { resolveMotionBeats } from "../scripts/motion-design-plan.mjs";
 import { CinematicStoryScene, type Storyboard } from "./CinematicStoryScene";
 import { SemanticStoryScene, type SemanticShot, type SemanticTimeline, type SemanticTimelineScene } from "./SemanticStoryScene";
 import { NarrativeVisual, type VisualFocus } from "./NarrativeVisual";
@@ -36,6 +41,7 @@ type LessonScene = {
   storyboard?: Storyboard;
   semanticShot?: SemanticShot;
   visualBeats?: VisualBeat[];
+  motionBeats?: MotionBeat[];
   durationSec?: number;
   durationFrames?: number;
   startMs?: number;
@@ -53,6 +59,8 @@ type LessonEpisode = {
   level: string;
   topic: string;
   semanticVisual?: { schemaVersion: 1; mode: "review-only" };
+  motionDesign?: boolean;
+  motionDesignStyle?: string;
   durationTargetSec?: number;
   scenes: LessonScene[];
   audioSrc?: string;
@@ -140,12 +148,15 @@ const getBeats = (scene: LessonScene): VisualBeat[] => {
   }
 
   if (scene.kind === "vocabulary") {
-    return (scene.cards ?? []).map((item) => ({
-      hero: item.hanzi,
-      pinyin: item.pinyin,
-      meaning: item.meaning,
-      chinese: true,
-    }));
+    const cards = scene.cards ?? [];
+    return cards.length
+      ? cards.map((item) => ({
+          hero: item.hanzi,
+          pinyin: item.pinyin,
+          meaning: item.meaning,
+          chinese: true,
+        }))
+      : [{ hero: scene.headline }];
   }
 
   if (scene.kind === "example" && card) {
@@ -982,14 +993,21 @@ const LessonSlide: React.FC<{
   timelineStartMs: number;
   captions: TimedCaption[];
   semanticScene?: SemanticTimelineScene;
-}> = ({ episodeId, scene, index, sceneCount, durationFrames, timelineStartMs, captions, semanticScene }) => {
+  motionDesignEnabled?: boolean;
+  motionDesignStyle?: string;
+}> = ({ episodeId, scene, index, sceneCount, durationFrames, timelineStartMs, captions, semanticScene, motionDesignEnabled = false, motionDesignStyle }) => {
   // A semantic scene must be bound to a compiled, exact-cue timeline.
   if (scene.semanticShot && (!semanticScene || semanticScene.sceneId !== scene.id))
     throw new Error("Semantic scene missing a matching audio-cue timeline: " + scene.id);
   if (!scene.semanticShot && semanticScene)
     throw new Error("Unmatched semantic timeline in " + scene.id);
   const frame = useCurrentFrame();
-  const motionDesign = episodeId === "zhe-na-ge";
+  const motionDesign = motionDesignEnabled || episodeId === "zhe-na-ge";
+  const narratedBeats = useMemo(() => scene.motionBeats?.length
+    ? resolveMotionBeats(scene, captions, FPS) : [], [scene, captions]);
+  if (motionDesignStyle==="explain-actions-v1" && scene.kind!=="cta") validateActionLesson({scenes:[scene]});
+  if (narratedBeats.length && (!motionDesign || !["le-context-v1","explain-actions-v1"].includes(motionDesignStyle??"")))
+    throw new Error("Narrated beats need a supported explicit motion style.");
   const fadeIn = index === 0
     ? 1
     : interpolate(frame, [0, MOTION.sceneCrossfadeFrames], [0, 1], clampEase);
@@ -1087,7 +1105,7 @@ const LessonSlide: React.FC<{
           Math.max(
             0,
             Math.round(((cue.startMs - timelineStartMs) / 1000) * FPS) -
-              MOTION.beatEntryLeadFrames,
+              (motionDesign ? 0 : MOTION.beatEntryLeadFrames),
           ),
         ),
       ),
@@ -1159,14 +1177,10 @@ const LessonSlide: React.FC<{
         opacity: sceneOpacity,
       }}
     >
-      {scene.semanticShot && semanticScene ? (
-        <SemanticStoryScene
-          shot={scene.semanticShot}
-          timeline={semanticScene}
-          beats={beats}
-          frame={frame}
-          sceneStartFrame={Math.round((timelineStartMs / 1000) * FPS)}
-        />
+      {motionDesign && motionDesignStyle==="explain-actions-v1" && narratedBeats.length ? (
+        <NarratedActionScene frame={frame} beats={narratedBeats}/>
+      ) : motionDesign && narratedBeats.length ? (
+        <NarratedMotionScene sceneId={scene.id} frame={frame} beats={narratedBeats}/>
       ) : motionDesign ? (
         <BoldMotionScene
           sceneId={scene.id}
@@ -1175,6 +1189,15 @@ const LessonSlide: React.FC<{
           frame={frame}
           beatFrame={localBeatFrame}
           accent={accent}
+        />
+      ) : scene.semanticShot && semanticScene ? (
+        <SemanticStoryScene
+          shot={scene.semanticShot}
+          timeline={semanticScene}
+          beats={beats}
+          headline={scene.headline}
+          frame={frame}
+          sceneStartFrame={Math.round((timelineStartMs / 1000) * FPS)}
         />
       ) : scene.storyboard && scene.kind !== "cta" ? (
         <CinematicStoryScene
@@ -1276,6 +1299,27 @@ const LessonSlide: React.FC<{
           />
         </Sequence>
       )}
+      {motionDesign && scene.kind === "hook" && beatCueMs[0] !== undefined && (
+        <Sequence
+          from={Math.max(
+            0,
+            Math.round(((beatCueMs[0] - timelineStartMs) / 1000) * FPS),
+          )}
+          durationInFrames={SOUND.beatCueFrames}
+        >
+          <Audio
+            src={staticFile("sfx/soft-cut.wav")}
+            volume={(audioFrame) =>
+              interpolate(
+                audioFrame,
+                [0, SOUND.beatCuePeakFrame, SOUND.beatCueFadeFrames],
+                [0, SOUND.beatCueVolume, 0],
+                { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+              )
+            }
+          />
+        </Sequence>
+      )}
       {scene.kind !== "hook" && !scene.semanticShot &&
         beats.slice(1, SOUND.maxBeatCuesPerScene + 1).map((_, beatOffset) => (
           <Sequence
@@ -1323,6 +1367,17 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, semanticTimeline }) => {
     return { scene, index, from, durationFrames: sceneFrames(scene) };
   });
   const voiceTrack = timeline.filter(({ scene }) => scene.audioSrc);
+  const actionCaptionScenes = useMemo(() => {
+    if (episode.motionDesignStyle !== "explain-actions-v1") return [];
+    let from = 0;
+    return episode.scenes.map((scene) => {
+      const durationFrames = sceneFrames(scene);
+      const entry = { from, durationFrames, beats: scene.kind !== "cta"
+        ? resolveMotionBeats(scene, episode.captions ?? [], FPS) : [] };
+      from += durationFrames;
+      return entry;
+    });
+  }, [episode.motionDesignStyle, episode.scenes, episode.captions]);
 
   return (
     <AbsoluteFill>
@@ -1346,6 +1401,8 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, semanticTimeline }) => {
             timelineStartMs={(from / FPS) * 1000}
             captions={episode.captions ?? []}
             semanticScene={semanticTimeline?.scenes.find(item => item.sceneId === scene.id)}
+            motionDesignEnabled={episode.motionDesign === true}
+            motionDesignStyle={episode.motionDesignStyle}
           />
         </Sequence>
       ))}
@@ -1401,7 +1458,9 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, semanticTimeline }) => {
       <CaptionOverlay
         captions={episode.captions ?? []}
         sceneSections={captionSections}
-        motionDesign={episode.id === "zhe-na-ge"}
+        motionDesign={episode.motionDesign === true || episode.id === "zhe-na-ge"}
+        plainMotionDesign={episode.scenes.some(scene => Boolean(scene.motionBeats?.length))}
+        actionCaptionScenes={actionCaptionScenes}
       />
     </AbsoluteFill>
   );

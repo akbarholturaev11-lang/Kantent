@@ -1,0 +1,503 @@
+{
+  "id": "hui-vs-neng-pool-20261028",
+  "date": "2026-10-28",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "tg-TJ",
+  "title": "会 ва 能: шиновариро медонам, аммо имрӯз наметавонам",
+  "level": "HSK 2",
+  "topic": "会 ва 能: маҳорати омӯхташуда ва имконият дар вазъияти муайян",
+  "durationTargetSec": 50,
+  "caption": "«Ман шиновариро медонам» — 我会游泳 (Wǒ huì yóuyǒng). «Имрӯз ман шино карда наметавонам» — 我今天不能游泳 (Wǒ jīntiān bù néng yóuyǒng). Дар ин вазъият 会 маҳорат ва 能 имкониятро нишон медиҳад.",
+  "hashtags": [
+    "#HSKAI",
+    "#забоничинӣ",
+    "#HSK2",
+    "#омӯзишичинӣ"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "会 (huì) пеш аз феъл метавонад маҳорати омӯхташударо нишон диҳад: 我会游泳 — «Ман шиновариро медонам».",
+    "能 (néng) пеш аз феъл метавонад имконияти ҷисмонӣ ё вазъиятиро нишон диҳад: 我今天不能游泳 — «Имрӯз ман шино карда наметавонам».",
+    "Шакли манфии 能 — 不能 (bù néng). Набудани имконият имрӯз маънои фаромӯш кардани шиновариро надорад.",
+    "Ин муқоиса барои навомӯзон аст ва ҳамаи маъниҳоро дар бар намегирад. 会 метавонад пешгӯиро ҳам ифода кунад; 能 дар баъзе мавридҳои имконият ё иҷозат бо 可以 маънои наздик дорад."
+  ],
+  "examples": [
+    "会 huì — тавонистан аз рӯйи маҳорати омӯхташуда",
+    "能 néng — тавонистан аз рӯйи шароит",
+    "游泳 yóuyǒng — шино кардан",
+    "我会游泳。 Wǒ huì yóuyǒng. — Ман шиновариро медонам.",
+    "我今天不能游泳。 Wǒ jīntiān bù néng yóuyǒng. — Имрӯз ман шино карда наметавонам.",
+    "不能 bù néng — натавонистан дар ин шароит"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "МЕДОНАМ, АММО ИМРӮЗ НАМЕТАВОНАМ?",
+      "narration": "Шиновариро медонӣ, аммо имрӯз ҳавз баста аст. 会 ё 能? Фарқашонро бин.",
+      "screenCaption": "Маҳорат ≠ имконият имрӯз",
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "skill-question",
+          "kind": "choice",
+          "cueText": "Шиновариро",
+          "visual": {
+            "title": "кадом маъно?",
+            "hanzi": "会 / 能",
+            "pinyin": "huì / néng",
+            "meaning": "кадом маъно?",
+            "choices": [
+              "会",
+              "能"
+            ]
+          },
+          "explains": "Introduce the learned-skill versus current-opportunity distinction."
+        },
+        {
+          "id": "closed-today",
+          "kind": "phrase",
+          "cueText": "имрӯз",
+          "visual": {
+            "title": "Имрӯз ман шино карда наметавонам.",
+            "hanzi": "我今天不能游泳。",
+            "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+            "meaning": "Имрӯз ман шино карда наметавонам.",
+            "parts": [
+              "我",
+              "今天",
+              "不能",
+              "游泳"
+            ],
+            "focus": "不能"
+          },
+          "explains": "Use the authored sentence to show the situational limitation; no unsupported pool graphic."
+        },
+        {
+          "id": "show-contrast",
+          "kind": "comparison",
+          "cueText": "Фарқашонро",
+          "visual": {
+            "title": "маҳорат / имконият",
+            "hanzi": "会 / 能",
+            "pinyin": "huì / néng",
+            "meaning": "маҳорат / имконият",
+            "models": [
+              {
+                "kind": "phrase",
+                "title": "Ман шиновариро медонам.",
+                "hanzi": "我会游泳。",
+                "pinyin": "Wǒ huì yóuyǒng.",
+                "meaning": "Ман шиновариро медонам.",
+                "parts": [
+                  "我",
+                  "会",
+                  "游泳"
+                ],
+                "focus": "会"
+              },
+              {
+                "kind": "phrase",
+                "title": "Имрӯз ман шино карда наметавонам.",
+                "hanzi": "我今天不能游泳。",
+                "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+                "meaning": "Имрӯз ман шино карда наметавонам.",
+                "parts": [
+                  "我",
+                  "今天",
+                  "不能",
+                  "游泳"
+                ],
+                "focus": "不能"
+              }
+            ]
+          },
+          "explains": "Present the two genuine models."
+        }
+      ],
+      "editPlan": "Use neutral sentence/action models; do not invent a pool asset or borrow Russian cues."
+    },
+    {
+      "id": "skill",
+      "kind": "example",
+      "durationSec": 10,
+      "headline": "会 — МАҲОРАТИ ОМӮХТАШУДА",
+      "narration": "我会游泳。 Яъне: «Ман шиновариро медонам». 会 маҳорати омӯхташударо нишон медиҳад. Ин шахс шиновариро ёд гирифтааст. Баста будани ҳавз ин маҳоратро аз байн намебарад.",
+      "screenCaption": "会 + амал = маҳорат",
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "skill-sentence",
+          "kind": "phrase",
+          "cueText": "我会游泳",
+          "visual": {
+            "title": "Ман шиновариро медонам.",
+            "hanzi": "我会游泳。",
+            "pinyin": "Wǒ huì yóuyǒng.",
+            "meaning": "Ман шиновариро медонам.",
+            "parts": [
+              "我",
+              "会",
+              "游泳"
+            ],
+            "focus": "会"
+          },
+          "explains": "Assemble the exact spoken sentence."
+        },
+        {
+          "id": "skill-meaning",
+          "kind": "phrase",
+          "cueText": "маҳорати",
+          "visual": {
+            "title": "Ман шиновариро медонам.",
+            "hanzi": "我会游泳。",
+            "pinyin": "Wǒ huì yóuyǒng.",
+            "meaning": "маҳорати омӯхташуда",
+            "parts": [
+              "我",
+              "会",
+              "游泳"
+            ],
+            "focus": "会"
+          },
+          "explains": "Focus the learned-skill modal during its explanation."
+        },
+        {
+          "id": "skill-remains",
+          "kind": "comparison",
+          "cueText": "Баста будани",
+          "visual": {
+            "title": "маҳорат / имконият",
+            "hanzi": "会 / 能",
+            "pinyin": "huì / néng",
+            "meaning": "маҳорат / имконият",
+            "models": [
+              {
+                "kind": "phrase",
+                "title": "Ман шиновариро медонам.",
+                "hanzi": "我会游泳。",
+                "pinyin": "Wǒ huì yóuyǒng.",
+                "meaning": "Ман шиновариро медонам.",
+                "parts": [
+                  "我",
+                  "会",
+                  "游泳"
+                ],
+                "focus": "会"
+              },
+              {
+                "kind": "phrase",
+                "title": "Имрӯз ман шино карда наметавонам.",
+                "hanzi": "我今天不能游泳。",
+                "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+                "meaning": "Имрӯз ман шино карда наметавонам.",
+                "parts": [
+                  "我",
+                  "今天",
+                  "不能",
+                  "游泳"
+                ],
+                "focus": "不能"
+              }
+            ]
+          },
+          "explains": "The situational limit does not remove the skill."
+        }
+      ],
+      "editPlan": "Build the full sentence and emphasize 会. Keep its pinyin in the single caption block."
+    },
+    {
+      "id": "conditions",
+      "kind": "example",
+      "durationSec": 10,
+      "headline": "能 — ИМКОНИЯТ ДАР ИН ВАЗЪИЯТ",
+      "narration": "我今天不能游泳。 Яъне: «Имрӯз ман шино карда наметавонам». Ҳавз баста аст. Сабаб надонистани шиноварӣ нест: имрӯз шароит имкон намедиҳад. Дар ин ҷумла 不能 ҳамин маҳдудиятро нишон медиҳад.",
+      "screenCaption": "不能 = ҳоло имконият нест",
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "today-sentence",
+          "kind": "phrase",
+          "cueText": "我今天不能游泳",
+          "visual": {
+            "title": "Имрӯз ман шино карда наметавонам.",
+            "hanzi": "我今天不能游泳。",
+            "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+            "meaning": "Имрӯз ман шино карда наметавонам.",
+            "parts": [
+              "我",
+              "今天",
+              "不能",
+              "游泳"
+            ],
+            "focus": "不能"
+          },
+          "explains": "Assemble the situational inability sentence."
+        },
+        {
+          "id": "today-time",
+          "kind": "phrase",
+          "cueText": "Ҳавз баста",
+          "visual": {
+            "title": "Имрӯз ман шино карда наметавонам.",
+            "hanzi": "我今天不能游泳。",
+            "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+            "meaning": "Имрӯз ман шино карда наметавонам.",
+            "parts": [
+              "我",
+              "今天",
+              "不能",
+              "游泳"
+            ],
+            "focus": "今天"
+          },
+          "explains": "The closed-pool situation concerns today."
+        },
+        {
+          "id": "cannot-now",
+          "kind": "phrase",
+          "cueText": "Дар ин ҷумла",
+          "visual": {
+            "title": "Имрӯз ман шино карда наметавонам.",
+            "hanzi": "我今天不能游泳。",
+            "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+            "meaning": "Имрӯз ман шино карда наметавонам.",
+            "parts": [
+              "我",
+              "今天",
+              "不能",
+              "游泳"
+            ],
+            "focus": "不能"
+          },
+          "explains": "Focus the situational inability modal."
+        }
+      ],
+      "editPlan": "Show 今天 and 不能 through exact translated cue words. Avoid real-place or prohibition claims."
+    },
+    {
+      "id": "contrast",
+      "kind": "context",
+      "durationSec": 9,
+      "headline": "МАҲОРАТ ҲАСТ, ШАРОИТ ДИГАР АСТ",
+      "narration": "Муқоиса кун: 我会游泳 — ман шиновариро медонам. 我今天不能游泳 — имрӯз шино карда наметавонам. Дар ин мисол 会 дар бораи маҳорат аст, 能 бошад дар бораи имконият дар шароити муайян.",
+      "screenCaption": "会: маҳорат · 能: имконият",
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "compare-skill",
+          "kind": "phrase",
+          "cueText": "我会游泳",
+          "visual": {
+            "title": "Ман шиновариро медонам.",
+            "hanzi": "我会游泳。",
+            "pinyin": "Wǒ huì yóuyǒng.",
+            "meaning": "Ман шиновариро медонам.",
+            "parts": [
+              "我",
+              "会",
+              "游泳"
+            ],
+            "focus": "会"
+          },
+          "explains": "Recall learned skill."
+        },
+        {
+          "id": "compare-conditions",
+          "kind": "phrase",
+          "cueText": "我今天不能游泳",
+          "visual": {
+            "title": "Имрӯз ман шино карда наметавонам.",
+            "hanzi": "我今天不能游泳。",
+            "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+            "meaning": "Имрӯз ман шино карда наметавонам.",
+            "parts": [
+              "我",
+              "今天",
+              "不能",
+              "游泳"
+            ],
+            "focus": "不能"
+          },
+          "explains": "Recall current conditions."
+        },
+        {
+          "id": "compare-together",
+          "kind": "comparison",
+          "cueText": "Дар ин мисол",
+          "visual": {
+            "title": "маҳорат / имконият",
+            "hanzi": "会 / 能",
+            "pinyin": "huì / néng",
+            "meaning": "маҳорат / имконият",
+            "models": [
+              {
+                "kind": "phrase",
+                "title": "Ман шиновариро медонам.",
+                "hanzi": "我会游泳。",
+                "pinyin": "Wǒ huì yóuyǒng.",
+                "meaning": "Ман шиновариро медонам.",
+                "parts": [
+                  "我",
+                  "会",
+                  "游泳"
+                ],
+                "focus": "会"
+              },
+              {
+                "kind": "phrase",
+                "title": "Имрӯз ман шино карда наметавонам.",
+                "hanzi": "我今天不能游泳。",
+                "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+                "meaning": "Имрӯз ман шино карда наметавонам.",
+                "parts": [
+                  "我",
+                  "今天",
+                  "不能",
+                  "游泳"
+                ],
+                "focus": "不能"
+              }
+            ]
+          },
+          "explains": "Show both meanings together, without claiming absolute exclusivity."
+        }
+      ],
+      "editPlan": "Keep both full models readable in a comparison, preserve grammar and the shared learning outcome."
+    },
+    {
+      "id": "recall",
+      "kind": "example",
+      "durationSec": 8,
+      "headline": "ДУ МАЪНО ДАР ДУ ВАЗЪИЯТ",
+      "narration": "Такрор кун: 我会游泳。 Ман шиновариро медонам. 我今天不能游泳。 Имрӯз шино карда наметавонам. Як чиз маҳорат аст, чизи дигар имконият дар ин вазъият.",
+      "screenCaption": "会 ва 能 дар ин мисол фарқ мекунанд",
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recall-skill",
+          "kind": "phrase",
+          "cueText": "我会游泳",
+          "visual": {
+            "title": "Ман шиновариро медонам.",
+            "hanzi": "我会游泳。",
+            "pinyin": "Wǒ huì yóuyǒng.",
+            "meaning": "Ман шиновариро медонам.",
+            "parts": [
+              "我",
+              "会",
+              "游泳"
+            ],
+            "focus": "会"
+          },
+          "explains": "Recall the whole learned-skill sentence."
+        },
+        {
+          "id": "recall-conditions",
+          "kind": "phrase",
+          "cueText": "我今天不能游泳",
+          "visual": {
+            "title": "Имрӯз ман шино карда наметавонам.",
+            "hanzi": "我今天不能游泳。",
+            "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+            "meaning": "Имрӯз ман шино карда наметавонам.",
+            "parts": [
+              "我",
+              "今天",
+              "不能",
+              "游泳"
+            ],
+            "focus": "不能"
+          },
+          "explains": "Recall the whole situational inability sentence."
+        },
+        {
+          "id": "recall-models",
+          "kind": "comparison",
+          "cueText": "Як чиз",
+          "visual": {
+            "title": "маҳорат / имконият",
+            "hanzi": "会 / 能",
+            "pinyin": "huì / néng",
+            "meaning": "маҳорат / имконият",
+            "models": [
+              {
+                "kind": "phrase",
+                "title": "Ман шиновариро медонам.",
+                "hanzi": "我会游泳。",
+                "pinyin": "Wǒ huì yóuyǒng.",
+                "meaning": "Ман шиновариро медонам.",
+                "parts": [
+                  "我",
+                  "会",
+                  "游泳"
+                ],
+                "focus": "会"
+              },
+              {
+                "kind": "phrase",
+                "title": "Имрӯз ман шино карда наметавонам.",
+                "hanzi": "我今天不能游泳。",
+                "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+                "meaning": "Имрӯз ман шино карда наметавонам.",
+                "parts": [
+                  "我",
+                  "今天",
+                  "不能",
+                  "游泳"
+                ],
+                "focus": "不能"
+              }
+            ]
+          },
+          "explains": "Close the lesson with the contrast, without an embedded CTA."
+        }
+      ],
+      "editPlan": "Recall both phrases at their actual Mandarin cues and finish with the contrast. The central CTA remains separate."
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "tg-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "会 vs 能 vs 可以 — Elon.io Chinese Grammar",
+      "url": "https://elon.io/grammar/chinese-mandarin/choosing/hui-vs-neng-vs-keyi",
+      "checkedAt": "2026-10-19",
+      "supports": "Examples 我会游泳 and 我今天不能来 establish 会 as learned skill and 能 as situational capacity; explains contexts and overlap with 可以."
+    },
+    {
+      "title": "能愿动词：会、能 — PandaBoo",
+      "url": "https://www.pandaboo.app/grammar/hsk1/grammar-hsk1-002",
+      "checkedAt": "2026-10-19",
+      "supports": "Defines 会 as learned ability, 能 as physical/situational ability, and Subject + 会/能 + verb, with 我会说中文 and 今天我不能去."
+    },
+    {
+      "title": "会 / 能 / 可以 — ChineseGrammar.app",
+      "url": "https://chinesegrammar.app/grammar/hui-neng-keyi",
+      "checkedAt": "2026-10-19",
+      "supports": "Confirms 我会游泳 represents learned swimming skill, situational inability uses 不能, and the distinction is a contextual default rather than an absolute non-overlap."
+    }
+  ],
+  "hookExperiment": {
+    "id": "hui-vs-neng-pool-20261028-tg-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Муқоисаи маҳорати шиноварӣ бо ҳавзи баста метавонад навомӯзи тоҷикзабонро то фарқи 会 ва 能 нигоҳ дорад; ин фарзия то гирифтани натиҷаҳои воқеӣ санҷиданашуда аст.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-26"
+  },
+  "audienceProblem": "Навомӯз маҳорат ва имконият дар вазъияти ҳозираро бо як маънои «тавонистан» омехта мекунад.",
+  "learningOutcome": "Маҳорати шиновариро бо 会 ва набудани имконият имрӯзро бо 不能 дар ду ҷумлаи маъмулӣ баён кунад.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "localization": {
+    "language": "tg",
+    "sourceEpisodeId": "hui-vs-neng-pool-20261028",
+    "sourceHash": "1dd8c3afde05fea9ebcd83709ebacab958af414c00b5f011410f73938886992f",
+    "authoredOn": "2026-10-26",
+    "status": "draft-awaiting-audio-review"
+  }
+}

@@ -1,4 +1,4 @@
-import { AbsoluteFill, Easing } from "remotion";
+import { AbsoluteFill, Easing, interpolate } from "remotion";
 import visual from "../content/visual-system.json";
 import semanticConfig from "../content/semantic-visual-system.json";
 import type { VisualBeat } from "./EpisodeComposition";
@@ -165,10 +165,57 @@ const ObjectMark:React.FC<{id:string;index:number;frame:number;actions:ResolvedS
   </g>;
 };
 
+/** Abstract grammar needs readable teaching, without an empty scenery panel. */
+const AbstractTeaching:React.FC<{beat:VisualBeat;headline?:string;frame:number}> = ({beat,headline,frame}) => {
+  const layout=visual.semanticAbstractLayout;
+  const parts=beat.hero.split(/\s*\/\s*/u);
+  const pinyin=beat.pinyin?.split(/\s*\/\s*/u)??[];
+  const meanings=beat.meaning?.split(/\s*\/\s*/u)??[];
+  const compare=parts.length===2 && pinyin.length===2 && meanings.length===2;
+  const rows=compare?parts:[beat.hero];
+  const ink=COLORS.foreground;
+  return <div style={{position:"absolute",top:layout.topPx,left:LAYOUT.safeSidePx,right:LAYOUT.safeSidePx,
+    display:"flex",flexDirection:"column",alignItems:"center",gap:layout.sectionGapPx,textAlign:"center",color:ink}}>
+    {headline&&<div style={{fontSize:layout.headlineFontPx,fontWeight:850,lineHeight:1.2,textWrap:"balance"}}>{headline}</div>}
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:layout.rowGapPx,width:"100%"}}>
+      {rows.map((text,row)=>{
+        const count=Array.from(text).length;
+        const size=compare?layout.comparisonFontPx:count<=2?layout.heroFontPx:
+          Math.min(layout.phraseFontPx,(1080-2*LAYOUT.safeSidePx)/Math.max(1,count));
+        return <div key={row} style={{width:"100%"}}>
+          <div style={{fontSize:size,fontWeight:900,lineHeight:1.15,whiteSpace:"nowrap"}}>
+            {Array.from(text).map((character,index)=>{
+              const reveal=interpolate(frame-index*visual.motion.heroCharacterStaggerFrames,
+                [0,visual.motion.settleFrames],[0,1],{extrapolateLeft:"clamp",extrapolateRight:"clamp",easing:ease});
+              return <span key={index} style={{display:"inline-block",color:character==="了"?COLORS.brandRed:ink,
+                opacity:0.65+0.35*reveal,translate:`0 ${(1-reveal)*visual.motion.slideDistancePx}px`,
+                borderBottom:character==="了"?`5px solid ${COLORS.brandGold}`:"5px solid transparent"}}>{character}</span>;
+            })}
+          </div>
+          {(compare?pinyin[row]:beat.pinyin)&&<div style={{marginTop:12,
+            fontSize:compare?layout.comparisonPinyinFontPx:LAYOUT.pinyinFontPx,fontWeight:750,color:COLORS.brandRed}}>
+            {compare?pinyin[row]:beat.pinyin}
+          </div>}
+          {(compare?meanings[row]:beat.meaning)&&<div style={{marginTop:12,
+            fontSize:compare?layout.comparisonMeaningFontPx:LAYOUT.meaningFontPx,fontWeight:650,color:COLORS.muted,textWrap:"balance"}}>
+            {compare?meanings[row]:beat.meaning}
+          </div>}
+        </div>;
+      })}
+    </div>
+    {!compare&&beat.hero.includes("书")&&<svg width={layout.objectSizePx} height={layout.objectSizePx}
+      viewBox="0 0 160 160" aria-label="Книга" style={{opacity:interpolate(frame,[0,visual.motion.settleFrames],[0.5,1],
+        {extrapolateLeft:"clamp",extrapolateRight:"clamp"})}}>
+      <path d="M22 28Q51 17 80 32Q109 17 138 28V128Q109 117 80 132Q51 117 22 128Z" fill="#FFFFFF" stroke={COLORS.brandTeal} strokeWidth="7" strokeLinejoin="round"/>
+      <path d="M80 32V132M36 48Q53 43 65 49M36 68Q53 63 65 69M96 49Q113 43 125 48M96 69Q113 63 125 68" fill="none" stroke={COLORS.brandTeal} strokeWidth="5" strokeLinecap="round"/>
+    </svg>}
+  </div>;
+};
+
 export const SemanticStoryScene:React.FC<{
   shot:SemanticShot;timeline:SemanticTimelineScene;beats:VisualBeat[];
-  sceneStartFrame:number;frame:number;
-}> = ({shot,timeline,beats,sceneStartFrame,frame}) => {
+  sceneStartFrame:number;frame:number;headline?:string;
+}> = ({shot,timeline,beats,sceneStartFrame,frame,headline}) => {
   const absoluteFrame=sceneStartFrame+frame;
   // P2 refuses actions/subjects for which a truthful motion visual does not
   // yet exist. The broader registry is a future planning vocabulary, not a
@@ -193,6 +240,12 @@ export const SemanticStoryScene:React.FC<{
   const selected=elapsedActions[elapsedActions.length-1];
   const beat=beats[selected?.beatIndex ?? 0];
   const hero=beat?.hero??"";
+  const abstract=shot.environmentId==="neutral" && !(shot.actorIds?.length) && !(shot.objectIds?.length);
+  if(abstract && beat) return <AbsoluteFill style={{background:COLORS.background,overflow:"hidden",
+    fontFamily:"'PingFang SC','Noto Sans CJK SC',sans-serif"}}>
+    <AbsoluteFill style={{background:"radial-gradient(ellipse at 50% 46%,rgba(233,169,22,.09),transparent 62%),linear-gradient(155deg,#FFF9ED,#FDF9F0)"}}/>
+    <AbstractTeaching beat={beat} headline={headline} frame={frame}/>
+  </AbsoluteFill>;
   const cameraScale=shot.shotType==="closeup"?1.10:shot.shotType==="wide"?0.90:1;
   const leadActor=(shot.actorIds ?? [])[0];
   const followOffset=leadActor ? semanticActorPose(leadActor,absoluteFrame,timeline.actions).x : 0;

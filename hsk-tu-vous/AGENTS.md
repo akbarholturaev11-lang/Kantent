@@ -8,6 +8,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 |---|---|
 | Active global behavior and safety rules | `AI_RULES.md` |
 | Production procedure and error handling | `content/WORKFLOW.md` |
+| Default production languages, locale codes and per-language content roots | `content/languages.json` |
 | Dates, IDs, cadence, episode references | `content/calendar.json` |
 | Future publishing weekdays and autonomous draft reserve | `content/calendar.json#planningWeekdays` and `#planningBuffer` |
 | Future planned episode buffer (minimum/target) | `content/calendar.json#planningBuffer` |
@@ -15,12 +16,13 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Optional adaptive story structure and editorial policy | `content/creative-formats.json#storytellingPolicy`; optional annotations in `content/EPISODE_SCHEMA.md` |
 
 | Raw external Zernio performance observations and optimizer audit notes | `content/feedback/` (not the canonical Hook/CTA Labs) |
-| CTA-free future lesson scripts; approved/published legacy snapshots kept immutable | `content/episodes/*.json` |
-| Approved voice/provider/settings | `content/voice-profile.json` |
-| CTA wording and active corrections | `content/cta-lab.json`, explained by `content/CTA_LAB.md` |
-| Hook rules, hypotheses and readbacks | `content/hook-lab.json`, explained by `content/HOOK_LAB.md` |
+| Shared CTA-free lesson source; approved/published legacy snapshots kept immutable | `content/episodes/*.json` |
+| Translated CTA-free lesson scripts and source-version binding | `episodes/*.json` under each localized content root in `content/languages.json`; `content/EPISODE_SCHEMA.md` |
+| Approved voice/provider/settings for each language | `voice-profile.json` in that language's configured content root |
+| Language-specific CTA wording and active corrections | `cta-lab.json` in that language's configured content root, explained by `content/CTA_LAB.md` |
+| Language-specific hook rules, hypotheses and readbacks | `hook-lab.json` in that language's configured content root, explained by `content/HOOK_LAB.md` |
 | Creative packaging formats and pilot allocation | `content/creative-formats.json` |
-| Design tokens, caption numbers and motion parameters | `content/visual-system.json` |
+| Design tokens, active lesson presentation/date, full-video duration, caption numbers and motion parameters | `content/visual-system.json` |
 | Visual editorial method | `content/EDITING_SPEC.md` |
 | Semantic shot/action enumeration and rollout status | `content/semantic-visual-system.json`, explained by `content/SEMANTIC_VISUAL_SCHEMA.md` |
 | P3 evidence-based shot suggestion rules | `content/semantic-shot-intents.json`, explained by `content/SEMANTIC_SHOT_ADVISER.md` |
@@ -54,7 +56,11 @@ The existing daily Calendar Reserve and the Monday/Wednesday/Friday feedback age
 
 ## Central CTA assembly for future lessons
 
-Author future canonical `content/episodes/*.json` lessons with teaching scenes only: **no** top-level `cta`, `ctaExperiment` or embedded CTA scene. The canonical copy plus visual template are under `content/cta-lab.json`; `scripts/episode-cta-assembly.mjs` adds them when a working episode is materialized. The working `review/<id>/episode.json` then keeps one immutable-version CTA snapshot for verified voice, cue timing, QA and publication. Legacy sources and registered CTA experiments are historical, not alternate CTA sources. Do not auto-acknowledge a changed owner rule or reuse a stale registration: a new CTA version must be validated/registered before TTS/render.
+Author shared and translated future lesson sources with teaching scenes only: **no** top-level `cta`, `ctaExperiment` or embedded CTA scene. The language's canonical CTA copy plus visual template are in its configured `cta-lab.json`; `scripts/episode-cta-assembly.mjs` adds them when that language's working episode is materialized. Each working copy then keeps its own immutable-version CTA snapshot for verified voice, cue timing, QA and publication. Legacy sources and registered CTA experiments are historical, not alternate CTA sources. Do not auto-acknowledge a changed owner rule or reuse a stale registration: a new CTA version must be validated/registered before TTS/render.
+
+## Language-scoped production
+
+Resolve the production language set and content roots from `content/languages.json`. Ordinary dated/today preparation creates every configured default language for one calendar lesson; `content/WORKFLOW.md` owns the command contract. Per-language reads, edits, labs, voice approval and publication approval must select the intended language explicitly when it is not the legacy default. Keep translations bound to the current shared source with `localization.sourceHash`; preserve the Chinese teaching point and regenerate narration/timing separately. Report missing/stale translations, pending voice decisions and partial outputs accurately; never substitute another language or reuse its review approval. Historical observations and publication records without a language marker belong to the original series, not to a translated series.
 
 ## Zernio feedback learning
 

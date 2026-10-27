@@ -1,0 +1,577 @@
+{
+  "version": 1,
+  "revision": 3,
+  "languageCode": "tg-TJ",
+  "baselineFormatId": "benefit-profile-link-download",
+  "offer": {
+    "id": "hsk-ai-tg-profile-link-download-v1",
+    "keyword": null,
+    "languageCode": "tg-TJ",
+    "canonicalRussian": "HSK AI-ро санҷ. Ба профил даро, пайвандро кушо, HSK AI-ро боргирӣ кун ва ҳар рӯз забони чиниро омӯз.",
+    "immediateAction": "Open the profile link, download HSK AI, and learn Chinese every day.",
+    "fulfillment": "The viewer follows the profile link to download HSK AI and can use it as part of a daily Chinese-learning routine.",
+    "appAvailabilityVerified": false,
+    "automaticDmsConfigured": false,
+    "ownerApprovedWording": false,
+    "localizationStatus": "draft-translation-of-authorized-direction"
+  },
+  "policy": {
+    "readbackWindows": [
+      "24h",
+      "7d"
+    ],
+    "primaryMetric": "profile-link-clickers-per-1000-views",
+    "primaryCountDefinition": "Unique viewers who open the HSK AI profile link divided by platform views × 1000; preserve the platform metric definition and observation window. Record website downloads separately when provided.",
+    "optionalDownstreamCounts": [
+      "downloads"
+    ],
+    "minimumPostsPerVariant": 3,
+    "minimumViewsPerPost": 500,
+    "minimumRelativeLiftPercent": 10,
+    "maximumSuppliedDownstreamDropPercent": 10,
+    "promotionRequiresOwnerDecision": true,
+    "thresholdNote": "Initial operating defaults, not statistical significance. Compare the same platform, time window, metric definition, offer, HSK level, duration band, hook format, voice profile, and registered comparison group. Vary one CTA element. Topic/audience differences remain possible confounders. Missing counts are unknown, never zero.",
+    "fixedSeriesCopy": true,
+    "fixedSeriesVisualSequence": true,
+    "ownerRequestedChangesOnly": true,
+    "performanceAutoPromotion": false,
+    "primaryAction": "Visit the profile, open its link, download HSK AI, and learn Chinese every day.",
+    "localizedGuardrails": [
+      "One central stage and one visible HSK AI wordmark at a time. No duplicate logo or moving focus marker.",
+      "Use profile, profile-links screenshot, branded download card and daily-learning closing card at their exact spoken Tajik cues. No website screenshot or simulated download completion.",
+      "Preserve the authorized profile-link/download direction; no comment/DM CTA, automatic DM, invented feature, speed, guarantee or free-offer claim.",
+      "Russian performance is not Tajik evidence. Keep measurements language-scoped and do not auto-promote."
+    ]
+  },
+  "corrections": [],
+  "experiments": [
+    {
+      "id": "er-vs-liang-cafe-20261026-tg-cta-v1",
+      "episodeId": "er-vs-liang-cafe-20261026",
+      "date": "2026-10-26",
+      "formatId": "benefit-profile-link-download",
+      "ruleVersion": "cta-policy-v0",
+      "offerId": "hsk-ai-tg-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Localized baseline of the authorized profile-link/download direction, with native Tajik narration and exact translated word cues. No performance improvement is claimed.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "hsk-profile-link-download-v1",
+      "registeredAt": "2026-10-26T14:23:27.088Z",
+      "acknowledgedCorrectionIds": [],
+      "supersedes": null,
+      "copyHash": "b0e04607cb939c577ffca7c3c52f87cb5be34f5988f20e04601676f4dd6e0452",
+      "copySnapshot": {
+        "cta": "HSK AI-ро санҷ. Ба профил даро, пайвандро кушо, HSK AI-ро боргирӣ кун ва ҳар рӯз забони чиниро омӯз.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "HSK AI-ро санҷ. Ба профил даро, пайвандро кушо, HSK AI-ро боргирӣ кун ва ҳар рӯз забони чиниро омӯз.",
+            "headline": "HSK AI • ПАЙВАНД ДАР ПРОФИЛ",
+            "screenCaption": "Профил → пайванд → HSK AI → ҳар рӯз",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "САНҶ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "санҷ",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ПРОФИЛ",
+                "screenImage": "cta/instagram-profile.png",
+                "screenImageWidthPx": 860,
+                "screenImageHeightPx": 633,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 86,
+                  "widthPercent": 92,
+                  "heightPercent": 7
+                },
+                "motion": "slide",
+                "syncCueText": "даро",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "ПАЙВАНД",
+                "screenImage": "cta/instagram-links.png",
+                "screenImageWidthPx": 842,
+                "screenImageHeightPx": 1164,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 52,
+                  "widthPercent": 92,
+                  "heightPercent": 15
+                },
+                "motion": "reveal",
+                "syncCueText": "кушо",
+                "transitionStyle": "mask-reveal"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "БОРГИРИИ БАРНОМА",
+                "brandLogo": true,
+                "motion": "slide",
+                "syncCueText": "боргирӣ",
+                "actionIcon": "app-download",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "ЧИНӢ ҲАР РӮЗ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "омӯз",
+                "transitionStyle": "type-reveal"
+              }
+            ],
+            "editPlan": "One central stage. On санҷ show HSK AI; on даро show the existing owner-supplied platform profile screenshot; on кушо show the complete existing profile-links screenshot. On боргирӣ show only a branded download card, with no website screenshot or completed-download claim. On омӯз close with the single HSK AI logo and ЧИНӢ ҲАР РӮЗ. Keep screenshot contents intact; existing product UI may retain its source language. All authored text and word cues use Tajik. No DM simulation, duplicate branding, moving focus marker or competing panel."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 5,
+            "precedingSceneIds": [
+              "hook",
+              "classifier",
+              "order",
+              "numeral",
+              "recap"
+            ],
+            "durationSec": 11,
+            "plannedStartSec": 41
+          }
+        ]
+      },
+      "placementHash": "3b3f4e5e94f5a17583df864cd1897d6e1285ecafda3f7cb3e7a2c9ddc7a3c418",
+      "contextSnapshot": {
+        "level": "HSK 1",
+        "topic": "二 ва 两: адад ва миқдор пеш аз калимаи ҳисобӣ",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "tg-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "89980fa6c99a15c1c2bba3ee8f0ab296c2046aef6f66cd0c5094d486bd37feeb",
+        "motionDesign": true,
+        "motionDesignStyle": "explain-actions-v1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "hui-vs-neng-pool-20261028-tg-cta-v1",
+      "episodeId": "hui-vs-neng-pool-20261028",
+      "date": "2026-10-28",
+      "formatId": "benefit-profile-link-download",
+      "ruleVersion": "cta-policy-v0",
+      "offerId": "hsk-ai-tg-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Localized baseline of the authorized profile-link/download direction, with native Tajik narration and exact translated word cues. No performance improvement is claimed.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "hsk-profile-link-download-v1",
+      "registeredAt": "2026-10-26T14:23:27.094Z",
+      "acknowledgedCorrectionIds": [],
+      "supersedes": null,
+      "copyHash": "bd30e31de9dbfbeb34bd99dcadfa1e893569e3791b34e44e428af4ec1e6098de",
+      "copySnapshot": {
+        "cta": "HSK AI-ро санҷ. Ба профил даро, пайвандро кушо, HSK AI-ро боргирӣ кун ва ҳар рӯз забони чиниро омӯз.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "HSK AI-ро санҷ. Ба профил даро, пайвандро кушо, HSK AI-ро боргирӣ кун ва ҳар рӯз забони чиниро омӯз.",
+            "headline": "HSK AI • ПАЙВАНД ДАР ПРОФИЛ",
+            "screenCaption": "Профил → пайванд → HSK AI → ҳар рӯз",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "САНҶ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "санҷ",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ПРОФИЛ",
+                "screenImage": "cta/instagram-profile.png",
+                "screenImageWidthPx": 860,
+                "screenImageHeightPx": 633,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 86,
+                  "widthPercent": 92,
+                  "heightPercent": 7
+                },
+                "motion": "slide",
+                "syncCueText": "даро",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "ПАЙВАНД",
+                "screenImage": "cta/instagram-links.png",
+                "screenImageWidthPx": 842,
+                "screenImageHeightPx": 1164,
+                "screenHighlight": {
+                  "leftPercent": 4,
+                  "topPercent": 52,
+                  "widthPercent": 92,
+                  "heightPercent": 15
+                },
+                "motion": "reveal",
+                "syncCueText": "кушо",
+                "transitionStyle": "mask-reveal"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "БОРГИРИИ БАРНОМА",
+                "brandLogo": true,
+                "motion": "slide",
+                "syncCueText": "боргирӣ",
+                "actionIcon": "app-download",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "ЧИНӢ ҲАР РӮЗ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "омӯз",
+                "transitionStyle": "type-reveal"
+              }
+            ],
+            "editPlan": "One central stage. On санҷ show HSK AI; on даро show the existing owner-supplied platform profile screenshot; on кушо show the complete existing profile-links screenshot. On боргирӣ show only a branded download card, with no website screenshot or completed-download claim. On омӯз close with the single HSK AI logo and ЧИНӢ ҲАР РӮЗ. Keep screenshot contents intact; existing product UI may retain its source language. All authored text and word cues use Tajik. No DM simulation, duplicate branding, moving focus marker or competing panel."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 5,
+            "precedingSceneIds": [
+              "hook",
+              "skill",
+              "conditions",
+              "contrast",
+              "recall"
+            ],
+            "durationSec": 11,
+            "plannedStartSec": 42
+          }
+        ]
+      },
+      "placementHash": "f91b341c86abb80bcb810b719298909299823dc6393df9c52623ccc48138150b",
+      "contextSnapshot": {
+        "level": "HSK 2",
+        "topic": "会 ва 能: маҳорати омӯхташуда ва имконият дар вазъияти муайян",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "tg-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "8ce9783fb8d6e4fd0736b88b11589d73a2790eb053abb05d425e17403505da52",
+        "motionDesign": true,
+        "motionDesignStyle": "explain-actions-v1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "er-vs-liang-cafe-20261026-youtube-cta-v1",
+      "episodeId": "er-vs-liang-cafe-20261026",
+      "date": "2026-10-26",
+      "formatId": "benefit-profile-link-download",
+      "ruleVersion": "cta-policy-v0",
+      "offerId": "hsk-ai-tg-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Bind the owner-approved platform CTA visuals to the reviewed shared lesson and existing speech. This baseline registration makes no performance claim.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "hsk-profile-link-download-v1-youtube",
+      "registeredAt": "2026-10-27T08:45:33.099Z",
+      "acknowledgedCorrectionIds": [],
+      "supersedes": null,
+      "copyHash": "9e28bf047c7e0defe8865de115f5c025d0f9372611f4d936a66537d05f1f29a8",
+      "copySnapshot": {
+        "cta": "HSK AI-ро санҷ. Ба профил даро, пайвандро кушо, HSK AI-ро боргирӣ кун ва ҳар рӯз забони чиниро омӯз.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "HSK AI-ро санҷ. Ба профил даро, пайвандро кушо, HSK AI-ро боргирӣ кун ва ҳар рӯз забони чиниро омӯз.",
+            "headline": "HSK AI • ПАЙВАНД ДАР ПРОФИЛ",
+            "screenCaption": "Профил → пайванд → HSK AI → ҳар рӯз",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "САНҶ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "санҷ",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ПРОФИЛ",
+                "screenImage": "cta/youtube-telegram-profile.jpg",
+                "screenImageWidthPx": 1178,
+                "screenImageHeightPx": 1035,
+                "screenHighlight": {
+                  "leftPercent": 3,
+                  "topPercent": 76,
+                  "widthPercent": 94,
+                  "heightPercent": 10
+                },
+                "motion": "slide",
+                "syncCueText": "даро",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "ПАЙВАНД",
+                "screenImage": "cta/youtube-open-link-browser.jpg",
+                "screenImageWidthPx": 1178,
+                "screenImageHeightPx": 2261,
+                "screenHighlight": {
+                  "leftPercent": 2,
+                  "topPercent": 55.5,
+                  "widthPercent": 96,
+                  "heightPercent": 11.5
+                },
+                "motion": "reveal",
+                "syncCueText": "кушо",
+                "transitionStyle": "mask-reveal"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "БОРГИРИИ БАРНОМА",
+                "brandLogo": true,
+                "motion": "slide",
+                "syncCueText": "боргирӣ",
+                "actionIcon": "app-download",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "ЧИНӢ ҲАР РӮЗ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "омӯз",
+                "transitionStyle": "type-reveal"
+              }
+            ],
+            "editPlan": "One central stage. On санҷ show HSK AI; on даро show the existing owner-supplied platform profile screenshot; on кушо show the complete existing profile-links screenshot. On боргирӣ show only a branded download card, with no website screenshot or completed-download claim. On омӯз close with the single HSK AI logo and ЧИНӢ ҲАР РӮЗ. Keep screenshot contents intact; existing product UI may retain its source language. All authored text and word cues use Tajik. No DM simulation, duplicate branding, moving focus marker or competing panel."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 5,
+            "precedingSceneIds": [
+              "hook",
+              "classifier",
+              "order",
+              "numeral",
+              "recap"
+            ],
+            "durationSec": 11,
+            "plannedStartSec": 41
+          }
+        ]
+      },
+      "placementHash": "3b3f4e5e94f5a17583df864cd1897d6e1285ecafda3f7cb3e7a2c9ddc7a3c418",
+      "contextSnapshot": {
+        "level": "HSK 1",
+        "topic": "二 ва 两: адад ва миқдор пеш аз калимаи ҳисобӣ",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "tg-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "89980fa6c99a15c1c2bba3ee8f0ab296c2046aef6f66cd0c5094d486bd37feeb",
+        "motionDesign": true,
+        "motionDesignStyle": "explain-actions-v1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    }
+  ],
+  "readbacks": [],
+  "promotions": [],
+  "sourcePolicy": {
+    "ctaFreeFromDate": "2026-10-09",
+    "description": "Canonical lessons on or after this date must exclude CTA and registration. Assemble from platformVariants at working-copy creation. Legacy source snapshots before this date are preserved."
+  },
+  "localization": {
+    "source": "content/cta-lab.json",
+    "sourceHash": "bd2b0f337119f59c0edeb2cd5f2ee1f750934f6ce7a0b95fbad86133b288c588",
+    "authoredOn": "2026-10-26"
+  },
+  "platformVariants": {
+    "instagram": {
+      "status": "approved",
+      "copySource": "offer",
+      "visualSource": "sceneTemplate",
+      "deliveryMode": "profile-link-download",
+      "destinationVerified": false,
+      "automationVerified": null,
+      "publishingAuthorized": true,
+      "notes": "Localized draft of the existing authorized platform route. Final owner review is required; no Tajik account or publication is inferred.",
+      "sceneTemplate": {
+        "id": "cta",
+        "kind": "cta",
+        "captionStyleId": "pill",
+        "durationSec": 11,
+        "headline": "HSK AI • ПАЙВАНД ДАР ПРОФИЛ",
+        "screenCaption": "Профил → пайванд → HSK AI → ҳар рӯз",
+        "editPlan": "One central stage. On санҷ show HSK AI; on даро show the existing owner-supplied platform profile screenshot; on кушо show the complete existing profile-links screenshot. On боргирӣ show only a branded download card, with no website screenshot or completed-download claim. On омӯз close with the single HSK AI logo and ЧИНӢ ҲАР РӮЗ. Keep screenshot contents intact; existing product UI may retain its source language. All authored text and word cues use Tajik. No DM simulation, duplicate branding, moving focus marker or competing panel.",
+        "visualBeats": [
+          {
+            "hero": "HSK AI",
+            "meaning": "САНҶ",
+            "brandLogo": true,
+            "motion": "reveal",
+            "syncCueText": "санҷ",
+            "transitionStyle": "type-reveal"
+          },
+          {
+            "hero": "ПРОФИЛ",
+            "screenImage": "cta/instagram-profile.png",
+            "screenImageWidthPx": 860,
+            "screenImageHeightPx": 633,
+            "screenHighlight": {
+              "leftPercent": 4,
+              "topPercent": 86,
+              "widthPercent": 92,
+              "heightPercent": 7
+            },
+            "motion": "slide",
+            "syncCueText": "даро",
+            "transitionStyle": "slide-match"
+          },
+          {
+            "hero": "ПАЙВАНД",
+            "screenImage": "cta/instagram-links.png",
+            "screenImageWidthPx": 842,
+            "screenImageHeightPx": 1164,
+            "screenHighlight": {
+              "leftPercent": 4,
+              "topPercent": 52,
+              "widthPercent": 92,
+              "heightPercent": 15
+            },
+            "motion": "reveal",
+            "syncCueText": "кушо",
+            "transitionStyle": "mask-reveal"
+          },
+          {
+            "hero": "HSK AI",
+            "meaning": "БОРГИРИИ БАРНОМА",
+            "brandLogo": true,
+            "motion": "slide",
+            "syncCueText": "боргирӣ",
+            "actionIcon": "app-download",
+            "transitionStyle": "slide-match"
+          },
+          {
+            "hero": "HSK AI",
+            "meaning": "ЧИНӢ ҲАР РӮЗ",
+            "brandLogo": true,
+            "motion": "reveal",
+            "syncCueText": "омӯз",
+            "transitionStyle": "type-reveal"
+          }
+        ],
+        "cards": [
+          {
+            "hanzi": "中文",
+            "pinyin": "zhōngwén",
+            "meaning": "ОДДӢ • ОСОН"
+          }
+        ]
+      }
+    },
+    "youtube": {
+      "status": "approved",
+      "copySource": "offer",
+      "deliveryMode": "profile-link-download",
+      "destinationVerified": false,
+      "automationVerified": null,
+      "publishingAuthorized": true,
+      "notes": "Localized draft of the existing authorized platform route. Final owner review is required; no Tajik account or publication is inferred.",
+      "sceneTemplate": {
+        "id": "cta",
+        "kind": "cta",
+        "captionStyleId": "pill",
+        "durationSec": 11,
+        "headline": "HSK AI • ПАЙВАНД ДАР ПРОФИЛ",
+        "screenCaption": "Профил → пайванд → HSK AI → ҳар рӯз",
+        "editPlan": "One central stage. On санҷ show HSK AI; on даро show the existing owner-supplied platform profile screenshot; on кушо show the complete existing profile-links screenshot. On боргирӣ show only a branded download card, with no website screenshot or completed-download claim. On омӯз close with the single HSK AI logo and ЧИНӢ ҲАР РӮЗ. Keep screenshot contents intact; existing product UI may retain its source language. All authored text and word cues use Tajik. No DM simulation, duplicate branding, moving focus marker or competing panel.",
+        "visualBeats": [
+          {
+            "hero": "HSK AI",
+            "meaning": "САНҶ",
+            "brandLogo": true,
+            "motion": "reveal",
+            "syncCueText": "санҷ",
+            "transitionStyle": "type-reveal"
+          },
+          {
+            "hero": "ПРОФИЛ",
+            "screenImage": "cta/youtube-telegram-profile.jpg",
+            "screenImageWidthPx": 1178,
+            "screenImageHeightPx": 1035,
+            "screenHighlight": {
+              "leftPercent": 3,
+              "topPercent": 76,
+              "widthPercent": 94,
+              "heightPercent": 10
+            },
+            "motion": "slide",
+            "syncCueText": "даро",
+            "transitionStyle": "slide-match"
+          },
+          {
+            "hero": "ПАЙВАНД",
+            "screenImage": "cta/youtube-open-link-browser.jpg",
+            "screenImageWidthPx": 1178,
+            "screenImageHeightPx": 2261,
+            "screenHighlight": {
+              "leftPercent": 2,
+              "topPercent": 55.5,
+              "widthPercent": 96,
+              "heightPercent": 11.5
+            },
+            "motion": "reveal",
+            "syncCueText": "кушо",
+            "transitionStyle": "mask-reveal"
+          },
+          {
+            "hero": "HSK AI",
+            "meaning": "БОРГИРИИ БАРНОМА",
+            "brandLogo": true,
+            "motion": "slide",
+            "syncCueText": "боргирӣ",
+            "actionIcon": "app-download",
+            "transitionStyle": "slide-match"
+          },
+          {
+            "hero": "HSK AI",
+            "meaning": "ЧИНӢ ҲАР РӮЗ",
+            "brandLogo": true,
+            "motion": "reveal",
+            "syncCueText": "омӯз",
+            "transitionStyle": "type-reveal"
+          }
+        ],
+        "cards": [
+          {
+            "hanzi": "中文",
+            "pinyin": "zhōngwén",
+            "meaning": "ОДДӢ • ОСОН"
+          }
+        ]
+      }
+    },
+    "tiktok": {
+      "status": "pending-owner-configuration",
+      "copySource": "platform",
+      "publishingAuthorized": false,
+      "canonicalRussian": "",
+      "deliveryMode": "unconfigured",
+      "notes": "No Tajik TikTok route or publishing is configured."
+    }
+  }
+}

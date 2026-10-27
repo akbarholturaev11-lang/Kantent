@@ -1,24 +1,31 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { spawn } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { McpServer } from "@modelcontextprotocol/server";
 import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { recommendSkills } from "./skill-router.mjs";
+import { MOTION_KINDS } from "./motion-design-plan.mjs";
+import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { suggestSemanticShots } from "./semantic-shot-adviser.mjs";
 import { CTA_PLATFORMS, getPlatformCtaStatus } from "./platform-cta.mjs";
 import { requirePlatformPackage, requireApprovedPlatformPackages } from "./platform-exports.mjs";
 import {
   APPROVED_PUBLICATION_PLATFORMS,
+  publicationScheduledFor,
+  validatePublicationSchedule,
   validatePublicationTarget,
 } from "./publication-policy.mjs";
 import { resolveTodayVideo } from "./resolve-production-date.mjs";
 import { verifiedPublishedRecords, confirmedPublishedIds, confirmedPublishedFor } from "./published-evidence.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
+import { activeLanguage, languageSettings, languageEnvironment, withLanguage, assertEpisodeLanguage } from "./language-context.mjs";
+import { requestedLanguages, prepareLanguagePackages } from "./bilingual-production.mjs";
+import { confirmedPublishedInAllLanguages } from "./published-evidence.mjs";
 import * as z from "zod/v4";
 import {
   CALENDAR_PATH,
   PROJECT_ROOT,
-  VOICE_PROFILE_PATH,
   getCalendarItemByDate,
   episodeContentHash,
   getPlannedEpisode,
@@ -56,12 +63,13 @@ import {
   writeCtaLab,
 } from "./cta-lab.mjs";
 
-const createServer = () => {
+export const createServer = () => {
   const server = new McpServer(
     { name: "hsk-ai-content", version: "1.0.0" },
     {
       instructions:
-      "На команду «Бугунги видеони тайёрла» сначала вызывайте prepare_today_video; если на сегодня нет слота, инструмент выберет ближайший следующий planned по timezone календаря и сообщит дату. Явно названная дата обрабатывается строго без подмены. Для создания или редактирования видео сначала вызывайте recommend_skills, затем читайте выбранные SKILL.md и текущие правила из content/SKILLS.md. Не запускайте HyperFrames для обычного HSK-урока и не меняйте движок без разрешения владельца. Работайте по AGENTS.md и AI_RULES.md. До hook edits читайте content/HOOK_LAB.md и get_hook_learning_status; пишите отдельный topic-specific hook до производства, сохраняйте точные слова владельца через record_hook_correction и не выдумывайте результаты без platform readback. До CTA edits читайте content/CTA_LAB.md и get_cta_learning_status; используйте единый CTA серии, сохраняйте точные слова владельца через record_cta_correction, регистрируйте датированный неизменный снимок до voice/render. Production voice берiladi фақат content/voice-profile.json dagi Gemini API profilidan; `content:voice` Gemini TTS orqali MP3 yaratadi, Gemini Transcribe so‘zma-so‘z timestamp beradi, exact-token tekshiruvidan keyin audio/caption avtomatik import qilinadi. HSK_AI_ALLOW_GEMINI_API=true va GEMINI_API_KEY lokal sozlanadi; matn va audio Google API ga yuborilishini hisobga oling. Yangi Gemini profilining egasi tinglaydigan bitta sample epizodidan tashqari boshqa epizodlar faqat profil tasdiqlangandan keyin tayyorlanadi. Boshqa TTS yoki transkripsiya provayderiga o‘tmang. Burned-in captions’ni tekshirib, Remotion review paketini yig‘ing. Публикуйте только через подключённый Zernio MCP и только после явного подтверждения владельца финального preview с точным роликом, целевым аккаунтом, caption/description, YouTube title/visibility/audience/synthetic-media settings, Instagram Reel settings и временем. Разрешённые платформы: Instagram Reels и YouTube Shorts. TikTok’га нашр қилманг.",
+      "Перед подготовкой нового HSK-урока читайте content/EDITING_SPEC.md и content/EPISODE_SCHEMA.md. Утверждённый формат выбирается из content/visual-system.json#lessonPresentation. Автор должен заполнить смысловые motionBeats каждой сцены через update_production_plan до voice/render и зарегистрировать изменившийся CTA-контекст. Если prepare_today_video вернул action-plan-required, продолжайте планирование самостоятельно по указанным правилам и повторите подготовку после заполнения плана. " +
+      "На команду «Бугунги видеони тайёрла» вызывайте prepare_today_video: по умолчанию он готовит все языки из content/languages.json для одного календарного урока. Для чтения, редактирования, регистрации и approval каждой версии передавайте language ru или tg. Не подменяйте перевод, аудио или approval другим языком. Если на сегодня нет слота, выберите ближайший следующий planned по timezone календаря и сообщите дату. Явно названная дата обрабатывается строго. Перед видео вызывайте recommend_skills и читайте выбранный SKILL.md с content/SKILLS.md; обычный урок остаётся Remotion. До hook/CTA edits читайте соответствующий Lab, active language corrections и регистрируйте новый immutable CTA context до voice/render. Ovoz faqat tanlangan tilning voice-profile.json profilidan tayyorlanadi. modelDecisionRequired bo‘lsa egasining aniq model qarorisiz API chaqirmang; pending-owner-approval faqat designated sample uchun. Exact-token tekshiruvi va haqiqiy word timestamp saqlansin. Boshqa TTS/transkripsiya provayderiga o‘tmang. Har bir tilning to‘liq review paketini tekshiring; qisman natijani ikki til tayyor deb aytmang. Публикуйте только через подключённый Zernio MCP после отдельного явного подтверждения каждого exact language/platform preview с аккаунтом, metadata/settings и временем. Instagram Reels и YouTube Shorts разрешены; TikTok publishing не разрешён.",
     },
   );
 
@@ -71,6 +79,22 @@ const createServer = () => {
       /^\d{4}-\d{2}-\d{2}$/,
       "Используйте дату YYYY-MM-DD, часовой пояс календаря — Asia/Shanghai.",
     );
+
+  // Every read/edit/approval is scoped independently; production tools default
+  // to both languages and manage their own per-language scopes below.
+  const registerTool = server.registerTool.bind(server);
+  server.registerTool = (name, config, handler) => {
+    if (["prepare_video_for_date", "prepare_today_video"].includes(name))
+      return registerTool(name, config, handler);
+    return registerTool(name, {
+      ...config,
+      description: `${config.description ?? ""} Language is ru or tg (default ru); edits and approvals apply only to that language.`,
+      inputSchema: config.inputSchema.safeExtend({ language: z.enum(["ru", "tg"]).optional() }),
+    }, (args, ...rest) => {
+      const { language = "ru", ...data } = args;
+      return withLanguage(language, () => handler(data, ...rest));
+    });
+  };
 
   const visualBeatSchema = z
     .object({
@@ -101,6 +125,7 @@ const createServer = () => {
           "book",
           "person-with-book",
           "coffee",
+          "coffee-refusal",
           "empty-cup",
           "apple-near",
           "apple-far",
@@ -128,6 +153,13 @@ const createServer = () => {
       path: ["hero"],
     });
 
+  const actionModelSchema = z.object({
+    kind:z.enum(["quantity","phrase","numeral","ordinal"]).optional(),
+    title:z.string().max(180),hanzi:z.string().max(180),pinyin:z.string().max(180),meaning:z.string().max(180),
+    object:z.enum(["tea-cup","book","apple"]).optional(),count:z.number().int().min(1).max(6).optional(),
+    grouped:z.boolean().optional(),focus:z.string().max(32).optional(),
+    parts:z.array(z.string().min(1).max(32)).min(2).max(6).optional(),value:z.number().int().min(1).max(30).optional(),
+  });
   const sceneEditSchema = z.object({
     sceneId: z.string().min(1).max(64),
     headline: z.string().min(1).max(120).optional(),
@@ -142,6 +174,17 @@ const createServer = () => {
       objectIds: z.array(z.string().regex(/^[a-z][a-z0-9-]{0,63}$/)).max(12).optional(),
     }).optional(),
     visualBeats: z.array(visualBeatSchema).max(12).optional(),
+    motionBeats: z.array(z.object({
+      id: z.string().regex(/^[a-z][a-z0-9-]*$/),
+      kind: z.enum(MOTION_KINDS),
+      cueText: z.string().min(1).max(120),
+      cueOccurrence: z.number().int().min(1).max(100).optional(),
+      explains:z.string().min(1).max(500).optional(),
+      visual:actionModelSchema.extend({
+        choices:z.array(z.string().min(1).max(32)).length(2).optional(),selected:z.string().max(32).optional(),
+        models:z.array(actionModelSchema).length(2).optional(),
+      }).optional(),
+    })).max(16).optional(),
     captionStyleId: z.enum(["headline", "pill", "highlight"]).optional(),
     durationSec: z.number().positive().optional(),
   });
@@ -186,6 +229,7 @@ const createServer = () => {
     accountId: z.string().min(1).max(180),
     accountName: z.string().min(1).max(180),
     caption: z.string().min(1).max(2200),
+    scheduledFor: z.iso.datetime({ offset: true }).optional(),
     instagramSettings: z
       .object({ shareToFeed: z.boolean(), isAiGenerated: z.boolean() })
       .optional(),
@@ -221,24 +265,11 @@ const createServer = () => {
             message,
           });
       }
-      if (intent.mode === "scheduled") {
-        if (!intent.scheduledFor)
-          context.addIssue({
-            code: "custom",
-            path: ["scheduledFor"],
-            message: "A scheduled post needs an exact timestamp.",
-          });
-        else if (Date.parse(intent.scheduledFor) <= Date.now())
-          context.addIssue({
-            code: "custom",
-            path: ["scheduledFor"],
-            message: "The scheduled timestamp must be in the future.",
-          });
-      } else if (intent.scheduledFor) {
+      for (const message of validatePublicationSchedule(intent)) {
         context.addIssue({
           code: "custom",
           path: ["scheduledFor"],
-          message: "Omit scheduledFor when publishing now.",
+          message,
         });
       }
     });
@@ -290,6 +321,7 @@ const createServer = () => {
     const filePath = path.join(reviewDir(item.id), "episode.json");
     try {
       const saved = normalizeEpisode(await readJson(filePath));
+      assertEpisodeLanguage(saved);
       const episode = synchronizeAutoStoryboard(saved, planned, await readStatus(item.id));
       validateEpisode(episode);
       return { item, episode, filePath, isRunCopy: true, planPath };
@@ -307,7 +339,7 @@ const createServer = () => {
         [scriptPath, episodeId, ...scriptArgs],
         {
           cwd: PROJECT_ROOT,
-          env: process.env,
+          env: languageEnvironment(),
           stdio: ["ignore", "pipe", "pipe"],
         },
       );
@@ -410,10 +442,12 @@ const createServer = () => {
         const profile = await readVoiceProfile();
         return {
           profile,
-          sampleAudioPath: path.join(PROJECT_ROOT, profile.sampleAudio),
+          sampleAudioPath: profile.sampleAudio ? path.join(PROJECT_ROOT, profile.sampleAudio) : null,
           approvalAction:
             profile.status === "approved"
               ? "already-approved; reuse the exact profile for every episode"
+              : profile.auditionApproval?.approvedBy === "owner"
+                ? "owner already accepted the heard sample; finish exact-caption validation without requesting the same approval again"
               : "owner must listen to the sample before one-time series approval",
         };
       }),
@@ -424,7 +458,7 @@ const createServer = () => {
     {
       title: "Approve the voice for the whole series",
       description:
-        "Один раз закрепляет просмотренный владельцем пробный голос для всех русских видео. Вызывайте только после прямого подтверждения владельца; это не разрешение на публикацию.",
+        "One-time approval of the selected language’s actual owner-listened sample. Does not inherit another language’s approval or authorize publishing.",
       inputSchema: z.object({
         confirmation: z.literal("Tasdiqlayman"),
       }),
@@ -447,6 +481,8 @@ const createServer = () => {
           throw new Error(
             "Профиль не ожидает подтверждения; проверьте его вручную.",
           );
+        if (profile.modelDecisionRequired || !profile.sampleAudio || !profile.sampleCaptions)
+          throw new Error("Approve the exact configured model for a sample first, then generate and listen to that language's real sample before approving its series voice.");
         const samplePath = path.resolve(PROJECT_ROOT, profile.sampleAudio);
         if (!samplePath.startsWith(PROJECT_ROOT + path.sep))
           throw new Error("Путь к пробному голосу выходит за пределы проекта.");
@@ -460,7 +496,8 @@ const createServer = () => {
           sampleMetadata.status !== "ready-for-owner-audition" ||
           sampleMetadata.provider !== profile.provider ||
           sampleMetadata.ttsModel !== profile.ttsModel ||
-          sampleMetadata.voice !== profile.voiceName
+          sampleMetadata.voice !== profile.voiceName ||
+          (activeLanguage() !== "ru" && (sampleMetadata.languageCode !== profile.locale || sampleMetadata.voiceProfileId !== profile.profileId || sampleMetadata.episodeId !== profile.sampleEpisodeId))
         )
           throw new Error("Пробный MP3 metadata не совпадает с текущим voice profile.");
         const sampleCaptionsPath = path.resolve(PROJECT_ROOT, profile.sampleCaptions);
@@ -470,13 +507,31 @@ const createServer = () => {
         const approvedAt = new Date().toISOString();
         profile.status = "approved";
         profile.approval = { approvedAt, approvedBy: "owner" };
-        await writeJson(VOICE_PROFILE_PATH, profile);
+        await writeJson(languageSettings().voiceProfilePath, profile);
         return {
           profile,
           message:
-            "Текущий Gemini voice profile подтверждён для будущих русских видео. Настройки менять нельзя без нового решения владельца и нового sample.",
+            "This language’s current voice profile is approved for future videos. Changed settings require a new owner decision and sample.",
         };
       }),
+  );
+
+  server.registerTool(
+    "approve_voice_model_for_sample",
+    {
+      title: "Approve the configured voice model for one sample",
+      description: "Only after the owner's explicit model decision, authorize the configured pending locale model for its designated sample. This does not approve the series voice or publication.",
+      inputSchema: z.object({ confirmation: z.literal("Tasdiqlayman"), ttsModel: z.string().min(1) }),
+    },
+    async ({ ttsModel }) => withToolErrors(async () => {
+      const profile = await readVoiceProfile();
+      if (profile.status !== "pending-owner-approval" || !profile.modelDecisionRequired || profile.ttsModel !== ttsModel)
+        throw new Error("The pending profile and exact model must match the owner's decision.");
+      profile.modelDecisionRequired = false;
+      profile.modelDecision = { approvedBy: "owner", approvedAt: new Date().toISOString(), ttsModel };
+      await writeJson(languageSettings().voiceProfilePath, profile);
+      return { profile, nextAction: "Generate only the designated sample and request owner audition before series use." };
+    }),
   );
 
   server.registerTool(
@@ -526,6 +581,8 @@ const createServer = () => {
         hookExperiment: hookExperimentSchema.optional(),
         ctaExperiment: ctaExperimentSchema.optional(),
         semanticVisual: z.object({schemaVersion: z.literal(1), mode: z.literal("review-only")}).optional(),
+        motionDesign: z.boolean().optional(),
+        motionDesignStyle: z.enum(["le-context-v1","explain-actions-v1"]).optional(),
         sceneEdits: z.array(sceneEditSchema).max(12).optional(),
       }),
     },
@@ -538,6 +595,8 @@ const createServer = () => {
       hookExperiment,
       ctaExperiment,
       semanticVisual,
+      motionDesign,
+      motionDesignStyle,
       sceneEdits = [],
     }) =>
       withToolErrors(async () => {
@@ -553,6 +612,8 @@ const createServer = () => {
           episode.hookExperiment = hookExperiment;
         if (ctaExperiment !== undefined) episode.ctaExperiment = ctaExperiment;
         if (semanticVisual !== undefined) episode.semanticVisual = semanticVisual;
+        if (motionDesign !== undefined) episode.motionDesign = motionDesign;
+        if (motionDesignStyle !== undefined) episode.motionDesignStyle = motionDesignStyle;
 
         for (const edit of sceneEdits) {
           const scene = episode.scenes.find(
@@ -569,6 +630,7 @@ const createServer = () => {
             "editPlan",
             "semanticShot",
             "visualBeats",
+            "motionBeats",
             "captionStyleId",
             "durationSec",
           ]) {
@@ -772,6 +834,19 @@ const createServer = () => {
         const { item, episode } = await currentEpisode(date);
         const { item: runItem } = await ensureRunCopy(date);
         const folder = reviewDir(item.id);
+        const visualSystem = await readJson(path.join(PROJECT_ROOT, "content", "visual-system.json"));
+        try {
+          validateLessonPresentation(episode, visualSystem.lessonPresentation);
+        } catch (error) {
+          return {
+            date, episodeId: item.id, reviewFolder: folder,
+            stage: "action-plan-required",
+            reason: error.message,
+            episode,
+            nextAgentAction: "Read content/EDITING_SPEC.md and content/EPISODE_SCHEMA.md, author the complete scene motionBeats with update_production_plan, register the new immutable CTA context, then retry preparation. No additional format approval is needed.",
+            publishing: "nothing was published",
+          };
+        }
         const voiceProfile = await requireApprovedVoiceProfile(item.id);
         const needsVoice =
           !episode.audioSrc ||
@@ -790,6 +865,7 @@ const createServer = () => {
         return {
           date,
           episodeId: item.id,
+          stage: "ready-for-review",
           reviewFolder: folder,
           sourceRevision,
           files: {
@@ -802,6 +878,7 @@ const createServer = () => {
           },
           status: renderedStatus,
           stages,
+          voiceApproval: { status: voiceProfile.status, sampleOnly: voiceProfile.status !== "approved" },
           publishing: "manual-review-required; nothing was published",
         };
   }
@@ -811,10 +888,12 @@ const createServer = () => {
     {
       title: "Prepare complete video package for a date",
       description:
-        "Автоматически генерирует Gemini TTS MP3, запрашивает у Gemini Transcribe word-level timestamps, сверяет каждый токен сценария, импортирует звук и собирает Remotion review-пакет для Instagram и YouTube. Продолжительность определяется сценарием и голосом; фиксированного лимита нет. Ничего не публикуется.",
-      inputSchema: z.object({ date: dateSchema }),
+        "Defaults to Russian AND Tajik versions of the same dated lesson. Each has its own source, voice profile, exact word cues, CTA and Instagram/YouTube review packages. Reports missing translation/voice/action plans per language; never claims both complete when one is blocked. language ru/tg selects one version. Nothing is published.",
+      inputSchema: z.object({ date: dateSchema, language: z.enum(["all", "ru", "tg"]).optional() }),
     },
-    async ({ date }) => withToolErrors(() => prepareReviewForDate(date)),
+    async ({ date, language = "all" }) => withToolErrors(async () => ({
+      date, ...await prepareLanguagePackages(requestedLanguages(language), () => prepareReviewForDate(date)),
+    })),
   );
 
   server.registerTool(
@@ -822,13 +901,14 @@ const createServer = () => {
     {
       title: "Prepare today's HSK video or the next planned episode",
       description:
-        "For a request such as «Бугунги видеони тайёрла»: resolve the calendar-local date. Use today's unpublished episode when present; otherwise skip externally verified published episodes and select the nearest FUTURE planned unpublished entry. Then begin the existing review-package workflow. Clearly report any fallback date. Do not publish or claim video completion before voice artifacts and a render exist.",
-      inputSchema: z.object({}),
+        "For «Бугунги видеони тайёрла» / bugungi videoni tayyorla: prepare BOTH Russian and Tajik versions by default, for ONE shared calendar lesson. Skip an episode only when all requested languages are verified published. If no eligible today slot exists, use the nearest future planned slot and disclose its date. Report each language's package or blocker. Never publish or claim both ready before real voice and renders exist.",
+      inputSchema: z.object({ language: z.enum(["all", "ru", "tg"]).optional() }),
     },
-    async () =>
+    async ({ language = "all" }) =>
       withToolErrors(async () => {
-        const resolved = resolveTodayVideo(await readJson(CALENDAR_PATH), new Date(), { confirmedPublishedEpisodeIds: confirmedPublishedIds() });
-        const prepared = await prepareReviewForDate(resolved.selectedDate);
+        const languages = requestedLanguages(language);
+        const resolved = resolveTodayVideo(await readJson(CALENDAR_PATH), new Date(), { confirmedPublishedEpisodeIds: confirmedPublishedInAllLanguages(languages) });
+        const prepared = await prepareLanguagePackages(languages, () => prepareReviewForDate(resolved.selectedDate));
         return {
           ...prepared,
           requestedDate: resolved.requestedDate,
@@ -1238,9 +1318,8 @@ const createServer = () => {
             );
           } catch (error) {
             if (error?.code !== "ENOENT") throw error;
-            episode = await readJson(
-              path.join(PROJECT_ROOT, "content", item.episodeFile),
-            );
+            try { episode = await readJson(path.join(languageSettings().contentRoot, item.episodeFile)); }
+            catch (sourceError) { if (sourceError.code === "ENOENT") continue; throw sourceError; }
           }
           if (episode.hookExperiment)
             experiments.push({
@@ -1613,7 +1692,7 @@ const createServer = () => {
             approval.publicationIntent.mode === "scheduled" &&
             result.scheduledFor &&
             Date.parse(result.scheduledFor) !==
-              Date.parse(approval.publicationIntent.scheduledFor)
+              Date.parse(publicationScheduledFor(approval.publicationIntent, result.platform))
           )
             throw new Error("Zernio schedule time differs from the approved preview.");
         }
@@ -1642,7 +1721,7 @@ const createServer = () => {
             } : {}),
             ...(approval.publicationIntent.mode === "scheduled" &&
             !result.scheduledFor
-              ? { scheduledFor: approval.publicationIntent.scheduledFor }
+              ? { scheduledFor: publicationScheduledFor(approval.publicationIntent, result.platform) }
               : {}),
             updatedAt: new Date().toISOString(),
           };
@@ -1685,7 +1764,7 @@ const createServer = () => {
   return server;
 };
 
-serveStdio(() => createServer(), {
+if (process.argv[1] && await fs.realpath(process.argv[1]).catch(() => null) === fileURLToPath(import.meta.url)) serveStdio(() => createServer(), {
   onerror: (error) =>
     process.stderr.write(`[hsk-ai-content] ${error.message}\n`),
 });

@@ -10,8 +10,8 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-test("normal dated loader automatically creates semantic review scenes BEFORE central CTA",async()=>{
-  const {episode}=await getPlannedEpisode("2026-10-21");
+test("earlier eligible dated loader retains semantic review scenes BEFORE central CTA",async()=>{
+  const {episode}=await getPlannedEpisode("2026-10-23");
   assert.deepEqual(episode.semanticVisual,{schemaVersion:1,mode:"review-only"});
   assert.equal(episode.autoSemantic.status,"review-video-required");
   assert.ok(episode.scenes.filter(s=>s.kind!=="cta").every(s=>s.semanticShot));
@@ -24,15 +24,16 @@ test("old lessons do not retroactively receive semantic metadata",async()=>{
   assert.equal(episode.semanticVisual,undefined);
   assert.ok(episode.scenes.some(s=>s.storyboard?.character==="student"));
 });
-test("real planned pool topic proposes contextual pool not another school front",async()=>{
-  const {episode}=await getPlannedEpisode("2026-10-28");
+test("retained semantic adviser proposes contextual pool from authored narration",async()=>{
+  const raw=JSON.parse(await readFile(path.join(PROJECT_ROOT,"content/episodes/hui-vs-neng-pool-20261028.json"),"utf8"));
+  const episode=applySemanticReviewDraft(raw);
   const hook=episode.scenes.find(s=>s.id==="hook");
   assert.equal(hook.semanticShot.environmentId,"pool");
   assert.equal(hook.semanticShot.actorIds.length,0);
   assert.equal(validateSemanticVisualEpisode(episode).length,0);
 });
 test("can migrate only untouched prevoice draft, even if old storyboard format already matches",async()=>{
-  const {episode:desired}=await getPlannedEpisode("2026-10-21");
+  const {episode:desired}=await getPlannedEpisode("2026-10-23");
   const old=structuredClone(desired);
   delete old.semanticVisual;delete old.autoSemantic;
   for(const scene of old.scenes){

@@ -3,6 +3,8 @@ import { assertNotPreviouslyPublished } from './published-evidence.mjs';
 import fs from "node:fs/promises";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
+import { generatedVoicePath } from "./language-context.mjs";
+import { assertVoiceEpisodeLanguage, normalizeVoiceToken } from "./voice-language.mjs";
 import {
   FPS,
   getEpisode,
@@ -70,6 +72,7 @@ const visualSystem = JSON.parse(
 );
 const beatEntryLeadFrames = visualSystem.motion.beatEntryLeadFrames;
 const voiceProfile = await requireApprovedVoiceProfile(id);
+assertVoiceEpisodeLanguage(episode, voiceProfile);
 if (voiceProfile.provider !== "gemini-api") {
   throw new Error("Faol ovoz profili Gemini API provayderiga mos emas.");
 }
@@ -241,9 +244,7 @@ if (durationMs - lastCaptionEndMs > 1500) {
 }
 
 const normalize = (value) =>
-  value
-    .toLocaleLowerCase("ru-RU")
-    .replace(/ё/g, "е")
+  normalizeVoiceToken(value, voiceProfile.locale)
     .replace(/[^\p{L}\p{N}]/gu, "");
 const sceneTexts = episode.scenes.map((scene) => normalize(scene.narration));
 const sourceText = sceneTexts.join("");
@@ -259,7 +260,7 @@ if (
   normalize(captions.map((caption) => caption.text).join("")) !== sourceText
 ) {
   throw new Error(
-    "Subtitr matni joriy ruscha ssenariyga to‘liq mos emas. Gemini generatorini joriy ssenariy bilan qayta bajaring.",
+    "Subtitr matni joriy ssenariyga to‘liq mos emas. Gemini generatorini joriy ssenariy bilan qayta bajaring.",
   );
 }
 const sceneRanges = [];
@@ -331,7 +332,10 @@ for (const [index] of episode.scenes.entries()) {
   );
   const previousStartFrame = sceneStartFrames[index - 1];
   const targetStartFrame = Math.round((targetStartMs / 1000) * FPS);
-  const cueAlignedFrame = index === 1
+  // Keep the historical six-second Russian hook cap. Tajik samples speak
+  // more slowly, so their first transition follows the verified next-scene
+  // cue and keeps the spoken answer inside the hook.
+  const cueAlignedFrame = index === 1 && episode.languageCode === "ru-RU"
     ? Math.min(targetStartFrame, 180)
     : targetStartFrame;
   sceneStartFrames.push(Math.max(previousStartFrame + 1, cueAlignedFrame));
@@ -365,7 +369,8 @@ const outputDurationSec = Math.max(
   effectiveDurationMs / 1000,
 );
 const folder = targetReviewDir;
-const assetFolder = path.join(PROJECT_ROOT, "public", "generated", id, ...(platform ? [platform] : []));
+const assetBase = generatedVoicePath(id);
+const assetFolder = path.join(PROJECT_ROOT, "public", assetBase, ...(platform ? [platform] : []));
 await fs.mkdir(assetFolder, { recursive: true });
 const audioFilename = `voice${path.extname(audioPath).toLowerCase()}`;
 const destinationAudio = path.join(assetFolder, audioFilename);
@@ -389,9 +394,10 @@ if (platform === "tiktok") {
   await fs.copyFile(captionsPath, importedCaptionsPath);
 }
 
-episode.audioSrc = `generated/${id}/${platform ? `${platform}/` : ""}${audioFilename}`;
+episode.audioSrc = `${assetBase}/${platform ? `${platform}/` : ""}${audioFilename}`;
 episode.voiceProfileId = voiceProfile.profileId;
 episode.voiceProvider = voiceProfile.provider;
+episode.voiceLocale = voiceProfile.locale;
 episode.sourceAudioDurationMs = durationMs;
 episode.audioDurationMs = effectiveDurationMs;
 episode.audioTrimAfterFrames = audioTrimAfterFrames;
@@ -408,6 +414,7 @@ const statusRecord = {
   provider: voiceProfile.serviceName,
   voiceProvider: voiceProfile.provider,
   voiceProfileId: voiceProfile.profileId,
+  languageCode: voiceProfile.locale,
   voice: voiceProfile.voiceName,
   voiceSelection: "Gemini API profile; generated voice identity recorded from the API request",
   voiceTextHash: episode.voiceTextHash,

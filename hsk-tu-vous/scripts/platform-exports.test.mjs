@@ -15,6 +15,7 @@ import {
 import { composeLessonCta } from "./episode-cta-assembly.mjs";
 import {
   prepareExportEpisodes,
+  assertSharedLesson,
   sharedRenderRanges,
   platformPackagePaths,
   requirePlatformPackage,
@@ -74,6 +75,13 @@ async function fixture(id = "platform-export-test") {
   base.ctaExperiment = ctaExperimentMetadata(record);
   return { base, lab };
 }
+
+test("platform exports cannot share narration or lesson frames across languages",async()=>{
+  const {base}=await fixture("platform-language-test");
+  const variant=structuredClone(base);
+  variant.languageCode="tg-TJ";
+  assert.throws(()=>assertSharedLesson(base,variant),/Platform CTA changed shared narration/);
+});
 
 test("both platform exports preserve one lesson, speech and cues; only the approved CTA ending changes", async () => {
   const { base, lab } = await fixture();
@@ -145,6 +153,7 @@ test("automatic derivation rejects new rules, changed CTA speech and a non-final
 test("render workflow draws one lesson, two CTA ranges and a continuous mix; mux copies identical lesson frames", async () => {
   const { base, lab } = await fixture();
   const { episodes } = prepareExportEpisodes(base, lab);
+  const expectedRanges = sharedRenderRanges(base);
   const folder = await fs.mkdtemp(
     path.join(os.tmpdir(), "hsk-platform-render-"),
   );
@@ -170,10 +179,10 @@ test("render workflow draws one lesson, two CTA ranges and a continuous mix; mux
                 pix_fmt: "yuv420p",
                 color_space: "bt709",
                 r_frame_rate: "30/1",
-                nb_frames: 900,
-                duration: 30,
+                nb_frames: expectedRanges.totalFrames,
+                duration: expectedRanges.totalFrames / 30,
               },
-              { codec_type: "audio", codec_name: "aac", duration: 30 },
+              { codec_type: "audio", codec_name: "aac", duration: expectedRanges.totalFrames / 30 },
             ],
           });
       },
@@ -312,7 +321,18 @@ test("approval CLI rejects a missing YouTube export and archives each selected p
       path.join(folder, "scripts"),
       { recursive: true, filter: (file) => !file.endsWith(".test.mjs") },
     );
+    // Approval reads canonical planning and render policy through the normal
+    // loader. Keep this isolated project complete without invoking production.
+    await fs.cp(path.join(PROJECT_ROOT, "content"), path.join(folder, "content"), { recursive: true });
     await writeJson(path.join(folder, "content/cta-lab.json"), lab);
+    const fixtureCalendar = JSON.parse(await fs.readFile(path.join(folder, "content/calendar.json"), "utf8"));
+    fixtureCalendar.items = [{ id: base.id, date: base.date, episodeFile: `episodes/${base.id}.json`, status: "planned" }];
+    await writeJson(path.join(folder, "content/calendar.json"), fixtureCalendar);
+    const canonicalLesson = structuredClone(base);
+    delete canonicalLesson.cta;
+    delete canonicalLesson.ctaExperiment;
+    canonicalLesson.scenes = canonicalLesson.scenes.filter(scene=>scene.kind!=="cta");
+    await writeJson(path.join(folder, "content/episodes", `${base.id}.json`), canonicalLesson);
     const review = path.join(folder, "review", base.id);
     const status = {
       stage: "rendered-pending-owner-approval",

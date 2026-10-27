@@ -1,0 +1,464 @@
+{
+  "episodeId": "er-vs-liang-cafe-20261026",
+  "date": "2026-10-26",
+  "status": "owner-authorized-pilot-only",
+  "scenes": [
+    {
+      "sceneId": "hook",
+      "editPlan": "Show the question first; reveal exactly two cups on «две», show the two choices on «Сказать», resolve 两 only on the second spoken 两.",
+      "beats": [
+        {
+          "id": "cafe-question",
+          "kind": "choice",
+          "cueText": "В кафе",
+          "visual": {
+            "title": "ДВА ЧАЯ: КАК СКАЗАТЬ?",
+            "hanzi": "二 / 两",
+            "pinyin": "èr / liǎng",
+            "meaning": "выберите форму",
+            "choices": [
+              "二",
+              "两"
+            ]
+          },
+          "explains": "Introduce the actual two-form decision."
+        },
+        {
+          "id": "two-cups",
+          "kind": "quantity",
+          "cueText": "две",
+          "visual": {
+            "title": "ДВЕ ЧАШКИ ЧАЯ",
+            "hanzi": "?",
+            "pinyin": "",
+            "meaning": "какую форму выбрать?",
+            "object": "tea-cup",
+            "count": 2
+          },
+          "explains": "Show two cups, without giving away the choice."
+        },
+        {
+          "id": "choose-form",
+          "kind": "choice",
+          "cueText": "Сказать",
+          "visual": {
+            "title": "二 ИЛИ 两?",
+            "hanzi": "二 / 两",
+            "pinyin": "èr / liǎng",
+            "meaning": "перед счётным словом",
+            "choices": [
+              "二",
+              "两"
+            ],
+            "object": "tea-cup",
+            "count": 2
+          },
+          "explains": "Connect the choice to the visible quantity."
+        },
+        {
+          "id": "correct-form",
+          "kind": "choice",
+          "cueText": "两",
+          "visual": {
+            "title": "ДВА ЧАЯ → 两",
+            "hanzi": "两",
+            "pinyin": "liǎng",
+            "meaning": "две чашки чая",
+            "choices": [
+              "二",
+              "两"
+            ],
+            "selected": "两",
+            "object": "tea-cup",
+            "count": 2
+          },
+          "explains": "Resolve the answer at its spoken occurrence.",
+          "cueOccurrence": 2
+        }
+      ]
+    },
+    {
+      "sceneId": "classifier",
+      "narration": "Перед счётным словом 杯 используем 两. 两杯茶 — две чашки чая. 两 — количество, 杯 — чашка, 茶 — чай. Соберите три части в одну фразу.",
+      "editPlan": "Highlight 杯 and 两 at their spoken cues, group exactly two cups, then assemble the three authored phrase parts in spoken order.",
+      "beats": [
+        {
+          "id": "classifier-focus",
+          "kind": "phrase",
+          "cueText": "Перед",
+          "visual": {
+            "title": "КОЛИЧЕСТВО → ЧАШКА → ЧАЙ",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "две чашки чая",
+            "parts": [
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "杯"
+          },
+          "explains": "Explain the classifier slot."
+        },
+        {
+          "id": "quantity-focus",
+          "kind": "phrase",
+          "cueText": "используем",
+          "visual": {
+            "title": "КОЛИЧЕСТВО → ЧАШКА → ЧАЙ",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "две чашки чая",
+            "parts": [
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "两"
+          },
+          "explains": "Show the quantity before the classifier."
+        },
+        {
+          "id": "group-cups",
+          "kind": "quantity",
+          "cueText": "两杯茶",
+          "visual": {
+            "title": "ДВЕ ЧАШКИ ЧАЯ",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "две чашки чая",
+            "object": "tea-cup",
+            "count": 2,
+            "grouped": true
+          },
+          "explains": "Connect the phrase to exactly two cups."
+        },
+        {
+          "id": "quantity-part",
+          "kind": "phrase",
+          "cueText": "количество",
+          "visual": {
+            "title": "КОЛИЧЕСТВО → ЧАШКА → ЧАЙ",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "две чашки чая",
+            "parts": [
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "两"
+          },
+          "explains": "Point to the quantity part."
+        },
+        {
+          "id": "cup-part",
+          "kind": "phrase",
+          "cueText": "чашка",
+          "visual": {
+            "title": "КОЛИЧЕСТВО → ЧАШКА → ЧАЙ",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "две чашки чая",
+            "parts": [
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "杯"
+          },
+          "explains": "Point to the classifier part."
+        },
+        {
+          "id": "tea-part",
+          "kind": "phrase",
+          "cueText": "чай",
+          "visual": {
+            "title": "КОЛИЧЕСТВО → ЧАШКА → ЧАЙ",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "две чашки чая",
+            "parts": [
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "茶"
+          },
+          "explains": "Point to the noun part."
+        },
+        {
+          "id": "assemble-phrase",
+          "kind": "phrase",
+          "cueText": "Соберите",
+          "visual": {
+            "title": "КОЛИЧЕСТВО → ЧАШКА → ЧАЙ",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "две чашки чая",
+            "parts": [
+              "两",
+              "杯",
+              "茶"
+            ]
+          },
+          "explains": "Join the three parts into the phrase."
+        }
+      ]
+    },
+    {
+      "sceneId": "order",
+      "editPlan": "The cups move onto a serving tray; the spoken Mandarin sentence assembles; on the Russian translation show the same two-cup order and its quantity.",
+      "beats": [
+        {
+          "id": "order-context",
+          "kind": "quantity",
+          "cueText": "Можно",
+          "visual": {
+            "title": "ДВЕ ЧАШКИ ЧАЯ",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "две чашки чая",
+            "object": "tea-cup",
+            "count": 2
+          },
+          "explains": "Introduce the objects being ordered."
+        },
+        {
+          "id": "spoken-order",
+          "kind": "phrase",
+          "cueText": "我要两杯茶",
+          "visual": {
+            "title": "ЗАКАЗ В КАФЕ",
+            "hanzi": "我要两杯茶。",
+            "pinyin": "Wǒ yào liǎng bēi chá.",
+            "meaning": "Мне две чашки чая.",
+            "parts": [
+              "我要",
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "两"
+          },
+          "explains": "Show the exact spoken order as a constructed phrase."
+        },
+        {
+          "id": "translated-order",
+          "kind": "quantity",
+          "cueText": "Мне",
+          "visual": {
+            "title": "ДВЕ ЧАШКИ ЧАЯ",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "две чашки чая",
+            "object": "tea-cup",
+            "count": 2,
+            "grouped": true
+          },
+          "explains": "Connect the Russian meaning to the same visible order."
+        },
+        {
+          "id": "quantity-in-order",
+          "kind": "phrase",
+          "cueText": "количество",
+          "visual": {
+            "title": "两 ПОКАЗЫВАЕТ КОЛИЧЕСТВО",
+            "hanzi": "我要两杯茶。",
+            "pinyin": "Wǒ yào liǎng bēi chá.",
+            "meaning": "Мне две чашки чая.",
+            "parts": [
+              "我要",
+              "两",
+              "杯",
+              "茶"
+            ],
+            "focus": "两"
+          },
+          "explains": "Locate quantity inside the whole order."
+        }
+      ]
+    },
+    {
+      "sceneId": "numeral",
+      "editPlan": "Replace the cup stage with two ten-dot groups and the number 20; then show three ordinal positions with the second selected. Compare 二十 and 第二 with 二 emphasized.",
+      "beats": [
+        {
+          "id": "twenty",
+          "kind": "numeral",
+          "cueText": "двадцать",
+          "visual": {
+            "title": "ЧИСЛО ДВАДЦАТЬ",
+            "hanzi": "二十",
+            "pinyin": "èrshí",
+            "meaning": "двадцать",
+            "value": 20
+          },
+          "explains": "Represent twenty with a number and two groups of ten."
+        },
+        {
+          "id": "er-in-twenty",
+          "kind": "numeral",
+          "cueText": "二十",
+          "visual": {
+            "title": "ЧИСЛО ДВАДЦАТЬ",
+            "hanzi": "二十",
+            "pinyin": "èrshí",
+            "meaning": "двадцать",
+            "value": 20,
+            "focus": "二"
+          },
+          "explains": "Locate 二 in the number."
+        },
+        {
+          "id": "second-position",
+          "kind": "ordinal",
+          "cueText": "второй",
+          "visual": {
+            "title": "ВТОРОЙ ПО ПОРЯДКУ",
+            "hanzi": "第二",
+            "pinyin": "dì èr",
+            "meaning": "второй",
+            "value": 2,
+            "focus": "二"
+          },
+          "explains": "Show the second position, rather than two objects."
+        },
+        {
+          "id": "two-er-models",
+          "kind": "comparison",
+          "cueText": "В этих",
+          "visual": {
+            "title": "В ЭТИХ КОНСТРУКЦИЯХ — 二",
+            "hanzi": "二",
+            "pinyin": "èr",
+            "meaning": "число и порядковое место",
+            "models": [
+              {
+                "kind": "numeral",
+                "title": "ЧИСЛО ДВАДЦАТЬ",
+                "hanzi": "二十",
+                "pinyin": "èrshí",
+                "meaning": "двадцать",
+                "value": 20,
+                "focus": "二"
+              },
+              {
+                "kind": "ordinal",
+                "title": "ВТОРОЙ ПО ПОРЯДКУ",
+                "hanzi": "第二",
+                "pinyin": "dì èr",
+                "meaning": "второй",
+                "value": 2,
+                "focus": "二"
+              }
+            ]
+          },
+          "explains": "Compare the two authored 二 constructions."
+        }
+      ]
+    },
+    {
+      "sceneId": "recap",
+      "editPlan": "Recall the two real objects, switch to the number twenty, then hold the two constructions together and focus the following classifier/number unit.",
+      "beats": [
+        {
+          "id": "recall-cups",
+          "kind": "quantity",
+          "cueText": "Две",
+          "visual": {
+            "title": "ДВЕ ЧАШКИ ЧАЯ",
+            "hanzi": "两杯茶",
+            "pinyin": "liǎng bēi chá",
+            "meaning": "две чашки чая",
+            "object": "tea-cup",
+            "count": 2,
+            "grouped": true
+          },
+          "explains": "Recall the physical quantity."
+        },
+        {
+          "id": "recall-twenty",
+          "kind": "numeral",
+          "cueText": "Двадцать",
+          "visual": {
+            "title": "ЧИСЛО ДВАДЦАТЬ",
+            "hanzi": "二十",
+            "pinyin": "èrshí",
+            "meaning": "двадцать",
+            "value": 20,
+            "focus": "二"
+          },
+          "explains": "Recall the number construction."
+        },
+        {
+          "id": "compare-models",
+          "kind": "comparison",
+          "cueText": "Смотрите",
+          "visual": {
+            "title": "СМОТРИТЕ НА КОНСТРУКЦИЮ",
+            "hanzi": "两 / 二",
+            "pinyin": "liǎng / èr",
+            "meaning": "количество / число",
+            "models": [
+              {
+                "kind": "quantity",
+                "title": "ДВЕ ЧАШКИ ЧАЯ",
+                "hanzi": "两杯茶",
+                "pinyin": "liǎng bēi chá",
+                "meaning": "две чашки чая",
+                "object": "tea-cup",
+                "count": 2,
+                "grouped": true
+              },
+              {
+                "kind": "numeral",
+                "title": "ЧИСЛО ДВАДЦАТЬ",
+                "hanzi": "二十",
+                "pinyin": "èrshí",
+                "meaning": "двадцать",
+                "value": 20,
+                "focus": "二"
+              }
+            ]
+          },
+          "explains": "Compare quantity and number at the same scale."
+        },
+        {
+          "id": "look-after",
+          "kind": "comparison",
+          "cueText": "после",
+          "visual": {
+            "title": "ЧТО ИДЁТ ПОСЛЕ ЧИСЛА?",
+            "hanzi": "两 / 二",
+            "pinyin": "liǎng / èr",
+            "meaning": "счётное слово / часть числа",
+            "models": [
+              {
+                "kind": "quantity",
+                "title": "ДВЕ ЧАШКИ ЧАЯ",
+                "hanzi": "两杯茶",
+                "pinyin": "liǎng bēi chá",
+                "meaning": "две чашки чая",
+                "object": "tea-cup",
+                "count": 2,
+                "grouped": true,
+                "focus": "杯"
+              },
+              {
+                "kind": "numeral",
+                "title": "ЧИСЛО ДВАДЦАТЬ",
+                "hanzi": "二十",
+                "pinyin": "èrshí",
+                "meaning": "двадцать",
+                "value": 20,
+                "focus": "十"
+              }
+            ]
+          },
+          "explains": "Focus the following construction that determines the beginner choice."
+        }
+      ]
+    }
+  ]
+}
