@@ -1,3 +1,6 @@
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { readStorytellingPolicy, inspectStorytelling, validateStorytellingEpisode } from "./storytelling-plan.mjs";
 
@@ -122,4 +125,53 @@ export function evaluateAdaptiveCandidate(source, proposal, policy = readStoryte
       "No evidence of retention improvement exists until matched provider-verified 7d observations."
     ]
   };
+}
+
+/**
+ * Agent-facing, local-only interface. Codex/Claude Code write and critically
+ * review narration themselves. Gemini remains the approved TTS/transcriber.
+ * This command never calls a text model and never writes source or reviews.
+ */
+export function prepareAgentStorytellingBrief(episode) {
+  return {
+    status: "editorial-brief-for-codex-or-claude-code",
+    brief: makeAdaptiveBrief(episode),
+    instructions: [
+      "Codex or Claude Code owns narrative drafting, independent editorial review and Chinese source verification.",
+      "Gemini is reserved for approved TTS and accurate word-timing transcription after the narration is accepted.",
+      "Preserve the registered Hook, the single Chinese learning outcome, exact verified Chinese phrases and centrally registered CTA.",
+      "Prefer a direct structure when a new re-hook adds no genuine learning value.",
+      "A structural pass is not language-source verification or owner approval; edited narration invalidates voice, captions, review videos and prior approvals.",
+      "Never modify canonical episodes, recorded approvals or published media as a side effect of previewing."
+    ]
+  };
+}
+
+export function validateAgentStorytellingProposal(episode, proposal) {
+  const result = evaluateAdaptiveCandidate(episode, proposal);
+  return result.valid ? {
+    ...result,
+    status: "requires-agent-source-review-and-owner-preview"
+  } : result;
+}
+
+function cli() {
+  const [id, flag, proposalPath, ...extra] = process.argv.slice(2);
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(id ?? "") ||
+      extra.length || (flag !== undefined && flag !== "--validate") ||
+      (flag === "--validate" && !proposalPath)) {
+    throw Error("Usage: npm run content:storytelling-generate -- <episode-id> [--validate <local-proposal.json>]");
+  }
+  const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+  const episode = JSON.parse(fs.readFileSync(path.join(root, "content/episodes", id + ".json"), "utf8"));
+  if (episode.id !== id) throw Error("Episode identity mismatch");
+  const result = flag === "--validate"
+    ? validateAgentStorytellingProposal(episode, JSON.parse(fs.readFileSync(path.resolve(proposalPath), "utf8")))
+    : prepareAgentStorytellingBrief(episode);
+  process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+  if (result.valid === false) process.exitCode = 1;
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  try { cli(); } catch (error) { console.error(error.message); process.exitCode = 1; }
 }
