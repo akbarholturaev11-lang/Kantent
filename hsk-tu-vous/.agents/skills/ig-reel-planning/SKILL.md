@@ -19,19 +19,9 @@ description: HSK-specific Instagram Reel hook and editorial beat planning, befor
 4. Produce a short beat-by-beat **proposal**: spoken Russian text, a corresponding visual action, Chinese text with pinyin, and a final payoff. Keep current HSK AI CTA *outside* this lesson proposal; central `cta-lab.json` assembles it later.
 5. For real production, hand the selected treatment to existing `auto-storyboard`, approved `content/episodes` flow and Remotion. Use actual Gemini word timestamps to validate semantic movement and subtitles; rough planning durations are not cue timestamps. Do not rewrite approved/published lessons.
 
-## Adaptive Storytelling: practical lesson writing
+## Adaptive story option (future, unapproved scripts)
 
-This adviser supplies *scriptwriting technique*, not another writing model or production pipeline. The authoritative editorial sequence and acceptance criteria are in `content/WORKFLOW.md` → **Adaptive Storytelling — scenario writing procedure**.
-
-When the existing Codex/Claude Code agent writes or repairs a **future unapproved HSK 1–2** Russian script:
-
-1. **Write a full spoken script** instead of a list of labels: open with one believable learner problem, give the first truthful Chinese answer early, show one source-backed consequence/contrast and finish with active recall. Preserve verified Mandarin phrases, pinyin, meaning and the required registered opening.
-2. **Make each transition earn its place.** Prefer a concrete spoken question such as “А как теперь попросить сделать дешевле?” to “А теперь следующий пункт”. Avoid hollow suspense (“Секрет узнаете в конце”), repeated topic announcements and formulaic eight-beat pacing.
-3. **Use re-hooks selectively.** After the first answer, a second question is warranted only if the viewer must solve a *different* useful learner task. Write the later exact answer before adding the question. An immediately answered rhetorical question does not qualify as a delayed re-hook. If the distinction is already clear, choose `direct`. Never sacrifice accuracy to fit `single-rehook` or `layered`.
-4. **Critique the actual narration.** Read the Russian script aloud; remove filler, check scene-to-scene causality, pronunciation-bearing Hanzi, tone-marked pinyin and faithful meaning on each existing teaching card. Source uncertainty is a blocker, not permission to improvise grammar rules.
-5. Use `npm run content:storytelling-plan -- <episode-id>` only for optional read-only structural hints, which are lexical and cannot prove quality. For a finished source-bound edit, optional `content:storytelling-generate -- <episode-id> --validate <proposal.json>` checks structural safety **without writing narration**. Do not introduce a Gemini text model, parallel agent, new canonical schema or CTA in the lesson.
-
-The result is a **finished scene-by-scene Russian lesson scenario** with one learning outcome and an honest, complete payoff—not a generic hook score, a new render command or guaranteed viral format. Do not change voiced, owner-approved or published episodes.
+After verifying one teachable HSK fact and checking the three hook proposals, inspect the relevant episode's existing narrative beats with `npm run content:storytelling-plan -- <episode-id>` when a canonical episode exists. Its re-hook hints are lexical, not semantic proof. If the lesson naturally has a second useful beginner problem after the first truthful answer, recommend a single re-hook and a later verbatim narrated payoff; otherwise prefer a direct explanation. Do not force a second open loop or hide the first answer. Follow the sole `content/creative-formats.json#storytellingPolicy` and `content/EPISODE_SCHEMA.md` for an optional metadata annotation, not an alternative Hook Lab. Never add a re-hook to voiced, approved or published artifacts.
 
 
 ## Output

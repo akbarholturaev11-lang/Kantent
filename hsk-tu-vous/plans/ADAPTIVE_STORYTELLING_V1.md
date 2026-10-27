@@ -60,22 +60,15 @@ All cues must appear verbatim in the existing narration. A re-hook cannot refer 
 - Instagram/YouTube lesson and CTA version integrity remain intact; no TikTok publishing.
 - No automatic modification of `main`, existing voice assets, scheduled/published content, approvals or analytics history as a side effect of planning.
 
-## Corrected scope — **scriptwriting only** (2026-10-27)
+## Implemented branch scope — expanded stages 2–4
 
-The owner clarified that the deliverable is **better scripts written by Codex/Claude Code**, not an additional video-production workflow, AI service, MCP tool, calendar resolver, TTS change or renderer integration. The original two-call Gemini scenario drafter/critic conflicted with that division of responsibility and has been removed; the existing Gemini **voice/transcription implementation remains unchanged**.
-
-**Existing canonical guidance:** `content/WORKFLOW.md#adaptive-storytelling--scenario-writing-procedure` owns the editorial process; `content/creative-formats.json#storytellingPolicy` owns allowed direct / single-rehook / layered narrative patterns; `content/HOOK_LAB.md` owns opening experiments. `.agents/skills/ig-reel-planning/SKILL.md` advises on optional hook and beat writing but creates no independent writing subsystem.
-
-**Exact deliverables in this corrected PR:**
-- Clarify Codex/Claude Code's author/critic role in the existing writing procedure and agent-facing instructions.
-- Preserve verified HSK 1–2 Chinese examples, the approved Hook/CTA separation, useful early payoff and optional *genuinely distinct* learner re-hook.
-- Provide an inspectable, authored five-scene Russian script proposal for the October 30 price lesson, without changing its canonical episode or publishing status.
-- Keep the existing pure local source-bound `storytelling-generator.mjs` brief/validator available for editorial QA; **no additional text API or model subscription**.
-- Add/maintain script-focused validation and CI coverage; remove unrelated MCP/calendar selection changes from the PR.
-
-**Explicit non-goals:** Changing `mcp-server.mjs`, `resolve-production-date.mjs`, Gemini TTS or its voice profile, Remotion, auto-storyboard, CTA generation, publication, scheduling or post analytics. CI may exercise existing video regression tests to detect collateral damage but this is not a video-building project.
-
-**Editorial acceptance:** a concrete opening, first true answer early, one verifiable teaching point, natural Russian transitions, correct Hanzi/pinyin/translation, no forced second loop, no CTA, and genuine distinct question → later answer whenever `single-rehook` is annotated. Test no-source-edit CLI behavior and reject invalid/mismatched narration changes. No engagement lift claim.
+- **AI drafting bridge:** `storytelling-generator.mjs` and `storytelling-gemini.mjs`, two-pass explicitly opted-in text model; no writes to source and no rewriting Hook/Hanzi.
+- **AI critic and deterministic gates:** re-hook/payoff exact cue, 30% scene bound, no CTA, version hash, no approved/published edits, Chinese-character preservation, source receipts. Mandarin claims still require independent human source verification.
+- **Remotion-compatible visual mapping:** existing question and answer storyboard mood annotations for **opted-in unapproved** scripts; unchanged renderer and voice pipeline.
+- **Audio contract:** `storytelling-timing.mjs` checks real imported Gemini word-aligned cues; opt-in semantic render refuses missing/late/reversed payoffs.
+- **Attribution readiness:** optional verified `storytellingPattern` split in feedback analysis; lifetime and unattributed samples cannot establish winners.
+- **Demonstration/fixture:** 30 October price lesson tested in isolated V8 with mocked AI author/critic. This is NOT live Gemini, Node test suite, MP4 or evidence of engagement uplift.
+- **Remaining operational gates:** full Node/Remotion CI, paid text model request under explicit local credentials, editor approval of exact narration, genuine Gemini TTS and platform preview, verified 7d stats. No claim of 12 actual published pilot videos.
 
 ## Proposed cost envelope
-The agent-led script authoring and existing Node.js validation require **no additional Gemini text-model API calls**, service, renderer, TTS policy or database. Authoring a changed narration later still requires new Gemini audio/timestamps, render and owner review. No quantitative reach/ROI claim is defensible until fixed-window comparable outcomes exist.
+Pure Node.js planning/validation adds no per-episode LLM call, server, database or render. Authoring a changed narration later still requires new Gemini audio/timestamps, render and owner review. No quantitative reach/ROI claim is defensible until fixed-window comparable outcomes exist.
