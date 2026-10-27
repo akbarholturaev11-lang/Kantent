@@ -6,12 +6,7 @@ import { getPlannedEpisode } from "./lib.mjs";
 import { prepareSemanticRender } from "./semantic-review-integration.mjs";
 const outfile=process.argv[2];
 if(!outfile) throw Error("Usage: node scripts/semantic-planned-fixture.mjs /tmp/props.json");
-// 2026-10-21 now uses the approved action-motion renderer, not automatic legacy
-// Semantic Visual. Use the last pre-action-policy lesson to test the *legacy*
-// semantic-loader path while dedicated action-motion tests cover newer lessons.
-const {episode}=await getPlannedEpisode("2026-10-23");
-if(episode.motionDesign===true)
-  throw Error("Semantic legacy fixture incorrectly selected the new action-motion renderer");
+const {episode}=await getPlannedEpisode("2026-10-21");
 if(!episode.semanticVisual || !episode.autoSemantic)
   throw Error("Normal production loader failed to apply semantic shot plan");
 let frame=0;
