@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import fs from "node:fs";
+import os from "node:os";
+import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { makeAdaptiveBrief, evaluateAdaptiveCandidate } from "./storytelling-generator.mjs";
-import { askGeminiForCandidate, executeAdaptive } from "./storytelling-gemini.mjs";
+import { makeAdaptiveBrief, evaluateAdaptiveCandidate, prepareAgentStorytellingBrief, validateAgentStorytellingProposal } from "./storytelling-generator.mjs";
 import { validateStorytellingEpisode } from "./storytelling-plan.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -80,58 +81,90 @@ test("approved, voiced or CTA-filled sources are never eligible",()=>{
   }
 });
 
-test("non-AI preview is read-only and incurs zero model calls",async()=>{
-  const result=await executeAdaptive(load(),{runAi:false,http:()=>{throw Error("Should not execute network")}});
-  assert.equal(result.status,"brief-only-no-api-charge");
+test("agent brief is read-only and requires no Gemini text-model calls",()=>{
+  const e=load(),before=JSON.stringify(e);
+  const result=prepareAgentStorytellingBrief(e);
+  assert.equal(result.status,"editorial-brief-for-codex-or-claude-code");
   assert.equal(result.brief.scenes.length,5);
+  assert.match(result.instructions.join(" "),/Gemini is reserved for approved TTS/);
+  assert.equal(JSON.stringify(e),before);
 });
 
-test("Gemini API requires explicit opt-in and does not leak an API key in errors",async()=>{
-  const b=makeAdaptiveBrief(load());
-  await assert.rejects(()=>askGeminiForCandidate(b,{env:{GEMINI_API_KEY:"top-secret"},
-    http:()=>{throw Error("should not call")}}),/opt-in/);
-  const fake=async(_url, options)=>{
-    assert.equal(options.headers["x-goog-api-key"],"top-secret");
-    return {ok:false,status:429,text:async()=>"{truncated}"};
-  };
-  await assert.rejects(()=>askGeminiForCandidate(b,{env:{GEMINI_API_KEY:"top-secret",HSK_AI_ALLOW_GEMINI_SCRIPT:"true"},http:fake}),e=>{
-    assert.match(e.message,/HTTP 429/);
-    assert.equal(e.message.includes("top-secret"),false);
-    return true;
-  });
-});
-
-test("mocked Gemini returns a candidate; only reviewed proposal goes forward",async()=>{
-  const p=proposal();
-  let calls=0;
-  const http=async(_url,options)=>{
-    assert.equal(options.method,"POST");
-    calls++;
-    const payload = calls===1 ? p :
-      {decision:"approve",examinedSourceFacts:true,distinctPayoff:true,russianClear:true,findings:[]};
-    return {ok:true,text:async()=>JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(payload)}]}}]})};
-  };
-  const result=await executeAdaptive(load(),{
-    runAi:true,env:{GEMINI_API_KEY:"test-key",HSK_AI_ALLOW_GEMINI_SCRIPT:"true"},http
-  });
-  assert.equal(result.status,"requires-human-language-review-and-owner-preview");
-  assert.equal(calls,2);
-  assert.equal(result.secondPass.status,"ai-second-pass-approved-pending-human");
-  assert.equal(result.narrationChanged,true);
+test("Codex or Claude Code candidate passes only source-bound structural gates",()=>{
+  const e=load(),before=JSON.stringify(e);
+  const result=validateAgentStorytellingProposal(e,proposal());
+  assert.equal(result.valid,true,result.errors.join("; "));
+  assert.equal(result.status,"requires-agent-source-review-and-owner-preview");
   assert.equal(result.draft.storytelling.pattern,"single-rehook");
   assert.equal(result.draft.cta,undefined);
+  assert.equal(JSON.stringify(e),before);
 });
 
-test("independent model rejection blocks generated scenario",async()=>{
-  let calls=0;
-  const http=async()=>{
-    calls++;
-    const obj=calls===1?proposal():{decision:"reject",examinedSourceFacts:false,
-      distinctPayoff:false,russianClear:true,findings:["Needs source review"]};
-    return {ok:true,text:async()=>JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(obj)}]}}]})};
+test("agent review rejects invalid source hash and unauthorized hook edits",()=>{
+  const e=load(),p=proposal();
+  p.originalSha256="wrong";
+  assert.equal(validateAgentStorytellingProposal(e,p).valid,false);
+  p.originalSha256=makeAdaptiveBrief(e).originalSha256;
+  p.narrationEdits[0].sceneId="hook";
+  assert.equal(validateAgentStorytellingProposal(e,p).valid,false);
+});
+
+test("CLI validates agent-authored JSON offline without touching source",()=>{
+  const before=fs.readFileSync(path.join(root,"content/episodes/youdianr-vs-yidianr-price-20261030.json"),"utf8");
+  const tmp=fs.mkdtempSync(path.join(os.tmpdir(),"hsk-agent-proposal-"));
+  try {
+    const f=path.join(tmp,"proposal.json");
+    fs.writeFileSync(f,JSON.stringify(proposal()));
+    const cp=spawnSync(process.execPath,[
+      path.join(root,"scripts/storytelling-generator.mjs"),
+      "youdianr-vs-yidianr-price-20261030","--validate",f
+    ],{cwd:root,encoding:"utf8",timeout:10000});
+    assert.equal(cp.status,0,cp.stderr);
+    const out=JSON.parse(cp.stdout);
+    assert.equal(out.valid,true,out.errors?.join("; "));
+    assert.equal(out.status,"requires-agent-source-review-and-owner-preview");
+    assert.equal(fs.readFileSync(path.join(root,"content/episodes/youdianr-vs-yidianr-price-20261030.json"),"utf8"),before);
+  } finally {fs.rmSync(tmp,{recursive:true,force:true});}
+});
+
+test("Gemini text-generation opt-in has been removed from scenario CLI",()=>{
+  const cp=spawnSync(process.execPath,[
+    path.join(root,"scripts/storytelling-generator.mjs"),
+    "youdianr-vs-yidianr-price-20261030","--ai"
+  ],{
+    cwd:root,encoding:"utf8",timeout:10000,
+    env:{...process.env,HSK_AI_ALLOW_GEMINI_SCRIPT:"true",GEMINI_API_KEY:"should-never-be-used"}
+  });
+  assert.notEqual(cp.status,0);
+  assert.match(cp.stderr,/Usage:/);
+  assert.equal(cp.stdout,"");
+});
+
+test("authored 30 October lesson script has an early payoff and a truly later word-order answer",()=>{
+  const source=load(),original=JSON.stringify(source);
+  const narrationEdits=[
+    {sceneId:"reaction",narration:"有点儿 ставят перед 贵: 这个有点儿贵 — «дороговато». Это оценка цены, а не просьба."},
+    {sceneId:"request",narration:"А попросить цену снизить? 便宜一点儿，可以吗？ — «Можно чуть дешевле?» Почему порядок другой?"},
+    {sceneId:"contrast",narration:"Сравните: 有点儿贵 — оценка цены, 便宜一点儿 — просьба. Поэтому 一点儿 идёт после «дешевле»: просим изменить цену немного."},
+    {sceneId:"recap",narration:"Быстрая проверка: «дороговато» — 有点儿贵. «Можно чуть дешевле?» — 便宜一点儿，可以吗？"}
+  ];
+  const candidate={
+    schemaVersion:1,episodeId:source.id,originalSha256:makeAdaptiveBrief(source).originalSha256,
+    narrationEdits,storytelling:{
+      schemaVersion:1,pattern:"single-rehook",
+      firstPayoff:{sceneId:"hook",cueText:"这个有点儿贵。"},
+      reHooks:[{
+        sceneId:"request",cueText:"Почему порядок другой?",
+        payoffSceneId:"contrast",payoffCueText:"Поэтому 一点儿 идёт после «дешевле»",
+        reason:"A distinct verified difference between evaluation and price-adjustment request"
+      }]
+    }
   };
-  await assert.rejects(()=>executeAdaptive(load(),{
-    runAi:true,env:{GEMINI_API_KEY:"test-key",HSK_AI_ALLOW_GEMINI_SCRIPT:"true"},http
-  }),/Independent AI editorial check failed/);
-  assert.equal(calls,2);
+  const out=validateAgentStorytellingProposal(source,candidate);
+  assert.equal(out.valid,true,out.errors.join("; "));
+  assert.equal(out.draft.scenes[0].narration,source.scenes[0].narration);
+  assert.deepEqual(out.draft.scenes.map(s=>s.cards),source.scenes.map(s=>s.cards));
+  assert.deepEqual(validateStorytellingEpisode(out.draft),[]);
+  assert.equal(out.draft.storytelling.reHooks.length,1);
+  assert.equal(JSON.stringify(source),original,"source lesson remains byte-equivalent");
 });
