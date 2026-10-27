@@ -60,36 +60,22 @@ All cues must appear verbatim in the existing narration. A re-hook cannot refer 
 - Instagram/YouTube lesson and CTA version integrity remain intact; no TikTok publishing.
 - No automatic modification of `main`, existing voice assets, scheduled/published content, approvals or analytics history as a side effect of planning.
 
-## Architecture correction and revised delivery plan (2026-10-27)
+## Corrected scope — **scriptwriting only** (2026-10-27)
 
-**Owner clarification supersedes the earlier Gemini text-drafting approach.** In this project, **Codex or Claude Code is the agent** that creates, evaluates and finalizes an eligible video's lesson script. The owner requests today's video from that agent. Gemini is reserved exclusively for the approved voice TTS and exact speech-to-word-timestamp transcription. The prior proposal for two Gemini text API calls (draft + AI critic), a dedicated text-model configuration and a second scenario agent was an architectural mistake.
+The owner clarified that the deliverable is **better scripts written by Codex/Claude Code**, not an additional video-production workflow, AI service, MCP tool, calendar resolver, TTS change or renderer integration. The original two-call Gemini scenario drafter/critic conflicted with that division of responsibility and has been removed; the existing Gemini **voice/transcription implementation remains unchanged**.
 
-### Canonical runtime responsibility map
+**Existing canonical guidance:** `content/WORKFLOW.md#adaptive-storytelling--scenario-writing-procedure` owns the editorial process; `content/creative-formats.json#storytellingPolicy` owns allowed direct / single-rehook / layered narrative patterns; `content/HOOK_LAB.md` owns opening experiments. `.agents/skills/ig-reel-planning/SKILL.md` advises on optional hook and beat writing but creates no independent writing subsystem.
 
-| Responsibility | Existing owner | Corrected operation |
-| --- | --- | --- |
-| Today's date, episode selection, review execution | MCP `preview_today_video_selection` (read-only) + `get_production_plan`, followed by unchanged `prepare_today_video` production, calendar, `scripts/mcp-server.mjs` | Same shared `resolveTodayVideo` rules; agent inspects selected script before voice/render; preserve strict date/published-dedup rules |
-| Fact-checked lesson writing, adaptive pattern selection, Russian narration and independent editorial review | The invoking **Codex/Claude Code agent** under `AGENTS.md`, `AI_RULES.md`, `content/WORKFLOW.md` | No added Gemini text-generation model or service |
-| Hook/CTA policy and immutable registration | Existing Hook Lab, CTA Lab and episode assembler | Preserve as sole authorities; no in-lesson CTA |
-| Storytelling heuristics / source-bound proposal guardrails | `storytelling-plan.mjs`, **existing** `storytelling-generator.mjs` | Local-only brief and offline validation, agent decides editorial content |
-| Approved voice and word-level caption timestamps | `generate-voice-gemini.mjs` + `content/voice-profile.json` | Gemini API for **TTS + transcription**, exactly matching approved narration |
-| Storyboard, semantic cues and visual export | Existing auto-storyboard + Remotion | Optional story annotations, never parallel video engine |
-| Preview, publication and experiment readback | Owner's exact package sign-off + Zernio and Hook/CTA labs | Unchanged; measured 7d windows only |
+**Exact deliverables in this corrected PR:**
+- Clarify Codex/Claude Code's author/critic role in the existing writing procedure and agent-facing instructions.
+- Preserve verified HSK 1–2 Chinese examples, the approved Hook/CTA separation, useful early payoff and optional *genuinely distinct* learner re-hook.
+- Provide an inspectable, authored five-scene Russian script proposal for the October 30 price lesson, without changing its canonical episode or publishing status.
+- Keep the existing pure local source-bound `storytelling-generator.mjs` brief/validator available for editorial QA; **no additional text API or model subscription**.
+- Add/maintain script-focused validation and CI coverage; remove unrelated MCP/calendar selection changes from the PR.
 
-### Delivery reconciliation
+**Explicit non-goals:** Changing `mcp-server.mjs`, `resolve-production-date.mjs`, Gemini TTS or its voice profile, Remotion, auto-storyboard, CTA generation, publication, scheduling or post analytics. CI may exercise existing video regression tests to detect collateral damage but this is not a video-building project.
 
-1. **Restore architecture (this correction PR):** remove unused Gemini text drafter/critic and model configuration; avoid duplicate `storytelling-agent.mjs`; expose read-only agent brief + local proposal validator through the existing storytelling module; update package command, workflow, tests, documentation and policy ownership; do not touch episodes, calendar, TTS settings, tokens or published snapshots.
-2. **Editorial phase (Codex/Claude Code, no extra provider):** for genuinely new/eligible episodes, the invoking agent verifies Chinese teaching references, chooses `direct` or a genuinely useful re-hook, authors Russian script and optional annotations, critically reviews factual/narrative quality, then applies the local checksum/scene validator. The existing three dated pilot ideas remain *examples*, not automatically modified content.
-3. **Established production phase:** using the normal MCP date tool and reviewed source only, Gemini produces approved MP3 and word timestamps; exact-token validator, storytelling cue timing and semantic Remotion execute as before. Re-render on any narration change and require owner preview approval. No new automation or independent agent service is planned.
-4. **Feedback phase:** only verified attributed same-age seven-day Instagram and YouTube post windows may be compared by pattern. No measured lift claim until actual compatible observations exist, no silently promoted winners.
-
-### Verification gates
-
-- `node --check` for changed modules; `node --test scripts/storytelling-generator.test.mjs scripts/storytelling-plan.test.mjs scripts/storytelling-timing.test.mjs`.
-- `npm run check:consistency`, `npm run lint`, all CI steps including Remotion real MP4 smoke and legacy episode compatibility.
-- Negative tests for edited opening Hook, mismatched source checksum, fabricated Chinese characters, CTA contamination, duplicate edits and altered published/voiced sources.
-- Confirm no `HSK_AI_ALLOW_GEMINI_SCRIPT`, Gemini text model, `storytelling-gemini.mjs` or duplicate agent entry point is invoked. A hypothetical user instruction to author narration must be handled by Codex/Claude Code, not by a newly billed API call.
-- No real Gemini voice synthesis, publishing or owner-preview endorsement is claimed from synthetic CI fixtures alone.
+**Editorial acceptance:** a concrete opening, first true answer early, one verifiable teaching point, natural Russian transitions, correct Hanzi/pinyin/translation, no forced second loop, no CTA, and genuine distinct question → later answer whenever `single-rehook` is annotated. Test no-source-edit CLI behavior and reject invalid/mismatched narration changes. No engagement lift claim.
 
 ## Proposed cost envelope
-The agent-driven editorial review and pure Node.js planning/validation require no additional Gemini text-model calls, agent server or database. Authoring a changed narration later still requires new Gemini audio/timestamps, render and owner review. No quantitative reach/ROI claim is defensible until fixed-window comparable outcomes exist.
+The agent-led script authoring and existing Node.js validation require **no additional Gemini text-model API calls**, service, renderer, TTS policy or database. Authoring a changed narration later still requires new Gemini audio/timestamps, render and owner review. No quantitative reach/ROI claim is defensible until fixed-window comparable outcomes exist.
