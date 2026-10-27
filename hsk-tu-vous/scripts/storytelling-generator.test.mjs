@@ -139,3 +139,32 @@ test("Gemini text-generation opt-in has been removed from scenario CLI",()=>{
   assert.match(cp.stderr,/Usage:/);
   assert.equal(cp.stdout,"");
 });
+
+test("authored 30 October lesson script has an early payoff and a truly later word-order answer",()=>{
+  const source=load(),original=JSON.stringify(source);
+  const narrationEdits=[
+    {sceneId:"reaction",narration:"有点儿 ставят перед 贵: 这个有点儿贵 — «дороговато». Это оценка цены, а не просьба."},
+    {sceneId:"request",narration:"А попросить цену снизить? 便宜一点儿，可以吗？ — «Можно чуть дешевле?» Почему порядок другой?"},
+    {sceneId:"contrast",narration:"Сравните: 有点儿贵 — оценка цены, 便宜一点儿 — просьба. Поэтому 一点儿 идёт после «дешевле»: просим изменить цену немного."},
+    {sceneId:"recap",narration:"Быстрая проверка: «дороговато» — 有点儿贵. «Можно чуть дешевле?» — 便宜一点儿，可以吗？"}
+  ];
+  const candidate={
+    schemaVersion:1,episodeId:source.id,originalSha256:makeAdaptiveBrief(source).originalSha256,
+    narrationEdits,storytelling:{
+      schemaVersion:1,pattern:"single-rehook",
+      firstPayoff:{sceneId:"hook",cueText:"这个有点儿贵。"},
+      reHooks:[{
+        sceneId:"request",cueText:"Почему порядок другой?",
+        payoffSceneId:"contrast",payoffCueText:"Поэтому 一点儿 идёт после «дешевле»",
+        reason:"A distinct verified difference between evaluation and price-adjustment request"
+      }]
+    }
+  };
+  const out=validateAgentStorytellingProposal(source,candidate);
+  assert.equal(out.valid,true,out.errors.join("; "));
+  assert.equal(out.draft.scenes[0].narration,source.scenes[0].narration);
+  assert.deepEqual(out.draft.scenes.map(s=>s.cards),source.scenes.map(s=>s.cards));
+  assert.deepEqual(validateStorytellingEpisode(out.draft),[]);
+  assert.equal(out.draft.storytelling.reHooks.length,1);
+  assert.equal(JSON.stringify(source),original,"source lesson remains byte-equivalent");
+});
