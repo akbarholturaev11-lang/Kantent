@@ -60,3 +60,35 @@ test("does not invent content if all remaining slots are closed", () => {
     /no upcoming planned video/i,
   );
 });
+
+test("same published-post evidence selects the same future episode on every preflight", () => {
+  const sample = {
+    timezone: "Asia/Shanghai",
+    items: [
+      {date:"2026-10-27",id:"already",topic:"Past",status:"planned"},
+      {date:"2026-10-28",id:"next",topic:"Next",status:"planned"},
+      {date:"2026-10-30",id:"later",topic:"Later",status:"planned"},
+    ],
+  };
+  const published = new Set(["already"]);
+  const at = new Date("2026-10-27T08:00:00Z");
+  const expected = resolveTodayVideo(sample,at,{confirmedPublishedEpisodeIds:published});
+  assert.equal(expected.selectedDate,"2026-10-28");
+  assert.equal(expected.episodeId,"next");
+  assert.deepEqual(resolveTodayVideo(sample,at,{confirmedPublishedEpisodeIds:published}),expected);
+  assert.deepEqual(sample.items.map(item=>item.status),["planned","planned","planned"]);
+});
+
+test("MCP read-only today's preview uses exactly the production resolver without media writes", () => {
+  const source=fs.readFileSync(new URL("./mcp-server.mjs",import.meta.url),"utf8");
+  const start=source.indexOf('"preview_today_video_selection"');
+  const end=source.indexOf('"prepare_today_video"',start);
+  assert.ok(start>=0 && end>start,"Preview must be registered before production");
+  const preview=source.slice(start,end);
+  assert.match(preview,/resolveTodayVideo\(await readJson\(CALENDAR_PATH\), new Date\(\)/);
+  assert.match(preview,/confirmedPublishedEpisodeIds: confirmedPublishedIds\(\)/);
+  assert.doesNotMatch(preview,/runScript\(|prepareReviewForDate\(|writeJson\(|writeStatus\(/);
+  const production=source.slice(end);
+  assert.match(production,/resolveTodayVideo\(await readJson\(CALENDAR_PATH\), new Date\(\)/);
+  assert.match(production,/confirmedPublishedEpisodeIds: confirmedPublishedIds\(\)/);
+});
