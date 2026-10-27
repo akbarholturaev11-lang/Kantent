@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import fs from "node:fs";
+import os from "node:os";
+import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { makeAdaptiveBrief, evaluateAdaptiveCandidate, prepareAgentStorytellingBrief, validateAgentStorytellingProposal } from "./storytelling-generator.mjs";
@@ -105,4 +107,35 @@ test("agent review rejects invalid source hash and unauthorized hook edits",()=>
   p.originalSha256=makeAdaptiveBrief(e).originalSha256;
   p.narrationEdits[0].sceneId="hook";
   assert.equal(validateAgentStorytellingProposal(e,p).valid,false);
+});
+
+test("CLI validates agent-authored JSON offline without touching source",()=>{
+  const before=fs.readFileSync(path.join(root,"content/episodes/youdianr-vs-yidianr-price-20261030.json"),"utf8");
+  const tmp=fs.mkdtempSync(path.join(os.tmpdir(),"hsk-agent-proposal-"));
+  try {
+    const f=path.join(tmp,"proposal.json");
+    fs.writeFileSync(f,JSON.stringify(proposal()));
+    const cp=spawnSync(process.execPath,[
+      path.join(root,"scripts/storytelling-generator.mjs"),
+      "youdianr-vs-yidianr-price-20261030","--validate",f
+    ],{cwd:root,encoding:"utf8",timeout:10000});
+    assert.equal(cp.status,0,cp.stderr);
+    const out=JSON.parse(cp.stdout);
+    assert.equal(out.valid,true,out.errors?.join("; "));
+    assert.equal(out.status,"requires-agent-source-review-and-owner-preview");
+    assert.equal(fs.readFileSync(path.join(root,"content/episodes/youdianr-vs-yidianr-price-20261030.json"),"utf8"),before);
+  } finally {fs.rmSync(tmp,{recursive:true,force:true});}
+});
+
+test("Gemini text-generation opt-in has been removed from scenario CLI",()=>{
+  const cp=spawnSync(process.execPath,[
+    path.join(root,"scripts/storytelling-generator.mjs"),
+    "youdianr-vs-yidianr-price-20261030","--ai"
+  ],{
+    cwd:root,encoding:"utf8",timeout:10000,
+    env:{...process.env,HSK_AI_ALLOW_GEMINI_SCRIPT:"true",GEMINI_API_KEY:"should-never-be-used"}
+  });
+  assert.notEqual(cp.status,0);
+  assert.match(cp.stderr,/Usage:/);
+  assert.equal(cp.stdout,"");
 });
