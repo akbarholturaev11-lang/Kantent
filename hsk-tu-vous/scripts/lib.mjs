@@ -12,6 +12,7 @@ import { assertCanonicalLessonSource, composeLessonCta } from "./episode-cta-ass
 import { decorateCanonicalLesson, compareAuthorialContent } from "./auto-storyboard.mjs";
 import { validateStoryboardScene } from "./storyboard-validation.mjs";
 import { validateSemanticVisualEpisode } from "./semantic-visual-plan.mjs";
+import { validateStorytellingEpisode } from "./storytelling-plan.mjs";
 
 export const PROJECT_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -385,6 +386,8 @@ export function captionsToSrt(captions, captionStyle, sections) {
 
 export function validateEpisode(episode) {
   normalizeEpisode(episode);
+  const storytellingErrors = validateStorytellingEpisode(episode);
+  if (storytellingErrors.length) throw new Error(storytellingErrors.join("\n"));
   const semanticErrors = validateSemanticVisualEpisode(episode);
   if (semanticErrors.length) throw new Error(semanticErrors.join("\n"));
   if (
