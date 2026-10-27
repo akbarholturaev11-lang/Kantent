@@ -16,12 +16,27 @@ export function validateObservation(o) {
   if(!iso(o.publishedAt)||!iso(o.observedAt)) errors.push('invalid timestamps');
   if(iso(o.publishedAt)&&iso(o.observedAt)&&Date.parse(o.publishedAt)>Date.parse(o.observedAt)) errors.push('observation precedes publication');
   if(!windows.has(o.window)) errors.push('invalid window');
-  // A time-window result can only exist once the post has reached that age.
-  // Later retrieval of provider-labelled historical windows remains valid.
+  // Post age is necessary but NOT proof of a fixed-age metric window.
+  // Zernio lifetime and calendar-day timeline data must never pass as 24h/7d.
   const ageRequiredHours = {'24h':24,'72h':72,'7d':168}[o.window];
-  if (ageRequiredHours && iso(o.publishedAt) && iso(o.observedAt) &&
-      Date.parse(o.observedAt)-Date.parse(o.publishedAt)<ageRequiredHours*3600000)
-    errors.push('window '+o.window+' claimed before required post age');
+  if (ageRequiredHours) {
+    const evidence = o.source?.windowEvidence;
+    if (iso(o.publishedAt) && iso(o.observedAt) &&
+        Date.parse(o.observedAt)-Date.parse(o.publishedAt)<ageRequiredHours*3600000)
+      errors.push('window '+o.window+' claimed before required post age');
+    if (!evidence || evidence.kind !== 'provider-exact-post-age' ||
+        evidence.window !== o.window || !iso(evidence.startAt) || !iso(evidence.endAt) ||
+        typeof evidence.providerRecordId !== 'string' || !evidence.providerRecordId.trim() ||
+        (iso(o.publishedAt) && Date.parse(evidence.startAt) !== Date.parse(o.publishedAt)) ||
+        (iso(evidence.startAt) && iso(evidence.endAt) &&
+         Date.parse(evidence.endAt)-Date.parse(evidence.startAt)!==ageRequiredHours*3600000) ||
+        (iso(o.observedAt) && iso(evidence.endAt) &&
+         Date.parse(evidence.endAt)>Date.parse(o.observedAt)) ||
+        ['analytics_get_analytics','analytics_get_daily_metrics','analytics_get_post_timeline','posts_list']
+          .includes(o.source?.endpoint)) {
+      errors.push('missing exact provider-fixed-window evidence (lifetime or calendar-day totals are not 24h/7d)');
+    }
+  }
   if(o.source?.provider!=='Zernio'||!iso(o.source?.syncedAt)||!o.source?.endpoint) errors.push('missing Zernio provenance');
   if(o.postUrl!=null && (typeof o.postUrl!=='string'||!/^https:\/\/(www\.)?(instagram\.com|tiktok\.com|youtube\.com)\//.test(o.postUrl))) errors.push('invalid postUrl');
   if(o.episodeId!=null && (typeof o.episodeId!=='string'||!/^[a-z0-9-]+$/.test(o.episodeId))) errors.push('invalid episodeId');
@@ -112,7 +127,7 @@ export function analyzeObservations(observations,policy={}, {asOf = new Date()} 
         !p.episodeId || !p.hookFormat || !p.hskLevel ||
         p.averageWatchRatio==null) continue;
     const key=[p.platform,p.window,p.hskLevel,p.durationBand,p.hookFormat,
-      p.storytellingPattern??'storytelling-unverified'].join('|');
+      p.creativeFormatId??'creative-unverified',p.storytellingPattern??'storytelling-unverified'].join('|');
     if(!cohorts.has(key)) cohorts.set(key,[]);
     cohorts.get(key).push(p);
   }
@@ -131,6 +146,8 @@ export function analyzeObservations(observations,policy={}, {asOf = new Date()} 
     caveats.push('Lifetime metrics have unequal post ages: never a controlled 24h/7d comparison.');
   if(posts.some(p=>p.episodeId==null||p.hookFormat==null||p.hskLevel==null))
     caveats.push('Unverified episode/hook/HSK attribution; do not infer creative effectiveness from these posts.');
+  if(posts.some(p=>p.creativeFormatId==null))
+    caveats.push('Some creative formats are unverified; do not pool them with an attributed visual treatment.');
   if(!comparableGroups.some(p=>p.phase==='primary'&&p.readiness==='descriptive-only-owner-review'))
     caveats.push('No eligible primary 7d cohort: insufficient evidence for adopting a performance-led script change.');
   if(!posts.length) caveats.push('Unmeasured is not zero. No analytics observations in the rolling window.');
@@ -150,7 +167,7 @@ export function analyzeObservations(observations,policy={}, {asOf = new Date()} 
     decision:'no-automatic-winner',
     caveats,
     nextActions:['Use grounded 24h data only as a preliminary signal; require actual 7d window for primary decisions.',
-      'Make only evidence-backed changes to unapproved future scripts, in a GitHub PR.',
+      'Hand off a testable proposed change to Calendar Reserve after owner review; Feedback must not edit scripts or calendars.',
       'Keep CTA, approved/published snapshots and publishing owner-approval gates unchanged.']
   };
 }
