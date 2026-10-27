@@ -1,0 +1,2235 @@
+{
+  "id": "ji-vs-duoshao-books-price-20261106",
+  "date": "2026-11-06",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "tg-TJ",
+  "title": "几 ё 多少: чанд китоб ва чанд пул?",
+  "level": "HSK 1",
+  "topic": "几 барои шумораи кам бо калимаи шуморакунанда; 多少 барои миқдор ё нархи номаълум",
+  "durationTargetSec": 50,
+  "caption": "Ту чанд китоб дорӣ? 你有几本书？ (Nǐ yǒu jǐ běn shū?) Ин чанд пул аст? 这个多少钱？ (Zhège duōshao qián?)",
+  "hashtags": [
+    "#HSKAI",
+    "#ЗабониЧинӣ",
+    "#HSK1"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "几 (jǐ) одатан вақте истифода мешавад, ки шумораи камро интизорем. Пеш аз исми шумурдашаванда пас аз 几 калимаи шуморакунанда меояд: 几本书 — «чанд китоб».",
+    "多少 (duōshao) барои миқдор ё нархи пешакӣ номаълум истифода мешавад: 这个多少钱？ — «Ин чанд пул аст?»",
+    "Дар саволҳо бо 几 ва 多少 одатан 吗 намегузорем. Дар ҳолатҳои дигар 几 метавонад «чандто» маъно диҳад."
+  ],
+  "examples": [
+    "几 jǐ — чанд (одатан шумораи кам)",
+    "多少 duōshao — чанд / чӣ қадар (нарх)",
+    "本 běn — калимаи шуморакунандаи китоб",
+    "你有几本书？ Nǐ yǒu jǐ běn shū? — Ту чанд китоб дорӣ?",
+    "这个多少钱？ Zhège duōshao qián? — Ин чанд пул аст?"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "narration": "Дар дӯкон мепурсанд: «Чанд китоб?» Баъд: «Нархаш чанд аст?» Дар чинӣ барои ин саволҳо 几 ва 多少 истифода мешаванд.",
+      "cards": [
+        {
+          "hanzi": "几",
+          "pinyin": "jǐ",
+          "meaning": "чанд китоб"
+        },
+        {
+          "hanzi": "多少",
+          "pinyin": "duōshao",
+          "meaning": "чанд пул"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-step-1",
+          "kind": "graphic",
+          "cueText": "Чанд китоб",
+          "visual": {
+            "title": "чанд китоб",
+            "hanzi": "几",
+            "pinyin": "jǐ",
+            "meaning": "чанд китоб",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 260,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 267,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 277,
+                    "y1": 171,
+                    "x2": 307,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Аввал шумораи китобҳои дӯконро дидан."
+        },
+        {
+          "id": "hook-step-2",
+          "kind": "graphic",
+          "cueText": "Нархаш чанд",
+          "visual": {
+            "title": "чанд пул",
+            "hanzi": "多少",
+            "pinyin": "duōshao",
+            "meaning": "чанд пул",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 164,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 171,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 181,
+                    "y1": 171,
+                    "x2": 211,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 240,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 247,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 257,
+                    "y1": 164,
+                    "x2": 287,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-2-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 316,
+                    "y": 136,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-2-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 323,
+                    "y": 149,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-2-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 333,
+                    "y1": 157,
+                    "x2": 363,
+                    "y2": 157,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири тасвир барои фарқи шумора ва нарх."
+        },
+        {
+          "id": "hook-step-3",
+          "kind": "graphic",
+          "cueText": "几 ва 多少",
+          "visual": {
+            "title": "чанд китоб",
+            "hanzi": "几",
+            "pinyin": "jǐ",
+            "meaning": "чанд китоб",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 63,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 70,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 80,
+                    "y1": 171,
+                    "x2": 110,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 139,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 146,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 156,
+                    "y1": 164,
+                    "x2": 186,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 355,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 449,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 384,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 420,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муқоисаи китобҳои ҳисобшуда бо нархи номаълум."
+        }
+      ]
+    },
+    {
+      "id": "books",
+      "kind": "example",
+      "durationSec": 7,
+      "narration": "Агар китобҳо кам бошанд, бигӯ: 你有几本书？ Яъне: «Ту чанд китоб дорӣ?» Пас аз 几 барои китоб калимаи шуморакунандаи 本 меояд.",
+      "cards": [
+        {
+          "hanzi": "几本书",
+          "pinyin": "jǐ běn shū",
+          "meaning": "чанд китоб"
+        },
+        {
+          "hanzi": "你有几本书？",
+          "pinyin": "Nǐ yǒu jǐ běn shū?",
+          "meaning": "Ту чанд китоб дорӣ?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "books-step-1",
+          "kind": "graphic",
+          "cueText": "китобҳо кам",
+          "visual": {
+            "title": "чанд китоб",
+            "hanzi": "几本书",
+            "pinyin": "jǐ běn shū",
+            "meaning": "чанд китоб",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 260,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 267,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 277,
+                    "y1": 171,
+                    "x2": 307,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Аввал шумораи китобҳои дӯконро дидан."
+        },
+        {
+          "id": "books-step-2",
+          "kind": "graphic",
+          "cueText": "你有几本书",
+          "visual": {
+            "title": "Ту чанд китоб дорӣ?",
+            "hanzi": "你有几本书？",
+            "pinyin": "Nǐ yǒu jǐ běn shū?",
+            "meaning": "Ту чанд китоб дорӣ?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 164,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 171,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 181,
+                    "y1": 171,
+                    "x2": 211,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 240,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 247,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 257,
+                    "y1": 164,
+                    "x2": 287,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-2-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 316,
+                    "y": 136,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-2-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 323,
+                    "y": 149,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-2-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 333,
+                    "y1": 157,
+                    "x2": 363,
+                    "y2": 157,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири тасвир барои фарқи шумора ва нарх."
+        },
+        {
+          "id": "books-step-3",
+          "kind": "graphic",
+          "cueText": "шуморакунандаи 本",
+          "visual": {
+            "title": "чанд китоб",
+            "hanzi": "几本书",
+            "pinyin": "jǐ běn shū",
+            "meaning": "чанд китоб",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 164,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 171,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 181,
+                    "y1": 171,
+                    "x2": 211,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 240,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 247,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 257,
+                    "y1": 164,
+                    "x2": 287,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-2-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 316,
+                    "y": 136,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-2-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 323,
+                    "y": 149,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-2-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 333,
+                    "y1": 157,
+                    "x2": 363,
+                    "y2": 157,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-marker",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 134,
+                    "y1": 318,
+                    "x2": 454,
+                    "y2": 318,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-spot",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 466,
+                    "cy": 318,
+                    "r": 16,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муқоисаи китобҳои ҳисобшуда бо нархи номаълум."
+        }
+      ]
+    },
+    {
+      "id": "price",
+      "kind": "example",
+      "durationSec": 7,
+      "narration": "Нархро чунин мепурсем: 这个多少钱？ — «Ин чанд пул аст?» 多少 барои нархи номаълум истифода мешавад.",
+      "cards": [
+        {
+          "hanzi": "多少",
+          "pinyin": "duōshao",
+          "meaning": "чанд пул"
+        },
+        {
+          "hanzi": "这个多少钱？",
+          "pinyin": "Zhège duōshao qián?",
+          "meaning": "Ин чанд пул аст?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "price-step-1",
+          "kind": "graphic",
+          "cueText": "Нархро",
+          "visual": {
+            "title": "чанд пул",
+            "hanzi": "多少",
+            "pinyin": "duōshao",
+            "meaning": "чанд пул",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 63,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 70,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 80,
+                    "y1": 171,
+                    "x2": 110,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 139,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 146,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 156,
+                    "y1": 164,
+                    "x2": 186,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 355,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 449,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 384,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 420,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Аввал шумораи китобҳои дӯконро дидан."
+        },
+        {
+          "id": "price-step-2",
+          "kind": "graphic",
+          "cueText": "这个多少钱",
+          "visual": {
+            "title": "Ин чанд пул аст?",
+            "hanzi": "这个多少钱？",
+            "pinyin": "Zhège duōshao qián?",
+            "meaning": "Ин чанд пул аст?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 205,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "red"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 299,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 234,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 270,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-2",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 306,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-3",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 342,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири тасвир барои фарқи шумора ва нарх."
+        },
+        {
+          "id": "price-step-3",
+          "kind": "graphic",
+          "cueText": "нархи номаълум",
+          "visual": {
+            "title": "чанд пул",
+            "hanzi": "多少",
+            "pinyin": "duōshao",
+            "meaning": "чанд пул",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 205,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 299,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 234,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 270,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муқоисаи китобҳои ҳисобшуда бо нархи номаълум."
+        }
+      ]
+    },
+    {
+      "id": "contrast",
+      "kind": "context",
+      "durationSec": 7,
+      "narration": "Муқоиса кун: 几本书 — чанд китоб, одатан шумораи кам. 多少钱 — чанд пул. Бо 几 калимаи шуморакунандаро фаромӯш накун.",
+      "cards": [
+        {
+          "hanzi": "几本书",
+          "pinyin": "jǐ běn shū",
+          "meaning": "чанд китоб"
+        },
+        {
+          "hanzi": "多少钱",
+          "pinyin": "duōshao qián",
+          "meaning": "чанд пул"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "contrast-step-1",
+          "kind": "graphic",
+          "cueText": "几本书",
+          "visual": {
+            "title": "чанд китоб",
+            "hanzi": "几本书",
+            "pinyin": "jǐ běn shū",
+            "meaning": "чанд китоб",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 164,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 171,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 181,
+                    "y1": 171,
+                    "x2": 211,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 240,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 247,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 257,
+                    "y1": 164,
+                    "x2": 287,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-2-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 316,
+                    "y": 136,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-2-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 323,
+                    "y": 149,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-2-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 333,
+                    "y1": 157,
+                    "x2": 363,
+                    "y2": 157,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Аввал шумораи китобҳои дӯконро дидан."
+        },
+        {
+          "id": "contrast-step-2",
+          "kind": "graphic",
+          "cueText": "多少钱",
+          "visual": {
+            "title": "чанд пул",
+            "hanzi": "多少钱",
+            "pinyin": "duōshao qián",
+            "meaning": "чанд пул",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 205,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "red"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 299,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 234,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 270,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-2",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 306,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-3",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 342,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири тасвир барои фарқи шумора ва нарх."
+        },
+        {
+          "id": "contrast-step-3",
+          "kind": "graphic",
+          "cueText": "шуморакунандаро",
+          "visual": {
+            "title": "чанд китоб",
+            "hanzi": "几本书",
+            "pinyin": "jǐ běn shū",
+            "meaning": "чанд китоб",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 63,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 70,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 80,
+                    "y1": 171,
+                    "x2": 110,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 139,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 146,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 156,
+                    "y1": 164,
+                    "x2": 186,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 355,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 449,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 384,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 420,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муқоисаи китобҳои ҳисобшуда бо нархи номаълум."
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "example",
+      "durationSec": 6,
+      "narration": "Ба ёд гир: чанд китоб — 几本书; чанд пул — 多少钱. Дар чунин саволҳо 吗 лозим нест.",
+      "cards": [
+        {
+          "hanzi": "几本书",
+          "pinyin": "jǐ běn shū",
+          "meaning": "чанд китоб"
+        },
+        {
+          "hanzi": "多少钱",
+          "pinyin": "duōshao qián",
+          "meaning": "чанд пул"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recap-step-1",
+          "kind": "graphic",
+          "cueText": "чанд китоб",
+          "visual": {
+            "title": "чанд китоб",
+            "hanzi": "几本书",
+            "pinyin": "jǐ běn shū",
+            "meaning": "чанд китоб",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 260,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 267,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 277,
+                    "y1": 171,
+                    "x2": 307,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Аввал шумораи китобҳои дӯконро дидан."
+        },
+        {
+          "id": "recap-step-2",
+          "kind": "graphic",
+          "cueText": "几本书",
+          "visual": {
+            "title": "чанд пул",
+            "hanzi": "多少钱",
+            "pinyin": "duōshao qián",
+            "meaning": "чанд пул",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 164,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 171,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 181,
+                    "y1": 171,
+                    "x2": 211,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 240,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 247,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 257,
+                    "y1": 164,
+                    "x2": 287,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-2-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 316,
+                    "y": 136,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-2-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 323,
+                    "y": 149,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-2-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 333,
+                    "y1": 157,
+                    "x2": 363,
+                    "y2": 157,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири тасвир барои фарқи шумора ва нарх."
+        },
+        {
+          "id": "recap-step-3",
+          "kind": "graphic",
+          "cueText": "多少钱",
+          "visual": {
+            "title": "чанд китоб",
+            "hanzi": "几本书",
+            "pinyin": "jǐ běn shū",
+            "meaning": "чанд китоб",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 63,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 70,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 80,
+                    "y1": 171,
+                    "x2": 110,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 139,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 146,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 156,
+                    "y1": 164,
+                    "x2": 186,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 355,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 449,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 384,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 420,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муқоисаи китобҳои ҳисобшуда бо нархи номаълум."
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "tg-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "几、多少 (jǐ, duōshao) — Hanzistack Chinese Grammar",
+      "url": "https://char.hanzistack.com/grammar/ji-duoshao-asking-quantities",
+      "checkedAt": "2026-10-28",
+      "supports": "几 + classifier + count noun for an expected small quantity (几本书), 多少 for open quantities and price (多少钱), and no 吗 in a wh-question."
+    },
+    {
+      "title": "How Many / How Much — HSK Companion",
+      "url": "https://hskcompanion.org/grammar/question-ji-duoshao/",
+      "checkedAt": "2026-10-28",
+      "supports": "Independent HSK1-oriented explanation of 几 and 多少, classifier 本 in small book counts and 多少钱 for an unknown price."
+    },
+    {
+      "title": "几 / 多少 — Wanyu HSK 1 Grammar",
+      "url": "https://wanyu.app/en/grammar/hsk1/ji-duoshao/",
+      "checkedAt": "2026-10-28",
+      "supports": "Confirms 几 typically expects a small count with classifier, whereas 多少 permits unknown larger quantity and asks how much something costs."
+    }
+  ],
+  "hookExperiment": {
+    "id": "ji-vs-duoshao-books-price-20261106-tg-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Мисоли воқеии шумораи китоб ва нархи мол метавонад барои навомӯзи тоҷикзабон фаҳмотар бошад; натиҷа ҳанӯз тасдиқ нашудааст.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-28"
+  },
+  "audienceProblem": "Навомӯз дар саволи шумораи китоб ва нархи мол «чанд»-ро бо як калимаи чинӣ ифода мекунад.",
+  "learningOutcome": "Барои китоб 你有几本书？ ва барои нарх 这个多少钱？-ро дуруст бигӯяд.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Харидор дар дӯкони китоб шумора ва нархро мепурсад",
+      "learnerGoal": "Шумораи китоб ва нархи номаълумро бо калимаи мувофиқ бипурсад",
+      "obstacle": "Ҳарду ба «чанд» тарҷума мешавад, вале 几 ва 多少 вазифаҳои гуногун доранд"
+    },
+    "selectionReason": "Як саҳнаи дӯкон барои фарқи шумораи кам ва нархи кушода ҷавоби фаврӣ медиҳад",
+    "firstPayoff": {
+      "sceneId": "books",
+      "cueText": "你有几本书"
+    },
+    "reHooks": []
+  },
+  "localization": {
+    "language": "tg",
+    "sourceEpisodeId": "ji-vs-duoshao-books-price-20261106",
+    "sourceHash": "9ffa3500a6782f3e883164c1f32427371f82a5553840aeb27eba71fcc1e62cc4",
+    "authoredOn": "2026-10-28",
+    "status": "draft-awaiting-audio-review"
+  }
+}
