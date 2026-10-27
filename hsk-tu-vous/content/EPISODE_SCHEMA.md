@@ -18,14 +18,14 @@ The renderer gives a timeline-validated semantic scene priority over `CinematicS
 
 ## Optional Adaptive Storytelling v1 (unapproved future lessons only)
 
-For newly authored, not-yet-voiced **CTA-free** plans, \`episode.storytelling\` may annotate a script's existing narrated beats. It does not create a new \`scene.kind\` or a rendered scene and MUST NOT be injected into approved/published records. Existing records without this object remain valid.
+For newly authored, not-yet-voiced **CTA-free** plans, `episode.storytelling` may annotate a script's existing narrated beats. It does not create a new `scene.kind` or a rendered scene and MUST NOT be injected into approved/published records. Existing records without this object remain valid.
 
-- The only active policy is \`content/creative-formats.json#storytellingPolicy\` (\`direct\`, \`single-rehook\`, \`layered\`; no forced extra questions).
-- \`schemaVersion: 1\`, \`pattern\` and \`firstPayoff: {sceneId, cueText}\` describe the earliest real instructional answer. \`cueText\` must appear verbatim in the cited teaching scene's narration, and its scene must start within the opening ratio set in the policy. Scene timing is planning evidence, NOT exact spoken-word timing.
-- \`reHooks: []\` contains zero or more \`{sceneId, cueText, payoffSceneId, payoffCueText, reason}\`. Every re-hook and payoff cue must occur verbatim in its existing scene's narration. Payoff must appear later than its distinct question, and both must be after the first teaching payoff. CTA scenes are never eligible.
-- \`direct\` requires no re-hook. \`single-rehook\` annotates exactly one genuine additional learner problem. \`layered\` permits at most two if editorially justified; this is not a mandatory eight-block script structure.
-- The read-only \`npm run content:storytelling-plan -- <episode-id>\` returns evidence-linked candidates and explicit uncertainty. It NEVER authors prose, changes scene order, writes a JSON plan, generates Gemini audio or publishes media.
-- \`validateEpisode\` rejects malformed opt-in metadata. No metadata is added to old drafts automatically. Hook Lab still owns the opening format and analytics, CTA Lab still owns the platform-specific closing and voice/cue timestamps still own actual synchronization.
+- The only active policy is `content/creative-formats.json#storytellingPolicy` (`direct`, `single-rehook`, `layered`; no forced extra questions).
+- `schemaVersion: 1`, `pattern` and `firstPayoff: {sceneId, cueText}` describe the earliest real instructional answer. `cueText` must appear verbatim in the cited teaching scene's narration, and its scene must start within the opening ratio set in the policy. Scene timing is planning evidence, NOT exact spoken-word timing.
+- `reHooks: []` contains zero or more `{sceneId, cueText, payoffSceneId, payoffCueText, reason}`. Every re-hook and payoff cue must occur verbatim in its existing scene's narration. Payoff must appear later than its distinct question, and both must be after the first teaching payoff. CTA scenes are never eligible.
+- `direct` requires no re-hook. `single-rehook` annotates exactly one genuine additional learner problem. `layered` permits at most two if editorially justified; this is not a mandatory eight-block script structure.
+- The read-only `npm run content:storytelling-plan -- <episode-id>` returns evidence-linked candidates and explicit uncertainty. It NEVER authors prose, changes scene order, writes a JSON plan, generates Gemini audio or publishes media.
+- `validateEpisode` rejects malformed opt-in metadata. No metadata is added to old drafts automatically. Hook Lab still owns the opening format and analytics, CTA Lab still owns the platform-specific closing and voice/cue timestamps still own actual synchronization.
 
 
 ## Canonical episode record
