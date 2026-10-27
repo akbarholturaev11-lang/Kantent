@@ -124,6 +124,9 @@ export function validateStorytellingEpisode(episode, policy = null) {
       errors.push(prefix + ": order must be first payoff, later teaching reHook, later teaching payoff");
     }
     if (index <= lastIndex) errors.push(prefix + ": reHooks must be ordered and distinct");
+    if (n > 0 && getIndex(info.reHooks[n - 1]?.payoffSceneId) >= index) {
+      errors.push(prefix + ": resolve the previous reHook before opening the next one");
+    }
     if (used.has(item?.sceneId)) errors.push(prefix + ": duplicate reHook scene");
     used.add(item?.sceneId);
     if (!cue(item?.sceneId, item?.cueText)) errors.push(prefix + ": cueText must be verbatim narration");
