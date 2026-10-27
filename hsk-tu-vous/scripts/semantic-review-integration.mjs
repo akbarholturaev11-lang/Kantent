@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { suggestSemanticShots } from "./semantic-shot-adviser.mjs";
 import { compileSemanticVisualTimeline, validateSemanticVisualEpisode } from "./semantic-visual-plan.mjs";
+import { validateStorytellingWordTiming } from "./storytelling-timing.mjs";
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const flags=JSON.parse(fs.readFileSync(path.join(root,"content/semantic-visual-system.json"),"utf8"));
@@ -72,6 +73,7 @@ export function applySemanticReviewDraft(source) {
 
 /** Strict exact-word timeline; only when real Gemini audio/captions are present. */
 export function prepareSemanticRender(episode) {
+  if (episode.storytelling) validateStorytellingWordTiming(episode);
   if(!episode.semanticVisual) return null;
   if(!flags.reviewAutoEnabled)
     throw Error("Semantic review render is disabled by canonical feature flag");
