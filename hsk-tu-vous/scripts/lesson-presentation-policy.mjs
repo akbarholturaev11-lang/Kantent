@@ -1,3 +1,4 @@
+import {validatePromoMedia} from './promo-production.mjs';
 import {validateActionLesson} from "./action-design-plan.mjs";
 
 function applies(episode, policy) {
@@ -28,6 +29,7 @@ export function applyLessonPresentationDefault(episode, policy) {
 
 /** Run before paid TTS and every render, including already voiced review copies. */
 export function validateLessonPresentation(episode, policy) {
+  if(episode.kind==="advertisement")return validatePromoMedia(episode);
   if (!applies(episode, policy)) return null;
   if (episode.motionDesign !== true || episode.motionDesignStyle !== policy.styleId) {
     throw Error("The approved lesson format is required. Read content/EDITING_SPEC.md and author explain-actions-v1 motionBeats for every lesson scene before voice/render.");

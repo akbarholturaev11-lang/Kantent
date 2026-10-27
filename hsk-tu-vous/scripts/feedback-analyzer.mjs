@@ -1,3 +1,4 @@
+import {validateContentIdentity,applyPublicationMappings} from './content-attribution.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -40,10 +41,14 @@ export function validateObservation(o) {
   if(o.source?.provider!=='Zernio'||!iso(o.source?.syncedAt)||!o.source?.endpoint) errors.push('missing Zernio provenance');
   if(o.postUrl!=null && (typeof o.postUrl!=='string'||!/^https:\/\/(www\.)?(instagram\.com|tiktok\.com|youtube\.com)\//.test(o.postUrl))) errors.push('invalid postUrl');
   if(o.episodeId!=null && (typeof o.episodeId!=='string'||!/^[a-z0-9-]+$/.test(o.episodeId))) errors.push('invalid episodeId');
+  if(o.content!=null) {
+    errors.push(...validateContentIdentity(o.content));
+    if(o.episodeId && o.content.id!==o.episodeId)errors.push('content ID conflicts with episodeId');
+  }
   if(o.hookFormat!=null && !['question','contrast','scenario'].includes(o.hookFormat)) errors.push('invalid hookFormat');
   if(o.hskLevel!=null && (typeof o.hskLevel!=='string'||!/^HSK\s*[1-6](?:\s*[-–]\s*[1-6])?$/.test(o.hskLevel))) errors.push('invalid hskLevel');
   if(o.effectStyle!=null && (typeof o.effectStyle!=='string'||o.effectStyle.length>80)) errors.push('invalid effectStyle');
-  if(o.creativeFormatId!=null && (!/^[a-z][a-z0-9-]{2,80}$/.test(o.creativeFormatId) || !o.episodeId || !o.hookFormat || !o.hskLevel))
+  if(o.creativeFormatId!=null && (!/^[a-z][a-z0-9-]{2,80}$/.test(o.creativeFormatId) || (!o.episodeId || !o.hookFormat || !o.hskLevel) && o.content?.type!=='advertisement'))
     errors.push('creativeFormatId requires valid ID and verified episode/hook/HSK mapping');
   if(o.storytellingPattern!=null && (!['direct','single-rehook','layered'].includes(o.storytellingPattern) ||
       !o.episodeId || !o.hookFormat || !o.hskLevel || !o.creativeFormatId))
@@ -81,7 +86,9 @@ export function durationBand(sec) {
 export function deriveMetrics(o){
   const {views,saves,shares,avgWatchMs,skipRatePercent,durationSeconds}=o.metrics;
   return {
-    platform:o.platform,postId:o.platformPostId,episodeId:o.episodeId,
+    platform:o.platform,accountUsername:o.accountUsername,postId:o.platformPostId,episodeId:o.episodeId,
+    contentId:o.content?.id??o.episodeId??null,contentType:o.content?.type??'legacy-unverified',
+    language:o.content?.language??'ru',series:o.content?.series??null,sourceHash:o.content?.sourceHash??null,
     hookFormat:o.hookFormat,hskLevel:o.hskLevel,creativeFormatId:o.creativeFormatId??null,
     storytellingPattern:o.storytellingPattern??null,window:o.window,
     observedAt:o.observedAt,publishedAt:o.publishedAt,
@@ -109,7 +116,7 @@ export function analyzeObservations(observations,policy={}, {asOf = new Date()} 
   for(const o of observations){
     const errors=validateObservation(o); if(errors.length) throw Error(errors.join('; '));
     if(Date.parse(o.observedAt)>asOfDate.valueOf()) {observationsAfterAsOf++;continue;}
-    const key=[o.platform,o.platformPostId,o.window].join('/');
+    const key=[o.platform,o.accountUsername,o.platformPostId,o.window].join('/');
     if(!latest.has(key)||latest.get(key).observedAt<o.observedAt) latest.set(key,o);
   }
   const allPosts=[...latest.values()].map(deriveMetrics);
@@ -124,9 +131,9 @@ export function analyzeObservations(observations,policy={}, {asOf = new Date()} 
     // 24h is an early signal; ONLY provider-grounded 7d evidence can be
     // considered the primary comparable cohort. Lifetime/72h never substitute.
     if(![earlyWindow,primaryWindow].includes(p.window) ||
-        !p.episodeId || !p.hookFormat || !p.hskLevel ||
+        !(p.contentType==='advertisement' ? p.contentId && p.creativeFormatId : p.episodeId && p.hookFormat && p.hskLevel) ||
         p.averageWatchRatio==null) continue;
-    const key=[p.platform,p.window,p.hskLevel,p.durationBand,p.hookFormat,
+    const key=[p.platform,p.accountUsername,p.language,p.contentType,p.series?.part??'standalone',p.window,p.hskLevel??'not-applicable',p.durationBand,p.hookFormat??'not-applicable',
       p.creativeFormatId??'creative-unverified',p.storytellingPattern??'storytelling-unverified'].join('|');
     if(!cohorts.has(key)) cohorts.set(key,[]);
     cohorts.get(key).push(p);
@@ -177,7 +184,11 @@ export function loadObservations(dir=path.join(root,'content/feedback/observatio
   for(const f of fs.readdirSync(dir).filter(v=>v.endsWith('.json')).sort()){
     results.push(...validateDataset(JSON.parse(fs.readFileSync(path.join(dir,f),'utf8'))));
   }
-  return results;
+  const receipt=path.join(dir,'../publications.json');
+  if(!fs.existsSync(receipt))return results;
+  const registry=JSON.parse(fs.readFileSync(receipt,'utf8'));
+  if(registry.schemaVersion!==1||!Array.isArray(registry.records))throw Error('Invalid publication registry');
+  return applyPublicationMappings(results,registry.records);
 }
 export function runCli(args=process.argv.slice(2)){
   if(args.some(x=>x!=='--json')) throw Error('Unknown command option; only --json supported');

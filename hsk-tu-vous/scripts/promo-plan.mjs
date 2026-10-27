@@ -111,7 +111,7 @@ export function validatePromoPlan(plan,{policy,presentation,languages}=readPromo
         fail(`${beat?.id}: product demonstrations need a genuine capture and supported claim IDs`);
       else if(beat.claimIds.some(id=>typeof beat.narration!=='string' || !beat.narration.includes(claims.get(id).text)))
         fail(`${beat.id}: demo narration must include the referenced product claim`);
-      if(v.uiLanguage!==plan.languageCode && !text(v.limitations))
+      if(v.uiLanguage!==plan.languageCode && !(v.uiLanguage==='zxx'&&v.languageNeutralCrop===true&&v.crop&&v.sourceUiLanguage) && !text(v.limitations))
         fail(`${beat?.id}: disclose the capture language mismatch as outstanding production work`);
     } else if(v?.type==='illustration') {
       if(!text(v.drawingBrief))fail(`${beat?.id}: describe the actual original object/action to build`);

@@ -10,7 +10,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Production procedure and error handling | `content/WORKFLOW.md` |
 | Default production languages, locale codes and per-language content roots | `content/languages.json` |
 | Dates, IDs, cadence, episode references | `content/calendar.json` |
-| Future publishing weekdays, consecutive series parts and autonomous draft reserve | `content/calendar.json#planningWeekdays`, `#seriesPolicy` and `#planningBuffer` |
+| Future publishing weekdays, consecutive series parts and autonomous draft reserve | `content/calendar.json#weeklySchedule`, `#seriesPolicy` and `#planningBuffer` |
 | Future planned episode buffer (minimum/target) | `content/calendar.json#planningBuffer` |
 | Topic-based adaptive story selection and editorial policy | `content/creative-formats.json#storytellingPolicy`; optional annotations in `content/EPISODE_SCHEMA.md` |
 
@@ -52,9 +52,9 @@ Before creating, changing, rendering or exporting any video, invoke the local MC
 The existing daily Calendar Reserve and the Monday/Wednesday/Friday feedback agent are independent scheduled ChatGPT tasks; their canonical production rules remain in `content/WORKFLOW.md` and `content/feedback/AGENT_PLAYBOOK.md`. Do not create duplicate schedulers or automatic publishing. On each run read the latest `main` plus `content/skill-catalog.json`, then use `recommend_skills` when available, otherwise read the exact matching project-local SKILL.md according to `content/SKILLS.md`.
 
 - **Calendar Reserve:** when authoring or repairing a future, unapproved HSK 1–2 lesson for the shared Instagram Reels/YouTube Shorts body, consult `.agents/skills/ig-reel-planning/SKILL.md` *during editorial hook/storyboard planning only*. This must not replace `content/hook-lab.json`, fabricate Chinese facts or add a CTA to canonical episode source.
-  Only this scheduled writer (or a separately owner-invoked drafting agent) owns new future lesson/calendar files. Verify **all** default languages in `content/languages.json`, each locale's matching `localization.sourceHash`, current `content/visual-system.json#lessonPresentation`, complete cue-linked `motionBeats`, `GRAPHIC_SCENES.md` when custom objects/actions are needed, and topic-selected `storytelling` metadata for new/revised drafts. `scripts/self-improvement-check.mjs#inspectDraftReadiness` now checks every configured production language and source-hash binding. It is **static source readiness**, not proof of real Gemini timings, an approved render or a completed publication.
+  Only this scheduled writer (or a separately owner-invoked drafting agent) owns new future source/calendar files for the content types in `calendar.json#weeklySchedule`; ads follow `PROMO_WORKFLOW.md`. Verify **all** default languages in `content/languages.json`, each locale's matching `localization.sourceHash`, current `content/visual-system.json#lessonPresentation`, complete cue-linked `motionBeats`, `GRAPHIC_SCENES.md` when custom objects/actions are needed, and topic-selected `storytelling` metadata for new/revised drafts. `scripts/self-improvement-check.mjs#inspectDraftReadiness` now checks every configured production language and source-hash binding. It is **static source readiness**, not proof of real Gemini timings, an approved render or a completed publication.
 - **Feedback (Mon/Wed/Fri):** Instagram caption review uses `ig-caption-quality` only for *proposed future publication copy* when that is explicitly part of the report; competitor benchmarking uses `ig-competitor-research` only when real authorized external references and comparable evidence are available. Neither is a prerequisite to own-account Zernio analysis, and no social-post or message is automatically sent.
-  Feedback owns sourced per-platform observations, descriptive reports and **hypotheses only**. It must never write or repair future episode JSON or calendar entries, nor promote a Hook/storytelling/CTA policy without valid fixed-age 7d evidence and explicit owner approval. A detected buffer shortfall is a handoff to Calendar Reserve, not permission for the analytics task to author scripts.
+  Feedback owns sourced per-platform observations, descriptive reports and **hypotheses only**. It must never write or repair future lesson/promo JSON or calendar entries, nor promote a Hook/storytelling/CTA policy without valid fixed-age 7d evidence and explicit owner approval. A detected buffer shortfall is a handoff to Calendar Reserve, not permission for the analytics task to author scripts.
 - Regular voice, semantic cue validation, Remotion rendering, CTA and final-publication approval remain unchanged.
 
 ## Central CTA assembly for future lessons
@@ -76,3 +76,5 @@ Resolve the production language set and content roots from `content/languages.js
 - Preserve the existing renderer and use relevant guidance in `content/SKILLS.md` only when needed.
 - Keep generated review artifacts in the designated ignored folders. Don't treat temporary files as canonical sources.
 - Make the smallest compatible change, validate affected scripts/render stages, and report tests and blockers truthfully.
+
+Cross-type publication attribution, serial IDs and evidence readbacks: `content/feedback/CONTENT_TRACKING.md`.

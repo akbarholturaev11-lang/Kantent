@@ -21,8 +21,21 @@ export function proposeBuffer(calendar, {today, episodeIsReady=()=>true}={}) {
      calendar.planningWeekdays.length!==calendar.cadencePerWeek ||
      calendar.planningWeekdays.some(d=>!names.includes(d))) throw Error('Invalid calendar planningWeekdays or cadencePerWeek');
   const audit=auditPlanningBuffer(calendar,{today,episodeIsReady});
+  if(audit.weeklyCoverage) {
+    const repair=audit.missing.filter(item=>item.existing&&!item.blocked).map(item=>({
+      type:'repair-existing-plan',date:item.date,id:item.id,contentType:item.contentType,reason:item.reason}));
+    const propose=audit.missing.filter(item=>!item.existing&&!item.blocked).map(item=>({
+      type:'author-new-script',date:item.date,contentType:item.contentType,...(item.series?{series:item.series}:{}),
+      requiresVerifiedLearningFacts:item.contentType!=='advertisement',requiresProductEvidence:item.contentType==='advertisement',
+      requiresDefaultProductionLanguages:true,ctaSource:'selected-language-cta-lab',status:'planned'}));
+    return {date:today,timeZone:calendar.timezone,weeklySchedule:calendar.weeklySchedule,buffer:audit,repair,propose,
+      blocked:audit.missing.filter(item=>item.blocked),writeDestination:'main',mustWriteToFeatureBranch:false,
+      publishedMediaChangeAllowed:false,proposalsAreScripts:false,publicationAuthorized:false,
+      note:'Author complete source-checked drafts and required translations for each typed slot before calendar registration. Register both serial parts together; never create placeholders or claim social scheduling.'};
+  }
   const repair=audit.missing.map(x=>({type:'repair-existing-plan',date:x.date,id:x.id,reason:x.reason,
     ...(x.languages ? { languages: x.languages } : {})}));
+
   const count=Math.max(0,audit.shortfallToTarget-repair.length);
   const occupied=new Set(calendar.items.map(x=>x.date));
   const allDates=[today,...calendar.items.map(x=>x.date).filter(x=>pattern.test(x))].sort();

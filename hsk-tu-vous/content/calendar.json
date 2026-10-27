@@ -1,6 +1,6 @@
 {
   "timezone": "Asia/Shanghai",
-  "cadencePerWeek": 3,
+  "cadencePerWeek": 7,
   "publishingMode": "prepare-for-owner-approval",
   "items": [
     {
@@ -407,6 +407,14 @@
       "status": "planned"
     },
     {
+      "id": "cafe-first-phrase-20261029",
+      "date": "2026-10-29",
+      "contentType": "advertisement",
+      "topic": "Слова есть. А фраза вслух?",
+      "promoFile": "promos/cafe-first-phrase-20261029.json",
+      "status": "planned"
+    },
+    {
       "id": "youdianr-vs-yidianr-price-20261030",
       "date": "2026-10-30",
       "week": 5,
@@ -507,13 +515,53 @@
   },
   "planningWeekdays": [
     "MO",
+    "TU",
     "WE",
-    "FR"
+    "TH",
+    "FR",
+    "SA",
+    "SU"
   ],
   "seriesPolicy": {
     "schemaVersion": 1,
     "continuationGapDays": 1,
     "allowContinuationOutsidePlanningWeekdays": true,
     "requireCompleteDraftSet": true
+  },
+  "weeklySchedule": {
+    "schemaVersion": 1,
+    "effectiveFromDate": "2026-10-27",
+    "days": [
+      {
+        "weekday": "MO",
+        "contentType": "lesson"
+      },
+      {
+        "weekday": "TU",
+        "contentType": "advertisement"
+      },
+      {
+        "weekday": "WE",
+        "contentType": "lesson"
+      },
+      {
+        "weekday": "TH",
+        "contentType": "advertisement"
+      },
+      {
+        "weekday": "FR",
+        "contentType": "lesson"
+      },
+      {
+        "weekday": "SA",
+        "contentType": "series-part",
+        "part": 1
+      },
+      {
+        "weekday": "SU",
+        "contentType": "series-part",
+        "part": 2
+      }
+    ]
   }
 }

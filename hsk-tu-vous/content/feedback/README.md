@@ -25,3 +25,5 @@ Implemented: read-only buffer audit, validated source-stamped Instagram and YouT
 - `AGENT_PLAYBOOK.md` is the active external ChatGPT ↔ Zernio ↔ GitHub task contract; the analytics run writes **only** immutable observations and dated feedback reports.
 
 A recorded scheduled Feedback run on 2026-10-26 successfully produced a reviewed data/report-only merge; historical success must not be presented as proof of the next run. The separate Calendar Reserve is the only scheduled scenario writer. Neither a native background daemon nor an extra standalone API client exists in this repository. Live GitHub/Zernio connector availability and complete multilingual source readiness still require checks each run. Git pre-render freshness is enforced at the local CLI/MCP entry points. HSK AI learner attribution and automatic publishing remain excluded. The owner-preview gate remains unchanged.
+
+For advertisement/serial/language IDs, durable verified post mappings and future readbacks, follow [CONTENT_TRACKING.md](CONTENT_TRACKING.md). Historical unmapped observations remain immutable and cannot be retrospectively attributed from dates or titles alone.

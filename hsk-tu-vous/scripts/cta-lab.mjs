@@ -295,6 +295,7 @@ export function ctaContextSnapshot(episode) {
     visualBeats: clone(scene.visualBeats ?? []),
     cards: clone(scene.cards ?? []),
     editPlan: clean(scene.editPlan),
+    ...(scene.promoVisual ? {promoVisual:clone(scene.promoVisual)} : {}),
     ...(scene.motionBeats?.length ? {motionBeats:clone(scene.motionBeats)} : {}),
   }));
   return {

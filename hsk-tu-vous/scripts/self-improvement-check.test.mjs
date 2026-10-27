@@ -38,6 +38,7 @@ test('counts only complete sourced CTA-free drafts with matching identity', () =
   try {
     fs.mkdirSync(path.join(tmp, 'content/episodes'), { recursive: true });
     fs.copyFileSync(new URL('../content/visual-system.json', import.meta.url), path.join(tmp, 'content/visual-system.json'));
+    fs.writeFileSync(path.join(tmp,'content/languages.json'),JSON.stringify({schemaVersion:1,defaultProductionLanguages:['ru'],languages:{ru:{languageCode:'ru-RU',contentRoot:'content'}}}));
     const item = { id: 'ep', date: '2026-10-12', episodeFile: 'episodes/ep.json' };
     const file = path.join(tmp, 'content/episodes/ep.json');
     const card = { hanzi: '我在家。', pinyin: 'Wǒ zài jiā.', meaning: 'Я дома.' };

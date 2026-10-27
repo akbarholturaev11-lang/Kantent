@@ -1,3 +1,4 @@
+import {applyPublicationMappings} from './content-attribution.mjs';
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -6,6 +7,7 @@ import { readLanguages, lessonSourceHash, ctaSourceHash } from "./language-conte
 import { validateSeriesCalendar } from "./series-plan.mjs";
 import { auditPlanningBuffer, inspectDraftReadiness, dateInTimezone } from "./self-improvement-check.mjs";
 import { readPromoRules, reviewPromoPlan, reviewPromoVariants } from "./promo-plan.mjs";
+import {contentTypeOf,validateScheduledContent} from "./content-schedule.mjs";
 
 export const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -160,6 +162,14 @@ export function validateFutureContentReadiness(root = projectRoot, { today } = {
 
 export function validateConsistency(root = projectRoot) {
   const errors = validateSkillRegistry(root);
+  const receipts=asPath(root,'content/feedback/publications.json');
+  if(fs.existsSync(receipts)) {
+    try {
+      const registry=JSON.parse(fs.readFileSync(receipts,'utf8'));
+      if(registry.schemaVersion!==1||!Array.isArray(registry.records))throw Error('Invalid publication registry');
+      applyPublicationMappings([],registry.records);
+    } catch(error){errors.push('content/feedback/publications.json: '+error.message);}
+  }
   const calendar = readJson(root, "content/calendar.json", errors);
   const voice = readJson(root, "content/voice-profile.json", errors);
   const cta = readJson(root, "content/cta-lab.json", errors);
@@ -213,6 +223,7 @@ export function validateConsistency(root = projectRoot) {
 
   if (calendar) {
     errors.push(...validateSeriesCalendar(calendar).map(error => `content/calendar.json: ${error}`));
+    errors.push(...validateScheduledContent(calendar).map(error => `content/calendar.json: ${error}`));
     if (!calendar.timezone || !Array.isArray(calendar.items) || calendar.items.length === 0) {
       errors.push("content/calendar.json: missing timezone or episodes");
     } else {
@@ -226,6 +237,15 @@ export function validateConsistency(root = projectRoot) {
         if (Object.hasOwn(item, "cta")) errors.push(`content/calendar.json: CTA must only be defined in cta-lab.json, not calendar item ${item.id}`);
         ids.add(item.id);
         dates.add(item.date);
+        if(contentTypeOf(item)==='advertisement') {
+          if(item.promoFile!==`promos/${item.id}.json`)errors.push(`content/calendar.json: invalid promo reference for ${item.id}`);
+          else try {
+            const report=reviewPromoVariants(item.id,{root});
+            for(const [language,variant] of Object.entries(report.variants))
+              if(variant.stage==='blocked')errors.push(`content/calendar.json: ${item.id}/${language}: ${variant.error}`);
+          } catch(error){errors.push(`content/calendar.json: ${item.id}: ${error.message}`);}
+          continue;
+        }
         const filename = item.episodeFile;
         if (!filename || path.isAbsolute(filename) || filename.includes("..") || !filename.startsWith("episodes/")) {
           errors.push(`content/calendar.json: invalid episode path for ${item.id}`);

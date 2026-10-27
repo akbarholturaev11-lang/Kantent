@@ -4,6 +4,8 @@ import { fileURLToPath } from 'node:url';
 import { validateStorytellingEpisode } from './storytelling-plan.mjs';
 import { validateLessonPresentation } from './lesson-presentation-policy.mjs';
 import { validateSeriesCalendar } from './series-plan.mjs';
+import {contentTypeOf,weeklyCoverage} from './content-schedule.mjs';
+import {reviewPromoVariants} from './promo-plan.mjs';
 import { readLanguages, assertLocalizedLessonSource } from './language-context.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -27,6 +29,18 @@ export function auditPlanningBuffer(calendar, { today, episodeIsReady = () => tr
   const target = calendar.planningBuffer?.targetFutureEpisodes;
   if (!Number.isInteger(min) || !Number.isInteger(target) || min < 1 || target < min) {
     throw new Error('Invalid calendar.planningBuffer (expected 1 <= minimum <= target)');
+  }
+  if(calendar.weeklySchedule) {
+    const slots=weeklyCoverage(calendar,{today,count:target,itemIsReady:episodeIsReady});
+    const ready=slots.filter(slot=>slot.ready).map(slot=>({date:slot.date,id:slot.item.id,contentType:slot.contentType,
+      file:slot.item.episodeFile??slot.item.promoFile}));
+    const missing=slots.filter(slot=>!slot.ready).map(({item,...slot})=>({...slot,id:item?.id,
+      existing:Boolean(item),status:item?.status}));
+    return {date:today,timezone:calendar.timezone,minimumFutureEpisodes:min,targetFutureEpisodes:target,
+      expectedFutureSlots:slots.length,readyFutureEpisodes:ready.length,weeklyCoverage:true,
+      status:ready.length<min?'below-minimum':missing.length?'replenish':'healthy',
+      shortfallToTarget:missing.length,ready,missing,
+      note:'Read-only source coverage of the next content slots, including complete serial sets; distant lessons cannot hide an unplanned ad/weekend. No media or social posts were created.'};
   }
   const future = calendar.items
     .filter(item => item?.status === 'planned' && ISO_DATE.test(item.date ?? '') && item.date > today)
@@ -117,6 +131,12 @@ function checkLessonSource(episode, item, languageCode, visualSystem, { localize
 export function inspectDraftReadiness(rootDirectory, item) {
   const languages = {};
   try {
+    if (contentTypeOf(item) === 'advertisement') {
+      if(item.promoFile !== `promos/${item.id}.json`) throw Error('invalid promo path');
+      const report=reviewPromoVariants(item.id,{root:rootDirectory});
+      return {ready:report.plansComplete, languages:report.variants,
+        ...(report.plansComplete?{}:{reason:'complete source-bound promo plans required in every default language'})};
+    }
     if (typeof item?.episodeFile !== 'string' ||
         !/^episodes\/[a-z0-9][a-z0-9-]*\.json$/.test(item.episodeFile))
       throw Error('invalid canonical episode path');

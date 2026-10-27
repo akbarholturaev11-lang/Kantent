@@ -41,8 +41,13 @@ export function languageSettings(language = activeLanguage()) {
 export function languageEnvironment(language = activeLanguage()) {
   return { ...process.env, HSK_CONTENT_LANGUAGE: requireLanguage(language) };
 }
+export function isPromoId(id) {
+  if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id??''))throw Error('Invalid content ID');
+  return fs.existsSync(path.join(root,'content/promos',id+'.json'));
+}
 export function generatedVoicePath(id, language = activeLanguage()) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id ?? "")) throw new Error("Invalid episode ID.");
+  if(isPromoId(id))return `generated/promos/${id}/${requireLanguage(language)}`;
   return requireLanguage(language) === "ru" ? `generated/${id}` : `generated/${language}/${id}`;
 }
 export function lessonSourceHash(episode) {
