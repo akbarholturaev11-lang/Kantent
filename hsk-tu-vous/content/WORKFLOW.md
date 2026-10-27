@@ -34,7 +34,7 @@ For existing `review/<id>/episode.json` files, an old storyboard may be migrated
 
 ## Read-only adaptive storytelling editorial review (opt-in)
 
-Before authoring the first **new** adaptive version of an unapproved script, check \`content/creative-formats.json#storytellingPolicy\`, \`content/EPISODE_SCHEMA.md\` and current Hook Lab rules. The advisory CLI \`npm run content:storytelling-plan -- <episode-id>\` reads a stored canonical plan without editing it; it may identify a candidate mid-lesson distinction but cannot prove narrative quality or invent Russian narration. An author can opt in by attaching the documented \`episode.storytelling\` metadata with verbatim real cues. Run the new validator tests and then \`npm run check:consistency\`.
+Before authoring the first **new** adaptive version of an unapproved script, check `content/creative-formats.json#storytellingPolicy`, `content/EPISODE_SCHEMA.md` and current Hook Lab rules. The advisory CLI `npm run content:storytelling-plan -- <episode-id>` reads a stored canonical plan without editing it; it may identify a candidate mid-lesson distinction but cannot prove narrative quality or invent Russian narration. An author can opt in by attaching the documented `episode.storytelling` metadata with verbatim real cues. Run the new validator tests and then `npm run check:consistency`.
 
 Do not retroactively annotate published/approved/voice-prepared reviews; any real narration edit still invalidates Gemini MP3, captions, rendered platform packages and approval. Keep CTA hydration after lesson planning. A source-only adaptive proposal is neither authorization for publication nor evidence of improved retention. The experiment's evidence gate remains the fixed-window Hook Lab / feedback policy.
 
