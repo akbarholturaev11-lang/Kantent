@@ -60,5 +60,15 @@ All cues must appear verbatim in the existing narration. A re-hook cannot refer 
 - Instagram/YouTube lesson and CTA version integrity remain intact; no TikTok publishing.
 - No automatic modification of `main`, existing voice assets, scheduled/published content, approvals or analytics history as a side effect of planning.
 
+## Implemented branch scope — expanded stages 2–4
+
+- **AI drafting bridge:** `storytelling-generator.mjs` and `storytelling-gemini.mjs`, two-pass explicitly opted-in text model; no writes to source and no rewriting Hook/Hanzi.
+- **AI critic and deterministic gates:** re-hook/payoff exact cue, 30% scene bound, no CTA, version hash, no approved/published edits, Chinese-character preservation, source receipts. Mandarin claims still require independent human source verification.
+- **Remotion-compatible visual mapping:** existing question and answer storyboard mood annotations for **opted-in unapproved** scripts; unchanged renderer and voice pipeline.
+- **Audio contract:** `storytelling-timing.mjs` checks real imported Gemini word-aligned cues; opt-in semantic render refuses missing/late/reversed payoffs.
+- **Attribution readiness:** optional verified `storytellingPattern` split in feedback analysis; lifetime and unattributed samples cannot establish winners.
+- **Demonstration/fixture:** 30 October price lesson tested in isolated V8 with mocked AI author/critic. This is NOT live Gemini, Node test suite, MP4 or evidence of engagement uplift.
+- **Remaining operational gates:** full Node/Remotion CI, paid text model request under explicit local credentials, editor approval of exact narration, genuine Gemini TTS and platform preview, verified 7d stats. No claim of 12 actual published pilot videos.
+
 ## Proposed cost envelope
 Pure Node.js planning/validation adds no per-episode LLM call, server, database or render. Authoring a changed narration later still requires new Gemini audio/timestamps, render and owner review. No quantitative reach/ROI claim is defensible until fixed-window comparable outcomes exist.
