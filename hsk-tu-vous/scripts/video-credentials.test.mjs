@@ -24,11 +24,11 @@ test("four Gemini slots remain ordered and duplicates never masquerade as spare 
   assert.throws(() => requireGeminiKeySlots({}), /Gemini credential/);
 });
 
-test("shared-project daily quota never enables automatic round-robin bypass", () => {
+test("Google API daily quota never enables account or project rotation", () => {
   assert.deepEqual(geminiRotationDecision({httpStatus:429}),
     {rotate:false,classification:"quota-exceeded"});
   assert.deepEqual(geminiRotationDecision({httpStatus:429,separateProjectsVerified:true}),
-    {rotate:true,classification:"quota-exceeded"});
+    {rotate:false,classification:"quota-exceeded"});
   assert.deepEqual(geminiRotationDecision({httpStatus:401}),
     {rotate:true,classification:"invalid-credential"});
   assert.deepEqual(geminiRotationDecision({httpStatus:403,reason:"API_KEY_REVOKED"}),
@@ -83,16 +83,8 @@ test("bounded Gemini fallback happens only on permitted failed standalone reques
   }),/HTTP 429/);
   assert.equal(invoked,1);
   assert.equal(quota.index,0);
-  const quotaApproved={slots:state.slots,index:0};
-  const prior=console.warn;console.warn=()=>{};
-  try{
-    const result=await withGeminiKeyFailover(quotaApproved,async(_,name)=>{
-      if(name==="GEMINI_API_KEY")throw new Error("Gemini request failed (HTTP 429)");
-      return "audio";
-    },{separateProjectsVerified:true});
-    assert.equal(result,"audio");
-    assert.equal(quotaApproved.index,1);
-  }finally{console.warn=prior;}
+  // Even a mistaken old on-switch must not permit quota circumvention.
+  assert.equal(geminiRotationDecision({httpStatus:429,separateProjectsVerified:true}).rotate,false);
   const bad={slots:state.slots,index:0};
   await assert.rejects(withGeminiKeyFailover(bad,async()=>{throw new Error("network failed");}),/network failed/);
   assert.equal(bad.index,0);
