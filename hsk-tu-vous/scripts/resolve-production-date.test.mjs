@@ -31,7 +31,7 @@ test("use the calendar timezone even when UTC is still the prior date", () => {
 
 test("does not silently return an older video after calendar ends", () => {
   assert.throws(
-    () => resolveTodayVideo(calendar, new Date("2026-11-01T00:00:00Z")),
+    () => resolveTodayVideo(calendar, new Date(calendar.items.map(item => item.date).sort().at(-1) + "T16:00:00Z")),
     /no upcoming planned video/i,
   );
 });
