@@ -71,3 +71,31 @@ Local tests from the hsk-tu-vous directory:
 - MP4 hash and ffprobe checks verify an encoded package, not educational or visual quality. Owner review is still compulsory.
 - Merging the feature does not authorize any social post. Keep the calendar reserve automation unchanged.
 - Running or repeating real production may incur Gemini/API and Actions costs.
+
+
+## Zernio upload, owner approval and posting (manual, no automatic posting)
+
+A separate GitHub Actions workflow now exists on this feature branch:
+.github/workflows/zernio-approved-publish.yml.
+
+It is ONLY launched by workflow_dispatch and ONLY by the repository owner akbarholturaev11-lang from main. It cannot run on push, cron, a passing CI job or routine scenario creation. The GitHub Environment hsk-zernio-publishing can optionally have required reviewers configured as an additional human gate.
+
+### Owner procedure after feature is merged and a real video was rendered
+
+1. Run Actions -> HSK AI video review automation -> Run workflow on main, select episode and language. Open the resulting review artifact, watch exact platform MP4, inspect audio, Mandarin, captions, graphics and CTA. Read manifest.json and post.md.
+2. The generated post.md has INTERNAL REVIEW-STATUS LABELS and must not be uploaded verbatim. Compose an accurate CLEAN final caption separately.
+3. Open Actions -> HSK AI Zernio owner-approved posting -> Run workflow. Enter the exact source review run ID, language, platform, target Account ID, exact sha256 and postSha256 from manifest, posting mode and approved_post_json. Add the exact mode-specific approval_confirmation.
+4. JSON for RU Instagram: {"content":"Узнайте разницу между 二 и 两. #HSKAI","shareToFeed":true}
+5. JSON for TG Instagram: {"content":"Фарқи 二 ва 两-ро омӯзед. #HSKAI","shareToFeed":true}
+6. JSON for RU YouTube: {"content":"Почему 二 и 两 не взаимозаменяемы? #Shorts","title":"二 vs 两 — HSK 1","visibility":"unlisted","madeForKids":false,"containsSyntheticMedia":true}
+7. For scheduled mode also supply a future Asia/Shanghai time in JSON, example "scheduledFor":"2026-11-01T18:30:00+08:00". It must be 20+ minutes in the future.
+8. Type one of these EXACT approval confirmations: SAVE_EXACT_VIDEO_AS_DRAFT, APPROVE_EXACT_VIDEO_AND_SCHEDULE or APPROVE_EXACT_VIDEO_AND_PUBLISH_NOW. This action itself is the explicit owner authorization of the selected MP4, final caption, account and mode.
+
+The workflow validates that the downloaded artifact came from a successful manual real review run on main and checks both SHA-256 hashes and account allowlist. It performs a read-only live Zernio GET /v1/accounts to verify the right target, then POST /v1/media/presign + unauthenticated PUT to its presigned Cloudflare upload URL, and POST /v1/posts with one stable Idempotency-Key and explicit draft/scheduled/now. It finally reads GET /v1/posts/{id} and saves an audit receipt artifact. GitHub does not announce a live publication without verified readback. No Tajik YouTube channel or routing exists.
+
+A draft stays unpublished. A scheduled post is not live until its scheduled time and later needs a fresh published readback. A partial/failed/ambiguous result requires owner investigation, not blind re-posting. Never equate a successful upload with a published video.
+
+The current review artifacts expire after 7 days. Zernio pre-signed uploads are created only after owner approval and are immediately followed by post creation. The repo is currently public, so review GitHub artifact access before using this flow for confidential videos. The workflow retains sanitized receipts 90 days and does not guarantee permanent exactly-once protection after Zernio's 24-hour idempotency window. Inspect existing posts/receipts before repeating manual dispatches.
+
+Offline/synthetic CI does not prove Zernio account permissions, live upload success or actual publication. No Zernio publication was authorized or executed as part of building these files.
+
