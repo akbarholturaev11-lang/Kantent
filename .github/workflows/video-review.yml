@@ -8,11 +8,17 @@ on:
       - .github/workflows/video-review.yml
       - hsk-tu-vous/scripts/github-video-pipeline.mjs
       - hsk-tu-vous/scripts/github-video-pipeline.test.mjs
+      - hsk-tu-vous/scripts/video-credentials.mjs
+      - hsk-tu-vous/scripts/video-credentials.test.mjs
+      - hsk-tu-vous/scripts/generate-voice-gemini.mjs
   pull_request:
     paths:
       - .github/workflows/video-review.yml
       - hsk-tu-vous/scripts/github-video-pipeline.mjs
       - hsk-tu-vous/scripts/github-video-pipeline.test.mjs
+      - hsk-tu-vous/scripts/video-credentials.mjs
+      - hsk-tu-vous/scripts/video-credentials.test.mjs
+      - hsk-tu-vous/scripts/generate-voice-gemini.mjs
       - hsk-tu-vous/docs/GITHUB_VIDEO_REVIEW.md
   workflow_dispatch:
     inputs:
@@ -63,6 +69,9 @@ jobs:
         run: |
           node --check scripts/github-video-pipeline.mjs
           node --check scripts/github-video-pipeline.test.mjs
+          node --check scripts/video-credentials.mjs
+          node --check scripts/video-credentials.test.mjs
+          node --check scripts/generate-voice-gemini.mjs
           npm run check:consistency
       - name: Install FFmpeg and FFprobe for real synthetic MP4 tests
         run: |
@@ -70,7 +79,7 @@ jobs:
           sudo apt-get install -y -qq ffmpeg
           ffprobe -version | head -n 1
       - name: Test exact-date safety, isolation and actual FFmpeg MP4/SRT verification
-        run: node --test scripts/github-video-pipeline.test.mjs
+        run: node --test scripts/github-video-pipeline.test.mjs scripts/video-credentials.test.mjs
 
   render-review:
     name: Gemini narration -> Remotion -> verified private review artifact
@@ -90,6 +99,12 @@ jobs:
     env:
       HSK_AI_ALLOW_GEMINI_API: "true"
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_API_KEY_BACKUP_1: ${{ secrets.GEMINI_API_KEY_BACKUP_1 }}
+      GEMINI_API_KEY_BACKUP_2: ${{ secrets.GEMINI_API_KEY_BACKUP_2 }}
+      GEMINI_API_KEY_BACKUP_3: ${{ secrets.GEMINI_API_KEY_BACKUP_3 }}
+      # Default OFF. Rate-limit rotation is not allowed without verified
+      # independently billed/isolated Google projects. Same-project keys share quota.
+      GEMINI_DISTINCT_PROJECTS_VERIFIED: ${{ vars.GEMINI_DISTINCT_PROJECTS_VERIFIED || 'false' }}
       REQUESTED_EPISODE: ${{ github.event.inputs.episode || 'today' }}
       REQUESTED_LANGUAGE: ${{ github.event.inputs.language || 'all' }}
       CI_PACKAGE_DIR: /tmp/hsk-ai-video-review
@@ -104,8 +119,8 @@ jobs:
           cache-dependency-path: hsk-tu-vous/package-lock.json
       - name: Check API secret without exposing it
         run: |
-          if [[ -z "$GEMINI_API_KEY" ]]; then
-            echo "::error::GEMINI_API_KEY is missing from repository Actions secrets."
+          if [[ -z "$GEMINI_API_KEY" && -z "$GEMINI_API_KEY_BACKUP_1" && -z "$GEMINI_API_KEY_BACKUP_2" && -z "$GEMINI_API_KEY_BACKUP_3" ]]; then
+            echo "::error::No Gemini API credential is configured in Actions secrets."
             exit 1
           fi
       - name: Install production dependencies
