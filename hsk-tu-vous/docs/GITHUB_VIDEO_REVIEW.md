@@ -32,6 +32,15 @@ The Gemini helper switches to another candidate only for certain credential reje
 
 The GitHub UI lists only secret names, not validity; branch/PR CI uses synthetic fake keys and must not consume real Gemini quota. Real API availability will require a separate owner-authorized production run after default-branch workflow activation.
 
+## Active language/social destinations (owner clarification)
+
+Only three **publishing destinations** are currently enabled:
+- RU / Instagram: Actions variable ZERNIO_RU_INSTAGRAM_ACCOUNT_ID (verified from connected Russian Zernio: 6a411e989d9472faae10a430)
+- RU / YouTube: Actions variable ZERNIO_RU_YOUTUBE_ACCOUNT_ID (verified from connected Russian Zernio: 6ac96e053f8f4ffc10b0655f)
+- TG / Instagram: Actions variable ZERNIO_TG_INSTAGRAM_ACCOUNT_ID (must be read from the separate Tajik Zernio API connection; not yet verified)
+
+The owner confirmed **there is currently no Tajik YouTube channel**. Do NOT create or require ZERNIO_TG_YOUTUBE_ACCOUNT_ID, do not substitute Russian YouTube for Tajik YouTube, and do not schedule Tajik YouTube posts. VIDEO_PLATFORM_TARGETS in video-credentials.mjs is the review-target allowlist; the review artifact packager requires both RU exports and only TG Instagram. zernioTargetAccount fails closed when a required configured account ID is missing or platform is disabled. The underlying existing content:make Remotion renderer currently still generates platform-specific YouTube exports per language internally; this isolated review adapter does not upload or expose TG YouTube and does not migrate that renderer. Avoid claiming rendering itself is single-platform without a separate renderer change. Future TG YouTube enablement needs owner instruction, a verified real Zernio account ID and corresponding regression tests.
+
 ## Protected audio for 26 October 二 / 两
 
 The owner-approved Tajik sample for er-vs-liang-cafe-20261026 has word-cue evidence and the flag audioMustNotBeRegeneratedForTranscription=true. The original MP3 and VTT are inside a Git-ignored review directory, not versioned in GitHub. The fresh GitHub runner therefore cannot recover them from the repository.
