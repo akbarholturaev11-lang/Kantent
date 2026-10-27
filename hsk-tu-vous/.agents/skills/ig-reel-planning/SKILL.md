@@ -21,7 +21,7 @@ description: HSK-specific Instagram Reel hook and editorial beat planning, befor
 
 ## Adaptive story option (future, unapproved scripts)
 
-After verifying one teachable HSK fact and checking the three hook proposals, inspect the relevant episode's existing narrative beats with \`npm run content:storytelling-plan -- <episode-id>\` when a canonical episode exists. Its re-hook hints are lexical, not semantic proof. If the lesson naturally has a second useful beginner problem after the first truthful answer, recommend a single re-hook and a later verbatim narrated payoff; otherwise prefer a direct explanation. Do not force a second open loop or hide the first answer. Follow the sole \`content/creative-formats.json#storytellingPolicy\` and \`content/EPISODE_SCHEMA.md\` for an optional metadata annotation, not an alternative Hook Lab. Never add a re-hook to voiced, approved or published artifacts.
+After verifying one teachable HSK fact and checking the three hook proposals, inspect the relevant episode's existing narrative beats with `npm run content:storytelling-plan -- <episode-id>` when a canonical episode exists. Its re-hook hints are lexical, not semantic proof. If the lesson naturally has a second useful beginner problem after the first truthful answer, recommend a single re-hook and a later verbatim narrated payoff; otherwise prefer a direct explanation. Do not force a second open loop or hide the first answer. Follow the sole `content/creative-formats.json#storytellingPolicy` and `content/EPISODE_SCHEMA.md` for an optional metadata annotation, not an alternative Hook Lab. Never add a re-hook to voiced, approved or published artifacts.
 
 
 ## Output
