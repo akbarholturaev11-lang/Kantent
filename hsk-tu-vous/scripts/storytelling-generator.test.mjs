@@ -86,7 +86,7 @@ test("agent brief is read-only and requires no Gemini text-model calls",()=>{
   const result=prepareAgentStorytellingBrief(e);
   assert.equal(result.status,"editorial-brief-for-codex-or-claude-code");
   assert.equal(result.brief.scenes.length,5);
-  assert.match(result.instructions.join(" "),/Gemini is reserved for voice TTS/);
+  assert.match(result.instructions.join(" "),/Gemini is reserved for approved TTS/);
   assert.equal(JSON.stringify(e),before);
 });
 
