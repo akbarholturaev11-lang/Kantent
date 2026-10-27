@@ -69,7 +69,7 @@ async function verifyAccount(token,target) {
   const accounts=data?.accounts;
   if(!Array.isArray(accounts))throw Error("Zernio did not return a valid social account list.");
   const entry=accounts.find(a=>(a._id??a.id)===target.accountId && a.platform===target.platform);
-  if(!entry || entry.isActive===false ||
+  if(!entry || (entry.isActive!==true && !["connected","active"].includes(entry.status??entry.platformStatus)) ||
       ["disconnected","needs_reconnection","error"].includes(entry.status??entry.platformStatus)) {
     throw Error("Zernio credential does not have an active connection to the exact approved language/platform account.");
   }
