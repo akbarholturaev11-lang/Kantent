@@ -17,6 +17,21 @@ This opt-in pipeline uses the existing Gemini + Remotion lesson renderer. It doe
 3. Keep both existing approved language voice profiles unchanged.
 4. After this feature is merged to default branch, open Actions → HSK AI video review automation → Run workflow. Enter episode ID er-vs-liang-cafe-20261026 and choose language ru for an initial independent test. Later use all after the protected Tajik audio issue is resolved; other input forms are today or exact YYYY-MM-DD.
 
+## Current GitHub Secrets: two distinct Zernio accounts, four Gemini candidates
+
+The current owner-provided repository secret names (never values) are:
+- GEMINI_API_KEY, GEMINI_API_KEY_BACKUP_1, GEMINI_API_KEY_BACKUP_2, GEMINI_API_KEY_BACKUP_3.
+- ZERNIO_API_KEY is the legacy **Russian Zernio** key. ZERNIO_TG_API_KEY is the separate **Tajik Zernio** key. No renaming is required.
+- Optional ZERNIO_RU_API_KEY takes precedence only if equal to the legacy credential. Conflicting RU keys block the routing helper; never silently mix accounts.
+- The new video-credentials module guarantees no RU-to-TG fallback and never displays credential contents.
+- Existing Zernio RU connector lists Instagram hskai.app and YouTube hskai_app; the **Tajik account IDs must be independently verified** from the actual Tajik Zernio connection before any target preview. Secret name alone does not establish the connected account.
+
+The review workflow consumes the four Gemini secret variables **only in the explicitly authorized render job**. It never consumes Zernio publishing credentials or initiates Zernio upload, draft, schedule or post. The preview's exact language, platform, account ID, CTA and video hash are still approval prerequisites.
+
+The Gemini helper switches to another candidate on certain credential rejection errors at **a standalone TTS or upload request boundary**, never after a successful voice take. HTTP 429 exhausted quota is **NOT automatically bypassed** with another key, since keys in the same Google project share quotas. The repository Actions **variable** GEMINI_DISTINCT_PROJECTS_VERIFIED (default false) may be set to true **only after** independent project ownership and quota isolation have actually been established. It then permits one bounded attempt on the next configured distinct-project credential at a failed standalone TTS or upload request. For transcription failures after a file has already been uploaded, the script retains its existing fail-closed matching-audio safeguards; it does not silently regenerate audio or invent timestamps. The helper does not turn quotas into unlimited usage.
+
+The GitHub UI lists only secret names, not validity; branch/PR CI uses synthetic fake keys and must not consume real Gemini quota. Real API availability will require a separate owner-authorized production run after default-branch workflow activation.
+
 ## Protected audio for 26 October 二 / 两
 
 The owner-approved Tajik sample for er-vs-liang-cafe-20261026 has word-cue evidence and the flag audioMustNotBeRegeneratedForTranscription=true. The original MP3 and VTT are inside a Git-ignored review directory, not versioned in GitHub. The fresh GitHub runner therefore cannot recover them from the repository.
