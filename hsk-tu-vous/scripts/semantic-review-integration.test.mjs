@@ -24,10 +24,29 @@ test("old lessons do not retroactively receive semantic metadata",async()=>{
   assert.equal(episode.semanticVisual,undefined);
   assert.ok(episode.scenes.some(s=>s.storyboard?.character==="student"));
 });
-test("retained semantic adviser proposes contextual pool from authored narration",async()=>{
+test("new narrated action plans are not silently converted into legacy semantic shots",async()=>{
   const raw=JSON.parse(await readFile(path.join(PROJECT_ROOT,"content/episodes/hui-vs-neng-pool-20261028.json"),"utf8"));
-  const episode=applySemanticReviewDraft(raw);
-  const hook=episode.scenes.find(s=>s.id==="hook");
+  assert.equal(raw.motionDesignStyle,"explain-actions-v1");
+  assert.ok(raw.scenes.every(scene=>scene.motionBeats.length>=2));
+  assert.equal(applySemanticReviewDraft(raw),raw,"the retained adviser must not mutate a new action-format source");
+  assert.equal(raw.scenes[0].semanticShot,undefined);
+});
+test("retained semantic adviser proposes the contextual pool for an eligible LEGACY draft",async()=>{
+  const raw=JSON.parse(await readFile(path.join(PROJECT_ROOT,"content/episodes/hui-vs-neng-pool-20261028.json"),"utf8"));
+  // Synthetic, source-only legacy representation: do not modify an active or voiced lesson.
+  const legacy=structuredClone(raw);
+  legacy.date="2026-10-23";
+  delete legacy.motionDesign;
+  delete legacy.motionDesignStyle;
+  delete legacy.storytelling;
+  legacy.scenes.forEach(scene=>{
+    delete scene.motionBeats;
+    scene.visualBeats=scene.cards.map(card=>({hero:card.hanzi,pinyin:card.pinyin,meaning:card.meaning,chinese:true,motion:"slide"}));
+  });
+  const original=JSON.stringify(legacy);
+  const episode=applySemanticReviewDraft(legacy);
+  assert.equal(JSON.stringify(legacy),original,"legacy advisor must preserve original source");
+  const hook=episode.scenes.find(scene=>scene.id==="hook");
   assert.equal(hook.semanticShot.environmentId,"pool");
   assert.equal(hook.semanticShot.actorIds.length,0);
   assert.equal(validateSemanticVisualEpisode(episode).length,0);
