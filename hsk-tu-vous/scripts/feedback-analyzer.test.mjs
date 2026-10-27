@@ -112,3 +112,19 @@ test('YouTube lifetime posts accept absent reach/skip fields without inventing d
  delete invalid.metrics.likes;
  assert.match(validateObservation(invalid).join(' '),/invalid metric likes/);
 });
+
+test("adaptive retention cohorts require verified pattern-to-episode attribution", () => {
+ const baseline=fixed({id:'17961571305238269',window:'7d'});
+ baseline.creativeFormatId='street-situation';
+ baseline.storytellingPattern='direct';
+ const adaptive=fixed({id:'17961571305238268',window:'7d'});
+ adaptive.creativeFormatId='street-situation';
+ adaptive.storytellingPattern='single-rehook';
+ assert.deepEqual(validateObservation(baseline),[]);
+ const report=analyzeObservations([baseline,adaptive],{minimumPostsPerFormat:3},{asOf});
+ assert.equal(report.comparableGroups.length,2);
+ const missing=structuredClone(baseline);missing.episodeId=null;
+ assert.match(validateObservation(missing).join(' '),/storytellingPattern/);
+ const fake=structuredClone(baseline);fake.storytellingPattern='8block-viral-magic';
+ assert.match(validateObservation(fake).join(' '),/storytellingPattern/);
+});
