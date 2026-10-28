@@ -67,7 +67,12 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ github.token }}
       ZERNIO_API_KEY: ${{ secrets.ZERNIO_API_KEY }}
+      ZERNIO_RU_API_KEY: ${{ secrets.ZERNIO_RU_API_KEY }}
       ZERNIO_TG_API_KEY: ${{ secrets.ZERNIO_TG_API_KEY }}
+      # The TikTok+Telegram and TikTok+Facebook Zernio connections have their
+      # OWN keys; RU/TJ primary credentials must never be used as substitutes.
+      ZERNIO_TIKTOK_TELEGRAM_API_KEY: ${{ secrets.ZERNIO_TIKTOK_TELEGRAM_API_KEY }}
+      ZERNIO_TIKTOK_FACEBOOK_API_KEY: ${{ secrets.ZERNIO_TIKTOK_FACEBOOK_API_KEY }}
       ZERNIO_RU_INSTAGRAM_ACCOUNT_ID: ${{ vars.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID }}
       ZERNIO_RU_YOUTUBE_ACCOUNT_ID: ${{ vars.ZERNIO_RU_YOUTUBE_ACCOUNT_ID }}
       ZERNIO_RU_TIKTOK_ACCOUNT_ID: ${{ vars.ZERNIO_RU_TIKTOK_ACCOUNT_ID }}
