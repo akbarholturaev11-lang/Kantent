@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "ownerInstructionDate": "2026-10-28",
-  "actor": "ChatGPT scheduled agent (planned tasks)",
+  "actor": "Single scheduled ChatGPT HSK AI product-news agent; 3-day Telegram+Instagram+Facebook distribution, NO VIDEO",
   "source": {
     "repository": "akbarholturaev11-lang/HSK-AI-Bot",
     "branch": "main",
@@ -141,14 +141,83 @@
       }
     },
     "noApprovalNeeded": true,
-    "publication": "Automatic after positive evidence; skip if no real update"
+    "publication": "Automatically publish verified news to Telegram TJ, Instagram RU, Instagram TJ and Facebook TJ as separate image+localized caption Feed posts. No stories/reels/video. No publication without independent media/account checks."
   },
   "safety": {
-    "deduplication": "Inspect Telegram published-post history for same source commits in last three days; don't repost",
+    "deduplication": "Check the prior 72h product-news fingerprint on EACH target independently; do not post duplicates or retry after ambiguous Zernio responses without remote readback.",
     "emptyWindow": "Skip; report no verified updates",
-    "missingPhotoOrAccount": "Do not post text-only, video or to another platform; report error and block",
-    "readback": "Confirm Zernio post has the exact Telegram account and published status; record URL and source SHA",
+    "missingPhotoOrAccount": "If no genuine image bytes, immutable public validated media URL or exact active connected social account for a target, skip that target and report blocker; never substitute a video or unrelated image.",
+    "readback": "Individually verify Zernio post status, target account, language, image URL and link for Telegram, Instagram RU, Instagram TJ and Facebook TJ; report per-account success/skip/failure.",
     "noSecretsInText": true,
     "publicationProof": "An enabled schedule is not proof of a published Telegram post; verify each actual Zernio post."
+  },
+  "socialNewsDistribution": {
+    "schemaVersion": 1,
+    "authorizedByOwnerOn": "2026-10-28",
+    "purpose": "Same verified HSK AI user-facing product news released in the previous 72h, as separate localized photo/feed updates across accounts. Extends Telegram-only auto-news authorization, NOT manual video publishing.",
+    "scheduleOwner": "Existing ChatGPT Scheduled Task 6ae1893b53a08191803177bea34d82b5. Do not create another agent or schedule, GitHub cron, or auto-video workflow.",
+    "postType": "photo-feed-post",
+    "perPostOwnerApprovalRequired": false,
+    "destinations": [
+      {
+        "id": "instagram-ru",
+        "platform": "instagram",
+        "languageCode": "ru",
+        "account": "@hskai.app",
+        "accountId": "6a411e989d9472faae10a430",
+        "credentialGroup": "ru-primary",
+        "connector": "Zernio_RU",
+        "content": "Concise accurate natural Russian caption and one original product-news image. Normal Instagram photo Feed post, NOT story/reel/video."
+      },
+      {
+        "id": "instagram-tg",
+        "platform": "instagram",
+        "languageCode": "tg",
+        "account": "@hskai.apptj",
+        "accountId": "6ae0f16205fd6f5357f8503d",
+        "credentialGroup": "tg-primary",
+        "connector": "Zernio",
+        "linkId": "link_6ae0f28880308191a999a34c05960945",
+        "content": "Concise accurate natural Tajik Cyrillic caption and one original product-news image. Normal Instagram photo Feed post, NOT story/reel/video."
+      },
+      {
+        "id": "facebook-tg",
+        "platform": "facebook",
+        "languageCode": "tg",
+        "account": "Akbarholturaev",
+        "accountId": "6ae161de384955d3b3ff194b",
+        "credentialGroup": "tiktok-facebook",
+        "connector": "Zernio",
+        "linkId": "link_6ae168dfda94819197ca6eabdaf72303",
+        "content": "One Tajik Cyrillic Facebook Page photo/Feed publication of the verified product update, separate from Instagram. NO Russian Facebook auto-publication."
+      }
+    ],
+    "existingTelegram": {
+      "account": "@aibotsakbar",
+      "accountId": "6ae1661bf80a20df8f31158e",
+      "languageCode": "tg",
+      "connectorGroup": "tiktok-telegram",
+      "note": "Keep all prior rules and automatic photo+caption publication exactly as before."
+    },
+    "videoPolicy": "No effect on existing RU/TJ video/CTA accounts, workflows, or owner-approval gates. No Instagram Reels, Facebook Reels, TikTok, YouTube, Stories, auto-DM, or Russian Facebook Zernio publishing.",
+    "copyPolicy": {
+      "evidence": "Read actual HSK-AI-Bot/main HEAD, last 72h commits/diffs and release/deploy evidence; mention only genuinely user-facing launched changes. If no verified news, skip all destinations.",
+      "languages": "Write independent Russian text for @hskai.app; independent Tajik Cyrillic text for @hskai.apptj, Facebook Akbarholturaev and Telegram @aibotsakbar; never translate hashtags or make up features.",
+      "formatting": "Brief human copy, one main news point or short fact-backed summary; no hype, no fake version claims. If platform requires caption, provide the caption separately from image."
+    },
+    "imagePolicy": {
+      "source": "One newly created 4:3 PNG/JPEG factual HSK AI editorial illustration may be shared across all photo/feed destinations only when completely text-free or language-neutral; if it includes readable language-specific text, independently create and validate the language-specific variants.",
+      "designReference": "Use existing output.image.designPolicy exactly: 1–2 dominant objects, no tiny repeated text, muted brand-aligned colors and minimal supporting elements.",
+      "hosting": "Use existing output.image.mediaHosting; genuine binary file in separate public GitHub media branch, immutable raw.githubusercontent.com commit SHA URL (not Adobe preview), verify HTTP 200, PNG/JPEG bytes, 4:3, and Zernio media validation for each target.",
+      "missingBytes": "If generated image bytes or valid HTTPS hosting cannot be obtained, DO NOT publish text-only or substitute unrelated assets; report blocker, do not invent public URL."
+    },
+    "deliveryPolicy": {
+      "preflight": "For each of four channels independently verify exact Zernio connection, account ID, username and active status; match canonical account map and correct language. Never use the RU API key for TJ and never route Facebook as RU.",
+      "validate": "Use each connection's Zernio media validation and content validation, and separately verify post type is Feed photo (not story/reel). Validate format before auto-post.",
+      "dedupe": "Inspect published and pending posts PER ACCOUNT for the same source product-news fingerprints/commit SHAs. A prior Telegram post must not block a yet-unpublished Instagram photo, and vice versa. NEVER blindly retry ambiguous results.",
+      "partialFailure": "Process target independently: one failure must not cause reposting to successful targets. Preserve receipts and report which channel succeeded, failed or skipped; retries only for unposted targets after fresh readback.",
+      "readback": "For every destination verify Zernio returned published status, exact platform and account ID, media image and post URL if available. Do not report success for scheduled/draft/publishing as though posted.",
+      "ownerApproval": "Owner explicitly authorized these factual static photo-news posts to the specified accounts without per-post approval. Video publishing remains manual and outside this task."
+    }
   }
 }
