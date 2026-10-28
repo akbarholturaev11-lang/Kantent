@@ -32,14 +32,57 @@ The Gemini helper switches to another candidate only for certain credential reje
 
 The GitHub UI lists only secret names, not validity; branch/PR CI uses synthetic fake keys and must not consume real Gemini quota. Real API availability will require a separate owner-authorized production run after default-branch workflow activation.
 
-## Active language/social destinations (owner clarification)
+## Verified Zernio platform-and-language routing (owner clarification 2026-10-28)
 
-Only three **publishing destinations** are currently enabled:
-- RU / Instagram: Actions variable ZERNIO_RU_INSTAGRAM_ACCOUNT_ID (verified from connected Russian Zernio: 6a411e989d9472faae10a430)
-- RU / YouTube: Actions variable ZERNIO_RU_YOUTUBE_ACCOUNT_ID (verified from connected Russian Zernio: 6ac96e053f8f4ffc10b0655f)
-- TG / Instagram: Actions variable ZERNIO_TG_INSTAGRAM_ACCOUNT_ID (must be read from the separate Tajik Zernio API connection; not yet verified)
+The canonical source of truth is `content/publication-destinations.json`.
+**RU/TJ denote the VIDEO LANGUAGE, not the account name, API connector name or login.**
+The six video destinations below were individually verified via four connected Zernio
+sessions on 2026-10-28. IDs are public identifiers, **not** keys or consent to post.
 
-The owner confirmed **there is currently no Tajik YouTube channel**. Do NOT create or require ZERNIO_TG_YOUTUBE_ACCOUNT_ID, do not substitute Russian YouTube for Tajik YouTube, and do not schedule Tajik YouTube posts. VIDEO_PLATFORM_TARGETS in video-credentials.mjs is the review-target allowlist; the review artifact packager requires both RU exports and only TG Instagram. zernioTargetAccount fails closed when a required configured account ID is missing or platform is disabled. The underlying existing content:make Remotion renderer currently still generates platform-specific YouTube exports per language internally; this isolated review adapter does not upload or expose TG YouTube and does not migrate that renderer. Avoid claiming rendering itself is single-platform without a separate renderer change. Future TG YouTube enablement needs owner instruction, a verified real Zernio account ID and corresponding regression tests.
+| Video language | Platform | Account | Zernio account ID | Actual Zernio connection |
+| --- | --- | --- | --- | --- |
+| RU | Instagram | @hskai.app | `6a411e989d9472faae10a430` | Russian Instagram+YouTube |
+| RU | YouTube | @hskai_app | `6ac96e053f8f4ffc10b0655f` | Russian Instagram+YouTube |
+| RU | TikTok | @hskai.app | `6ae16327a2845fbdb07e5ccb` | TikTok+Telegram |
+| TJ | Instagram | @hskai.apptj | `6ae0f16205fd6f5357f8503d` | Tajik Instagram+YouTube |
+| TJ | YouTube | @hskaiapp-tj | `6ae160123787e4c71b522d64` | Tajik Instagram+YouTube |
+| TJ | TikTok | @hskai.ru | `6ae16064ecf91092adba7d68` | TikTok+Facebook |
+
+**IMPORTANT:** RU TikTok and TJ Telegram share a Zernio connector/credential group.
+TJ TikTok and Facebook share a different connection. A video language never determines
+which connected Zernio API key owns the social account. The publishing code picks the
+connection **from the canonical target account** and makes a live Zernio GET account
+readback before any upload. A username or account ID mismatch must fail closed.
+
+Additional accounts:
+- **Facebook Akbarholturaev** `6ae161de384955d3b3ff194b`: connected but video language
+  was not chosen. **No automatic Facebook video publishing or inferred RU/TJ language.**
+- **Telegram @aibotsakbar** `6ae1661bf80a20df8f31158e`: **TJ text-only HSK AI product
+  updates every three days**, **NO videos**. Scheduled review of product update text
+  is separate from the video workflow; do not publish unsupported or invented news.
+
+Required Github Actions **encrypted secrets** (never expose values in files, logs or messages):
+- `ZERNIO_API_KEY`: RU Instagram + RU YouTube (existing).
+- `ZERNIO_TG_API_KEY`: TJ Instagram + TJ YouTube (existing, verify live).
+- `ZERNIO_TIKTOK_TELEGRAM_API_KEY`: RU TikTok + TJ Telegram (NEW).
+- `ZERNIO_TIKTOK_FACEBOOK_API_KEY`: TJ TikTok (NEW; Facebook auto-post disabled).
+
+Optional Actions Variables for the six accounts use
+`ZERNIO_RU_INSTAGRAM_ACCOUNT_ID`, `ZERNIO_RU_YOUTUBE_ACCOUNT_ID`,
+`ZERNIO_RU_TIKTOK_ACCOUNT_ID`, `ZERNIO_TG_INSTAGRAM_ACCOUNT_ID`,
+`ZERNIO_TG_YOUTUBE_ACCOUNT_ID`, `ZERNIO_TG_TIKTOK_ACCOUNT_ID`.
+Public IDs in the canonical map are sufficient for targeting; if the variables are
+set they MUST match the verified ID, otherwise the run fails before any upload.
+
+The standard Gemini/Remotion review adapter exports RU Instagram+YouTube and
+TJ Instagram+YouTube with distinct registered CTAs. TikTok has its own
+`content:tiktok:prepare` and `content:tiktok:render` review path; **do not**
+silently clone an Instagram video into a TikTok review artifact. Exact approved
+video, language-specific CTA, policy settings, hashtags, captions, account and
+publish time must be reverified per destination. The legacy README's claims
+that Tajik YouTube does not exist and only three platforms are connected
+are superseded by this verified map. All publication remains manual after owner
+review; just linking an account is never permission to upload a video.
 
 ## Protected audio for 26 October 二 / 两
 
