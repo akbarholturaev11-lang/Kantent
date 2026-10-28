@@ -9,6 +9,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Active global behavior and safety rules | `AI_RULES.md` |
 | Production procedure and error handling | `content/WORKFLOW.md` |
 | Default production languages, locale codes and per-language content roots | `content/languages.json` |
+| Social account-to-language routing, video destinations and non-video update channels | `content/publication-destinations.json` |
 | Dates, IDs, cadence, episode references | `content/calendar.json` |
 | Future publishing weekdays, consecutive series parts and autonomous draft reserve | `content/calendar.json#weeklySchedule`, `#seriesPolicy` and `#planningBuffer` |
 | Future planned episode buffer (minimum/target) | `content/calendar.json#planningBuffer` |

@@ -61,8 +61,8 @@ export function validatePlatformCtaConfig(lab) {
     }
     if (platform === "youtube" && item.publishingAuthorized !== true)
       errors.push("YouTube Shorts is an owner-authorized publication destination");
-    if (platform === "tiktok" && item.publishingAuthorized !== false)
-      errors.push("TikTok is not an authorized publication destination");
+    if (platform === "tiktok" && item.publishingAuthorized !== true)
+      errors.push("TikTok destination authorization must be explicit in its language CTA lab");
   }
   if (!isText(lab.offer?.canonicalRussian))
     errors.push("Canonical Instagram offer copy is missing");

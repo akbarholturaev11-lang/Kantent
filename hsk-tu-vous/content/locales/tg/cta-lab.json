@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 14,
+  "revision": 15,
   "languageCode": "tg-TJ",
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
@@ -1645,8 +1645,8 @@
   },
   "localization": {
     "source": "content/cta-lab.json",
-    "sourceHash": "bd2b0f337119f59c0edeb2cd5f2ee1f750934f6ce7a0b95fbad86133b288c588",
-    "authoredOn": "2026-10-26"
+    "sourceHash": "732de5c8211715d4f7c7a7d5176727a8ef13042df2d5a86f8c95411e18817990",
+    "authoredOn": "2026-10-28"
   },
   "platformVariants": {
     "instagram": {
@@ -1817,10 +1817,10 @@
     "tiktok": {
       "status": "pending-owner-configuration",
       "copySource": "platform",
-      "publishingAuthorized": false,
+      "publishingAuthorized": true,
       "canonicalRussian": "",
       "deliveryMode": "unconfigured",
-      "notes": "No Tajik TikTok route or publishing is configured."
+      "notes": "The owner-authorized Tajik TikTok destination is listed in content/publication-destinations.json. Tajik TikTok CTA copy/scene is still unconfigured; do not render or publish until it is approved."
     }
   }
 }

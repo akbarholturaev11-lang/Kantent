@@ -27,7 +27,7 @@ const manifest={schemaVersion:1,episodeId:"er-vs-liang-cafe-20261026",sourceComm
  }};
 test("exact owner draft approval creates an unpublished Zernio draft payload",()=>{
  const a=validateApprovedIntent(fields,env);
- assert.deepEqual(a.target,{language:"ru",platform:"instagram",accountId:env.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID,variable:"ZERNIO_RU_INSTAGRAM_ACCOUNT_ID"});
+ assert.deepEqual(a.target,{language:"ru",platform:"instagram",accountId:env.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID,variable:"ZERNIO_RU_INSTAGRAM_ACCOUNT_ID",expectedUsername:"@hskai.app"});
  const target=selectApprovedArtifact(manifest,a);
  assert.equal(target.videoRel,"ru/instagram/video.mp4");
  assert.equal(target.postRel,"ru/instagram/post.md");

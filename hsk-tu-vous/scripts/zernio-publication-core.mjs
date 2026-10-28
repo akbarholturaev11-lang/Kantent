@@ -4,7 +4,7 @@
  */
 import { createHash } from "node:crypto";
 import path from "node:path";
-import { enabledVideoPlatforms, zernioTargetAccount } from "./video-credentials.mjs";
+import { zernioTargetAccount } from "./video-credentials.mjs";
 
 const SHA256 = /^[0-9a-f]{64}$/;
 const ID = /^[a-f0-9]{24}$/;
@@ -21,15 +21,16 @@ export function validateApprovedIntent(raw, env = process.env, now = Date.now())
   if (!raw || typeof raw !== "object") throw Error("Missing publication approval intent.");
   const { runId, language, platform, mode, videoSha256, postSha256, confirmation } = raw;
   if (!INT.test(String(runId ?? ""))) throw Error("Review run_id must be a numeric GitHub Actions run ID.");
-  if (!enabledVideoPlatforms(language).includes(platform))
-    throw Error("This language/platform target is disabled.");
+  let target;
+  try { target = zernioTargetAccount(language, platform, env); }
+  catch (error) { throw Error("This language/platform target is disabled: " + error.message); }
   if (!["draft", "scheduled", "now"].includes(mode)) throw Error("Choose draft, scheduled or now.");
   if (confirmation !== APPROVAL_SENTENCES[mode])
     throw Error("Missing the exact mode-specific owner consent text.");
   if (!SHA256.test(videoSha256 ?? "") || !SHA256.test(postSha256 ?? ""))
     throw Error("Owner must supply exact 64-character video and post preview SHA-256 hashes.");
   const content = String(raw.content ?? "");
-  if (content !== content.trim() || !content || content.length > (platform === "instagram" ? 2200 : 5000) ||
+  if (content !== content.trim() || !content || content.length > (platform === "youtube" ? 5000 : 2200) ||
       /пакет готов к ручной проверке|баста барои баррасии дастӣ|package ready for manual review/iu.test(content)) {
     throw Error("Approved post caption is empty, contains internal review labels or exceeds target length.");
   }
@@ -42,7 +43,6 @@ export function validateApprovedIntent(raw, env = process.env, now = Date.now())
       throw Error("Scheduled timestamp must match Asia/Shanghai local time.");
   } else if (scheduledFor) throw Error("scheduledFor must be empty except for scheduled mode.");
 
-  const target = zernioTargetAccount(language, platform, env);
   const previewAccountId = String(raw.accountId ?? "");
   if (!ID.test(previewAccountId) || previewAccountId !== target.accountId)
     throw Error("Owner-approved account ID must exactly match this language/platform Actions variable.");
@@ -59,10 +59,30 @@ export function validateApprovedIntent(raw, env = process.env, now = Date.now())
     settings.madeForKids = String(raw.madeForKids) === "true";
     settings.containsSyntheticMedia = String(raw.containsSyntheticMedia) === "true";
     settings.categoryId = "27";
-  } else {
+  } else if (platform === "instagram") {
     if (!["true", "false"].includes(String(raw.shareToFeed)))
       throw Error("Instagram shareToFeed setting must be explicit.");
     settings.shareToFeed = String(raw.shareToFeed) === "true";
+  } else {
+    const tiktok = raw.tiktokSettings;
+    const privacyLevels = ["PUBLIC_TO_EVERYONE", "MUTUAL_FOLLOW_FRIENDS", "FOLLOWER_OF_CREATOR", "SELF_ONLY"];
+    const commercialContentTypes = ["none", "brand_organic", "brand_content"];
+    if (!tiktok || typeof tiktok !== "object" || Array.isArray(tiktok))
+      throw Error("TikTok preview must include explicit tiktokSettings.");
+    const expectedKeys = ["privacy_level", "allow_comment", "allow_duet", "allow_stitch",
+      "content_preview_confirmed", "express_consent_given", "video_made_with_ai", "commercialContentType"];
+    if (Object.keys(tiktok).some((key) => !expectedKeys.includes(key)) ||
+        expectedKeys.some((key) => !Object.hasOwn(tiktok, key)))
+      throw Error("TikTok settings must contain only the complete approved settings set.");
+    if (!privacyLevels.includes(tiktok.privacy_level))
+      throw Error("TikTok privacy_level must be one of the supported creator visibility values.");
+    for (const key of ["allow_comment", "allow_duet", "allow_stitch", "video_made_with_ai"])
+      if (typeof tiktok[key] !== "boolean") throw Error("TikTok " + key + " must be explicitly true or false.");
+    if (tiktok.content_preview_confirmed !== true || tiktok.express_consent_given !== true)
+      throw Error("TikTok requires explicit content preview confirmation and express consent.");
+    if (!commercialContentTypes.includes(tiktok.commercialContentType))
+      throw Error("TikTok commercialContentType must be explicitly none, brand_organic or brand_content.");
+    settings.tiktokSettings = structuredClone(tiktok);
   }
   return { runId: String(runId), language, platform, mode, target, content, settings,
     videoSha256, postSha256, scheduledFor,
@@ -101,9 +121,10 @@ export function publicationBody(approval, publicUrl) {
     mediaItems: [{type:"video",url:publicUrl}],
     platforms: [{
       platform: approval.platform, accountId: approval.target.accountId,
-      platformSpecificData: approval.settings,
+      ...(approval.platform === "tiktok" ? {} : { platformSpecificData: approval.settings }),
     }],
   };
+  if (approval.platform === "tiktok") body.tiktokSettings = approval.settings.tiktokSettings;
   if (approval.mode === "draft") body.isDraft = true;
   else if (approval.mode === "now") body.publishNow = true;
   else { body.scheduledFor = approval.scheduledFor; body.timezone = "Asia/Shanghai"; }
@@ -144,7 +165,7 @@ export function parseZernioPostReply(value, approval) {
 }
 
 export function artifactAbsolutePath(root, relative) {
-  const allowed = /^[a-z]{2}\/(?:instagram|youtube)\/(?:video\.mp4|post\.md|captions\.srt)$/;
+  const allowed = /^[a-z]{2}\/(?:instagram|youtube|tiktok)\/(?:video\.mp4|post\.md|captions\.srt)$/;
   if (!allowed.test(relative)) throw Error("Unexpected artifact path");
   const resolved=path.resolve(root,relative);
   if (!resolved.startsWith(path.resolve(root)+path.sep))throw Error("Artifact escaped its root");

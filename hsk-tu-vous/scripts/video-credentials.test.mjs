@@ -91,7 +91,7 @@ test("bounded Gemini fallback happens only on permitted failed standalone reques
   assert.equal(bad.index,0);
 });
 
-test("disabled Tajik YouTube is never inferred from Russian credentials or optional account IDs", () => {
+test("owner-authorized social destinations stay mapped to the correct language and account", () => {
   assert.deepEqual(enabledVideoPlatforms("ru"), ["instagram", "youtube"]);
   assert.deepEqual(enabledVideoPlatforms("tg"), ["instagram"]);
   assert.throws(() => enabledVideoPlatforms("zh"));
@@ -101,11 +101,20 @@ test("disabled Tajik YouTube is never inferred from Russian credentials or optio
     ZERNIO_TG_INSTAGRAM_ACCOUNT_ID: "6ab31e989d9472faae10a4af",
   };
   assert.equal(zernioTargetAccount("ru", "youtube", env).accountId, env.ZERNIO_RU_YOUTUBE_ACCOUNT_ID);
+  assert.equal(zernioTargetAccount("ru", "youtube", env).expectedUsername, "@hskai_app");
   assert.equal(zernioTargetAccount("tg", "instagram", env).accountId, env.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID);
-  assert.throws(() => zernioTargetAccount("tg", "youtube", env), /not enabled/);
-  assert.throws(() => zernioTargetAccount("tg", "youtube", {
+  assert.equal(zernioTargetAccount("tg", "instagram", env).expectedUsername, "@hskai.apptj");
+  assert.throws(() => zernioTargetAccount("tg", "youtube", env), /Missing\/invalid ZERNIO_TG_YOUTUBE_ACCOUNT_ID/);
+  const mapped = zernioTargetAccount("tg", "youtube", {
     ...env,ZERNIO_TG_YOUTUBE_ACCOUNT_ID:"6ac96e053f8f4ffc10b0655f"
-  }),/not enabled/);
+  });
+  assert.equal(mapped.expectedUsername, "@hskaiapp-tj");
+  assert.equal(zernioTargetAccount("ru", "tiktok", {
+    ZERNIO_RU_TIKTOK_ACCOUNT_ID:"6ac96e053f8f4ffc10b0655f"
+  }).expectedUsername, "@hskai.app");
+  assert.equal(zernioTargetAccount("tg", "tiktok", {
+    ZERNIO_TG_TIKTOK_ACCOUNT_ID:"6ac96e053f8f4ffc10b0655f"
+  }).expectedUsername, "@hskai.ru");
   assert.throws(() => zernioTargetAccount("tg", "instagram",{
     ZERNIO_RU_INSTAGRAM_ACCOUNT_ID:env.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID
   }),/Missing\/invalid ZERNIO_TG_INSTAGRAM_ACCOUNT_ID/);

@@ -36,11 +36,11 @@ test("three platform entries expose safe CTA states", () => {
   const tiktok = getPlatformCtaStatus(lab, "tiktok");
   assert.equal(tiktok.status, "approved");
   assert.equal(tiktok.readyForDraft, true, "Owner-approved manual-DM CTA may be previewed locally");
-  assert.equal(tiktok.readyForRendering, false, "TikTok must never enter automatic shared-platform rendering");
+  assert.equal(tiktok.readyForRendering, true, "Owner authorization permits a language-specific TikTok CTA render");
   assert.equal(tiktok.copy, lab.platformVariants.tiktok.canonicalRussian);
   assert.equal(tiktok.deliveryMode, "manual-dm");
   assert.deepEqual(tiktok.missing, []);
-  assert.equal(tiktok.publishingAuthorized, false);
+  assert.equal(tiktok.publishingAuthorized, true);
   const youtube = getPlatformCtaStatus(lab, "youtube");
   assert.equal(youtube.status, "approved");
   assert.equal(youtube.readyForDraft, true);
@@ -60,7 +60,7 @@ test("Instagram CTA copy is centrally read from offer and not duplicated", () =>
   assert.notEqual(retained, baseEpisode);
 });
 
-test("approved TikTok preview uses its own spoken CTA, resets stale audio and cannot authorize publishing", () => {
+test("approved TikTok preview uses its own spoken CTA and remains behind the exact publication gate", () => {
   const draft = preparePlatformCtaDraft(baseEpisode, lab, "tiktok");
   assert.equal(draft.ctaPlatform, "tiktok");
   assert.equal(draft.cta, lab.platformVariants.tiktok.canonicalRussian);
@@ -71,7 +71,7 @@ test("approved TikTok preview uses its own spoken CTA, resets stale audio and ca
   assert.equal(draft.captionSource, "pending-gemini-generation");
   assert.equal(draft.ctaExperiment, undefined, "TikTok requires a distinct CTA version");
   assert.equal(draft.publishingStatus, "pending-owner-review");
-  assert.equal(getPlatformCtaStatus(lab, "tiktok").publishingAuthorized, false);
+  assert.equal(getPlatformCtaStatus(lab, "tiktok").publishingAuthorized, true);
   assert.equal(baseEpisode.cta, lab.offer.canonicalRussian, "Source remains unchanged");
 });
 

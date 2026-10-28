@@ -84,4 +84,4 @@ await writeJson(path.join(folder, "status.json"), {
 });
 console.log(`TikTok review draft prepared: ${episodePath}`);
 console.log(`CTA registration: ${registration.id} (CTA Lab revision ${savedLab.revision}).`);
-console.log(`Local review only; TikTok publishing authorized: ${status.publishingAuthorized}.`);
+console.log(`TikTok destination authorization: ${status.publishingAuthorized}; exact video/post preview approval is still required before publishing.`);

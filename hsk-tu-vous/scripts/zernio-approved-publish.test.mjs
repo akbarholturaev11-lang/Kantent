@@ -21,7 +21,7 @@ test("owner-approved draft runs presign -> auth-free PUT -> one post -> status r
     const dir=path.join(temp,"source");
     const itemDir=path.join(dir,"ru","instagram");
     await fs.mkdir(itemDir,{recursive:true});
-    const fakeVideo=Buffer.alloc(12000,7),postText="Reviewed proposed post\n";
+    const fakeVideo=Buffer.alloc(12000,7),postText="Reviewed proposed post\n\nТема: Example lesson\nПлатформа: instagram\nСтатус: package ready for manual review HSK AI\n";
     const videoHash=createHash("sha256").update(fakeVideo).digest("hex");
     const postHash=createHash("sha256").update(postText).digest("hex");
     await fs.writeFile(path.join(itemDir,"video.mp4"),fakeVideo);
@@ -62,7 +62,7 @@ test("owner-approved draft runs presign -> auth-free PUT -> one post -> status r
       APPROVED_RUN_ID:"40552075736",APPROVED_LANGUAGE:"ru",APPROVED_PLATFORM:"instagram",
       APPROVED_MODE:"draft",APPROVED_ACCOUNT_ID:ID,
       APPROVED_VIDEO_SHA256:videoHash,APPROVED_POST_SHA256:postHash,
-      APPROVED_POST_JSON:'{"content":"二 vs 两 — учебный ролик #HSKAI","shareToFeed":true}',
+      APPROVED_POST_JSON:'{"content":"Reviewed proposed post","shareToFeed":true}',
       APPROVAL_CONFIRMATION:"SAVE_EXACT_VIDEO_AS_DRAFT",
       PUBLICATION_RECEIPT_DIR:path.join(temp,"receipt"),
     };

@@ -59,7 +59,7 @@ All cues must appear verbatim in the existing narration. A re-hook cannot refer 
 ## Acceptance
 - `npm run check:consistency`, project tests, `npm run lint`, new planner tests and render smoke (when used) pass or each pre-existing unrelated failure is clearly attributed.
 - Read-only commands leave canonical files byte-identical.
-- Instagram/YouTube lesson and CTA version integrity remain intact; no TikTok publishing.
+- Instagram/YouTube lesson and CTA version integrity remain intact. TikTok publishing uses the owner-authorized account/language map and separate exact-preview gate; this storytelling plan does not create TikTok packages or publish.
 - No automatic modification of `main`, existing voice assets, scheduled/published content, approvals or analytics history as a side effect of planning.
 
 ## Current implementation scope

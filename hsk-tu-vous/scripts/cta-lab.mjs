@@ -436,7 +436,7 @@ export function validateCtaEpisode(
     "Text checks do not prove visual/audio sync. Review each active owner correction against the actual narration and rendered frames.",
   );
   warnings.push(episode.ctaPlatform === "tiktok"
-    ? "TikTok's manual-DM CTA does not prove a DM was sent or verify the download link; TikTok publishing is not authorized."
+    ? "TikTok's manual-DM CTA does not prove a DM was sent or verify the download link; publishing is limited to the language-matched account in content/publication-destinations.json and requires exact-preview approval."
     : "The CTA directs viewers to the profile link and website; text checks do not verify current site availability or actual downloads.");
   return {
     valid: errors.length === 0,

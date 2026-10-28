@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "videoDestinations": {
+    "ru": {
+      "language": "Russian",
+      "platforms": {
+        "instagram": { "account": "@hskai.app", "ownerAuthorized": true },
+        "youtube": { "account": "@hskai_app", "ownerAuthorized": true },
+        "tiktok": { "account": "@hskai.app", "ownerAuthorized": true }
+      }
+    },
+    "tg": {
+      "language": "Tajik",
+      "platforms": {
+        "instagram": { "account": "@hskai.apptj", "ownerAuthorized": true },
+        "youtube": { "account": "@hskaiapp-tj", "ownerAuthorized": true },
+        "tiktok": { "account": "@hskai.ru", "ownerAuthorized": true }
+      }
+    }
+  },
+  "otherDestinations": {
+    "facebook": {
+      "account": "Akbarholturaev",
+      "language": null,
+      "videoPublishingAuthorized": false,
+      "note": "Language routing was not specified; do not infer RU or TJ."
+    },
+    "telegram": {
+      "account": "@aibotsakbar",
+      "language": "tg",
+      "purpose": "HSK AI product updates",
+      "cadenceDays": 3,
+      "videoPublishingAuthorized": false,
+      "delivery": "text updates only; exact update preview and current connection are required before sending"
+    }
+  },
+  "routingGuard": "Never substitute an account from another language or platform. Verify the exact connected account with the live Zernio connection before any upload or scheduling."
+}

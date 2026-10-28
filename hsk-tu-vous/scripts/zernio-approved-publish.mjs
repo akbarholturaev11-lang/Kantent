@@ -24,7 +24,7 @@ function requestEnv(env) {
   if (!details || typeof details !== "object" || Array.isArray(details))
     throw Error("approved_post_json must be one JSON object.");
   if (Object.keys(details).some(key => !["content","title","visibility","madeForKids",
-    "containsSyntheticMedia","shareToFeed","scheduledFor"].includes(key)))
+    "containsSyntheticMedia","shareToFeed","tiktokSettings","scheduledFor"].includes(key)))
     throw Error("approved_post_json has unsupported fields.");
   return {
     runId: env.APPROVED_RUN_ID, language: env.APPROVED_LANGUAGE,
@@ -35,6 +35,7 @@ function requestEnv(env) {
     madeForKids: details.madeForKids,
     containsSyntheticMedia: details.containsSyntheticMedia,
     shareToFeed: details.shareToFeed,
+    tiktokSettings: details.tiktokSettings,
     scheduledFor: details.scheduledFor ?? "", accountId: env.APPROVED_ACCOUNT_ID,
   };
 }
@@ -64,6 +65,19 @@ async function verifyReviewOrigin(runId, expectedCommit, token) {
   return {sourceRunId:Number(runId),sourceCommit:data.head_sha,sourceUrl:data.html_url};
 }
 
+function normalizeUsername(value) {
+  return String(value ?? "").trim().replace(/^@+/, "").toLocaleLowerCase("en-US");
+}
+
+function exactCaptionFromPostPreview(postBytes) {
+  const preview=postBytes.toString("utf8");
+  const metadataStart=/\n\n(?:Тема|Мавзӯъ):/u.exec(preview);
+  if(!metadataStart)throw Error("Post preview is missing its internal topic marker; refuse to guess the public caption.");
+  const caption=preview.slice(0,metadataStart.index);
+  if(!caption || caption!==caption.trim())throw Error("Post preview has an empty or malformed public caption.");
+  return caption;
+}
+
 async function verifyAccount(token,target) {
   const {data}=await jsonRequest(API_ROOT+"/accounts?platform="+encodeURIComponent(target.platform),{token});
   const accounts=data?.accounts;
@@ -73,7 +87,33 @@ async function verifyAccount(token,target) {
       ["disconnected","needs_reconnection","error"].includes(entry.status??entry.platformStatus)) {
     throw Error("Zernio credential does not have an active connection to the exact approved language/platform account.");
   }
+  if(normalizeUsername(entry.username)!==normalizeUsername(target.expectedUsername))
+    throw Error("Connected Zernio username does not match the canonical language/platform account map; refuse cross-language posting.");
   return {accountId:target.accountId,username:entry.username??null};
+}
+
+async function verifyTikTokCreatorSettings(token, target, settings) {
+  const {data}=await jsonRequest(API_ROOT+"/accounts/"+encodeURIComponent(target.accountId)+"/tiktok/creator-info?mediaType=video",{token});
+  if(!Array.isArray(data?.privacyLevels) || !data?.postingLimits?.interactionSettings ||
+      !Array.isArray(data?.commercialContentTypes))
+    throw Error("TikTok creator info is incomplete; refuse upload until the current creator settings can be verified.");
+  if(!data.privacyLevels.some(level=>level?.value===settings.privacy_level))
+    throw Error("Approved TikTok privacy level is not currently allowed for this creator account.");
+  for(const key of ["allow_comment","allow_duet","allow_stitch"]) {
+    const capability=data.postingLimits.interactionSettings[key];
+    if(!capability || typeof capability.enabled!=="boolean" || typeof settings[key]!=="boolean")
+      throw Error("TikTok creator info is missing the current "+key+" capability.");
+    if(settings[key]===true && capability.enabled!==true)
+      throw Error("Approved TikTok "+key+" setting is not currently allowed for this creator account.");
+  }
+  if(!data.commercialContentTypes.some(type=>type?.value===settings.commercialContentType))
+    throw Error("Approved TikTok commercial disclosure is not currently allowed for this creator account.");
+  return {
+    privacyLevel:settings.privacy_level,
+    interactionSettings:Object.fromEntries(["allow_comment","allow_duet","allow_stitch"]
+      .map(key=>[key,settings[key]])),
+    commercialContentType:settings.commercialContentType,
+  };
 }
 
 async function uploadExactVideo(token,video,episodeId,language,platform) {
@@ -113,10 +153,15 @@ export async function executeApprovedPublication(root,env=process.env) {
   const postHash=createHash("sha256").update(postBytes).digest("hex");
   if(videoHash!==approval.videoSha256 || postHash!==approval.postSha256)
     throw Error("Owner hash mismatch after downloading GitHub artifact; stop before network or uploading.");
+  if(exactCaptionFromPostPreview(postBytes)!==approval.content)
+    throw Error("Approved caption does not exactly match the public caption in the downloaded post preview.");
   if(videoBytes.length<8000)throw Error("Missing real MP4.");
   const origin=await verifyReviewOrigin(approval.runId,manifest.sourceCommit,env.GITHUB_TOKEN);
   const zernio=zernioRoute(approval.language,env);
   const account=await verifyAccount(zernio.secret,{...approval.target,platform:approval.platform});
+  const verifiedTikTokSettings=approval.platform==="tiktok"
+    ? await verifyTikTokCreatorSettings(zernio.secret,approval.target,approval.settings.tiktokSettings)
+    : null;
   const idempotencyKey=deterministicPostKey(manifest,approval);
   const safeReceipt={
     episodeId:manifest.episodeId, sourceRunId:origin.sourceRunId,
@@ -125,6 +170,7 @@ export async function executeApprovedPublication(root,env=process.env) {
     connectedUsername:account.username,videoSha256:approval.videoSha256,
     postPreviewSha256:approval.postSha256,
     approvedCaptionSha256:createHash("sha256").update(approval.content).digest("hex"),
+    ...(verifiedTikTokSettings?{verifiedTikTokSettings}:{}),
     approvedMode:approval.mode,approvedSchedule:approval.scheduledFor||null,
     approvalConfirmed:approval.ownerExplicitlyConfirmed,
     idempotencyKey,

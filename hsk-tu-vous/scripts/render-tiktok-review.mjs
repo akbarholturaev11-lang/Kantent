@@ -39,8 +39,8 @@ const visualSystem = await readJson(path.join(PROJECT_ROOT, "content", "visual-s
 validateLessonPresentation(episode, visualSystem.lessonPresentation);
 const lab = await readCtaLab();
 const platformCta = getPlatformCtaStatus(lab, "tiktok");
-if (!platformCta.readyForDraft || platformCta.publishingAuthorized) {
-  throw new Error("TikTok CTA review-only configuration is not valid.");
+if (!platformCta.readyForDraft || !platformCta.publishingAuthorized) {
+  throw new Error("TikTok CTA or owner destination authorization is not ready.");
 }
 const ctaValidation = validateCtaEpisode(episode, lab);
 if (!ctaValidation.valid) {
@@ -124,7 +124,7 @@ await fs.writeFile(
 const hashtags = (episode.hashtags ?? []).join(" ");
 await fs.writeFile(
   path.join(folder, "post.md"),
-  `${episode.caption || episode.title}\n\n${hashtags}\n\n${episode.cta}\n\nТема: ${episode.title}\nПлатформа: TikTok\nСтатус: только локальная проверка; публикация не разрешена\n`,
+  `${episode.caption || episode.title}\n\n${hashtags}\n\n${episode.cta}\n\nТема: ${episode.title}\nПлатформа: TikTok\nСтатус: только локальная проверка; точное одобрение публикации ещё не дано\n`,
   "utf8",
 );
 await fs.rm(propsPath, { force: true });
@@ -146,4 +146,4 @@ await writeJson(path.join(folder, "status.json"), {
 });
 console.log(`TikTok video tayyor, faqat ko‘rib chiqish uchun: ${videoPath}`);
 console.log(`CTA: ${episode.ctaExperiment.id}; davomiylik: ${(totalFrames / 30).toFixed(2)} s.`);
-console.log("TikTok nashr qilinmadi; ruxsat berilmagan.");
+console.log("TikTok nashr qilinmadi; aniq video, post, sozlamalar va vaqt hali tasdiqlanmagan.");

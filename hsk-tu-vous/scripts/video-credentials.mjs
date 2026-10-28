@@ -1,3 +1,9 @@
+import fs from "node:fs";
+
+const PUBLICATION_DESTINATIONS = JSON.parse(
+  fs.readFileSync(new URL("../content/publication-destinations.json", import.meta.url), "utf8"),
+);
+
 /**
  * GitHub video production secret-name registry.
  * Never echo secret values. No API requests, video rendering or publication here.
@@ -84,11 +90,7 @@ export async function withGeminiKeyFailover(state, operation) {
   }
 }
 
-/**
- * Enabled social destinations are intentionally asymmetric until the owner
- * connects a Tajik YouTube channel. Never infer that a missing account ID
- * may be substituted with the Russian YouTube channel.
- */
+/** Automatic review exports currently supported by the standard renderer. */
 export const VIDEO_PLATFORM_TARGETS = Object.freeze({
   ru: Object.freeze(["instagram", "youtube"]),
   tg: Object.freeze(["instagram"]),
@@ -101,15 +103,15 @@ export function enabledVideoPlatforms(language) {
 }
 
 export function zernioTargetAccount(language, platform, env = process.env) {
-  if (!enabledVideoPlatforms(language).includes(platform)) {
-    throw Error("Zernio " + language + "/" + platform + " is not enabled or has no connected destination.");
-  }
+  const destination = PUBLICATION_DESTINATIONS.videoDestinations?.[language]?.platforms?.[platform];
+  if (!destination || destination.ownerAuthorized !== true || typeof destination.account !== "string")
+    throw Error("Zernio " + language + "/" + platform + " is not an owner-authorized video destination.");
   const variable = "ZERNIO_" + language.toUpperCase() + "_" + platform.toUpperCase() + "_ACCOUNT_ID";
   const accountId = typeof env[variable] === "string" ? env[variable].trim() : "";
   if (!/^[a-f0-9]{24}$/.test(accountId)) {
     throw Error("Missing/invalid " + variable + " Actions variable; never guess an account or cross language.");
   }
-  return { language, platform, accountId, variable };
+  return { language, platform, accountId, variable, expectedUsername: destination.account };
 }
 
 export function zernioRoute(language, env = process.env) {
