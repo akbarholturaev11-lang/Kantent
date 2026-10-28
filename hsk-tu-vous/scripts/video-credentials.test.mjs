@@ -47,9 +47,9 @@ test("Russian and Tajik Zernio credentials never cross-map", () => {
   );
   assert.equal(zernioRoute("ru",env).secret,"ru-only-fake");
   assert.equal(zernioRoute("tg",env).secret,"tg-only-fake");
-  assert.throws(()=>zernioRoute("ru",{ZERNIO_TG_API_KEY:"tg"}),/Zernio ru/);
-  assert.throws(()=>zernioRoute("tg",{ZERNIO_API_KEY:"ru"}),/Zernio tg/);
-  assert.throws(()=>zernioRoute("en",env),/Unsupported/);
+  assert.throws(()=>zernioRoute("ru",{ZERNIO_TG_API_KEY:"tg"}),/No Zernio API key for ru-primary/);
+  assert.throws(()=>zernioRoute("tg",{ZERNIO_API_KEY:"ru"}),/No Zernio API key for tg-primary/);
+  assert.throws(()=>zernioRoute("en",env),/not an owner-authorized/);
   assert.throws(()=>zernioRoute("ru",{ZERNIO_API_KEY:"a",ZERNIO_RU_API_KEY:"b"}),/conflicting/);
   assert.equal(zernioRoute("ru",{ZERNIO_API_KEY:"a",ZERNIO_RU_API_KEY:"a"}).secretName,"ZERNIO_RU_API_KEY");
   assert.doesNotMatch(JSON.stringify(credentialReadiness(env)),/only-fake/);
