@@ -16,9 +16,12 @@ export const GEMINI_SECRET_NAMES = Object.freeze([
 ]);
 
 export const ZERNIO_SECRET_NAMES = Object.freeze({
-  ru: ["ZERNIO_RU_API_KEY", "ZERNIO_API_KEY"],
-  tg: ["ZERNIO_TG_API_KEY"],
+  "ru-primary": ["ZERNIO_RU_API_KEY", "ZERNIO_API_KEY"],
+  "tg-primary": ["ZERNIO_TG_API_KEY"],
+  "tiktok-telegram": ["ZERNIO_TIKTOK_TELEGRAM_API_KEY"],
+  "tiktok-facebook": ["ZERNIO_TIKTOK_FACEBOOK_API_KEY"],
 });
+export const SOCIAL_CONNECTION_GROUPS = Object.freeze(Object.keys(ZERNIO_SECRET_NAMES));
 
 export function geminiKeySlots(env = process.env) {
   const seen = new Set();
@@ -110,25 +113,51 @@ export function zernioTargetAccount(language, platform, env = process.env) {
   const destination = PUBLICATION_DESTINATIONS.videoDestinations?.[language]?.platforms?.[platform];
   if (!destination || destination.ownerAuthorized !== true || typeof destination.account !== "string")
     throw Error("Zernio " + language + "/" + platform + " is not an owner-authorized video destination.");
+  const verified = destination.verifiedAccountId;
+  const credentialGroup = destination.credentialGroup;
+  if (!/^[a-f0-9]{24}$/.test(verified ?? "") || !ZERNIO_SECRET_NAMES[credentialGroup])
+    throw Error("No verified Zernio account ID/credential group for " + language + "/" + platform);
   const variable = "ZERNIO_" + language.toUpperCase() + "_" + platform.toUpperCase() + "_ACCOUNT_ID";
-  const accountId = typeof env[variable] === "string" ? env[variable].trim() : "";
-  if (!/^[a-f0-9]{24}$/.test(accountId)) {
-    throw Error("Missing/invalid " + variable + " Actions variable; never guess an account or cross language.");
-  }
-  return { language, platform, accountId, variable, expectedUsername: destination.account };
+  const configured = typeof env[variable] === "string" ? env[variable].trim() : "";
+  // Public account IDs (not API secrets) are bound to the owner's canonical map.
+  // An Actions Variable may override only if it exactly matches the verified ID.
+  if (configured && configured !== verified)
+    throw Error(variable + " conflicts with the verified owner account map; refuse cross-language posting.");
+  return { language, platform, accountId: verified, variable, expectedUsername: destination.account,
+    credentialGroup };
 }
 
-export function zernioRoute(language, env = process.env) {
-  if (language !== "ru" && language !== "tg") throw Error("Unsupported Zernio content language: " + language);
-  const names = ZERNIO_SECRET_NAMES[language];
+/** This chooses the actual Zernio connection, NOT the language label alone.
+ * RU TikTok and TG Telegram are in one connection. TG TikTok and Facebook
+ * are in another connection. Neither key may silently fall back to RU/TG primary.
+ */
+export function zernioRoute(language, env = process.env, platform = "instagram") {
+  const destination = zernioTargetAccount(language, platform, env);
+  const group = destination.credentialGroup;
+  const names = ZERNIO_SECRET_NAMES[group];
   const matching = names.filter((name) => typeof env[name] === "string" && env[name].trim());
-  // Do not silently prefer conflicting legacy/new RU credentials.
   if (matching.length > 1 && env[matching[0]].trim() !== env[matching[1]].trim()) {
-    throw Error("Zernio RU: conflicting legacy and named credentials; fix mapping before posting.");
+    throw Error("Zernio " + group + ": conflicting legacy and named credentials; fix mapping before posting.");
   }
   const keyName = matching[0];
-  if (!keyName) throw Error("No Zernio " + language + " API key; never route to another language's account.");
-  return { language, secretName: keyName, secret: env[keyName].trim() };
+  if (!keyName) throw Error("No Zernio API key for " + group + "; never use another Zernio connection.");
+  return { language, platform, group, secretName: keyName, secret: env[keyName].trim() };
+}
+
+export function telegramNewsRoute(env = process.env) {
+  const telegram = PUBLICATION_DESTINATIONS.otherDestinations?.telegram;
+  if (telegram?.language !== "tg" || telegram?.videoPublishingAuthorized !== false ||
+      telegram?.cadenceDays !== 3 || !/^[a-f0-9]{24}$/.test(telegram?.verifiedAccountId ?? "") ||
+      telegram?.credentialGroup !== "tiktok-telegram" || telegram?.account !== "@aibotsakbar")
+    throw Error("Telegram TJ text-news route differs from owner's canonical rules.");
+  const variable = "ZERNIO_TG_TELEGRAM_ACCOUNT_ID";
+  const configured = typeof env[variable] === "string" ? env[variable].trim() : "";
+  if (configured && configured !== telegram.verifiedAccountId)
+    throw Error("Telegram account ID conflicts with verified route.");
+  const secretName = ZERNIO_SECRET_NAMES["tiktok-telegram"].find(name => env[name]?.trim());
+  if (!secretName) throw Error("Missing TikTok/Telegram Zernio connection key.");
+  return {accountId:telegram.verifiedAccountId,expectedUsername:"aibotsakbar",
+    platform:"telegram",language:"tg",group:"tiktok-telegram",secretName,secret:env[secretName].trim()};
 }
 
 export function credentialReadiness(env = process.env) {
@@ -137,8 +166,10 @@ export function credentialReadiness(env = process.env) {
     geminiKeyNames: names,
     geminiBackupCount: Math.max(0, names.length - 1),
     zernio: {
-      ru: ZERNIO_SECRET_NAMES.ru.filter(n => Boolean(env[n])).map(n => n),
-      tg: ZERNIO_SECRET_NAMES.tg.filter(n => Boolean(env[n])).map(n => n),
+      ru: ZERNIO_SECRET_NAMES["ru-primary"].filter(n => Boolean(env[n])),
+      tg: ZERNIO_SECRET_NAMES["tg-primary"].filter(n => Boolean(env[n])),
+      groups: Object.fromEntries(Object.entries(ZERNIO_SECRET_NAMES)
+        .map(([group,keys])=>[group,keys.filter(name=>Boolean(env[name]))])),
     },
     includesSecretValues: false,
   };
