@@ -60,16 +60,9 @@ const result = await prepareLanguagePackages(languages, async (language) => {
     episode.captionSource === "gemini-word-timestamps" &&
     episode.captions?.length;
   const runStage = (script) => {
-    // Optional explicit restoration of a SAME-EPISODE generated Gemini take.
-    // Only the voice generator accepts --resume and validates its identity,
-    // saved narration hash, voice profile, language and original audio.
-    const folder = script === "generate-voice-gemini.mjs"
-      ? process.env["HSK_AI_GEMINI_RESUME_FOLDER_" + language.toUpperCase()]
-      : undefined;
     const result = spawnSync(
       process.execPath,
-      [path.join(PROJECT_ROOT, "scripts", script), item.id,
-        ...(folder ? ["--resume", folder] : [])],
+      [path.join(PROJECT_ROOT, "scripts", script), item.id],
       { cwd: PROJECT_ROOT, stdio: "inherit", env: languageEnvironment(language) },
     );
     if (result.error) throw result.error;
