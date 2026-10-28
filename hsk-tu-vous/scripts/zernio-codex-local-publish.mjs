@@ -29,6 +29,12 @@ const OWNER = "akbarholturaev11-lang";
 const REPOSITORY = "akbarholturaev11-lang/Kantent";
 const WORKFLOW_PATH = ".github/workflows/zernio-codex-local-publish.yml";
 
+function responseAccountId(value) {
+  if (typeof value === "string") return value;
+  if (value && typeof value === "object") return String(value._id ?? value.id ?? "");
+  return "";
+}
+
 function actionGuard(env = process.env) {
   if (env.GITHUB_EVENT_NAME !== "workflow_dispatch" || env.GITHUB_REPOSITORY !== REPOSITORY ||
       env.GITHUB_REF !== "refs/heads/main" || env.GITHUB_ACTOR !== OWNER)
@@ -191,7 +197,8 @@ async function reconcileExistingPost(env = process.env) {
     const post = data?.post ?? data;
     const platforms = Array.isArray(post?.platforms) ? post.platforms : [];
     const entry = platforms.find(item => item?.platform === platform) ?? null;
-    const targetVerified = platforms.length === 1 && entry?.accountId === target.accountId;
+    const observedAccountId = responseAccountId(entry?.accountId);
+    const targetVerified = platforms.length === 1 && observedAccountId === target.accountId;
     const status = entry?.status ?? post?.status ?? "unknown";
     receipt = {
       sourceType: "codex-local-reconcile",
@@ -201,7 +208,7 @@ async function reconcileExistingPost(env = process.env) {
       accountId: target.accountId,
       connectedUsername: account.username,
       observedPlatform: entry?.platform ?? null,
-      observedAccountId: entry?.accountId ?? null,
+      observedAccountId: observedAccountId || null,
       targetVerified,
       state: status,
       platformPostUrl: entry?.platformPostUrl ?? entry?.publishedUrl ?? null,
@@ -299,7 +306,7 @@ async function publishLocalUpload(ticketRoot, env = process.env) {
     readbackPost = readback.data?.post ?? readback.data;
     const platforms = Array.isArray(readbackPost?.platforms) ? readbackPost.platforms : [];
     const entry = platforms.find(item => item?.platform === approval.platform) ?? null;
-    if (platforms.length !== 1 || entry?.accountId !== approval.target.accountId)
+    if (platforms.length !== 1 || responseAccountId(entry?.accountId) !== approval.target.accountId)
       throw Error("Zernio GET readback did not prove the exact target account; do not retry or repost.");
     readbackStatus = entry?.status ?? readbackPost?.status ?? "unknown";
     const expectedStatus = approval.mode === "draft" ? "draft"

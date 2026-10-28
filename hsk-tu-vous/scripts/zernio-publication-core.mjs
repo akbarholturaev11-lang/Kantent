@@ -152,10 +152,14 @@ export function safeSignedUploadUrl(url) {
 export function parseZernioPostReply(value, approval) {
   const post = value?.post;
   const id = post?._id ?? post?.id;
+  const reportedAccountId = post?.platforms?.[0]?.accountId;
+  const accountId = typeof reportedAccountId === "string" ? reportedAccountId
+    : reportedAccountId && typeof reportedAccountId === "object"
+      ? String(reportedAccountId._id ?? reportedAccountId.id ?? "") : "";
   if (!ID.test(id ?? "")) throw Error("Zernio create response did not return a real post ID. Check Zernio before retrying.");
   if (!Array.isArray(post.platforms) || post.platforms.length !== 1 ||
       post.platforms[0].platform !== approval.platform ||
-      post.platforms[0].accountId !== approval.target.accountId)
+      accountId !== approval.target.accountId)
     throw Error("Zernio response did not confirm the exact target account; manual investigation required.");
   if (approval.mode === "draft" && post.status !== "draft") throw Error("Zernio did not confirm draft-only status.");
   if (approval.mode === "scheduled" && !["scheduled","pending_approval"].includes(post.status))
