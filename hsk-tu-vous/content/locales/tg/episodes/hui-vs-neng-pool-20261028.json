@@ -1694,6 +1694,199 @@
             }
           },
           "explains": "Муқоисаи намоёни маҳорат ва имкони ҳозира."
+        },
+        {
+          "id": "contrast-action-4",
+          "kind": "graphic",
+          "cueText": "能",
+          "cueOccurrence": 1,
+          "visual": {
+            "title": "Ҳавз имрӯз баста аст.",
+            "hanzi": "我今天不能游泳。",
+            "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+            "meaning": "Имконият дар ин шароит маҳдуд аст.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "left-pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 58,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "left-pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 183,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "left-pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 173,
+                    "y1": 171,
+                    "x2": 240,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "second",
+                  "type": "rect",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 346,
+                    "y": 142,
+                    "width": 214,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "closed-a",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 360,
+                    "y1": 145,
+                    "x2": 545,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "closed-b",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 540,
+                    "y1": 145,
+                    "x2": 360,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "right-pool-condition-focus",
+                  "type": "rect",
+                  "parentId": "stage",
+                  "opacity": 0,
+                  "attrs": {
+                    "x": 336,
+                    "y": 132,
+                    "width": 234,
+                    "height": 140,
+                    "rx": 20,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "right-pool-condition-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 240,
+                      "value": 1
+                    },
+                    {
+                      "atMs": 720,
+                      "value": 0.82
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Ҳангоми шунидани 能 диққат аз маҳорати шинокунӣ ба имконияти ҳозира мегузарад; ҳавзи баста шароитро нишон медиҳад."
         }
       ],
       "cards": [
