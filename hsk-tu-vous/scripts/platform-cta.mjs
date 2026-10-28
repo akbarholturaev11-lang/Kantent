@@ -74,6 +74,12 @@ export function getPlatformCtaStatus(lab, platform) {
   const variant = lab.platformVariants[platform];
   const text = variant.copySource === "offer"
     ? lab.offer.canonicalRussian : variant.canonicalRussian;
+  const ctaLabPath = lab.languageCode === "tg-TJ"
+    ? "content/locales/tg/cta-lab.json"
+    : "content/cta-lab.json";
+  const copySourcePath = variant.copySource === "offer"
+    ? "offer.canonicalRussian"
+    : `platformVariants.${platform}.canonicalRussian`;
   const template = variant.sceneTemplate ?? variant;
   const missing = [];
   if (variant.status !== "approved") missing.push("owner approval of platform CTA");
@@ -91,8 +97,7 @@ export function getPlatformCtaStatus(lab, platform) {
     status: variant.status,
     readyForDraft: missing.length === 0,
     readyForRendering: missing.length === 0 && variant.publishingAuthorized === true,
-    copySource: variant.copySource === "offer" ? "content/cta-lab.json#offer.canonicalRussian"
-      : `content/cta-lab.json#platformVariants.${platform}.canonicalRussian`,
+    copySource: `${ctaLabPath}#${copySourcePath}`,
     copy: missing.length === 0 ? text : null,
     deliveryMode: variant.deliveryMode,
     requiresVoiceAndWordCues: true,

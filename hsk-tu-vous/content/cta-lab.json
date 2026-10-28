@@ -245,6 +245,40 @@
       ],
       "effect": "mandatory-owner-policy",
       "performanceEvidence": "not-a-performance-result"
+    },
+    {
+      "id": "cta-correction-0015",
+      "ruleVersion": "cta-policy-v15",
+      "createdAt": "2026-10-28T05:11:47.170Z",
+      "source": "owner-correction",
+      "ownerWording": "Tojik tilidagi TikTok masalasi hal bo‘ldimi? Unga rus tilidagi CTA tarjimasini ishlatish mumkin.",
+      "rule": "TikTok is an owner-authorized video destination only for the exact language-matched account in content/publication-destinations.json. Before publishing, verify the live Zernio account and current creator settings, then obtain approval of the exact language-specific video, caption, settings and time. Keep the approved manual link fulfillment; do not automate DMs or simulate sent messages, verified links or completed downloads. Carry forward the single central CTA stage, one HSK AI wordmark at a time, no moving focus marker, quiet brand background and complete phrase-onset cue timing. Telegram remains text-update-only.",
+      "scope": {
+        "type": "series"
+      },
+      "supersedes": [
+        "cta-correction-0012",
+        "cta-correction-0013"
+      ],
+      "effect": "mandatory-owner-policy",
+      "performanceEvidence": "not-a-performance-result"
+    },
+    {
+      "id": "cta-correction-0016",
+      "ruleVersion": "cta-policy-v16",
+      "createdAt": "2026-10-28T05:11:47.171Z",
+      "source": "owner-correction",
+      "ownerWording": "Tojik tilidagi TikTok uchun rus tilidagi CTA tarjimasini ishlatish mumkin; ruscha matnning o‘zini TJ videoga qo‘yma.",
+      "rule": "For the tiktok-manual-dm format, always load spoken CTA text, voice and word cues from the selected language’s own CTA Lab. Russian videos use the approved Russian CTA; Tajik videos use its approved Tajik translation from content/locales/tg/cta-lab.json. Never put Russian CTA speech, subtitles or cues into a Tajik video. Retain the owner’s manual HSK/link fulfillment and the no-automated-DM/no-fake-send rules. Use the exact language-matched TikTok account and require live account verification plus owner approval of the exact final video, caption, creator settings and time before posting.",
+      "scope": {
+        "type": "format",
+        "formatId": "tiktok-manual-dm"
+      },
+      "supersedes": [
+        "cta-correction-0014"
+      ],
+      "effect": "mandatory-owner-policy",
+      "performanceEvidence": "not-a-performance-result"
     }
   ],
   "experiments": [

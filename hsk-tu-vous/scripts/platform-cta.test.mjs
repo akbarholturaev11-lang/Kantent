@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readCtaLab } from "./cta-lab.mjs";
+import { getActiveCtaCorrections, readCtaLab } from "./cta-lab.mjs";
+import { withLanguage } from "./language-context.mjs";
 import {
   CTA_PLATFORMS,
   getPlatformCtaStatus,
@@ -53,6 +54,30 @@ test("four video platform entries expose safe CTA states", () => {
   assert.equal(facebook.readyForRendering, true);
   assert.equal(facebook.copy, lab.offer.canonicalRussian);
   assert.equal(facebook.publishingAuthorized, true);
+});
+
+test("Tajik TikTok uses only its translated CTA source and the current rule chain", async () => {
+  const tajikLab = await withLanguage("tg", () => readCtaLab());
+  const state = getPlatformCtaStatus(tajikLab, "tiktok");
+  assert.equal(
+    state.copy,
+    "HSK AI-ро санҷ. Ба профили ман даро ва дар паёми хусусӣ «HSK» навис — ман пайванди боргирии HSK AI-ро дастӣ мефиристам.",
+  );
+  assert.notEqual(state.copy, getPlatformCtaStatus(lab, "tiktok").copy);
+  assert.equal(
+    state.copySource,
+    "content/locales/tg/cta-lab.json#platformVariants.tiktok.canonicalRussian",
+  );
+  assert.equal(state.readyForRendering, true);
+  const activeIds = new Set(
+    getActiveCtaCorrections(lab, { formatId: "tiktok-manual-dm" })
+      .map(({ id }) => id),
+  );
+  assert.equal(activeIds.has("cta-correction-0012"), false);
+  assert.equal(activeIds.has("cta-correction-0013"), false);
+  assert.equal(activeIds.has("cta-correction-0014"), false);
+  assert.equal(activeIds.has("cta-correction-0015"), true);
+  assert.equal(activeIds.has("cta-correction-0016"), true);
 });
 
 test("Instagram CTA copy is centrally read from offer and not duplicated", () => {
