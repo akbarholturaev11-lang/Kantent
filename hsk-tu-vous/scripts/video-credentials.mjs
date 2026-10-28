@@ -93,11 +93,15 @@ export async function withGeminiKeyFailover(state, operation) {
   }
 }
 
-/** Automatic review exports currently supported by the standard renderer. */
-export const VIDEO_PLATFORM_TARGETS = Object.freeze({
-  ru: Object.freeze(["instagram", "youtube"]),
-  tg: Object.freeze(["instagram", "youtube"]),
-});
+/** Review targets are derived from the canonical language/account map. */
+export const VIDEO_PLATFORM_TARGETS = Object.freeze(Object.fromEntries(
+  Object.entries(PUBLICATION_DESTINATIONS.videoDestinations ?? {}).map(([language, route]) => [
+    language,
+    Object.freeze(Object.entries(route.platforms ?? {})
+      .filter(([, destination]) => destination.ownerAuthorized === true)
+      .map(([platform]) => platform)),
+  ]),
+));
 
 export function enabledVideoPlatforms(language) {
   const platforms = VIDEO_PLATFORM_TARGETS[language];
@@ -162,8 +166,10 @@ export function credentialReadiness(env = process.env) {
     geminiKeyNames: names,
     geminiBackupCount: Math.max(0, names.length - 1),
     zernio: {
+      ru: ZERNIO_SECRET_NAMES["ru-primary"].filter(n => Boolean(env[n])),
+      tg: ZERNIO_SECRET_NAMES["tg-primary"].filter(n => Boolean(env[n])),
       groups: Object.fromEntries(Object.entries(ZERNIO_SECRET_NAMES)
-        .map(([group, keys]) => [group, keys.filter(name => Boolean(env[name]))])),
+        .map(([group,keys])=>[group,keys.filter(name=>Boolean(env[name]))])),
     },
     includesSecretValues: false,
   };

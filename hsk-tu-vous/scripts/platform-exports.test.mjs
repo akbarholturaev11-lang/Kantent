@@ -83,12 +83,12 @@ test("platform exports cannot share narration or lesson frames across languages"
   assert.throws(()=>assertSharedLesson(base,variant),/Platform CTA changed shared narration/);
 });
 
-test("both platform exports preserve one lesson, speech and cues; only the approved CTA ending changes", async () => {
+test("shared-voice platform exports preserve one lesson and add distinct registered CTA endings", async () => {
   const { base, lab } = await fixture();
   const before = JSON.stringify({ base, lab });
   const { episodes, registrations } = prepareExportEpisodes(base, lab);
-  assert.deepEqual(Object.keys(episodes), ["instagram", "youtube"]);
-  assert.equal(registrations.length, 1);
+  assert.deepEqual(Object.keys(episodes), ["instagram", "youtube", "facebook"]);
+  assert.equal(registrations.length, 2);
   assert.deepEqual(
     episodes.youtube.scenes.slice(0, -1),
     base.scenes.slice(0, -1),
@@ -96,6 +96,10 @@ test("both platform exports preserve one lesson, speech and cues; only the appro
   assert.equal(episodes.youtube.audioSrc, base.audioSrc);
   assert.equal(episodes.youtube.voiceTextHash, base.voiceTextHash);
   assert.deepEqual(episodes.youtube.captions, base.captions);
+  assert.equal(episodes.facebook.audioSrc, base.audioSrc);
+  assert.equal(episodes.facebook.voiceTextHash, base.voiceTextHash);
+  assert.deepEqual(episodes.facebook.captions, base.captions);
+  assert.ok(episodes.facebook.scenes.at(-1).visualBeats.every((beat) => !beat.screenImage));
   assert.equal(
     episodes.youtube.scenes.at(-1).visualBeats[1].screenImage,
     "cta/youtube-telegram-profile.jpg",
@@ -150,7 +154,7 @@ test("automatic derivation rejects new rules, changed CTA speech and a non-final
   assert.throws(() => sharedRenderRanges(reordered), /final CTA/);
 });
 
-test("render workflow draws one lesson, two CTA ranges and a continuous mix; mux copies identical lesson frames", async () => {
+test("render workflow draws one lesson, three shared-voice CTA endings and one continuous mix", async () => {
   const { base, lab } = await fixture();
   const { episodes } = prepareExportEpisodes(base, lab);
   const expectedRanges = sharedRenderRanges(base);
@@ -164,6 +168,7 @@ test("render workflow draws one lesson, two CTA ranges and a continuous mix; mux
       outputs: {
         instagram: path.join(folder, "ig.mp4"),
         youtube: path.join(folder, "yt.mp4"),
+        facebook: path.join(folder, "fb.mp4"),
       },
       workDir: path.join(folder, "work"),
       execute: (args) => {
@@ -189,19 +194,19 @@ test("render workflow draws one lesson, two CTA ranges and a continuous mix; mux
       log: () => {},
     });
     const renders = commands.filter((args) => args[0] === "render");
-    assert.equal(renders.length, 4);
+    assert.equal(renders.length, 5);
     assert.equal(
       renders.filter((args) => args.includes(ranges.body.join("-"))).length,
       1,
     );
     assert.equal(
       renders.filter((args) => args.includes(ranges.ending.join("-"))).length,
-      2,
+      3,
     );
-    assert.equal(renders.filter((args) => args.includes("--muted")).length, 3);
+    assert.equal(renders.filter((args) => args.includes("--muted")).length, 4);
     assert.equal(renders.filter((args) => args.includes("aac")).length, 1);
     const muxes = commands.filter((args) => args[0] === "ffmpeg");
-    assert.equal(muxes.length, 2);
+    assert.equal(muxes.length, 3);
     assert.ok(
       muxes.every((args) => args.includes("copy") && args.includes("1:a:0")),
     );
@@ -246,7 +251,7 @@ test("preview and publishing bind YouTube to its exact export, registration and 
   try {
     await assert.rejects(
       requirePlatformPackage(base, status, "youtube", { lab }),
-      /YouTube export is missing/,
+      /youtube export is missing/,
     );
     for (const [platform, episode] of Object.entries(episodes)) {
       const files = platformPackagePaths(id, platform);
@@ -393,7 +398,7 @@ test("approval CLI rejects a missing YouTube export and archives each selected p
     await writeJson(path.join(review, "status.json"), status);
     const missing = approve();
     assert.notEqual(missing.status, 0);
-    assert.match(missing.stderr, /YouTube export is missing/);
+    assert.match(missing.stderr, /youtube export is missing/);
     await assert.rejects(fs.access(path.join(review, "approval.json")), {
       code: "ENOENT",
     });

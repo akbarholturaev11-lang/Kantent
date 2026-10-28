@@ -21,6 +21,13 @@
           "ownerAuthorized": true,
           "verifiedAccountId": "6ae16327a2845fbdb07e5ccb",
           "credentialGroup": "tiktok-telegram"
+        },
+        "facebook": {
+          "account": "Akbarholturaev",
+          "ownerAuthorized": true,
+          "sharedLanguageAccount": true,
+          "verifiedAccountId": "6ae161de384955d3b3ff194b",
+          "credentialGroup": "tiktok-facebook"
         }
       }
     },
@@ -44,19 +51,18 @@
           "ownerAuthorized": true,
           "verifiedAccountId": "6ae16064ecf91092adba7d68",
           "credentialGroup": "tiktok-facebook"
+        },
+        "facebook": {
+          "account": "Akbarholturaev",
+          "ownerAuthorized": true,
+          "sharedLanguageAccount": true,
+          "verifiedAccountId": "6ae161de384955d3b3ff194b",
+          "credentialGroup": "tiktok-facebook"
         }
       }
     }
   },
   "otherDestinations": {
-    "facebook": {
-      "account": "Akbarholturaev",
-      "language": null,
-      "videoPublishingAuthorized": false,
-      "note": "Language routing was not specified; do not infer RU or TJ.",
-      "verifiedAccountId": "6ae161de384955d3b3ff194b",
-      "credentialGroup": "tiktok-facebook"
-    },
     "telegram": {
       "account": "@aibotsakbar",
       "language": "tg",
@@ -72,6 +78,6 @@
       "publisher": "ChatGPT Planned Agent"
     }
   },
-  "routingGuard": "Content language is bound to exact platform + verified account ID and live username; RU/TG refer to video language, not connector/credential ownership. Facebook needs explicit language choice and video permission. Telegram is Tajik product news text + 4:3 image every three days, never video. Never auto-post or cross-route from a review job.",
+  "routingGuard": "RU is Russian video, TJ is Tajik video: TikTok @hskai.ru is TJ regardless of handle. All eight main-authorized video language/platform routes preserve their connected account, CTA, platform settings and exact owner preview gate. Facebook is the same bilingual page with separate RU/TJ packages. Verify exact account ID, username and credential group for each upload. Telegram @aibotsakbar is TJ news text with 4:3 image via a separate scheduled agent, never video. Never publish social videos automatically.",
   "verifiedBy": "Live connected Zernio accounts across four distinct Zernio connections on 2026-10-28; readback before every external action."
 }

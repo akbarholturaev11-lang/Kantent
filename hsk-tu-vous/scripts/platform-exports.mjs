@@ -12,6 +12,12 @@ import {
   preparePlatformCtaDraft,
 } from "./platform-cta.mjs";
 import { APPROVED_PUBLICATION_PLATFORMS } from "./publication-policy.mjs";
+
+// These destinations reuse the lesson's spoken CTA. TikTok has a separate
+// spoken manual-DM CTA and is rendered by its dedicated voice workflow.
+const SHARED_VOICE_PLATFORMS = Object.freeze([
+  "instagram", "youtube", "facebook",
+]);
 import {
   episodeContentHash,
   narrationHash,
@@ -85,8 +91,10 @@ export function prepareExportEpisodes(base, lab) {
   sharedRenderRanges(base);
   const registrations = [];
   const episodes = {};
-  for (const platform of APPROVED_PUBLICATION_PLATFORMS) {
-    if (!getPlatformCtaStatus(lab, platform).readyForRendering)
+  for (const platform of SHARED_VOICE_PLATFORMS) {
+    const platformStatus = getPlatformCtaStatus(lab, platform);
+    if (!platformStatus.publishingAuthorized) continue;
+    if (!platformStatus.readyForRendering)
       throw new Error(`${platform} CTA is not approved for rendering.`);
     const episode = preparePlatformCtaDraft(base, lab, platform);
     assertSharedLesson(base, episode);
@@ -169,7 +177,7 @@ export async function requirePlatformPackage(
   // authorize YouTube using an Instagram file.
   if (!stored && platform !== "instagram")
     throw new Error(
-      "YouTube export is missing. Render the shared platform packages first.",
+      `${platform} export is missing. Render the required platform package first.`,
     );
   const paths = platformPackagePaths(base.id, platform);
   const episode =
@@ -186,7 +194,7 @@ export async function requirePlatformPackage(
       throw new Error(
         `${platform} export no longer matches the current lesson/CTA. Render again.`,
       );
-    assertSharedLesson(base, episode);
+    if (platform !== "tiktok") assertSharedLesson(base, episode);
   }
   const validation = validateCtaEpisode(episode, lab);
   if (!validation.valid)

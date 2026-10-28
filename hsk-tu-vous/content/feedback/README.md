@@ -13,7 +13,7 @@ This directory is reserved for **raw, sourced** Zernio observations and agent de
 
 ## First-phase scope
 
-Implemented: read-only buffer audit, validated source-stamped Instagram and YouTube Zernio snapshots (including 2026-10-26), and a deterministic local analyzer. These are historical observations, not a guarantee that the provider's current connection or 24h/7d coverage is available.
+Implemented: read-only buffer audit, validated source-stamped historical Instagram and YouTube Zernio snapshots (including 2026-10-26), and a deterministic local analyzer that accepts real data from authorized Instagram, YouTube, TikTok and Facebook video destinations. No Telegram video analytics are collected because Telegram is text-update-only. Historical snapshots remain limited to the platforms and evidence they actually contain; this does not guarantee that the provider's current connection or 24h/7d coverage is available.
 
 - `observations/*.json` holds source-stamped immutable collections. Run `npm run content:feedback` or `npm run content:feedback -- --json` to review.
 - A snapshot uses `window: "lifetime"` unless actual post-age 24h, 72h or 7d provider-fixed metrics are available with `source.windowEvidence: {kind:"provider-exact-post-age", window, startAt, endAt, providerRecordId}` and a genuinely exact-period endpoint. `analytics_get_analytics`, `analytics_get_daily_metrics`, and `analytics_get_post_timeline` do not alone certify that window. The validator rejects fixed-day labels without this evidence; post age alone is not proof. Lifetime counts of posts of different ages are not comparable controlled experiments.

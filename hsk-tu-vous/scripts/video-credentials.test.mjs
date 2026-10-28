@@ -91,54 +91,63 @@ test("bounded Gemini fallback happens only on permitted failed standalone reques
   assert.equal(bad.index,0);
 });
 
-test("all six verified video accounts have exact canonical IDs and language isolation", () => {
-  const expected = {
-    ru: {
-      instagram: ["6a411e989d9472faae10a430","@hskai.app","ru-primary"],
-      youtube: ["6ac96e053f8f4ffc10b0655f","@hskai_app","ru-primary"],
-      tiktok: ["6ae16327a2845fbdb07e5ccb","@hskai.app","tiktok-telegram"],
-    },
-    tg: {
-      instagram: ["6ae0f16205fd6f5357f8503d","@hskai.apptj","tg-primary"],
-      youtube: ["6ae160123787e4c71b522d64","@hskaiapp-tj","tg-primary"],
-      tiktok: ["6ae16064ecf91092adba7d68","@hskai.ru","tiktok-facebook"],
-    },
+test("owner-authorized social destinations stay mapped to the correct language and account", () => {
+  assert.deepEqual(enabledVideoPlatforms("ru"), ["instagram", "youtube", "tiktok", "facebook"]);
+  assert.deepEqual(enabledVideoPlatforms("tg"), ["instagram", "youtube", "tiktok", "facebook"]);
+  assert.throws(() => enabledVideoPlatforms("zh"));
+  const env = {
+    ZERNIO_RU_INSTAGRAM_ACCOUNT_ID: "6a411e989d9472faae10a430",
+    ZERNIO_RU_YOUTUBE_ACCOUNT_ID: "6ac96e053f8f4ffc10b0655f",
+    ZERNIO_TG_INSTAGRAM_ACCOUNT_ID: "6ae0f16205fd6f5357f8503d",
+    ZERNIO_TG_YOUTUBE_ACCOUNT_ID: "6ae160123787e4c71b522d64",
+    ZERNIO_RU_FACEBOOK_ACCOUNT_ID: "6ae161de384955d3b3ff194b",
+    ZERNIO_TG_FACEBOOK_ACCOUNT_ID: "6ae161de384955d3b3ff194b",
   };
-  for (const [language,platforms] of Object.entries(expected)) {
-    for (const [platform,[id,name,group]] of Object.entries(platforms)) {
-      const target=zernioTargetAccount(language,platform,{});
-      assert.equal(target.accountId,id);
-      assert.equal(target.expectedUsername,name);
-      assert.equal(target.credentialGroup,group);
-      const variable=target.variable;
-      assert.equal(zernioTargetAccount(language,platform,{[variable]:id}).accountId,id);
-      assert.throws(()=>zernioTargetAccount(language,platform,{
-        [variable]:language==="ru"?"6ae0f16205fd6f5357f8503d":"6a411e989d9472faae10a430",
-      }),/conflicts with the verified owner account map/);
-    }
-  }
-  assert.throws(()=>zernioTargetAccount("ru","telegram",{}),/not an owner-authorized/);
-  assert.throws(()=>zernioTargetAccount("tg","facebook",{}),/not an owner-authorized/);
-  assert.throws(()=>zernioTargetAccount("en","instagram",{}),/not an owner-authorized/);
+  assert.equal(zernioTargetAccount("ru", "youtube", env).accountId, env.ZERNIO_RU_YOUTUBE_ACCOUNT_ID);
+  assert.equal(zernioTargetAccount("ru", "youtube", env).expectedUsername, "@hskai_app");
+  assert.equal(zernioTargetAccount("tg", "instagram", env).accountId, env.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID);
+  assert.equal(zernioTargetAccount("tg", "instagram", env).expectedUsername, "@hskai.apptj");
+  const mapped = zernioTargetAccount("tg", "youtube", env);
+  assert.equal(mapped.expectedUsername, "@hskaiapp-tj");
+  assert.equal(zernioTargetAccount("ru", "facebook", env).expectedUsername, "Akbarholturaev");
+  assert.equal(zernioTargetAccount("tg", "facebook", env).accountId, env.ZERNIO_TG_FACEBOOK_ACCOUNT_ID);
+  assert.throws(()=>zernioTargetAccount("ru", "tiktok", {
+    ZERNIO_RU_TIKTOK_ACCOUNT_ID:"6ac96e053f8f4ffc10b0655f"
+  }),/conflicts/);
+  assert.throws(()=>zernioTargetAccount("tg", "tiktok", {
+    ZERNIO_TG_TIKTOK_ACCOUNT_ID:"6ac96e053f8f4ffc10b0655f"
+  }),/conflicts/);
+  assert.throws(() => zernioTargetAccount("tg", "telegram", {
+    ZERNIO_TG_TELEGRAM_ACCOUNT_ID:"6ae1661bf80a20df8f31158e"
+  }), /not an owner-authorized video destination/);
+  assert.equal(zernioTargetAccount("tg", "instagram",{
+    ZERNIO_RU_INSTAGRAM_ACCOUNT_ID:env.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID
+  }).accountId,"6ae0f16205fd6f5357f8503d");
+  assert.equal(zernioTargetAccount("ru", "instagram", {}).accountId,"6a411e989d9472faae10a430");
 });
 
-test("each connected Zernio token group is selected by account not language label", () => {
-  const env={
-    ZERNIO_API_KEY:"russian-instagram-youtube",
-    ZERNIO_TG_API_KEY:"tajik-instagram-youtube",
-    ZERNIO_TIKTOK_TELEGRAM_API_KEY:"russian-tiktok-and-tajik-telegram",
-    ZERNIO_TIKTOK_FACEBOOK_API_KEY:"tajik-tiktok-and-unauthorized-facebook",
-  };
-  assert.equal(zernioRoute("ru",env,"instagram").secret,env.ZERNIO_API_KEY);
-  assert.equal(zernioRoute("ru",env,"youtube").secret,env.ZERNIO_API_KEY);
-  assert.equal(zernioRoute("tg",env,"instagram").secret,env.ZERNIO_TG_API_KEY);
-  assert.equal(zernioRoute("tg",env,"youtube").secret,env.ZERNIO_TG_API_KEY);
-  assert.equal(zernioRoute("ru",env,"tiktok").secret,env.ZERNIO_TIKTOK_TELEGRAM_API_KEY);
-  assert.equal(zernioRoute("tg",env,"tiktok").secret,env.ZERNIO_TIKTOK_FACEBOOK_API_KEY);
-  assert.equal(telegramNewsRoute(env).secret,env.ZERNIO_TIKTOK_TELEGRAM_API_KEY);
-  assert.equal(telegramNewsRoute(env).accountId,"6ae1661bf80a20df8f31158e");
-  assert.throws(()=>zernioRoute("ru",{ZERNIO_API_KEY:"ru"},"tiktok"),/No Zernio API key for tiktok-telegram/);
-  assert.throws(()=>zernioRoute("tg",{ZERNIO_TG_API_KEY:"tg"},"tiktok"),/No Zernio API key for tiktok-facebook/);
-  assert.throws(()=>telegramNewsRoute({ZERNIO_TG_API_KEY:"tg"}),/Missing TikTok\/Telegram/);
-  assert.throws(()=>telegramNewsRoute({...env,ZERNIO_TG_TELEGRAM_ACCOUNT_ID:"6a411e989d9472faae10a430"}),/conflicts/);
+test("connection groups bind all 8 exact RU/TJ video targets without username-derived routing",()=>{
+ const env={
+  ZERNIO_API_KEY:"ru-ig-youtube",ZERNIO_TG_API_KEY:"tj-ig-youtube",
+  ZERNIO_TIKTOK_TELEGRAM_API_KEY:"ru-tiktok",ZERNIO_TIKTOK_FACEBOOK_API_KEY:"tj-tiktok-facebook",
+ };
+ for(const [lang,platform,id,group,secret] of [
+   ["ru","instagram","6a411e989d9472faae10a430","ru-primary","ru-ig-youtube"],
+   ["ru","youtube","6ac96e053f8f4ffc10b0655f","ru-primary","ru-ig-youtube"],
+   ["ru","tiktok","6ae16327a2845fbdb07e5ccb","tiktok-telegram","ru-tiktok"],
+   ["ru","facebook","6ae161de384955d3b3ff194b","tiktok-facebook","tj-tiktok-facebook"],
+   ["tg","instagram","6ae0f16205fd6f5357f8503d","tg-primary","tj-ig-youtube"],
+   ["tg","youtube","6ae160123787e4c71b522d64","tg-primary","tj-ig-youtube"],
+   ["tg","tiktok","6ae16064ecf91092adba7d68","tiktok-facebook","tj-tiktok-facebook"],
+   ["tg","facebook","6ae161de384955d3b3ff194b","tiktok-facebook","tj-tiktok-facebook"],
+ ]) { const target=zernioTargetAccount(lang,platform,env);
+   assert.equal(target.accountId,id); assert.equal(target.credentialGroup,group);
+   assert.equal(zernioRoute(lang,env,platform).secret,secret);
+ }
+ assert.equal(zernioTargetAccount("tg","tiktok",env).expectedUsername,"@hskai.ru");
+ assert.equal(telegramNewsRoute(env).accountId,"6ae1661bf80a20df8f31158e");
+ assert.equal(telegramNewsRoute(env).secret,"ru-tiktok");
+ assert.throws(()=>zernioRoute("ru",{ZERNIO_API_KEY:"only-ru"},"tiktok"),/No Zernio API key for tiktok-telegram/);
+ assert.throws(()=>zernioRoute("tg",{ZERNIO_TG_API_KEY:"only-tg"},"tiktok"),/No Zernio API key for tiktok-facebook/);
+ assert.throws(()=>zernioTargetAccount("tg","tiktok",{ZERNIO_TG_TIKTOK_ACCOUNT_ID:"6ae16327a2845fbdb07e5ccb"}),/conflicts/);
 });

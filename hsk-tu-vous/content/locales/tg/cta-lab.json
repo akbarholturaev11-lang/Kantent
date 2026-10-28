@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 16,
+  "revision": 17,
   "languageCode": "tg-TJ",
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
@@ -1645,7 +1645,7 @@
   },
   "localization": {
     "source": "content/cta-lab.json",
-    "sourceHash": "732de5c8211715d4f7c7a7d5176727a8ef13042df2d5a86f8c95411e18817990",
+    "sourceHash": "5a2ca6e183199e3cf802dda0153abe069304e7df0ae437f60f264b698ed2597b",
     "authoredOn": "2026-10-28"
   },
   "platformVariants": {
@@ -1863,6 +1863,58 @@
             "motion": "slide",
             "syncCueText": "пайванди",
             "transitionStyle": "slide-match"
+          }
+        ]
+      }
+    },
+    "facebook": {
+      "status": "approved",
+      "copySource": "offer",
+      "visualSource": "cueSequence",
+      "deliveryMode": "profile-link-download",
+      "destinationVerified": false,
+      "automationVerified": null,
+      "publishingAuthorized": true,
+      "notes": "Owner-authorized language-matched video destination. Reuse the language CTA offer without claiming that the app link or download was independently verified. One cue-linked visual detail at a time; no repeated headline, duplicate wordmark, screenshots from another platform, fake taps, or completed-download claim.",
+      "sceneTemplate": {
+        "id": "cta",
+        "kind": "cta",
+        "captionStyleId": "pill",
+        "durationSec": 11,
+        "headline": "HSK AI",
+        "screenCaption": "",
+        "editPlan": "Use one central stage. Keep only one cue-linked visual detail on screen at a time, plus the single timed subtitle. Do not add a persistent headline or second CTA strip, duplicate the HSK AI wordmark, or use a moving focus marker. Use restrained brand-color transitions. Do not show platform UI screenshots, simulated taps, sent messages, or a completed download. Keep the app/profile link destination unverified unless separately checked.",
+        "visualBeats": [
+          {
+            "hero": "HSK AI",
+            "motion": "reveal",
+            "syncCueText": "санҷ",
+            "transitionStyle": "type-reveal"
+          },
+          {
+            "hero": "ПРОФИЛ",
+            "motion": "slide",
+            "syncCueText": "даро",
+            "transitionStyle": "slide-match"
+          },
+          {
+            "hero": "ПАЙВАНД",
+            "motion": "reveal",
+            "syncCueText": "кушо",
+            "transitionStyle": "mask-reveal"
+          },
+          {
+            "hero": "БОРГИРӢ",
+            "motion": "slide",
+            "syncCueText": "боргирӣ",
+            "actionIcon": "app-download",
+            "transitionStyle": "slide-match"
+          },
+          {
+            "hero": "ЧИНӢ ҲАР РӮЗ",
+            "motion": "reveal",
+            "syncCueText": "омӯз",
+            "transitionStyle": "type-reveal"
           }
         ]
       }

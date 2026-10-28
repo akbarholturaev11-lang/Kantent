@@ -125,6 +125,15 @@ test('YouTube lifetime posts accept absent reach/skip fields without inventing d
  assert.match(validateObservation(invalid).join(' '),/invalid metric likes/);
 });
 
+test('Facebook observations accept the shared page URL while retaining account attribution', () => {
+ const o=source();
+ o.platform='facebook';
+ o.accountUsername='Akbarholturaev';
+ o.platformPostId='123456789012345678901234';
+ o.postUrl='https://www.facebook.com/akbarholturaev/videos/123456789012345678901234/';
+ assert.deepEqual(validateObservation(o),[]);
+});
+
 test("adaptive retention cohorts require verified pattern-to-episode attribution", () => {
  const baseline=fixed({id:'17961571305238269',window:'7d'});
  baseline.creativeFormatId='street-situation';

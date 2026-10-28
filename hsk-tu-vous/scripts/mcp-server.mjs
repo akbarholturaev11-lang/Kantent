@@ -250,13 +250,25 @@ export const createServer = () => {
         containsSyntheticMedia: z.boolean(),
       })
       .optional(),
+    tiktokSettings: z
+      .object({
+        privacy_level: z.string(),
+        allow_comment: z.boolean(),
+        allow_duet: z.boolean(),
+        allow_stitch: z.boolean(),
+        content_preview_confirmed: z.literal(true),
+        express_consent_given: z.literal(true),
+        video_made_with_ai: z.boolean(),
+        commercialContentType: z.enum(["none", "brand_organic", "brand_content"]),
+      })
+      .optional(),
   });
   const publicationIntentSchema = z
     .object({
       mode: z.enum(["now", "scheduled"]),
       timezone: z.literal("Asia/Shanghai"),
       scheduledFor: z.iso.datetime({ offset: true }).optional(),
-      platforms: z.array(publicationTargetSchema).min(1).max(2),
+      platforms: z.array(publicationTargetSchema).min(1).max(4),
     })
     .superRefine((intent, context) => {
       const platforms = intent.platforms.map((target) => target.platform);
@@ -1045,9 +1057,9 @@ export const createServer = () => {
     {
       title: "Inspect platform-specific CTA readiness",
       description:
-        "Read the selected language's canonical CTA Lab for Instagram, TikTok and YouTube. Reports each variant's copy/scene readiness separately from publication authorization. TikTok publication is owner-authorized only for the exact language-matched accounts in content/publication-destinations.json, after exact-preview approval; the standard video workflow does not yet create TikTok packages automatically. The manual-DM CTA does not verify a link or automate DMs. Never sends a DM or publishes.",
+        "Read the selected language's canonical CTA Lab for Instagram, TikTok, YouTube and Facebook. Reports each variant's copy/scene readiness separately from publication authorization. Route only to the exact language-matched accounts in content/publication-destinations.json. TikTok uses its separate manual-DM CTA; Facebook reuses the language-approved offer with cue-synced visuals. Telegram is text-update-only and is not a video target. Never sends a DM or publishes.",
       inputSchema: z.object({
-        platform: z.enum(["instagram", "tiktok", "youtube"]).optional(),
+        platform: z.enum(CTA_PLATFORMS).optional(),
       }),
     },
     async ({ platform }) =>
@@ -1058,7 +1070,7 @@ export const createServer = () => {
           variants: (platform ? [platform] : CTA_PLATFORMS).map(
             (name) => getPlatformCtaStatus(lab, name),
           ),
-          note: "The normal render produces Instagram and YouTube packages automatically: one shared lesson render, separate approved CTA endings, and reused continuous audio/word cues. Each destination is bound to its exact exported file and CTA registration. YouTube Shorts publishing requires exact-preview approval.",
+          note: "The normal render produces every authorized language-matched destination package: shared-voice platforms reuse one lesson render and receive cue-synced CTA endings; TikTok keeps its dedicated spoken manual-DM ending. Each destination is bound to its exact exported file, CTA registration and owner-approved preview. Telegram receives text updates only.",
         };
       }),
   );
@@ -1608,7 +1620,7 @@ export const createServer = () => {
     {
       title: "Confirm the final preview for Zernio publishing",
       description:
-        "Call only after the owner says yes to the immediately preceding preview with the exact video, Instagram Reels or YouTube Shorts account, caption/description, all platform-specific settings (including YouTube title, visibility, audience and synthetic-media disclosure), and immediate/scheduled time. Records that precise approval; this tool does not upload or publish. The following action must use the connected Zernio MCP tools.",
+        "Call only after the owner says yes to the immediately preceding preview with the exact language-matched video, connected account, caption/description, required platform settings (including YouTube title, visibility, audience and synthetic-media disclosure, or TikTok creator settings), and immediate/scheduled time. Records that precise approval; this tool does not upload or publish. Telegram is text-update-only. The following action must use the connected Zernio MCP tools.",
       inputSchema: z.object({
         date: dateSchema,
         publicationIntent: publicationIntentSchema,
@@ -1649,7 +1661,7 @@ export const createServer = () => {
         "After an owner-approved Zernio create/schedule call succeeds, records the returned post ID, account, URL, status, and scheduled time in the dated review package. It never calls Zernio or publishes by itself. Use the same post ID to update a scheduled/processing result later; do not record a new ID for the same package/platform/account.",
       inputSchema: z.object({
         date: dateSchema,
-        platforms: z.array(publicationResultSchema).min(1).max(2),
+        platforms: z.array(publicationResultSchema).min(1).max(4),
       }),
     },
     async ({ date, platforms }) =>
