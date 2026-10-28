@@ -45,7 +45,7 @@ test("probe requires both real audio and portrait video", () => {
   assert.throws(() => validateProbe({ ...good, streams: [{ codec_type: "video", width: 1920, height: 1080 }, { codec_type: "audio" }] }), /Invalid MP4/);
 });
 
-test("real MP4/SRT verifier stages RU Instagram/YouTube and TG Instagram without requiring TG YouTube", async () => {
+test("real MP4/SRT verifier stages Instagram/YouTube for BOTH language groups; no TikTok auto-clone", async () => {
   const id = "github-ci-review-verifier-test";
   const sourceDir = path.join(PROJECT_ROOT, "review", id);
   const exists = await fs.stat(sourceDir).then(() => true, () => false);
@@ -65,7 +65,7 @@ test("real MP4/SRT verifier stages RU Instagram/YouTube and TG Instagram without
     for (const language of ["ru", "tg"]) {
       await withLanguage(language, async () => {
         const platformPackages = {};
-        for (const platform of language === "ru" ? ["instagram", "youtube"] : ["instagram"]) {
+        for (const platform of ["instagram", "youtube"]) {
           const files = platformPackagePaths(id, platform);
           await fs.mkdir(files.folder, { recursive: true });
           await fs.copyFile(mp4, files.video);
@@ -83,8 +83,9 @@ test("real MP4/SRT verifier stages RU Instagram/YouTube and TG Instagram without
     assert.deepEqual(Object.keys(manifest.languages), ["ru", "tg"]);
     assert.equal(manifest.languages.tg.instagram.sha256, sha);
     assert.deepEqual(Object.keys(manifest.languages.ru), ["instagram","youtube"]);
-    assert.deepEqual(Object.keys(manifest.languages.tg), ["instagram"]);
-    await assert.rejects(fs.stat(path.join(bundle,"tg","youtube","video.mp4")), {code:"ENOENT"});
+    assert.deepEqual(Object.keys(manifest.languages.tg), ["instagram","youtube"]);
+    assert.equal(manifest.languages.tg.youtube.sha256, sha);
+    await assert.rejects(fs.stat(path.join(bundle,"tg","tiktok","video.mp4")), {code:"ENOENT"});
     assert.equal(createHash("sha256").update(await fs.readFile(path.join(bundle, "ru", "instagram", "video.mp4"))).digest("hex"), sha);
     assert.equal((await fs.readFile(path.join(bundle, "manifest.json"), "utf8")).includes("published\": false"), true);
     // Hash tamper test: existing artifact must never be marked complete.
