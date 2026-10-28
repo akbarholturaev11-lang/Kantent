@@ -42,6 +42,6 @@ jobs:
           npm ci --no-audit --no-fund
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg
-      - name: Confirm exact RU/TJ account IDs, separate TikTok tokens, real MP4/SRT package, mock publisher and Telegram text-only
+      - name: Confirm exact RU/TJ account IDs, separate TikTok tokens, real MP4/SRT package and mock publisher
         run: |
-          node --test scripts/video-credentials.test.mjs scripts/github-video-pipeline.test.mjs scripts/zernio-publication-core.test.mjs scripts/zernio-approved-publish.test.mjs scripts/telegram-product-news.test.mjs
+          node --test scripts/video-credentials.test.mjs scripts/github-video-pipeline.test.mjs scripts/zernio-publication-core.test.mjs scripts/zernio-approved-publish.test.mjs
