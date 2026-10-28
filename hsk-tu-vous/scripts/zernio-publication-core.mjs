@@ -161,15 +161,25 @@ export function parseZernioPostReply(value, approval) {
       post.platforms[0].platform !== approval.platform ||
       accountId !== approval.target.accountId)
     throw Error("Zernio response did not confirm the exact target account; manual investigation required.");
-  if (approval.mode === "draft" && post.status !== "draft") throw Error("Zernio did not confirm draft-only status.");
-  if (approval.mode === "scheduled" && !["scheduled","pending_approval"].includes(post.status))
-    throw Error("Zernio did not confirm scheduled/pending status.");
-  if (approval.mode === "now" && post.status !== "published")
+  const platformResult = post.platforms[0];
+  const status = platformResult.status ?? post.status;
+  if (approval.mode === "draft" && status !== "draft") throw Error("Zernio did not confirm draft-only status.");
+  const scheduledFor = platformResult.scheduledFor ?? post.scheduledFor ?? null;
+  if (approval.mode === "scheduled") {
+    if (!["scheduled","pending_approval"].includes(status))
+      throw Error("Zernio did not confirm scheduled/pending status.");
+    if (!scheduledFor || !Number.isFinite(Date.parse(scheduledFor)) ||
+        Date.parse(scheduledFor) !== Date.parse(approval.scheduledFor))
+      throw Error("Zernio readback did not confirm the exact approved scheduled time.");
+  }
+  if (approval.mode === "now" && status !== "published")
     throw Error("Zernio did not fully publish this video; inspect the returned post before any retry.");
-  return {postId:id,status:post.status,platform:approval.platform,
+  return {postId:id,zernioPostId:id,status,platform:approval.platform,
     accountId:approval.target.accountId,
-    platformPostId:post.platforms[0].platformPostId??null,
-    platformPostUrl:post.platforms[0].platformPostUrl??post.platforms[0].publishedUrl??null};
+    platformPostId:platformResult.platformPostId??null,
+    platformPostUrl:platformResult.platformPostUrl??platformResult.publishedUrl??null,
+    publishedAt:platformResult.publishedAt??post.publishedAt??null,
+    scheduledFor};
 }
 
 export function artifactAbsolutePath(root, relative) {

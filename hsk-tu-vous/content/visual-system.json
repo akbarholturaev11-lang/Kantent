@@ -10,7 +10,7 @@
     "effectiveFromDate": "2026-10-23",
     "targetSec": 50,
     "targetRangeSec": [
-      45,
+      0,
       55
     ],
     "includesCta": true

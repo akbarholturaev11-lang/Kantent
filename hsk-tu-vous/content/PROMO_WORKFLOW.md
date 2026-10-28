@@ -13,6 +13,8 @@ The owner selected situation-led advertising and a minimalist visual treatment f
 
 ## Build the minimalist video
 
+There is no minimum or fixed maximum duration for an advertisement. The 50-second target is only a pacing reference; keep the complete natural story and CTA, and let length follow the material. A video shorter than 45 seconds is eligible for review and scheduling when all content, quality and exact-preview approval gates pass.
+
 Keep one dominant object/action and one narration caption, as defined by the visual policy. No additional headline repeating the subtitle or unrelated text stack. Product UI text can remain inside the genuine capture; crop and focus it for phone readability. Use an original character, hand, cup, phone or other relevant object; preserve its identity and continuity when moving between scenes. A product view replaces that focal object at the relevant phrase. The background and restrained accent follow meaning, rather than cycling by time. Build depth with original simple geometry, cutout-like framing and gentle camera changes when useful.
 
 **Minimal does not mean blank or washed out.** Give each beat one clearly readable focal action and enough story-specific context to identify the situation. Pair the subject with a background that separates it by both value and color: a pale cup, shirt or face on an ivory/white background fails even if a small gold or green accent is present. Use the darker approved background for a pale hero, or a light background for a dark hero; keep at least one restrained HSK accent visibly crisp where it supports the story. Preserve negative space around the subject, not instead of a subject. Do not solve a low-contrast frame by adding a headline or a stack of labels.

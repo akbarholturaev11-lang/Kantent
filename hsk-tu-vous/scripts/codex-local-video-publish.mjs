@@ -192,6 +192,8 @@ async function verifyLocalPackage(opts) {
     expectedUsername: account.expectedUsername,
     videoBytes, postBytes, postPreviewBase64, postSha256,
     approvedPostJson: JSON.stringify(preview.details),
+    approvedCaptionSha256: sha256(Buffer.from(approval.content, "utf8")),
+    approvedPlatformSettings: approval.settings,
     contentHash: platformStatus.contentHash,
     ctaExperimentId: platformStatus.ctaExperimentId,
     videoSha256: platformStatus.videoSha256,
@@ -288,7 +290,8 @@ async function savePublicationRecord(data, receipt) {
   }
   const existing = record.platforms.find(item =>
     item.platform === data.platform && item.accountId === data.accountId);
-  if (existing?.postId && existing.postId !== receipt.postId)
+  const existingZernioPostId = existing?.zernioPostId ?? existing?.postId;
+  if (existingZernioPostId && existingZernioPostId !== receipt.postId)
     throw Error("A different Zernio post ID is already recorded for this platform/account; manual reconciliation is required.");
   const normalizedStatus = receipt.state === "pending_approval" ? "pending" : receipt.state;
   if (!["published", "scheduled", "processing", "pending", "failed"].includes(normalizedStatus))
@@ -297,15 +300,36 @@ async function savePublicationRecord(data, receipt) {
     platform: data.platform,
     accountId: data.accountId,
     accountName: data.expectedUsername,
+    zernioPostId: receipt.zernioPostId ?? receipt.postId,
+    // Keep the historical postId alias for readers of older package records.
     postId: receipt.postId,
+    platformPostId: receipt.platformPostId ?? existing?.platformPostId ?? null,
     ...(receipt.platformPostUrl ? { postUrl: receipt.platformPostUrl } : {}),
     status: normalizedStatus,
     ...(receipt.approvedSchedule ? { scheduledFor: receipt.approvedSchedule } : {}),
+    ...(receipt.approvedSchedule ? { scheduledTimezone: "Asia/Shanghai" } : {}),
+    ...(receipt.publishedAt ? { publishedAt: receipt.publishedAt } : {}),
+    approvedMode: receipt.approvedMode ?? data.mode,
+    approvalConfirmed: receipt.approvalConfirmed === true,
+    approvedAt: receipt.approvalRecordedAt ?? receipt.updatedAt ?? now,
+    postPreviewSha256: data.postSha256,
+    ...(receipt.approvedCaptionSha256 ? { approvedCaptionSha256: receipt.approvedCaptionSha256 } :
+      existing?.approvedCaptionSha256 ? { approvedCaptionSha256: existing.approvedCaptionSha256 } : {}),
+    ...(receipt.approvedPlatformSettings ? { approvedPlatformSettings: receipt.approvedPlatformSettings } :
+      existing?.approvedPlatformSettings ? { approvedPlatformSettings: existing.approvedPlatformSettings } : {}),
+    ...(receipt.likeViewCountVisibility ? { likeViewCountVisibility: receipt.likeViewCountVisibility } :
+      existing?.likeViewCountVisibility ? { likeViewCountVisibility: existing.likeViewCountVisibility } : {}),
     contentIdentity: data.platformEpisode.contentIdentity,
     contentHash: data.contentHash,
     ctaExperimentId: data.ctaExperimentId,
     video: path.relative(data.reviewDir, data.platformStatus.video),
     videoSha256: data.videoSha256,
+    ...(receipt.publishRunId ? { publishRunId: String(receipt.publishRunId) } : {}),
+    ...(receipt.ticketRunId ? { ticketRunId: String(receipt.ticketRunId) } : {}),
+    ...(receipt.localRequestId ? { localRequestId: receipt.localRequestId } : {}),
+    ...(receipt.localSourceCommit ? { sourceCommit: receipt.localSourceCommit } : {}),
+    resultVerifiedBy: receipt.resultVerifiedBy ?? "Zernio GET /v1/posts/{id}",
+    verifiedAt: receipt.updatedAt ?? now,
     updatedAt: now,
   };
   if (existing) Object.assign(existing, saved);
@@ -351,9 +375,21 @@ async function runLocalPublication(opts) {
   const state = {
     sourceType: "codex-local", requestId, episodeId: data.episodeId,
     language: data.language, platform: data.platform, accountId: data.accountId,
+    accountName: data.expectedUsername,
     videoSha256: data.videoSha256, postSha256: data.postSha256,
-    mode: data.mode, status: "preparing-upload-ticket", createdAt: new Date().toISOString(),
+    contentHash: data.contentHash, ctaExperimentId: data.ctaExperimentId,
+    approvedCaptionSha256: data.approvedCaptionSha256,
+    approvedPlatformSettings: data.approvedPlatformSettings,
+    ...(data.platform === "instagram" ? { likeViewCountVisibility: {
+      requested: "hidden", status: "manual_action_required",
+    } } : {}),
+    approvalConfirmed: true,
+    sourceCommit: data.localSourceCommit,
+    mode: data.mode, scheduledFor: data.scheduledFor || null,
+    ...(data.scheduledFor ? { scheduledTimezone: "Asia/Shanghai" } : {}),
+    status: "preparing-upload-ticket", createdAt: new Date().toISOString(),
   };
+  state.approvalRecordedAt = state.createdAt;
   await writeLocalState(localStatePath, state);
   let mediaUploaded = false;
   let postDispatched = false;
@@ -434,12 +470,23 @@ async function runLocalPublication(opts) {
         receipt.accountId !== data.accountId || receipt.language !== data.language ||
         receipt.platform !== data.platform || !receipt.postId)
       throw Error("Zernio audit receipt does not match this local video request.");
-    const saved = await savePublicationRecord(data, receipt);
+    const saved = await savePublicationRecord(data, {
+      ...receipt,
+      publishRunId: publishRun.runId,
+      approvalRecordedAt: state.approvalRecordedAt,
+    });
     Object.assign(state, {
       status: receipt.state,
       publishRunId: publishRun.runId,
       postId: receipt.postId,
+      zernioPostId: receipt.zernioPostId ?? receipt.postId,
+      platformPostId: receipt.platformPostId ?? null,
       platformPostUrl: receipt.platformPostUrl ?? null,
+      publishedAt: receipt.publishedAt ?? null,
+      resultVerifiedBy: receipt.resultVerifiedBy ?? "Zernio GET /v1/posts/{id}",
+      verifiedAt: receipt.updatedAt ?? new Date().toISOString(),
+      approvedCaptionSha256: receipt.approvedCaptionSha256 ?? data.approvedCaptionSha256,
+      approvedPlatformSettings: receipt.approvedPlatformSettings ?? data.approvedPlatformSettings,
       finishedAt: new Date().toISOString(),
     });
     await writeLocalState(localStatePath, state);

@@ -49,7 +49,8 @@ test("owner-approved draft runs presign -> auth-free PUT -> one post -> status r
         return response({uploadUrl:"https://example.r2.cloudflarestorage.com/temp/lesson.mp4?X-Amz-Signature=mock",
           publicUrl:"https://media.zernio.com/temp/lesson.mp4"});
       if(pathname==="/temp/lesson.mp4"&&method==="PUT")return new Response("",{status:200});
-      const post={_id:POST_ID,status:"draft",platforms:[{platform:"instagram",accountId:ID}]};
+    const post={_id:POST_ID,status:"draft",platforms:[{platform:"instagram",accountId:ID,
+      platformPostId:"17900000000000000",platformPostUrl:"https://www.instagram.com/reel/example/"}]};
       if(pathname==="/api/v1/posts"&&method==="POST")return response({post},201);
       if(pathname==="/api/v1/posts/"+POST_ID)return response({post});
       throw Error("unexpected fetch "+method+" "+url);
@@ -68,6 +69,7 @@ test("owner-approved draft runs presign -> auth-free PUT -> one post -> status r
     };
     const result=await executeApprovedPublication(dir,env);
     assert.equal(result.state,"draft");assert.equal(result.postId,POST_ID);
+    assert.equal(result.zernioPostId,POST_ID);assert.equal(result.platformPostId,"17900000000000000");
     assert.deepEqual(calls.map(c=>c.method+" "+c.pathname),[
       "GET /repos/akbarholturaev11-lang/Kantent/actions/runs/40552075736",
       "GET /api/v1/accounts","POST /api/v1/media/presign",
@@ -79,7 +81,10 @@ test("owner-approved draft runs presign -> auth-free PUT -> one post -> status r
     assert.equal(calls[4].body.platforms[0].accountId,ID);
     assert.equal(calls[4].body.platforms[0].platformSpecificData.isAiGenerated,true);
     assert.match(calls[4].idempotency,/^hsk-[0-9a-f]{56}$/);
-    assert.equal((await fs.readFile(path.join(temp,"receipt","receipt.json"),"utf8")).includes("mock-zernio-key"),false);
+    const receipt=JSON.parse(await fs.readFile(path.join(temp,"receipt","receipt.json"),"utf8"));
+    assert.equal(JSON.stringify(receipt).includes("mock-zernio-key"),false);
+    assert.equal(receipt.zernioPostId,POST_ID);assert.equal(receipt.platformPostId,"17900000000000000");
+    assert.equal(receipt.resultVerifiedBy,"Zernio GET /v1/posts/{id}");
     // A wrong owner hash is blocked before any network request, upload, or draft.
     calls.length=0;
     await assert.rejects(executeApprovedPublication(dir,{...env,APPROVED_VIDEO_SHA256:"0".repeat(64)}),/hashes do not match/);

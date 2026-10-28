@@ -183,6 +183,7 @@ async function reconcileExistingPost(env = process.env) {
   const language = String(env.CODEX_LOCAL_LANGUAGE ?? "");
   const platform = String(env.CODEX_LOCAL_PLATFORM ?? "");
   const postId = String(env.CODEX_LOCAL_POST_ID ?? "");
+  const expectedScheduledFor = String(env.APPROVED_SCHEDULED_FOR ?? "");
   if (!/^[a-f0-9]{24}$/.test(postId)) throw Error("A real Zernio post ID is required for reconciliation.");
   const target = zernioTargetAccount(language, platform, env);
   if (String(env.APPROVED_ACCOUNT_ID ?? "") !== target.accountId)
@@ -200,9 +201,14 @@ async function reconcileExistingPost(env = process.env) {
     const observedAccountId = responseAccountId(entry?.accountId);
     const targetVerified = platforms.length === 1 && observedAccountId === target.accountId;
     const status = entry?.status ?? post?.status ?? "unknown";
+    const scheduledFor = entry?.scheduledFor ?? post?.scheduledFor ?? null;
+    const scheduleVerified = !expectedScheduledFor ||
+      (scheduledFor && Number.isFinite(Date.parse(scheduledFor)) &&
+        Date.parse(scheduledFor) === Date.parse(expectedScheduledFor));
     receipt = {
       sourceType: "codex-local-reconcile",
       postId,
+      zernioPostId: postId,
       language,
       platform,
       accountId: target.accountId,
@@ -211,11 +217,17 @@ async function reconcileExistingPost(env = process.env) {
       observedAccountId: observedAccountId || null,
       targetVerified,
       state: status,
+      platformPostId: entry?.platformPostId ?? null,
       platformPostUrl: entry?.platformPostUrl ?? entry?.publishedUrl ?? null,
+      publishedAt: entry?.publishedAt ?? post?.publishedAt ?? null,
+      scheduledFor,
+      ...(expectedScheduledFor ? { approvedSchedule: expectedScheduledFor, scheduleVerified } : {}),
+      resultVerifiedBy: "Zernio GET /v1/posts/{id}",
       updatedAt: new Date().toISOString(),
     };
     await writeReceipt(receipt, env);
     if (!targetVerified) throw Error("Zernio GET readback did not prove the exact target account; do not retry or repost.");
+    if (!scheduleVerified) throw Error("Zernio GET readback did not confirm the exact approved schedule; do not retry or repost.");
     if (["published", "scheduled", "failed", "partial"].includes(status) || Date.now() >= stopAt) break;
     await delay(5_000);
   }
@@ -278,11 +290,17 @@ async function publishLocalUpload(ticketRoot, env = process.env) {
     platform: approval.platform,
     accountId: approval.target.accountId,
     connectedUsername: account.username,
+    publishRunId: String(env.GITHUB_RUN_ID ?? ""),
+    approvedPlatformSettings: approval.settings,
     videoSha256: approval.videoSha256,
     postPreviewSha256: approval.postSha256,
     approvedCaptionSha256: createHash("sha256").update(approval.content).digest("hex"),
     approvedMode: approval.mode,
     approvedSchedule: approval.scheduledFor || null,
+    ...(approval.scheduledFor ? { scheduledTimezone: "Asia/Shanghai" } : {}),
+    ...(approval.platform === "instagram" ? { likeViewCountVisibility: {
+      requested: "hidden", status: "manual_action_required",
+    } } : {}),
     approvalConfirmed: approval.ownerExplicitlyConfirmed,
     idempotencyKey: postKey,
     ...(verifiedTikTokSettings ? { verifiedTikTokSettings } : {}),
@@ -321,7 +339,9 @@ async function publishLocalUpload(ticketRoot, env = process.env) {
   }, approval);
   const receipt = {
     ...receiptBase, state: verified.status, postId: verified.postId,
+    zernioPostId: verified.zernioPostId,
     platformPostId: verified.platformPostId, platformPostUrl: verified.platformPostUrl,
+    publishedAt: verified.publishedAt, scheduledFor: verified.scheduledFor,
     resultVerifiedBy: "Zernio GET /v1/posts/{id}", updatedAt: new Date().toISOString(),
   };
   await writeReceipt(receipt, env);

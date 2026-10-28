@@ -7,6 +7,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
+import { setTimeout as delay } from "node:timers/promises";
 import { zernioRoute } from "./video-credentials.mjs";
 import {
   validateApprovedIntent,selectApprovedArtifact,publicationBody,
@@ -15,6 +16,12 @@ import {
 
 export const API_ROOT = "https://zernio.com/api/v1";
 const self = fileURLToPath(import.meta.url);
+
+function responseAccountId(value) {
+  if (typeof value === "string") return value;
+  if (value && typeof value === "object") return String(value._id ?? value.id ?? "");
+  return "";
+}
 
 
 export function requestEnv(env) {
@@ -164,16 +171,24 @@ export async function executeApprovedPublication(root,env=process.env) {
     ? await verifyTikTokCreatorSettings(zernio.secret,approval.target,approval.settings.tiktokSettings)
     : null;
   const idempotencyKey=deterministicPostKey(manifest,approval);
+  const approvalRecordedAt=new Date().toISOString();
   const safeReceipt={
+    sourceType:"github-review-artifact",
     episodeId:manifest.episodeId, sourceRunId:origin.sourceRunId,
     sourceCommit:manifest.sourceCommit,sourceUrl:origin.sourceUrl,
+    publishRunId:String(env.GITHUB_RUN_ID ?? ""),
     language:approval.language,platform:approval.platform,accountId:approval.target.accountId,
     connectedUsername:account.username,videoSha256:approval.videoSha256,
     postPreviewSha256:approval.postSha256,
     approvedCaptionSha256:createHash("sha256").update(approval.content).digest("hex"),
     ...(verifiedTikTokSettings?{verifiedTikTokSettings}:{}),
     approvedMode:approval.mode,approvedSchedule:approval.scheduledFor||null,
-    approvalConfirmed:approval.ownerExplicitlyConfirmed,
+    ...(approval.scheduledFor?{scheduledTimezone:"Asia/Shanghai"}:{}),
+    approvedPlatformSettings:approval.settings,
+    ...(approval.platform==="instagram"?{likeViewCountVisibility:{
+      requested:"hidden",status:"manual_action_required",
+    }}:{}),
+    approvalConfirmed:approval.ownerExplicitlyConfirmed,approvalRecordedAt,
     idempotencyKey,
     state:"validated-owner-approval-awaiting-upload",
   };
@@ -189,15 +204,34 @@ export async function executeApprovedPublication(root,env=process.env) {
     body:payload,
   });
   const rawId=created.data?.post?._id??created.data?.post?.id??null;
+  if(!/^[a-f0-9]{24}$/.test(rawId??""))
+    throw Error("Zernio create response did not return a real post ID. Check Zernio before retrying.");
   await writeReceipt({...safeReceipt,state:"post-created-awaiting-verification",
-    postId:rawId,reportedStatus:created.data?.post?.status??null},env);
-  const result=parseZernioPostReply(created.data,approval);
-  // Do not infer actual publication from HTTP 201 alone: require GET readback.
-  const readback=await jsonRequest(API_ROOT+"/posts/"+encodeURIComponent(result.postId),{token:zernio.secret});
-  const fromGet=readback.data?.post??readback.data;
-  const validated=parseZernioPostReply({post:fromGet},approval);
+    postId:rawId,zernioPostId:rawId,reportedStatus:created.data?.post?.status??null},env);
+  // A 2xx or transient `publishing` response is not completion; verify this exact
+  // post/account with GET until the approved mode reaches a terminal state.
+  const stopAt=Date.now()+120_000;
+  let fromGet,readbackStatus="unknown";
+  while(true){
+    const readback=await jsonRequest(API_ROOT+"/posts/"+encodeURIComponent(rawId),{token:zernio.secret});
+    fromGet=readback.data?.post??readback.data;
+    const platforms=Array.isArray(fromGet?.platforms)?fromGet.platforms:[];
+    const entry=platforms.find(item=>item?.platform===approval.platform)??null;
+    if(platforms.length!==1||responseAccountId(entry?.accountId)!==approval.target.accountId)
+      throw Error("Zernio GET readback did not prove the exact target account; do not retry or repost.");
+    readbackStatus=entry?.status??fromGet?.status??"unknown";
+    const expectedStatus=approval.mode==="draft"?readbackStatus==="draft"
+      :approval.mode==="scheduled"?["scheduled","pending_approval"].includes(readbackStatus)
+        :readbackStatus==="published";
+    if(expectedStatus||["failed","partial","rejected","canceled","cancelled"].includes(readbackStatus))break;
+    if(Date.now()>=stopAt)break;
+    await delay(5_000);
+  }
+  const validated=parseZernioPostReply({post:{...fromGet,status:fromGet?.status??readbackStatus}},approval);
   const receipt={...safeReceipt,state:validated.status,postId:validated.postId,
-    platformPostId:validated.platformPostId,platformPostUrl:validated.platformPostUrl,
+    zernioPostId:validated.zernioPostId,platformPostId:validated.platformPostId,
+    platformPostUrl:validated.platformPostUrl,publishedAt:validated.publishedAt,
+    scheduledFor:validated.scheduledFor,
     resultVerifiedBy:"Zernio GET /v1/posts/{id}",updatedAt:new Date().toISOString()};
   await writeReceipt(receipt,env);
   console.log("Zernio readback verified: "+receipt.language+"/"+receipt.platform+

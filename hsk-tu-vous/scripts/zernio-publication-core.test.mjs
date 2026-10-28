@@ -95,8 +95,15 @@ test("scheduled mode requires explicit future Shanghai timestamp and schedules o
 test("response must prove matching account and actual status, never infer from 2xx",()=>{
  const a=validateApprovedIntent(fields,env);
  const good={post:{_id:"6ab31e989d9472faae10a4af",status:"draft",
- platforms:[{platform:"instagram",accountId:env.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID}]}};
+  platforms:[{platform:"instagram",accountId:env.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID,
+    platformPostId:"17900000000000000",platformPostUrl:"https://www.instagram.com/reel/example/"}]}};
  assert.equal(parseZernioPostReply(good,a).status,"draft");
+  const parsed=parseZernioPostReply({post:{...good.post,platforms:[{
+    ...good.post.platforms[0],accountId:{_id:env.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID,platform:"instagram",username:"hskai.app"},
+  }]}},a);
+  assert.equal(parsed.zernioPostId,good.post._id);
+  assert.equal(parsed.platformPostId,"17900000000000000");
+  assert.equal(parsed.platformPostUrl,"https://www.instagram.com/reel/example/");
  assert.throws(()=>parseZernioPostReply({post:{...good.post,status:"published"}},a),/draft-only/);
  assert.throws(()=>parseZernioPostReply({post:{...good.post,platforms:[{platform:"instagram",accountId:env.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID}]}},a),/exact target/);
  assert.throws(()=>parseZernioPostReply({post:{status:"draft"}},a),/real post ID/);
