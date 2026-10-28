@@ -19,9 +19,10 @@ export async function prepareLanguagePackages(languages, prepare) {
     }
   }
   const ready = (value) => value.stage === "ready-for-review" || value.status?.stage === "externally-verified-published";
+  const hasReviewOutput = (value) => ready(value) || value.stage === "partial";
   const complete = Object.values(variants).every(ready);
   return {
-    stage: complete ? "ready-for-review" : Object.values(variants).some(ready) ? "partial" : "blocked",
+    stage: complete ? "ready-for-review" : Object.values(variants).some(hasReviewOutput) ? "partial" : "blocked",
     complete, requestedLanguages: languages, variants,
     publishing: "manual-review-required; nothing was published",
   };

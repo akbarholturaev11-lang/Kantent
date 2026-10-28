@@ -9,6 +9,7 @@ This file is an architecture overview, not a second copy of live production poli
 - `hsk-tu-vous/PROJECT_MEMORY.md` — current architecture/state only; it must not preserve superseded active rules.
 - `hsk-tu-vous/content/calendar.json` — the only source of shared production dates and lesson IDs.
 - `hsk-tu-vous/content/languages.json` — default production languages and per-language content roots.
+- `hsk-tu-vous/content/publication-destinations.json` — authorized language-to-platform account routing.
 - `hsk-tu-vous/content/episodes/` — canonical episode plans.
 - Each configured content root’s `voice-profile.json` — its voice/model configuration and approval state.
 - `hsk-tu-vous/content/HOOK_LAB.md` and `CTA_LAB.md` — hook/CTA learning rules and history.
@@ -28,9 +29,9 @@ High-level flow:
 4. Produce/import the approved voice artifacts and word-level timing.
 5. Render the video with Remotion.
 6. Validate language, timing, captions, visuals, duration, and package files.
-7. Build the exact platform publication preview.
-8. Wait for explicit owner approval.
-9. Publish/schedule through the connected publishing integration and record the result.
+7. Prepare an exact video, caption, settings and destination preview for every authorized language/platform package; derive each proposed posting time from fresh account/platform analytics and active-time evidence.
+8. Wait for the owner's explicit approval of the displayed preview bundle. If timing evidence is insufficient, ask for the missing time decision instead of choosing a default.
+9. Only after approval, schedule each approved platform post separately through the connected publishing integration and verify/read back the result.
 10. Store analytics/readbacks separately from production rules.
 
 ## Architecture
