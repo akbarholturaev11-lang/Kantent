@@ -182,7 +182,9 @@ async function verifyLocalPackage(opts) {
   });
   if (preview.details.content !== approval.content)
     throw Error("Approved caption does not exactly match the local platform post preview.");
-  const localSourceCommit = gh(["rev-parse", "HEAD"]);
+  const localSourceCommit = execFileSync("git", ["rev-parse", "HEAD"], {
+    cwd: REPOSITORY_ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"],
+  }).trim();
   if (!/^[a-f0-9]{40}$/.test(localSourceCommit)) throw Error("Cannot identify the local source commit.");
   return {
     reviewDir, episode, status, platformStatus, platformEpisode,
