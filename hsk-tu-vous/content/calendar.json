@@ -439,6 +439,30 @@
       "status": "planned"
     },
     {
+      "date": "2026-10-31",
+      "id": "zhuozi-you-book-20261031",
+      "status": "planned",
+      "contentType": "series-part",
+      "episodeFile": "episodes/zhuozi-you-book-20261031.json",
+      "series": {
+        "id": "book-on-table-20261031",
+        "part": 1,
+        "totalParts": 2
+      }
+    },
+    {
+      "date": "2026-11-01",
+      "id": "known-book-zai-20261101",
+      "status": "planned",
+      "contentType": "series-part",
+      "episodeFile": "episodes/known-book-zai-20261101.json",
+      "series": {
+        "id": "book-on-table-20261031",
+        "part": 2,
+        "totalParts": 2
+      }
+    },
+    {
       "id": "haishi-vs-huozhe-tea-20261102",
       "date": "2026-11-02",
       "week": 6,
