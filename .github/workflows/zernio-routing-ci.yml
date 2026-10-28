@@ -45,3 +45,8 @@ jobs:
       - name: Confirm exact RU/TJ account IDs, separate TikTok tokens, real MP4/SRT package and mock publisher
         run: |
           node --test scripts/video-credentials.test.mjs scripts/github-video-pipeline.test.mjs scripts/zernio-publication-core.test.mjs scripts/zernio-approved-publish.test.mjs
+      - name: Check all existing main source contracts including Facebook and TikTok
+        run: |
+          npm run check:consistency
+          npm run lint
+          node --test scripts/platform-exports.test.mjs scripts/platform-cta.test.mjs scripts/publication-policy.test.mjs scripts/semantic-review-integration.test.mjs
