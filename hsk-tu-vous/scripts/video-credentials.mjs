@@ -11,11 +11,11 @@ const PUBLICATION_DESTINATIONS = JSON.parse(
 export const GEMINI_SECRET_NAMES = Object.freeze([
   "GEMINI_API_KEY",
   "GEMINI_API_KEY_BACKUP_1",
+  "GEMINI_API_KEY_BACKUP_2",
+  "GEMINI_API_KEY_BACKUP_3",
   // Compatibility with the existing local .env.local numeric key slots.
   "GEMINI_API_KEY_2",
-  "GEMINI_API_KEY_BACKUP_2",
   "GEMINI_API_KEY_3",
-  "GEMINI_API_KEY_BACKUP_3",
   "GEMINI_API_KEY_4",
   "GEMINI_API_KEY_5",
 ]);
