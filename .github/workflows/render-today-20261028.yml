@@ -25,7 +25,7 @@ jobs:
         (
           github.event_name == 'workflow_dispatch' ||
           (github.event_name == 'push' &&
-           github.event.head_commit.message == 'ci(video): owner-requested one-time 2026-10-28 RU/TG Gemini Remotion review render')
+           github.event.head_commit.message == 'ci(video): owner-requested 2026-10-28 RU/TG diagnostic review retry')
         )
       }}
     runs-on: ubuntu-latest
@@ -89,5 +89,17 @@ jobs:
           path: /tmp/hsk-ai-video-review-20261028/
           if-no-files-found: error
           retention-days: 7
+      - name: Preserve genuine Gemini audio and mismatch diagnostic on failure (no fabricated captions)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hsk-voice-diagnostic-20261028-${{ github.run_id }}
+          path: |
+            hsk-tu-vous/review/**/gemini-production/**/metadata.json
+            hsk-tu-vous/review/**/gemini-production/**/tts-input.txt
+            hsk-tu-vous/review/**/gemini-production/**/voice.mp3
+            hsk-tu-vous/review/**/gemini-production/**/transcription-part-*-attempt-*.json
+          if-no-files-found: warn
+          retention-days: 3
 
 # There is no Zernio auth, no auto upload, no auto approval, no publish step.
