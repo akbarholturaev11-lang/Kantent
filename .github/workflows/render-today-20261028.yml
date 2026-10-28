@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: hsk-20261028-review-production
@@ -25,7 +26,7 @@ jobs:
         (
           github.event_name == 'workflow_dispatch' ||
           (github.event_name == 'push' &&
-           github.event.head_commit.message == 'ci(video): owner-requested 2026-10-28 RU/TG diagnostic review retry')
+           github.event.head_commit.message == 'ci(video): resume authentic RU/TG Gemini audio with independently timed bilingual transcript')
         )
       }}
     runs-on: ubuntu-latest
@@ -42,6 +43,8 @@ jobs:
       CI_PACKAGE_DIR: /tmp/hsk-ai-video-review-20261028
       EPISODE_ID: hui-vs-neng-pool-20261028
       REQUESTED_LANGUAGE: all
+      HSK_AI_GEMINI_RESUME_FOLDER_RU: 2026-10-28T02-55-22-347Z
+      HSK_AI_GEMINI_RESUME_FOLDER_TG: 2026-10-28T02-56-27-158Z
     steps:
       - name: Fetch current canonical main source
         uses: actions/checkout@v4
@@ -65,10 +68,46 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg
           ffprobe -version | head -n 1
+      - name: Restore exactly the prior authentic Gemini MP3 recordings and ASR evidence
+        uses: actions/download-artifact@v4
+        with:
+          name: hsk-voice-diagnostic-20261028-40623684636
+          run-id: 40623684636
+          repository: akbarholturaev11-lang/Kantent
+          github-token: ${{ github.token }}
+          path: hsk-tu-vous/review/
+      - name: Validate original narration identity, restore WAV and reset only transcription attempt counters
+        run: |
+          python3 - <<'PY'
+          import pathlib, json, hashlib, subprocess
+          root=pathlib.Path("review/hui-vs-neng-pool-20261028")
+          required={
+            "ru": root/"gemini-production"/"2026-10-28T02-55-22-347Z",
+            "tg": root/"tg"/"gemini-production"/"2026-10-28T02-56-27-158Z",
+          }
+          for lang, folder in required.items():
+            metadata=json.loads((folder/"metadata.json").read_text())
+            original=(folder/"tts-input.txt").read_text().strip()
+            mp3=folder/"voice.mp3"
+            assert metadata["episodeId"] == "hui-vs-neng-pool-20261028"
+            assert metadata["narrationTextHash"] == hashlib.sha256(original.encode("utf8")).hexdigest()
+            assert metadata["ttsChunkCount"] == 1
+            assert metadata["languageCode"] == ("ru-RU" if lang=="ru" else "tg-TJ")
+            assert mp3.stat().st_size > 30000
+            wav=folder/"voice.wav"
+            subprocess.run(["ffmpeg","-v","error","-y","-i",str(mp3),
+              "-ar","24000","-ac","1","-c:a","pcm_s16le",str(wav)],check=True)
+            assert wav.stat().st_size > 50000
+            metadata["transcriptionAttempts"]=[]
+            metadata["status"]="audio-ready-for-independent-language-timing"
+            (folder/"metadata.json").write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+"\n")
+            print("Reused owner-requested authentic Gemini recording:",lang,
+              "SHA-256",hashlib.sha256(mp3.read_bytes()).hexdigest())
+          PY
       - name: Verify canonical 28 Oct episode, approved voices and protected sample restrictions
         id: episode
         run: node scripts/github-video-pipeline.mjs resolve "$EPISODE_ID" "$REQUESTED_LANGUAGE"
-      - name: Create genuine RU and TJ Gemini voice and Remotion MP4 packages
+      - name: Reuse existing RU/TG Gemini voice, obtain independent real word cues and render MP4s
         run: npm run content:make -- "$EPISODE_ID" --language "$REQUESTED_LANGUAGE"
       - name: Validate real MP4+SRT+post per authorized language and platform and SHA-256
         run: node scripts/github-video-pipeline.mjs package "$EPISODE_ID" "$REQUESTED_LANGUAGE" "$CI_PACKAGE_DIR"
