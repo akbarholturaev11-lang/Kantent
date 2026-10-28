@@ -1,0 +1,47 @@
+name: HSK AI verified Zernio routing and video package tests
+
+on:
+  push:
+    branches: [feat/zernio-verified-language-routing-20261028]
+    paths:
+      - .github/workflows/zernio-routing-ci.yml
+      - hsk-tu-vous/scripts/video-credentials.mjs
+      - hsk-tu-vous/scripts/video-credentials.test.mjs
+      - hsk-tu-vous/scripts/zernio-publication-core.mjs
+      - hsk-tu-vous/scripts/zernio-approved-publish.mjs
+      - hsk-tu-vous/scripts/github-video-pipeline.test.mjs
+      - hsk-tu-vous/content/publication-destinations.json
+  pull_request:
+    paths:
+      - hsk-tu-vous/scripts/video-credentials.mjs
+      - hsk-tu-vous/scripts/video-credentials.test.mjs
+      - hsk-tu-vous/scripts/zernio-publication-core.mjs
+      - hsk-tu-vous/scripts/zernio-approved-publish.mjs
+      - hsk-tu-vous/scripts/github-video-pipeline.test.mjs
+      - hsk-tu-vous/content/publication-destinations.json
+
+permissions:
+  contents: read
+
+jobs:
+  exact-account-routing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: hsk-tu-vous/package-lock.json
+      - name: Install locked dependencies and FFmpeg for synthetic real MP4 test
+        run: |
+          npm ci --no-audit --no-fund
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+      - name: Confirm exact RU/TJ account IDs, separate TikTok tokens, real MP4/SRT package, mock publisher and Telegram text-only
+        run: |
+          node --test scripts/video-credentials.test.mjs scripts/github-video-pipeline.test.mjs scripts/zernio-publication-core.test.mjs scripts/zernio-approved-publish.test.mjs scripts/telegram-product-news.test.mjs
