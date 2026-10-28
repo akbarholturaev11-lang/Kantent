@@ -6,12 +6,12 @@ import visual from "../content/visual-system.json";
 const colors:Record<string,string>={...visual.narratedActionPalette,
   red:visual.colors.brandRed,gold:visual.colors.brandGold,teal:visual.colors.brandTeal,none:"none"};
 
-export const GraphicScene:React.FC<{plan:GraphicPlan;frame:number;height:number;fps?:number}>=({plan,frame,height,fps=30})=>{
+export const GraphicScene:React.FC<{plan:GraphicPlan;frame:number;height:number;fps?:number;palette?:Record<string,string>}>=({plan,frame,height,fps=30,palette})=>{
   validateGraphicScene(plan);
   const draw=(node:GraphicNode):React.ReactNode=>{
     const state=graphicNodeState(plan,node,frame*1000/fps);
     const attrs={...node.attrs};
-    for(const key of ["fill","stroke"]) if(typeof attrs[key]==="string") attrs[key]=colors[attrs[key]];
+    for(const key of ["fill","stroke"]) if(typeof attrs[key]==="string") attrs[key]=palette?.[attrs[key]] ?? colors[attrs[key]];
     return createElement("g",{key:node.id,"data-graphic-node":node.id,opacity:state.opacity,
       transform:`translate(${state.x} ${state.y}) rotate(${state.rotate}) scale(${state.scale})`},
       createElement(node.type,{fill:"none",strokeLinecap:"round",strokeLinejoin:"round",...attrs},
