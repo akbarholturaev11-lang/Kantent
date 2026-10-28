@@ -1,0 +1,92 @@
+name: HSK AI Hui-Neng canonical Remotion visual review (no audio)
+
+# Runs only for changes to THIS isolated review on its feature branch.
+# No Gemini, Zernio, scheduling, approval or publishing.
+on:
+  push:
+    branches:
+      - feat/hui-neng-github-remotion-visual-review-20261028
+    paths:
+      - .github/workflows/hui-neng-visual-review-20261028.yml
+      - hsk-tu-vous/src/HuiNengVisualReview.tsx
+      - hsk-tu-vous/src/GraphicScene.tsx
+      - hsk-tu-vous/src/Root.tsx
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hsk-hui-neng-visual-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  storyboard-preview:
+    name: Canonical RU/TG Remotion-only frames -> 9:16 MP4
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: hsk-tu-vous/package-lock.json
+      - name: Install existing locked Remotion dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Verify React/Remotion TypeScript and canonical story assets
+        run: |
+          npm run lint
+          node --input-type=module -e '
+            import fs from "node:fs";
+            for(const [lang,file] of [["ru","content/episodes/hui-vs-neng-pool-20261028.json"],["tg","content/locales/tg/episodes/hui-vs-neng-pool-20261028.json"]]){
+              const e=JSON.parse(fs.readFileSync(file,"utf8"));
+              if(e.id!=="hui-vs-neng-pool-20261028" || !e.scenes.length)throw Error("Invalid canonical episode");
+              for(const sc of e.scenes){
+                if(!Array.isArray(sc.motionBeats)||sc.motionBeats.length!==3)throw Error("Missing authored beats");
+                for(const beat of sc.motionBeats)if(!beat.visual?.graphic?.nodes?.length)throw Error("Missing authored drawing");
+              }
+              console.log(lang+": verified "+e.scenes.length+" existing scenes; no generated cue times");
+            }'
+      - name: Render RU and TG with project-owned React/Remotion renderer
+        run: |
+          mkdir -p review-visual
+          npx remotion render src/index.ts HSKAI-HuiNeng-RU-Visual-Review review-visual/ru.mp4 \
+            --codec h264 --pixel-format yuv420p --crf 22 --scale 0.75 --concurrency 2 --log error
+          npx remotion render src/index.ts HSKAI-HuiNeng-TG-Visual-Review review-visual/tg.mp4 \
+            --codec h264 --pixel-format yuv420p --crf 22 --scale 0.75 --concurrency 2 --log error
+      - name: Verify encoded MP4 files, hash and label them as unapproved visual-only previews
+        run: |
+          ffprobe -v error -show_entries format=duration -of default=nw=1 review-visual/ru.mp4
+          ffprobe -v error -show_entries format=duration -of default=nw=1 review-visual/tg.mp4
+          sha256sum review-visual/*.mp4 > review-visual/SHA256SUMS
+          python3 - <<'PY'
+          import json,hashlib,pathlib,subprocess
+          output=pathlib.Path("review-visual")
+          streams={}
+          for code in ("ru","tg"):
+            p=output/(code+".mp4")
+            if not p.exists() or p.stat().st_size<30000:raise RuntimeError("Missing actual Remotion MP4 "+code)
+            raw=subprocess.check_output(["ffprobe","-v","error","-show_streams","-of","json",str(p)])
+            data=json.loads(raw)
+            v=next((x for x in data["streams"] if x.get("codec_type")=="video"),None)
+            if not v or int(v["width"])!=810 or int(v["height"])!=1440:raise RuntimeError("Wrong video frame size")
+            streams[code]={"file":str(p.name),"sha256":hashlib.sha256(p.read_bytes()).hexdigest(),"bytes":p.stat().st_size}
+          (output/"manifest.json").write_text(json.dumps({"episodeId":"hui-vs-neng-pool-20261028",
+            "renderer":"GitHub Remotion project src/HuiNengVisualReview.tsx",
+            "mode":"visual-only storyboard; NO word-timed subtitles or audio",
+            "approved":False,"published":False,"notPublishable":True,"languages":streams},indent=2))
+          PY
+      - name: Preserve review-only videos as GitHub artifact for manual inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: hui-neng-github-remotion-visual-review-${{ github.run_id }}
+          path: hsk-tu-vous/review-visual/
+          if-no-files-found: error
+          retention-days: 7
