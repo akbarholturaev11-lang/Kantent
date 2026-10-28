@@ -120,6 +120,21 @@ The approved JSON shape is the same as the GitHub-rendered publisher: Instagram 
 The repository is public. The temporary workflow artifacts contain no MP4 or cleartext media URL; the local MP4 remains on this machine and Zernio receives its bytes through the presigned destination. This handoff does not publish automatically and a successful upload alone is not proof of a created or published post.
 
 
+## Separate 3-day HSK AI static photo news distribution (owner 2026-10-28)
+
+Current `main` is authoritative: the Zernio Facebook publishing route is explicitly **Tajik only**; RU Facebook video packages may be prepared for the owner's MANUAL Facebook posting, but neither Russian Facebook static news nor Russian Facebook video is an authorized automatic Zernio action. Do not revive older bilingual-Facebook auto-publish guidance.
+
+The **single existing ChatGPT Scheduled Task** `6ae1893b53a08191803177bea34d82b5`, every three days at 09:00 Asia/Shanghai, is separately authorized for *fact-checked, real user-facing* HSK AI product-news **PHOTO FEED** posts, without per-post owner approval, on exactly four destinations:
+
+- Telegram TJ: `@aibotsakbar`, account `6ae1661bf80a20df8f31158e`, TikTok+Telegram Zernio connection
+- Instagram RU: `@hskai.app`, account `6a411e989d9472faae10a430`, `Zernio_RU` connection
+- Instagram TJ: `@hskai.apptj`, account `6ae0f16205fd6f5357f8503d`, Tajik Instagram+YouTube Zernio connection
+- Facebook TJ: `Akbarholturaev`, account `6ae161de384955d3b3ff194b`, TikTok+Facebook Zernio connection
+
+Read `content/telegram-agent.json#socialNewsDistribution` and `content/publication-destinations.json#newsPhotoDestinations` on EVERY run; the older `channel` entry remains the original Telegram destination and has not been removed. Validate user-facing `HSK-AI-Bot/main` changes from the previous 72h and a minimal original 4:3 PNG/JPG hosted on an isolated GitHub media branch with an immutable raw image URL. Independently validate and de-duplicate the exact account/caption/image at each Zernio connection and require per-platform published readback. Use Russian caption ONLY for Instagram RU and Tajik Cyrillic for the other three. A missing image is not permission to publish text alone. If no real release, do not post anywhere.
+
+This narrowly approved static image+caption workflow is NOT an Instagram Reel, video, Story, Facebook RU, TikTok, YouTube or automatic DM publisher. **The separate video approval/CTA/publishing rules in this document remain unchanged.** An enabled scheduled task does not prove posts were delivered, and GitHub Actions does NOT run a second social posting cron.
+
 ## Verified account groups and separate Telegram news agent (owner policy 2026-10-28)
 
 RU-language videos: Instagram `@hskai.app` ID `6a411e989d9472faae10a430`, YouTube `@hskai_app` ID `6ac96e053f8f4ffc10b0655f`, TikTok `@hskai.app` ID `6ae16327a2845fbdb07e5ccb`. TJ-language videos: Instagram `@hskai.apptj` ID `6ae0f16205fd6f5357f8503d`, YouTube `@hskaiapp-tj` ID `6ae160123787e4c71b522d64`, TikTok **`@hskai.ru`** ID `6ae16064ecf91092adba7d68`. Facebook `Akbarholturaev` ID `6ae161de384955d3b3ff194b` is a **shared bilingual RU/TJ page**, with separate videos and owner review for each language. The username `.ru` does not make TikTok `@hskai.ru` Russian.

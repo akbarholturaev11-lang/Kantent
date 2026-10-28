@@ -93,6 +93,8 @@ jobs:
           node-version: "22"
       - name: Check validator tests
         run: node --test scripts/check-consistency.test.mjs
+      - name: Guard the four authorized three-day photo-news destinations and preserve manual video controls
+        run: node --test scripts/telegram-news-routing.test.mjs
       - name: Test task-to-skill routing
         run: node --test scripts/skill-router.test.mjs
       - name: Test all functional skill branches
