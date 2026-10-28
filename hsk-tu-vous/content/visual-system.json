@@ -261,7 +261,10 @@
     "background": "#161A23",
     "secondary": "#29313E",
     "foreground": "#FFF5DF",
-    "muted": "#D2C6B4"
+    "muted": "#D2C6B4",
+    "poolDeck": "#F3E6C9",
+    "poolWater": "#117E95",
+    "poolRipple": "#B7EDF0"
   },
   "promoPresentation": {
     "styleId": "minimal-story-v1",

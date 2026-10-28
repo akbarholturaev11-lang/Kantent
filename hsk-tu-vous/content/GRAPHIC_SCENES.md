@@ -43,7 +43,7 @@ Each beat is `{id,kind:"graphic",cueText,cueOccurrence?,explains,visual}`. `visu
 The moving circle above demonstrates syntax; it is not a generic replacement for a spoken person/action.
 
 - Node types: `g`, `path`, `circle`, `ellipse`, `rect`, `line`, `polyline`, `polygon`. An optional `parentId` references an earlier group. Missing parents, duplicate IDs and cycles are rejected.
-- `attrs` holds the shape's geometry and paint: `fill`, `stroke`, `strokeWidth`, `strokeLinecap`, `strokeLinejoin`. Color tokens are `foreground`, `muted`, `secondary`, `red`, `gold`, `teal`, `none`, resolved from the active design system.
+- `attrs` holds the shape's geometry and paint: `fill`, `stroke`, `strokeWidth`, `strokeLinecap`, `strokeLinejoin`. Color tokens are `foreground`, `muted`, `secondary`, `red`, `gold`, `teal`, `poolDeck`, `poolWater`, `poolRipple`, `none`, resolved from the active design system.
 - Node `x`, `y`, `rotate`, `scale`, `opacity` set its base transform. Tracks override a selected property using increasing `{atMs,value}` keys beginning at zero. Group rotation uses its local origin; place joints at the intended arm/leg pivot and nest groups for coordinated movement.
 - An optional closed `loop:true` supports continuous meaningful movement. Flashing opacity/scale loops and constant tracks are rejected. All animation is frame-driven and seek-safe.
 - A `graphic` cannot mix legacy object/count/value/choice/model payloads. Use multiple nodes or separate beats.

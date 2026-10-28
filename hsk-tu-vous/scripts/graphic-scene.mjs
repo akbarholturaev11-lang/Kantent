@@ -1,6 +1,6 @@
 // Declarative drawings, not executable SVG/HTML. New teaching actions are data.
 export const GRAPHIC_TYPES = ["g", "path", "circle", "ellipse", "rect", "line", "polyline", "polygon"];
-export const GRAPHIC_COLORS = ["foreground", "muted", "secondary", "red", "gold", "teal", "none"];
+export const GRAPHIC_COLORS = ["foreground", "muted", "secondary", "red", "gold", "teal", "poolDeck", "poolWater", "poolRipple", "none"];
 const properties = ["x", "y", "rotate", "scale", "opacity"];
 const geometry = {
   g: [], path: ["d"], circle: ["cx", "cy", "r"], ellipse: ["cx", "cy", "rx", "ry"],
