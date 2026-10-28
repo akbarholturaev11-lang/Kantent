@@ -17,7 +17,7 @@ import {
   validateApprovedIntent, publicationBody, safeSignedUploadUrl,
   parseZernioPostReply,
 } from "./zernio-publication-core.mjs";
-import { zernioRoute } from "./video-credentials.mjs";
+import { zernioRoute, zernioTargetAccount } from "./video-credentials.mjs";
 import {
   MAX_LOCAL_VIDEO_BYTES, buildLocalTicketMetadata, encryptTicket, isSha256,
   localMediaSecretName, safeRequestId, safeTicketPublicKey,
@@ -287,11 +287,31 @@ async function publishLocalUpload(ticketRoot, env = process.env) {
     body: publicationBody(approval, mediaUrl),
   });
   const rawId = created.data?.post?._id ?? created.data?.post?.id ?? null;
+  if (!/^[a-f0-9]{24}$/.test(rawId ?? ""))
+    throw Error("Zernio create response did not return a real post ID. Check Zernio before retrying.");
   await writeReceipt({ ...receiptBase, state: "post-created-awaiting-verification",
     postId: rawId, reportedStatus: created.data?.post?.status ?? null }, env);
-  const parsed = parseZernioPostReply(created.data, approval);
-  const readback = await jsonRequest(API_ROOT + "/posts/" + encodeURIComponent(parsed.postId), { token: route.secret });
-  const verified = parseZernioPostReply({ post: readback.data?.post ?? readback.data }, approval);
+  const stopAt = Date.now() + 120_000;
+  let readbackPost;
+  let readbackStatus = "unknown";
+  while (true) {
+    const readback = await jsonRequest(API_ROOT + "/posts/" + encodeURIComponent(rawId), { token: route.secret });
+    readbackPost = readback.data?.post ?? readback.data;
+    const platforms = Array.isArray(readbackPost?.platforms) ? readbackPost.platforms : [];
+    const entry = platforms.find(item => item?.platform === approval.platform) ?? null;
+    if (platforms.length !== 1 || entry?.accountId !== approval.target.accountId)
+      throw Error("Zernio GET readback did not prove the exact target account; do not retry or repost.");
+    readbackStatus = entry?.status ?? readbackPost?.status ?? "unknown";
+    const expectedStatus = approval.mode === "draft" ? "draft"
+      : approval.mode === "scheduled" ? ["scheduled", "pending_approval"].includes(readbackStatus)
+        : readbackStatus === "published";
+    if (expectedStatus || ["failed", "partial", "rejected", "canceled", "cancelled"].includes(readbackStatus)) break;
+    if (Date.now() >= stopAt) break;
+    await delay(5_000);
+  }
+  const verified = parseZernioPostReply({
+    post: { ...readbackPost, status: readbackPost?.status ?? readbackStatus },
+  }, approval);
   const receipt = {
     ...receiptBase, state: verified.status, postId: verified.postId,
     platformPostId: verified.platformPostId, platformPostUrl: verified.platformPostUrl,
