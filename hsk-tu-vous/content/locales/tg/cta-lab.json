@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 25,
+  "revision": 26,
   "languageCode": "tg-TJ",
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
@@ -2650,6 +2650,98 @@
         "voiceProfileId": "tg-gemini-kore-v1",
         "voiceProvider": "gemini-api",
         "nonCtaContentHash": "2e2ffed4e5615f1bae37f9fd5a70feb0b83c920468d0145b2e6b4f1c6c4e3067"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "hui-vs-neng-pool-20261028-tiktok-cta-v2",
+      "episodeId": "hui-vs-neng-pool-20261028",
+      "date": "2026-10-28",
+      "formatId": "tiktok-manual-dm",
+      "ruleVersion": "cta-policy-v1",
+      "offerId": "hsk-ai-tg-profile-link-download-v1",
+      "keyword": "HSK",
+      "hypothesis": "Apply the owner single-subtitle and no-duplicate-text correction to the current Tajik TikTok CTA, retaining its approved narration and cue-linked visuals.",
+      "changedVariable": "visual",
+      "comparisonGroupId": "tiktok-profile-manual-dm-v1",
+      "registeredAt": "2026-10-28T09:27:15.888Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0001"
+      ],
+      "supersedes": "hui-vs-neng-pool-20261028-tiktok-cta-v1",
+      "copyHash": "41449b6a2ba2093c502230c42034857736a8f51d34cba53676828064c874a2f1",
+      "copySnapshot": {
+        "cta": "HSK AI-ро санҷ. Ба профили ман даро ва дар паёми хусусӣ «HSK» навис — ман пайванди боргирии HSK AI-ро дастӣ мефиристам.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "HSK AI-ро санҷ. Ба профили ман даро ва дар паёми хусусӣ «HSK» навис — ман пайванди боргирии HSK AI-ро дастӣ мефиристам.",
+            "headline": "ПРОФИЛ • ПАЁМИ ХУСУСӢ",
+            "screenCaption": "HSK навис — пайвандро дастӣ мефиристам",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "санҷ",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ПРОФИЛ",
+                "motion": "slide",
+                "syncCueText": "даро",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "ПАЁМИ ХУСУСӢ",
+                "motion": "reveal",
+                "syncCueText": "паёми",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "HSK",
+                "motion": "pop",
+                "syncCueText": "HSK",
+                "transitionStyle": "mask-reveal"
+              },
+              {
+                "hero": "ПАЙВАНДИ БОРГИРӢ",
+                "motion": "slide",
+                "syncCueText": "пайванди",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "Use one central CTA stage and only the normal single subtitle line. Show one large cue-linked focus detail at a time; do not repeat the spoken phrase in a second headline, add a second CTA strip, duplicate the HSK AI wordmark, or use a moving focus marker. At санҷ, reveal the single HSK AI mark. At даро, show ПРОФИЛ. At паёми, show ПАЁМИ ХУСУСӢ. At HSK, show the keyword HSK. At пайванди, reveal ПАЙВАНДИ БОРГИРӢ and hold it through the final spoken word. Use restrained brand-colored transitions, no screenshots and no simulated DM/message or completed download. The spoken offer says the owner will send the link manually; do not imply automation or independent link verification."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 5,
+            "precedingSceneIds": [
+              "hook",
+              "skill",
+              "conditions",
+              "contrast",
+              "recall"
+            ],
+            "durationSec": 11,
+            "plannedStartSec": 42
+          }
+        ]
+      },
+      "placementHash": "f91b341c86abb80bcb810b719298909299823dc6393df9c52623ccc48138150b",
+      "contextSnapshot": {
+        "level": "HSK 2",
+        "topic": "会 ва 能: маҳорати омӯхташуда ва имконият дар вазъияти муайян",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "tg-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "487adb9bb7b44dc84dc7d81ede04c65703d5a3dcc4e40506925cc55631615f34",
+        "motionDesign": true,
+        "motionDesignStyle": "explain-actions-v1"
       },
       "primaryMetric": "profile-link-clickers-per-1000-views",
       "evidenceStatus": "unmeasured"
