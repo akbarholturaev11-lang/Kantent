@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "language": "tg",
+  "platform": "telegram",
+  "account": "@aibotsakbar",
+  "timezone": "Asia/Shanghai",
+  "cadenceDays": 3,
+  "firstCycleDate": "2026-10-29",
+  "posts": [],
+  "policy": "Only real sourced HSK AI user-facing product news in Tajik Cyrillic; no video, no fabricated releases, owner-reviewed exact message and SHA-256 before automated dispatch. Empty queue -> no post."
+}
