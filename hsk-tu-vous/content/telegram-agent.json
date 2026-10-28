@@ -23,7 +23,16 @@
     "firstDate": "2026-10-29",
     "timezone": "Asia/Shanghai",
     "intendedWindow": "morning",
-    "publisher": "scheduled ChatGPT agent, not GitHub Actions (avoid duplicates)"
+    "publisher": "scheduled ChatGPT agent, not GitHub Actions (avoid duplicates)",
+    "automationId": "6ae1893b53a08191803177bea34d82b5",
+    "startLocalTime": "09:00",
+    "recurrence": "FREQ=DAILY;INTERVAL=3",
+    "activation": {
+      "verifiedDate": "2026-10-28",
+      "verifiedThrough": "ChatGPT Scheduled Tasks",
+      "wasEnabled": true,
+      "note": "This is the verified scheduled-task state on 2026-10-28; task activation is outside GitHub and must be rechecked before future status claims."
+    }
   },
   "output": {
     "message": "One concise factual Tajik product update, not technical commit log",
@@ -41,6 +50,7 @@
     "emptyWindow": "Skip; report no verified updates",
     "missingPhotoOrAccount": "Do not post text-only, video or to another platform; report error and block",
     "readback": "Confirm Zernio post has the exact Telegram account and published status; record URL and source SHA",
-    "noSecretsInText": true
+    "noSecretsInText": true,
+    "publicationProof": "An enabled schedule is not proof of a published Telegram post; verify each actual Zernio post."
   }
 }
