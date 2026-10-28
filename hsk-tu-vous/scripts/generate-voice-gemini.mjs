@@ -3,6 +3,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
+import { requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { languageEnvironment, languageSettings } from "./language-context.mjs";
@@ -69,13 +70,11 @@ async function loadGeminiEnvironment(profile) {
       "Gemini production TTS uchun .env.local ichida HSK_AI_ALLOW_GEMINI_API=true bo‘lishi kerak.",
     );
   }
-  if (!process.env.GEMINI_API_KEY) {
-    throw new Error(
-      "GEMINI_API_KEY yo‘q. Kalitni .env.local ga kiriting; uni kodga yoki logga yozmang.",
-    );
-  }
+  const slots = requireGeminiKeySlots(process.env);
+  const credentialState = { slots, index: 0 };
   return {
-    apiKey: process.env.GEMINI_API_KEY,
+    apiKey: slots[0].secret,
+    credentialState,
     ttsModel: profile.ttsModel,
     voice: profile.voiceName,
     transcribeModel: profile.transcriptionModel,
@@ -507,24 +506,30 @@ async function generateTtsWav(config, text) {
       { type: "speech_metadata", style: config.style },
     ];
   }
-  const tts = await requestJson(
-    `${API_ROOT}/v1beta/interactions`,
-    {
-      method: "POST",
-      headers: {
-        "x-goog-api-key": config.apiKey,
-        "Content-Type": "application/json",
-        "Api-Revision": API_REVISION,
+  // Rotate credentials only if this standalone TTS call fails. Do not
+  // regenerate a successful take or change provider, model, voice or cues.
+  const tts = await withGeminiKeyFailover(
+    config.credentialState,
+    (apiKey) => requestJson(
+      `${API_ROOT}/v1beta/interactions`,
+      {
+        method: "POST",
+        headers: {
+          "x-goog-api-key": apiKey,
+          "Content-Type": "application/json",
+          "Api-Revision": API_REVISION,
+        },
+        body: JSON.stringify({
+          model: config.ttsModel,
+          input: [{ type: "user_input", content }],
+          response_format: { type: "audio" },
+          generation_config: { speech_config: [{ voice: config.voice }] },
+        }),
       },
-      body: JSON.stringify({
-        model: config.ttsModel,
-        input: [{ type: "user_input", content }],
-        response_format: { type: "audio" },
-        generation_config: { speech_config: [{ voice: config.voice }] },
-      }),
-    },
-    "Gemini speech generation",
+      "Gemini speech generation",
+    ),
   );
+  config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
   const wav = getAudioData(tts.data);
   if (
     wav.subarray(0, 4).toString("ascii") !== "RIFF" ||
@@ -1001,11 +1006,17 @@ try {
     let attempts = metadata.transcriptionAttempts?.[index] ?? (transcription ? 1 : 0);
     while (!chunkAlignment?.captions && attempts < 3) {
       attempts += 1;
-      const uploadedFile = await uploadForTranscription(
-        config.apiKey,
-        transcriptionAudioPath,
-        `hsk-production-${EPISODE_ID}-${index + 1}-attempt-${attempts}`,
+      // Keep resumable upload atomic per key; a rejected start may switch to a
+      // backup and start a NEW upload. Transcribe + cleanup use that SAME key.
+      const uploadedFile = await withGeminiKeyFailover(
+        config.credentialState,
+        (apiKey) => uploadForTranscription(
+          apiKey,
+          transcriptionAudioPath,
+          `hsk-production-${EPISODE_ID}-${index + 1}-attempt-${attempts}`,
+        ),
       );
+      config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
       try {
         const response = await requestJson(
           `${API_ROOT}/v1beta/interactions`,

@@ -1,0 +1,180 @@
+name: HSK AI video review automation
+
+on:
+  push:
+    branches:
+      - feat/github-automated-video-review-20261028
+    paths:
+      - .github/workflows/video-review.yml
+      - hsk-tu-vous/scripts/github-video-pipeline.mjs
+      - hsk-tu-vous/scripts/github-video-pipeline.test.mjs
+      - hsk-tu-vous/scripts/video-credentials.mjs
+      - hsk-tu-vous/scripts/video-credentials.test.mjs
+      - hsk-tu-vous/scripts/generate-voice-gemini.mjs
+      - .github/workflows/zernio-approved-publish.yml
+      - hsk-tu-vous/scripts/zernio-publication-core.mjs
+      - hsk-tu-vous/scripts/zernio-publication-core.test.mjs
+      - hsk-tu-vous/scripts/zernio-approved-publish.mjs
+      - hsk-tu-vous/scripts/zernio-approved-publish.test.mjs
+  pull_request:
+    paths:
+      - .github/workflows/video-review.yml
+      - hsk-tu-vous/scripts/github-video-pipeline.mjs
+      - hsk-tu-vous/scripts/github-video-pipeline.test.mjs
+      - hsk-tu-vous/scripts/video-credentials.mjs
+      - hsk-tu-vous/scripts/video-credentials.test.mjs
+      - hsk-tu-vous/scripts/generate-voice-gemini.mjs
+      - .github/workflows/zernio-approved-publish.yml
+      - hsk-tu-vous/scripts/zernio-publication-core.mjs
+      - hsk-tu-vous/scripts/zernio-publication-core.test.mjs
+      - hsk-tu-vous/scripts/zernio-approved-publish.mjs
+      - hsk-tu-vous/scripts/zernio-approved-publish.test.mjs
+      - hsk-tu-vous/docs/GITHUB_VIDEO_REVIEW.md
+  workflow_dispatch:
+    inputs:
+      episode:
+        description: "Canonical date (YYYY-MM-DD), episode ID, or today"
+        required: true
+        type: string
+        default: today
+      language:
+        description: "Production languages; each has its own real audio, CTA and MP4"
+        required: true
+        type: choice
+        options:
+          - all
+          - ru
+          - tg
+        default: all
+  # Disabled until HSK_VIDEO_SCHEDULE_ENABLED is explicitly set to true
+  # in repository Actions variables after owner review and merge.
+  schedule:
+    - cron: "0 0 * * 1,3,5"  # 08:00 Asia/Shanghai, Mon/Wed/Fri
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hsk-video-review-${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}-${{ github.event.inputs.episode || 'calendar' }}
+  cancel-in-progress: false
+
+jobs:
+  safe-ci:
+    name: Test request guards and real synthetic MP4 packaging (NO Gemini)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: hsk-tu-vous/package-lock.json
+      - name: Install frozen dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Check pipeline scripts and canonical files
+        run: |
+          node --check scripts/github-video-pipeline.mjs
+          node --check scripts/github-video-pipeline.test.mjs
+          node --check scripts/video-credentials.mjs
+          node --check scripts/video-credentials.test.mjs
+          node --check scripts/generate-voice-gemini.mjs
+          node --check scripts/zernio-publication-core.mjs
+          node --check scripts/zernio-publication-core.test.mjs
+          node --check scripts/zernio-approved-publish.mjs
+          node --check scripts/zernio-approved-publish.test.mjs
+          npm run check:consistency
+      - name: Install FFmpeg and FFprobe for real synthetic MP4 tests
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          ffprobe -version | head -n 1
+      - name: Test exact-date safety, isolation and actual FFmpeg MP4/SRT verification
+        run: node --test scripts/github-video-pipeline.test.mjs scripts/video-credentials.test.mjs scripts/zernio-publication-core.test.mjs scripts/zernio-approved-publish.test.mjs
+
+  render-review:
+    name: Gemini narration -> Remotion -> verified private review artifact
+    if: >-
+      ${{
+        github.event_name == 'workflow_dispatch' ||
+        (github.event_name == 'schedule' && vars.HSK_VIDEO_SCHEDULE_ENABLED == 'true')
+      }}
+    needs: safe-ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    env:
+      HSK_AI_ALLOW_GEMINI_API: "true"
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_API_KEY_BACKUP_1: ${{ secrets.GEMINI_API_KEY_BACKUP_1 }}
+      GEMINI_API_KEY_BACKUP_2: ${{ secrets.GEMINI_API_KEY_BACKUP_2 }}
+      GEMINI_API_KEY_BACKUP_3: ${{ secrets.GEMINI_API_KEY_BACKUP_3 }}
+      # HTTP 429 quota limits are never bypassed by rotating Google accounts.
+      REQUESTED_EPISODE: ${{ github.event.inputs.episode || 'today' }}
+      REQUESTED_LANGUAGE: ${{ github.event.inputs.language || 'all' }}
+      CI_PACKAGE_DIR: /tmp/hsk-ai-video-review
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: hsk-tu-vous/package-lock.json
+      - name: Check API secret without exposing it
+        run: |
+          if [[ -z "$GEMINI_API_KEY" && -z "$GEMINI_API_KEY_BACKUP_1" && -z "$GEMINI_API_KEY_BACKUP_2" && -z "$GEMINI_API_KEY_BACKUP_3" ]]; then
+            echo "::error::No Gemini API credential is configured in Actions secrets."
+            exit 1
+          fi
+      - name: Install production dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Install FFmpeg and FFprobe for real production MP4 validation
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Resolve exact lesson and fail closed for protected approved audio
+        id: episode
+        run: node scripts/github-video-pipeline.mjs resolve "$REQUESTED_EPISODE" "$REQUESTED_LANGUAGE"
+      - name: Use existing Gemini narration and real-word-cue Remotion pipeline
+        env:
+          EPISODE_ID: ${{ steps.episode.outputs.episode_id }}
+        run: npm run content:make -- "$EPISODE_ID" --language "$REQUESTED_LANGUAGE"
+      - name: Verify and isolate both platform MP4s per language (no publishing)
+        env:
+          EPISODE_ID: ${{ steps.episode.outputs.episode_id }}
+        run: node scripts/github-video-pipeline.mjs package "$EPISODE_ID" "$REQUESTED_LANGUAGE" "$CI_PACKAGE_DIR"
+      - name: Write immutable review manifest summary
+        run: |
+          {
+            echo "### HSK AI generated review package"
+            echo "All MP4 files remain **unapproved and unpublished**."
+            echo "The manifest holds language/platform-specific SHA-256 hashes."
+            echo "Inspect actual video, narration, captions, CTA and Zernio account/time before approving a post."
+            echo
+            echo '~~~json'
+            cat "$CI_PACKAGE_DIR/manifest.json"
+            echo '~~~'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload verified review videos (7-day retention)
+        uses: actions/upload-artifact@v4
+        with:
+          name: hsk-review-${{ steps.episode.outputs.episode_id }}-${{ github.run_id }}
+          path: /tmp/hsk-ai-video-review/
+          if-no-files-found: error
+          retention-days: 7
+
+# Deliberately NO github write permission, Zernio credentials, API calls to
+# social networks, approval token or publication job. Exact owner approval
+# of each language/platform preview is required outside this workflow.

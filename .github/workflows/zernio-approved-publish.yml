@@ -1,0 +1,115 @@
+name: HSK AI Zernio owner-approved posting
+
+# No push, pull_request, cron, or automatic render trigger.
+on:
+  workflow_dispatch:
+    inputs:
+      review_run_id:
+        description: "Successful VIDEO REVIEW run ID on main (inspect its artifact first)"
+        required: true
+        type: string
+      language:
+        description: "Approved rendered language"
+        required: true
+        type: choice
+        options: [ru, tg]
+      platform:
+        description: "Approved platform; Tajik YouTube is forbidden"
+        required: true
+        type: choice
+        options: [instagram, youtube]
+      target_account_id:
+        description: "Exact target Account ID from your repository Variables"
+        required: true
+        type: string
+      video_sha256:
+        description: "EXACT video sha256 from verified review manifest"
+        required: true
+        type: string
+      post_sha256:
+        description: "EXACT post preview sha256 from verified review manifest"
+        required: true
+        type: string
+      mode:
+        description: "Choose DRAFT or explicitly request publishing/scheduling"
+        required: true
+        type: choice
+        options: [draft, scheduled, now]
+        default: draft
+      approved_post_json:
+        description: 'JSON: {"content":"caption","title":"YouTube title","visibility":"unlisted","madeForKids":false,"containsSyntheticMedia":true,"shareToFeed":true,"scheduledFor":""}'
+        required: true
+        type: string
+      approval_confirmation:
+        description: "Type mode phrase: SAVE_EXACT_VIDEO_AS_DRAFT / APPROVE_EXACT_VIDEO_AND_SCHEDULE / APPROVE_EXACT_VIDEO_AND_PUBLISH_NOW"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: hsk-zernio-${{ inputs.review_run_id }}-${{ inputs.language }}-${{ inputs.platform }}
+  cancel-in-progress: false
+
+jobs:
+  owner-approved-zernio:
+    name: Verify owner/hash/account -> presign -> upload -> create post -> readback
+    if: ${{ github.actor == 'akbarholturaev11-lang' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    # Optional additional human gate; configure required reviewers where available.
+    environment: hsk-zernio-publishing
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      ZERNIO_API_KEY: ${{ secrets.ZERNIO_API_KEY }}
+      ZERNIO_TG_API_KEY: ${{ secrets.ZERNIO_TG_API_KEY }}
+      ZERNIO_RU_INSTAGRAM_ACCOUNT_ID: ${{ vars.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID }}
+      ZERNIO_RU_YOUTUBE_ACCOUNT_ID: ${{ vars.ZERNIO_RU_YOUTUBE_ACCOUNT_ID }}
+      ZERNIO_TG_INSTAGRAM_ACCOUNT_ID: ${{ vars.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID }}
+      APPROVED_RUN_ID: ${{ inputs.review_run_id }}
+      APPROVED_LANGUAGE: ${{ inputs.language }}
+      APPROVED_PLATFORM: ${{ inputs.platform }}
+      APPROVED_ACCOUNT_ID: ${{ inputs.target_account_id }}
+      APPROVED_VIDEO_SHA256: ${{ inputs.video_sha256 }}
+      APPROVED_POST_SHA256: ${{ inputs.post_sha256 }}
+      APPROVED_POST_JSON: ${{ inputs.approved_post_json }}
+      APPROVED_MODE: ${{ inputs.mode }}
+      APPROVAL_CONFIRMATION: ${{ inputs.approval_confirmation }}
+      PUBLICATION_RECEIPT_DIR: /tmp/hsk-zernio-receipt
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: hsk-tu-vous/package-lock.json
+      - name: Install frozen dependencies and verify policy tests
+        run: |
+          npm ci --no-audit --no-fund
+          node --test scripts/zernio-publication-core.test.mjs scripts/video-credentials.test.mjs
+      - name: Download manually reviewed source run artifact
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.review_run_id }}
+          repository: akbarholturaev11-lang/Kantent
+          github-token: ${{ github.token }}
+          pattern: hsk-review-*
+          path: /tmp/hsk-owner-reviewed-media
+          merge-multiple: true
+      - name: Verify source run, exact media/copy hashes, account and explicit owner approval
+        run: node scripts/zernio-approved-publish.mjs /tmp/hsk-owner-reviewed-media
+      - name: Save sanitized post receipt even if posting fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hsk-zernio-audit-${{ github.run_id }}
+          path: /tmp/hsk-zernio-receipt/receipt.json
+          if-no-files-found: warn
+          retention-days: 90
+
+# No auto-publish. GitHub workflow_dispatch available only after merge to main.
