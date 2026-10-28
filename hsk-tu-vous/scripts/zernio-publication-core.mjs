@@ -162,7 +162,9 @@ export function parseZernioPostReply(value, approval) {
       accountId !== approval.target.accountId)
     throw Error("Zernio response did not confirm the exact target account; manual investigation required.");
   const platformResult = post.platforms[0];
-  const status = platformResult.status ?? post.status;
+  // Zernio's lifecycle status is on the post; a scheduled platform row may
+  // correctly remain `pending` until its scheduled time.
+  const status = post.status ?? platformResult.status;
   if (approval.mode === "draft" && status !== "draft") throw Error("Zernio did not confirm draft-only status.");
   const scheduledFor = platformResult.scheduledFor ?? post.scheduledFor ?? null;
   if (approval.mode === "scheduled") {
@@ -174,7 +176,7 @@ export function parseZernioPostReply(value, approval) {
   }
   if (approval.mode === "now" && status !== "published")
     throw Error("Zernio did not fully publish this video; inspect the returned post before any retry.");
-  return {postId:id,zernioPostId:id,status,platform:approval.platform,
+  return {postId:id,zernioPostId:id,status,platformStatus:platformResult.status??null,platform:approval.platform,
     accountId:approval.target.accountId,
     platformPostId:platformResult.platformPostId??null,
     platformPostUrl:platformResult.platformPostUrl??platformResult.publishedUrl??null,

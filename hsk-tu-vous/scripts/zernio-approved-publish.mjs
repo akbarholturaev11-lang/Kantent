@@ -219,7 +219,7 @@ export async function executeApprovedPublication(root,env=process.env) {
     const entry=platforms.find(item=>item?.platform===approval.platform)??null;
     if(platforms.length!==1||responseAccountId(entry?.accountId)!==approval.target.accountId)
       throw Error("Zernio GET readback did not prove the exact target account; do not retry or repost.");
-    readbackStatus=entry?.status??fromGet?.status??"unknown";
+    readbackStatus=fromGet?.status??entry?.status??"unknown";
     const expectedStatus=approval.mode==="draft"?readbackStatus==="draft"
       :approval.mode==="scheduled"?["scheduled","pending_approval"].includes(readbackStatus)
         :readbackStatus==="published";
@@ -231,7 +231,7 @@ export async function executeApprovedPublication(root,env=process.env) {
   const receipt={...safeReceipt,state:validated.status,postId:validated.postId,
     zernioPostId:validated.zernioPostId,platformPostId:validated.platformPostId,
     platformPostUrl:validated.platformPostUrl,publishedAt:validated.publishedAt,
-    scheduledFor:validated.scheduledFor,
+    scheduledFor:validated.scheduledFor,platformStatus:validated.platformStatus,
     resultVerifiedBy:"Zernio GET /v1/posts/{id}",updatedAt:new Date().toISOString()};
   await writeReceipt(receipt,env);
   console.log("Zernio readback verified: "+receipt.language+"/"+receipt.platform+

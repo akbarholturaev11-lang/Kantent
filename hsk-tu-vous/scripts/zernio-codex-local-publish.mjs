@@ -200,7 +200,7 @@ async function reconcileExistingPost(env = process.env) {
     const entry = platforms.find(item => item?.platform === platform) ?? null;
     const observedAccountId = responseAccountId(entry?.accountId);
     const targetVerified = platforms.length === 1 && observedAccountId === target.accountId;
-    const status = entry?.status ?? post?.status ?? "unknown";
+    const status = post?.status ?? entry?.status ?? "unknown";
     const scheduledFor = entry?.scheduledFor ?? post?.scheduledFor ?? null;
     const scheduleVerified = !expectedScheduledFor ||
       (scheduledFor && Number.isFinite(Date.parse(scheduledFor)) &&
@@ -217,6 +217,7 @@ async function reconcileExistingPost(env = process.env) {
       observedAccountId: observedAccountId || null,
       targetVerified,
       state: status,
+      platformStatus: entry?.status ?? null,
       platformPostId: entry?.platformPostId ?? null,
       platformPostUrl: entry?.platformPostUrl ?? entry?.publishedUrl ?? null,
       publishedAt: entry?.publishedAt ?? post?.publishedAt ?? null,
@@ -326,7 +327,7 @@ async function publishLocalUpload(ticketRoot, env = process.env) {
     const entry = platforms.find(item => item?.platform === approval.platform) ?? null;
     if (platforms.length !== 1 || responseAccountId(entry?.accountId) !== approval.target.accountId)
       throw Error("Zernio GET readback did not prove the exact target account; do not retry or repost.");
-    readbackStatus = entry?.status ?? readbackPost?.status ?? "unknown";
+    readbackStatus = readbackPost?.status ?? entry?.status ?? "unknown";
     const expectedStatus = approval.mode === "draft" ? "draft"
       : approval.mode === "scheduled" ? ["scheduled", "pending_approval"].includes(readbackStatus)
         : readbackStatus === "published";
@@ -340,6 +341,7 @@ async function publishLocalUpload(ticketRoot, env = process.env) {
   const receipt = {
     ...receiptBase, state: verified.status, postId: verified.postId,
     zernioPostId: verified.zernioPostId,
+    platformStatus: verified.platformStatus,
     platformPostId: verified.platformPostId, platformPostUrl: verified.platformPostUrl,
     publishedAt: verified.publishedAt, scheduledFor: verified.scheduledFor,
     resultVerifiedBy: "Zernio GET /v1/posts/{id}", updatedAt: new Date().toISOString(),
