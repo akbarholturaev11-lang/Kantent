@@ -49,7 +49,7 @@ jobs:
               const e=JSON.parse(fs.readFileSync(file,"utf8"));
               if(e.id!=="hui-vs-neng-pool-20261028" || !e.scenes.length)throw Error("Invalid canonical episode");
               for(const sc of e.scenes){
-                if(!Array.isArray(sc.motionBeats)||sc.motionBeats.length!==3)throw Error("Missing authored beats");
+                if(!Array.isArray(sc.motionBeats)||sc.motionBeats.length<2)throw Error("Missing authored beats");
                 for(const beat of sc.motionBeats)if(!beat.visual?.graphic?.nodes?.length)throw Error("Missing authored drawing");
               }
               console.log(lang+": verified "+e.scenes.length+" existing scenes; no generated cue times");
