@@ -100,6 +100,44 @@
           "Relevant to verified user-facing news"
         ],
         "onFailure": "Regenerate or simplify before publication; do not compromise factual or media-hosting requirements."
+      },
+      "mediaHosting": {
+        "version": "2026-10-28-github-binary-host-v1",
+        "rationale": "Adobe-generated preview/share/session HTTPS URLs can return 404 to Zernio; a real raw image file must be hosted and independently validated before publication.",
+        "sourceRepository": "akbarholturaev11-lang/Kantent",
+        "sourceRepositoryMustBePublic": true,
+        "branchPolicy": "Create a unique media/telegram-news-YYYYMMDD-unique branch from the current main SHA for each distinct image. Never alter main, existing files, historical posts, lesson/video code or agent scripts. No duplicate GitHub publishing cron.",
+        "pathPattern": "hsk-tu-vous/public/telegram-news/YYYY-MM-DD-unique.png",
+        "fileRequirements": {
+          "allowedMimeTypes": [
+            "image/png",
+            "image/jpeg"
+          ],
+          "aspectRatio": "4:3",
+          "maxBytes": 10485760,
+          "mustBeGenuineBinary": true,
+          "source": "Only the newly generated factual news image, not an old/irrelevant placeholder"
+        },
+        "uploadSteps": [
+          "Obtain the newly generated image's ACTUAL binary bytes, not an Adobe share/session/preview URL or a markdown image link.",
+          "For GitHub Git data API use create_blob with encoding=base64 containing genuine PNG/JPEG bytes; create_tree with the binary blob's SHA and exact file path, create_commit on the isolated media branch, update_ref with the expected branch SHA. A create_file UTF-8 string is NOT a binary image upload.",
+          "Build the immutable raw.githubusercontent.com URL from the created image COMMIT SHA and exact path, not a guessed branch URL or a github.com/.../blob HTML page.",
+          "Verify remote GET returns HTTP 200, a real image/png or image/jpeg payload with matching dimensions (4:3) and nonzero file size; check Zernio validate_media or validate_post accepts it.",
+          "Post only the validated original image plus verified Tajik Cyrillic news text to the exact authorized Telegram account via Zernio, read back published status and deduplicate."
+        ],
+        "immutableRawUrlPattern": "https://raw.githubusercontent.com/akbarholturaev11-lang/Kantent/IMAGE_COMMIT_SHA/hsk-tu-vous/public/telegram-news/EXACT_FILE.png",
+        "prohibited": [
+          "Adobe session/share/preview URLs as post media",
+          "HTML GitHub blob page",
+          "unverified temporary URLs",
+          "fabricated or inferred URLs",
+          "writing binary content with text-only create_file",
+          "altering main branch while archiving media",
+          "substituting an unrelated existing image",
+          "posting text only when an image was required"
+        ],
+        "onHostingFailure": "Skip public Telegram post, give exact blocker, do not retry publishing without checking Zernio's recent posts first.",
+        "verificationNote": "On 2026-10-28 an already committed public PNG in this GitHub repository passed Zernio's read-only validate_media check. This verifies GitHub RAW HOST compatibility only; it does not verify a future agent can acquire generated image bytes, upload them or complete a Telegram post."
       }
     },
     "noApprovalNeeded": true,
