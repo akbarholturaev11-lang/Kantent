@@ -9,6 +9,7 @@ import ruEpisode from "../content/episodes/hui-vs-neng-pool-20261028.json";
 import tgEpisode from "../content/locales/tg/episodes/hui-vs-neng-pool-20261028.json";
 import visualSystem from "../content/visual-system.json";
 import {GraphicScene} from "./GraphicScene";
+import type {GraphicScene as GraphicPlan} from "../scripts/graphic-scene.mjs";
 
 const FPS=30;
 const C=visualSystem.colors;
@@ -54,7 +55,7 @@ const VisualOnly:React.FC<PreviewProps>=({language})=>{
   <div style={{position:"absolute",left:82,right:82,top:640,height:730,
    display:"flex",alignItems:"center",justifyContent:"center",
    opacity:beatOpacity,transform:`translateY(${(1-beatOpacity)*14}px)`}}>
-   <GraphicScene plan={graphic} frame={local} height={650} fps={FPS} palette={palette}/>
+   <GraphicScene plan={graphic as unknown as GraphicPlan} frame={local} height={650} fps={FPS} palette={palette}/>
   </div>
   <div style={{position:"absolute",top:1400,left:82,right:82,textAlign:"center",
    fontSize:size,fontWeight:820,lineHeight:1.12,color:C.foreground,opacity:beatOpacity}}>
