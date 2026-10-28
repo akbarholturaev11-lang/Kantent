@@ -1,0 +1,93 @@
+name: HSK AI 2026-10-28 owner-requested review render (one-time)
+
+# One-time explicit owner request. Never posts to any social account.
+# This trigger fires only for the exact workflow-file creation commit; future
+# pushes to unrelated files have no production Gemini effects.
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/render-today-20261028.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hsk-20261028-review-production
+  cancel-in-progress: false
+
+jobs:
+  render-requested-video:
+    if: >-
+      ${{
+        github.ref == 'refs/heads/main' &&
+        (
+          github.event_name == 'workflow_dispatch' ||
+          (github.event_name == 'push' &&
+           github.event.head_commit.message == 'ci(video): owner-requested one-time 2026-10-28 RU/TG Gemini Remotion review render')
+        )
+      }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    env:
+      HSK_AI_ALLOW_GEMINI_API: "true"
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_API_KEY_BACKUP_1: ${{ secrets.GEMINI_API_KEY_BACKUP_1 }}
+      GEMINI_API_KEY_BACKUP_2: ${{ secrets.GEMINI_API_KEY_BACKUP_2 }}
+      GEMINI_API_KEY_BACKUP_3: ${{ secrets.GEMINI_API_KEY_BACKUP_3 }}
+      CI_PACKAGE_DIR: /tmp/hsk-ai-video-review-20261028
+      EPISODE_ID: hui-vs-neng-pool-20261028
+      REQUESTED_LANGUAGE: all
+    steps:
+      - name: Fetch current canonical main source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: hsk-tu-vous/package-lock.json
+      - name: Refuse missing API credentials
+        run: |
+          if [[ -z "$GEMINI_API_KEY" && -z "$GEMINI_API_KEY_BACKUP_1" && -z "$GEMINI_API_KEY_BACKUP_2" && -z "$GEMINI_API_KEY_BACKUP_3" ]]; then
+            echo "::error::Missing Gemini credentials: cannot synthesize real narration."
+            exit 1
+          fi
+      - name: Install frozen production dependencies and FFmpeg
+        run: |
+          npm ci --no-audit --no-fund
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          ffprobe -version | head -n 1
+      - name: Verify canonical 28 Oct episode, approved voices and protected sample restrictions
+        id: episode
+        run: node scripts/github-video-pipeline.mjs resolve "$EPISODE_ID" "$REQUESTED_LANGUAGE"
+      - name: Create genuine RU and TJ Gemini voice and Remotion MP4 packages
+        run: npm run content:make -- "$EPISODE_ID" --language "$REQUESTED_LANGUAGE"
+      - name: Validate real MP4+SRT+post per authorized language and platform and SHA-256
+        run: node scripts/github-video-pipeline.mjs package "$EPISODE_ID" "$REQUESTED_LANGUAGE" "$CI_PACKAGE_DIR"
+      - name: Show unapproved review manifest
+        run: |
+          {
+            echo "### HSK AI — 28 October owner-requested video"
+            echo "Review artifact only. **Not owner approved; not published to Zernio.**"
+            echo "Expected exports: RU Instagram/YouTube, TG Instagram."
+            echo '~~~json'
+            cat "$CI_PACKAGE_DIR/manifest.json"
+            echo '~~~'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Attach exact video previews for owner's review (7 days)
+        uses: actions/upload-artifact@v4
+        with:
+          name: hsk-review-hui-vs-neng-pool-20261028-${{ github.run_id }}
+          path: /tmp/hsk-ai-video-review-20261028/
+          if-no-files-found: error
+          retention-days: 7
+
+# There is no Zernio auth, no auto upload, no auto approval, no publish step.
