@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 24,
+  "revision": 25,
   "languageCode": "tg-TJ",
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
@@ -2559,6 +2559,97 @@
         "nonCtaContentHash": "487adb9bb7b44dc84dc7d81ede04c65703d5a3dcc4e40506925cc55631615f34",
         "motionDesign": true,
         "motionDesignStyle": "explain-actions-v1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "cafe-first-phrase-20261029-tiktok-cta-v1",
+      "episodeId": "cafe-first-phrase-20261029",
+      "date": "2026-10-29",
+      "formatId": "tiktok-manual-dm",
+      "ruleVersion": "cta-policy-v1",
+      "offerId": "hsk-ai-tg-profile-link-download-v1",
+      "keyword": "HSK",
+      "hypothesis": "Bind the owner-approved TikTok manual-DM CTA and cue-synced kinetic typography to this reviewed lesson; performance remains unmeasured.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "tiktok-profile-manual-dm-v1",
+      "registeredAt": "2026-10-28T08:54:22.721Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0001"
+      ],
+      "supersedes": null,
+      "copyHash": "5f4ca8decfec5b20c72bfa6b3d89f28e033f4bc61864d9088e1ce27f85d1814c",
+      "copySnapshot": {
+        "cta": "HSK AI-ро санҷ. Ба профили ман даро ва дар паёми хусусӣ «HSK» навис — ман пайванди боргирии HSK AI-ро дастӣ мефиристам.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "HSK AI-ро санҷ. Ба профили ман даро ва дар паёми хусусӣ «HSK» навис — ман пайванди боргирии HSK AI-ро дастӣ мефиристам.",
+            "headline": "ПРОФИЛ • ПАЁМИ ХУСУСӢ",
+            "screenCaption": "HSK навис — пайвандро дастӣ мефиристам",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "санҷ",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ПРОФИЛ",
+                "motion": "slide",
+                "syncCueText": "даро",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "ПАЁМИ ХУСУСӢ",
+                "motion": "reveal",
+                "syncCueText": "паёми",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "HSK",
+                "motion": "pop",
+                "syncCueText": "HSK",
+                "transitionStyle": "mask-reveal"
+              },
+              {
+                "hero": "ПАЙВАНДИ БОРГИРӢ",
+                "motion": "slide",
+                "syncCueText": "пайванди",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "Use one central CTA stage and only the normal single subtitle line. Show one large cue-linked focus detail at a time; do not repeat the spoken phrase in a second headline, add a second CTA strip, duplicate the HSK AI wordmark, or use a moving focus marker. At санҷ, reveal the single HSK AI mark. At даро, show ПРОФИЛ. At паёми, show ПАЁМИ ХУСУСӢ. At HSK, show the keyword HSK. At пайванди, reveal ПАЙВАНДИ БОРГИРӢ and hold it through the final spoken word. Use restrained brand-colored transitions, no screenshots and no simulated DM/message or completed download. The spoken offer says the owner will send the link manually; do not imply automation or independent link verification."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 6,
+            "precedingSceneIds": [
+              "cafe",
+              "pause",
+              "try",
+              "product",
+              "microphone",
+              "return"
+            ],
+            "durationSec": 11,
+            "plannedStartSec": 24
+          }
+        ]
+      },
+      "placementHash": "31194df7d95c824b127958b144b7f905dfc0ae62f68b4b5cf815f1b736344ba0",
+      "contextSnapshot": {
+        "level": null,
+        "topic": "Имкони истифодаи калимаҳои шинос дар машқи гуфтугӯи HSK AI; бе ваъдаи натиҷаи воқеӣ.",
+        "hookFormatId": null,
+        "voiceProfileId": "tg-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "2e2ffed4e5615f1bae37f9fd5a70feb0b83c920468d0145b2e6b4f1c6c4e3067"
       },
       "primaryMetric": "profile-link-clickers-per-1000-views",
       "evidenceStatus": "unmeasured"

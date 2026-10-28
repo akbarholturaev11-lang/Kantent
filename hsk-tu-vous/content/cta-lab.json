@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 114,
+  "revision": 115,
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
     "id": "hsk-ai-profile-link-download-v1",
@@ -14193,6 +14193,107 @@
         "nonCtaContentHash": "b55c4b8ea293a8a565f2847589cf06a4a26b87551f630b7aef6167ef5ed9fbb3",
         "motionDesign": true,
         "motionDesignStyle": "explain-actions-v1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "cafe-first-phrase-20261029-tiktok-cta-v1",
+      "episodeId": "cafe-first-phrase-20261029",
+      "date": "2026-10-29",
+      "formatId": "tiktok-manual-dm",
+      "ruleVersion": "cta-policy-v17",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": "HSK",
+      "hypothesis": "Bind the owner-approved TikTok manual-DM CTA and cue-synced kinetic typography to this reviewed lesson; performance remains unmeasured.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "tiktok-profile-manual-dm-v1",
+      "registeredAt": "2026-10-28T08:50:21.398Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0015",
+        "cta-correction-0016",
+        "cta-correction-0017"
+      ],
+      "supersedes": null,
+      "copyHash": "a32dd3979f67e10c867cd001c471f88eaf2dbe35f31b9dc27593733cb727e6c1",
+      "copySnapshot": {
+        "cta": "Попробуй HSK AI. Зайди в мой профиль и напиши мне в личные сообщения «HSK» — я пришлю ссылку, чтобы скачать HSK AI.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Попробуй HSK AI. Зайди в мой профиль и напиши мне в личные сообщения «HSK» — я пришлю ссылку, чтобы скачать HSK AI.",
+            "headline": "ПРОФИЛЬ • HSK В ЛИЧНЫЕ",
+            "screenCaption": "Напиши HSK — пришлю ссылку",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "ПОПРОБУЙ",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "Попробуй",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ПРОФИЛЬ",
+                "meaning": "ЗАЙДИ В МОЙ ПРОФИЛЬ",
+                "motion": "slide",
+                "syncCueText": "Зайди",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "ЛИЧНЫЕ СООБЩЕНИЯ",
+                "meaning": "НАПИШИ МНЕ",
+                "motion": "reveal",
+                "syncCueText": "напиши",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "HSK",
+                "meaning": "В ЛИЧНЫЕ СООБЩЕНИЯ",
+                "motion": "pop",
+                "syncCueText": "HSK",
+                "transitionStyle": "mask-reveal"
+              },
+              {
+                "hero": "ПРИШЛЮ ССЫЛКУ",
+                "meaning": "ДЛЯ СКАЧИВАНИЯ HSK AI",
+                "motion": "slide",
+                "syncCueText": "пришлю",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "One central stage and one visible HSK AI wordmark at a time. Remove repeated hero/logo/tagline layers and the moving focus marker; use a quiet, distinctive brand gradient. On “Попробуй” reveal HSK AI; on “Зайди” show ПРОФИЛЬ; on “напиши” show ЛИЧНЫЕ СООБЩЕНИЯ; on “HSK” show the keyword; on “пришлю” reveal ПРИШЛЮ ССЫЛКУ and hold it through “скачать HSK AI”. Start each beat at the phrase onset and keep the complete message readable through that spoken phrase. No screenshots, simulated sent DM, automated DM, or completed download."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 6,
+            "precedingSceneIds": [
+              "cafe",
+              "pause",
+              "try",
+              "product",
+              "microphone",
+              "return"
+            ],
+            "durationSec": 11,
+            "plannedStartSec": 24
+          }
+        ]
+      },
+      "placementHash": "31194df7d95c824b127958b144b7f905dfc0ae62f68b4b5cf815f1b736344ba0",
+      "contextSnapshot": {
+        "level": null,
+        "topic": "Возможность попробовать знакомые слова в разговорной практике HSK AI; без обещания реального результата.",
+        "hookFormatId": null,
+        "voiceProfileId": "ru-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "f4b1d17e7735fcf711903110076671aced19bda14f5a568a8946414d1ece1123"
       },
       "primaryMetric": "profile-link-clickers-per-1000-views",
       "evidenceStatus": "unmeasured"

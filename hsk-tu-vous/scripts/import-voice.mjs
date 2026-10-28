@@ -76,7 +76,12 @@ assertVoiceEpisodeLanguage(episode, voiceProfile);
 if (voiceProfile.provider !== "gemini-api") {
   throw new Error("Faol ovoz profili Gemini API provayderiga mos emas.");
 }
-const existingStatus = await readStatus(id);
+// A separate TikTok review episode may be created after the base lesson has
+// already been scheduled on other platforms. Protect the TikTok lifecycle
+// independently while keeping the original episode guard unchanged.
+const existingStatus = platform
+  ? await readJson(path.join(targetReviewDir, "status.json"))
+  : await readStatus(id);
 const protectedStages = new Set([
   "owner-approved-for-zernio-publishing",
   "zernio-published",

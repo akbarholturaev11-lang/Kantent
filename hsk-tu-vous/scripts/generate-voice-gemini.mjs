@@ -751,7 +751,13 @@ validateEpisode(episode);
 const visualSystem = await readJson(path.join(PROJECT_ROOT, "content", "visual-system.json"));
 validateLessonPresentation(episode, visualSystem.lessonPresentation);
 await requireCurrentCta(episode);
-const previousStatus = await readStatus(EPISODE_ID);
+// A separately registered TikTok variant has its own review and publication
+// lifecycle. Do not let another platform's scheduled root status block its
+// first voice render; the platform-specific approval check below still guards
+// any TikTok voice that has already been approved.
+const previousStatus = PLATFORM
+  ? await readJson(path.join(targetReviewDir, "status.json"))
+  : await readStatus(EPISODE_ID);
 if (
   [
     "owner-approved-for-zernio-publishing",
