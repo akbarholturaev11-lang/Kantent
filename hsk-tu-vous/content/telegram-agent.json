@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "ownerInstructionDate": "2026-10-28",
+  "actor": "ChatGPT scheduled agent (planned tasks)",
+  "source": {
+    "repository": "akbarholturaev11-lang/HSK-AI-Bot",
+    "branch": "main",
+    "lookbackDays": 3,
+    "reviewRequirement": "Inspect actual commits and diff files. Include only real user-facing changes shown by code and release/deploy evidence. Internal refactors are not user-facing releases."
+  },
+  "channel": {
+    "platform": "telegram",
+    "account": "@aibotsakbar",
+    "accountId": "6ae1661bf80a20df8f31158e",
+    "linkId": "link_6ae1682ea1088191baa9e9b69eb012fe",
+    "credentialGroup": "tiktok-telegram",
+    "languageCode": "tg",
+    "language": "Tojik (Cyrillic)",
+    "allowVideo": false
+  },
+  "schedule": {
+    "everyDays": 3,
+    "firstDate": "2026-10-29",
+    "timezone": "Asia/Shanghai",
+    "intendedWindow": "morning",
+    "publisher": "scheduled ChatGPT agent, not GitHub Actions (avoid duplicates)"
+  },
+  "output": {
+    "message": "One concise factual Tajik product update, not technical commit log",
+    "image": {
+      "required": true,
+      "ratio": "4:3",
+      "format": "png or jpg",
+      "theme": "Original HSK AI branded topical artwork, clean readable layout, no invented screenshot; media must have HTTPS URL accepted by Zernio"
+    },
+    "noApprovalNeeded": true,
+    "publication": "Automatic after positive evidence; skip if no real update"
+  },
+  "safety": {
+    "deduplication": "Inspect Telegram published-post history for same source commits in last three days; don't repost",
+    "emptyWindow": "Skip; report no verified updates",
+    "missingPhotoOrAccount": "Do not post text-only, video or to another platform; report error and block",
+    "readback": "Confirm Zernio post has the exact Telegram account and published status; record URL and source SHA",
+    "noSecretsInText": true
+  }
+}
