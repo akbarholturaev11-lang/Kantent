@@ -37,7 +37,7 @@ The GitHub UI lists only secret names, not validity; branch/PR CI uses synthetic
 The live Zernio connector currently returns eight connected accounts. Video routing is language-scoped in `content/publication-destinations.json`:
 - RU: Instagram `@hskai.app`, YouTube `@hskai_app`, TikTok `@hskai.app`, Facebook `Akbarholturaev`.
 - TJ: Instagram `@hskai.apptj`, YouTube `@hskaiapp-tj`, TikTok `@hskai.ru`, Facebook `Akbarholturaev`.
-- Telegram `@aibotsakbar` is TJ text updates only, every three days; it never receives video.
+- Telegram `@aibotsakbar` is a separate TJ news channel: short factual text plus a 4:3 original image every three days, with no per-post approval; it never receives video.
 
 Facebook is one shared page and receives separate Russian and Tajik videos. For the manual GitHub REST workflow, configure the corresponding `ZERNIO_RU_*_ACCOUNT_ID` and `ZERNIO_TG_*_ACCOUNT_ID` Actions variables; Facebook's live account ID is the same destination for both languages. Never store API keys or tokens in these variables. `VIDEO_PLATFORM_TARGETS` is derived from the canonical destination file, while `zernioTargetAccount` still requires exact account IDs and verifies the active username through the selected language's Zernio credential before upload. The live connector check does not imply that GitHub Actions variables or REST credentials are configured.
 
