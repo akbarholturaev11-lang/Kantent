@@ -357,6 +357,69 @@ function alignWords(text, annotations, audioDurationMs) {
   return { captions, mismatches: [], timingRepairs };
 }
 
+/**
+ * A single mixed-language Gemini transcription can drop Chinese or the
+ * explanation language. This selects only evidence-backed word timestamps
+ * from independent language transcriptions, never inventing timing or text.
+ */
+function alignIndependentLanguageTracks(text, tracks, audioDurationMs) {
+  const expected = flattenExpected(sourceWords(text));
+  const seen = [];
+  for (const track of tracks) {
+    const words = flattenRecognized(track.wordAnnotations, audioDurationMs, []);
+    for (const word of words) seen.push({ ...word, language: track.language });
+  }
+  seen.sort((a, b) => a.startMs - b.startMs || a.endMs - b.endMs);
+  const dp = Array(expected.length + 1).fill(null);
+  dp[0] = { indices: [], score: 0, lastStart: -1, lastEnd: -1 };
+  for (let index = 0; index < seen.length; index++) {
+    const recognized = seen[index];
+    for (let k = expected.length - 1; k >= 0; k--) {
+      const prev = dp[k];
+      if (!prev || expected[k].text !== recognized.text ||
+          recognized.startMs < prev.lastStart ||
+          recognized.endMs < prev.lastEnd - 250) continue;
+      const gap = Math.max(0, recognized.startMs - prev.lastEnd);
+      const candidate = {
+        indices: [...prev.indices, index],
+        score: prev.score + gap * 0.001,
+        lastStart: recognized.startMs,
+        lastEnd: recognized.endMs,
+      };
+      if (!dp[k + 1] || candidate.score < dp[k + 1].score) dp[k + 1] = candidate;
+    }
+  }
+  const path = dp[expected.length];
+  if (!path) {
+    const bestIndex = dp.findLastIndex(Boolean);
+    return {
+      success: false, matched: bestIndex,
+      expectedCount: expected.length, recognizedCount: seen.length,
+      nextExpected: expected.slice(bestIndex, bestIndex + 8).map(x => x.text),
+      wordAnnotations: [],
+    };
+  }
+  const wordAnnotations = path.indices.map(index => {
+    const evidence = seen[index];
+    return {
+      // The token and timestamps are derived from a real Gemini annotation.
+      text: evidence.text,
+      startOffset: (evidence.startMs / 1000).toFixed(3) + "s",
+      endOffset: (evidence.endMs / 1000).toFixed(3) + "s",
+      languageEvidence: evidence.language,
+    };
+  });
+  const check = alignWords(text, wordAnnotations, audioDurationMs);
+  if (!check.captions || check.mismatches.length) {
+    return { success: false, matched: expected.length,
+      expectedCount: expected.length, recognizedCount: seen.length,
+      mismatches: check.mismatches, wordAnnotations: [] };
+  }
+  return { success: true, matched: expected.length,
+    expectedCount: expected.length, recognizedCount: seen.length,
+    wordAnnotations };
+}
+
 function vttTime(ms) {
   const value = Math.max(0, Math.round(ms));
   const hours = Math.floor(value / 3_600_000);
@@ -1004,7 +1067,7 @@ try {
       }
     }
     let attempts = metadata.transcriptionAttempts?.[index] ?? (transcription ? 1 : 0);
-    while (!chunkAlignment?.captions && attempts < 3) {
+    while (!chunkAlignment?.captions && attempts < 2) {
       attempts += 1;
       // Keep resumable upload atomic per key; a rejected start may switch to a
       // backup and start a NEW upload. Transcribe + cleanup use that SAME key.
@@ -1018,47 +1081,65 @@ try {
       );
       config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
       try {
-        const response = await requestJson(
-          `${API_ROOT}/v1beta/interactions`,
-          {
-            method: "POST",
-            headers: {
-              "x-goog-api-key": config.apiKey,
-              "Content-Type": "application/json",
-              "Api-Revision": API_REVISION,
-            },
-            body: JSON.stringify({
-              model: config.transcribeModel,
-              input: [{
-                type: "audio",
-                uri: uploadedFile.uri,
-                mime_type: audioMimeType(transcriptionAudioPath),
-              }],
-              generation_config: {
-                transcription_config: {
-                  language_codes: transcriptionLanguages,
-                  mode: { type: "verbatim", timestamp_granularities: ["word"] },
-                },
+        const tracks = [];
+        for (const languageCode of transcriptionLanguages) {
+          const response = await requestJson(
+            API_ROOT + "/v1beta/interactions",
+            {
+              method: "POST",
+              headers: {
+                "x-goog-api-key": config.apiKey,
+                "Content-Type": "application/json",
+                "Api-Revision": API_REVISION,
               },
-            }),
-          },
-          "Gemini word transcription",
+              body: JSON.stringify({
+                model: config.transcribeModel,
+                input: [{
+                  type: "audio",
+                  uri: uploadedFile.uri,
+                  mime_type: audioMimeType(transcriptionAudioPath),
+                }],
+                generation_config: {
+                  transcription_config: {
+                    language_codes: [languageCode],
+                    mode: { type: "verbatim", timestamp_granularities: ["word"] },
+                  },
+                },
+              }),
+            },
+            "Gemini independent " + languageCode + " word transcription",
+          );
+          const annotations = getWordAnnotations(response.data);
+          const transcriptText = response.data.output_text ??
+            (response.data.steps ?? [])
+              .filter(step => step.type === "model_output")
+              .flatMap(step => step.content ?? [])
+              .filter(block => block.type === "text")
+              .map(block => block.text ?? "")
+              .join("");
+          tracks.push({ language: languageCode, wordAnnotations: annotations,
+            transcript: transcriptText });
+        }
+        const combined = alignIndependentLanguageTracks(
+          ttsChunks[index].text,
+          tracks,
+          metadata.chunkDurationsMs[index],
         );
-        const annotations = getWordAnnotations(response.data);
-        const transcriptText = response.data.output_text ??
-          (response.data.steps ?? [])
-            .filter((step) => step.type === "model_output")
-            .flatMap((step) => step.content ?? [])
-            .filter((block) => block.type === "text")
-            .map((block) => block.text ?? "")
-            .join("");
+        if (!combined.success) {
+          metadata.lastTranscriptionError =
+            "Independent bilingual word cues incomplete: matched " +
+            combined.matched + "/" + combined.expectedCount +
+            "; next expected: " + JSON.stringify(combined.nextExpected ?? []) +
+            "; recognizer token count: " + combined.recognizedCount;
+        }
         transcription = {
-          transcript: transcriptText,
-          wordAnnotations: annotations.map((word) => ({
-            text: word.text,
-            startOffset: word.start_offset,
-            endOffset: word.end_offset,
+          transcript: tracks.map(t => t.transcript).join(" / "),
+          wordAnnotations: combined.wordAnnotations,
+          sourceLanguageTracks: tracks.map(track => ({
+            language: track.language, transcript: track.transcript,
+            wordAnnotations: track.wordAnnotations,
           })),
+          exactSequenceMatched: combined.success,
         };
       } finally {
         try {
