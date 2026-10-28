@@ -49,7 +49,7 @@ const VisualOnly:React.FC<PreviewProps>=({language})=>{
  const hanzi=String(beat.visual?.hanzi??"").trim();
  // Source Hanzi is planning metadata for design review; it is NOT a subtitle.
  const size=hanzi.length>9?64:hanzi.length>5?80:108;
- return <AbsoluteFill style={{backgroundColor:C.background,fontFamily:'Arial, "PingFang SC", "Noto Sans CJK SC", sans-serif',overflow:"hidden"}}>
+ return <AbsoluteFill style={{backgroundColor:C.background,fontFamily:'"Noto Sans CJK SC", "Noto Sans CJK JP", "Noto Sans CJK TC", "PingFang SC", Arial, sans-serif',overflow:"hidden"}}>
   <div style={{position:"absolute",top:360,left:0,width:"100%",
    fontWeight:850,fontSize:38,letterSpacing:3,textAlign:"center",color:C.foreground}}>HSK AI</div>
   <div style={{position:"absolute",left:82,right:82,top:640,height:730,
