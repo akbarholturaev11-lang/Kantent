@@ -1,6 +1,8 @@
 export const APPROVED_PUBLICATION_PLATFORMS = Object.freeze([
   "instagram",
   "youtube",
+  "tiktok",
+  "facebook",
 ]);
 
 const isNonEmptyString = (value) =>
@@ -38,7 +40,7 @@ export function validatePublicationTarget(target) {
   if (!target || typeof target !== "object" || Array.isArray(target))
     return ["Zernio publication target must be an object."];
   if (!APPROVED_PUBLICATION_PLATFORMS.includes(target.platform))
-    errors.push("Only Instagram Reels and YouTube Shorts are currently authorized.");
+    errors.push("Platform is not an authorized video destination.");
   if (!isNonEmptyString(target.accountId) || target.accountId.length > 180)
     errors.push("A valid social account ID is required.");
   if (!isNonEmptyString(target.accountName) || target.accountName.length > 180)
@@ -60,6 +62,26 @@ export function validatePublicationTarget(target) {
       errors.push("YouTube preview must explicitly set its made-for-kids audience value.");
     if (!settings || typeof settings.containsSyntheticMedia !== "boolean")
       errors.push("YouTube preview must explicitly set its synthetic-media disclosure value.");
+  }
+  if (target.platform === "tiktok") {
+    const settings = target.tiktokSettings;
+    const keys = ["privacy_level", "allow_comment", "allow_duet", "allow_stitch",
+      "content_preview_confirmed", "express_consent_given", "video_made_with_ai",
+      "commercialContentType"];
+    if (!settings || typeof settings !== "object" || Array.isArray(settings) ||
+        Object.keys(settings).some((key) => !keys.includes(key)) ||
+        keys.some((key) => !Object.hasOwn(settings, key))) {
+      errors.push("TikTok preview must include the complete current creator settings and consent fields.");
+    } else {
+      if (!["PUBLIC_TO_EVERYONE", "MUTUAL_FOLLOW_FRIENDS", "FOLLOWER_OF_CREATOR", "SELF_ONLY"].includes(settings.privacy_level))
+        errors.push("TikTok privacy_level must be explicitly selected from the current supported values.");
+      for (const key of ["allow_comment", "allow_duet", "allow_stitch", "video_made_with_ai"])
+        if (typeof settings[key] !== "boolean") errors.push(`TikTok ${key} must be explicitly true or false.`);
+      if (settings.content_preview_confirmed !== true || settings.express_consent_given !== true)
+        errors.push("TikTok requires explicit content preview confirmation and express consent.");
+      if (!["none", "brand_organic", "brand_content"].includes(settings.commercialContentType))
+        errors.push("TikTok commercialContentType must be explicitly selected.");
+    }
   }
   return errors;
 }

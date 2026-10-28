@@ -28,6 +28,13 @@ const youtube = {
   },
 };
 
+const facebook = {
+  platform: "facebook",
+  accountId: "fb-account",
+  accountName: "Akbarholturaev",
+  caption: "Facebook caption",
+};
+
 const clock = Date.parse("2026-10-23T00:00:00Z");
 const igTime = "2026-10-24T20:00:00+08:00";
 const ytTime = "2026-10-24T10:00:00+08:00";
@@ -66,12 +73,15 @@ test("publish-now cannot carry a schedule at either level", () => {
   assert.ok(validatePublicationSchedule({ mode: "now", platforms: [{ ...youtube, scheduledFor: ytTime }] }, clock).length);
 });
 
-test("only Instagram Reels and YouTube Shorts are authorized publication targets", () => {
-  assert.deepEqual(APPROVED_PUBLICATION_PLATFORMS, ["instagram", "youtube"]);
+test("all language-mapped video destinations are authorized while Telegram stays excluded", () => {
+  assert.deepEqual(APPROVED_PUBLICATION_PLATFORMS, ["instagram", "youtube", "tiktok", "facebook"]);
   assert.deepEqual(validatePublicationTarget(instagram), []);
   assert.deepEqual(validatePublicationTarget(youtube), []);
+  assert.deepEqual(validatePublicationTarget(facebook), []);
+  assert.ok(validatePublicationTarget({ ...instagram, platform: "telegram" })
+    .some((error) => error.includes("not an authorized video destination")));
   assert.ok(validatePublicationTarget({ ...instagram, platform: "tiktok" })
-    .some((error) => error.includes("Only Instagram Reels and YouTube Shorts")));
+    .some((error) => error.includes("TikTok preview must include")));
 });
 
 test("YouTube preview requires its title, visibility, audience and synthetic-media choices", () => {

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 106,
+  "revision": 107,
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
     "id": "hsk-ai-profile-link-download-v1",
@@ -224,6 +224,21 @@
       "rule": "Authorize TikTok publication only to the exact language-matched accounts listed in content/publication-destinations.json: RU content to the RU TikTok account and TJ content to the TJ TikTok account. Before upload or scheduling, verify the live Zernio connection and current creator-specific posting settings, render and inspect the language-specific TikTok package, and obtain the owner's approval of its exact video, caption, settings and time. Preserve correction 0011's manual-link fulfillment and no fake/automated DM claims, and correction 0012's single-stage, no-duplicate-logo, no-moving-focus, quiet-background and cue-complete-readable-phrase requirements. This destination authorization does not make an unconfigured language CTA ready and does not authorize automated DMs.",
       "scope": {
         "type": "series"
+      },
+      "supersedes": [],
+      "effect": "mandatory-owner-policy",
+      "performanceEvidence": "not-a-performance-result"
+    },
+    {
+      "id": "cta-correction-0014",
+      "ruleVersion": "cta-policy-v14",
+      "createdAt": "2026-10-28T04:57:41.930Z",
+      "source": "owner-correction",
+      "ownerWording": "TikTokniyam nashr qilish mumkin dep belgila va RU va TJ TikTok akkauntlarini adashtirma; video faqat o‘z tilidagi akkauntga chiqsin.",
+      "rule": "For the tiktok-manual-dm format, retain the approved Russian manual-DM CTA and its cue-synced, screenshot-free visual treatment. Replace the obsolete statement that TikTok publishing is unauthorized: publishing is permitted only under active series authorization, to the exact language-matched TikTok account in content/publication-destinations.json, after live Zernio verification and the owner approves the exact video, caption, creator settings and time. Do not simulate a sent message, automate DMs, claim a verified link or completed download. Keep the single-stage/no-duplicate-logo/no-moving-focus/readable-phrase requirements active.",
+      "scope": {
+        "type": "format",
+        "formatId": "tiktok-manual-dm"
       },
       "supersedes": [
         "cta-correction-0011"
@@ -13019,6 +13034,58 @@
             "hanzi": "中文",
             "pinyin": "zhōngwén",
             "meaning": "ПРОСТО • ЛЕГКО"
+          }
+        ]
+      }
+    },
+    "facebook": {
+      "status": "approved",
+      "copySource": "offer",
+      "visualSource": "cueSequence",
+      "deliveryMode": "profile-link-download",
+      "destinationVerified": false,
+      "automationVerified": null,
+      "publishingAuthorized": true,
+      "notes": "Owner-authorized language-matched video destination. Reuse the language CTA offer without claiming that the app link or download was independently verified. One cue-linked visual detail at a time; no repeated headline, duplicate wordmark, screenshots from another platform, fake taps, or completed-download claim.",
+      "sceneTemplate": {
+        "id": "cta",
+        "kind": "cta",
+        "captionStyleId": "pill",
+        "durationSec": 11,
+        "headline": "HSK AI",
+        "screenCaption": "",
+        "editPlan": "Use one central stage. Keep only one cue-linked visual detail on screen at a time, plus the single timed subtitle. Do not add a persistent headline or second CTA strip, duplicate the HSK AI wordmark, or use a moving focus marker. Use restrained brand-color transitions. Do not show platform UI screenshots, simulated taps, sent messages, or a completed download. Keep the app/profile link destination unverified unless separately checked.",
+        "visualBeats": [
+          {
+            "hero": "HSK AI",
+            "motion": "reveal",
+            "syncCueText": "Попробуй",
+            "transitionStyle": "type-reveal"
+          },
+          {
+            "hero": "ПРОФИЛЬ",
+            "motion": "slide",
+            "syncCueText": "Зайди",
+            "transitionStyle": "slide-match"
+          },
+          {
+            "hero": "ССЫЛКА",
+            "motion": "reveal",
+            "syncCueText": "Открой",
+            "transitionStyle": "mask-reveal"
+          },
+          {
+            "hero": "СКАЧАТЬ HSK AI",
+            "motion": "slide",
+            "syncCueText": "скачай",
+            "actionIcon": "app-download",
+            "transitionStyle": "slide-match"
+          },
+          {
+            "hero": "КИТАЙСКИЙ КАЖДЫЙ ДЕНЬ",
+            "motion": "reveal",
+            "syncCueText": "учи",
+            "transitionStyle": "type-reveal"
           }
         ]
       }

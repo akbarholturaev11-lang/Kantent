@@ -90,11 +90,15 @@ export async function withGeminiKeyFailover(state, operation) {
   }
 }
 
-/** Automatic review exports currently supported by the standard renderer. */
-export const VIDEO_PLATFORM_TARGETS = Object.freeze({
-  ru: Object.freeze(["instagram", "youtube"]),
-  tg: Object.freeze(["instagram"]),
-});
+/** Review targets are derived from the canonical language/account map. */
+export const VIDEO_PLATFORM_TARGETS = Object.freeze(Object.fromEntries(
+  Object.entries(PUBLICATION_DESTINATIONS.videoDestinations ?? {}).map(([language, route]) => [
+    language,
+    Object.freeze(Object.entries(route.platforms ?? {})
+      .filter(([, destination]) => destination.ownerAuthorized === true)
+      .map(([platform]) => platform)),
+  ]),
+));
 
 export function enabledVideoPlatforms(language) {
   const platforms = VIDEO_PLATFORM_TARGETS[language];

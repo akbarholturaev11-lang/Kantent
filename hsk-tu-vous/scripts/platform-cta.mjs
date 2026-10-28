@@ -1,4 +1,6 @@
-export const CTA_PLATFORMS = Object.freeze(["instagram", "tiktok", "youtube"]);
+export const CTA_PLATFORMS = Object.freeze([
+  "instagram", "youtube", "tiktok", "facebook",
+]);
 
 const isText = (value) => typeof value === "string" && value.trim().length > 0;
 
@@ -16,26 +18,17 @@ export function validatePlatformCtaConfig(lab) {
     }
     if (!["approved", "pending-owner-configuration"].includes(item.status))
       errors.push(`Invalid CTA variant status: ${platform}`);
-    if (platform === "instagram" && item.status === "approved") {
+    if (item.status === "approved") {
       const template = item.sceneTemplate;
       if (!template || template.kind !== "cta" || template.id !== "cta" ||
           !Array.isArray(template.visualBeats) || !template.visualBeats.length ||
           !isText(template.headline) || !isText(template.editPlan) ||
           "narration" in template || "cta" in template || "ctaExperiment" in template) {
-        errors.push("Instagram needs a central CTA sceneTemplate without duplicated narration or registrations");
+        errors.push(`${platform} needs a cue-linked CTA sceneTemplate without duplicated narration or registrations`);
       }
     }
-    if (platform === "youtube" && item.status === "approved") {
-      const template = item.sceneTemplate;
-      if (!template || template.kind !== "cta" || template.id !== "cta" ||
-          !Array.isArray(template.visualBeats) || !template.visualBeats.length ||
-          !isText(template.headline) || !isText(template.screenCaption) || !isText(template.editPlan) ||
-          "narration" in template || "cta" in template || "ctaExperiment" in template) {
-        errors.push("YouTube needs a central CTA sceneTemplate without duplicated narration or registrations");
-      }
-    }
-    if (platform === "instagram" && item.copySource !== "offer")
-      errors.push("Instagram must reference the canonical offer; do not duplicate its wording");
+    if (["instagram", "facebook"].includes(platform) && item.copySource !== "offer")
+      errors.push(`${platform} must reference the language's canonical offer; do not duplicate its wording`);
     if (platform === "tiktok" && item.copySource !== "platform")
       errors.push(`${platform} needs its own platform CTA wording in the same lab`);
     if (platform === "youtube" && !["offer", "platform"].includes(item.copySource))
@@ -55,6 +48,9 @@ export function validatePlatformCtaConfig(lab) {
     if (platform === "youtube" && item.status === "approved" && item.copySource === "offer" &&
         !isText(item.deliveryMode))
       errors.push("youtube: deliveryMode missing");
+    if (platform === "facebook" && item.status === "approved" &&
+        (!isText(item.deliveryMode) || item.publishingAuthorized !== true))
+      errors.push(`${platform}: approved video destination needs deliveryMode and explicit owner authorization`);
     if (item.status !== "approved" && item.copySource === "platform" &&
       (isText(item.canonicalRussian) || (Array.isArray(item.visualBeats) && item.visualBeats.length))) {
       // Draft text may be worked on, but an unapproved variant must never be rendered.
@@ -109,7 +105,7 @@ export function getPlatformCtaStatus(lab, platform) {
         ? "Owner-approved instruction; the profile-link destination and app availability are not independently verified."
         : platform === "youtube"
           ? "Owner-approved YouTube CTA; the linked destination is not independently verified."
-          : null
+          : "Owner-authorized language-matched video destination; verify the linked destination before making availability claims."
       : null,
   };
 }

@@ -29,8 +29,8 @@ const baseEpisode = {
   publishingStatus: "owner-approved-for-zernio-publishing",
 };
 
-test("three platform entries expose safe CTA states", () => {
-  assert.deepEqual(CTA_PLATFORMS, ["instagram", "tiktok", "youtube"]);
+test("four video platform entries expose safe CTA states", () => {
+  assert.deepEqual(CTA_PLATFORMS, ["instagram", "youtube", "tiktok", "facebook"]);
   assert.deepEqual(validatePlatformCtaConfig(lab), []);
   assert.equal(getPlatformCtaStatus(lab, "instagram").readyForRendering, true);
   const tiktok = getPlatformCtaStatus(lab, "tiktok");
@@ -48,6 +48,11 @@ test("three platform entries expose safe CTA states", () => {
   assert.equal(youtube.copy, lab.offer.canonicalRussian);
   assert.equal(youtube.copySource, "content/cta-lab.json#offer.canonicalRussian");
   assert.equal(youtube.publishingAuthorized, true);
+  const facebook = getPlatformCtaStatus(lab, "facebook");
+  assert.equal(facebook.status, "approved");
+  assert.equal(facebook.readyForRendering, true);
+  assert.equal(facebook.copy, lab.offer.canonicalRussian);
+  assert.equal(facebook.publishingAuthorized, true);
 });
 
 test("Instagram CTA copy is centrally read from offer and not duplicated", () => {
@@ -102,6 +107,20 @@ test("YouTube reuses Instagram copy and changes only the two supplied screenshot
   assert.equal(draft.scenes[0].durationFrames, baseEpisode.scenes[0].durationFrames);
   assert.equal(draft.ctaExperiment, undefined);
   assert.equal(draft.publishingStatus, "pending-owner-review");
+});
+
+test("Facebook reuses the language offer with a separate cue-synced no-UI ending", () => {
+  const draft = preparePlatformCtaDraft(baseEpisode, lab, "facebook");
+  const scene = draft.scenes.find((item) => item.kind === "cta");
+  assert.equal(draft.cta, lab.offer.canonicalRussian);
+  assert.equal(draft.ctaPlatform, "facebook");
+  assert.equal(scene.narration, lab.offer.canonicalRussian);
+  assert.ok(scene.visualBeats.length > 0);
+  assert.ok(scene.visualBeats.every((beat) => beat.syncCueText));
+  assert.ok(scene.visualBeats.every((beat) => !beat.screenImage));
+  assert.equal(draft.audioSrc, baseEpisode.audioSrc);
+  assert.deepEqual(draft.captions, baseEpisode.captions);
+  assert.equal(draft.ctaExperiment, undefined, "Facebook needs its own exact CTA registration");
 });
 
 test("TikTok keyword auto-DM requires actual verification before approval", () => {

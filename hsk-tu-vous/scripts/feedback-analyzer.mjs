@@ -11,7 +11,7 @@ const iso = v => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(v) && !Numb
 export function validateObservation(o) {
   if (!o || typeof o !== 'object' || Array.isArray(o)) return ['observation must be object'];
   const errors=[];
-  if(!['instagram','tiktok','youtube'].includes(o.platform)) errors.push('invalid platform');
+  if(!['instagram','tiktok','youtube','facebook'].includes(o.platform)) errors.push('invalid platform');
   if(typeof o.platformPostId!=='string' || !/^[a-zA-Z0-9_-]{6,100}$/.test(o.platformPostId)) errors.push('invalid platformPostId');
   if(typeof o.accountUsername!=='string' || !o.accountUsername.trim()) errors.push('missing accountUsername');
   if(!iso(o.publishedAt)||!iso(o.observedAt)) errors.push('invalid timestamps');
@@ -39,7 +39,7 @@ export function validateObservation(o) {
     }
   }
   if(o.source?.provider!=='Zernio'||!iso(o.source?.syncedAt)||!o.source?.endpoint) errors.push('missing Zernio provenance');
-  if(o.postUrl!=null && (typeof o.postUrl!=='string'||!/^https:\/\/(www\.)?(instagram\.com|tiktok\.com|youtube\.com)\//.test(o.postUrl))) errors.push('invalid postUrl');
+  if(o.postUrl!=null && (typeof o.postUrl!=='string'||!/^https:\/\/(www\.)?(instagram\.com|tiktok\.com|youtube\.com|facebook\.com)\//.test(o.postUrl))) errors.push('invalid postUrl');
   if(o.episodeId!=null && (typeof o.episodeId!=='string'||!/^[a-z0-9-]+$/.test(o.episodeId))) errors.push('invalid episodeId');
   if(o.content!=null) {
     errors.push(...validateContentIdentity(o.content));

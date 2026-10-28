@@ -92,29 +92,34 @@ test("bounded Gemini fallback happens only on permitted failed standalone reques
 });
 
 test("owner-authorized social destinations stay mapped to the correct language and account", () => {
-  assert.deepEqual(enabledVideoPlatforms("ru"), ["instagram", "youtube"]);
-  assert.deepEqual(enabledVideoPlatforms("tg"), ["instagram"]);
+  assert.deepEqual(enabledVideoPlatforms("ru"), ["instagram", "youtube", "tiktok", "facebook"]);
+  assert.deepEqual(enabledVideoPlatforms("tg"), ["instagram", "youtube", "tiktok", "facebook"]);
   assert.throws(() => enabledVideoPlatforms("zh"));
   const env = {
     ZERNIO_RU_INSTAGRAM_ACCOUNT_ID: "6a411e989d9472faae10a430",
     ZERNIO_RU_YOUTUBE_ACCOUNT_ID: "6ac96e053f8f4ffc10b0655f",
-    ZERNIO_TG_INSTAGRAM_ACCOUNT_ID: "6ab31e989d9472faae10a4af",
+    ZERNIO_TG_INSTAGRAM_ACCOUNT_ID: "6ae0f16205fd6f5357f8503d",
+    ZERNIO_TG_YOUTUBE_ACCOUNT_ID: "6ae160123787e4c71b522d64",
+    ZERNIO_RU_FACEBOOK_ACCOUNT_ID: "6ae161de384955d3b3ff194b",
+    ZERNIO_TG_FACEBOOK_ACCOUNT_ID: "6ae161de384955d3b3ff194b",
   };
   assert.equal(zernioTargetAccount("ru", "youtube", env).accountId, env.ZERNIO_RU_YOUTUBE_ACCOUNT_ID);
   assert.equal(zernioTargetAccount("ru", "youtube", env).expectedUsername, "@hskai_app");
   assert.equal(zernioTargetAccount("tg", "instagram", env).accountId, env.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID);
   assert.equal(zernioTargetAccount("tg", "instagram", env).expectedUsername, "@hskai.apptj");
-  assert.throws(() => zernioTargetAccount("tg", "youtube", env), /Missing\/invalid ZERNIO_TG_YOUTUBE_ACCOUNT_ID/);
-  const mapped = zernioTargetAccount("tg", "youtube", {
-    ...env,ZERNIO_TG_YOUTUBE_ACCOUNT_ID:"6ac96e053f8f4ffc10b0655f"
-  });
+  const mapped = zernioTargetAccount("tg", "youtube", env);
   assert.equal(mapped.expectedUsername, "@hskaiapp-tj");
+  assert.equal(zernioTargetAccount("ru", "facebook", env).expectedUsername, "Akbarholturaev");
+  assert.equal(zernioTargetAccount("tg", "facebook", env).accountId, env.ZERNIO_TG_FACEBOOK_ACCOUNT_ID);
   assert.equal(zernioTargetAccount("ru", "tiktok", {
     ZERNIO_RU_TIKTOK_ACCOUNT_ID:"6ac96e053f8f4ffc10b0655f"
   }).expectedUsername, "@hskai.app");
   assert.equal(zernioTargetAccount("tg", "tiktok", {
     ZERNIO_TG_TIKTOK_ACCOUNT_ID:"6ac96e053f8f4ffc10b0655f"
   }).expectedUsername, "@hskai.ru");
+  assert.throws(() => zernioTargetAccount("tg", "telegram", {
+    ZERNIO_TG_TELEGRAM_ACCOUNT_ID:"6ae1661bf80a20df8f31158e"
+  }), /not an owner-authorized video destination/);
   assert.throws(() => zernioTargetAccount("tg", "instagram",{
     ZERNIO_RU_INSTAGRAM_ACCOUNT_ID:env.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID
   }),/Missing\/invalid ZERNIO_TG_INSTAGRAM_ACCOUNT_ID/);

@@ -17,7 +17,7 @@ on:
         description: "Approved language/platform target; the live Zernio username must match the canonical map"
         required: true
         type: choice
-        options: [instagram, youtube, tiktok]
+        options: [instagram, youtube, tiktok, facebook]
       target_account_id:
         description: "Exact target Account ID from your repository Variables"
         required: true
@@ -71,9 +71,11 @@ jobs:
       ZERNIO_RU_INSTAGRAM_ACCOUNT_ID: ${{ vars.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID }}
       ZERNIO_RU_YOUTUBE_ACCOUNT_ID: ${{ vars.ZERNIO_RU_YOUTUBE_ACCOUNT_ID }}
       ZERNIO_RU_TIKTOK_ACCOUNT_ID: ${{ vars.ZERNIO_RU_TIKTOK_ACCOUNT_ID }}
+      ZERNIO_RU_FACEBOOK_ACCOUNT_ID: ${{ vars.ZERNIO_RU_FACEBOOK_ACCOUNT_ID }}
       ZERNIO_TG_INSTAGRAM_ACCOUNT_ID: ${{ vars.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID }}
       ZERNIO_TG_YOUTUBE_ACCOUNT_ID: ${{ vars.ZERNIO_TG_YOUTUBE_ACCOUNT_ID }}
       ZERNIO_TG_TIKTOK_ACCOUNT_ID: ${{ vars.ZERNIO_TG_TIKTOK_ACCOUNT_ID }}
+      ZERNIO_TG_FACEBOOK_ACCOUNT_ID: ${{ vars.ZERNIO_TG_FACEBOOK_ACCOUNT_ID }}
       APPROVED_RUN_ID: ${{ inputs.review_run_id }}
       APPROVED_LANGUAGE: ${{ inputs.language }}
       APPROVED_PLATFORM: ${{ inputs.platform }}

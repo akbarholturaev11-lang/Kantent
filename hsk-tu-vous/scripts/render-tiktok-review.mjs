@@ -19,9 +19,11 @@ import {
   narrationHash,
   PROJECT_ROOT,
   readJson,
+  readStatus,
   requireApprovedVoiceProfile,
   reviewDir,
   validateEpisode,
+  writeStatus,
   writeJson,
 } from "./lib.mjs";
 import { verifyPlatformVideo } from "./render-platform-videos.mjs";
@@ -144,6 +146,26 @@ await writeJson(path.join(folder, "status.json"), {
   voiceProfileId: voiceProfile.profileId,
   timingSource: episode.captionSource,
 });
+const rootStatus = await readStatus(id);
+const baseEpisode = await readJson(path.join(reviewDir(id), "episode.json"));
+rootStatus.platformPackages = {
+  ...(rootStatus.platformPackages ?? {}),
+  tiktok: {
+    platform: "tiktok",
+    folder,
+    episode: episodePath,
+    video: videoPath,
+    captions: path.join(folder, "captions.srt"),
+    post: path.join(folder, "post.md"),
+    contentHash: episodeContentHash(episode),
+    baseContentHash: episodeContentHash(baseEpisode),
+    ctaExperimentId: episode.ctaExperiment.id,
+    ctaCopyHash: episode.ctaExperiment.copyHash,
+    ctaRuleVersion: ctaValidation.ruleVersion,
+    videoSha256,
+  },
+};
+await writeStatus(id, rootStatus);
 console.log(`TikTok video tayyor, faqat ko‘rib chiqish uchun: ${videoPath}`);
 console.log(`CTA: ${episode.ctaExperiment.id}; davomiylik: ${(totalFrames / 30).toFixed(2)} s.`);
 console.log("TikTok nashr qilinmadi; aniq video, post, sozlamalar va vaqt hali tasdiqlanmagan.");

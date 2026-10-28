@@ -106,6 +106,8 @@ test("refuse untrusted upload destinations, non-videos, cross-target artifact pa
   assert.throws(()=>safeSignedUploadUrl(url));
  }
  assert.throws(()=>artifactAbsolutePath("/tmp/download","../../etc/passwd"));
+ assert.equal(artifactAbsolutePath("/tmp/download","tg/facebook/video.mp4"),"/tmp/download/tg/facebook/video.mp4");
+ assert.throws(()=>artifactAbsolutePath("/tmp/download","tg/telegram/video.mp4"),/Unexpected artifact path/);
  assert.throws(()=>publicationBody(validateApprovedIntent(fields,env),"https://evil.com/test.mp4"));
  assert.throws(()=>selectApprovedArtifact({...manifest,published:true},validateApprovedIntent(fields,env)));
 });

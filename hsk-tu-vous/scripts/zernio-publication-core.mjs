@@ -63,7 +63,7 @@ export function validateApprovedIntent(raw, env = process.env, now = Date.now())
     if (!["true", "false"].includes(String(raw.shareToFeed)))
       throw Error("Instagram shareToFeed setting must be explicit.");
     settings.shareToFeed = String(raw.shareToFeed) === "true";
-  } else {
+  } else if (platform === "tiktok") {
     const tiktok = raw.tiktokSettings;
     const privacyLevels = ["PUBLIC_TO_EVERYONE", "MUTUAL_FOLLOW_FRIENDS", "FOLLOWER_OF_CREATOR", "SELF_ONLY"];
     const commercialContentTypes = ["none", "brand_organic", "brand_content"];
@@ -121,7 +121,8 @@ export function publicationBody(approval, publicUrl) {
     mediaItems: [{type:"video",url:publicUrl}],
     platforms: [{
       platform: approval.platform, accountId: approval.target.accountId,
-      ...(approval.platform === "tiktok" ? {} : { platformSpecificData: approval.settings }),
+      ...(["instagram", "youtube"].includes(approval.platform)
+        ? { platformSpecificData: approval.settings } : {}),
     }],
   };
   if (approval.platform === "tiktok") body.tiktokSettings = approval.settings.tiktokSettings;
@@ -165,7 +166,7 @@ export function parseZernioPostReply(value, approval) {
 }
 
 export function artifactAbsolutePath(root, relative) {
-  const allowed = /^[a-z]{2}\/(?:instagram|youtube|tiktok)\/(?:video\.mp4|post\.md|captions\.srt)$/;
+  const allowed = /^[a-z]{2}\/(?:instagram|youtube|tiktok|facebook)\/(?:video\.mp4|post\.md|captions\.srt)$/;
   if (!allowed.test(relative)) throw Error("Unexpected artifact path");
   const resolved=path.resolve(root,relative);
   if (!resolved.startsWith(path.resolve(root)+path.sep))throw Error("Artifact escaped its root");

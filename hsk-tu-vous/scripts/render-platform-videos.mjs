@@ -65,7 +65,8 @@ export async function verifyPlatformVideo(file, totalFrames, execute = run) {
   return metadata;
 }
 
-/** Render the lesson once, two visual endings, and one continuous audio mix.
+/** Render the lesson once, one visual ending per shared-voice destination,
+ * and one continuous audio mix.
  * Concatenation copies the same encoded lesson frames into both final videos.
  * Audio is muxed once per final file, so the CTA join never splits speech/AAC.
  */

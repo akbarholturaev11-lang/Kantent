@@ -6,7 +6,8 @@
       "platforms": {
         "instagram": { "account": "@hskai.app", "ownerAuthorized": true },
         "youtube": { "account": "@hskai_app", "ownerAuthorized": true },
-        "tiktok": { "account": "@hskai.app", "ownerAuthorized": true }
+        "tiktok": { "account": "@hskai.app", "ownerAuthorized": true },
+        "facebook": { "account": "Akbarholturaev", "ownerAuthorized": true, "sharedLanguageAccount": true }
       }
     },
     "tg": {
@@ -14,17 +15,12 @@
       "platforms": {
         "instagram": { "account": "@hskai.apptj", "ownerAuthorized": true },
         "youtube": { "account": "@hskaiapp-tj", "ownerAuthorized": true },
-        "tiktok": { "account": "@hskai.ru", "ownerAuthorized": true }
+        "tiktok": { "account": "@hskai.ru", "ownerAuthorized": true },
+        "facebook": { "account": "Akbarholturaev", "ownerAuthorized": true, "sharedLanguageAccount": true }
       }
     }
   },
   "otherDestinations": {
-    "facebook": {
-      "account": "Akbarholturaev",
-      "language": null,
-      "videoPublishingAuthorized": false,
-      "note": "Language routing was not specified; do not infer RU or TJ."
-    },
     "telegram": {
       "account": "@aibotsakbar",
       "language": "tg",

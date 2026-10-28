@@ -136,5 +136,5 @@ test("semantic production owner approval retains exact export safety gate",async
     {id:"semantic-reviewed",semanticVisual:{schemaVersion:1,mode:"review-only"}},
     {stage:"owner-approved-for-zernio-publishing",platformPackages:{}},
     {publicationIntent:{platforms:[{platform:"youtube"}]},platformPackages:{}}
-  ),/YouTube export is missing/);
+  ),/youtube export is missing/);
 });

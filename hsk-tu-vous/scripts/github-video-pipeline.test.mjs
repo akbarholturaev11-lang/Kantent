@@ -9,6 +9,7 @@ import { validateInput, resolveExactEpisode, validateProbe, packageReview } from
 import { withLanguage } from "./language-context.mjs";
 import { PROJECT_ROOT, reviewDir, writeStatus } from "./lib.mjs";
 import { platformPackagePaths } from "./platform-exports.mjs";
+import { enabledVideoPlatforms } from "./video-credentials.mjs";
 
 test("production request is restricted to canonical episode and explicit configured language", () => {
   assert.deepEqual(validateInput("er-vs-liang-cafe-20261026", "all").languages, ["ru", "tg"]);
@@ -45,7 +46,7 @@ test("probe requires both real audio and portrait video", () => {
   assert.throws(() => validateProbe({ ...good, streams: [{ codec_type: "video", width: 1920, height: 1080 }, { codec_type: "audio" }] }), /Invalid MP4/);
 });
 
-test("real MP4/SRT verifier stages RU Instagram/YouTube and TG Instagram without requiring TG YouTube", async () => {
+test("review verifier stages every mapped RU/TJ video destination and excludes Telegram", async () => {
   const id = "github-ci-review-verifier-test";
   const sourceDir = path.join(PROJECT_ROOT, "review", id);
   const exists = await fs.stat(sourceDir).then(() => true, () => false);
@@ -65,7 +66,7 @@ test("real MP4/SRT verifier stages RU Instagram/YouTube and TG Instagram without
     for (const language of ["ru", "tg"]) {
       await withLanguage(language, async () => {
         const platformPackages = {};
-        for (const platform of language === "ru" ? ["instagram", "youtube"] : ["instagram"]) {
+        for (const platform of enabledVideoPlatforms(language)) {
           const files = platformPackagePaths(id, platform);
           await fs.mkdir(files.folder, { recursive: true });
           await fs.copyFile(mp4, files.video);
@@ -82,9 +83,9 @@ test("real MP4/SRT verifier stages RU Instagram/YouTube and TG Instagram without
     assert.equal(manifest.state, "rendered-pending-owner-approval");
     assert.deepEqual(Object.keys(manifest.languages), ["ru", "tg"]);
     assert.equal(manifest.languages.tg.instagram.sha256, sha);
-    assert.deepEqual(Object.keys(manifest.languages.ru), ["instagram","youtube"]);
-    assert.deepEqual(Object.keys(manifest.languages.tg), ["instagram"]);
-    await assert.rejects(fs.stat(path.join(bundle,"tg","youtube","video.mp4")), {code:"ENOENT"});
+    assert.deepEqual(Object.keys(manifest.languages.ru), enabledVideoPlatforms("ru"));
+    assert.deepEqual(Object.keys(manifest.languages.tg), enabledVideoPlatforms("tg"));
+    await assert.rejects(fs.stat(path.join(bundle,"tg","telegram","video.mp4")), {code:"ENOENT"});
     assert.equal(createHash("sha256").update(await fs.readFile(path.join(bundle, "ru", "instagram", "video.mp4"))).digest("hex"), sha);
     assert.equal((await fs.readFile(path.join(bundle, "manifest.json"), "utf8")).includes("published\": false"), true);
     // Hash tamper test: existing artifact must never be marked complete.

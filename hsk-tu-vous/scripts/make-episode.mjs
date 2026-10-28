@@ -59,10 +59,10 @@ const result = await prepareLanguagePackages(languages, async (language) => {
     episode.voiceTextHash === narrationHash(episode) &&
     episode.captionSource === "gemini-word-timestamps" &&
     episode.captions?.length;
-  const runStage = (script) => {
+  const runStage = (script, ...stageArgs) => {
     const result = spawnSync(
       process.execPath,
-      [path.join(PROJECT_ROOT, "scripts", script), item.id],
+      [path.join(PROJECT_ROOT, "scripts", script), item.id, ...stageArgs],
       { cwd: PROJECT_ROOT, stdio: "inherit", env: languageEnvironment(language) },
     );
     if (result.error) throw result.error;
@@ -71,6 +71,16 @@ const result = await prepareLanguagePackages(languages, async (language) => {
 
   if (!hasImportedVoice) runStage("generate-voice-gemini.mjs");
   runStage("render-episode.mjs");
+  runStage("prepare-tiktok-review.mjs");
+  const tiktokEpisode = await readJson(path.join(folder, "tiktok", "episode.json"));
+  const hasTikTokVoice = tiktokEpisode.audioSrc &&
+    tiktokEpisode.voiceProfileId === voiceProfile.profileId &&
+    tiktokEpisode.voiceTextHash === narrationHash(tiktokEpisode) &&
+    tiktokEpisode.captionSource === "gemini-word-timestamps" &&
+    tiktokEpisode.captions?.length;
+  if (!hasTikTokVoice)
+    runStage("generate-voice-gemini.mjs", "--platform", "tiktok");
+  runStage("render-tiktok-review.mjs");
   console.log("Пакет готов для ручной проверки: " + folder);
   const status = await readStatus(item.id);
   for (const [platform, exported] of Object.entries(status.platformPackages ?? {})) {
