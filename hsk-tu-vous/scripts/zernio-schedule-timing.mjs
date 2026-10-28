@@ -118,11 +118,17 @@ function analyticsSummary(rows) {
       row.platformAnalytics?.[0]?.analytics?.lastUpdated)
     .filter(value => typeof value === "string" && Number.isFinite(Date.parse(value)))
     .sort((a, b) => Date.parse(b) - Date.parse(a));
-  const syncedRows = rows.filter(row => row.syncStatus === "synced" ||
-    row.platformAnalytics?.some(item => item.syncStatus === "synced")).length;
+  const statuses = rows.map(row => row.syncStatus ?? row.source?.syncStatus ??
+    row.platformAnalytics?.find(item => item.syncStatus)?.syncStatus).filter(Boolean);
+  const syncStatusCounts = Object.fromEntries([...new Set(statuses)].map(status => [
+    status,
+    statuses.filter(value => value === status).length,
+  ]));
   return {
     postCount: rows.length,
-    syncedPostCount: syncedRows,
+    syncedPostCount: statuses.length ? (syncStatusCounts.synced ?? 0) : null,
+    syncStatusKnownPostCount: statuses.length,
+    syncStatusCounts,
     latestPublishedAt: published[0] ?? null,
     latestMetricUpdatedAt: updated[0] ?? null,
   };
@@ -130,7 +136,7 @@ function analyticsSummary(rows) {
 
 function targetSlotSummary(slots, targetDate, timezone) {
   const targetDay = localWeekday(targetDate, timezone);
-  const candidates = slots.map(slot => {
+  const allCandidates = slots.map(slot => {
     const local = utcSlotToLocal(slot, timezone);
     if (!local) return null;
     return {
@@ -138,16 +144,34 @@ function targetSlotSummary(slots, targetDate, timezone) {
       targetLocalWeekday: targetDay,
       localWeekday: local.localWeekday,
       localTime: local.localTime,
-      sourceDayOfWeekUtc: slot.day_of_week,
+      sourceDayOfWeekUtc: slot.day_of_week ?? slot.dayofweek,
       sourceHourUtc: slot.hour,
       avgEngagement: Number(slot.avg_engagement),
       postCount: Number(slot.post_count),
     };
-  }).filter(candidate => candidate && candidate.localWeekday === targetDay &&
+  }).filter(candidate => candidate &&
     Number.isFinite(candidate.avgEngagement) && Number.isFinite(candidate.postCount));
+  const candidates = allCandidates.filter(candidate => candidate.localWeekday === targetDay);
   candidates.sort((a, b) => b.avgEngagement - a.avgEngagement || b.postCount - a.postCount);
   const supported = candidates.filter(candidate => candidate.postCount >= 3);
   const chosen = supported[0] ?? candidates[0] ?? null;
+  const byHour = new Map();
+  for (const candidate of allCandidates) {
+    const total = byHour.get(candidate.localTime) ?? { engagementTotal: 0, postCount: 0, weekdays: new Set() };
+    total.engagementTotal += candidate.avgEngagement * candidate.postCount;
+    total.postCount += candidate.postCount;
+    total.weekdays.add(candidate.localWeekday);
+    byHour.set(candidate.localTime, total);
+  }
+  const hourOfDayCandidates = [...byHour.entries()].map(([localTime, data]) => ({
+    localTime,
+    avgEngagement: Number((data.engagementTotal / data.postCount).toFixed(2)),
+    postCount: data.postCount,
+    historicalWeekdays: [...data.weekdays].sort(),
+  })).sort((a, b) => b.avgEngagement - a.avgEngagement || b.postCount - a.postCount);
+  const chosenHour = chosen
+    ? hourOfDayCandidates.find(item => item.localTime === chosen.localTime)
+    : hourOfDayCandidates[0] ?? null;
   return {
     targetLocalDate: targetDate,
     timezone,
@@ -156,7 +180,14 @@ function targetSlotSummary(slots, targetDate, timezone) {
       ...chosen,
       confidence: chosen.postCount >= 3 ? "supported-by-at-least-3-posts" : "provisional-fewer-than-3-posts",
     } : null,
+    recommendedTimeOfDay: chosenHour ? {
+      ...chosenHour,
+      basis: chosen ? "weekday-matched-slot" : "time-of-day-aggregated-across-weekdays",
+      confidence: chosen && chosen.postCount >= 3 ? "supported-by-at-least-3-posts" :
+        chosen ? "provisional-fewer-than-3-posts" : "provisional-weekday-has-no-matching-slot",
+    } : null,
     candidateSlots: candidates.slice(0, 5),
+    hourOfDayCandidates: hourOfDayCandidates.slice(0, 8),
   };
 }
 
