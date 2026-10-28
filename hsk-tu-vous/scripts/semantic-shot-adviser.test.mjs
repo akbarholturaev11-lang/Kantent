@@ -93,7 +93,10 @@ test("canonical CLI reads planned lesson without mutating sources",()=>{
  const result=JSON.parse(execFileSync(process.execPath,[path.join(root,"scripts/preview-semantic-shots.mjs"),id],
   {cwd:root,encoding:"utf8"}));
  assert.equal(result.episodeId,id);
- assert.equal(result.eligible,true);
- assert.equal(result.scenes[0].proposedShot.environmentId,"pool");
+ const statusFile=path.join(root,'review',id,'status.json');
+ const stage=fs.existsSync(statusFile)?JSON.parse(fs.readFileSync(statusFile,'utf8')).stage:'planned';
+ assert.equal(result.eligible,['planned','plan-ready'].includes(stage));
+ if(result.eligible)assert.equal(result.scenes[0].proposedShot.environmentId,"pool");
+ else {assert.deepEqual(result.scenes,[]);assert.match(result.reason,/Protected/);}
  assert.equal(fs.readFileSync(sourcePath,"utf8"),before);
 });

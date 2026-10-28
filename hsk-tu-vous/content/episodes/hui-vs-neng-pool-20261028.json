@@ -35,25 +35,9 @@
       "kind": "hook",
       "durationSec": 5,
       "headline": "УМЕЮ ПЛАВАТЬ — НО СЕГОДНЯ НЕ МОГУ?",
-      "narration": "Ты умеешь плавать, но сегодня бассейн закрыт. Как сказать «могу» по-китайски? Здесь важно различать 会 и 能.",
+      "narration": "Умеешь плавать. Бассейн закрыт. 会 или 能?",
       "screenCaption": "Умею ≠ могу сегодня",
       "editPlan": "0–5 с: сразу покажите человека у закрытого бассейна, затем крупно 会 и 不能; визуал обозначает вымышленную бытовую ситуацию, не реальное место. На первом beat выделите освоенный навык, на втором — сегодняшнее ограничение. Читаемые пиньинь и перевод держать в safe-area 9:16.",
-      "visualBeats": [
-        {
-          "hero": "会",
-          "pinyin": "huì",
-          "meaning": "умею (научился)",
-          "chinese": true,
-          "motion": "pop"
-        },
-        {
-          "hero": "不能",
-          "pinyin": "bù néng",
-          "meaning": "сегодня нет возможности",
-          "chinese": true,
-          "motion": "slide"
-        }
-      ],
       "cards": [
         {
           "hanzi": "会",
@@ -65,6 +49,406 @@
           "pinyin": "bù néng",
           "meaning": "не могу в этой ситуации"
         }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "Умеешь плавать",
+          "visual": {
+            "title": "умею (освоенный навык)",
+            "hanzi": "会",
+            "pinyin": "huì",
+            "meaning": "умею (освоенный навык)",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 288,
+                    "y1": 171,
+                    "x2": 355,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "hook: Закрытый бассейн рядом с человеком, который умеет плавать. Показать исходную учебную ситуацию. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "бассейн закрыт",
+          "visual": {
+            "title": "не могу в этой ситуации",
+            "hanzi": "不能",
+            "pinyin": "bù néng",
+            "meaning": "не могу в этой ситуации",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-a",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 203,
+                    "y1": 148,
+                    "x2": 393,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-b",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 393,
+                    "y1": 148,
+                    "x2": 203,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "hook: Закрытый бассейн рядом с человеком, который умеет плавать. Изменить видимое состояние в момент объяснения. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
+        },
+        {
+          "id": "hook-action-3",
+          "kind": "graphic",
+          "cueText": "или",
+          "visual": {
+            "title": "умею (освоенный навык)",
+            "hanzi": "会",
+            "pinyin": "huì",
+            "meaning": "умею (освоенный навык)",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "left-pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 58,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "left-pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 183,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "left-pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 173,
+                    "y1": 171,
+                    "x2": 240,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "second",
+                  "type": "rect",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 346,
+                    "y": 142,
+                    "width": 214,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "closed-a",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 360,
+                    "y1": 145,
+                    "x2": 545,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "closed-b",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 540,
+                    "y1": 145,
+                    "x2": 360,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "hook: Закрытый бассейн рядом с человеком, который умеет плавать. Сопоставить результат с правильным примером. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
+        }
       ]
     },
     {
@@ -75,22 +459,6 @@
       "narration": "我会游泳。 — «Я умею плавать». 会 показывает навык: человек научился плавать. Это умение никуда не исчезло.",
       "screenCaption": "会 + действие = освоенный навык",
       "editPlan": "5–12 с: покажите нейтральную иллюстрацию плавания, затем целое 我会游泳。 с тоновым пиньинем. Подсветите 会, не разделяя грамматически связанную фразу на нечитабельные части.",
-      "visualBeats": [
-        {
-          "hero": "会",
-          "pinyin": "huì",
-          "meaning": "умею, научился",
-          "chinese": true,
-          "motion": "slide"
-        },
-        {
-          "hero": "我会游泳。",
-          "pinyin": "Wǒ huì yóuyǒng.",
-          "meaning": "Я умею плавать.",
-          "chinese": true,
-          "motion": "slide"
-        }
-      ],
       "cards": [
         {
           "hanzi": "会",
@@ -102,6 +470,405 @@
           "pinyin": "Wǒ huì yóuyǒng.",
           "meaning": "Я умею плавать."
         }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "skill-action-1",
+          "kind": "graphic",
+          "cueText": "我会游泳",
+          "visual": {
+            "title": "умею",
+            "hanzi": "会",
+            "pinyin": "huì",
+            "meaning": "умею",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 288,
+                    "y1": 171,
+                    "x2": 355,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "skill: Закрытый бассейн рядом с человеком, который умеет плавать. Показать исходную учебную ситуацию. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
+        },
+        {
+          "id": "skill-action-2",
+          "kind": "graphic",
+          "cueText": "会 показывает",
+          "visual": {
+            "title": "Я умею плавать.",
+            "hanzi": "我会游泳。",
+            "pinyin": "Wǒ huì yóuyǒng.",
+            "meaning": "Я умею плавать.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "left-pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 58,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "left-pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 183,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "left-pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 173,
+                    "y1": 171,
+                    "x2": 240,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "second",
+                  "type": "rect",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 346,
+                    "y": 142,
+                    "width": 214,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "closed-a",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 360,
+                    "y1": 145,
+                    "x2": 545,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "closed-b",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 540,
+                    "y1": 145,
+                    "x2": 360,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "skill: Закрытый бассейн рядом с человеком, который умеет плавать. Изменить видимое состояние в момент объяснения. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
+        },
+        {
+          "id": "skill-action-3",
+          "kind": "graphic",
+          "cueText": "исчезло",
+          "visual": {
+            "title": "умею",
+            "hanzi": "会",
+            "pinyin": "huì",
+            "meaning": "умею",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 288,
+                    "y1": 171,
+                    "x2": 355,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "skill: Закрытый бассейн рядом с человеком, который умеет плавать. Сопоставить результат с правильным примером. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
+        }
       ]
     },
     {
@@ -112,22 +879,6 @@
       "narration": "我今天不能游泳。 — «Сегодня я не могу плавать». Бассейн закрыт: дело не в навыке, а в обстоятельствах.",
       "screenCaption": "不能 = сейчас нет возможности",
       "editPlan": "12–19 с: верните схему закрытого бассейна, покажите всю фразу и выделите 今天 и 不能. Не добавляйте графику запрета, якобы взятую из реального бассейна.",
-      "visualBeats": [
-        {
-          "hero": "不能",
-          "pinyin": "bù néng",
-          "meaning": "не могу сейчас",
-          "chinese": true,
-          "motion": "slide"
-        },
-        {
-          "hero": "我今天不能游泳。",
-          "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
-          "meaning": "Сегодня я не могу плавать.",
-          "chinese": true,
-          "motion": "slide"
-        }
-      ],
       "cards": [
         {
           "hanzi": "不能",
@@ -139,6 +890,406 @@
           "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
           "meaning": "Сегодня я не могу плавать."
         }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "conditions-action-1",
+          "kind": "graphic",
+          "cueText": "我今天不能游泳",
+          "visual": {
+            "title": "не могу в этой ситуации",
+            "hanzi": "不能",
+            "pinyin": "bù néng",
+            "meaning": "не могу в этой ситуации",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 288,
+                    "y1": 171,
+                    "x2": 355,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "conditions: Закрытый бассейн рядом с человеком, который умеет плавать. Показать исходную учебную ситуацию. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
+        },
+        {
+          "id": "conditions-action-2",
+          "kind": "graphic",
+          "cueText": "Бассейн закрыт",
+          "visual": {
+            "title": "Сегодня я не могу плавать.",
+            "hanzi": "我今天不能游泳。",
+            "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+            "meaning": "Сегодня я не могу плавать.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-a",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 203,
+                    "y1": 148,
+                    "x2": 393,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-b",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 393,
+                    "y1": 148,
+                    "x2": 203,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "conditions: Закрытый бассейн рядом с человеком, который умеет плавать. Изменить видимое состояние в момент объяснения. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
+        },
+        {
+          "id": "conditions-action-3",
+          "kind": "graphic",
+          "cueText": "обстоятельствах",
+          "visual": {
+            "title": "не могу в этой ситуации",
+            "hanzi": "不能",
+            "pinyin": "bù néng",
+            "meaning": "не могу в этой ситуации",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "left-pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 58,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "left-pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 183,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "left-pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 173,
+                    "y1": 171,
+                    "x2": 240,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "second",
+                  "type": "rect",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 346,
+                    "y": 142,
+                    "width": 214,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "closed-a",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 360,
+                    "y1": 145,
+                    "x2": 545,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "closed-b",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 540,
+                    "y1": 145,
+                    "x2": 360,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "conditions: Закрытый бассейн рядом с человеком, который умеет плавать. Сопоставить результат с правильным примером. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
+        }
       ]
     },
     {
@@ -149,22 +1300,6 @@
       "narration": "Сравните: 我会游泳 — я умею плавать. 我今天不能游泳 — сегодня не могу. 会 — про навык; 能 — про возможность в условиях.",
       "screenCaption": "会: навык · 能: возможность",
       "editPlan": "19–26 с: два равных кадра — человек умеет плавать / закрытый бассейн. Подписи 会 и 不能 выделяйте по очереди, но оставляйте одновременно оба примера, пиньинь и перевод.",
-      "visualBeats": [
-        {
-          "hero": "我会游泳。",
-          "pinyin": "Wǒ huì yóuyǒng.",
-          "meaning": "Я умею плавать.",
-          "chinese": true,
-          "motion": "slide"
-        },
-        {
-          "hero": "我今天不能游泳。",
-          "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
-          "meaning": "Сегодня я не могу плавать.",
-          "chinese": true,
-          "motion": "slide"
-        }
-      ],
       "cards": [
         {
           "hanzi": "我会游泳。",
@@ -175,6 +1310,406 @@
           "hanzi": "我今天不能游泳。",
           "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
           "meaning": "Сегодня я не могу плавать."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "contrast-action-1",
+          "kind": "graphic",
+          "cueText": "我会游泳",
+          "visual": {
+            "title": "Я умею плавать.",
+            "hanzi": "我会游泳。",
+            "pinyin": "Wǒ huì yóuyǒng.",
+            "meaning": "Я умею плавать.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 288,
+                    "y1": 171,
+                    "x2": 355,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "contrast: Закрытый бассейн рядом с человеком, который умеет плавать. Показать исходную учебную ситуацию. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
+        },
+        {
+          "id": "contrast-action-2",
+          "kind": "graphic",
+          "cueText": "我今天不能游泳",
+          "visual": {
+            "title": "Сегодня я не могу плавать.",
+            "hanzi": "我今天不能游泳。",
+            "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+            "meaning": "Сегодня я не могу плавать.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-a",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 203,
+                    "y1": 148,
+                    "x2": 393,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-b",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 393,
+                    "y1": 148,
+                    "x2": 203,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "contrast: Закрытый бассейн рядом с человеком, который умеет плавать. Изменить видимое состояние в момент объяснения. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
+        },
+        {
+          "id": "contrast-action-3",
+          "kind": "graphic",
+          "cueText": "会 —",
+          "visual": {
+            "title": "Я умею плавать.",
+            "hanzi": "我会游泳。",
+            "pinyin": "Wǒ huì yóuyǒng.",
+            "meaning": "Я умею плавать.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "left-pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 58,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "left-pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 183,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "left-pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 173,
+                    "y1": 171,
+                    "x2": 240,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "second",
+                  "type": "rect",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 346,
+                    "y": 142,
+                    "width": 214,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "closed-a",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 360,
+                    "y1": 145,
+                    "x2": 545,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "closed-b",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 540,
+                    "y1": 145,
+                    "x2": 360,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "contrast: Закрытый бассейн рядом с человеком, который умеет плавать. Сопоставить результат с правильным примером. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
         }
       ]
     },
@@ -186,22 +1721,6 @@
       "narration": "Повторите: 我会游泳。 Я умею плавать. 我今天不能游泳。 Сегодня не могу. Одно дело — навык, другое — ситуация.",
       "screenCaption": "会 ≠ 能 в этом контексте",
       "editPlan": "26–31 с: последовательный учебный recall: сначала фраза про навык, затем фраза про сегодняшнюю невозможность. Без призыва к подписке, скачиванию или любому другому CTA.",
-      "visualBeats": [
-        {
-          "hero": "会",
-          "pinyin": "huì",
-          "meaning": "умею",
-          "chinese": true,
-          "motion": "slide"
-        },
-        {
-          "hero": "不能",
-          "pinyin": "bù néng",
-          "meaning": "не могу сейчас",
-          "chinese": true,
-          "motion": "slide"
-        }
-      ],
       "cards": [
         {
           "hanzi": "我会游泳。",
@@ -212,6 +1731,406 @@
           "hanzi": "我今天不能游泳。",
           "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
           "meaning": "Сегодня я не могу плавать."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recall-action-1",
+          "kind": "graphic",
+          "cueText": "我会游泳",
+          "visual": {
+            "title": "Я умею плавать.",
+            "hanzi": "我会游泳。",
+            "pinyin": "Wǒ huì yóuyǒng.",
+            "meaning": "Я умею плавать.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 288,
+                    "y1": 171,
+                    "x2": 355,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: Закрытый бассейн рядом с человеком, который умеет плавать. Показать исходную учебную ситуацию. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
+        },
+        {
+          "id": "recall-action-2",
+          "kind": "graphic",
+          "cueText": "我今天不能游泳",
+          "visual": {
+            "title": "Сегодня я не могу плавать.",
+            "hanzi": "我今天不能游泳。",
+            "pinyin": "Wǒ jīntiān bù néng yóuyǒng.",
+            "meaning": "Сегодня я не могу плавать.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 173,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-a",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 203,
+                    "y1": 148,
+                    "x2": 393,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "pool-lock-b",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 393,
+                    "y1": 148,
+                    "x2": 203,
+                    "y2": 261,
+                    "stroke": "red",
+                    "strokeWidth": 11,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: Закрытый бассейн рядом с человеком, который умеет плавать. Изменить видимое состояние в момент объяснения. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
+        },
+        {
+          "id": "recall-action-3",
+          "kind": "graphic",
+          "cueText": "Одно дело",
+          "visual": {
+            "title": "Я умею плавать.",
+            "hanzi": "我会游泳。",
+            "pinyin": "Wǒ huì yóuyǒng.",
+            "meaning": "Я умею плавать.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "left-pool-water",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 58,
+                    "y": 143,
+                    "width": 250,
+                    "height": 122,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,183 238,175 283,183 333,175 388,183",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,211 238,203 283,211 333,203 388,211",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "left-pool-wave-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "193,239 238,231 283,239 333,231 388,239",
+                    "fill": "none",
+                    "stroke": "secondary",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "left-pool-swimmer",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 183,
+                    "cy": 151,
+                    "r": 23,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "left-pool-arm",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 173,
+                    "y1": 171,
+                    "x2": 240,
+                    "y2": 206,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "second",
+                  "type": "rect",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 346,
+                    "y": 142,
+                    "width": 214,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "closed-a",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 360,
+                    "y1": 145,
+                    "x2": 545,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "closed-b",
+                  "type": "line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 540,
+                    "y1": 145,
+                    "x2": 360,
+                    "y2": 254,
+                    "stroke": "red",
+                    "strokeWidth": 9
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: Закрытый бассейн рядом с человеком, который умеет плавать. Сопоставить результат с правильным примером. Учебный смысл: Различить уже освоенный навык и физическую возможность плавать сегодня."
         }
       ]
     }
@@ -249,5 +2168,22 @@
     "registeredAt": "2026-10-19"
   },
   "audienceProblem": "Начинающий переводит русское «могу» всегда одним китайским словом и не отличает умение от возможности сейчас.",
-  "learningOutcome": "Сказать «Я умею плавать» через 会 и «Сегодня я не могу плавать» через 不能 в двух типичных контекстах."
+  "learningOutcome": "Сказать «Я умею плавать» через 会 и «Сегодня я не могу плавать» через 不能 в двух типичных контекстах.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Закрытый бассейн рядом с человеком, который умеет плавать",
+      "learnerGoal": "Различить уже освоенный навык и физическую возможность плавать сегодня",
+      "obstacle": "Одна русская формулировка «могу» скрывает две разные китайские конструкции"
+    },
+    "selectionReason": "В паре 会 и 能 достаточно одного реального препятствия и раннего ответа; дополнительные re-hook вопросы исказили бы одну полезную мысль",
+    "firstPayoff": {
+      "sceneId": "skill",
+      "cueText": "我会游泳"
+    },
+    "reHooks": []
+  }
 }

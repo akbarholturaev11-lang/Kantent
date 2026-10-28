@@ -213,7 +213,7 @@
     ],
     "storyRule": "Start with a recognisable life task and a person trying to do it. Develop only tension relevant to one supported product benefit, show the actual useful action and resolve that task. Choose the number of scenes from the story; no fixed eight-block template or forced re-hooks.",
     "truthRule": "Illustrative stories are introduced as imagined situations. First-person experiences and testimonials require documented owner-provided evidence. Product capabilities need checked source receipts and genuine captures; never invent UI, conversations, outcomes, metrics or guarantees.",
-    "author": "The invoking AI agent writes the story and visual actions before approved voice generation. Calendar Reserve remains authorised for dated lesson reserves only; no new ad scheduler or separate Gemini text writer.",
+    "author": "The invoking AI writes manual ads; Calendar Reserve authors complete future bilingual ad source drafts for calendar.weeklySchedule under WORKFLOW.md. Gemini handles approved voice/transcription only. No additional scheduler.",
     "closingSource": "The selected language and platform CTA Lab; no copied CTA text or automatic publication.",
     "reference": {
       "fileName": "-6684566936130931710.mp4",

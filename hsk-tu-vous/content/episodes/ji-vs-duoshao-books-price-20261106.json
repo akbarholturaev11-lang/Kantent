@@ -1,0 +1,2229 @@
+{
+  "id": "ji-vs-duoshao-books-price-20261106",
+  "date": "2026-11-06",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "几 или 多少: сколько книг и сколько стоит?",
+  "level": "HSK 1",
+  "topic": "几 с небольшим количеством и счётным словом, 多少 для неизвестного количества и цены",
+  "durationTargetSec": 50,
+  "caption": "Сколько книг? 你有几本书？ (Nǐ yǒu jǐ běn shū?) Сколько стоит? 这个多少钱？ (Zhège duōshao qián?) Разница между 几 и 多少 — в контексте количества и цены.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#грамматикакитайского"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "几 (jǐ) обычно спрашивает о небольшом ожидаемом количестве. Перед исчисляемым существительным после 几 требуется счётное слово: 几本书 — «сколько книг».",
+    "多少 (duōshao) спрашивает о неизвестном количестве или цене без ожидания малого числа: 这个多少钱？ — «Сколько это стоит?»",
+    "В вопросах с 几 и 多少 частица 吗 не нужна. Это начальные типичные конструкции; в других контекстах 几 может значить «несколько»."
+  ],
+  "examples": [
+    "几 jǐ — сколько (обычно небольшое число)",
+    "多少 duōshao — сколько (открытое количество, цена)",
+    "本 běn — счётное слово для книг",
+    "你有几本书？ Nǐ yǒu jǐ běn shū? — Сколько у тебя книг?",
+    "这个多少钱？ Zhège duōshao qián? — Сколько это стоит?"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "narration": "В магазине спрашивают: «Сколько книг?» А потом: «Сколько стоит?» В китайском тут два разных вопроса: 几 и 多少.",
+      "cards": [
+        {
+          "hanzi": "几",
+          "pinyin": "jǐ",
+          "meaning": "сколько книг"
+        },
+        {
+          "hanzi": "多少",
+          "pinyin": "duōshao",
+          "meaning": "сколько стоит"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-step-1",
+          "kind": "graphic",
+          "cueText": "Сколько книг",
+          "visual": {
+            "title": "сколько книг",
+            "hanzi": "几",
+            "pinyin": "jǐ",
+            "meaning": "сколько книг",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 260,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 267,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 277,
+                    "y1": 171,
+                    "x2": 307,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Сначала увидеть книги в магазине и число предметов."
+        },
+        {
+          "id": "hook-step-2",
+          "kind": "graphic",
+          "cueText": "Сколько стоит",
+          "visual": {
+            "title": "сколько стоит",
+            "hanzi": "多少",
+            "pinyin": "duōshao",
+            "meaning": "сколько стоит",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 164,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 171,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 181,
+                    "y1": 171,
+                    "x2": 211,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 240,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 247,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 257,
+                    "y1": 164,
+                    "x2": 287,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-2-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 316,
+                    "y": 136,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-2-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 323,
+                    "y": 149,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-2-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 333,
+                    "y1": 157,
+                    "x2": 363,
+                    "y2": 157,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Движением показать выбор между счётом и ценой."
+        },
+        {
+          "id": "hook-step-3",
+          "kind": "graphic",
+          "cueText": "几 и 多少",
+          "visual": {
+            "title": "сколько книг",
+            "hanzi": "几",
+            "pinyin": "jǐ",
+            "meaning": "сколько книг",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 63,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 70,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 80,
+                    "y1": 171,
+                    "x2": 110,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 139,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 146,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 156,
+                    "y1": 164,
+                    "x2": 186,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 355,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 449,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 384,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 420,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Сопоставить количество книг с неизвестной ценой."
+        }
+      ]
+    },
+    {
+      "id": "books",
+      "kind": "example",
+      "durationSec": 7,
+      "narration": "Если книг немного, спросите: 你有几本书？ — «Сколько у тебя книг?» После 几 перед книгами нужно счётное слово 本.",
+      "cards": [
+        {
+          "hanzi": "几本书",
+          "pinyin": "jǐ běn shū",
+          "meaning": "сколько книг"
+        },
+        {
+          "hanzi": "你有几本书？",
+          "pinyin": "Nǐ yǒu jǐ běn shū?",
+          "meaning": "Сколько у тебя книг?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "books-step-1",
+          "kind": "graphic",
+          "cueText": "книг немного",
+          "visual": {
+            "title": "сколько книг",
+            "hanzi": "几本书",
+            "pinyin": "jǐ běn shū",
+            "meaning": "сколько книг",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 260,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 267,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 277,
+                    "y1": 171,
+                    "x2": 307,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Сначала увидеть книги в магазине и число предметов."
+        },
+        {
+          "id": "books-step-2",
+          "kind": "graphic",
+          "cueText": "你有几本书",
+          "visual": {
+            "title": "Сколько у тебя книг?",
+            "hanzi": "你有几本书？",
+            "pinyin": "Nǐ yǒu jǐ běn shū?",
+            "meaning": "Сколько у тебя книг?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 164,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 171,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 181,
+                    "y1": 171,
+                    "x2": 211,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 240,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 247,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 257,
+                    "y1": 164,
+                    "x2": 287,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-2-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 316,
+                    "y": 136,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-2-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 323,
+                    "y": 149,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-2-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 333,
+                    "y1": 157,
+                    "x2": 363,
+                    "y2": 157,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Движением показать выбор между счётом и ценой."
+        },
+        {
+          "id": "books-step-3",
+          "kind": "graphic",
+          "cueText": "счётное слово 本",
+          "visual": {
+            "title": "сколько книг",
+            "hanzi": "几本书",
+            "pinyin": "jǐ běn shū",
+            "meaning": "сколько книг",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 164,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 171,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 181,
+                    "y1": 171,
+                    "x2": 211,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 240,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 247,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 257,
+                    "y1": 164,
+                    "x2": 287,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-2-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 316,
+                    "y": 136,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-2-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 323,
+                    "y": 149,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-2-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 333,
+                    "y1": 157,
+                    "x2": 363,
+                    "y2": 157,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-marker",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 134,
+                    "y1": 318,
+                    "x2": 454,
+                    "y2": 318,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-spot",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 466,
+                    "cy": 318,
+                    "r": 16,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Сопоставить количество книг с неизвестной ценой."
+        }
+      ]
+    },
+    {
+      "id": "price",
+      "kind": "example",
+      "durationSec": 7,
+      "narration": "А цену спрашиваем так: 这个多少钱？ — «Сколько это стоит?» 多少 подходит для цены, когда сумма заранее неизвестна.",
+      "cards": [
+        {
+          "hanzi": "多少",
+          "pinyin": "duōshao",
+          "meaning": "сколько стоит"
+        },
+        {
+          "hanzi": "这个多少钱？",
+          "pinyin": "Zhège duōshao qián?",
+          "meaning": "Сколько это стоит?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "price-step-1",
+          "kind": "graphic",
+          "cueText": "цену спрашиваем",
+          "visual": {
+            "title": "сколько стоит",
+            "hanzi": "多少",
+            "pinyin": "duōshao",
+            "meaning": "сколько стоит",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 63,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 70,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 80,
+                    "y1": 171,
+                    "x2": 110,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 139,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 146,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 156,
+                    "y1": 164,
+                    "x2": 186,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 355,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 449,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 384,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 420,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Сначала увидеть книги в магазине и число предметов."
+        },
+        {
+          "id": "price-step-2",
+          "kind": "graphic",
+          "cueText": "这个多少钱",
+          "visual": {
+            "title": "Сколько это стоит?",
+            "hanzi": "这个多少钱？",
+            "pinyin": "Zhège duōshao qián?",
+            "meaning": "Сколько это стоит?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 205,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "red"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 299,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 234,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 270,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-2",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 306,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-3",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 342,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Движением показать выбор между счётом и ценой."
+        },
+        {
+          "id": "price-step-3",
+          "kind": "graphic",
+          "cueText": "сумма заранее неизвестна",
+          "visual": {
+            "title": "сколько стоит",
+            "hanzi": "多少",
+            "pinyin": "duōshao",
+            "meaning": "сколько стоит",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 205,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 299,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 234,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 270,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Сопоставить количество книг с неизвестной ценой."
+        }
+      ]
+    },
+    {
+      "id": "contrast",
+      "kind": "context",
+      "durationSec": 7,
+      "narration": "Сравните: 几本书 — сколько книг, обычно небольшое число. 多少钱 — сколько денег, то есть цена. Для 几 перед предметом нужно счётное слово.",
+      "cards": [
+        {
+          "hanzi": "几本书",
+          "pinyin": "jǐ běn shū",
+          "meaning": "сколько книг"
+        },
+        {
+          "hanzi": "多少钱",
+          "pinyin": "duōshao qián",
+          "meaning": "сколько денег"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "contrast-step-1",
+          "kind": "graphic",
+          "cueText": "几本书",
+          "visual": {
+            "title": "сколько книг",
+            "hanzi": "几本书",
+            "pinyin": "jǐ běn shū",
+            "meaning": "сколько книг",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 164,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 171,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 181,
+                    "y1": 171,
+                    "x2": 211,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 240,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 247,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 257,
+                    "y1": 164,
+                    "x2": 287,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-2-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 316,
+                    "y": 136,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-2-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 323,
+                    "y": 149,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-2-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 333,
+                    "y1": 157,
+                    "x2": 363,
+                    "y2": 157,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Сначала увидеть книги в магазине и число предметов."
+        },
+        {
+          "id": "contrast-step-2",
+          "kind": "graphic",
+          "cueText": "多少钱",
+          "visual": {
+            "title": "сколько денег",
+            "hanzi": "多少钱",
+            "pinyin": "duōshao qián",
+            "meaning": "сколько денег",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 205,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "red"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 299,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 234,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 270,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-2",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 306,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-3",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 342,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Движением показать выбор между счётом и ценой."
+        },
+        {
+          "id": "contrast-step-3",
+          "kind": "graphic",
+          "cueText": "счётное слово",
+          "visual": {
+            "title": "сколько книг",
+            "hanzi": "几本书",
+            "pinyin": "jǐ běn shū",
+            "meaning": "сколько книг",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 63,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 70,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 80,
+                    "y1": 171,
+                    "x2": 110,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 139,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 146,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 156,
+                    "y1": 164,
+                    "x2": 186,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 355,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 449,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 384,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 420,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Сопоставить количество книг с неизвестной ценой."
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "example",
+      "durationSec": 6,
+      "narration": "Проверьте себя: сколько книг — 几本书; сколько стоит — 多少钱. Здесь не добавляем 吗: вопрос уже задан.",
+      "cards": [
+        {
+          "hanzi": "几本书",
+          "pinyin": "jǐ běn shū",
+          "meaning": "сколько книг"
+        },
+        {
+          "hanzi": "多少钱",
+          "pinyin": "duōshao qián",
+          "meaning": "сколько стоит"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recap-step-1",
+          "kind": "graphic",
+          "cueText": "сколько книг",
+          "visual": {
+            "title": "сколько книг",
+            "hanzi": "几本书",
+            "pinyin": "jǐ běn shū",
+            "meaning": "сколько книг",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 260,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 267,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 277,
+                    "y1": 171,
+                    "x2": 307,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Сначала увидеть книги в магазине и число предметов."
+        },
+        {
+          "id": "recap-step-2",
+          "kind": "graphic",
+          "cueText": "几本书",
+          "visual": {
+            "title": "сколько стоит",
+            "hanzi": "多少钱",
+            "pinyin": "duōshao qián",
+            "meaning": "сколько стоит",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 164,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 171,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 181,
+                    "y1": 171,
+                    "x2": 211,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 240,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 247,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 257,
+                    "y1": 164,
+                    "x2": 287,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-2-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 316,
+                    "y": 136,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-2-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 323,
+                    "y": 149,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-2-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 333,
+                    "y1": 157,
+                    "x2": 363,
+                    "y2": 157,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Движением показать выбор между счётом и ценой."
+        },
+        {
+          "id": "recap-step-3",
+          "kind": "graphic",
+          "cueText": "多少钱",
+          "visual": {
+            "title": "сколько книг",
+            "hanzi": "几本书",
+            "pinyin": "jǐ běn shū",
+            "meaning": "сколько книг",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 63,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 70,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 80,
+                    "y1": 171,
+                    "x2": 110,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 139,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 146,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 156,
+                    "y1": 164,
+                    "x2": 186,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-base",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 355,
+                    "y": 92,
+                    "width": 192,
+                    "height": 222,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "price-hole",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 449,
+                    "cy": 118,
+                    "r": 13,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "price-bar-0",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 384,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "price-bar-1",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 420,
+                    "y": 179,
+                    "width": 24,
+                    "height": 63,
+                    "rx": 8,
+                    "fill": "foreground"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Сопоставить количество книг с неизвестной ценой."
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "几、多少 (jǐ, duōshao) — Hanzistack Chinese Grammar",
+      "url": "https://char.hanzistack.com/grammar/ji-duoshao-asking-quantities",
+      "checkedAt": "2026-10-28",
+      "supports": "几 + classifier + count noun for an expected small quantity (几本书), 多少 for open quantities and price (多少钱), and no 吗 in a wh-question."
+    },
+    {
+      "title": "How Many / How Much — HSK Companion",
+      "url": "https://hskcompanion.org/grammar/question-ji-duoshao/",
+      "checkedAt": "2026-10-28",
+      "supports": "Independent HSK1-oriented explanation of 几 and 多少, classifier 本 in small book counts and 多少钱 for an unknown price."
+    },
+    {
+      "title": "几 / 多少 — Wanyu HSK 1 Grammar",
+      "url": "https://wanyu.app/en/grammar/hsk1/ji-duoshao/",
+      "checkedAt": "2026-10-28",
+      "supports": "Confirms 几 typically expects a small count with classifier, whereas 多少 permits unknown larger quantity and asks how much something costs."
+    }
+  ],
+  "hookExperiment": {
+    "id": "ji-vs-duoshao-books-price-20261106-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Сравнение вопроса о количестве книг с вопросом о цене в реальном магазине может раньше показать различие 几/多少; это редакционная гипотеза без подтверждённых результатов.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-28"
+  },
+  "audienceProblem": "Новичок путает «сколько» при подсчёте нескольких книг и при вопросе о неизвестной цене.",
+  "learningOutcome": "Сказать 你有几本书？ с 本 и 这个多少钱？ для цены.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Покупатель в книжном магазине считает несколько книг и спрашивает цену",
+      "learnerGoal": "Узнать число книг и стоимость, не смешивая 几 и 多少",
+      "obstacle": "На русском оба вопроса начинаются со слова «сколько», а китайские слова разные"
+    },
+    "selectionReason": "Прямой контраст количества книг и цены даёт ответ в начале и не требует искусственного второго вопроса",
+    "firstPayoff": {
+      "sceneId": "books",
+      "cueText": "你有几本书"
+    },
+    "reHooks": []
+  }
+}

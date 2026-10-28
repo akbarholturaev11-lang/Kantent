@@ -1,3 +1,4 @@
+import {compilePromoTimeline} from './promo-production.mjs';
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import fs from "node:fs/promises";
@@ -79,6 +80,7 @@ if (perWordCueCount / episode.captions.length < 0.8) {
 // working copies, CTA registrations or production packages.
 const durationValidation = validateProductionDuration(episode, visualSystem.duration);
 const semanticTimeline = prepareSemanticRender(episode);
+const promoTimeline=compilePromoTimeline(episode);
 const motionTimeline = compileMotionDesignTimeline(episode, visualSystem.lessonPresentation);
 const folder = reviewDir(id);
 await fs.mkdir(folder, { recursive: true });
@@ -92,6 +94,7 @@ if (registrations.length) {
 await writeJson(filePath, episode);
 await invalidateReviewArtifacts(id);
 if (semanticTimeline) await writeJson(path.join(folder, "visual-timeline.json"), semanticTimeline);
+if (promoTimeline) await writeJson(path.join(folder,"promo-timeline.json"),promoTimeline);
 if (motionTimeline) await writeJson(path.join(folder, "motion-timeline.json"), motionTimeline);
 await writeStatus(id, {
   stage: "rendering",
@@ -138,6 +141,7 @@ try {
       ),
       "utf8",
     );
+    await writeJson(path.join(path.dirname(files.video),"content-identity.json"),{...variant.contentIdentity,platform,videoSha256:await videoHash(files.video),publicationAuthorized:false});
     const hashtags = (variant.hashtags || []).join(" ");
     const labels = variant.languageCode === "tg-TJ"
       ? { topic: "Мавзӯъ", platform: "Платформа", status: "Ҳолат", ready: "баста барои баррасии дастӣ омода аст" }
@@ -146,6 +150,7 @@ try {
     await fs.writeFile(files.post, `${postText}\n`, "utf8");
     platformPackages[platform] = {
       ...files,
+      contentIdentity:episode.contentIdentity,
       contentHash: episodeContentHash(variant),
       baseContentHash: episodeContentHash(episode),
       ctaExperimentId: variant.ctaExperiment.id,

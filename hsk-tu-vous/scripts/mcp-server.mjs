@@ -7,7 +7,10 @@ import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { recommendSkills } from "./skill-router.mjs";
 import { MOTION_KINDS } from "./motion-design-plan.mjs";
 import { graphicSceneSchema } from "./graphic-scene-schema.mjs";
-import { reviewPromoVariants } from "./promo-plan.mjs";
+import { reviewPromoPlan, reviewPromoVariants } from "./promo-plan.mjs";
+import {contentTypeOf} from "./content-schedule.mjs";
+import {proposeBuffer} from "./scenario-buffer-plan.mjs";
+import {dateInTimezone,isDraftReady} from "./self-improvement-check.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { suggestSemanticShots } from "./semantic-shot-adviser.mjs";
 import { CTA_PLATFORMS, getPlatformCtaStatus } from "./platform-cta.mjs";
@@ -70,7 +73,7 @@ export const createServer = () => {
     { name: "hsk-ai-content", version: "1.0.0" },
     {
       instructions:
-      "Для новых рекламных роликов читайте content/PROMO_WORKFLOW.md и creativeGuidance из recommend_skills. Сценарий строится на жизненной ситуации и доказанной пользе продукта; минималистичный кадр и один субтитр определяет content/visual-system.json#promoPresentation. Перед медиа вызовите get_promo_plan: по умолчанию он проверяет все языки из content/languages.json, включая отдельные переведённые реплики и cueText. Этот запрос не расширяет полномочия Calendar Reserve на рекламу. " +
+      "Для новых рекламных роликов читайте content/PROMO_WORKFLOW.md и creativeGuidance из recommend_skills. Сценарий строится на жизненной ситуации и доказанной пользе продукта; минималистичный кадр и один субтитр определяет content/visual-system.json#promoPresentation. Перед медиа вызовите get_promo_plan: по умолчанию он проверяет все языки из content/languages.json, включая отдельные переведённые реплики и cueText. Calendar Reserve drafts future ad sources only under calendar.weeklySchedule and WORKFLOW.md; it does not publish. " +
       "При написании новых учебных сценариев выбирайте структуру по content/creative-formats.json#storytellingPolicy и задаче ученика, а не по длине: никаких обязательных восьми блоков. Серии планируйте по content/calendar.json#seriesPolicy и content/WORKFLOW.md. " +
       "Для новых рисунков и действий читайте content/GRAPHIC_SCENES.md. Сценарий и рисунки пишет агент по content/WORKFLOW.md: Calendar Reserve для резерва, вызывающий AI-агент для ручного запроса; не используйте отдельную Gemini-модель сценариста. Используйте kind:graphic и декларативные nodes/tracks, когда готовых объектов недостаточно; автор обязан нарисовать смысловой кадр и привязать его к словам выбранного языка до озвучки. Смена метаданных не считается сменой видимого кадра. " +
       "Перед подготовкой нового HSK-урока читайте content/EDITING_SPEC.md и content/EPISODE_SCHEMA.md. Утверждённый формат выбирается из content/visual-system.json#lessonPresentation. Автор должен заполнить смысловые motionBeats каждой сцены через update_production_plan до voice/render и зарегистрировать изменившийся CTA-контекст. Если prepare_today_video вернул action-plan-required, продолжайте планирование самостоятельно по указанным правилам и повторите подготовку после заполнения плана. " +
@@ -89,7 +92,7 @@ export const createServer = () => {
   // and promo planning own their full configured language set below.
   const registerTool = server.registerTool.bind(server);
   server.registerTool = (name, config, handler) => {
-    if (["prepare_video_for_date", "prepare_today_video", "get_promo_plan"].includes(name))
+    if (["prepare_video_for_date", "prepare_today_video", "get_promo_plan", "get_weekly_content_plan"].includes(name))
       return registerTool(name, config, handler);
     return registerTool(name, {
       ...config,
@@ -394,6 +397,19 @@ export const createServer = () => {
   );
 
   server.registerTool(
+    "get_weekly_content_plan",
+    {
+      title:"Read the daily content mix and missing source drafts",
+      description:"Read-only planning from calendar.weeklySchedule and planningBuffer for all default production languages. Reports lessons, ads and complete consecutive series, including missing translations. Never creates scripts, media or social schedules.",
+      inputSchema:z.object({date:dateSchema.optional()}),
+    },
+    async ({date})=>withToolErrors(async()=>{
+      const calendar=await readJson(CALENDAR_PATH);
+      return proposeBuffer(calendar,{today:date??dateInTimezone(new Date(),calendar.timezone),episodeIsReady:item=>isDraftReady(PROJECT_ROOT,item)});
+    }),
+  );
+
+  server.registerTool(
     "get_promo_plan",
     {
       title: "Read an original promo story and its minimal frame plan",
@@ -432,11 +448,13 @@ export const createServer = () => {
         const calendar = await readJson(CALENDAR_PATH);
         return {
           timezone: calendar.timezone,
+          weeklySchedule: calendar.weeklySchedule,
           seriesPolicy: calendar.seriesPolicy,
           dates: await Promise.all(
             calendar.items.map(async (item) => ({
               date: item.date,
               id: item.id,
+              contentType:contentTypeOf(item),
               topic: item.topic,
               level: item.level,
               ...(item.series ? {series:item.series} : {}),
@@ -860,7 +878,7 @@ export const createServer = () => {
           };
         }
         const sourceRevision = requireFreshGitMain();
-        const { item, episode } = await currentEpisode(date);
+          const { item, episode } = await currentEpisode(date);
         const { item: runItem } = await ensureRunCopy(date);
         const folder = reviewDir(item.id);
         const visualSystem = await readJson(path.join(PROJECT_ROOT, "content", "visual-system.json"));
@@ -1742,6 +1760,7 @@ export const createServer = () => {
             throw new Error("A different Zernio post ID is already recorded for this package and account.");
           const savedResult = {
             ...result,
+            contentIdentity: episode.contentIdentity,
             ...(approval.platformPackages?.[result.platform] ? {
               contentHash: approval.platformPackages[result.platform].contentHash,
               ctaExperimentId: approval.platformPackages[result.platform].ctaExperimentId,

@@ -1,3 +1,6 @@
+import {reviewPromoPlan} from './promo-plan.mjs';
+import {materializePromo,validatePromoMedia} from './promo-production.mjs';
+import {contentIdentity} from './content-attribution.mjs';
 import fs from "node:fs/promises";
 import path from "node:path";
 import { createHash } from "node:crypto";
@@ -14,7 +17,8 @@ import { validateStoryboardScene } from "./storyboard-validation.mjs";
 import { validateSemanticVisualEpisode } from "./semantic-visual-plan.mjs";
 import { validateStorytellingEpisode } from "./storytelling-plan.mjs";
 import { validateSeriesCalendar } from "./series-plan.mjs";
-import { activeLanguage, languageSettings, generatedVoicePath, assertLocalizedLessonSource, assertEpisodeLanguage } from "./language-context.mjs";
+import {contentTypeOf,validateScheduledContent} from "./content-schedule.mjs";
+import { isPromoId, activeLanguage, languageSettings, generatedVoicePath, assertLocalizedLessonSource, assertEpisodeLanguage } from "./language-context.mjs";
 
 export const PROJECT_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -102,6 +106,7 @@ export async function writeJson(filePath, value) {
 }
 
 export function reviewDir(id) {
+  if(isPromoId(id))return path.join(REVIEW_ROOT,"promos",safeId(id),activeLanguage());
   return path.join(REVIEW_ROOT, safeId(id), ...(activeLanguage() === "ru" ? [] : [activeLanguage()]));
 }
 
@@ -174,7 +179,7 @@ export async function invalidateReviewArtifacts(
 
 export async function getCalendarItem(id) {
   const calendar = await readJson(CALENDAR_PATH);
-  const errors = validateSeriesCalendar(calendar);
+  const errors = [...validateSeriesCalendar(calendar),...validateScheduledContent(calendar)];
   if (errors.length) throw Error(errors.join("\n"));
   const item = calendar.items.find((entry) => entry.id === safeId(id));
   if (!item) throw new Error(`Taqvimda “${id}” IDli mavzu topilmadi.`);
@@ -195,7 +200,7 @@ export async function getCalendarItemByDate(date) {
     throw new Error("Kiritilgan sana haqiqiy kalendar sanasi emas.");
   }
   const calendar = await readJson(CALENDAR_PATH);
-  const errors = validateSeriesCalendar(calendar);
+  const errors = [...validateSeriesCalendar(calendar),...validateScheduledContent(calendar)];
   if (errors.length) throw Error(errors.join("\n"));
   const item = calendar.items.find((entry) => entry.date === date);
   if (!item) {
@@ -209,6 +214,12 @@ export async function getCalendarItemByDate(date) {
 
 export async function getPlannedEpisode(date) {
   const item = await getCalendarItemByDate(date);
+  if(contentTypeOf(item)==='advertisement') {
+    const {plan,sourcePlan}=reviewPromoPlan(item.id,{language:activeLanguage()});
+    const episode=materializePromo(item,plan,{voiceProfile:await requireApprovedVoiceProfile(item.id),ctaLab:await readCtaLab(),composeCta:composeLessonCta});
+    validateEpisode(episode);
+    return {item,episode,filePath:path.join(PROJECT_ROOT,sourcePlan)};
+  }
   if (!/^episodes\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/.test(item.episodeFile ?? ""))
     throw new Error("Invalid canonical episode file path.");
   const canonicalPath = path.join(PROJECT_ROOT, "content", item.episodeFile);
@@ -231,6 +242,7 @@ export async function getPlannedEpisode(date) {
   const episode = lesson.scenes.some((scene) => scene.kind === "cta")
     ? lesson
     : composeLessonCta(lesson, ctaLab);
+  episode.contentIdentity=contentIdentity(item,{language:activeLanguage(),source});
   validateEpisode(episode);
   if (episode.id !== item.id || episode.date !== item.date) {
     throw new Error(
@@ -285,6 +297,9 @@ export async function getRunEpisodeByDate(date) {
   try {
     const saved = normalizeEpisode(await readJson(filePath));
     assertEpisodeLanguage(saved);
+    if(saved.contentIdentity && plannedEpisode.contentIdentity &&
+       JSON.stringify(saved.contentIdentity)!==JSON.stringify(plannedEpisode.contentIdentity))
+      throw Error('Source revision changed after materialization; inspect and explicitly regenerate the unapproved working copy, voice and render.');
     const status = await readStatus(item.id);
     const episode = synchronizeAutoStoryboard(saved, plannedEpisode, status);
     if (episode !== saved) await writeJson(filePath, episode);
@@ -407,6 +422,7 @@ export function captionsToSrt(captions, captionStyle, sections) {
 
 export function validateEpisode(episode) {
   normalizeEpisode(episode);
+  if(episode.kind==="advertisement")validatePromoMedia(episode);
   const storytellingErrors = validateStorytellingEpisode(episode);
   if (storytellingErrors.length) throw new Error(storytellingErrors.join("\n"));
   if (!["ru-RU", "tg-TJ"].includes(episode.languageCode)) throw new Error("Unsupported episode language.");
@@ -430,13 +446,13 @@ export function validateEpisode(episode) {
   }
   const hookFrames = hook.durationFrames ?? (hook.durationSec ?? 4) * FPS;
   const maxHookFrames = episode.languageCode === "tg-TJ" ? 240 : 180;
-  if (hookFrames > maxHookFrames) {
+  if (episode.kind!=="advertisement" && hookFrames > maxHookFrames) {
     throw new Error(
       `Hook ${(maxHookFrames / FPS).toFixed(0)} soniyadan oshmasligi kerak; asosiy va’dani tez ko‘rsating.`,
     );
   }
   const experiment = episode.hookExperiment;
-  if (
+  if (episode.kind!=="advertisement" && (
     !experiment?.id ||
     !["question", "contrast", "scenario"].includes(experiment.formatId) ||
     typeof experiment.hypothesis !== "string" ||
@@ -456,7 +472,7 @@ export function validateEpisode(episode) {
       experiment.fallbackMetric,
     ) ||
     !/^\d{4}-\d{2}-\d{2}$/.test(experiment.registeredAt ?? "")
-  ) {
+  )) {
     throw new Error(
       "Har bir epizodda hookExperiment ID, format, oldindan yozilgan taxmin, metrika va sana bo‘lishi kerak.",
     );

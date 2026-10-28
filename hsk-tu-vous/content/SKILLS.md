@@ -45,7 +45,7 @@ For new advertisements, `recommend_skills` also returns `creativeGuidance` point
 ## Selected Instagram advisors (no wholesale third-party installation)
 
 Three HSK-specific, project-local `social` skills are registered as ordinary `.agents/skills/<name>/SKILL.md` modules:
-- `ig-reel-planning`: `social_hook/lesson`, advice before the approved Hook Lab + storyboard + actual Gemini cue workflow; automatically offered only for explicitly Instagram-scoped HSK lesson video tasks.
+- `ig-reel-planning`: `social_hook/lesson`, advice before the approved Hook Lab + current action/motionBeats planning + actual Gemini cue workflow; automatically offered only for explicitly Instagram-scoped HSK lesson video tasks.
 - `ig-caption-quality`: `social_caption/special`, for **Instagram publication copy**, not baked-in captions/subtitles.
 - `ig-competitor-research`: `social_research/special`, read-only source-backed competitor benchmarking. Never scrape, claim access to private metrics or feed invented results into the Hook Lab.
 

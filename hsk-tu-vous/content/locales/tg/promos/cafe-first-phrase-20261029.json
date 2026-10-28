@@ -1,0 +1,984 @@
+{
+  "schemaVersion": 1,
+  "id": "cafe-first-phrase-20261029",
+  "kind": "advertisement",
+  "status": "draft",
+  "title": "Калимаҳо ҳастанд. Ҷумларо чӣ тавр гӯем?",
+  "language": "tg",
+  "languageCode": "tg-TJ",
+  "styleId": "minimal-story-v1",
+  "formatId": "life-friction-demo",
+  "benefit": "Имкони истифодаи калимаҳои шинос дар машқи гуфтугӯи HSK AI; бе ваъдаи натиҷаи воқеӣ.",
+  "situation": {
+    "setting": "Қаҳвахона пеш аз фармоиш",
+    "learnerGoal": "Ҷумларо бо овоз гуфтан",
+    "friction": "Калимаҳои шинос ҳанӯз ба ҷумла намепайванданд"
+  },
+  "storyType": "illustrative",
+  "storyDisclosure": "Тасаввур кун",
+  "evidence": [
+    {
+      "id": "voice-practice",
+      "kind": "product-source",
+      "sourcePath": "../reports/HSK_AI_AI_Voice_Reklama_60s.md",
+      "checkedAt": "2026-10-27",
+      "supports": "The existing owner-approved production report documents AI Voice conversation practice, voice input, real source screens and its underlying product source references. This is not evidence of a learner outcome."
+    }
+  ],
+  "claims": [
+    {
+      "id": "practice-mode",
+      "text": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст.",
+      "evidenceIds": [
+        "voice-practice"
+      ]
+    },
+    {
+      "id": "voice-input",
+      "text": "Дар ин ҷо метавонӣ ҷумларо бо овоз бигӯӣ.",
+      "evidenceIds": [
+        "voice-practice"
+      ]
+    }
+  ],
+  "beats": [
+    {
+      "id": "cafe",
+      "role": "situation",
+      "narration": "Тасаввур кун: вақти фармоиши чой расид.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Чашка и край меню перед одной рукой ученика",
+        "action": "Рука открывает меню; чашка сдвигается в тот же центр, когда звучит место действия.",
+        "continuityKey": "same-learner-cafe-phone",
+        "cueText": "фармоиши чой",
+        "backgroundToken": "background",
+        "drawingBrief": "Оригинальная простая иллюстрация стола, чашки и одной руки; без вывесок, надписей меню и чужих фотографий.",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "table",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 400,
+                "cy": 470,
+                "rx": 300,
+                "ry": 32,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "cup",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "handle",
+              "type": "path",
+              "attrs": {
+                "d": "M 475 285 C 580 270 568 390 475 378",
+                "stroke": "foreground",
+                "strokeWidth": 16
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "cup-body",
+              "type": "path",
+              "attrs": {
+                "d": "M 280 270 L 488 270 L 470 410 Q 390 460 300 410 Z",
+                "fill": "foreground"
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "tea",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 384,
+                "cy": 272,
+                "rx": 101,
+                "ry": 22,
+                "fill": "gold"
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "cup-face",
+              "type": "path",
+              "attrs": {
+                "d": "M 332 356 Q 382 390 431 356",
+                "stroke": "teal",
+                "strokeWidth": 12
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "steam",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "steam-one",
+              "type": "path",
+              "attrs": {
+                "d": "M 350 235 C 335 210 370 190 353 165",
+                "stroke": "muted",
+                "strokeWidth": 7
+              },
+              "parentId": "steam"
+            },
+            {
+              "id": "steam-two",
+              "type": "path",
+              "attrs": {
+                "d": "M 404 230 C 388 205 423 185 406 160",
+                "stroke": "muted",
+                "strokeWidth": 7
+              },
+              "parentId": "steam"
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "steam",
+              "property": "y",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 1500,
+                  "value": -14
+                },
+                {
+                  "atMs": 3000,
+                  "value": 0
+                },
+                {
+                  "atMs": 4500,
+                  "value": -14
+                },
+                {
+                  "atMs": 6000,
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "nodeId": "cup",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": -95
+                },
+                {
+                  "atMs": 900,
+                  "value": 0
+                },
+                {
+                  "atMs": 6000,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "pause",
+      "role": "complication",
+      "narration": "Калимаҳои шиносро медонӣ. Аммо вақте бояд ҷумлаи пурра гӯӣ, лаҳзае хомӯш мемонӣ.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Та же рука рядом с чашкой",
+        "action": "Рука останавливается перед заказом; два простых значка мысли приближаются и замирают, показывая паузу.",
+        "continuityKey": "same-learner-cafe-phone",
+        "cueText": "хомӯш мемонӣ",
+        "backgroundToken": "background",
+        "drawingBrief": "Сохранить ту же чашку и руку. Значки мысли без читаемых слов; единственный текст — субтитр.",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "table",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 400,
+                "cy": 470,
+                "rx": 300,
+                "ry": 32,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "cup",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "handle",
+              "type": "path",
+              "attrs": {
+                "d": "M 475 285 C 580 270 568 390 475 378",
+                "stroke": "foreground",
+                "strokeWidth": 16
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "cup-body",
+              "type": "path",
+              "attrs": {
+                "d": "M 280 270 L 488 270 L 470 410 Q 390 460 300 410 Z",
+                "fill": "foreground"
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "tea",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 384,
+                "cy": 272,
+                "rx": 101,
+                "ry": 22,
+                "fill": "gold"
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "cup-face",
+              "type": "path",
+              "attrs": {
+                "d": "M 332 356 Q 382 390 431 356",
+                "stroke": "teal",
+                "strokeWidth": 12
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "steam",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "steam-one",
+              "type": "path",
+              "attrs": {
+                "d": "M 350 235 C 335 210 370 190 353 165",
+                "stroke": "muted",
+                "strokeWidth": 7
+              },
+              "parentId": "steam"
+            },
+            {
+              "id": "steam-two",
+              "type": "path",
+              "attrs": {
+                "d": "M 404 230 C 388 205 423 185 406 160",
+                "stroke": "muted",
+                "strokeWidth": 7
+              },
+              "parentId": "steam"
+            },
+            {
+              "id": "thought",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "dot-one",
+              "type": "circle",
+              "attrs": {
+                "cx": 310,
+                "cy": 110,
+                "r": 12,
+                "fill": "muted"
+              },
+              "parentId": "thought"
+            },
+            {
+              "id": "dot-two",
+              "type": "circle",
+              "attrs": {
+                "cx": 380,
+                "cy": 110,
+                "r": 12,
+                "fill": "muted"
+              },
+              "parentId": "thought"
+            },
+            {
+              "id": "dot-three",
+              "type": "circle",
+              "attrs": {
+                "cx": 450,
+                "cy": 110,
+                "r": 12,
+                "fill": "muted"
+              },
+              "parentId": "thought"
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "steam",
+              "property": "y",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 1500,
+                  "value": -14
+                },
+                {
+                  "atMs": 3000,
+                  "value": 0
+                },
+                {
+                  "atMs": 4500,
+                  "value": -14
+                },
+                {
+                  "atMs": 6000,
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "nodeId": "thought",
+              "property": "y",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 40
+                },
+                {
+                  "atMs": 700,
+                  "value": 0
+                },
+                {
+                  "atMs": 6000,
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "nodeId": "cup",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 600,
+                  "value": -8
+                },
+                {
+                  "atMs": 1200,
+                  "value": 0
+                },
+                {
+                  "atMs": 6000,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "try",
+      "role": "attempt",
+      "narration": "Шарт нест, ки аз суҳбат назди пештахта оғоз кунӣ. Аввал метавонӣ дар барнома оромона машқ кунӣ.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Телефон в той же руке",
+        "action": "Вместо меню рука поднимает телефон; камера следует за одним предметом к крупному плану.",
+        "continuityKey": "same-learner-cafe-phone",
+        "cueText": "дар барнома",
+        "backgroundToken": "background",
+        "drawingBrief": "Оригинальный силуэт телефона без выдуманного интерфейса; перед настоящим продуктом он служит только переходом.",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "table",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 400,
+                "cy": 470,
+                "rx": 300,
+                "ry": 32,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "cup",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "handle",
+              "type": "path",
+              "attrs": {
+                "d": "M 475 285 C 580 270 568 390 475 378",
+                "stroke": "foreground",
+                "strokeWidth": 16
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "cup-body",
+              "type": "path",
+              "attrs": {
+                "d": "M 280 270 L 488 270 L 470 410 Q 390 460 300 410 Z",
+                "fill": "foreground"
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "tea",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 384,
+                "cy": 272,
+                "rx": 101,
+                "ry": 22,
+                "fill": "gold"
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "cup-face",
+              "type": "path",
+              "attrs": {
+                "d": "M 332 356 Q 382 390 431 356",
+                "stroke": "teal",
+                "strokeWidth": 12
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "steam",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "steam-one",
+              "type": "path",
+              "attrs": {
+                "d": "M 350 235 C 335 210 370 190 353 165",
+                "stroke": "muted",
+                "strokeWidth": 7
+              },
+              "parentId": "steam"
+            },
+            {
+              "id": "steam-two",
+              "type": "path",
+              "attrs": {
+                "d": "M 404 230 C 388 205 423 185 406 160",
+                "stroke": "muted",
+                "strokeWidth": 7
+              },
+              "parentId": "steam"
+            },
+            {
+              "id": "phone",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "phone-case",
+              "type": "rect",
+              "attrs": {
+                "x": 285,
+                "y": 65,
+                "width": 220,
+                "height": 360,
+                "rx": 32,
+                "fill": "foreground"
+              },
+              "parentId": "phone"
+            },
+            {
+              "id": "phone-screen",
+              "type": "rect",
+              "attrs": {
+                "x": 300,
+                "y": 90,
+                "width": 190,
+                "height": 300,
+                "rx": 20,
+                "fill": "secondary"
+              },
+              "parentId": "phone"
+            },
+            {
+              "id": "phone-ear",
+              "type": "line",
+              "attrs": {
+                "x1": 363,
+                "y1": 78,
+                "x2": 426,
+                "y2": 78,
+                "stroke": "muted",
+                "strokeWidth": 6
+              },
+              "parentId": "phone"
+            },
+            {
+              "id": "speaker",
+              "type": "g",
+              "attrs": {},
+              "x": 0,
+              "y": 0,
+              "parentId": "phone"
+            },
+            {
+              "id": "speech",
+              "type": "path",
+              "attrs": {
+                "d": "M 342 180 Q 395 145 450 180 L 450 246 Q 408 268 370 249 L 344 270 L 350 244 Q 326 220 342 180 Z",
+                "fill": "teal"
+              },
+              "parentId": "speaker"
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "steam",
+              "property": "y",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 1500,
+                  "value": -14
+                },
+                {
+                  "atMs": 3000,
+                  "value": 0
+                },
+                {
+                  "atMs": 4500,
+                  "value": -14
+                },
+                {
+                  "atMs": 6000,
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "nodeId": "cup",
+              "property": "scale",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 1
+                },
+                {
+                  "atMs": 700,
+                  "value": 0.65
+                },
+                {
+                  "atMs": 6000,
+                  "value": 0.65
+                }
+              ]
+            },
+            {
+              "nodeId": "cup",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 700,
+                  "value": -140
+                },
+                {
+                  "atMs": 6000,
+                  "value": -140
+                }
+              ]
+            },
+            {
+              "nodeId": "phone",
+              "property": "y",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 460
+                },
+                {
+                  "atMs": 900,
+                  "value": 0
+                },
+                {
+                  "atMs": 6000,
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "nodeId": "speaker",
+              "property": "scale",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0.6
+                },
+                {
+                  "atMs": 1100,
+                  "value": 1
+                },
+                {
+                  "atMs": 6000,
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "product",
+      "role": "product-demo",
+      "narration": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст. Дар ин ҷо метавонӣ ба кӯшиши навбатии худ омода шавӣ.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Хорошо читаемый фрагмент настоящего AI Voice",
+        "action": "Genuine existing UI detail, cropped to a language-neutral panda / microphone. No fake tap, recording, response or replacement text.",
+        "continuityKey": "same-learner-cafe-phone",
+        "cueText": "AI Voice",
+        "backgroundToken": "background",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "zxx",
+        "screenImage": "promo-captures/ai-voice-original.png",
+        "sourceUiLanguage": "tg-TJ",
+        "languageNeutralCrop": true,
+        "crop": {
+          "x": 285,
+          "y": 580,
+          "width": 600,
+          "height": 540,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        }
+      },
+      "claimIds": [
+        "practice-mode"
+      ]
+    },
+    {
+      "id": "microphone",
+      "role": "product-demo",
+      "narration": "Дар ин ҷо метавонӣ ҷумларо бо овоз бигӯӣ. Аз як ҷумлаи кӯтоҳ оғоз кун ва диққататро ба он равона соз.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Микрофон на том же настоящем экране",
+        "action": "Genuine existing UI detail, cropped to a language-neutral panda / microphone. No fake tap, recording, response or replacement text.",
+        "continuityKey": "same-learner-cafe-phone",
+        "cueText": "бо овоз",
+        "backgroundToken": "background",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "zxx",
+        "screenImage": "promo-captures/ai-voice-original.png",
+        "sourceUiLanguage": "tg-TJ",
+        "languageNeutralCrop": true,
+        "crop": {
+          "x": 440,
+          "y": 2180,
+          "width": 290,
+          "height": 245,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        }
+      },
+      "claimIds": [
+        "voice-input"
+      ]
+    },
+    {
+      "id": "return",
+      "role": "resolution",
+      "narration": "Ба ҷумлаат баргард ва кӯшиш кун онро бо овози баланд бигӯӣ. Омодагӣ аз як кӯшиш оғоз мешавад.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Та же чашка рядом с телефоном",
+        "action": "Возврат к исходному столу: телефон опускается рядом с чашкой. Итог — возможность подготовиться, без показа выдуманного успешного заказа.",
+        "continuityKey": "same-learner-cafe-phone",
+        "cueText": "як кӯшиш",
+        "backgroundToken": "background",
+        "drawingBrief": "Повторно использовать исходные предметы и руку; новый результат разговора не изображать.",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "table",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 400,
+                "cy": 470,
+                "rx": 300,
+                "ry": 32,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "cup",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "handle",
+              "type": "path",
+              "attrs": {
+                "d": "M 475 285 C 580 270 568 390 475 378",
+                "stroke": "foreground",
+                "strokeWidth": 16
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "cup-body",
+              "type": "path",
+              "attrs": {
+                "d": "M 280 270 L 488 270 L 470 410 Q 390 460 300 410 Z",
+                "fill": "foreground"
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "tea",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 384,
+                "cy": 272,
+                "rx": 101,
+                "ry": 22,
+                "fill": "gold"
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "cup-face",
+              "type": "path",
+              "attrs": {
+                "d": "M 332 356 Q 382 390 431 356",
+                "stroke": "teal",
+                "strokeWidth": 12
+              },
+              "parentId": "cup"
+            },
+            {
+              "id": "steam",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "steam-one",
+              "type": "path",
+              "attrs": {
+                "d": "M 350 235 C 335 210 370 190 353 165",
+                "stroke": "muted",
+                "strokeWidth": 7
+              },
+              "parentId": "steam"
+            },
+            {
+              "id": "steam-two",
+              "type": "path",
+              "attrs": {
+                "d": "M 404 230 C 388 205 423 185 406 160",
+                "stroke": "muted",
+                "strokeWidth": 7
+              },
+              "parentId": "steam"
+            },
+            {
+              "id": "phone",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "phone-case",
+              "type": "rect",
+              "attrs": {
+                "x": 285,
+                "y": 65,
+                "width": 220,
+                "height": 360,
+                "rx": 32,
+                "fill": "foreground"
+              },
+              "parentId": "phone"
+            },
+            {
+              "id": "phone-screen",
+              "type": "rect",
+              "attrs": {
+                "x": 300,
+                "y": 90,
+                "width": 190,
+                "height": 300,
+                "rx": 20,
+                "fill": "secondary"
+              },
+              "parentId": "phone"
+            },
+            {
+              "id": "phone-ear",
+              "type": "line",
+              "attrs": {
+                "x1": 363,
+                "y1": 78,
+                "x2": 426,
+                "y2": 78,
+                "stroke": "muted",
+                "strokeWidth": 6
+              },
+              "parentId": "phone"
+            },
+            {
+              "id": "speaker",
+              "type": "g",
+              "attrs": {},
+              "x": 0,
+              "y": 0,
+              "parentId": "phone"
+            },
+            {
+              "id": "speech",
+              "type": "path",
+              "attrs": {
+                "d": "M 342 180 Q 395 145 450 180 L 450 246 Q 408 268 370 249 L 344 270 L 350 244 Q 326 220 342 180 Z",
+                "fill": "teal"
+              },
+              "parentId": "speaker"
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "cup",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": -100
+                },
+                {
+                  "atMs": 900,
+                  "value": 0
+                },
+                {
+                  "atMs": 6000,
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "nodeId": "phone",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 900,
+                  "value": 200
+                },
+                {
+                  "atMs": 6000,
+                  "value": 200
+                }
+              ]
+            },
+            {
+              "nodeId": "phone",
+              "property": "scale",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 1
+                },
+                {
+                  "atMs": 900,
+                  "value": 0.7
+                },
+                {
+                  "atMs": 6000,
+                  "value": 0.7
+                }
+              ]
+            },
+            {
+              "nodeId": "steam",
+              "property": "y",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 1500,
+                  "value": -14
+                },
+                {
+                  "atMs": 3000,
+                  "value": 0
+                },
+                {
+                  "atMs": 4500,
+                  "value": -14
+                },
+                {
+                  "atMs": 6000,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "caption": "Калимаҳои шиносро дар машқи ороми гуфтугӯ истифода бар. Вазъият мисолӣ аст; порчаҳои экрани мавҷудаи AI Voice нишон дода шудаанд.",
+  "hashtags": [
+    "#HSKAI",
+    "#забонихитоӣ",
+    "#гуфтугӯ"
+  ],
+  "durationTargetSec": 50,
+  "localization": {
+    "language": "tg",
+    "sourcePromoId": "cafe-first-phrase-20261029",
+    "sourceHash": "496f13786324bfe7494fe10fc13be7849cd166bf8d5b008dd0199e2845e12fc1",
+    "authoredOn": "2026-10-28",
+    "status": "draft"
+  }
+}

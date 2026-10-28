@@ -1,0 +1,2385 @@
+{
+  "id": "youdianr-vs-yidianr-price-20261030",
+  "date": "2026-10-30",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "tg-TJ",
+  "title": "有点儿 ё 一点儿: каме гарон аст ё каме арзонтар?",
+  "level": "HSK 2",
+  "topic": "有点儿 пеш аз сифат ва 一点儿 баъд аз сифат ҳангоми харид",
+  "durationTargetSec": 32,
+  "caption": "这个有点儿贵 — «Ин каме гарон аст». 便宜一点儿，可以吗？ — «Каме арзонтар мешавад?»",
+  "hashtags": [
+    "#HSKAI",
+    "#ЗабониЧинӣ",
+    "#HSK2"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "有点儿 пеш аз 贵 меояд: 这个有点儿贵 — «Ин каме гарон аст», аксаран норозигии мулоимро нишон медиҳад.",
+    "一点儿 баъд аз 便宜 меояд: 便宜一点儿，可以吗？ — «Каме арзонтар мешавад?»",
+    "Дар ин ду ҷумла якум баҳои нарх ва дуюм дархости тағйири нарх аст; 一点儿 маъноҳои дигар низ дорад."
+  ],
+  "examples": [
+    "有点儿 yǒudiǎnr — каме (пеш аз сифат)",
+    "一点儿 yìdiǎnr — каме (баъд аз сифат)",
+    "贵 guì — гарон",
+    "便宜 piányi — арзон",
+    "这个有点儿贵。 Zhège yǒudiǎnr guì. — Ин каме гарон аст.",
+    "便宜一点儿，可以吗？ Piányi yìdiǎnr, kěyǐ ma? — Каме арзонтар мешавад?"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "narration": "Дар бозор нархи мол каме баланд аст. Бо чинӣ чӣ мегӯӣ? 这个有点儿贵。",
+      "cards": [
+        {
+          "hanzi": "这个有点儿贵。",
+          "pinyin": "Zhège yǒudiǎnr guì.",
+          "meaning": "Ин каме гарон аст."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "нархи мол",
+          "visual": {
+            "title": "Ин каме гарон аст.",
+            "hanzi": "这个有点儿贵。",
+            "pinyin": "Zhège yǒudiǎnr guì.",
+            "meaning": "Ин каме гарон аст.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "high-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 216,
+                    "y": 95,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 231,
+                    "y": 119,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "high-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 288,
+                    "cy": 140,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 251,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 278,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 305,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муҳити дарс: Харидор дар бозор ба нархи маҳсулот менигарад. Ҳолати аввал ва ҳадаф: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "чӣ мегӯӣ",
+          "visual": {
+            "title": "Ин каме гарон аст.",
+            "hanzi": "这个有点儿贵。",
+            "pinyin": "Zhège yǒudiǎnr guì.",
+            "meaning": "Ин каме гарон аст.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "price-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 216,
+                    "y": 75,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "price-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 231,
+                    "y": 99,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "price-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 288,
+                    "cy": 120,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "price-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 251,
+                    "y": 158,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "price-cost-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 278,
+                    "y": 158,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "price-cost-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 305,
+                    "y": 158,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "cost-high",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 205,
+                    "y1": 305,
+                    "x2": 393,
+                    "y2": 305,
+                    "stroke": "red",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири намоён барои маънои нав: Ҳар ду шакл ба «каме» тарҷума мешавад, аммо ҷойи онҳо дигар аст."
+        },
+        {
+          "id": "hook-action-3",
+          "kind": "graphic",
+          "cueText": "这个有点儿贵",
+          "visual": {
+            "title": "Ин каме гарон аст.",
+            "hanzi": "这个有点儿贵。",
+            "pinyin": "Zhège yǒudiǎnr guì.",
+            "meaning": "Ин каме гарон аст.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "old-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 108,
+                    "y": 115,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 123,
+                    "y": 139,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "old-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 180,
+                    "cy": 160,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 143,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 170,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 197,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 347,
+                    "y": 115,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 362,
+                    "y": 139,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "new-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 419,
+                    "cy": 160,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "reduction",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "300,155 300,290 270,260",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
+        }
+      ]
+    },
+    {
+      "id": "reaction",
+      "kind": "vocabulary",
+      "durationSec": 7,
+      "narration": "有点儿 пеш аз сифати 贵 меояд. 这个有点儿贵 — яъне «Ин каме гарон аст». Ин баҳо додан ба нарх мебошад.",
+      "cards": [
+        {
+          "hanzi": "有点儿贵",
+          "pinyin": "yǒudiǎnr guì",
+          "meaning": "каме гарон"
+        },
+        {
+          "hanzi": "这个有点儿贵。",
+          "pinyin": "Zhège yǒudiǎnr guì.",
+          "meaning": "Ин каме гарон аст."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "reaction-action-1",
+          "kind": "graphic",
+          "cueText": "有点儿",
+          "visual": {
+            "title": "каме гарон",
+            "hanzi": "有点儿贵",
+            "pinyin": "yǒudiǎnr guì",
+            "meaning": "каме гарон",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "high-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 216,
+                    "y": 95,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 231,
+                    "y": 119,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "high-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 288,
+                    "cy": 140,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 251,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 278,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 305,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муҳити дарс: Харидор дар бозор ба нархи маҳсулот менигарад. Ҳолати аввал ва ҳадаф: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
+        },
+        {
+          "id": "reaction-action-2",
+          "kind": "graphic",
+          "cueText": "пеш аз сифати",
+          "visual": {
+            "title": "Ин каме гарон аст.",
+            "hanzi": "这个有点儿贵。",
+            "pinyin": "Zhège yǒudiǎnr guì.",
+            "meaning": "Ин каме гарон аст.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "old-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 108,
+                    "y": 115,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 123,
+                    "y": 139,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "old-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 180,
+                    "cy": 160,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 143,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 170,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 197,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 347,
+                    "y": 115,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 362,
+                    "y": 139,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "new-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 419,
+                    "cy": 160,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "reduction",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "300,155 300,290 270,260",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири намоён барои маънои нав: Ҳар ду шакл ба «каме» тарҷума мешавад, аммо ҷойи онҳо дигар аст."
+        },
+        {
+          "id": "reaction-action-3",
+          "kind": "graphic",
+          "cueText": "Ин баҳо",
+          "visual": {
+            "title": "каме гарон",
+            "hanzi": "有点儿贵",
+            "pinyin": "yǒudiǎnr guì",
+            "meaning": "каме гарон",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "price-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 216,
+                    "y": 75,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "price-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 231,
+                    "y": 99,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "price-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 288,
+                    "cy": 120,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "price-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 251,
+                    "y": 158,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "price-cost-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 278,
+                    "y": 158,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "price-cost-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 305,
+                    "y": 158,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "cost-high",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 205,
+                    "y1": 305,
+                    "x2": 393,
+                    "y2": 305,
+                    "stroke": "red",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
+        }
+      ]
+    },
+    {
+      "id": "request",
+      "kind": "example",
+      "durationSec": 7,
+      "narration": "Акнун ба фурӯшанда бигӯ: 便宜一点儿，可以吗？ Яъне: «Каме арзонтар мешавад?»",
+      "cards": [
+        {
+          "hanzi": "便宜一点儿",
+          "pinyin": "piányi yìdiǎnr",
+          "meaning": "каме арзонтар"
+        },
+        {
+          "hanzi": "便宜一点儿，可以吗？",
+          "pinyin": "Piányi yìdiǎnr, kěyǐ ma?",
+          "meaning": "Каме арзонтар мешавад?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "request-action-1",
+          "kind": "graphic",
+          "cueText": "ба фурӯшанда",
+          "visual": {
+            "title": "каме арзонтар",
+            "hanzi": "便宜一点儿",
+            "pinyin": "piányi yìdiǎnr",
+            "meaning": "каме арзонтар",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "high-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 216,
+                    "y": 95,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 231,
+                    "y": 119,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "high-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 288,
+                    "cy": 140,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 251,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 278,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 305,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муҳити дарс: Харидор дар бозор ба нархи маҳсулот менигарад. Ҳолати аввал ва ҳадаф: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
+        },
+        {
+          "id": "request-action-2",
+          "kind": "graphic",
+          "cueText": "便宜一点儿",
+          "visual": {
+            "title": "Каме арзонтар мешавад?",
+            "hanzi": "便宜一点儿，可以吗？",
+            "pinyin": "Piányi yìdiǎnr, kěyǐ ma?",
+            "meaning": "Каме арзонтар мешавад?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "lower-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 216,
+                    "y": 95,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "lower-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 231,
+                    "y": 119,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "lower-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 288,
+                    "cy": 140,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "lower-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 251,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "down-arrow",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "397,140 397,255 371,228",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "down-arrow2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 397,
+                    "y1": 255,
+                    "x2": 423,
+                    "y2": 228,
+                    "stroke": "teal",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири намоён барои маънои нав: Ҳар ду шакл ба «каме» тарҷума мешавад, аммо ҷойи онҳо дигар аст."
+        },
+        {
+          "id": "request-action-3",
+          "kind": "graphic",
+          "cueText": "Каме арзонтар",
+          "visual": {
+            "title": "каме арзонтар",
+            "hanzi": "便宜一点儿",
+            "pinyin": "piányi yìdiǎnr",
+            "meaning": "каме арзонтар",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "old-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 108,
+                    "y": 115,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 123,
+                    "y": 139,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "old-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 180,
+                    "cy": 160,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 143,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 170,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 197,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 347,
+                    "y": 115,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 362,
+                    "y": 139,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "new-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 419,
+                    "cy": 160,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "reduction",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "300,155 300,290 270,260",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
+        }
+      ]
+    },
+    {
+      "id": "contrast",
+      "kind": "context",
+      "durationSec": 8,
+      "narration": "Муқоиса кун: 有点儿贵 — каме гарон. 便宜一点儿 — каме арзонтар кунед. Ҷойи 一点儿ро бин.",
+      "cards": [
+        {
+          "hanzi": "有点儿贵",
+          "pinyin": "yǒudiǎnr guì",
+          "meaning": "каме гарон"
+        },
+        {
+          "hanzi": "便宜一点儿",
+          "pinyin": "piányi yìdiǎnr",
+          "meaning": "каме арзонтар"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "contrast-action-1",
+          "kind": "graphic",
+          "cueText": "有点儿贵",
+          "visual": {
+            "title": "каме гарон",
+            "hanzi": "有点儿贵",
+            "pinyin": "yǒudiǎnr guì",
+            "meaning": "каме гарон",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "high-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 216,
+                    "y": 95,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 231,
+                    "y": 119,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "high-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 288,
+                    "cy": 140,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 251,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 278,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 305,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муҳити дарс: Харидор дар бозор ба нархи маҳсулот менигарад. Ҳолати аввал ва ҳадаф: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
+        },
+        {
+          "id": "contrast-action-2",
+          "kind": "graphic",
+          "cueText": "便宜一点儿",
+          "visual": {
+            "title": "каме арзонтар",
+            "hanzi": "便宜一点儿",
+            "pinyin": "piányi yìdiǎnr",
+            "meaning": "каме арзонтар",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "lower-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 216,
+                    "y": 95,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "lower-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 231,
+                    "y": 119,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "lower-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 288,
+                    "cy": 140,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "lower-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 251,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "down-arrow",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "397,140 397,255 371,228",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "down-arrow2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 397,
+                    "y1": 255,
+                    "x2": 423,
+                    "y2": 228,
+                    "stroke": "teal",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири намоён барои маънои нав: Ҳар ду шакл ба «каме» тарҷума мешавад, аммо ҷойи онҳо дигар аст."
+        },
+        {
+          "id": "contrast-action-3",
+          "kind": "graphic",
+          "cueText": "Ҷойи 一点儿ро",
+          "visual": {
+            "title": "каме гарон",
+            "hanzi": "有点儿贵",
+            "pinyin": "yǒudiǎnr guì",
+            "meaning": "каме гарон",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "old-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 108,
+                    "y": 115,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 123,
+                    "y": 139,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "old-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 180,
+                    "cy": 160,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 143,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 170,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 197,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 347,
+                    "y": 115,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 362,
+                    "y": 139,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "new-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 419,
+                    "cy": 160,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "reduction",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "300,155 300,290 270,260",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "example",
+      "durationSec": 5,
+      "narration": "Каме гарон — 有点儿贵. Каме арзонтар мешавад? 便宜一点儿，可以吗？ Ду ҷойи калимаро дар ёд дор.",
+      "cards": [
+        {
+          "hanzi": "有点儿贵",
+          "pinyin": "yǒudiǎnr guì",
+          "meaning": "каме гарон"
+        },
+        {
+          "hanzi": "便宜一点儿，可以吗？",
+          "pinyin": "Piányi yìdiǎnr, kěyǐ ma?",
+          "meaning": "Каме арзонтар мешавад?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recap-action-1",
+          "kind": "graphic",
+          "cueText": "Каме гарон",
+          "visual": {
+            "title": "каме гарон",
+            "hanzi": "有点儿贵",
+            "pinyin": "yǒudiǎnr guì",
+            "meaning": "каме гарон",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "high-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 216,
+                    "y": 95,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 231,
+                    "y": 119,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "high-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 288,
+                    "cy": 140,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 251,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 278,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "high-cost-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 305,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муҳити дарс: Харидор дар бозор ба нархи маҳсулот менигарад. Ҳолати аввал ва ҳадаф: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
+        },
+        {
+          "id": "recap-action-2",
+          "kind": "graphic",
+          "cueText": "便宜一点儿",
+          "visual": {
+            "title": "Каме арзонтар мешавад?",
+            "hanzi": "便宜一点儿，可以吗？",
+            "pinyin": "Piányi yìdiǎnr, kěyǐ ma?",
+            "meaning": "Каме арзонтар мешавад?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "lower-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 216,
+                    "y": 95,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "lower-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 231,
+                    "y": 119,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "lower-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 288,
+                    "cy": 140,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "lower-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 251,
+                    "y": 178,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "down-arrow",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "397,140 397,255 371,228",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "down-arrow2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 397,
+                    "y1": 255,
+                    "x2": 423,
+                    "y2": 228,
+                    "stroke": "teal",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири намоён барои маънои нав: Ҳар ду шакл ба «каме» тарҷума мешавад, аммо ҷойи онҳо дигар аст."
+        },
+        {
+          "id": "recap-action-3",
+          "kind": "graphic",
+          "cueText": "Ду ҷойи",
+          "visual": {
+            "title": "каме гарон",
+            "hanzi": "有点儿贵",
+            "pinyin": "yǒudiǎnr guì",
+            "meaning": "каме гарон",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "old-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 108,
+                    "y": 115,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 123,
+                    "y": 139,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "old-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 180,
+                    "cy": 160,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 143,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-1",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 170,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "old-cost-2",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 197,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-base",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 347,
+                    "y": 115,
+                    "width": 145,
+                    "height": 210,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-tag",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 362,
+                    "y": 139,
+                    "width": 115,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "new-hole",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 419,
+                    "cy": 160,
+                    "r": 10,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "new-cost-0",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 198,
+                    "width": 18,
+                    "height": 36,
+                    "rx": 12,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "reduction",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "300,155 300,290 270,260",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "tg-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "有点儿 vs 一点儿 — ChineseGrammar",
+      "url": "https://chinesegrammar.app/grammar/youdianr-yidianr",
+      "checkedAt": "2026-10-24",
+      "supports": "Documents 有点儿 + adjective with 这个有点儿贵 and adjective + 一点儿 with 请便宜一点儿, tone-marked examples and nonabsolute pragmatic nuance."
+    },
+    {
+      "title": "有点儿 vs 一点儿 — GoEast Mandarin",
+      "url": "https://goeastmandarin.com/youdianr-versus-yidianr/",
+      "checkedAt": "2026-10-24",
+      "supports": "Independent language-school explanation of 有点儿 before an adjective as degree/evaluation and 一点儿 after adjective as small adjustment; market-price scenario and pinyin."
+    },
+    {
+      "title": "一点儿 vs 有点儿 — The Pure Language",
+      "url": "https://www.thepurelanguage.com/chinese-grammar/yidianr-vs-youdianr",
+      "checkedAt": "2026-10-24",
+      "supports": "Confirms 有点儿贵 as mildly expensive and 便宜一点儿，可以吗？ as a request for a small reduction."
+    }
+  ],
+  "hookExperiment": {
+    "id": "youdianr-vs-yidianr-price-20261030-tg-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Намоиши ҳолати воқеӣ ва мисоли равшани грамматика метавонад барои тоҷикзабонон фаҳмотар бошад; ин ҳанӯз натиҷаи санҷидашуда нест.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-28"
+  },
+  "audienceProblem": "Дар баҳои нарх ва дархости арзонтар кардан ҷойи ду калимаи «каме»-ро омехта мекунад.",
+  "learningOutcome": "Бо 这个有点儿贵 баҳои нарх диҳад ва бо 便宜一点儿，可以吗？ арзонтар карданро пурсад.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Харидор дар бозор ба нархи маҳсулот менигарад",
+      "learnerGoal": "Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад",
+      "obstacle": "Ҳар ду шакл ба «каме» тарҷума мешавад, аммо ҷойи онҳо дигар аст"
+    },
+    "selectionReason": "Ду амали воқеии харид барои дарси мустақими фарқи ҷойи 有点儿 ва 一点儿 кофӣ аст",
+    "firstPayoff": {
+      "sceneId": "hook",
+      "cueText": "这个有点儿贵"
+    },
+    "reHooks": []
+  },
+  "localization": {
+    "language": "tg",
+    "sourceEpisodeId": "youdianr-vs-yidianr-price-20261030",
+    "sourceHash": "51006f71adbf7a79d65f53d8749dbe3ff65daa9860cd024a2be7c0eea70d537f",
+    "authoredOn": "2026-10-28",
+    "status": "draft-awaiting-audio-review"
+  }
+}

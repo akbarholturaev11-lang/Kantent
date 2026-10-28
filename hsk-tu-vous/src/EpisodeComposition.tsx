@@ -1,3 +1,5 @@
+import {PromoScene,type PromoVisual} from './PromoScene';
+import {resolvePromoCue} from '../scripts/promo-visual.mjs';
 import { useMemo } from "react";
 import {
   AbsoluteFill,
@@ -42,6 +44,7 @@ type LessonScene = {
   semanticShot?: SemanticShot;
   visualBeats?: VisualBeat[];
   motionBeats?: MotionBeat[];
+  promoVisual?:PromoVisual;
   durationSec?: number;
   durationFrames?: number;
   startMs?: number;
@@ -1008,6 +1011,10 @@ const LessonSlide: React.FC<{
   if (motionDesignStyle==="explain-actions-v1" && scene.kind!=="cta") validateActionLesson({scenes:[scene]});
   if (narratedBeats.length && (!motionDesign || !["le-context-v1","explain-actions-v1"].includes(motionDesignStyle??"")))
     throw new Error("Narrated beats need a supported explicit motion style.");
+  if(scene.promoVisual) {
+    const cue=resolvePromoCue(scene,captions,FPS);
+    return <PromoScene visual={scene.promoVisual} frame={frame} cueFrame={cue.localFrame} durationFrames={durationFrames} first={index===0}/>;
+  }
   const fadeIn = index === 0
     ? 1
     : interpolate(frame, [0, MOTION.sceneCrossfadeFrames], [0, 1], clampEase);
@@ -1459,7 +1466,7 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, semanticTimeline }) => {
         captions={episode.captions ?? []}
         sceneSections={captionSections}
         motionDesign={episode.motionDesign === true || episode.id === "zhe-na-ge"}
-        plainMotionDesign={episode.scenes.some(scene => Boolean(scene.motionBeats?.length))}
+        plainMotionDesign={episode.scenes.some(scene => Boolean(scene.motionBeats?.length || scene.promoVisual))}
         actionCaptionScenes={actionCaptionScenes}
       />
     </AbsoluteFill>

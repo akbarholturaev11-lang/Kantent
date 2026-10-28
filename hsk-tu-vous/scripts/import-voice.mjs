@@ -335,7 +335,7 @@ for (const [index] of episode.scenes.entries()) {
   // Keep the historical six-second Russian hook cap. Tajik samples speak
   // more slowly, so their first transition follows the verified next-scene
   // cue and keeps the spoken answer inside the hook.
-  const cueAlignedFrame = index === 1 && episode.languageCode === "ru-RU"
+  const cueAlignedFrame = index === 1 && episode.languageCode === "ru-RU" && episode.kind !== "advertisement"
     ? Math.min(targetStartFrame, 180)
     : targetStartFrame;
   sceneStartFrames.push(Math.max(previousStartFrame + 1, cueAlignedFrame));

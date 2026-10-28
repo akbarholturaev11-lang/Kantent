@@ -1,3 +1,4 @@
+import {expectedContentSlot} from './content-schedule.mjs';
 const weekdays = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -55,6 +56,9 @@ export function validateSeriesCalendar(calendar) {
     if (!calendar.planningWeekdays?.includes(weekdays[dateValue(first.date).getUTCDay()]))
       errors.push(`${id}: the first part must use a regular planning weekday`);
     for (const item of ordered) {
+      const slot=expectedContentSlot(calendar,item.date);
+      if(slot && (slot.contentType!=='series-part' || slot.series.part!==item.series.part || slot.series.totalParts!==total))
+        errors.push(`${id} part ${item.series.part}: must match the configured weekly series slot`);
       const expected = addDays(first.date, (item.series.part - 1) * policy.continuationGapDays);
       if (item.date !== expected)
         errors.push(`${id} part ${item.series.part}: expected next consecutive date ${expected}, got ${item.date}`);
@@ -79,6 +83,9 @@ export function proposeSeries(calendar, {seriesId, startDate, totalParts, today}
   if (startDate <= today) throw Error('A new series must start in the future');
   if (!calendar.planningWeekdays?.includes(weekdays[start.getUTCDay()]))
     throw Error('The first part must use a regular planning weekday');
+  const firstSlot=expectedContentSlot(calendar,startDate);
+  if(firstSlot && (firstSlot.contentType!=='series-part' || firstSlot.series.part!==1 || firstSlot.series.totalParts!==totalParts))
+    throw Error('Start the complete series on its configured weekly first-part slot');
   if (calendar.items.some(item => item.series?.id === seriesId)) throw Error('Series ID already exists');
   const propose = Array.from({length: totalParts}, (_, index) => ({
     type: 'author-new-script', date: addDays(startDate, index * policy.continuationGapDays),
@@ -87,6 +94,9 @@ export function proposeSeries(calendar, {seriesId, startDate, totalParts, today}
     ctaSource: 'content/cta-lab.json', status: 'planned',
   }));
   for (const item of propose) {
+    const slot=expectedContentSlot(calendar,item.date);
+    if(slot && (slot.contentType!=='series-part' || slot.series.part!==item.series.part || slot.series.totalParts!==totalParts))
+      throw Error('Series continuation does not match the weekly content schedule');
     if (calendar.items.some(existing => existing.date === item.date))
       throw Error(`Series date ${item.date} is occupied; do not move an existing episode or skip a day`);
   }

@@ -31,6 +31,7 @@ export function recommendCreativeFormats({ calendar, episodeByFile, registry, fe
 
   let nextFormatIndex = 0;
   const upcoming = candidateItems.map((item) => {
+    if(item.contentType==='advertisement')return {date:item.date,contentId:item.id,contentType:'advertisement',status:'use-promo-plan',source:item.promoFile,creativeFormatId:null};
     const episode = episodeByFile[item.episodeFile];
     if (!episode || episode.id !== item.id || episode.date !== item.date)
       return { date: item.date, episodeId: item.id, status: 'missing-or-mismatched-episode', creativeFormatId: null };
@@ -91,7 +92,7 @@ export function recommendCreativeFormats({ calendar, episodeByFile, registry, fe
         !post.episodeId || !post.hookFormat || !post.hskLevel ||
         post.averageWatchRatio == null || post.views == null ||
         post.views < policy.minimumViewsPerPost) continue;
-    const key = [post.platform,post.hskLevel,post.durationBand,post.creativeFormatId].join('|');
+    const key = [post.platform,post.accountUsername??'account-unverified',post.language??'ru',post.contentType??'legacy-unverified',post.series?.part??'standalone',post.hskLevel,post.durationBand,post.creativeFormatId].join('|');
     if (!groups.has(key)) groups.set(key, []);
     groups.get(key).push(post);
   }

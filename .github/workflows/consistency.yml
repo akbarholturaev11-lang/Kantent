@@ -107,6 +107,20 @@ jobs:
         run: node --test scripts/resolve-production-date.test.mjs scripts/published-evidence.test.mjs
       - name: Test future episode buffer audit
         run: node --test scripts/self-improvement-check.test.mjs
+      - name: Report real bilingual future content gaps (non-gating historical backlog)
+        run: |
+          # Fail on tool/configuration errors; existing unfinished drafts are a
+          # visible production blocker, not a new code-regression test failure.
+          set +e
+          npm run content:buffer -- --json > /tmp/bilingual-readiness.json
+          code=$?
+          set -e
+          cat /tmp/bilingual-readiness.json
+          if [ "$code" -eq 2 ]; then
+            echo "::warning::Future multilingual source reserve is below minimum. See JSON: production is not ready."
+          elif [ "$code" -ne 0 ]; then
+            exit "$code"
+          fi
       - name: Test 30-day canonical Hook Lab decisions
         run: node --test scripts/hook-lab-rolling.test.mjs
       - name: Test Zernio feedback analyzer and source snapshots

@@ -1,0 +1,2712 @@
+{
+  "id": "haishi-vs-huozhe-tea-20261102",
+  "date": "2026-11-02",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "tg-TJ",
+  "title": "还是 ё 或者: чой ё қаҳва?",
+  "level": "HSK 2",
+  "topic": "还是 дар саволи бевосита ва 或者 дар ҷумлаи хабарӣ",
+  "durationTargetSec": 31,
+  "caption": "你喝茶还是喝咖啡？ — «Чой ё қаҳва?» 茶或者咖啡都行。 — «Ҳарду мешавад».",
+  "hashtags": [
+    "#HSKAI",
+    "#ЗабониЧинӣ",
+    "#HSK2"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "还是 дар саволи бевоситаи интихоби A ё B меояд: 你喝茶还是喝咖啡？",
+    "或者 дар ҷумлаи хабарӣ вариантҳоро нишон медиҳад: 茶或者咖啡都行。",
+    "Дар чунин саволи мустақими интихоб бо 还是 одатан 吗 намегузорем; 还是 маъноҳои дигар низ дорад."
+  ],
+  "examples": [
+    "还是 háishi — ё (саволи интихоб)",
+    "或者 huòzhě — ё (ҷумлаи хабарӣ)",
+    "茶 chá — чой",
+    "咖啡 kāfēi — қаҳва",
+    "你喝茶还是喝咖啡？ Nǐ hē chá háishi hē kāfēi? — Ту чой менӯшӣ ё қаҳва?",
+    "茶或者咖啡都行。 Chá huòzhě kāfēi dōu xíng. — Чой ё қаҳва, ҳарду мешавад."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "narration": "Дар қаҳвахона мепурсанд: «Чой ё қаҳва?» Дар ин савол 还是 меояд, на 或者. Чаро?",
+      "cards": [
+        {
+          "hanzi": "还是",
+          "pinyin": "háishi",
+          "meaning": "ё (саволи интихоб)"
+        },
+        {
+          "hanzi": "茶 / 咖啡",
+          "pinyin": "chá / kāfēi",
+          "meaning": "чой / қаҳва"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "Чой ё қаҳва",
+          "visual": {
+            "title": "ё (саволи интихоб)",
+            "hanzi": "还是",
+            "pinyin": "háishi",
+            "meaning": "ё (саволи интихоб)",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "divide",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 303,
+                    "y1": 110,
+                    "x2": 303,
+                    "y2": 300,
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муҳити дарс: Дар қаҳвахона муштарӣ байни чой ва қаҳва интихоб мекунад. Ҳолати аввал ва ҳадаф: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "还是",
+          "visual": {
+            "title": "чой / қаҳва",
+            "hanzi": "茶 / 咖啡",
+            "pinyin": "chá / kāfēi",
+            "meaning": "чой / қаҳва",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-halo",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 158,
+                    "cy": 194,
+                    "r": 80,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "choice-line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 285,
+                    "y1": 130,
+                    "x2": 340,
+                    "y2": 130,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири намоён барои маънои нав: Дар тоҷикӣ ҳарду бо «ё» ифода мешаванд, аммо чинӣ онҳоро фарқ мекунад."
+        },
+        {
+          "id": "hook-action-3",
+          "kind": "graphic",
+          "cueText": "Чаро",
+          "visual": {
+            "title": "ё (саволи интихоб)",
+            "hanzi": "还是",
+            "pinyin": "háishi",
+            "meaning": "ё (саволи интихоб)",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-coffee",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "417,280 441,300 472,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
+        }
+      ]
+    },
+    {
+      "id": "choice",
+      "kind": "example",
+      "durationSec": 7,
+      "narration": "你喝茶还是喝咖啡？ — «Ту чой менӯшӣ ё қаҳва?» 还是 ду вариантро мепайвандад: аз ту мехоҳанд якеро интихоб кунӣ.",
+      "cards": [
+        {
+          "hanzi": "你喝茶还是喝咖啡？",
+          "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+          "meaning": "Ту чой менӯшӣ ё қаҳва?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "choice-action-1",
+          "kind": "graphic",
+          "cueText": "你喝茶还是喝咖啡",
+          "visual": {
+            "title": "Ту чой менӯшӣ ё қаҳва?",
+            "hanzi": "你喝茶还是喝咖啡？",
+            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+            "meaning": "Ту чой менӯшӣ ё қаҳва?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "divide",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 303,
+                    "y1": 110,
+                    "x2": 303,
+                    "y2": 300,
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муҳити дарс: Дар қаҳвахона муштарӣ байни чой ва қаҳва интихоб мекунад. Ҳолати аввал ва ҳадаф: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
+        },
+        {
+          "id": "choice-action-2",
+          "kind": "graphic",
+          "cueText": "Ту чой",
+          "visual": {
+            "title": "Ту чой менӯшӣ ё қаҳва?",
+            "hanzi": "你喝茶还是喝咖啡？",
+            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+            "meaning": "Ту чой менӯшӣ ё қаҳва?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-halo",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 158,
+                    "cy": 194,
+                    "r": 80,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "choice-line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 285,
+                    "y1": 130,
+                    "x2": 340,
+                    "y2": 130,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири намоён барои маънои нав: Дар тоҷикӣ ҳарду бо «ё» ифода мешаванд, аммо чинӣ онҳоро фарқ мекунад."
+        },
+        {
+          "id": "choice-action-3",
+          "kind": "graphic",
+          "cueText": "якеро интихоб",
+          "visual": {
+            "title": "Ту чой менӯшӣ ё қаҳва?",
+            "hanzi": "你喝茶还是喝咖啡？",
+            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+            "meaning": "Ту чой менӯшӣ ё қаҳва?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "divide",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 303,
+                    "y1": 110,
+                    "x2": 303,
+                    "y2": 300,
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "kind": "example",
+      "durationSec": 7,
+      "narration": "Ҳоло ҷавоб: 茶或者咖啡都行。 Яъне: «Чой ё қаҳва, ҳарду мешавад». Дар ин ҷумла 或者 меояд.",
+      "cards": [
+        {
+          "hanzi": "茶或者咖啡都行。",
+          "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+          "meaning": "Чой ё қаҳва, ҳарду мешавад."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "options-action-1",
+          "kind": "graphic",
+          "cueText": "Ҳоло ҷавоб",
+          "visual": {
+            "title": "Чой ё қаҳва, ҳарду мешавад.",
+            "hanzi": "茶或者咖啡都行。",
+            "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+            "meaning": "Чой ё қаҳва, ҳарду мешавад.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "divide",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 303,
+                    "y1": 110,
+                    "x2": 303,
+                    "y2": 300,
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муҳити дарс: Дар қаҳвахона муштарӣ байни чой ва қаҳва интихоб мекунад. Ҳолати аввал ва ҳадаф: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
+        },
+        {
+          "id": "options-action-2",
+          "kind": "graphic",
+          "cueText": "茶或者咖啡都行",
+          "visual": {
+            "title": "Чой ё қаҳва, ҳарду мешавад.",
+            "hanzi": "茶或者咖啡都行。",
+            "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+            "meaning": "Чой ё қаҳва, ҳарду мешавад.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-coffee",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "417,280 441,300 472,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири намоён барои маънои нав: Дар тоҷикӣ ҳарду бо «ё» ифода мешаванд, аммо чинӣ онҳоро фарқ мекунад."
+        },
+        {
+          "id": "options-action-3",
+          "kind": "graphic",
+          "cueText": "或者 меояд",
+          "visual": {
+            "title": "Чой ё қаҳва, ҳарду мешавад.",
+            "hanzi": "茶或者咖啡都行。",
+            "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+            "meaning": "Чой ё қаҳва, ҳарду мешавад.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-halo",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 158,
+                    "cy": 194,
+                    "r": 80,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "choice-line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 285,
+                    "y1": 130,
+                    "x2": 340,
+                    "y2": 130,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
+        }
+      ]
+    },
+    {
+      "id": "contrast",
+      "kind": "context",
+      "durationSec": 7,
+      "narration": "Муқоиса кун: 还是 — саволи интихоб. 或者 — ду варианти мумкин дар ҷумлаи хабарӣ. Бо 还是 дар чунин савол 吗 намегузорем.",
+      "cards": [
+        {
+          "hanzi": "还是",
+          "pinyin": "háishi",
+          "meaning": "ё (саволи интихоб)"
+        },
+        {
+          "hanzi": "或者",
+          "pinyin": "huòzhě",
+          "meaning": "ё (ҷумлаи хабарӣ)"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "contrast-action-1",
+          "kind": "graphic",
+          "cueText": "还是",
+          "visual": {
+            "title": "ё (саволи интихоб)",
+            "hanzi": "还是",
+            "pinyin": "háishi",
+            "meaning": "ё (саволи интихоб)",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-halo",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 158,
+                    "cy": 194,
+                    "r": 80,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "choice-line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 285,
+                    "y1": 130,
+                    "x2": 340,
+                    "y2": 130,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муҳити дарс: Дар қаҳвахона муштарӣ байни чой ва қаҳва интихоб мекунад. Ҳолати аввал ва ҳадаф: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
+        },
+        {
+          "id": "contrast-action-2",
+          "kind": "graphic",
+          "cueText": "或者",
+          "visual": {
+            "title": "ё (ҷумлаи хабарӣ)",
+            "hanzi": "或者",
+            "pinyin": "huòzhě",
+            "meaning": "ё (ҷумлаи хабарӣ)",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-coffee",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "417,280 441,300 472,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири намоён барои маънои нав: Дар тоҷикӣ ҳарду бо «ё» ифода мешаванд, аммо чинӣ онҳоро фарқ мекунад."
+        },
+        {
+          "id": "contrast-action-3",
+          "kind": "graphic",
+          "cueText": "吗 намегузорем",
+          "visual": {
+            "title": "ё (саволи интихоб)",
+            "hanzi": "还是",
+            "pinyin": "háishi",
+            "meaning": "ё (саволи интихоб)",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "divide",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 303,
+                    "y1": 110,
+                    "x2": 303,
+                    "y2": 300,
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
+        }
+      ]
+    },
+    {
+      "id": "recall",
+      "kind": "example",
+      "durationSec": 5,
+      "narration": "Чой ё қаҳва? 你喝茶还是喝咖啡？ Ҳардуи онҳо мешавад: 茶或者咖啡都行。",
+      "cards": [
+        {
+          "hanzi": "你喝茶还是喝咖啡？",
+          "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+          "meaning": "Ту чой менӯшӣ ё қаҳва?"
+        },
+        {
+          "hanzi": "茶或者咖啡都行。",
+          "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+          "meaning": "Чой ё қаҳва, ҳарду мешавад."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recall-action-1",
+          "kind": "graphic",
+          "cueText": "Чой ё қаҳва",
+          "visual": {
+            "title": "Ту чой менӯшӣ ё қаҳва?",
+            "hanzi": "你喝茶还是喝咖啡？",
+            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+            "meaning": "Ту чой менӯшӣ ё қаҳва?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "divide",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 303,
+                    "y1": 110,
+                    "x2": 303,
+                    "y2": 300,
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Муҳити дарс: Дар қаҳвахона муштарӣ байни чой ва қаҳва интихоб мекунад. Ҳолати аввал ва ҳадаф: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
+        },
+        {
+          "id": "recall-action-2",
+          "kind": "graphic",
+          "cueText": "你喝茶还是喝咖啡",
+          "visual": {
+            "title": "Чой ё қаҳва, ҳарду мешавад.",
+            "hanzi": "茶或者咖啡都行。",
+            "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+            "meaning": "Чой ё қаҳва, ҳарду мешавад.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-halo",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 158,
+                    "cy": 194,
+                    "r": 80,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "choice-line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 285,
+                    "y1": 130,
+                    "x2": 340,
+                    "y2": 130,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Тағйири намоён барои маънои нав: Дар тоҷикӣ ҳарду бо «ё» ифода мешаванд, аммо чинӣ онҳоро фарқ мекунад."
+        },
+        {
+          "id": "recall-action-3",
+          "kind": "graphic",
+          "cueText": "茶或者咖啡都行",
+          "visual": {
+            "title": "Ту чой менӯшӣ ё қаҳва?",
+            "hanzi": "你喝茶还是喝咖啡？",
+            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+            "meaning": "Ту чой менӯшӣ ё қаҳва?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-coffee",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "417,280 441,300 472,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "tg-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "还是 vs 或者 — ChineseGrammar",
+      "url": "https://chinesegrammar.app/grammar/haishi-huozhe",
+      "checkedAt": "2026-10-24",
+      "supports": "Explains 还是 for questions requesting a choice, 或者 for declarative alternatives; provides 你喝茶还是咖啡 and 茶或者咖啡都行 as patterns."
+    },
+    {
+      "title": "Choice Questions with 还是 — Elon.io",
+      "url": "https://elon.io/grammar/chinese-mandarin/questions/haishi-choice",
+      "checkedAt": "2026-10-24",
+      "supports": "Independent grammar guide gives 你喝茶还是喝咖啡？ and 茶或者咖啡都行。 with tone-marked pinyin; notes no 吗 and the limitation that 还是 can occur in embedded questions."
+    }
+  ],
+  "hookExperiment": {
+    "id": "haishi-vs-huozhe-tea-20261102-tg-hook-v1",
+    "formatId": "contrast",
+    "hypothesis": "Намоиши ҳолати воқеӣ ва мисоли равшани грамматика метавонад барои тоҷикзабонон фаҳмотар бошад; ин ҳанӯз натиҷаи санҷидашуда нест.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-28"
+  },
+  "audienceProblem": "Навомӯз «ё»-ро дар савол ва хабар як хел мегӯяд.",
+  "learningOutcome": "Саволи интихобро бо 还是 ва вариантҳои мувофиқро бо 或者 баён кунад.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Дар қаҳвахона муштарӣ байни чой ва қаҳва интихоб мекунад",
+      "learnerGoal": "Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан",
+      "obstacle": "Дар тоҷикӣ ҳарду бо «ё» ифода мешаванд, аммо чинӣ онҳоро фарқ мекунад"
+    },
+    "selectionReason": "Диалоги кӯтоҳи қаҳвахона фарқи савол ва хабарро зуд нишон медиҳад; re-hook иловагӣ лозим нест",
+    "firstPayoff": {
+      "sceneId": "choice",
+      "cueText": "你喝茶还是喝咖啡"
+    },
+    "reHooks": []
+  },
+  "localization": {
+    "language": "tg",
+    "sourceEpisodeId": "haishi-vs-huozhe-tea-20261102",
+    "sourceHash": "a42d43e65e8987bafc8b30705ded6503e5b82fb403bfd4762802dca3eb4ff7bd",
+    "authoredOn": "2026-10-28",
+    "status": "draft-awaiting-audio-review"
+  }
+}
