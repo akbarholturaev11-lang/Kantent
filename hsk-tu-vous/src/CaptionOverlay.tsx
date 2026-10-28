@@ -65,6 +65,7 @@ export const CaptionOverlay: React.FC<{
   const variant = (variants[page.styleId as keyof typeof variants] ??
     variants.pill) as CaptionVariant;
   const isCtaFooter = page.styleId === "ctaFooter";
+  const plainMotionCaption = motionDesign && plainMotionDesign && !isCtaFooter;
   const actionText = isCtaFooter ? null : actionTextAtFrame(actionCaptionScenes, frame);
   const presentation = actionSubtitlePresentation(page.text, actionText);
   const displayText = presentation.text;
@@ -123,16 +124,26 @@ export const CaptionOverlay: React.FC<{
           data-subtitle-block
           style={{
             maxWidth: motionDesign ? 960 : CAPTION_STYLE.maxWidthPx,
-            padding: motionDesign && !plainMotionDesign
+            padding: plainMotionCaption
+              ? "8px 18px"
+              : motionDesign && !plainMotionDesign
               ? "12px 26px"
               : `${variant.verticalPaddingPx}px ${variant.horizontalPaddingPx}px`,
-            borderRadius: motionDesign && !plainMotionDesign ? 999 : variant.borderRadiusPx,
-            border: motionDesign && !plainMotionDesign ? "2px solid rgba(255,255,255,.42)" : variant.border,
-            background: motionDesign && !plainMotionDesign ? "rgba(24,20,25,.86)" : variant.background,
-            boxShadow: motionDesign && !plainMotionDesign
+            borderRadius: plainMotionCaption ? 16 : motionDesign && !plainMotionDesign ? 999 : variant.borderRadiusPx,
+            border: plainMotionCaption
+              ? "1px solid rgba(33,29,23,.16)"
+              : motionDesign && !plainMotionDesign ? "2px solid rgba(255,255,255,.42)" : variant.border,
+            background: plainMotionCaption
+              ? "rgba(253,249,240,.96)"
+              : motionDesign && !plainMotionDesign ? "rgba(24,20,25,.86)" : variant.background,
+            boxShadow: plainMotionCaption
+              ? "0 8px 24px rgba(33,29,23,.16)"
+              : motionDesign && !plainMotionDesign
               ? "0 20px 56px rgba(0,0,0,.32)"
               : variant.boxShadow,
-            color: motionDesign ? "#FFF5DF" : CAPTION_STYLE.foreground,
+            color: plainMotionCaption
+              ? visualSystem.colors.foreground
+              : motionDesign ? "#FFF5DF" : CAPTION_STYLE.foreground,
             fontSize: actionText ? visualSystem.narratedActionLayout.subtitleFontPx
               : motionDesign ? Math.max(variant.fontSizePx, 48) : variant.fontSizePx,
             fontWeight: variant.fontWeight,
