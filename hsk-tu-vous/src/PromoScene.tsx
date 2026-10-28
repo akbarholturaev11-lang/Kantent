@@ -10,8 +10,9 @@ export const PromoScene:React.FC<{visual:PromoVisual;frame:number;cueFrame:numbe
  const local=Math.max(0,frame-cueFrame);
  const opacity=first?1:interpolate(frame,[0,visualSystem.motion.sceneCrossfadeFrames],[0,1],ease);
  const bg=visualSystem.colors[visual.backgroundToken as keyof typeof visualSystem.colors];
+ const textColor=visual.backgroundToken==='foreground'?visualSystem.narratedActionPalette.foreground:visualSystem.colors.foreground;
  const crop=visual.crop;
- return <AbsoluteFill style={{background:typeof bg==='string'?bg:visualSystem.colors.background,opacity,color:visualSystem.colors.foreground}}>
+ return <AbsoluteFill style={{background:typeof bg==='string'?bg:visualSystem.colors.background,opacity,color:textColor}}>
   <div style={{position:'absolute',top:visualSystem.motion.brandTopInsetPx,left:0,width:'100%',display:'flex',justifyContent:'center',alignItems:'center',gap:14,fontSize:30,fontWeight:700}}>
    <Img src={staticFile('branding/hsk-ai-logo-1024.png')} style={{width:44,height:44,borderRadius:10}}/> HSK <span style={{color:visualSystem.colors.brandGold}}>AI</span>
   </div>

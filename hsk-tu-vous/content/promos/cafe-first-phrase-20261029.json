@@ -52,7 +52,7 @@
         "action": "Рука открывает меню; чашка сдвигается в тот же центр, когда звучит место действия.",
         "continuityKey": "same-learner-cafe-phone",
         "cueText": "пора заказать",
-        "backgroundToken": "background",
+        "backgroundToken": "foreground",
         "drawingBrief": "Оригинальная простая иллюстрация стола, чашки и одной руки; без вывесок, надписей меню и чужих фотографий.",
         "graphic": {
           "width": 800,
@@ -66,7 +66,7 @@
                 "cy": 470,
                 "rx": 300,
                 "ry": 32,
-                "fill": "secondary"
+                "fill": "teal"
               }
             },
             {
@@ -200,7 +200,7 @@
         "action": "Рука останавливается перед заказом; два простых значка мысли приближаются и замирают, показывая паузу.",
         "continuityKey": "same-learner-cafe-phone",
         "cueText": "наступает пауза",
-        "backgroundToken": "background",
+        "backgroundToken": "foreground",
         "drawingBrief": "Сохранить ту же чашку и руку. Значки мысли без читаемых слов; единственный текст — субтитр.",
         "graphic": {
           "width": 800,
@@ -214,7 +214,7 @@
                 "cy": 470,
                 "rx": 300,
                 "ry": 32,
-                "fill": "secondary"
+                "fill": "teal"
               }
             },
             {
@@ -408,7 +408,7 @@
         "action": "Вместо меню рука поднимает телефон; камера следует за одним предметом к крупному плану.",
         "continuityKey": "same-learner-cafe-phone",
         "cueText": "в приложении",
-        "backgroundToken": "background",
+        "backgroundToken": "foreground",
         "drawingBrief": "Оригинальный силуэт телефона без выдуманного интерфейса; перед настоящим продуктом он служит только переходом.",
         "graphic": {
           "width": 800,
@@ -422,7 +422,7 @@
                 "cy": 470,
                 "rx": 300,
                 "ry": 32,
-                "fill": "secondary"
+                "fill": "teal"
               }
             },
             {
@@ -671,7 +671,7 @@
         "action": "Genuine existing UI detail, cropped to a language-neutral panda / microphone. No fake tap, recording, response or replacement text.",
         "continuityKey": "same-learner-cafe-phone",
         "cueText": "AI Voice",
-        "backgroundToken": "background",
+        "backgroundToken": "foreground",
         "assetPath": "public/promo-captures/ai-voice-original.png",
         "provenance": "genuine-product-capture",
         "uiLanguage": "zxx",
@@ -701,7 +701,7 @@
         "action": "Genuine existing UI detail, cropped to a language-neutral panda / microphone. No fake tap, recording, response or replacement text.",
         "continuityKey": "same-learner-cafe-phone",
         "cueText": "голосом",
-        "backgroundToken": "background",
+        "backgroundToken": "foreground",
         "assetPath": "public/promo-captures/ai-voice-original.png",
         "provenance": "genuine-product-capture",
         "uiLanguage": "zxx",
@@ -731,7 +731,7 @@
         "action": "Возврат к исходному столу: телефон опускается рядом с чашкой. Итог — возможность подготовиться, без показа выдуманного успешного заказа.",
         "continuityKey": "same-learner-cafe-phone",
         "cueText": "одной попытки",
-        "backgroundToken": "background",
+        "backgroundToken": "foreground",
         "drawingBrief": "Повторно использовать исходные предметы и руку; новый результат разговора не изображать.",
         "graphic": {
           "width": 800,
@@ -745,7 +745,7 @@
                 "cy": 470,
                 "rx": 300,
                 "ry": 32,
-                "fill": "secondary"
+                "fill": "teal"
               }
             },
             {
