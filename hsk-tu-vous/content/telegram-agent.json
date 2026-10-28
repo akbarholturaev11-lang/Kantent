@@ -40,7 +40,67 @@
       "required": true,
       "ratio": "4:3",
       "format": "png or jpg",
-      "theme": "Original HSK AI branded topical artwork, clean readable layout, no invented screenshot; media must have HTTPS URL accepted by Zernio"
+      "theme": "Original HSK AI branded topical artwork, clean readable layout, no invented screenshot; media must have HTTPS URL accepted by Zernio",
+      "designPolicy": {
+        "version": "2026-10-28-minimal-editorial",
+        "principle": "Restrained, elegant, human-art-directed editorial product/news art, not AI-generated ad collage or an infographic.",
+        "focalElements": {
+          "min": 1,
+          "max": 2,
+          "description": "One or two main visual objects only, strictly related to verified news."
+        },
+        "supportingDetails": {
+          "max": 3,
+          "description": "A few subtle supporting details only where needed; generous whitespace and one visual hierarchy."
+        },
+        "typography": {
+          "preferred": "none",
+          "headlineAllowed": "At most one short, large, correctly typeset 2–5-word heading only if it adds meaning.",
+          "captionDuplication": "Never repeat the Telegram caption/message or information already clearly expressed in the caption.",
+          "prohibited": [
+            "tiny text",
+            "multiple titles or subheadings",
+            "lists or statistics strips",
+            "decorative microtype",
+            "repeated numbers",
+            "fake CTA/button",
+            "watermarks generated as text",
+            "invented Chinese characters or book-cover text"
+          ]
+        },
+        "color": {
+          "palette": "2–4 harmonious understated brand-compatible colors",
+          "avoid": [
+            "neon",
+            "acid brights",
+            "clashing gradients",
+            "aggressive saturation",
+            "excessive high-contrast rainbow"
+          ]
+        },
+        "avoid": [
+          "busy AI-promo template",
+          "glowing 3D typography",
+          "shiny plastic render",
+          "sparkles/lightning",
+          "ribbons/waves/pagoda collage",
+          "floating UI icons",
+          "unnecessary decorative borders",
+          "fake application screenshots",
+          "AI-looking typographic glitches"
+        ],
+        "reviewChecklist": [
+          "4:3 image ratio",
+          "No duplicated caption text",
+          "No tiny or malformed lettering",
+          "Only one/two primary focal elements",
+          "No distracting ornaments",
+          "No garish colors",
+          "Credible natural/editorial visual style",
+          "Relevant to verified user-facing news"
+        ],
+        "onFailure": "Regenerate or simplify before publication; do not compromise factual or media-hosting requirements."
+      }
     },
     "noApprovalNeeded": true,
     "publication": "Automatic after positive evidence; skip if no real update"
