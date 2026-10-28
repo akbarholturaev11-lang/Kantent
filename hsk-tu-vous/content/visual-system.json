@@ -279,9 +279,9 @@
     "colorSource": "colors",
     "layoutSource": "shape.safeMarginPx",
     "captionSource": "Existing language-specific narration and verified word-timed caption styling",
-    "direction": "One open composition, generous empty space, one meaningful subject/action, original simple vector or cutout-like objects and restrained depth. Keep the hero clearly separated from the background; use crisp brand accents sparingly. A genuine product crop replaces the narrative object when its function is spoken.",
+    "direction": "One open composition with intentional negative space, one meaningful subject/action large enough to read on a phone, and one or two story-specific context details. Empty canvas is not a focal image. Use original simple vector or cutout-like objects and restrained depth. Keep the hero clearly separated from the background; use crisp brand accents sparingly. A genuine product crop replaces the narrative object when its function is spoken.",
     "motion": "Preserve object continuity between beats. Move, reveal, crop or reframe only to explain the spoken action; transitions follow the actual voice cues. No decorative motion loops, busy collages, flashing backgrounds or title-only slides.",
     "text": "One narration-synced text layer. No parallel headline, duplicate sentence or extra teaching stack. Text intrinsic to a genuine captured product UI is source evidence, not another authored headline.",
-    "background": "Choose a quiet light or dark brand background with strong contrast against the hero. Put pale objects on a dark background and dark objects on a light background. Use the existing red, teal and gold accents for crisp color; avoid pale-on-pale compositions. Do not rotate colors on a timer or copy a reference palette."
+    "background": "Choose a quiet light or dark brand background only after checking the hero against it at phone size. Put pale objects on a dark background and dark objects on a light background; a pale cup/face/object on ivory or white is a failed pairing. Use an existing dark token for pale heroes, and retain a clearly visible red, teal or gold accent when it supports the story. Avoid pale-on-pale or mostly empty washed-out frames. Do not rotate colors on a timer or copy a reference palette."
   }
 }

@@ -9,7 +9,13 @@ Keep each language's authored cues and imported word timestamps independent unde
 1. Identify the real objects, actions and changes in the narration. Write an `explains` rationale and exact spoken `cueText` for every change. Preserve the learning point and verified narration.
 2. Use existing quantity/number/ordinal models where they fit. For a new object or action, author a `graphic` drawing. Write the actual geometry and movement, not prose such as “show a swimmer”. `content/visual-examples/swimming-and-gate.json` provides reusable technical drawings without voice or production approval.
 3. Validate before TTS. After genuine word timestamps are imported, keyframes start at the exact spoken anchor. `atMs` is elapsed time since that anchor; it never replaces the imported cue. A later beat selects a new drawing state and stops the preceding tracks.
-4. Inspect start, moving and settled poses, then their transitions in the real MP4 with actual narration. Repair missing/misleading details and repeat the affected render. Mechanical checks do not prove teaching meaning, visual quality or phone readability.
+4. Inspect start, moving and settled poses, then their transitions in the real MP4 with actual narration. Apply the pass/fail review in `EDITING_SPEC.md#Review before delivery`; repair missing/misleading details and repeat the affected render. Mechanical checks do not prove teaching meaning, visual quality or phone readability.
+
+## Object-recognition bar
+
+A drawing must read as its named object/action from its silhouette, meaningful details and context at the rendered phone size. Do not rely on an extra headline, tiny labels, or a subtitle to turn generic shapes into the intended scene. Scale the hero until its parts and action are visible; if that no longer fits, split the explanation across cue-linked beats instead of shrinking the subject.
+
+For example, a pool comparison needs a contained water basin with a visible rim, lane/water details, a swimmer whose head/body/limbs can be distinguished, and a visibly different closed state such as a gate or lane barrier. Wave lines that spill between flat green rectangles, a tiny swimmer, or a large unexplained X do not establish “pool / swimming / closed.” Keep both pools' details inside their own outlines. Preserve the spoken comparison by changing the pool state, not by changing unrelated colors. `content/visual-examples/swimming-and-gate.json` is a technical geometry reference; still inspect the actual localized MP4 at full frame and 270×480, since a valid example or schema is not proof of readability.
 
 ## Payload
 
