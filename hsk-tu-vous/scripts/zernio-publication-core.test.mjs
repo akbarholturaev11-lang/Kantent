@@ -14,7 +14,7 @@ const video="a".repeat(64),post="b".repeat(64),source="d".repeat(40),contentHash
 const fields={
  runId:"40552075736",language:"ru",platform:"instagram",accountId:env.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID,
  mode:"draft",videoSha256:video,postSha256:post,confirmation:"SAVE_EXACT_VIDEO_AS_DRAFT",
- content:"Проверьте этот урок: 二 или 两? #HSKAI",shareToFeed:"true",scheduledFor:"",
+ content:"Проверьте этот урок: 二 или 两? #HSKAI",shareToFeed:"true",isAiGenerated:"true",scheduledFor:"",
 };
 const manifest={schemaVersion:1,episodeId:"er-vs-liang-cafe-20261026",sourceCommit:source,
  state:"rendered-pending-owner-approval",published:false,publicationAuthorized:false,
@@ -33,7 +33,7 @@ test("exact owner draft approval creates an unpublished Zernio draft payload",()
  assert.equal(target.postRel,"ru/instagram/post.md");
  const body=publicationBody(a,"https://media.zernio.com/temp/safe.mp4");
  assert.equal(body.isDraft,true);assert.equal(body.publishNow,undefined);
- assert.deepEqual(body.platforms,[{platform:"instagram",accountId:env.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID,platformSpecificData:{shareToFeed:true}}]);
+ assert.deepEqual(body.platforms,[{platform:"instagram",accountId:env.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID,platformSpecificData:{shareToFeed:true,isAiGenerated:true}}]);
  assert.match(deterministicPostKey(manifest,a),/^hsk-[a-f0-9]{56}$/);
  assert.equal(deterministicPostKey(manifest,a),deterministicPostKey(manifest,a));
 });
@@ -43,6 +43,7 @@ test("owner confirmation, hashes, post copy and account ID cannot be bypassed",(
   {videoSha256:"0".repeat(64)},{postSha256:"0".repeat(64)},
   {accountId:env.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID},
   {content:"пакет готов к ручной проверке"},
+  {isAiGenerated:""},
   {content:" "},{content:"text "},{content:"x".repeat(2201)},
   {mode:"now"},{mode:"scheduled"},
   {scheduledFor:"2027-01-01T12:00:00+08:00"},
@@ -59,10 +60,10 @@ test("owner confirmation, hashes, post copy and account ID cannot be bypassed",(
  assert.throws(()=>validateApprovedIntent({...fields,language:"tg",accountId:env.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID},{}),/exactly match/);
 });
 test("Tajik destination can only receive an approved Tajik Instagram video",()=>{
- const a=validateApprovedIntent({...fields,language:"tg",accountId:env.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID,content:"Ду пиёла чой",shareToFeed:"false"},env);
+ const a=validateApprovedIntent({...fields,language:"tg",accountId:env.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID,content:"Ду пиёла чой",shareToFeed:"false",isAiGenerated:"true"},env);
  assert.equal(a.target.accountId,env.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID);
  assert.equal(selectApprovedArtifact(manifest,a).videoRel,"tg/instagram/video.mp4");
- assert.deepEqual(publicationBody(a,"https://media.zernio.com/temp/tg.mp4").platforms[0].platformSpecificData,{shareToFeed:false});
+ assert.deepEqual(publicationBody(a,"https://media.zernio.com/temp/tg.mp4").platforms[0].platformSpecificData,{shareToFeed:false,isAiGenerated:true});
 });
 test("YouTube settings must be explicitly selected and match YouTube route",()=>{
  const yt={...fields,platform:"youtube",accountId:env.ZERNIO_RU_YOUTUBE_ACCOUNT_ID,

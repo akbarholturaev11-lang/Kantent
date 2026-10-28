@@ -62,7 +62,10 @@ export function validateApprovedIntent(raw, env = process.env, now = Date.now())
   } else if (platform === "instagram") {
     if (!["true", "false"].includes(String(raw.shareToFeed)))
       throw Error("Instagram shareToFeed setting must be explicit.");
+    if (!["true", "false"].includes(String(raw.isAiGenerated)))
+      throw Error("Instagram AI-generated media disclosure must be explicit.");
     settings.shareToFeed = String(raw.shareToFeed) === "true";
+    settings.isAiGenerated = String(raw.isAiGenerated) === "true";
   } else if (platform === "tiktok") {
     const tiktok = raw.tiktokSettings;
     const privacyLevels = ["PUBLIC_TO_EVERYONE", "MUTUAL_FOLLOW_FRIENDS", "FOLLOWER_OF_CREATOR", "SELF_ONLY"];

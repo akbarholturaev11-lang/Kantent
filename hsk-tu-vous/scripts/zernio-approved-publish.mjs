@@ -24,7 +24,7 @@ export function requestEnv(env) {
   if (!details || typeof details !== "object" || Array.isArray(details))
     throw Error("approved_post_json must be one JSON object.");
   if (Object.keys(details).some(key => !["content","title","visibility","madeForKids",
-    "containsSyntheticMedia","shareToFeed","tiktokSettings","scheduledFor"].includes(key)))
+    "containsSyntheticMedia","shareToFeed","isAiGenerated","tiktokSettings","scheduledFor"].includes(key)))
     throw Error("approved_post_json has unsupported fields.");
   return {
     runId: env.APPROVED_RUN_ID, language: env.APPROVED_LANGUAGE,
@@ -35,6 +35,7 @@ export function requestEnv(env) {
     madeForKids: details.madeForKids,
     containsSyntheticMedia: details.containsSyntheticMedia,
     shareToFeed: details.shareToFeed,
+    isAiGenerated: details.isAiGenerated,
     tiktokSettings: details.tiktokSettings,
     scheduledFor: details.scheduledFor ?? "", accountId: env.APPROVED_ACCOUNT_ID,
   };

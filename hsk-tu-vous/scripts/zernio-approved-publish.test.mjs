@@ -62,7 +62,7 @@ test("owner-approved draft runs presign -> auth-free PUT -> one post -> status r
       APPROVED_RUN_ID:"40552075736",APPROVED_LANGUAGE:"ru",APPROVED_PLATFORM:"instagram",
       APPROVED_MODE:"draft",APPROVED_ACCOUNT_ID:ID,
       APPROVED_VIDEO_SHA256:videoHash,APPROVED_POST_SHA256:postHash,
-      APPROVED_POST_JSON:'{"content":"Reviewed proposed post","shareToFeed":true}',
+      APPROVED_POST_JSON:'{"content":"Reviewed proposed post","shareToFeed":true,"isAiGenerated":true}',
       APPROVAL_CONFIRMATION:"SAVE_EXACT_VIDEO_AS_DRAFT",
       PUBLICATION_RECEIPT_DIR:path.join(temp,"receipt"),
     };
@@ -77,6 +77,7 @@ test("owner-approved draft runs presign -> auth-free PUT -> one post -> status r
     assert.equal(calls[4].body.isDraft,true);
     assert.equal(calls[4].body.publishNow,undefined);
     assert.equal(calls[4].body.platforms[0].accountId,ID);
+    assert.equal(calls[4].body.platforms[0].platformSpecificData.isAiGenerated,true);
     assert.match(calls[4].idempotency,/^hsk-[0-9a-f]{56}$/);
     assert.equal((await fs.readFile(path.join(temp,"receipt","receipt.json"),"utf8")).includes("mock-zernio-key"),false);
     // A wrong owner hash is blocked before any network request, upload, or draft.
