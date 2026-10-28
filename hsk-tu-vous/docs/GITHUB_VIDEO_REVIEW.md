@@ -57,9 +57,7 @@ readback before any upload. A username or account ID mismatch must fail closed.
 Additional accounts:
 - **Facebook Akbarholturaev** `6ae161de384955d3b3ff194b`: connected but video language
   was not chosen. **No automatic Facebook video publishing or inferred RU/TJ language.**
-- **Telegram @aibotsakbar** `6ae1661bf80a20df8f31158e`: **TJ text-only HSK AI product
-  updates every three days**, **NO videos**. Scheduled review of product update text
-  is separate from the video workflow; do not publish unsupported or invented news.
+- **Telegram @aibotsakbar** `6ae1661bf80a20df8f31158e`: TJ product updates **with original 4:3 photo/image and short Tajik-Cyrillic copy every 3 days**, NO videos. A separate ChatGPT Planned agent reviews the last 72 hours of `HSK-AI-Bot/main` and publishes automatically without per-post confirmation, as explicitly authorized 2026-10-28. If no verified user-facing change or hostable image, skip; do not invent news. The GitHub Telegram cron/sender was removed to avoid duplicates.
 
 Required Github Actions **encrypted secrets** (never expose values in files, logs or messages):
 - `ZERNIO_API_KEY`: RU Instagram + RU YouTube (existing).
