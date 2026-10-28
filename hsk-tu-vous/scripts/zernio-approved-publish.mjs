@@ -157,7 +157,7 @@ export async function executeApprovedPublication(root,env=process.env) {
     throw Error("Approved caption does not exactly match the public caption in the downloaded post preview.");
   if(videoBytes.length<8000)throw Error("Missing real MP4.");
   const origin=await verifyReviewOrigin(approval.runId,manifest.sourceCommit,env.GITHUB_TOKEN);
-  const zernio=zernioRoute(approval.language,env);
+  const zernio=zernioRoute(approval.language,env,approval.platform);
   const account=await verifyAccount(zernio.secret,{...approval.target,platform:approval.platform});
   const verifiedTikTokSettings=approval.platform==="tiktok"
     ? await verifyTikTokCreatorSettings(zernio.secret,approval.target,approval.settings.tiktokSettings)
