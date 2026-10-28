@@ -63,12 +63,15 @@
       "purpose": "HSK AI product updates",
       "cadenceDays": 3,
       "videoPublishingAuthorized": false,
-      "delivery": "text updates only; exact update preview and current connection are required before sending",
+      "delivery": "Auto post short Tajik Cyrillic HSK AI changes plus one original 4:3 image via scheduled ChatGPT agent. No video; verify previous 72h main commits and prevent duplicate/news inventions.",
       "verifiedAccountId": "6ae1661bf80a20df8f31158e",
       "credentialGroup": "tiktok-telegram",
-      "contentRule": "Verified HSK AI product changes only, Tajik Cyrillic, no video or fabricated update; three-day cadence is a scheduling objective, never proof a message was delivered."
+      "contentRule": "Verified HSK AI product changes only, Tajik Cyrillic, no video or fabricated update; three-day cadence is a scheduling objective, never proof a message was delivered.",
+      "noApprovalNeeded": true,
+      "imageAspectRatio": "4:3",
+      "publisher": "ChatGPT Planned Agent"
     }
   },
-  "routingGuard": "Content language is bound to exact platform + verified account ID and live username; RU/TG refer to video language, not connector/credential ownership. Facebook needs explicit language choice and video permission. Telegram is Tajik text-only product news every three days, never video. Never auto-post or cross-route from a review job.",
+  "routingGuard": "Content language is bound to exact platform + verified account ID and live username; RU/TG refer to video language, not connector/credential ownership. Facebook needs explicit language choice and video permission. Telegram is Tajik product news text + 4:3 image every three days, never video. Never auto-post or cross-route from a review job.",
   "verifiedBy": "Live connected Zernio accounts across four distinct Zernio connections on 2026-10-28; readback before every external action."
 }
