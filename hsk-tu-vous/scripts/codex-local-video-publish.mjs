@@ -200,7 +200,9 @@ async function verifyLocalPackage(opts) {
 }
 
 async function assertCurrentMainCode() {
-  const localHead = gh(["rev-parse", "HEAD"]);
+  const localHead = execFileSync("git", ["rev-parse", "HEAD"], {
+    cwd: REPOSITORY_ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"],
+  }).trim();
   const remoteMain = gh(["api", "repos/" + REPOSITORY + "/commits/main", "--jq", ".sha"]);
   if (localHead !== remoteMain)
     throw Error("Local Codex publish code must match the current GitHub main before dispatch.");
