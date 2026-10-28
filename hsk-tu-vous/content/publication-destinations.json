@@ -1,20 +1,50 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "videoDestinations": {
     "ru": {
       "language": "Russian",
       "platforms": {
-        "instagram": { "account": "@hskai.app", "ownerAuthorized": true },
-        "youtube": { "account": "@hskai_app", "ownerAuthorized": true },
-        "tiktok": { "account": "@hskai.app", "ownerAuthorized": true }
+        "instagram": {
+          "account": "@hskai.app",
+          "ownerAuthorized": true,
+          "verifiedAccountId": "6a411e989d9472faae10a430",
+          "credentialGroup": "ru-primary"
+        },
+        "youtube": {
+          "account": "@hskai_app",
+          "ownerAuthorized": true,
+          "verifiedAccountId": "6ac96e053f8f4ffc10b0655f",
+          "credentialGroup": "ru-primary"
+        },
+        "tiktok": {
+          "account": "@hskai.app",
+          "ownerAuthorized": true,
+          "verifiedAccountId": "6ae16327a2845fbdb07e5ccb",
+          "credentialGroup": "tiktok-telegram"
+        }
       }
     },
     "tg": {
       "language": "Tajik",
       "platforms": {
-        "instagram": { "account": "@hskai.apptj", "ownerAuthorized": true },
-        "youtube": { "account": "@hskaiapp-tj", "ownerAuthorized": true },
-        "tiktok": { "account": "@hskai.ru", "ownerAuthorized": true }
+        "instagram": {
+          "account": "@hskai.apptj",
+          "ownerAuthorized": true,
+          "verifiedAccountId": "6ae0f16205fd6f5357f8503d",
+          "credentialGroup": "tg-primary"
+        },
+        "youtube": {
+          "account": "@hskaiapp-tj",
+          "ownerAuthorized": true,
+          "verifiedAccountId": "6ae160123787e4c71b522d64",
+          "credentialGroup": "tg-primary"
+        },
+        "tiktok": {
+          "account": "@hskai.ru",
+          "ownerAuthorized": true,
+          "verifiedAccountId": "6ae16064ecf91092adba7d68",
+          "credentialGroup": "tiktok-facebook"
+        }
       }
     }
   },
@@ -23,7 +53,9 @@
       "account": "Akbarholturaev",
       "language": null,
       "videoPublishingAuthorized": false,
-      "note": "Language routing was not specified; do not infer RU or TJ."
+      "note": "Language routing was not specified; do not infer RU or TJ.",
+      "verifiedAccountId": "6ae161de384955d3b3ff194b",
+      "credentialGroup": "tiktok-facebook"
     },
     "telegram": {
       "account": "@aibotsakbar",
@@ -31,8 +63,12 @@
       "purpose": "HSK AI product updates",
       "cadenceDays": 3,
       "videoPublishingAuthorized": false,
-      "delivery": "text updates only; exact update preview and current connection are required before sending"
+      "delivery": "text updates only; exact update preview and current connection are required before sending",
+      "verifiedAccountId": "6ae1661bf80a20df8f31158e",
+      "credentialGroup": "tiktok-telegram",
+      "contentRule": "Verified HSK AI product changes only, Tajik Cyrillic, no video or fabricated update; three-day cadence is a scheduling objective, never proof a message was delivered."
     }
   },
-  "routingGuard": "Never substitute an account from another language or platform. Verify the exact connected account with the live Zernio connection before any upload or scheduling."
+  "routingGuard": "Content language is bound to exact platform + verified account ID and live username; RU/TG refer to video language, not connector/credential ownership. Facebook needs explicit language choice and video permission. Telegram is Tajik text-only product news every three days, never video. Never auto-post or cross-route from a review job.",
+  "verifiedBy": "Live connected Zernio accounts across four distinct Zernio connections on 2026-10-28; readback before every external action."
 }
