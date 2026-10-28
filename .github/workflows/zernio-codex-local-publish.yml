@@ -7,16 +7,20 @@ on:
   workflow_dispatch:
     inputs:
       phase:
-        description: "Prepare an encrypted upload ticket, or publish the exact uploaded file"
+        description: "Prepare a ticket, publish the exact uploaded file, or reconcile an existing post without posting"
         required: true
         type: choice
-        options: [prepare, publish]
+        options: [prepare, publish, reconcile]
       request_id:
         description: "One-time Codex-local request ID"
         required: true
         type: string
       ticket_run_id:
         description: "Successful prepare run; used only for publish phase"
+        required: false
+        type: string
+      post_id:
+        description: "Existing Zernio post ID; used only for read-only reconciliation"
         required: false
         type: string
       language:
@@ -126,6 +130,7 @@ jobs:
       CODEX_LOCAL_PHASE: ${{ inputs.phase }}
       CODEX_LOCAL_REQUEST_ID: ${{ inputs.request_id }}
       CODEX_LOCAL_TICKET_RUN_ID: ${{ inputs.ticket_run_id }}
+      CODEX_LOCAL_POST_ID: ${{ inputs.post_id }}
       CODEX_LOCAL_LANGUAGE: ${{ inputs.language }}
       CODEX_LOCAL_PLATFORM: ${{ inputs.platform }}
       CODEX_LOCAL_EPISODE_ID: ${{ inputs.episode_id }}
@@ -191,8 +196,11 @@ jobs:
         env:
           CODEX_LOCAL_MEDIA_URL: ${{ secrets[inputs.media_url_secret_name] }}
         run: node scripts/zernio-codex-local-publish.mjs publish /tmp/codex-local-zernio-ticket
+      - name: Reconcile an existing Zernio post without creating another
+        if: ${{ inputs.phase == 'reconcile' }}
+        run: node scripts/zernio-codex-local-publish.mjs reconcile
       - name: Save sanitized local-source receipt
-        if: ${{ always() && inputs.phase == 'publish' }}
+        if: ${{ always() && (inputs.phase == 'publish' || inputs.phase == 'reconcile') }}
         uses: actions/upload-artifact@v4
         with:
           name: codex-local-receipt-${{ github.run_id }}
@@ -202,4 +210,4 @@ jobs:
 
 # The local MP4 travels from this machine directly to Zernio's presigned URL.
 # GitHub receives hashes and an encrypted one-time transfer ticket only.
-# Both phases are manual, owner-only and on main; no render job triggers them.
+# Every phase is manual, owner-only and on main; no render job triggers them.

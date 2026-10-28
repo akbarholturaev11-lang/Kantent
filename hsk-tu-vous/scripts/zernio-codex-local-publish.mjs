@@ -8,6 +8,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
+import { setTimeout as delay } from "node:timers/promises";
 import {
   API_ROOT, exactCaptionFromPostPreview, jsonRequest, requestEnv,
   verifyAccount, verifyTikTokCreatorSettings, writeReceipt,
@@ -170,6 +171,53 @@ async function hashRemoteMedia(mediaUrl, expectedBytes) {
   return { bytes, sha256: hash.digest("hex") };
 }
 
+async function reconcileExistingPost(env = process.env) {
+  actionGuard(env);
+  if (env.CODEX_LOCAL_PHASE !== "reconcile") throw Error("Wrong phase for read-only post reconciliation.");
+  const language = String(env.CODEX_LOCAL_LANGUAGE ?? "");
+  const platform = String(env.CODEX_LOCAL_PLATFORM ?? "");
+  const postId = String(env.CODEX_LOCAL_POST_ID ?? "");
+  if (!/^[a-f0-9]{24}$/.test(postId)) throw Error("A real Zernio post ID is required for reconciliation.");
+  const target = zernioTargetAccount(language, platform, env);
+  if (String(env.APPROVED_ACCOUNT_ID ?? "") !== target.accountId)
+    throw Error("Reconciliation account differs from the canonical language/platform route.");
+  const route = zernioRoute(language, env, platform);
+  const account = await verifyAccount(route.secret, { ...target, platform });
+
+  const stopAt = Date.now() + 120_000;
+  let receipt;
+  while (true) {
+    const { data } = await jsonRequest(API_ROOT + "/posts/" + encodeURIComponent(postId), { token: route.secret });
+    const post = data?.post ?? data;
+    const platforms = Array.isArray(post?.platforms) ? post.platforms : [];
+    const entry = platforms.find(item => item?.platform === platform) ?? null;
+    const targetVerified = platforms.length === 1 && entry?.accountId === target.accountId;
+    const status = entry?.status ?? post?.status ?? "unknown";
+    receipt = {
+      sourceType: "codex-local-reconcile",
+      postId,
+      language,
+      platform,
+      accountId: target.accountId,
+      connectedUsername: account.username,
+      observedPlatform: entry?.platform ?? null,
+      observedAccountId: entry?.accountId ?? null,
+      targetVerified,
+      state: status,
+      platformPostUrl: entry?.platformPostUrl ?? entry?.publishedUrl ?? null,
+      updatedAt: new Date().toISOString(),
+    };
+    await writeReceipt(receipt, env);
+    if (!targetVerified) throw Error("Zernio GET readback did not prove the exact target account; do not retry or repost.");
+    if (["published", "scheduled", "failed", "partial"].includes(status) || Date.now() >= stopAt) break;
+    await delay(5_000);
+  }
+  console.log("Zernio existing-post reconciliation: " + receipt.language + "/" + receipt.platform +
+    " status=" + receipt.state + " targetVerified=true postId=" + receipt.postId);
+  if (receipt.platformPostUrl) console.log(receipt.platformPostUrl);
+  return receipt;
+}
+
 async function publishLocalUpload(ticketRoot, env = process.env) {
   actionGuard(env);
   if (env.CODEX_LOCAL_PHASE !== "publish") throw Error("Wrong phase for local-media post creation.");
@@ -263,7 +311,8 @@ async function main() {
       throw Error("Usage: node scripts/zernio-codex-local-publish.mjs publish /absolute/ticket-dir");
     return publishLocalUpload(ticketRoot);
   }
-  throw Error("Actions usage: zernio-codex-local-publish.mjs prepare|publish <ticket-dir>");
+  if (phase === "reconcile") return reconcileExistingPost();
+  throw Error("Actions usage: zernio-codex-local-publish.mjs prepare|publish|reconcile <ticket-dir>");
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === self) {
