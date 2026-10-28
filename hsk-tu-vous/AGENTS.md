@@ -10,6 +10,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Production procedure and error handling | `content/WORKFLOW.md` |
 | Default production languages, locale codes and per-language content roots | `content/languages.json` |
 | Social account-to-language routing, video destinations and non-video update channels | `content/publication-destinations.json` |
+| Telegram-only scheduled product-news agent: ChatGPT task ID, 3-day cadence, source proof, Tajik Cyrillic and original 4:3 image, auto-post policy | `content/telegram-agent.json` (using `content/publication-destinations.json` for the exact Telegram account) |
 | Dates, IDs, cadence, episode references | `content/calendar.json` |
 | Future publishing weekdays, consecutive series parts and autonomous draft reserve | `content/calendar.json#weeklySchedule`, `#seriesPolicy` and `#planningBuffer` |
 | Future planned episode buffer (minimum/target) | `content/calendar.json#planningBuffer` |
@@ -50,12 +51,13 @@ Before creating, changing, rendering or exporting any video, invoke the local MC
 
 ## Editorial skill selection for scheduled agents
 
-The existing daily Calendar Reserve and the Monday/Wednesday/Friday feedback agent are independent scheduled ChatGPT tasks; their canonical production rules remain in `content/WORKFLOW.md` and `content/feedback/AGENT_PLAYBOOK.md`. Do not create duplicate schedulers or automatic publishing. On each run read the latest `main` plus `content/skill-catalog.json`, then use `recommend_skills` when available, otherwise read the exact matching project-local SKILL.md according to `content/SKILLS.md`.
+The daily Calendar Reserve, Monday/Wednesday/Friday Feedback and **every-three-day Telegram TJ News** agents are three separate scheduled ChatGPT tasks. Drafting and Feedback remain nonpublishing. Telegram TJ News is the **sole, explicitly owner-authorized automatic publisher** of factual Tajik product news with one original 4:3 image; it never sends video. See `content/telegram-agent.json` for the verified task ID, and `content/publication-destinations.json` for routing. Do not create duplicate schedulers or grant automatic VIDEO publishing. On each run read the latest `main` plus `content/skill-catalog.json`, then use `recommend_skills` when available, otherwise read the exact matching project-local SKILL.md according to `content/SKILLS.md`.
 
 - **Calendar Reserve:** when authoring or repairing a future, unapproved HSK 1–2 lesson for the shared Instagram Reels/YouTube Shorts body, consult `.agents/skills/ig-reel-planning/SKILL.md` *during editorial hook/storyboard planning only*. This must not replace `content/hook-lab.json`, fabricate Chinese facts or add a CTA to canonical episode source.
   Only this scheduled writer (or a separately owner-invoked drafting agent) owns new future source/calendar files for the content types in `calendar.json#weeklySchedule`; ads follow `PROMO_WORKFLOW.md`. Verify **all** default languages in `content/languages.json`, each locale's matching `localization.sourceHash`, current `content/visual-system.json#lessonPresentation`, complete cue-linked `motionBeats`, `GRAPHIC_SCENES.md` when custom objects/actions are needed, and topic-selected `storytelling` metadata for new/revised drafts. `scripts/self-improvement-check.mjs#inspectDraftReadiness` now checks every configured production language and source-hash binding. It is **static source readiness**, not proof of real Gemini timings, an approved render or a completed publication.
 - **Feedback (Mon/Wed/Fri):** Instagram caption review uses `ig-caption-quality` only for *proposed future publication copy* when that is explicitly part of the report; competitor benchmarking uses `ig-competitor-research` only when real authorized external references and comparable evidence are available. Neither is a prerequisite to own-account Zernio analysis, and no social-post or message is automatically sent.
   Feedback owns sourced per-platform observations, descriptive reports and **hypotheses only**. It must never write or repair future lesson/promo JSON or calendar entries, nor promote a Hook/storytelling/CTA policy without valid fixed-age 7d evidence and explicit owner approval. A detected buffer shortfall is a handoff to Calendar Reserve, not permission for the analytics task to author scripts.
+- **Telegram TJ News (every 3 days):** follow `content/telegram-agent.json`; verify the last 72h of `HSK-AI-Bot/main` actual user-facing releases, create one concise Tajik Cyrillic message + original 4:3 image and publish automatically to live-verified `@aibotsakbar`, WITHOUT per-post approval. If no real updates or valid media URL/account, skip. Check post history and readback. Never send video or publish to any other account.
 - Regular voice, semantic cue validation, Remotion rendering, CTA and final-publication approval remain unchanged.
 
 ## Central CTA assembly for future lessons
@@ -73,7 +75,7 @@ Resolve the production language set and content roots from `content/languages.js
 ## Operating boundaries
 
 - Do not edit secrets, add credentials, or use an unapproved external service.
-- Do not treat a production command as authorization to publish. Follow the explicit final-preview gate in `AI_RULES.md`.
+- Do not treat a VIDEO production command as authorization to publish. Keep the exact video preview gate in `AI_RULES.md`. The distinct Telegram TJ News task alone has the separate owner-approved news+4:3 image auto-publishing rule in `content/telegram-agent.json`.
 - Preserve the existing renderer and use relevant guidance in `content/SKILLS.md` only when needed.
 - Keep generated review artifacts in the designated ignored folders. Don't treat temporary files as canonical sources.
 - Make the smallest compatible change, validate affected scripts/render stages, and report tests and blockers truthfully.
