@@ -1145,6 +1145,16 @@ try {
         profile: voiceProfile,
       });
       if (!fallback) {
+        // Diagnostic only: published/approved audio is never replaced. Keep
+        // exact mismatch tokens, not any secret or raw Gemini response.
+        console.error("GEMINI_WORD_ALIGNMENT_DIAGNOSTIC " + JSON.stringify({
+          language: voiceProfile.locale,
+          episodeId: EPISODE_ID,
+          chunk: index + 1,
+          attempts,
+          mismatches: metadata.firstTranscriptMismatches,
+          error: metadata.lastTranscriptionError ?? null,
+        }));
         throw new Error(
           `Gemini transcription did not match narration chunk ${index + 1} after ${attempts} attempt(s); audio was kept and VTT was not written.`,
         );
