@@ -61,7 +61,7 @@ test("latest MAIN Facebook TJ-only Zernio rule and independent video owner gate 
   assert.equal(routes.videoDestinations.tg.platforms.tiktok.account,"@hskai.ru");
   assert.equal(routes.videoDestinations.ru.platforms.instagram.account,"@hskai.app");
   assert.equal(routes.videoDestinations.tg.platforms.instagram.account,"@hskai.apptj");
-  assert.equal(news.socialNewsDistribution.videoPolicy.includes("manual video"),true);
+  assert.equal(news.socialNewsDistribution.videoPolicy.includes("owner-approval gates"),true);
   assert.equal(routes.newsPhotoDestinations.excluded.some(x=>x.includes("Russian Facebook")),true);
   assert.equal(routes.newsPhotoDestinations.excluded.some(x=>x.includes("video")),true);
 });
