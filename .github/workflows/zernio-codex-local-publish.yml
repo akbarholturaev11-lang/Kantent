@@ -1,0 +1,205 @@
+name: HSK AI Codex-local Zernio handoff
+run-name: Codex-local ${{ inputs.phase }} ${{ inputs.request_id }}
+
+# Deliberately separate from video-review.yml. This workflow never renders,
+# downloads from the review artifact, or stores a local MP4 in GitHub.
+on:
+  workflow_dispatch:
+    inputs:
+      phase:
+        description: "Prepare an encrypted upload ticket, or publish the exact uploaded file"
+        required: true
+        type: choice
+        options: [prepare, publish]
+      request_id:
+        description: "One-time Codex-local request ID"
+        required: true
+        type: string
+      ticket_run_id:
+        description: "Successful prepare run; used only for publish phase"
+        required: false
+        type: string
+      language:
+        description: "Language of the already-rendered local review MP4"
+        required: true
+        type: choice
+        options: [ru, tg]
+      platform:
+        description: "One exact language/platform destination"
+        required: true
+        type: choice
+        options: [instagram, youtube, tiktok, facebook]
+      account_id:
+        description: "Canonical connected Zernio account ID"
+        required: true
+        type: string
+      episode_id:
+        description: "Exact lesson or promotion ID from the local review package"
+        required: true
+        type: string
+      video_sha256:
+        description: "Exact local MP4 SHA-256"
+        required: true
+        type: string
+      video_bytes:
+        description: "Exact local MP4 byte size"
+        required: true
+        type: string
+      post_sha256:
+        description: "Exact post.md SHA-256"
+        required: true
+        type: string
+      post_preview_base64:
+        description: "Exact UTF-8 post.md bytes, base64 encoded"
+        required: true
+        type: string
+      content_hash:
+        description: "Rendered platform content hash from local status.json"
+        required: true
+        type: string
+      cta_experiment_id:
+        description: "Platform-specific CTA registration from local status.json"
+        required: true
+        type: string
+      mode:
+        description: "Exact approved action"
+        required: true
+        type: choice
+        options: [scheduled, now]
+      scheduled_for:
+        description: "Exact Asia/Shanghai time for scheduled mode; blank otherwise"
+        required: false
+        type: string
+      approved_post_json:
+        description: "Exact platform caption/settings JSON approved by the owner"
+        required: true
+        type: string
+      approval_confirmation:
+        description: "Exact mode phrase: SAVE_EXACT_VIDEO_AS_DRAFT / APPROVE_EXACT_VIDEO_AND_SCHEDULE / APPROVE_EXACT_VIDEO_AND_PUBLISH_NOW"
+        required: true
+        type: string
+      recipient_public_key:
+        description: "Ephemeral RSA public key used only to encrypt the short-lived upload ticket"
+        required: true
+        type: string
+      media_url_secret_name:
+        description: "One-time Actions secret name holding the returned public media URL during publish"
+        required: true
+        type: string
+      local_source_commit:
+        description: "Local Codex checkout HEAD for the audit receipt"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: hsk-codex-zernio-${{ inputs.request_id }}-${{ inputs.phase }}
+  cancel-in-progress: false
+
+jobs:
+  codex-local-zernio:
+    name: Verify local package -> secure ticket or approved post
+    if: ${{ github.actor == 'akbarholturaev11-lang' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    environment: hsk-zernio-publishing
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      ZERNIO_API_KEY: ${{ secrets.ZERNIO_API_KEY }}
+      ZERNIO_TG_API_KEY: ${{ secrets.ZERNIO_TG_API_KEY }}
+      ZERNIO_TIKTOK_TELEGRAM_API_KEY: ${{ secrets.ZERNIO_TIKTOK_TELEGRAM_API_KEY }}
+      ZERNIO_TIKTOK_FACEBOOK_API_KEY: ${{ secrets.ZERNIO_TIKTOK_FACEBOOK_API_KEY }}
+      ZERNIO_RU_INSTAGRAM_ACCOUNT_ID: ${{ vars.ZERNIO_RU_INSTAGRAM_ACCOUNT_ID }}
+      ZERNIO_RU_YOUTUBE_ACCOUNT_ID: ${{ vars.ZERNIO_RU_YOUTUBE_ACCOUNT_ID }}
+      ZERNIO_RU_TIKTOK_ACCOUNT_ID: ${{ vars.ZERNIO_RU_TIKTOK_ACCOUNT_ID }}
+      ZERNIO_RU_FACEBOOK_ACCOUNT_ID: ${{ vars.ZERNIO_RU_FACEBOOK_ACCOUNT_ID }}
+      ZERNIO_TG_INSTAGRAM_ACCOUNT_ID: ${{ vars.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID }}
+      ZERNIO_TG_YOUTUBE_ACCOUNT_ID: ${{ vars.ZERNIO_TG_YOUTUBE_ACCOUNT_ID }}
+      ZERNIO_TG_TIKTOK_ACCOUNT_ID: ${{ vars.ZERNIO_TG_TIKTOK_ACCOUNT_ID }}
+      ZERNIO_TG_FACEBOOK_ACCOUNT_ID: ${{ vars.ZERNIO_TG_FACEBOOK_ACCOUNT_ID }}
+      CODEX_LOCAL_PHASE: ${{ inputs.phase }}
+      CODEX_LOCAL_REQUEST_ID: ${{ inputs.request_id }}
+      CODEX_LOCAL_TICKET_RUN_ID: ${{ inputs.ticket_run_id }}
+      CODEX_LOCAL_LANGUAGE: ${{ inputs.language }}
+      CODEX_LOCAL_PLATFORM: ${{ inputs.platform }}
+      CODEX_LOCAL_EPISODE_ID: ${{ inputs.episode_id }}
+      CODEX_LOCAL_VIDEO_SHA256: ${{ inputs.video_sha256 }}
+      CODEX_LOCAL_VIDEO_BYTES: ${{ inputs.video_bytes }}
+      CODEX_LOCAL_CONTENT_HASH: ${{ inputs.content_hash }}
+      CODEX_LOCAL_CTA_EXPERIMENT_ID: ${{ inputs.cta_experiment_id }}
+      CODEX_LOCAL_RECIPIENT_PUBLIC_KEY: ${{ inputs.recipient_public_key }}
+      CODEX_LOCAL_MEDIA_URL_SECRET_NAME: ${{ inputs.media_url_secret_name }}
+      CODEX_LOCAL_SOURCE_COMMIT: ${{ inputs.local_source_commit }}
+      APPROVED_LANGUAGE: ${{ inputs.language }}
+      APPROVED_PLATFORM: ${{ inputs.platform }}
+      APPROVED_ACCOUNT_ID: ${{ inputs.account_id }}
+      APPROVED_VIDEO_SHA256: ${{ inputs.video_sha256 }}
+      APPROVED_POST_SHA256: ${{ inputs.post_sha256 }}
+      APPROVED_POST_PREVIEW_B64: ${{ inputs.post_preview_base64 }}
+      APPROVED_MODE: ${{ inputs.mode }}
+      APPROVED_SCHEDULED_FOR: ${{ inputs.scheduled_for }}
+      APPROVED_POST_JSON: ${{ inputs.approved_post_json }}
+      APPROVAL_CONFIRMATION: ${{ inputs.approval_confirmation }}
+      CODEX_LOCAL_TICKET_DIR: /tmp/codex-local-zernio-ticket
+      PUBLICATION_RECEIPT_DIR: /tmp/codex-local-zernio-receipt
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: hsk-tu-vous/package-lock.json
+      - name: Install dependencies and verify publication policy
+        run: |
+          npm ci --no-audit --no-fund
+          npm run check:consistency
+          node --check scripts/zernio-local-transfer.mjs
+          node --check scripts/zernio-codex-local-publish.mjs
+          node --test scripts/zernio-publication-core.test.mjs scripts/video-credentials.test.mjs
+      - name: Prepare encrypted presigned-upload ticket
+        if: ${{ inputs.phase == 'prepare' }}
+        run: node scripts/zernio-codex-local-publish.mjs prepare
+      - name: Return only encrypted upload ticket (one-day retention)
+        if: ${{ inputs.phase == 'prepare' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-local-ticket-${{ inputs.request_id }}
+          path: |
+            /tmp/codex-local-zernio-ticket/metadata.json
+            /tmp/codex-local-zernio-ticket/ticket.enc.json
+          if-no-files-found: error
+          retention-days: 1
+      - name: Download exact encrypted ticket from prepare run
+        if: ${{ inputs.phase == 'publish' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: codex-local-ticket-${{ inputs.request_id }}
+          run-id: ${{ inputs.ticket_run_id }}
+          repository: akbarholturaev11-lang/Kantent
+          github-token: ${{ github.token }}
+          path: /tmp/codex-local-zernio-ticket
+      - name: Publish exact Codex-local MP4 and verify Zernio readback
+        if: ${{ inputs.phase == 'publish' }}
+        env:
+          CODEX_LOCAL_MEDIA_URL: ${{ secrets[inputs.media_url_secret_name] }}
+        run: node scripts/zernio-codex-local-publish.mjs publish /tmp/codex-local-zernio-ticket
+      - name: Save sanitized local-source receipt
+        if: ${{ always() && inputs.phase == 'publish' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-local-receipt-${{ github.run_id }}
+          path: /tmp/codex-local-zernio-receipt/receipt.json
+          if-no-files-found: warn
+          retention-days: 90
+
+# The local MP4 travels from this machine directly to Zernio's presigned URL.
+# GitHub receives hashes and an encrypted one-time transfer ticket only.
+# Both phases are manual, owner-only and on main; no render job triggers them.

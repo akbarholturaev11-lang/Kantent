@@ -13,11 +13,11 @@ import {
   deterministicPostKey,safeSignedUploadUrl,parseZernioPostReply,artifactAbsolutePath,
 } from "./zernio-publication-core.mjs";
 
-const API_ROOT = "https://zernio.com/api/v1";
+export const API_ROOT = "https://zernio.com/api/v1";
 const self = fileURLToPath(import.meta.url);
 
 
-function requestEnv(env) {
+export function requestEnv(env) {
   let details;
   try { details = JSON.parse(env.APPROVED_POST_JSON ?? ""); }
   catch { throw Error("Invalid approved_post_json: it must be valid JSON."); }
@@ -40,7 +40,7 @@ function requestEnv(env) {
   };
 }
 
-async function jsonRequest(url, {method = "GET",token,body,headers = {}} = {}) {
+export async function jsonRequest(url, {method = "GET",token,body,headers = {}} = {}) {
   const response=await fetch(url,{method,
     headers:{Accept:"application/json", ...(body ? {"Content-Type":"application/json"}:{}),
       ...(token ? {Authorization:"Bearer "+token}:{}),...headers},
@@ -52,7 +52,7 @@ async function jsonRequest(url, {method = "GET",token,body,headers = {}} = {}) {
   return {status:response.status,data};
 }
 
-async function verifyReviewOrigin(runId, expectedCommit, token) {
+export async function verifyReviewOrigin(runId, expectedCommit, token) {
   if(!token)throw Error("GitHub read-only workflow token missing.");
   const url="https://api.github.com/repos/akbarholturaev11-lang/Kantent/actions/runs/"+runId;
   const {data}=await jsonRequest(url,{token,headers:{"X-GitHub-Api-Version":"2022-11-28"}});
@@ -65,11 +65,11 @@ async function verifyReviewOrigin(runId, expectedCommit, token) {
   return {sourceRunId:Number(runId),sourceCommit:data.head_sha,sourceUrl:data.html_url};
 }
 
-function normalizeUsername(value) {
+export function normalizeUsername(value) {
   return String(value ?? "").trim().replace(/^@+/, "").toLocaleLowerCase("en-US");
 }
 
-function exactCaptionFromPostPreview(postBytes) {
+export function exactCaptionFromPostPreview(postBytes) {
   const preview=postBytes.toString("utf8");
   const metadataStart=/\n\n(?:Тема|Мавзӯъ):/u.exec(preview);
   if(!metadataStart)throw Error("Post preview is missing its internal topic marker; refuse to guess the public caption.");
@@ -78,7 +78,7 @@ function exactCaptionFromPostPreview(postBytes) {
   return caption;
 }
 
-async function verifyAccount(token,target) {
+export async function verifyAccount(token,target) {
   const {data}=await jsonRequest(API_ROOT+"/accounts?platform="+encodeURIComponent(target.platform),{token});
   const accounts=data?.accounts;
   if(!Array.isArray(accounts))throw Error("Zernio did not return a valid social account list.");
@@ -92,7 +92,7 @@ async function verifyAccount(token,target) {
   return {accountId:target.accountId,username:entry.username??null};
 }
 
-async function verifyTikTokCreatorSettings(token, target, settings) {
+export async function verifyTikTokCreatorSettings(token, target, settings) {
   const {data}=await jsonRequest(API_ROOT+"/accounts/"+encodeURIComponent(target.accountId)+"/tiktok/creator-info?mediaType=video",{token});
   if(!Array.isArray(data?.privacyLevels) || !data?.postingLimits?.interactionSettings ||
       !Array.isArray(data?.commercialContentTypes))
@@ -132,7 +132,7 @@ async function uploadExactVideo(token,video,episodeId,language,platform) {
   return data.publicUrl;
 }
 
-async function writeReceipt(value,env=process.env) {
+export async function writeReceipt(value,env=process.env) {
   const receiptDir=env.PUBLICATION_RECEIPT_DIR || "/tmp/hsk-zernio-receipt";
   await fs.mkdir(receiptDir,{recursive:true});
   await fs.writeFile(path.join(receiptDir,"receipt.json"),JSON.stringify(value,null,2)+"\n");

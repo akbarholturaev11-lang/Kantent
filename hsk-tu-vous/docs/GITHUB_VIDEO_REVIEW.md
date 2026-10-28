@@ -4,10 +4,8 @@ This opt-in pipeline uses the existing Gemini + Remotion lesson renderer. It doe
 
 ## Branch and rollout
 
-- Initial implementation lives only on branch feat/github-automated-video-review-20261028. No main source lesson or active rule was changed.
-- Branch pushes and pull requests run only secret-free tests, including an actual **synthetic-test-audio** MP4 verification. This does not prove a real Gemini video was generated.
-- GitHub workflow_dispatch appears in the Actions UI only when the workflow file is on the default branch. Until merged, a production Gemini run cannot be claimed to have executed through this new workflow.
-- Scheduled runs are disabled until repository Actions variable HSK_VIDEO_SCHEDULE_ENABLED=true is deliberately set after owner review and merge. If enabled, the schedule is Mon/Wed/Fri 08:00 Asia/Shanghai, and it generates review media only, never social posts.
+- The `video-review.yml` workflow is on `main`; manual `workflow_dispatch` runs are available there. Push validation is scoped to the implementation branch, while pull requests run secret-free checks including an actual **synthetic-test-audio** MP4 verification. These checks do not prove a real Gemini video was generated.
+- Scheduled runs stay disabled unless repository Actions variable `HSK_VIDEO_SCHEDULE_ENABLED=true` is deliberately set after owner review. If enabled, the schedule is Mon/Wed/Fri 08:00 Asia/Shanghai and generates review media only, never social posts.
 - Before enabling this schedule, check real-run cost, exact narration/timestamps and delivery to the owner.
 
 ## Required configuration
@@ -75,12 +73,12 @@ Local tests from the hsk-tu-vous directory:
 
 ## Zernio upload, owner approval and posting (manual, no automatic posting)
 
-A separate GitHub Actions workflow now exists on this feature branch:
-.github/workflows/zernio-approved-publish.yml.
+A separate GitHub Actions workflow is on `main`:
+`.github/workflows/zernio-approved-publish.yml`.
 
 It is ONLY launched by workflow_dispatch and ONLY by the repository owner akbarholturaev11-lang from main. It cannot run on push, cron, a passing CI job or routine scenario creation. The GitHub Environment hsk-zernio-publishing can optionally have required reviewers configured as an additional human gate.
 
-### Owner procedure after feature is merged and a real video was rendered
+### Owner procedure for a GitHub-rendered video
 
 1. Run Actions -> HSK AI video review automation -> Run workflow on main, select episode and language. Open the resulting review artifact, watch exact platform MP4, inspect audio, Mandarin, captions, graphics and CTA. Read manifest.json and post.md.
 2. The generated post.md has INTERNAL REVIEW-STATUS LABELS and must not be uploaded verbatim. Compose an accurate CLEAN final caption separately.
@@ -99,6 +97,27 @@ A draft stays unpublished. A scheduled post is not live until its scheduled time
 The current review artifacts expire after 7 days. Zernio pre-signed uploads are created only after owner approval and are immediately followed by post creation. The repo is currently public, so review GitHub artifact access before using this flow for confidential videos. The workflow retains sanitized receipts 90 days and does not guarantee permanent exactly-once protection after Zernio's 24-hour idempotency window. Inspect existing posts/receipts before repeating manual dispatches.
 
 Offline/synthetic CI does not prove Zernio account permissions, live upload success or actual publication. No Zernio publication was authorized or executed as part of building these files.
+
+
+## Codex-local video handoff (separate source route)
+
+Use this only for a real MP4 already rendered on this machine under the ignored `review/` tree. The GitHub-rendered publisher above still consumes only a successful `video-review.yml` artifact; it must not be pointed at a Codex-local folder.
+
+The local route is `.github/workflows/zernio-codex-local-publish.yml`, started by `scripts/codex-local-video-publish.mjs`. It checks the selected local `episode.json`, `status.json`, registered platform package, video and post hashes, CTA ID, language, canonical account, exact caption, owner approval phrase and requested mode. It verifies the local source code is already on current GitHub `main` before dispatch. Run one platform/account at a time.
+
+The handoff has two manual Actions phases. `prepare` verifies the selected Zernio connection and returns a one-day artifact containing metadata and an RSA/AES-encrypted, short-lived presigned-upload ticket. The local CLI decrypts it in memory and sends the exact MP4 bytes directly from this computer to Zernio; GitHub never receives the video. After the upload succeeds, the CLI places the returned public media URL in a random one-use repository Actions Secret, dispatches `publish`, waits for exact remote-byte hashing and account/post readback, then deletes the temporary Secret. It saves a sanitized receipt in the local review folder and in a 90-day Actions artifact. If the outcome after post dispatch is ambiguous, the local state blocks a blind retry; reconcile the Zernio post first.
+
+Example command after the video, caption/settings and schedule have been shown and explicitly approved:
+
+    node scripts/codex-local-video-publish.mjs \
+      --review-dir /absolute/path/to/hsk-tu-vous/review/<episode-id> \
+      --language ru --platform instagram \
+      --approved-post-json /absolute/path/to/approved-post.json \
+      --mode scheduled --confirmation APPROVE_EXACT_VIDEO_AND_SCHEDULE
+
+The approved JSON shape is the same as the GitHub-rendered publisher: Instagram `{ "content": "...", "shareToFeed": true }`; YouTube additionally requires `title`, `visibility`, `madeForKids` and `containsSyntheticMedia`; TikTok requires the complete current `tiktokSettings`. For scheduled mode include exact `scheduledFor` in Asia/Shanghai (`+08:00`). Every language/platform is independently previewed and confirmed. Telegram is never a video destination.
+
+The repository is public. The temporary workflow artifacts contain no MP4 or cleartext media URL; the local MP4 remains on this machine and Zernio receives its bytes through the presigned destination. This handoff does not publish automatically and a successful upload alone is not proof of a created or published post.
 
 
 ## Verified account groups and separate Telegram news agent (owner policy 2026-10-28)

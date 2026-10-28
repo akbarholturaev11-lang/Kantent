@@ -98,7 +98,7 @@ const approval = {
   contentHash: status.contentHash,
   publicationIntent,
   platformPackages,
-  note: "Владелец подтвердил показанный Zernio preview. Для фактической публикации требуется отдельный вызов Zernio MCP.",
+  note: "Владелец подтвердил показанный Zernio preview. Для фактической публикации нужен отдельный owner-approved вызов Zernio MCP или source-specific GitHub Actions workflow.",
 };
 await writeJson(path.join(folder, "approval.json"), approval);
 // Archive each selected CTA/video version separately for honest attribution.
