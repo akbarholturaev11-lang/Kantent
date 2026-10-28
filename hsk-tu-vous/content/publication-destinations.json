@@ -7,24 +7,28 @@
         "instagram": {
           "account": "@hskai.app",
           "ownerAuthorized": true,
+          "zernioPublishingAuthorized": true,
           "verifiedAccountId": "6a411e989d9472faae10a430",
           "credentialGroup": "ru-primary"
         },
         "youtube": {
           "account": "@hskai_app",
           "ownerAuthorized": true,
+          "zernioPublishingAuthorized": true,
           "verifiedAccountId": "6ac96e053f8f4ffc10b0655f",
           "credentialGroup": "ru-primary"
         },
         "tiktok": {
           "account": "@hskai.app",
           "ownerAuthorized": true,
+          "zernioPublishingAuthorized": true,
           "verifiedAccountId": "6ae16327a2845fbdb07e5ccb",
           "credentialGroup": "tiktok-telegram"
         },
         "facebook": {
           "account": "Akbarholturaev",
           "ownerAuthorized": true,
+          "zernioPublishingAuthorized": false,
           "sharedLanguageAccount": true,
           "verifiedAccountId": "6ae161de384955d3b3ff194b",
           "credentialGroup": "tiktok-facebook"
@@ -37,24 +41,28 @@
         "instagram": {
           "account": "@hskai.apptj",
           "ownerAuthorized": true,
+          "zernioPublishingAuthorized": true,
           "verifiedAccountId": "6ae0f16205fd6f5357f8503d",
           "credentialGroup": "tg-primary"
         },
         "youtube": {
           "account": "@hskaiapp-tj",
           "ownerAuthorized": true,
+          "zernioPublishingAuthorized": true,
           "verifiedAccountId": "6ae160123787e4c71b522d64",
           "credentialGroup": "tg-primary"
         },
         "tiktok": {
           "account": "@hskai.ru",
           "ownerAuthorized": true,
+          "zernioPublishingAuthorized": true,
           "verifiedAccountId": "6ae16064ecf91092adba7d68",
           "credentialGroup": "tiktok-facebook"
         },
         "facebook": {
           "account": "Akbarholturaev",
           "ownerAuthorized": true,
+          "zernioPublishingAuthorized": true,
           "sharedLanguageAccount": true,
           "verifiedAccountId": "6ae161de384955d3b3ff194b",
           "credentialGroup": "tiktok-facebook"
@@ -78,6 +86,6 @@
       "publisher": "ChatGPT Planned Agent"
     }
   },
-  "routingGuard": "RU is Russian video, TJ is Tajik video: TikTok @hskai.ru is TJ regardless of handle. All eight main-authorized video language/platform routes preserve their connected account, CTA, platform settings and exact owner preview gate. Facebook is the same bilingual page with separate RU/TJ packages. Verify exact account ID, username and credential group for each upload. Telegram @aibotsakbar is TJ news text with 4:3 image via a separate scheduled agent, never video. Never publish social videos automatically.",
+  "routingGuard": "RU is Russian video, TJ is Tajik video: TikTok @hskai.ru is TJ regardless of handle. Prepare all eight language/platform video review packages. Facebook is the same bilingual page with separate RU/TJ packages, but its Zernio publication workflow is authorized only for TJ; RU Facebook videos are prepared for the owner to publish manually in Facebook. Verify exact account ID, username and credential group for each permitted upload. Every video publication still requires exact-preview owner approval. Telegram @aibotsakbar is TJ news text with 4:3 image via a separate scheduled agent, never video.",
   "verifiedBy": "Live connected Zernio accounts across four distinct Zernio connections on 2026-10-28; readback before every external action."
 }

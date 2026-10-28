@@ -4,7 +4,7 @@ import {
   GEMINI_SECRET_NAMES, geminiKeySlots, requireGeminiKeySlots,
   initialGeminiCredential, geminiRotationDecision,
   zernioRoute, credentialReadiness, withGeminiKeyFailover,
-  enabledVideoPlatforms, zernioTargetAccount, telegramNewsRoute,
+  enabledVideoPlatforms, zernioTargetAccount, assertZernioPublishingAuthorized, telegramNewsRoute,
 } from "./video-credentials.mjs";
 
 test("four Gemini slots remain ordered and duplicates never masquerade as spare quota", () => {
@@ -110,6 +110,8 @@ test("owner-authorized social destinations stay mapped to the correct language a
   const mapped = zernioTargetAccount("tg", "youtube", env);
   assert.equal(mapped.expectedUsername, "@hskaiapp-tj");
   assert.equal(zernioTargetAccount("ru", "facebook", env).expectedUsername, "Akbarholturaev");
+  assert.throws(() => assertZernioPublishingAuthorized("ru", "facebook"), /publishing is disabled/);
+  assert.doesNotThrow(() => assertZernioPublishingAuthorized("tg", "facebook"));
   assert.equal(zernioTargetAccount("tg", "facebook", env).accountId, env.ZERNIO_TG_FACEBOOK_ACCOUNT_ID);
   assert.throws(()=>zernioTargetAccount("ru", "tiktok", {
     ZERNIO_RU_TIKTOK_ACCOUNT_ID:"6ac96e053f8f4ffc10b0655f"

@@ -4,7 +4,7 @@
  */
 import { createHash } from "node:crypto";
 import path from "node:path";
-import { zernioTargetAccount } from "./video-credentials.mjs";
+import { zernioTargetAccount, assertZernioPublishingAuthorized } from "./video-credentials.mjs";
 
 const SHA256 = /^[0-9a-f]{64}$/;
 const ID = /^[a-f0-9]{24}$/;
@@ -22,7 +22,10 @@ export function validateApprovedIntent(raw, env = process.env, now = Date.now())
   const { runId, language, platform, mode, videoSha256, postSha256, confirmation } = raw;
   if (!INT.test(String(runId ?? ""))) throw Error("Review run_id must be a numeric GitHub Actions run ID.");
   let target;
-  try { target = zernioTargetAccount(language, platform, env); }
+  try {
+    target = zernioTargetAccount(language, platform, env);
+    assertZernioPublishingAuthorized(language, platform);
+  }
   catch (error) { throw Error("This language/platform target is disabled: " + error.message); }
   if (!["draft", "scheduled", "now"].includes(mode)) throw Error("Choose draft, scheduled or now.");
   if (confirmation !== APPROVAL_SENTENCES[mode])

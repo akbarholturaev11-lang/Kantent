@@ -9,6 +9,8 @@ const env={
  ZERNIO_RU_INSTAGRAM_ACCOUNT_ID:"6a411e989d9472faae10a430",
  ZERNIO_RU_YOUTUBE_ACCOUNT_ID:"6ac96e053f8f4ffc10b0655f",
  ZERNIO_TG_INSTAGRAM_ACCOUNT_ID:"6ae0f16205fd6f5357f8503d",
+ ZERNIO_RU_FACEBOOK_ACCOUNT_ID:"6ae161de384955d3b3ff194b",
+ ZERNIO_TG_FACEBOOK_ACCOUNT_ID:"6ae161de384955d3b3ff194b",
 };
 const video="a".repeat(64),post="b".repeat(64),source="d".repeat(40),contentHash="c".repeat(64);
 const fields={
@@ -64,6 +66,13 @@ test("Tajik destination can only receive an approved Tajik Instagram video",()=>
  assert.equal(a.target.accountId,env.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID);
  assert.equal(selectApprovedArtifact(manifest,a).videoRel,"tg/instagram/video.mp4");
  assert.deepEqual(publicationBody(a,"https://media.zernio.com/temp/tg.mp4").platforms[0].platformSpecificData,{shareToFeed:false,isAiGenerated:true});
+});
+test("Facebook videos are prepared in both languages but Zernio publishing is TJ-only",()=>{
+ const ru={...fields,platform:"facebook",accountId:env.ZERNIO_RU_FACEBOOK_ACCOUNT_ID};
+ const tg={...fields,language:"tg",platform:"facebook",accountId:env.ZERNIO_TG_FACEBOOK_ACCOUNT_ID,
+   content:"Видео дар бораи дарси имрӯза"};
+ assert.throws(()=>validateApprovedIntent(ru,env),/Zernio publishing is disabled for ru\/facebook/);
+ assert.equal(validateApprovedIntent(tg,env).target.accountId,env.ZERNIO_TG_FACEBOOK_ACCOUNT_ID);
 });
 test("YouTube settings must be explicitly selected and match YouTube route",()=>{
  const yt={...fields,platform:"youtube",accountId:env.ZERNIO_RU_YOUTUBE_ACCOUNT_ID,

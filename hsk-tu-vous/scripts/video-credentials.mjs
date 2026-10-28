@@ -132,6 +132,12 @@ export function zernioTargetAccount(language, platform, env = process.env) {
     credentialGroup };
 }
 
+export function assertZernioPublishingAuthorized(language, platform) {
+  const destination = PUBLICATION_DESTINATIONS.videoDestinations?.[language]?.platforms?.[platform];
+  if (!destination || destination.ownerAuthorized !== true || destination.zernioPublishingAuthorized !== true)
+    throw Error("Zernio publishing is disabled for " + language + "/" + platform + "; use its owner-directed manual publishing route.");
+}
+
 /** This chooses the actual Zernio connection, NOT the language label alone.
  * RU TikTok and TG Telegram are in one connection. TG TikTok and Facebook
  * are in another connection. Neither key may silently fall back to RU/TG primary.
