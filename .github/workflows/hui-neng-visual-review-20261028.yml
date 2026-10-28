@@ -54,6 +54,12 @@ jobs:
               }
               console.log(lang+": verified "+e.scenes.length+" existing scenes; no generated cue times");
             }'
+      - name: Install system CJK font and FFmpeg; reject missing Mandarin glyph support
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
+          fc-cache -f
+          fc-match 'Noto Sans CJK SC' | grep -i 'NotoSansCJK'
       - name: Render RU and TG with project-owned React/Remotion renderer
         run: |
           mkdir -p review-visual
@@ -61,10 +67,6 @@ jobs:
             --codec h264 --pixel-format yuv420p --crf 22 --scale 0.75 --concurrency 2 --log error
           npx remotion render src/index.ts HSKAI-HuiNeng-TG-Visual-Review review-visual/tg.mp4 \
             --codec h264 --pixel-format yuv420p --crf 22 --scale 0.75 --concurrency 2 --log error
-      - name: Install FFmpeg/ffprobe for independent encoded MP4 validation
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg
       - name: Verify encoded MP4 files, hash and label them as unapproved visual-only previews
         run: |
           ffprobe -v error -show_entries format=duration -of default=nw=1 review-visual/ru.mp4
