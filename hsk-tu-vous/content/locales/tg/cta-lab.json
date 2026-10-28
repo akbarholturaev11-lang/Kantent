@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 15,
+  "revision": 16,
   "languageCode": "tg-TJ",
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
@@ -39,7 +39,7 @@
     "localizedGuardrails": [
       "One central stage and one visible HSK AI wordmark at a time. No duplicate logo or moving focus marker.",
       "Use profile, profile-links screenshot, branded download card and daily-learning closing card at their exact spoken Tajik cues. No website screenshot or simulated download completion.",
-      "Preserve the authorized profile-link/download direction; no comment/DM CTA, automatic DM, invented feature, speed, guarantee or free-offer claim.",
+      "Instagram and YouTube keep the authorized profile-link/download direction. TikTok uses its own owner-requested Tajik localization of the approved manual-DM CTA: ask viewers to send HSK and say the owner will manually send the HSK AI download link. Never imply automatic DM, simulate a sent message, or claim the link/app was independently verified.",
       "Russian performance is not Tajik evidence. Keep measurements language-scoped and do not auto-promote."
     ]
   },
@@ -1815,12 +1815,57 @@
       }
     },
     "tiktok": {
-      "status": "pending-owner-configuration",
+      "status": "approved",
       "copySource": "platform",
       "publishingAuthorized": true,
-      "canonicalRussian": "",
-      "deliveryMode": "unconfigured",
-      "notes": "The owner-authorized Tajik TikTok destination is listed in content/publication-destinations.json. Tajik TikTok CTA copy/scene is still unconfigured; do not render or publish until it is approved."
+      "canonicalRussian": "HSK AI-ро санҷ. Ба профили ман даро ва дар паёми хусусӣ «HSK» навис — ман пайванди боргирии HSK AI-ро дастӣ мефиристам.",
+      "keyword": "HSK",
+      "deliveryMode": "manual-dm",
+      "destinationVerified": false,
+      "automationVerified": false,
+      "notes": "Owner requested a Tajik TikTok localization of the existing Russian manual-DM CTA on 2026-10-28. Route Tajik content only to the mapped @hskai.ru TikTok account. The owner sends the link manually; no automated DM, simulated sent message or independently verified app/link is claimed. Exact video/caption/settings/time approval and live account verification are still required before publishing.",
+      "sceneTemplate": {
+        "id": "cta",
+        "kind": "cta",
+        "captionStyleId": "pill",
+        "durationSec": 11,
+        "headline": "ПРОФИЛ • ПАЁМИ ХУСУСӢ",
+        "screenCaption": "HSK навис — пайвандро дастӣ мефиристам",
+        "editPlan": "Use one central CTA stage and only the normal single subtitle line. Show one large cue-linked focus detail at a time; do not repeat the spoken phrase in a second headline, add a second CTA strip, duplicate the HSK AI wordmark, or use a moving focus marker. At санҷ, reveal the single HSK AI mark. At даро, show ПРОФИЛ. At паёми, show ПАЁМИ ХУСУСӢ. At HSK, show the keyword HSK. At пайванди, reveal ПАЙВАНДИ БОРГИРӢ and hold it through the final spoken word. Use restrained brand-colored transitions, no screenshots and no simulated DM/message or completed download. The spoken offer says the owner will send the link manually; do not imply automation or independent link verification.",
+        "visualBeats": [
+          {
+            "hero": "HSK AI",
+            "brandLogo": true,
+            "motion": "reveal",
+            "syncCueText": "санҷ",
+            "transitionStyle": "type-reveal"
+          },
+          {
+            "hero": "ПРОФИЛ",
+            "motion": "slide",
+            "syncCueText": "даро",
+            "transitionStyle": "slide-match"
+          },
+          {
+            "hero": "ПАЁМИ ХУСУСӢ",
+            "motion": "reveal",
+            "syncCueText": "паёми",
+            "transitionStyle": "type-reveal"
+          },
+          {
+            "hero": "HSK",
+            "motion": "pop",
+            "syncCueText": "HSK",
+            "transitionStyle": "mask-reveal"
+          },
+          {
+            "hero": "ПАЙВАНДИ БОРГИРӢ",
+            "motion": "slide",
+            "syncCueText": "пайванди",
+            "transitionStyle": "slide-match"
+          }
+        ]
+      }
     }
   }
 }
