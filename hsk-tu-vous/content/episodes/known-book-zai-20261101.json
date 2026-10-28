@@ -1,0 +1,1785 @@
+{
+  "id": "known-book-zai-20261101",
+  "date": "2026-11-01",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "Где та книга? Предмет + 在 + место",
+  "level": "HSK 1–2",
+  "topic": "Известный предмет + 在 + место: 那本书在桌子上",
+  "durationTargetSec": 43,
+  "caption": "那本书在桌子上 — та книга на столе. Сначала известная книга, потом 在 и место.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#HSK2"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "Когда предмет уже известен, его местоположение выражают как предмет + 在 + место: 那本书在桌子上 (Nà běn shū zài zhuōzi shang.) — «Та книга на столе»."
+  ],
+  "examples": [
+    "那本书 nà běn shū — та книга",
+    "在 zài — находиться в/на",
+    "桌子上 zhuōzi shang — на столе",
+    "那本书在桌子上。 Nà běn shū zài zhuōzi shang. — Та книга на столе.",
+    "桌子上有一本书。 Zhuōzi shang yǒu yì běn shū. — На столе есть одна книга."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 7,
+      "headline": "ГДЕ ТА КНИГА?",
+      "narration": "Книгу уже видели. Где теперь та книга? 那本书在桌子上 — та книга на столе.",
+      "cards": [
+        {
+          "hanzi": "那本书在桌子上。",
+          "pinyin": "Nà běn shū zài zhuōzi shang.",
+          "meaning": "Та книга на столе."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "Книгу уже видели",
+          "explains": "Выделить уже знакомую книгу как предмет поиска.",
+          "visual": {
+            "title": "Та книга на столе.",
+            "hanzi": "那本书在桌子上。",
+            "pinyin": "Nà běn shū zài zhuōzi shang.",
+            "meaning": "Та книга на столе.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -75,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-ring",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 187,
+                    "r": 82,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -75
+                    },
+                    {
+                      "atMs": 680,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "Где теперь та книга",
+          "explains": "Перенести внимание на место, которое ищут.",
+          "visual": {
+            "title": "Та книга на столе.",
+            "hanzi": "那本书在桌子上。",
+            "pinyin": "Nà běn shū zài zhuōzi shang.",
+            "meaning": "Та книга на столе.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -65
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -65
+                    },
+                    {
+                      "atMs": 620,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "hook-action-3",
+          "kind": "graphic",
+          "cueText": "那本书在桌子上",
+          "explains": "Показать книгу на столе в момент готового ответа.",
+          "visual": {
+            "title": "Та книга на столе.",
+            "hanzi": "那本书在桌子上。",
+            "pinyin": "Nà běn shū zài zhuōzi shang.",
+            "meaning": "Та книга на столе.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -65
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -65
+                    },
+                    {
+                      "atMs": 620,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "location",
+      "kind": "example",
+      "durationSec": 12,
+      "headline": "ПРЕДМЕТ + 在 + МЕСТО",
+      "narration": "那本书在桌子上. Сначала известный предмет: 那本书. Потом 在 и место: 桌子上. Это ответ на вопрос «где книга?»",
+      "cards": [
+        {
+          "hanzi": "那本书在桌子上。",
+          "pinyin": "Nà běn shū zài zhuōzi shang.",
+          "meaning": "Та книга на столе."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "location-action-1",
+          "kind": "graphic",
+          "cueText": "那本书在桌子上",
+          "explains": "Книга находится на столе.",
+          "visual": {
+            "title": "Та книга на столе.",
+            "hanzi": "那本书在桌子上。",
+            "pinyin": "Nà běn shū zài zhuōzi shang.",
+            "meaning": "Та книга на столе.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -65
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -65
+                    },
+                    {
+                      "atMs": 620,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "location-action-2",
+          "kind": "graphic",
+          "cueText": "известный предмет",
+          "explains": "Выделить знакомую книгу перед указанием места.",
+          "visual": {
+            "title": "Та книга на столе.",
+            "hanzi": "那本书在桌子上。",
+            "pinyin": "Nà běn shū zài zhuōzi shang.",
+            "meaning": "Та книга на столе.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -75,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-ring",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 187,
+                    "r": 82,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -75
+                    },
+                    {
+                      "atMs": 680,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "location-action-3",
+          "kind": "graphic",
+          "cueText": "место",
+          "explains": "Обвести стол как конечное место книги.",
+          "visual": {
+            "title": "Та книга на столе.",
+            "hanzi": "那本书在桌子上。",
+            "pinyin": "Nà běn shū zài zhuōzi shang.",
+            "meaning": "Та книга на столе.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -65
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -65
+                    },
+                    {
+                      "atMs": 620,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "contrast",
+      "kind": "context",
+      "durationSec": 12,
+      "headline": "有 ИЛИ 在?",
+      "narration": "Сравните два вопроса. Что есть на столе? 桌子上有一本书. Где та книга? 那本书在桌子上. Сейчас ищем место знакомой книги.",
+      "cards": [
+        {
+          "hanzi": "那本书在桌子上。",
+          "pinyin": "Nà běn shū zài zhuōzi shang.",
+          "meaning": "Та книга на столе."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "contrast-action-1",
+          "kind": "graphic",
+          "cueText": "Что есть на столе",
+          "explains": "Сначала показать пустой стол как основу для 有.",
+          "visual": {
+            "title": "Та книга на столе.",
+            "hanzi": "那本书在桌子上。",
+            "pinyin": "Nà běn shū zài zhuōzi shang.",
+            "meaning": "Та книга на столе.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -65
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -65
+                    },
+                    {
+                      "atMs": 620,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "contrast-action-2",
+          "kind": "graphic",
+          "cueText": "桌子上有一本书",
+          "explains": "Новая книга появляется при 有.",
+          "visual": {
+            "title": "Та книга на столе.",
+            "hanzi": "那本书在桌子上。",
+            "pinyin": "Nà běn shū zài zhuōzi shang.",
+            "meaning": "Та книга на столе.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": -125
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -125
+                    },
+                    {
+                      "atMs": 720,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "contrast-action-3",
+          "kind": "graphic",
+          "cueText": "那本书在桌子上",
+          "explains": "Уже известная книга остаётся на столе при 在.",
+          "visual": {
+            "title": "Та книга на столе.",
+            "hanzi": "那本书在桌子上。",
+            "pinyin": "Nà běn shū zài zhuōzi shang.",
+            "meaning": "Та книга на столе.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -65
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -65
+                    },
+                    {
+                      "atMs": 620,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "recall",
+      "kind": "example",
+      "durationSec": 12,
+      "headline": "ГДЕ КНИГА?",
+      "narration": "Запомните: 那本书在桌子上 — та книга на столе. Сначала книга, потом 在, затем место. Скажите ещё раз: 那本书在桌子上.",
+      "cards": [
+        {
+          "hanzi": "那本书在桌子上。",
+          "pinyin": "Nà běn shū zài zhuōzi shang.",
+          "meaning": "Та книга на столе."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recall-action-1",
+          "kind": "graphic",
+          "cueText": "那本书在桌子上",
+          "explains": "Показать точное место известной книги.",
+          "visual": {
+            "title": "Та книга на столе.",
+            "hanzi": "那本书在桌子上。",
+            "pinyin": "Nà běn shū zài zhuōzi shang.",
+            "meaning": "Та книга на столе.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -65
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -65
+                    },
+                    {
+                      "atMs": 620,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "recall-action-2",
+          "kind": "graphic",
+          "cueText": "Сначала книга",
+          "explains": "Выделить предмет, о котором уже говорили.",
+          "visual": {
+            "title": "Та книга на столе.",
+            "hanzi": "那本书在桌子上。",
+            "pinyin": "Nà běn shū zài zhuōzi shang.",
+            "meaning": "Та книга на столе.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -75,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-ring",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 187,
+                    "r": 82,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -75
+                    },
+                    {
+                      "atMs": 680,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "recall-action-3",
+          "kind": "graphic",
+          "cueText": "затем место",
+          "explains": "Вернуть внимание к столу, на котором книга лежит.",
+          "visual": {
+            "title": "Та книга на столе.",
+            "hanzi": "那本书在桌子上。",
+            "pinyin": "Nà běn shū zài zhuōzi shang.",
+            "meaning": "Та книга на столе.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -65
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -65
+                    },
+                    {
+                      "atMs": 620,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "Kilo Lingo — Mandarin Location and Existence",
+      "url": "https://kilolingo.com/mandarin/grammar/location-and-existence",
+      "checkedAt": "2026-10-28",
+      "supports": "Verifies specific known thing + 在 + place, including book on table, versus place + 有 + new object."
+    },
+    {
+      "title": "Elon.io — 有 vs 是 vs 在",
+      "url": "https://elon.io/grammar/chinese-mandarin/verbs/you-shi-zai-existence-contrast",
+      "checkedAt": "2026-10-28",
+      "supports": "Distinguishes known book location with 在 and a new indefinite book with 有; confirms the order thing + 在 + place."
+    },
+    {
+      "title": "Elon.io — Existence with 有",
+      "url": "https://elon.io/grammar/chinese-mandarin/syntax/existential-you",
+      "checkedAt": "2026-10-28",
+      "supports": "Gives both 桌子上有一本书 and 那本书在桌子上, with pinyin and the contrast between a new and known book."
+    }
+  ],
+  "hookExperiment": {
+    "id": "known-book-zai-20261101-ru-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Переход от уже показанной книги к поиску её места может помочь различить 在 и 有; результаты пока неизвестны.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-10-28"
+  },
+  "audienceProblem": "Ученик уже знает о книге, но вместо её местоположения снова пытается объявить, что книга существует.",
+  "learningOutcome": "Ответить, где находится известная книга: 那本书在桌子上.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Знакомую книгу ищут на том же столе",
+      "learnerGoal": "Ответить, где именно та книга",
+      "obstacle": "Смешиваются сообщение о новой книге и указание места известной книги"
+    },
+    "selectionReason": "Продолжение вчерашней ситуации позволяет сразу показать ответ на вопрос «где?» без искусственного второго сюжета.",
+    "firstPayoff": {
+      "sceneId": "hook",
+      "cueText": "那本书在桌子上"
+    },
+    "reHooks": []
+  }
+}
