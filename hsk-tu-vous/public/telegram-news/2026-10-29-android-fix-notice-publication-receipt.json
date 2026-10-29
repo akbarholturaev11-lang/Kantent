@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "news": "Android bug-fix notification localized",
+  "sourceCommit": "6e0835f",
+  "imageCommit": "78e8f1be5604fca9bf51e986ba858bd77f9d0878",
+  "imageUrl": "https://raw.githubusercontent.com/akbarholturaev11-lang/Kantent/78e8f1be5604fca9bf51e986ba858bd77f9d0878/hsk-tu-vous/public/telegram-news/2026-10-29-android-fix-notice-original-6e0835.png",
+  "verifiedBy": "Zernio connector readback 2026-10-29",
+  "posts": [
+    {
+      "platform": "telegram",
+      "language": "tg",
+      "accountId": "6ae1661bf80a20df8f31158e",
+      "postId": "6ae29e49bb19d024ebd7e707",
+      "status": "published",
+      "url": "https://t.me/aibotsakbar/33"
+    },
+    {
+      "platform": "instagram",
+      "language": "ru",
+      "accountId": "6a411e989d9472faae10a430",
+      "postId": "6ae29e4fbb19d024ebd7e733",
+      "status": "published",
+      "url": null
+    },
+    {
+      "platform": "instagram",
+      "language": "tg",
+      "accountId": "6ae0f16205fd6f5357f8503d",
+      "postId": "6ae29e5dbb19d024ebd7e769",
+      "status": "published",
+      "url": "https://www.instagram.com/p/DfDzknEAiAN/"
+    },
+    {
+      "platform": "facebook",
+      "language": "tg",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "postId": "6ae29e708c226e5d225a630e",
+      "status": "published",
+      "url": "https://www.facebook.com/1159152280609531_122120892291319062"
+    }
+  ]
+}
