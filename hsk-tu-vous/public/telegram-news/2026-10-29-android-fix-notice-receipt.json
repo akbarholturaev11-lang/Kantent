@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "newsKey": "android-report-fix-notification-2026-10-27",
+  "fingerprint": {
+    "sourceRepository": "akbarholturaev11-lang/HSK-AI-Bot",
+    "sourceMainObserved": "dbc4990002b62ffd9d01cb24397ce5c5f9dca722",
+    "sourceCommits": [
+      "6e0835fc3a5c06258fae21786e808b5d6c273660",
+      "d897f65b9ca89f4936d6a58ad27e6283115dc6db"
+    ],
+    "summary": "When an Android issue report is marked fixed by an admin, the reporter receives a localized notification; app-update need is explicitly communicated.",
+    "evidence": "Railway SUCCESS deployment e326bc2e-8d37-4e65-9fa4-9cdff02957bb at 2026-10-28T22:49:43Z on source main dbc4990002b62ffd9d01cb24397ce5c5f9dca722. Code gated by admin resolve_fixed and correct published version."
+  },
+  "image": {
+    "blobSha": "ed61503ee594426b22bd78dce051a59b08c39dec",
+    "commitSha": "78e8f1be5604fca9bf51e986ba858bd77f9d0878",
+    "path": "hsk-tu-vous/public/telegram-news/2026-10-29-android-fix-notice-original-6e0835.png",
+    "url": "https://raw.githubusercontent.com/akbarholturaev11-lang/Kantent/78e8f1be5604fca9bf51e986ba858bd77f9d0878/hsk-tu-vous/public/telegram-news/2026-10-29-android-fix-notice-original-6e0835.png",
+    "mime": "image/png",
+    "bytes": 120697,
+    "width": 800,
+    "height": 600,
+    "quality": "original language-neutral minimalist bell + check, no text, no fake UI",
+    "zernioMediaValidated": true
+  },
+  "channels": [
+    {
+      "platform": "telegram",
+      "language": "tg",
+      "account": "@aibotsakbar",
+      "accountId": "6ae1661bf80a20df8f31158e",
+      "zernioPostId": "6ae29e49bb19d024ebd7e707",
+      "status": "published",
+      "url": "https://t.me/aibotsakbar/33",
+      "publishedAt": "2026-10-29T01:15:54.604Z"
+    },
+    {
+      "platform": "instagram",
+      "language": "ru",
+      "account": "@hskai.app",
+      "accountId": "6a411e989d9472faae10a430",
+      "zernioPostId": "6ae29e4fbb19d024ebd7e733",
+      "platformPostId": "18110410892204623",
+      "status": "published",
+      "url": null,
+      "publishedAt": "2026-10-29T01:16:19.317Z",
+      "urlNote": "Zernio_RU returned published + platformPostId, but permalink is not yet synced."
+    },
+    {
+      "platform": "instagram",
+      "language": "tg",
+      "account": "@hskai.apptj",
+      "accountId": "6ae0f16205fd6f5357f8503d",
+      "zernioPostId": "6ae29e5dbb19d024ebd7e769",
+      "status": "published",
+      "url": "https://www.instagram.com/p/DfDzknEAiAN/",
+      "publishedAt": "2026-10-29T01:16:38.663Z"
+    },
+    {
+      "platform": "facebook",
+      "language": "tg",
+      "account": "Akbarholturaev",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "zernioPostId": "6ae29e708c226e5d225a630e",
+      "status": "published",
+      "url": "https://www.facebook.com/1159152280609531_122120892291319062",
+      "publishedAt": "2026-10-29T01:16:37.567Z"
+    }
+  ],
+  "safety": {
+    "mainModified": false,
+    "otherPlatformsPosted": false,
+    "videoPublished": false,
+    "captionLanguageValidated": true,
+    "perTargetDeduplicationChecked": true
+  }
+}
