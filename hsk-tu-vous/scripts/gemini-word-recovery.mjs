@@ -69,7 +69,7 @@ export function buildRecoveryPlan(expected, blocks, durationMs) {
     if(match.blockIndex!==null)previous=blocks[match.blockIndex];
     cursor=match.to;
   }
-  return {matches,gaps,matchedTokenCount:matched.reduce((s,x)=>s+x.to-x.from,0)};
+  return {matches:matched,gaps,matchedTokenCount:matched.reduce((s,x)=>s+x.to-x.from,0)};
 }
 
 export function selectRecoveredBlocks(tokens,blocks) {
