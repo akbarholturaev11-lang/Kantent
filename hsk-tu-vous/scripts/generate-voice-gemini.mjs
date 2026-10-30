@@ -105,6 +105,11 @@ async function requestJson(url, options, label) {
     if (response.ok) return { data, headers: response.headers };
 
     const detail = data?.error?.message;
+    // A per-day Free Tier cap cannot reset within this run. Do not waste
+    // retries or rotate accounts against the provider's daily quota.
+    if (response.status === 429 && /requests per day|per-day quota/i.test(detail ?? "")) {
+      throw new Error(`${label} blocked by Gemini's daily quota (HTTP 429)${detail ? `: ${detail}` : ""}`);
+    }
     const retryable = response.status === 429 || response.status >= 500;
     if (retryable && attempt < maxAttempts) {
       // A 429 may specify when the model's per-minute bucket resets.
