@@ -12,4 +12,4 @@ If the owner modifies the schedule or a theme, edit `calendar.json` and the affe
 
 ## Typed weekly reserve
 
-`calendar.json#weeklySchedule` owns the daily content mix for all default languages. Use the typed near-slot adviser in `WORKFLOW.md`; ordinary lessons cannot replace ad/serial slots. Stable IDs and future evidence tests follow `feedback/CONTENT_TRACKING.md`.
+`calendar.json#weeklySchedule` owns the daily content mix for all default languages. Keep complete, localized CTA-free source scripts for the next `planningBuffer.targetFutureEpisodes` scheduled future dates (currently 4), across all content types: lesson, advertisement and both parts of a serial. These are scheduled calendar days, not four lessons; if an ad is due, use `promos/<id>.json` and its RU/TG locale versions as defined in `PROMO_WORKFLOW.md`, not a lesson placeholder. Use the typed near-slot adviser in `WORKFLOW.md`; ordinary lessons cannot replace ad/serial slots. Failed checks or missing evidence should be reported and retried at the next daily run, never used to disable the running Calendar Reserve task. Stable IDs and future evidence tests follow `feedback/CONTENT_TRACKING.md`.
