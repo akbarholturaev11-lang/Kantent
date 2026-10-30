@@ -108,7 +108,7 @@ async function requestJson(url, options, label) {
     if (retryable && attempt < maxAttempts) {
       // A 429 may specify when the model's per-minute bucket resets.
       // Honor that period rather than retrying at 2/4/8 seconds.
-      const retrySeconds = Number(detail?.match(/retry in\\s+(\\d+(?:\\.\\d+)?)\\s*s/i)?.[1]);
+      const retrySeconds = Number(detail?.match(/retry in\s+(\d+(?:\.\d+)?)\s*s/i)?.[1]);
       const delayMs = response.status === 429
         ? Math.min(90_000, Math.max(20_000, Number.isFinite(retrySeconds) && retrySeconds > 0
           ? Math.ceil(retrySeconds * 1000) + 1500
