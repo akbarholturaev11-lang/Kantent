@@ -3,6 +3,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
+import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
 import { requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
@@ -624,6 +625,117 @@ async function deleteGeminiFile(apiKey, name) {
   }
 }
 
+
+/**
+ * The normal multi-language transcript is always attempted first. If it omits
+ * speech, only transcribe the exact audible gap between the adjacent
+ * *provider-timed* verified words. Never guess missing word timestamps.
+ * The same approved Gemini Transcribe model is used for every recovery clip.
+ */
+function timedBlocks(annotations, durationMs) {
+  return annotations.map((word, annotationIndex) => {
+    const startMs = parseOffsetMs(word.startOffset ?? word.start_offset);
+    const endMs = parseOffsetMs(word.endOffset ?? word.end_offset);
+    if (startMs < 0 || endMs <= startMs || endMs > durationMs + 100)
+      throw new Error("Invalid Gemini source clip word timing.");
+    return {
+      tokens: tokenParts(word.text).flatMap(spokenParts),
+      text: word.text,
+      startMs, endMs, annotationIndex,
+    };
+  });
+}
+
+async function recoverActualWordClips({
+  chunkText, originalAnnotations, audioPath, durationMs, outputDir,
+  chunkNumber, config, ffmpegRuntime, transcriptionLanguages
+}) {
+  const words = sourceWords(chunkText);
+  const expected = flattenExpected(words).map((entry) => ({
+    text: entry.text,
+    language: /\p{Script=Han}/u.test(words[entry.wordIndex].display) ? "zh" : "locale",
+  }));
+  const original = timedBlocks(originalAnnotations, durationMs);
+  const plan = buildRecoveryPlan(expected, original, durationMs);
+  if (!plan.gaps.length || plan.gaps.length > 8)
+    throw new Error("Recovery requires 1–8 independently bounded missing speech spans.");
+  const directory = path.join(outputDir, "recovery-diagnostic", "chunk-" + chunkNumber);
+  await fs.mkdir(directory, { recursive: true });
+  await fs.writeFile(path.join(directory,"plan.json"),JSON.stringify({
+    sourceAudio: path.basename(audioPath), originalAnnotations,
+    missingGaps: plan.gaps, matchedTokenCount: plan.matchedTokenCount,
+    expectedTokens: expected.length,
+  },null,2)+"\n");
+  const recovered = [];
+  for (const [gapIndex,gap] of plan.gaps.entries()) {
+    if (gap.endMs - gap.startMs < 80) throw Error("Recoverable speech clip is too short.");
+    const clipName = "span-" + String(gapIndex+1).padStart(2,"0");
+    const clipPath = path.join(directory,clipName+".wav");
+    // -ss after -i ensures an accurate cut; offsets are not inferred or expanded.
+    execFileSync(ffmpegRuntime.ffmpegPath,[
+      "-hide_banner","-loglevel","error","-nostdin","-y",
+      "-i",audioPath,"-ss",(gap.startMs/1000).toFixed(3),
+      "-t",((gap.endMs-gap.startMs)/1000).toFixed(3),
+      "-map","0:a:0","-ac","1","-ar",String(config.sampleRateHz),
+      "-c:a","pcm_s16le",clipPath,
+    ],{env:ffmpegRuntime.env,stdio:["ignore","pipe","pipe"]});
+    const actualMs = mediaDurationMs(clipPath,ffmpegRuntime);
+    if (actualMs <= 0) throw Error("Gemini recovery clip was empty.");
+    const languageCode = gap.language === "zh"
+      ? transcriptionLanguages.at(-1) : transcriptionLanguages[0];
+    const uploaded = await withGeminiKeyFailover(config.credentialState,(apiKey)=>
+      uploadForTranscription(apiKey,clipPath,
+        "hsk-recovery-"+EPISODE_ID+"-"+chunkNumber+"-"+clipName));
+    config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
+    let response;
+    try {
+      response = await requestJson(
+        API_ROOT + "/v1beta/interactions",
+        {method:"POST",headers:{
+          "x-goog-api-key":config.apiKey,"Content-Type":"application/json",
+          "Api-Revision":API_REVISION,
+        },body:JSON.stringify({
+          model:config.transcribeModel,
+          input:[{type:"audio",uri:uploaded.uri,mime_type:audioMimeType(clipPath)}],
+          generation_config:{transcription_config:{
+            language_codes:[languageCode],
+            mode:{type:"verbatim",timestamp_granularities:["word"]},
+          }},
+        })},"Gemini recovery word transcription");
+    } finally {
+      await deleteGeminiFile(config.apiKey,uploaded.name);
+    }
+    const annotations=getWordAnnotations(response.data).map(w=>({
+      text:w.text,startOffset:w.start_offset,endOffset:w.end_offset,
+    }));
+    // Save the exact provider response/provenance before attempting alignment.
+    await fs.writeFile(path.join(directory,clipName+".json"),
+      JSON.stringify({languageCode,clipStartMs:gap.startMs,clipEndMs:gap.endMs,
+        actualClipDurationMs:actualMs,annotations,provider:"Gemini Transcribe",
+        model:config.transcribeModel},null,2)+"\n");
+    const blocks = timedBlocks(annotations,actualMs);
+    const selected = selectRecoveredBlocks(gap.tokens,blocks);
+    recovered.push(selected.map(b=>({
+      ...b,startMs:b.startMs+gap.startMs,endMs:b.endMs+gap.startMs,
+    })));
+  }
+  const joined=mergeRecoveredBlocks(expected,original,plan,recovered);
+  const joinedAnnotations=joined.map(b=>({
+    text:b.text,
+    startOffset:(b.startMs/1000).toFixed(3)+"s",
+    endOffset:(b.endMs/1000).toFixed(3)+"s",
+  }));
+  const verified=alignWords(chunkText,joinedAnnotations,durationMs);
+  if(verified.mismatches.length)throw Error(
+    "Recovery clips still failed exact whole-narration word alignment.");
+  await fs.writeFile(path.join(directory,"verified-merge.json"),
+    JSON.stringify({provider:"Gemini Transcribe",model:config.transcribeModel,
+      actualClipOffsets:plan.gaps,wordAnnotations:joinedAnnotations,
+      exactAlignment:true},null,2)+"\n");
+  return {wordAnnotations:joinedAnnotations,alignment:verified,
+    transcript:chunkText,recoverySpans:plan.gaps.length};
+}
+
 function safeErrorMessage(error) {
   return String(error?.message ?? error).replace(
     /(?:AIza)[A-Za-z0-9_-]{20,}/g,
@@ -1140,6 +1252,37 @@ try {
     }
     metadata.transcriptionAttempts ??= [];
     metadata.transcriptionAttempts[index] = attempts;
+    if (!chunkAlignment?.captions && transcription?.wordAnnotations?.length) {
+      try {
+        const clips = await recoverActualWordClips({
+          chunkText:ttsChunks[index].text,
+          originalAnnotations:transcription.wordAnnotations,
+          audioPath:transcriptionAudioPath,
+          durationMs:metadata.chunkDurationsMs[index],
+          outputDir,chunkNumber,config,ffmpegRuntime,transcriptionLanguages,
+        });
+        chunkAlignment=clips.alignment;
+        transcription={
+          transcript:clips.transcript,
+          wordAnnotations:clips.wordAnnotations,
+          recoverySpans:clips.recoverySpans,
+        };
+        await fs.writeFile(transcriptPath,JSON.stringify(transcription,null,2)+"\n");
+        metadata.recoveredClips ??= [];
+        metadata.recoveredClips.push({chunk:index+1,spans:clips.recoverySpans,
+          model:config.transcribeModel});
+        delete metadata.lastTranscriptionError;
+        delete metadata.lastTranscriptionMismatch;
+        await fs.writeFile(metadataPath,JSON.stringify(metadata,null,2)+"\n");
+        console.log("GEMINI_CLIP_RECOVERY_VERIFIED "+JSON.stringify({
+          language:voiceProfile.locale,chunk:index+1,spans:clips.recoverySpans}));
+      } catch(recoveryError) {
+        metadata.lastRecoveryError=safeErrorMessage(recoveryError);
+        console.warn("GEMINI_CLIP_RECOVERY_BLOCKED "+JSON.stringify({
+          language:voiceProfile.locale,chunk:index+1,
+          reason:metadata.lastRecoveryError}));
+      }
+    }
     if (!chunkAlignment?.captions && transcription?.wordAnnotations?.length) {
       metadata.lastTranscriptionMismatch = {
         chunk: index + 1,

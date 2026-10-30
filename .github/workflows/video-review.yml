@@ -11,6 +11,8 @@ on:
       - hsk-tu-vous/scripts/video-credentials.mjs
       - hsk-tu-vous/scripts/video-credentials.test.mjs
       - hsk-tu-vous/scripts/generate-voice-gemini.mjs
+      - hsk-tu-vous/scripts/gemini-word-recovery.mjs
+      - hsk-tu-vous/scripts/gemini-word-recovery.test.mjs
       - .github/workflows/zernio-approved-publish.yml
       - hsk-tu-vous/scripts/zernio-publication-core.mjs
       - hsk-tu-vous/scripts/zernio-publication-core.test.mjs
@@ -24,6 +26,8 @@ on:
       - hsk-tu-vous/scripts/video-credentials.mjs
       - hsk-tu-vous/scripts/video-credentials.test.mjs
       - hsk-tu-vous/scripts/generate-voice-gemini.mjs
+      - hsk-tu-vous/scripts/gemini-word-recovery.mjs
+      - hsk-tu-vous/scripts/gemini-word-recovery.test.mjs
       - .github/workflows/zernio-approved-publish.yml
       - hsk-tu-vous/scripts/zernio-publication-core.mjs
       - hsk-tu-vous/scripts/zernio-publication-core.test.mjs
@@ -82,10 +86,13 @@ jobs:
           node --check scripts/video-credentials.mjs
           node --check scripts/video-credentials.test.mjs
           node --check scripts/generate-voice-gemini.mjs
+          node --check scripts/gemini-word-recovery.mjs
+          node --check scripts/gemini-word-recovery.test.mjs
           node --check scripts/zernio-publication-core.mjs
           node --check scripts/zernio-publication-core.test.mjs
           node --check scripts/zernio-approved-publish.mjs
           node --check scripts/zernio-approved-publish.test.mjs
+          node --test scripts/gemini-word-recovery.test.mjs
           npm run check:consistency
       - name: Install FFmpeg and FFprobe for real synthetic MP4 tests
         run: |
