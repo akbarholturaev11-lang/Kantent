@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feat/github-automated-video-review-20261028
+      - run/2026-10-30-hsk-review
     paths:
       - .github/workflows/video-review.yml
       - hsk-tu-vous/scripts/github-video-pipeline.mjs
@@ -100,7 +101,8 @@ jobs:
     if: >-
       ${{
         github.event_name == 'workflow_dispatch' ||
-        (github.event_name == 'schedule' && vars.HSK_VIDEO_SCHEDULE_ENABLED == 'true')
+        (github.event_name == 'schedule' && vars.HSK_VIDEO_SCHEDULE_ENABLED == 'true') ||
+        (github.event_name == 'push' && github.ref == 'refs/heads/run/2026-10-30-hsk-review')
       }}
     needs: safe-ci
     runs-on: ubuntu-latest
@@ -117,7 +119,7 @@ jobs:
       GEMINI_API_KEY_BACKUP_2: ${{ secrets.GEMINI_API_KEY_BACKUP_2 }}
       GEMINI_API_KEY_BACKUP_3: ${{ secrets.GEMINI_API_KEY_BACKUP_3 }}
       # HTTP 429 quota limits are never bypassed by rotating Google accounts.
-      REQUESTED_EPISODE: ${{ github.event.inputs.episode || 'today' }}
+      REQUESTED_EPISODE: ${{ github.event.inputs.episode || '2026-10-30' }}
       REQUESTED_LANGUAGE: ${{ github.event.inputs.language || 'all' }}
       CI_PACKAGE_DIR: /tmp/hsk-ai-video-review
     steps:
