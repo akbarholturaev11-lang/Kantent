@@ -106,7 +106,14 @@ async function requestJson(url, options, label) {
     const detail = data?.error?.message;
     const retryable = response.status === 429 || response.status >= 500;
     if (retryable && attempt < maxAttempts) {
-      const delayMs = 1000 * 2 ** attempt;
+      // A 429 may specify when the model's per-minute bucket resets.
+      // Honor that period rather than retrying at 2/4/8 seconds.
+      const retrySeconds = Number(detail?.match(/retry in\\s+(\\d+(?:\\.\\d+)?)\\s*s/i)?.[1]);
+      const delayMs = response.status === 429
+        ? Math.min(90_000, Math.max(20_000, Number.isFinite(retrySeconds) && retrySeconds > 0
+          ? Math.ceil(retrySeconds * 1000) + 1500
+          : 20_000 * attempt))
+        : 1000 * 2 ** attempt;
       console.warn(
         `${label} returned HTTP ${response.status}; retrying in ${delayMs / 1000}s (${attempt}/${maxAttempts - 1}).`,
       );
@@ -486,7 +493,10 @@ function createTtsChunks(episode, maxCharacters = 12000) {
       if (phrase.trim()) pieces.push(phrase.trim());
     }
     for (const piece of pieces) {
-      if (text && text.length + 1 + piece.length > maxCharacters) {
+      // Honor authored scene boundaries as the original production contract
+      // says: short scene audio is easier to transcribe in RU+Mandarin/TJ+Mandarin.
+      // Do not concatenate unrelated scenes into one long ASR request.
+      if (text && (!scenes.includes(scene.id) || text.length + 1 + piece.length > maxCharacters)) {
         chunks.push({ text, sceneIds: scenes });
         scenes = [];
         text = "";
