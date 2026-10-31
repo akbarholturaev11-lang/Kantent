@@ -1378,6 +1378,9 @@ try {
       await fs.writeFile(transcriptPath,
         JSON.stringify(transcription, null, 2) + "\n");
       metadata.externalWordCueSource = verified.source;
+      metadata.actualWordTimingModel = verified.source.model;
+      metadata.actualWordTimingMethod = verified.source.method;
+      metadata.actualWordTimingProvider = "external";
       metadata.wordAlignment = "External original-audio forced alignment + exact canonical token gate; owner listening review required";
       await fs.writeFile(metadataPath,
         JSON.stringify(metadata, null, 2) + "\n");
