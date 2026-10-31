@@ -32,3 +32,14 @@ Target: one unbroken take per language, at most two actual TTS HTTP attempts for
 - A durable regression suite and CI must remain green after the final correction.
 
 The experimental one-shot secret-using GitHub Actions workflow is intentionally removed after evidence collection to avoid unintended billed reruns. Ordinary PR validation never calls paid Gemini.
+
+## 2026-10-31 continuation: preserve voice, separate alignment
+
+- Added `scripts/external-word-cue-gate.mjs` and its negative-case unit tests.
+- `content:voice ... --resume <existing-take> --aligned-cues <file.json>` now accepts an **independently generated** word-cue file only after checking exact original WAV SHA-256, source narration SHA-256, RU/TJ locale, word timestamp bounds and model/method provenance. The existing exact normalized-token gate runs after the file gate. If any word is missing or the generator would invent a timestamp correction, import fails.
+- This offline path **requires no Gemini secret and categorically blocks Gemini API calls and new TTS**. It only processes the archived one-take audio.
+- In the opt-in pilot, invalid zero-length or backward Gemini word timestamps now fail closed rather than being expanded to a synthetic 1ms token.
+- All pilot Gemini Transcribe HTTP attempts are budgeted to **at most eight per original recording**, including 429/5xx retries across saved metadata/resumes. Successful silence-clip ASR responses are cached by the SHA-256 of the exact clipped audio plus model, locale and measured source interval. This avoids rebilling identical clips on later resumes; incompatible legacy cache files fail closed.
+- Model-backed commercial-quality **RU/TJ plus Chinese** cue coverage is **not yet proven**. Do not call the current archived audio a finished captioned MP4. The original TTS samples are accepted by the owner for voice quality, not approved for posting.
+
+Full schema and CLI: `docs/VOICE_OFFLINE_CUE_IMPORT.md`.
