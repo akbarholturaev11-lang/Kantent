@@ -1,0 +1,772 @@
+{
+  "schemaVersion": 1,
+  "id": "campus-voice-rehearsal-20261103",
+  "kind": "advertisement",
+  "status": "draft",
+  "title": "Пеш аз суҳбат: машқ бо AI Voice",
+  "language": "tg",
+  "languageCode": "tg-TJ",
+  "styleId": "minimal-story-v1",
+  "formatId": "unfinished-task",
+  "benefit": "Дар HSK AI барои машқи гуфтугӯ AI Voice ва тугмаи микрофон ҳаст; кӯшиши як ҷумла натиҷаи кафолатнок нест.",
+  "situation": {
+    "setting": "Назди дари хобгоҳи донишҷӯён",
+    "learnerGoal": "Ба шинос бо овоз ҷавоб додан, ки ба куҷо меравӣ",
+    "friction": "Ҷавобро дар дил медонӣ, вале ба забон овардан душвор аст"
+  },
+  "storyType": "illustrative",
+  "storyDisclosure": "Тасаввур кун",
+  "evidence": [
+    {
+      "id": "verified-ai-voice-ui",
+      "kind": "product-source",
+      "sourcePath": "public/promo-captures/ai-voice-original.png",
+      "checkedAt": "2026-10-31",
+      "supports": "Genuine HSK AI AI Voice screenshot, inspected 2026-10-31: panda, conversation prompt and microphone. Cross-checked current HSK-AI-Bot main app/static/course-v3.html blob bc60ab8e4ae55c5bb5996a936fc3d97a8a60a76b at https://github.com/akbarholturaev11-lang/HSK-AI-Bot/blob/main/app/static/course-v3.html : VOICE_HTML contains vc-root and vc-mic button; this supports availability of a speaking-practice interface, not user outcomes or a recorded AI response."
+    }
+  ],
+  "claims": [
+    {
+      "id": "voice-mode",
+      "text": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст.",
+      "evidenceIds": [
+        "verified-ai-voice-ui"
+      ]
+    },
+    {
+      "id": "microphone",
+      "text": "Дар ин режим тугмаи микрофон ҳаст.",
+      "evidenceIds": [
+        "verified-ai-voice-ui"
+      ]
+    }
+  ],
+  "beats": [
+    {
+      "id": "dorm-exit",
+      "role": "situation",
+      "narration": "Тасаввур кун: аз хобгоҳ мебароӣ, шиносе мепурсад, ба куҷо меравӣ.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Донишҷӯ бо ҷузвдон назди дари хобгоҳ",
+        "action": "Донишҷӯ аз дар берун меояд; ҳаракат оғози суҳбатро нишон медиҳад.",
+        "continuityKey": "same-student-dorm-voice-rehearsal",
+        "cueText": "аз хобгоҳ мебароӣ",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Тасвири аслии дари хобгоҳ ва донишҷӯ бо ҷузвдон, бе навишта.",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "dorm-wall",
+              "type": "rect",
+              "attrs": {
+                "x": 85,
+                "y": 100,
+                "width": 630,
+                "height": 365,
+                "rx": 20,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "dorm-door",
+              "type": "rect",
+              "attrs": {
+                "x": 302,
+                "y": 202,
+                "width": 195,
+                "height": 263,
+                "rx": 16,
+                "fill": "foreground"
+              }
+            },
+            {
+              "id": "dorm-frame",
+              "type": "rect",
+              "attrs": {
+                "x": 290,
+                "y": 191,
+                "width": 219,
+                "height": 18,
+                "rx": 7,
+                "fill": "gold"
+              }
+            },
+            {
+              "id": "door-handle",
+              "type": "rect",
+              "attrs": {
+                "x": 472,
+                "y": 335,
+                "width": 11,
+                "height": 28,
+                "rx": 5,
+                "fill": "gold"
+              }
+            },
+            {
+              "id": "ground",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 400,
+                "cy": 500,
+                "rx": 340,
+                "ry": 23,
+                "fill": "teal"
+              }
+            },
+            {
+              "id": "learner",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "head",
+              "type": "circle",
+              "parentId": "learner",
+              "attrs": {
+                "cx": 510,
+                "cy": 257,
+                "r": 48,
+                "fill": "poolDeck"
+              }
+            },
+            {
+              "id": "shirt",
+              "type": "path",
+              "parentId": "learner",
+              "attrs": {
+                "d": "M 460 313 Q 510 286 560 313 L 578 420 L 445 420 Z",
+                "fill": "poolDeck"
+              }
+            },
+            {
+              "id": "bag",
+              "type": "rect",
+              "parentId": "learner",
+              "attrs": {
+                "x": 442,
+                "y": 323,
+                "width": 30,
+                "height": 84,
+                "rx": 12,
+                "fill": "red"
+              }
+            },
+            {
+              "id": "leg-left",
+              "type": "rect",
+              "parentId": "learner",
+              "attrs": {
+                "x": 465,
+                "y": 416,
+                "width": 30,
+                "height": 90,
+                "rx": 8,
+                "fill": "muted"
+              }
+            },
+            {
+              "id": "leg-right",
+              "type": "rect",
+              "parentId": "learner",
+              "attrs": {
+                "x": 525,
+                "y": 416,
+                "width": 30,
+                "height": 90,
+                "rx": 8,
+                "fill": "muted"
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "learner",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 125
+                },
+                {
+                  "atMs": 950,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "hesitation",
+      "role": "complication",
+      "narration": "Ҷавоб дар сарат ҳаст, вале бо овоз гуфтанаш якбора осон нест.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Донишҷӯ дар лаҳзаи таваққуф",
+        "action": "Ҳаракати донишҷӯ суст мешавад, ҳубобчаи холӣ бо се нуқта пайдо мешавад.",
+        "continuityKey": "same-student-dorm-voice-rehearsal",
+        "cueText": "бо овоз гуфтанаш",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Ҳамон донишҷӯ ва таваққуфи намоён; ҳубобча интерфейс нест.",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "ground",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 400,
+                "cy": 504,
+                "rx": 330,
+                "ry": 22,
+                "fill": "teal"
+              }
+            },
+            {
+              "id": "learner",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "head",
+              "type": "circle",
+              "parentId": "learner",
+              "attrs": {
+                "cx": 510,
+                "cy": 257,
+                "r": 48,
+                "fill": "poolDeck"
+              }
+            },
+            {
+              "id": "shirt",
+              "type": "path",
+              "parentId": "learner",
+              "attrs": {
+                "d": "M 460 313 Q 510 286 560 313 L 578 420 L 445 420 Z",
+                "fill": "poolDeck"
+              }
+            },
+            {
+              "id": "bag",
+              "type": "rect",
+              "parentId": "learner",
+              "attrs": {
+                "x": 442,
+                "y": 323,
+                "width": 30,
+                "height": 84,
+                "rx": 12,
+                "fill": "red"
+              }
+            },
+            {
+              "id": "leg-left",
+              "type": "rect",
+              "parentId": "learner",
+              "attrs": {
+                "x": 465,
+                "y": 416,
+                "width": 30,
+                "height": 90,
+                "rx": 8,
+                "fill": "muted"
+              }
+            },
+            {
+              "id": "leg-right",
+              "type": "rect",
+              "parentId": "learner",
+              "attrs": {
+                "x": 525,
+                "y": 416,
+                "width": 30,
+                "height": 90,
+                "rx": 8,
+                "fill": "muted"
+              }
+            },
+            {
+              "id": "speech-pause",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "speech-cloud",
+              "type": "ellipse",
+              "parentId": "speech-pause",
+              "attrs": {
+                "cx": 308,
+                "cy": 164,
+                "rx": 105,
+                "ry": 60,
+                "fill": "poolDeck"
+              }
+            },
+            {
+              "id": "dot-left",
+              "type": "circle",
+              "parentId": "speech-pause",
+              "attrs": {
+                "cx": 269,
+                "cy": 165,
+                "r": 9,
+                "fill": "foreground"
+              }
+            },
+            {
+              "id": "dot-mid",
+              "type": "circle",
+              "parentId": "speech-pause",
+              "attrs": {
+                "cx": 307,
+                "cy": 165,
+                "r": 9,
+                "fill": "foreground"
+              }
+            },
+            {
+              "id": "dot-right",
+              "type": "circle",
+              "parentId": "speech-pause",
+              "attrs": {
+                "cx": 345,
+                "cy": 165,
+                "r": 9,
+                "fill": "foreground"
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "speech-pause",
+              "property": "y",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 65
+                },
+                {
+                  "atMs": 850,
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "nodeId": "learner",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 750,
+                  "value": -18
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "open-phone",
+      "role": "attempt",
+      "narration": "Метавонӣ аввал телефонро кушода, ҷавоби кӯтоҳатро оромона машқ кунӣ.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Телефон дар дасти донишҷӯ",
+        "action": "Даст телефони бе интерфейсро ба пеш мебарад; ягон саҳифаи сохта нест.",
+        "continuityKey": "same-student-dorm-voice-rehearsal",
+        "cueText": "телефонро кушода",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Тасвири аслии телефон бо экрани холӣ ва даст.",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "shadow",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 400,
+                "cy": 512,
+                "rx": 220,
+                "ry": 21,
+                "fill": "teal"
+              }
+            },
+            {
+              "id": "hand",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "palm",
+              "type": "path",
+              "parentId": "hand",
+              "attrs": {
+                "d": "M 260 460 Q 230 400 290 340 L 350 320 L 400 430 L 375 515 Z",
+                "fill": "gold"
+              }
+            },
+            {
+              "id": "phone",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "phone-frame",
+              "type": "rect",
+              "parentId": "phone",
+              "attrs": {
+                "x": 315,
+                "y": 90,
+                "width": 195,
+                "height": 356,
+                "rx": 30,
+                "fill": "poolDeck"
+              }
+            },
+            {
+              "id": "screen",
+              "type": "rect",
+              "parentId": "phone",
+              "attrs": {
+                "x": 331,
+                "y": 120,
+                "width": 163,
+                "height": 286,
+                "rx": 16,
+                "fill": "foreground"
+              }
+            },
+            {
+              "id": "earpiece",
+              "type": "rect",
+              "parentId": "phone",
+              "attrs": {
+                "x": 381,
+                "y": 103,
+                "width": 64,
+                "height": 6,
+                "rx": 3,
+                "fill": "muted"
+              }
+            },
+            {
+              "id": "home-dot",
+              "type": "circle",
+              "parentId": "phone",
+              "attrs": {
+                "cx": 412,
+                "cy": 426,
+                "r": 7,
+                "fill": "muted"
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "phone",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 130
+                },
+                {
+                  "atMs": 850,
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "nodeId": "hand",
+              "property": "y",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 70
+                },
+                {
+                  "atMs": 850,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ai-voice",
+      "role": "product-demo",
+      "narration": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст. Дар экрани ҳақиқӣ персонажи панда дида мешавад.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Пандаи ҳақиқии экрани AI Voice",
+        "action": "Аз телефони холӣ ба буридаи аслии экран бо панда мегузарад; ягон матни нав илова намешавад.",
+        "continuityKey": "same-student-dorm-voice-rehearsal",
+        "cueText": "AI Voice",
+        "backgroundToken": "foreground",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "zxx",
+        "sourceUiLanguage": "tg-TJ",
+        "languageNeutralCrop": true,
+        "screenImage": "promo-captures/ai-voice-original.png",
+        "crop": {
+          "x": 285,
+          "y": 580,
+          "width": 600,
+          "height": 540,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        }
+      },
+      "claimIds": [
+        "voice-mode"
+      ]
+    },
+    {
+      "id": "mic",
+      "role": "product-demo",
+      "narration": "Дар ин режим тугмаи микрофон ҳаст. Метавонӣ кӯшиш кунӣ, ки як ҷумлаи кӯтоҳро бо овоз бигӯӣ.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Тугмаи ҳақиқии микрофони AI Voice",
+        "action": "Дар вақти калимаи «микрофон» буридаи аслии тугма нишон дода мешавад; пахш ё ҷавоби сохта нест.",
+        "continuityKey": "same-student-dorm-voice-rehearsal",
+        "cueText": "тугмаи микрофон",
+        "backgroundToken": "foreground",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "zxx",
+        "sourceUiLanguage": "tg-TJ",
+        "languageNeutralCrop": true,
+        "screenImage": "promo-captures/ai-voice-original.png",
+        "crop": {
+          "x": 440,
+          "y": 2180,
+          "width": 290,
+          "height": 245,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        }
+      },
+      "claimIds": [
+        "microphone"
+      ]
+    },
+    {
+      "id": "back-to-talk",
+      "role": "resolution",
+      "narration": "Дар ин воқеаи тасаввурӣ аввал ҷавобатро машқ мекунӣ, баъд ба суҳбат бармегардӣ. Чӣ гуфтанро худат интихоб мекунӣ.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Ҳамон донишҷӯ назди хобгоҳ",
+        "action": "Донишҷӯ ба назди дар бармегардад; ду хатти садо танҳо кӯшиши суханро нишон медиҳанд.",
+        "continuityKey": "same-student-dorm-voice-rehearsal",
+        "cueText": "ба суҳбат бармегардӣ",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Ҳамон донишҷӯ назди ҳамон дар, ду мавҷи садо, бе натиҷаи сохта.",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "dorm-wall",
+              "type": "rect",
+              "attrs": {
+                "x": 85,
+                "y": 100,
+                "width": 630,
+                "height": 365,
+                "rx": 20,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "dorm-door",
+              "type": "rect",
+              "attrs": {
+                "x": 302,
+                "y": 202,
+                "width": 195,
+                "height": 263,
+                "rx": 16,
+                "fill": "foreground"
+              }
+            },
+            {
+              "id": "dorm-frame",
+              "type": "rect",
+              "attrs": {
+                "x": 290,
+                "y": 191,
+                "width": 219,
+                "height": 18,
+                "rx": 7,
+                "fill": "gold"
+              }
+            },
+            {
+              "id": "ground",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 400,
+                "cy": 500,
+                "rx": 340,
+                "ry": 23,
+                "fill": "teal"
+              }
+            },
+            {
+              "id": "learner",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "head",
+              "type": "circle",
+              "parentId": "learner",
+              "attrs": {
+                "cx": 510,
+                "cy": 257,
+                "r": 48,
+                "fill": "poolDeck"
+              }
+            },
+            {
+              "id": "shirt",
+              "type": "path",
+              "parentId": "learner",
+              "attrs": {
+                "d": "M 460 313 Q 510 286 560 313 L 578 420 L 445 420 Z",
+                "fill": "poolDeck"
+              }
+            },
+            {
+              "id": "bag",
+              "type": "rect",
+              "parentId": "learner",
+              "attrs": {
+                "x": 442,
+                "y": 323,
+                "width": 30,
+                "height": 84,
+                "rx": 12,
+                "fill": "red"
+              }
+            },
+            {
+              "id": "leg-left",
+              "type": "rect",
+              "parentId": "learner",
+              "attrs": {
+                "x": 465,
+                "y": 416,
+                "width": 30,
+                "height": 90,
+                "rx": 8,
+                "fill": "muted"
+              }
+            },
+            {
+              "id": "leg-right",
+              "type": "rect",
+              "parentId": "learner",
+              "attrs": {
+                "x": 525,
+                "y": 416,
+                "width": 30,
+                "height": 90,
+                "rx": 8,
+                "fill": "muted"
+              }
+            },
+            {
+              "id": "voice-waves",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "wave-one",
+              "type": "path",
+              "parentId": "voice-waves",
+              "attrs": {
+                "d": "M 586 255 Q 622 275 586 298",
+                "fill": "none",
+                "stroke": "gold",
+                "strokeWidth": 6
+              }
+            },
+            {
+              "id": "wave-two",
+              "type": "path",
+              "parentId": "voice-waves",
+              "attrs": {
+                "d": "M 615 230 Q 672 277 615 324",
+                "fill": "none",
+                "stroke": "teal",
+                "strokeWidth": 6
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "voice-waves",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": -38
+                },
+                {
+                  "atMs": 800,
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "nodeId": "learner",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 30
+                },
+                {
+                  "atMs": 900,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "caption": "Ҳикояи тасаввурӣ: пеш аз суҳбат як ҷумлаи кӯтоҳро бо AI Voice машқ кардан.",
+  "hashtags": [
+    "#HSKAI",
+    "#ЗабониЧинӣ",
+    "#HSK"
+  ],
+  "durationTargetSec": 40,
+  "localization": {
+    "language": "tg",
+    "sourcePromoId": "campus-voice-rehearsal-20261103",
+    "sourceHash": "69b9f55955c8b3b2d69fe67c952d00434857cd22afd330850372322e54458781",
+    "authoredOn": "2026-10-31",
+    "status": "draft"
+  }
+}
