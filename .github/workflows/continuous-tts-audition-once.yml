@@ -19,6 +19,7 @@ jobs:
     timeout-minutes: 35
     strategy:
       fail-fast: false
+      max-parallel: 1  # Stay within the shared provider/project's request-rate budget.
       matrix:
         include:
           - language: ru
