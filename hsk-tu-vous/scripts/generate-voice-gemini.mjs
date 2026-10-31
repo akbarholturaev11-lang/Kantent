@@ -1,10 +1,11 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
 import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
+import { planSilenceClips } from "./silence-clip-plan.mjs";
 import { requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
@@ -666,6 +667,101 @@ function timedBlocks(annotations, durationMs) {
   });
 }
 
+/**
+ * Continuous-TTS-only fallback for an empty full-audio transcript.
+ * Cuts are taken exclusively from measured waveform silences, not guessed
+ * from text. Every accepted word offset still comes from Gemini Transcribe.
+ * Existing exact whole-script and language safety gates remain unchanged.
+ */
+async function recoverSilenceGuidedAnnotations({
+  audioPath, durationMs, outputDir, chunkNumber,
+  config, ffmpegRuntime, transcriptionLanguages,
+}) {
+  const ffmpeg = ffmpegRuntime.ffmpegPath;
+  const detection = spawnSync(ffmpeg, [
+    "-hide_banner","-nostdin","-i",audioPath,
+    "-af","silencedetect=noise=-37dB:d=0.30",
+    "-f","null","-",
+  ], { env:ffmpegRuntime.env,encoding:"utf8",maxBuffer:2*1024*1024 });
+  if (detection.error || detection.status !== 0)
+    throw new Error("FFmpeg failed to measure original WAV pauses.");
+  const pauses=[];
+  let startMs=null;
+  for(const line of detection.stderr.split(/\\r?\\n/u)){
+    const start=line.match(/silence_start:\\s*(\\d+(?:\\.\\d+)?)/u);
+    if(start) startMs=Number(start[1])*1000;
+    const end=line.match(/silence_end:\\s*(\\d+(?:\\.\\d+)?)/u);
+    if(end && startMs!==null){
+      pauses.push({startMs,endMs:Number(end[1])*1000});
+      startMs=null;
+    }
+  }
+  const clips=planSilenceClips(durationMs,pauses);
+  const directory=path.join(outputDir,"silence-recovery","chunk-"+chunkNumber);
+  await fs.mkdir(directory,{recursive:true});
+  await fs.writeFile(path.join(directory,"cuts.json"),JSON.stringify({
+    sourceAudio:path.basename(audioPath),durationMs,measuredPauses:pauses,clips,
+  },null,2)+"\\n");
+  const wordAnnotations=[];
+  const transcripts=[];
+  for(const [i,clip] of clips.entries()){
+    const name="silence-"+String(i+1).padStart(2,"0");
+    const localPath=path.join(directory,name+".wav");
+    execFileSync(ffmpeg,[
+      "-hide_banner","-loglevel","error","-nostdin","-y",
+      "-i",audioPath,"-ss",(clip.startMs/1000).toFixed(3),
+      "-t",((clip.endMs-clip.startMs)/1000).toFixed(3),
+      "-map","0:a:0","-ac","1","-ar",String(config.sampleRateHz),
+      "-c:a","pcm_s16le",localPath,
+    ],{env:ffmpegRuntime.env,stdio:["ignore","pipe","pipe"]});
+    const measuredMs=mediaDurationMs(localPath,ffmpegRuntime);
+    if(Math.abs(measuredMs-(clip.endMs-clip.startMs))>50)
+      throw new Error("Source audio clip duration does not match measured silence boundaries.");
+    const uploaded=await withGeminiKeyFailover(config.credentialState,(key)=>
+      uploadForTranscription(key,localPath,"hsk-silence-"+EPISODE_ID+"-"+name));
+    config.apiKey=config.credentialState.slots[config.credentialState.index].secret;
+    let response;
+    try{
+      response=await requestJson(
+        API_ROOT+"/v1beta/interactions",{
+          method:"POST",headers:{
+            "x-goog-api-key":config.apiKey,"Content-Type":"application/json",
+            "Api-Revision":API_REVISION,
+          },body:JSON.stringify({
+            model:config.transcribeModel,
+            input:[{type:"audio",uri:uploaded.uri,mime_type:"audio/wav"}],
+            generation_config:{transcription_config:{
+              language_codes:transcriptionLanguages,
+              mode:{type:"verbatim",timestamp_granularities:["word"]},
+            }},
+          }),
+        },"Gemini silence-bounded transcription",{maxAttempts:2});
+    }finally{
+      await deleteGeminiFile(config.apiKey,uploaded.name);
+    }
+    const raw=getWordAnnotations(response.data).map(w=>({
+      text:w.text,startOffset:w.start_offset,endOffset:w.end_offset,
+    }));
+    // Preserve provenance even when the provider returns no speech words.
+    await fs.writeFile(path.join(directory,name+".json"),JSON.stringify({
+      clip,measuredMs,model:config.transcribeModel,
+      languageCodes:transcriptionLanguages,annotations:raw,
+      transcript:response.data.output_text??"",
+    },null,2)+"\\n");
+    if(!raw.length) throw new Error(
+      `Gemini returned no word annotations for measured audio span ${i+1}/${clips.length}; original audio preserved.`);
+    for(const block of timedBlocks(raw,measuredMs)){
+      wordAnnotations.push({
+        text:block.text,
+        startOffset:((block.startMs+clip.startMs)/1000).toFixed(3)+"s",
+        endOffset:((block.endMs+clip.startMs)/1000).toFixed(3)+"s",
+      });
+    }
+    transcripts.push(response.data.output_text??"");
+  }
+  return {wordAnnotations,transcript:transcripts.join(" "),clips};
+}
+
 async function recoverActualWordClips({
   chunkText, originalAnnotations, audioPath, durationMs, outputDir,
   chunkNumber, config, ffmpegRuntime, transcriptionLanguages
@@ -677,8 +773,9 @@ async function recoverActualWordClips({
   }));
   const original = timedBlocks(originalAnnotations, durationMs);
   const plan = buildRecoveryPlan(expected, original, durationMs);
-  if (!plan.gaps.length || plan.gaps.length > 8)
-    throw new Error("Recovery requires 1–8 independently bounded missing speech spans.");
+  const maxSpans = CONTINUOUS_TTS_PILOT ? 16 : 8;
+  if (!plan.gaps.length || plan.gaps.length > maxSpans)
+    throw new Error(`Recovery requires 1–${maxSpans} independently bounded missing speech spans.`);
   const directory = path.join(outputDir, "recovery-diagnostic", "chunk-" + chunkNumber);
   await fs.mkdir(directory, { recursive: true });
   await fs.writeFile(path.join(directory,"plan.json"),JSON.stringify({
@@ -1283,6 +1380,27 @@ try {
     }
     metadata.transcriptionAttempts ??= [];
     metadata.transcriptionAttempts[index] = attempts;
+    if (CONTINUOUS_TTS_PILOT && !chunkAlignment?.captions &&
+        !transcription?.wordAnnotations?.length) {
+      try {
+        const bounded=await recoverSilenceGuidedAnnotations({
+          audioPath:transcriptionAudioPath,
+          durationMs:metadata.chunkDurationsMs[index],
+          outputDir,chunkNumber,config,ffmpegRuntime,transcriptionLanguages,
+        });
+        transcription={transcript:bounded.transcript,wordAnnotations:bounded.wordAnnotations};
+        await fs.writeFile(transcriptPath,JSON.stringify(transcription,null,2)+"\\n");
+        metadata.silenceRecoveryClips ??= [];
+        metadata.silenceRecoveryClips.push({chunk:index+1,clips:bounded.clips});
+        chunkAlignment=alignWords(ttsChunks[index].text,
+          transcription.wordAnnotations,metadata.chunkDurationsMs[index]);
+      }catch(error) {
+        metadata.lastSilenceRecoveryError=safeErrorMessage(error);
+        console.warn("GEMINI_SILENCE_RECOVERY_BLOCKED "+JSON.stringify({
+          language:voiceProfile.locale,chunk:index+1,
+          reason:metadata.lastSilenceRecoveryError}));
+      }
+    }
     if (!chunkAlignment?.captions && transcription?.wordAnnotations?.length) {
       try {
         const clips = await recoverActualWordClips({
