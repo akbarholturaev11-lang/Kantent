@@ -5,6 +5,7 @@ import { createHash } from "node:crypto";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
 import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
+import { splitExperimentalMandarinUnits } from "./mandarin-erhua-units.mjs";
 import { verifyExternalWordCues } from "./external-word-cue-gate.mjs";
 import { planSilenceClips } from "./silence-clip-plan.mjs";
 import { requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
@@ -263,9 +264,10 @@ function tokenParts(value) {
     // the written narration has no spaces. Keep the source phrase as one
     // caption word while aligning its characters against those timed units.
     if (/^\p{Script=Han}+$/u.test(normalized)) {
-      return Array.from(normalized, (character) =>
-        transcriptionAliases[character] ?? character,
-      );
+      const units = CONTINUOUS_TTS_PILOT
+        ? splitExperimentalMandarinUnits(normalized)
+        : Array.from(normalized);
+      return units.map((unit) => transcriptionAliases[unit] ?? unit);
     }
     return [transcriptionAliases[normalized] ?? normalized];
   });
