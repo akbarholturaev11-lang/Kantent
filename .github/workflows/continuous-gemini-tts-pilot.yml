@@ -6,6 +6,8 @@ on:
       - '.github/workflows/continuous-gemini-tts-pilot.yml'
       - 'hsk-tu-vous/scripts/continuous-tts-plan.mjs'
       - 'hsk-tu-vous/scripts/continuous-tts-plan.test.mjs'
+      - 'hsk-tu-vous/scripts/silence-clip-plan.mjs'
+      - 'hsk-tu-vous/scripts/silence-clip-plan.test.mjs'
       - 'hsk-tu-vous/scripts/generate-voice-gemini.mjs'
       - 'hsk-tu-vous/content/WORKFLOW.md'
   workflow_dispatch:
@@ -30,9 +32,11 @@ jobs:
         run: |
           node --check scripts/continuous-tts-plan.mjs
           node --check scripts/continuous-tts-plan.test.mjs
+          node --check scripts/silence-clip-plan.mjs
+          node --check scripts/silence-clip-plan.test.mjs
           node --check scripts/generate-voice-gemini.mjs
       - name: Voice planner and source-word recovery regression tests
-        run: node --test scripts/continuous-tts-plan.test.mjs scripts/gemini-word-recovery.test.mjs
+        run: node --test scripts/continuous-tts-plan.test.mjs scripts/silence-clip-plan.test.mjs scripts/gemini-word-recovery.test.mjs
       - name: Install project dependencies
         run: npm ci
       - name: Project consistency
