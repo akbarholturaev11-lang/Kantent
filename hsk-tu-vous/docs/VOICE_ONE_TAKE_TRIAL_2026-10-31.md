@@ -64,3 +64,15 @@ Full schema and CLI: `docs/VOICE_OFFLINE_CUE_IMPORT.md`.
 The experimental normalizer now groups *only* verified `点儿` as a single source-preserving unit (5.879–6.119 s) and leaves `儿子`, `花儿`, etc. unchanged. **No synthetic time extension.** Qwen's valid five acoustic units correspond exactly to six written Hanzi. The approved Chinese script is unchanged; original model raw output and the phonetic-fold provenance are preserved. Code and tests are in `scripts/mandarin-erhua-units.mjs`, its test, and the read-only `scripts/qwen-one-take-probe.py`.
 
 This is confirmed **model inference with a real 1.063-second Mandarin audio crop**, not full RU/TJ episode alignment. Model-provided offsets are candidates pending listening and whole-script coverage checks, and **not yet imported or approved as captions**.
+
+## Complete Mandarin phrase probe + independent ASR — 2026-10-31
+
+With the **original, unchanged one-take WAVs** and offline Qwen3 models:
+
+1. In [full Qwen forced-alignment evidence run 41190035220](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/41190035220), all ten Chinese clauses in each language were processed separately, strictly bound to the original approved narration, WAV SHA-256 and 20 candidate speech windows. Qwen returned **structurally valid** monotonic timestamps for **RU 9/10** and **TJ 8/10**. Three candidates were deliberately rejected for zero-duration syllables or model outputs beyond the candidate crop. Source evidence artifact ID: `13038616727`.
+2. An **independent** model was then run on the same source clips **without supplying target text**, Qwen3-ASR-0.6B (Apache-2.0); see [run 41190353327](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/41190353327), artifact `13038203679`. RU ASR Chinese exact text match **2/10** plus *erhua-only* spelling equivalence **3/10**. TJ ASR exact match **3/10** plus *erhua-only* equivalence **5/10**. ASR sometimes misrecognized Mandarin in multilingual short clips; ASR mismatch is **not** proof of bad pronunciation.
+3. Intersection **both provider-timing-structural + independent ASR same Chinese content (allowing only 点儿→点 orthographic rhotacization)**: **RU 4/10**, **TJ 6/10** candidate phrases. Even these candidates are **NOT independently owner-auditioned word cues**, and the recorded source text contains other untranslated/unverified Russian, Tajik and brand-acronym spans. **Do not import partial diagnostic timing into VTT or mark a full MP4 complete.**
+4. Original archived WAV chunks can be directly reviewed in a locally created 20-clip acoustic QA package (original PCM, no new TTS) with expected phrase and independent ASR hypotheses. Audio listening approval is distinct from model equality.
+5. One-shot GitHub CPU model workflow triggers were removed after the experiments; repository main, voice TTS model, approved voice and production pipeline remain unchanged.
+
+The next change must be a clear product decision about whole-word karaoke captions versus a separate **review-only, scene-synchronized** preview path. Do not silently weaken `render-episode.mjs`'s canonical strict word-cue gate.
