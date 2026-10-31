@@ -25,7 +25,7 @@ PROBES = [
     {"language": "Russian", "text": "Представьте: на рынке вещь дороговата.",
      "start": 0.0, "end": 3.05, "boundaryEvidence": "original-timed-ru-words"},
     {"language": "Chinese", "text": "这个有点儿贵",
-     "start": 4.65, "end": 8.0, "boundaryEvidence": "hypothesis-only-unverified"},
+     "start": 5.399, "end": 6.462, "boundaryEvidence": "measured-pause-window-4.783-to-5.400-and-6.461-to-7.293-unverified-word-identity"},
 ]
 
 
@@ -92,14 +92,25 @@ def main():
         aligned = aligner.align(audio=(clip, sr), text=spec["text"], language=spec["language"])
         if len(aligned) != 1:
             raise ValueError("Unexpected Qwen result count")
-        words = validate_model_items(aligned[0], len(clip)/sr)
+        raw = [{"text": str(item.text), "start": float(item.start_time),
+                "end": float(item.end_time)} for item in aligned[0]]
+        try:
+            words = validate_model_items(aligned[0], len(clip)/sr)
+            outcome = "MODEL-CANDIDATE-NOT-VERIFIED-NOT-FOR-CAPTIONS"
+            failure = None
+        except ValueError as exc:
+            words = []
+            outcome = "INVALID-MODEL-TIMESTAMPS-REJECTED"
+            failure = str(exc)
         result["clips"].append({**spec, "clipSha256": sha256(clip.tobytes()),
+            "rawModelOutput": raw,
             "rawRelativeWords": words, "sourceGlobalCandidates": [
                 {**w, "start": round(w["start"] + start, 3),
                  "end": round(w["end"] + start, 3)} for w in words],
-            "validation": "MODEL-CANDIDATE-NOT-VERIFIED-NOT-FOR-CAPTIONS"})
+            "validation": outcome, "error": failure})
         print(json.dumps({"language":spec["language"],"words":len(words),
-              "first":words[0],"last":words[-1]},ensure_ascii=False),flush=True)
+            "rawWords":len(raw),"validation":outcome,"error":failure},
+            ensure_ascii=False),flush=True)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
     print("WROTE_DIAGNOSTIC_ONLY", args.out)
