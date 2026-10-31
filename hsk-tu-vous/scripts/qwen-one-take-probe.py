@@ -12,6 +12,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 import soundfile as sf
@@ -67,6 +68,31 @@ def validate_model_items(items, duration):
     return out
 
 
+def fold_only_measured_dianr(items):
+    """Combine the zero-duration 儿 into adjacent real-timed 点.
+    The *original* provider word/time data remain in rawModelOutput.
+    No timestamp is created or extended beyond the model-observed 点.
+    """
+    folded=[]
+    evidence=[]
+    for item in items:
+        current=SimpleNamespace(text=str(item.text),
+                                start_time=float(item.start_time),
+                                end_time=float(item.end_time))
+        if (current.text=="儿" and current.start_time==current.end_time and
+            folded and folded[-1].text=="点" and
+            abs(folded[-1].end_time-current.start_time)<0.001):
+            folded[-1].text="点儿"
+            evidence.append({"type":"diǎnr-rhotacized-suffix",
+                             "suffixModelOffset":current.start_time,
+                             "parentStart":folded[-1].start_time,
+                             "parentEnd":folded[-1].end_time,
+                             "method":"inherit-real-点-syllable-boundaries-no-interpolation"})
+        else:
+            folded.append(current)
+    return folded,evidence
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--wav", type=Path, required=True)
@@ -94,8 +120,11 @@ def main():
             raise ValueError("Unexpected Qwen result count")
         raw = [{"text": str(item.text), "start": float(item.start_time),
                 "end": float(item.end_time)} for item in aligned[0]]
+        folded, erhuaEvidence=fold_only_measured_dianr(aligned[0])
         try:
-            words = validate_model_items(aligned[0], len(clip)/sr)
+            if spec["language"] == "Chinese" and "".join(x.text for x in folded) != spec["text"]:
+                raise ValueError("Rhotacization fold changed the original Chinese character sequence")
+            words = validate_model_items(folded, len(clip)/sr)
             outcome = "MODEL-CANDIDATE-NOT-VERIFIED-NOT-FOR-CAPTIONS"
             failure = None
         except ValueError as exc:
@@ -104,6 +133,7 @@ def main():
             failure = str(exc)
         result["clips"].append({**spec, "clipSha256": sha256(clip.tobytes()),
             "rawModelOutput": raw,
+            "erhuaEvidence": erhuaEvidence,
             "rawRelativeWords": words, "sourceGlobalCandidates": [
                 {**w, "start": round(w["start"] + start, 3),
                  "end": round(w["end"] + start, 3)} for w in words],
