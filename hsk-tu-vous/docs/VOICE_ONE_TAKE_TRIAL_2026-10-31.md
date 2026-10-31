@@ -50,3 +50,17 @@ Full schema and CLI: `docs/VOICE_OFFLINE_CUE_IMPORT.md`.
 - Tajik Sherpa-ONNX Zipformer2/Vosk 0.61 (Apache-2.0): the real archived TJ WAV was processed on the runner with **zero Gemini requests** in [run 41188404443](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/41188404443). Source Cyrillic-script token-sequence match coverage was **0.93** for the approved Tajik-script reference; 71 expected Tajik words and 98 ASR words after filtering. Its ONNX source-token timepoints are real provider outputs, **not source-verified start/end word cues**. Chinese and Latin acronym passages need distinct alignment. The complete raw word/timepoint evidence is in GitHub artifact ID `13037318948`.
 - The result is a technical advancement, but **neither language's full original audio currently has complete accepted word annotations**. Do not make or approve a final MP4 using partial/tentative timings, and do not substitute Russian language models for Tajik. The temporarily created one-shot model workflows are removed after the runs; normal GitHub CI never installs models or spends Gemini quotas.
 
+
+## Verified offline trial progression — speech timing, not yet full-video approval
+
+**Real Qwen model (not mocked):** The archived RU original WAV was loaded by Qwen3 ForcedAligner 0.6B on CPU; run [41188312492](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/41188312492), latest attempt, evidence artifact ID `13037692357`. The first five Russian words were successfully timestamped (0.240–2.880 s). The first Mandarin phrase `这个有点儿贵` was isolated using real measured silence and Qwen returned:
+- `这` 5.399–5.559 s;
+- `个` 5.559–5.639 s;
+- `有` 5.639–5.879 s;
+- `点` 5.879–6.119 s;
+- `儿` instantaneous at 6.119 s; this is a rhotacized suffix, **not an independently timed syllable**;
+- `贵` 6.199–6.439 s.
+
+The experimental normalizer now groups *only* verified `点儿` as a single source-preserving unit (5.879–6.119 s) and leaves `儿子`, `花儿`, etc. unchanged. **No synthetic time extension.** Qwen's valid five acoustic units correspond exactly to six written Hanzi. The approved Chinese script is unchanged; original model raw output and the phonetic-fold provenance are preserved. Code and tests are in `scripts/mandarin-erhua-units.mjs`, its test, and the read-only `scripts/qwen-one-take-probe.py`.
+
+This is confirmed **model inference with a real 1.063-second Mandarin audio crop**, not full RU/TJ episode alignment. Model-provided offsets are candidates pending listening and whole-script coverage checks, and **not yet imported or approved as captions**.
