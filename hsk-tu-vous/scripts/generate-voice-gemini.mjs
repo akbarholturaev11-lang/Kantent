@@ -71,7 +71,7 @@ async function loadGeminiEnvironment(profile) {
   // Strict offline cue import: reuse the archived TTS WAV without keys.
   if (EXTERNAL_WORD_CUES_FILE) {
     return {
-      apiKey: null, credentialState: null, ttsRequestCount: 0,
+      apiKey: null, credentialState: null, ttsRequestCount: 0, transcriptionRequestCount: 0,
       ttsModel: profile.ttsModel, voice: profile.voiceName,
       transcribeModel: profile.transcriptionModel,
       style: profile.spokenStyle || "",
@@ -100,6 +100,7 @@ async function loadGeminiEnvironment(profile) {
     apiKey: slots[0].secret,
     credentialState,
     ttsRequestCount: 0,
+    transcriptionRequestCount: 0,
     ttsModel: profile.ttsModel,
     voice: profile.voiceName,
     transcribeModel: profile.transcriptionModel,
@@ -157,6 +158,21 @@ async function requestJson(url, options, label, { maxAttempts = 4, onAttempt } =
     );
   }
   throw new Error(`${label} failed after ${maxAttempts} attempts.`);
+}
+
+function pilotTranscriptRequestOptions(config) {
+  if (!CONTINUOUS_TTS_PILOT) return {};
+  return {
+    maxAttempts: 2,
+    onAttempt: () => {
+      // One archived voice: no more than eight actual ASR HTTP calls across
+      // every retry/resume. TTS is counted and limited separately.
+      if (config.transcriptionRequestCount >= 8) {
+        throw new Error("Continuous voice pilot ASR budget exhausted: 8 HTTP requests per saved take. Keep existing audio and diagnostics.");
+      }
+      config.transcriptionRequestCount += 1;
+    },
+  };
 }
 
 function getAudioData(interaction) {
@@ -765,7 +781,7 @@ async function recoverSilenceGuidedAnnotations({
               mode:{type:"verbatim",timestamp_granularities:["word"]},
             }},
           }),
-        },"Gemini silence-bounded transcription",{maxAttempts:2});
+        },"Gemini silence-bounded transcription",pilotTranscriptRequestOptions(config));
     }finally{
       await deleteGeminiFile(config.apiKey,uploaded.name);
     }
@@ -864,7 +880,7 @@ async function recoverActualWordClips({
             language_codes:[languageCode],
             mode:{type:"verbatim",timestamp_granularities:["word"]},
           }},
-        })},"Gemini recovery word transcription");
+        })},"Gemini recovery word transcription",pilotTranscriptRequestOptions(config));
     } finally {
       await deleteGeminiFile(config.apiKey,uploaded.name);
     }
@@ -1176,6 +1192,8 @@ if (RESUME_FOLDER_NAME && metadata.ttsChunkCount !== ttsChunks.length) {
   throw new Error("Saved generation chunk count does not match the current narration.");
 }
 config.ttsRequestCount = metadata.ttsRequestCount ?? 0;
+config.transcriptionRequestCount = metadata.transcriptionRequestCount ?? 0;
+metadata.transcriptionRequestBudget = CONTINUOUS_TTS_PILOT ? 8 : null;
 metadata.ttsGenerationMode = ttsGenerationMode;
 metadata.ttsChunkCount = ttsChunks.length;
 metadata.chunkSceneIds = ttsChunks.map((chunk) => chunk.sceneIds);
@@ -1396,6 +1414,7 @@ try {
             }),
           },
           "Gemini word transcription",
+          pilotTranscriptRequestOptions(config),
         );
         const annotations = getWordAnnotations(response.data);
         const transcriptText = response.data.output_text ??
@@ -1477,6 +1496,7 @@ try {
     }
     metadata.transcriptionAttempts ??= [];
     metadata.transcriptionAttempts[index] = attempts;
+    metadata.transcriptionRequestCount = config.transcriptionRequestCount;
     const severeWordLoss=chunkAlignment?.mismatches?.some(m=>
       m.kind==="token-count" && m.expected-m.recognized>=15);
     if (CONTINUOUS_TTS_PILOT && !chunkAlignment?.captions &&
@@ -1541,6 +1561,7 @@ try {
     }
     if (!chunkAlignment?.captions) {
       metadata.status = "transcript-mismatch";
+      metadata.transcriptionRequestCount = config.transcriptionRequestCount;
       metadata.transcriptMismatchCount = metadata.lastTranscriptionMismatch?.mismatches?.length ?? 1;
       metadata.firstTranscriptMismatches = metadata.lastTranscriptionMismatch?.mismatches ?? [];
       await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
@@ -1693,6 +1714,7 @@ try {
   console.log(`Metadata: ${metadataPath}`);
 } catch (error) {
   metadata.ttsRequestCount = config.ttsRequestCount;
+  metadata.transcriptionRequestCount = config.transcriptionRequestCount;
   if (!metadata.status || ["starting", "audio-generating", "audio-ready", "ready-for-import"].includes(metadata.status))
     metadata.status = "failed";
   metadata.error = safeErrorMessage(error);
