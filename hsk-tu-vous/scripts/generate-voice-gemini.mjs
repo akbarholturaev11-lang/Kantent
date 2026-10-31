@@ -734,7 +734,9 @@ async function recoverSilenceGuidedAnnotations({
             model:config.transcribeModel,
             input:[{type:"audio",uri:uploaded.uri,mime_type:"audio/wav"}],
             generation_config:{transcription_config:{
-              language_codes:transcriptionLanguages,
+              // Prioritize the explanation language in silence-bounded clips.
+              // Separate verified Chinese-only recovery remains available.
+              language_codes:[transcriptionLanguages[0]],
               mode:{type:"verbatim",timestamp_granularities:["word"]},
             }},
           }),
@@ -748,12 +750,28 @@ async function recoverSilenceGuidedAnnotations({
     // Preserve provenance even when the provider returns no speech words.
     await fs.writeFile(path.join(directory,name+".json"),JSON.stringify({
       clip,measuredMs,model:config.transcribeModel,
-      languageCodes:transcriptionLanguages,annotations:raw,
+      languageCodes:[transcriptionLanguages[0]],annotations:raw,
       transcript:response.data.output_text??"",
     },null,2)+"\n");
     if(!raw.length) throw new Error(
       `Gemini returned no word annotations for measured audio span ${i+1}/${clips.length}; original audio preserved.`);
-    for(const block of timedBlocks(raw,measuredMs)){
+    // Zero/negative/out-of-clip provider timestamps are rejected individually.
+    // Never assign a synthetic positive duration to an invalid word.
+    const eligible=raw.filter(word=>{
+      try {
+        const start=parseOffsetMs(word.startOffset);
+        const end=parseOffsetMs(word.endOffset);
+        return start>=0 && end>start && end<=measuredMs+100;
+      } catch {
+        return false;
+      }
+    });
+    await fs.writeFile(path.join(directory,name+"-rejected.json"),JSON.stringify({
+      reason:"provider timestamp has zero/negative duration or lies outside measured clip",
+      rejected:raw.filter(word=>!eligible.includes(word)),
+    },null,2)+"\n");
+    if(!eligible.length) throw Error("No words with valid provider timestamps in bounded clip.");
+    for(const block of timedBlocks(eligible,measuredMs)){
       wordAnnotations.push({
         text:block.text,
         startOffset:((block.startMs+clip.startMs)/1000).toFixed(3)+"s",
@@ -1398,8 +1416,10 @@ try {
     }
     metadata.transcriptionAttempts ??= [];
     metadata.transcriptionAttempts[index] = attempts;
+    const severeWordLoss=chunkAlignment?.mismatches?.some(m=>
+      m.kind==="token-count" && m.expected-m.recognized>=15);
     if (CONTINUOUS_TTS_PILOT && !chunkAlignment?.captions &&
-        !transcription?.wordAnnotations?.length) {
+        (!transcription?.wordAnnotations?.length || severeWordLoss)) {
       try {
         const bounded=await recoverSilenceGuidedAnnotations({
           audioPath:transcriptionAudioPath,
