@@ -1,0 +1,69 @@
+name: One-shot offline Mandarin full-phrase coverage probe (PR 46)
+
+# Read-only, no Gemini API keys, model installed only for explicit audition.
+on:
+  pull_request:
+    types: [ready_for_review]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  full-mandarin-evidence:
+    if: >-
+      ${{ github.event.pull_request.number == 46 &&
+          github.event.pull_request.head.repo.full_name == github.repository &&
+          github.event.pull_request.head.ref == 'feat/continuous-gemini-tts-pilot-20261031' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    env:
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      HF_HUB_DISABLE_XET: '1'
+      OMP_NUM_THREADS: '4'
+      MKL_NUM_THREADS: '4'
+      TOKENIZERS_PARALLELISM: 'false'
+    steps:
+      - name: Checkout current PR source
+        uses: actions/checkout@v4
+        with:
+          ref: feat/continuous-gemini-tts-pilot-20261031
+      - name: Restore archived RU 1-TTS take, no new synthesis
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 41183287146
+          name: gemini-continuous-pr46-ru-41183287146
+          github-token: ${{ github.token }}
+          path: hsk-tu-vous/review
+      - name: Restore archived TJ 1-TTS take, no new synthesis
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 41183287146
+          name: gemini-continuous-pr46-tg-41183287146
+          github-token: ${{ github.token }}
+          path: hsk-tu-vous/review
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read-only Qwen aligner dependencies, no API credentials
+        run: |
+          python -m pip install --quiet numpy soundfile
+          python -m pip install --quiet torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --quiet qwen-asr
+      - name: Run all Mandarin-run diagnostic clips on original RU/TJ WAV
+        run: |
+          python scripts/full-mandarin-one-take-probe.py \
+            --review review \
+            --manifest content/voice-evidence/oct30-ru-tg-chinese-clip-manifest.json \
+            --out /tmp/hsk-full-mandarin-evidence/model-coverage.json
+      - name: Archive source-bound provider results and uncovered gaps
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr46-all-mandarin-ru-tg-${{ github.run_id }}
+          path: /tmp/hsk-full-mandarin-evidence/
+          if-no-files-found: warn
+          retention-days: 7
