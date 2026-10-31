@@ -5,6 +5,7 @@ import { createHash } from "node:crypto";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
 import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
+import { verifyExternalWordCues } from "./external-word-cue-gate.mjs";
 import { planSilenceClips } from "./silence-clip-plan.mjs";
 import { requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
@@ -39,15 +40,22 @@ const EPISODE_ID = process.argv[2];
 const CLI_OPTIONS = process.argv.slice(3);
 let PLATFORM;
 let RESUME_FOLDER_NAME;
+let EXTERNAL_WORD_CUES_FILE;
 for (let index = 0; index < CLI_OPTIONS.length; index += 1) {
   const option = CLI_OPTIONS[index];
   if (option === "--platform" && !PLATFORM) {
     PLATFORM = CLI_OPTIONS[++index];
   } else if (option === "--resume" && !RESUME_FOLDER_NAME) {
     RESUME_FOLDER_NAME = CLI_OPTIONS[++index];
+  } else if (option === "--aligned-cues" && !EXTERNAL_WORD_CUES_FILE) {
+    EXTERNAL_WORD_CUES_FILE = CLI_OPTIONS[++index];
   } else {
-    throw new Error("Use [--platform tiktok] [--resume <generation-folder>].");
+    throw new Error("Use [--platform tiktok] [--resume <generation-folder>] [--aligned-cues <file.json>].");
   }
+}
+if (EXTERNAL_WORD_CUES_FILE && (!CONTINUOUS_TTS_PILOT || !RESUME_FOLDER_NAME ||
+    !EXTERNAL_WORD_CUES_FILE.endsWith(".json"))) {
+  throw new Error("Aligned cue import requires the opt-in continuous pilot, an existing --resume folder and a JSON file.");
 }
 
 function requireEpisodeId(value) {
@@ -60,6 +68,17 @@ function requireEpisodeId(value) {
 }
 
 async function loadGeminiEnvironment(profile) {
+  // Strict offline cue import: reuse the archived TTS WAV without keys.
+  if (EXTERNAL_WORD_CUES_FILE) {
+    return {
+      apiKey: null, credentialState: null, ttsRequestCount: 0,
+      ttsModel: profile.ttsModel, voice: profile.voiceName,
+      transcribeModel: profile.transcriptionModel,
+      style: profile.spokenStyle || "",
+      mp3BitrateKbps: profile.mp3BitrateKbps,
+      sampleRateHz: profile.sampleRateHz, channels: profile.channels,
+    };
+  }
   if (
     (!process.env.GEMINI_API_KEY || !process.env.HSK_AI_ALLOW_GEMINI_API) &&
     typeof process.loadEnvFile === "function"
@@ -92,6 +111,8 @@ async function loadGeminiEnvironment(profile) {
 }
 
 async function requestJson(url, options, label, { maxAttempts = 4, onAttempt } = {}) {
+  if (EXTERNAL_WORD_CUES_FILE)
+    throw new Error("Aligned cue import forbids every Gemini API request.");
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     onAttempt?.();
     const response = await fetch(url, {
@@ -521,8 +542,8 @@ function createTtsChunks(episode, maxCharacters = 12000) {
 }
 
 async function generateTtsWav(config, text) {
-  if (process.env.HSK_AI_CONTINUOUS_TTS_RESUME_ONLY === "true") {
-    throw new Error("Resume-only diagnosis forbids new TTS API calls; original WAV must exist.");
+  if (EXTERNAL_WORD_CUES_FILE || process.env.HSK_AI_CONTINUOUS_TTS_RESUME_ONLY === "true") {
+    throw new Error("Offline cue import/resume forbids new TTS API calls; original WAV must exist.");
   }
   const content = [{ type: "text", text }];
   if (config.style) {
@@ -1284,7 +1305,39 @@ try {
       }
     }
     let chunkAlignment;
-    if (transcription?.wordAnnotations?.length) {
+    if (EXTERNAL_WORD_CUES_FILE) {
+      if (ttsChunks.length !== 1)
+        throw new Error("Offline aligned cue import requires exactly one saved continuous TTS take.");
+      const payload = await readJson(path.resolve(EXTERNAL_WORD_CUES_FILE));
+      const verified = verifyExternalWordCues({
+        payload,
+        wavBytes: await fs.readFile(wavPath),
+        narration,
+        languageCode: voiceProfile.locale,
+        durationMs: metadata.chunkDurationsMs[index],
+      });
+      const alignment = alignWords(
+        ttsChunks[index].text,
+        verified.wordAnnotations,
+        metadata.chunkDurationsMs[index],
+      );
+      // "Exact" excludes the generator's legacy 1ms synthesized end repairs.
+      if (alignment.mismatches.length || !alignment.captions ||
+          alignment.timingRepairs.length)
+        throw new Error("External aligned word cues failed exact script/timing validation; no captions were written.");
+      transcription = {
+        transcript: narration, wordAnnotations: verified.wordAnnotations,
+        alignmentSource: verified.source,
+      };
+      chunkAlignment = alignment;
+      await fs.writeFile(transcriptPath,
+        JSON.stringify(transcription, null, 2) + "\n");
+      metadata.externalWordCueSource = verified.source;
+      metadata.wordAlignment = "External original-audio forced alignment + exact canonical token gate; owner listening review required";
+      await fs.writeFile(metadataPath,
+        JSON.stringify(metadata, null, 2) + "\n");
+    }
+    if (!chunkAlignment && transcription?.wordAnnotations?.length) {
       try {
         chunkAlignment = alignWords(
           ttsChunks[index].text,
