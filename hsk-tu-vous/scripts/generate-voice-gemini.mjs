@@ -761,39 +761,62 @@ async function recoverSilenceGuidedAnnotations({
     const measuredMs=mediaDurationMs(localPath,ffmpegRuntime);
     if(Math.abs(measuredMs-(clip.endMs-clip.startMs))>50)
       throw new Error("Source audio clip duration does not match measured silence boundaries.");
-    const uploaded=await withGeminiKeyFailover(config.credentialState,(key)=>
-      uploadForTranscription(key,localPath,"hsk-silence-"+EPISODE_ID+"-"+name));
-    config.apiKey=config.credentialState.slots[config.credentialState.index].secret;
-    let response;
-    try{
-      response=await requestJson(
-        API_ROOT+"/v1beta/interactions",{
-          method:"POST",headers:{
-            "x-goog-api-key":config.apiKey,"Content-Type":"application/json",
-            "Api-Revision":API_REVISION,
-          },body:JSON.stringify({
-            model:config.transcribeModel,
-            input:[{type:"audio",uri:uploaded.uri,mime_type:"audio/wav"}],
-            generation_config:{transcription_config:{
-              // Prioritize the explanation language in silence-bounded clips.
-              // Separate verified Chinese-only recovery remains available.
-              language_codes:[transcriptionLanguages[0]],
-              mode:{type:"verbatim",timestamp_granularities:["word"]},
-            }},
-          }),
-        },"Gemini silence-bounded transcription",pilotTranscriptRequestOptions(config));
-    }finally{
-      await deleteGeminiFile(config.apiKey,uploaded.name);
+    const clipHash=createHash("sha256").update(await fs.readFile(localPath)).digest("hex");
+    const cachePath=path.join(directory,name+".json");
+    let cached;
+    try {
+      cached=await readJson(cachePath);
+    } catch(error) {
+      if(error?.code!=="ENOENT") throw error;
     }
-    const raw=getWordAnnotations(response.data).map(w=>({
-      text:w.text,startOffset:w.start_offset,endOffset:w.end_offset,
-    }));
-    // Preserve provenance even when the provider returns no speech words.
-    await fs.writeFile(path.join(directory,name+".json"),JSON.stringify({
-      clip,measuredMs,model:config.transcribeModel,
-      languageCodes:[transcriptionLanguages[0]],annotations:raw,
-      transcript:response.data.output_text??"",
-    },null,2)+"\n");
+    const hint=[transcriptionLanguages[0]];
+    // Reuse a model response only when the actual audio clip, measured
+    // offsets, exact model and language hint match. Never bill an API twice
+    // for previously archived identical speech.
+    if(cached && (
+      cached.clipSha256!==clipHash ||
+      JSON.stringify(cached.clip)!==JSON.stringify(clip) ||
+      cached.model!==config.transcribeModel ||
+      JSON.stringify(cached.languageCodes)!==JSON.stringify(hint) ||
+      !Array.isArray(cached.annotations)
+    )) throw new Error("Archived word-cue clip provenance changed; refusing to reuse or re-bill.");
+
+    let raw, transcriptText;
+    if(cached) {
+      raw=cached.annotations;
+      transcriptText=cached.transcript??"";
+    } else {
+      const uploaded=await withGeminiKeyFailover(config.credentialState,(key)=>
+        uploadForTranscription(key,localPath,"hsk-silence-"+EPISODE_ID+"-"+name));
+      config.apiKey=config.credentialState.slots[config.credentialState.index].secret;
+      let response;
+      try{
+        response=await requestJson(
+          API_ROOT+"/v1beta/interactions",{
+            method:"POST",headers:{
+              "x-goog-api-key":config.apiKey,"Content-Type":"application/json",
+              "Api-Revision":API_REVISION,
+            },body:JSON.stringify({
+              model:config.transcribeModel,
+              input:[{type:"audio",uri:uploaded.uri,mime_type:"audio/wav"}],
+              generation_config:{transcription_config:{
+                language_codes:hint,
+                mode:{type:"verbatim",timestamp_granularities:["word"]},
+              }},
+            }),
+          },"Gemini silence-bounded transcription",pilotTranscriptRequestOptions(config));
+      }finally{
+        await deleteGeminiFile(config.apiKey,uploaded.name);
+      }
+      raw=getWordAnnotations(response.data).map(w=>({
+        text:w.text,startOffset:w.start_offset,endOffset:w.end_offset,
+      }));
+      transcriptText=response.data.output_text??"";
+      await fs.writeFile(cachePath,JSON.stringify({
+        clip,clipSha256:clipHash,measuredMs,model:config.transcribeModel,
+        languageCodes:hint,annotations:raw,transcript:transcriptText,
+      },null,2)+"\n");
+    }
     if(!raw.length) throw new Error(
       `Gemini returned no word annotations for measured audio span ${i+1}/${clips.length}; original audio preserved.`);
     // Zero/negative/out-of-clip provider timestamps are rejected individually.
@@ -819,7 +842,7 @@ async function recoverSilenceGuidedAnnotations({
         endOffset:((block.endMs+clip.startMs)/1000).toFixed(3)+"s",
       });
     }
-    transcripts.push(response.data.output_text??"");
+    transcripts.push(transcriptText);
   }
   return {wordAnnotations,transcript:transcripts.join(" "),clips};
 }
