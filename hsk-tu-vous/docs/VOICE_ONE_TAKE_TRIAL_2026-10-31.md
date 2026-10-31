@@ -43,3 +43,10 @@ The experimental one-shot secret-using GitHub Actions workflow is intentionally 
 - Model-backed commercial-quality **RU/TJ plus Chinese** cue coverage is **not yet proven**. Do not call the current archived audio a finished captioned MP4. The original TTS samples are accepted by the owner for voice quality, not approved for posting.
 
 Full schema and CLI: `docs/VOICE_OFFLINE_CUE_IMPORT.md`.
+
+## Offline acoustic model trial (2026-10-31)
+
+- Qwen3 ForcedAligner 0.6B (Apache-2.0): the real archived RU WAV's first five Russian words were aligned successfully by the actual CPU model, 0.240s through 2.880s. See [first trial run](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/41188312492). The initial Chinese diagnostic window was not speech-isolated, resulting in nonmonotonic timestamps that were properly rejected. Retest uses measured source silences at 4.782–5.400 and 6.461–7.293s to isolate the first Chinese phrase; all output remains diagnostic, not importable cues.
+- Tajik Sherpa-ONNX Zipformer2/Vosk 0.61 (Apache-2.0): the real archived TJ WAV was processed on the runner with **zero Gemini requests** in [run 41188404443](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/41188404443). Source Cyrillic-script token-sequence match coverage was **0.93** for the approved Tajik-script reference; 71 expected Tajik words and 98 ASR words after filtering. Its ONNX source-token timepoints are real provider outputs, **not source-verified start/end word cues**. Chinese and Latin acronym passages need distinct alignment. The complete raw word/timepoint evidence is in GitHub artifact ID `13037318948`.
+- The result is a technical advancement, but **neither language's full original audio currently has complete accepted word annotations**. Do not make or approve a final MP4 using partial/tentative timings, and do not substitute Russian language models for Tajik. The temporarily created one-shot model workflows are removed after the runs; normal GitHub CI never installs models or spends Gemini quotas.
+
