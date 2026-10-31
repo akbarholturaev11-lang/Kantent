@@ -1,0 +1,98 @@
+name: One-shot Gemini RU/TJ voice audition (PR 46)
+
+# The owner starts this one-shot check by changing PR #46 from draft to ready.
+# No push, schedule, synchronize or ordinary PR-open event can bill the API.
+on:
+  pull_request:
+    types: [ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  voice-audition:
+    if: >-
+      ${{ github.event.pull_request.number == 46 &&
+          github.event.pull_request.head.repo.full_name == github.repository &&
+          github.event.pull_request.head.ref == 'feat/continuous-gemini-tts-pilot-20261031' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ru, tg]
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    env:
+      HSK_CONTENT_LANGUAGE: ${{ matrix.language }}
+      HSK_AI_CONTINUOUS_TTS_PILOT: 'true'
+      EPISODE_ID: youdianr-vs-yidianr-price-20261030
+    steps:
+      - name: Checkout source branch (real branch; includes current main)
+        uses: actions/checkout@v4
+        with:
+          ref: feat/continuous-gemini-tts-pilot-20261031
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: hsk-tu-vous/package-lock.json
+      - name: Install Node deps and FFmpeg
+        run: |
+          npm ci --no-audit --no-fund
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+      - name: Verify current branch and approved voice profile
+        run: |
+          test "$(git symbolic-ref --short HEAD)" = 'feat/continuous-gemini-tts-pilot-20261031'
+          node --test scripts/continuous-tts-plan.test.mjs scripts/gemini-word-recovery.test.mjs
+          npm run check:consistency
+      - name: Create isolated review draft (NO publication)
+        run: npm run content:draft -- "$EPISODE_ID"
+      - name: Generate one continuous RU/TJ voice and exact word cues (billable; max 2 TTS attempts)
+        id: voice
+        continue-on-error: true
+        env:
+          HSK_AI_ALLOW_GEMINI_API: 'true'
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_BACKUP_1: ${{ secrets.GEMINI_API_KEY_BACKUP_1 }}
+          GEMINI_API_KEY_BACKUP_2: ${{ secrets.GEMINI_API_KEY_BACKUP_2 }}
+          GEMINI_API_KEY_BACKUP_3: ${{ secrets.GEMINI_API_KEY_BACKUP_3 }}
+        run: npm run content:voice -- "$EPISODE_ID"
+      - name: Summarize actual generated voice metadata without secrets
+        if: always()
+        run: |
+          node --input-type=module -e '
+          import fs from "node:fs";
+          import path from "node:path";
+          const root = path.join("review", process.env.EPISODE_ID, process.env.HSK_CONTENT_LANGUAGE === "tg" ? "tg" : "", "gemini-production");
+          const ds = fs.existsSync(root) ? fs.readdirSync(root).sort() : [];
+          const latest = ds.at(-1);
+          const f = latest ? path.join(root, latest, "metadata.json") : "";
+          const m = f && fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf8")) : {};
+          const report = {language:process.env.HSK_CONTENT_LANGUAGE, episode:process.env.EPISODE_ID,
+            status:m.status??"not-started", ttsModel:m.ttsModel??null,
+            ttsGenerationMode:m.ttsGenerationMode??null, ttsChunkCount:m.ttsChunkCount??null,
+            ttsRequestCount:m.ttsRequestCount??null, transcriptionAttempts:m.transcriptionAttempts??null,
+            audioDurationMs:m.audioDurationMs??null, captionWordCount:m.captionWordCount??null,
+            recoveredClips:m.recoveredClips?.length??0, blockedReason:m.error?.slice(0,400)??null};
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, "### "+report.language+" one-shot audition\n\n```json\n"+JSON.stringify(report,null,2)+"\n```\n");
+          console.log(JSON.stringify(report));
+          '
+      - name: Upload private review artifacts (no Zernio or publishing)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gemini-continuous-pr46-${{ matrix.language }}-${{ github.run_id }}
+          path: hsk-tu-vous/review/
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Require real successful word-aligned audio
+        if: always()
+        run: test "${{ steps.voice.outcome }}" = "success"
+
+# No provider/voice/model changes, no social credentials, uploads or publishing.
