@@ -487,6 +487,14 @@
       "status": "planned"
     },
     {
+      "id": "campus-voice-rehearsal-20261103",
+      "date": "2026-11-03",
+      "contentType": "advertisement",
+      "topic": "Перед разговором: короткая голосовая репетиция с AI Voice",
+      "promoFile": "promos/campus-voice-rehearsal-20261103.json",
+      "status": "planned"
+    },
+    {
       "id": "bi-comparison-height-20261104",
       "date": "2026-11-04",
       "week": 6,
