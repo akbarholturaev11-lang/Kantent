@@ -4,6 +4,7 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
+import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
 import { requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
@@ -31,6 +32,8 @@ import {
 
 const API_ROOT = "https://generativelanguage.googleapis.com";
 const API_REVISION = "2026-05-20";
+// Default OFF: no production video/caption change before end-to-end approval.
+const ONE_TAKE_PILOT = process.env.HSK_AI_CONTINUOUS_TTS_PILOT === "true";
 const EPISODE_ID = process.argv[2];
 const CLI_OPTIONS = process.argv.slice(3);
 let PLATFORM;
@@ -76,6 +79,7 @@ async function loadGeminiEnvironment(profile) {
   return {
     apiKey: slots[0].secret,
     credentialState,
+    ttsRequestCount: 0,
     ttsModel: profile.ttsModel,
     voice: profile.voiceName,
     transcribeModel: profile.transcriptionModel,
@@ -86,9 +90,9 @@ async function loadGeminiEnvironment(profile) {
   };
 }
 
-async function requestJson(url, options, label) {
-  const maxAttempts = 4;
+async function requestJson(url, options, label, { maxAttempts = 4, onAttempt } = {}) {
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    onAttempt?.();
     const response = await fetch(url, {
       ...options,
       signal: options.signal ?? AbortSignal.timeout(120_000),
@@ -543,6 +547,14 @@ async function generateTtsWav(config, text) {
         }),
       },
       "Gemini speech generation",
+      {
+        maxAttempts: ONE_TAKE_PILOT ? 2 : 4,
+        onAttempt: () => {
+          if (ONE_TAKE_PILOT && config.ttsRequestCount >= 2)
+            throw new Error("One-take TTS limit of two HTTP attempts reached; original audio remains preserved.");
+          config.ttsRequestCount += 1;
+        },
+      },
     ),
   );
   config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
@@ -1005,16 +1017,26 @@ if (RESUME_FOLDER_NAME) {
 }
 
 const ffmpegRuntime = await resolveFfmpegRuntime();
-const ttsChunks = createTtsChunks(
-  PLATFORM ? { ...episode, scenes: [tiktokCtaScene] } : episode,
-);
+const ttsSource = PLATFORM ? { ...episode, scenes: [tiktokCtaScene] } : episode;
+const ttsMode = ONE_TAKE_PILOT ? "continuous-pilot" : "scene";
+const ttsChunks = ONE_TAKE_PILOT
+  ? createContinuousTtsChunks(ttsSource, { expectedNarration: narration })
+  : createTtsChunks(ttsSource);
 if (!ttsChunks.length) throw new Error("No narration chunks were created.");
+if (RESUME_FOLDER_NAME && (metadata.ttsGenerationMode ?? "scene") !== ttsMode) {
+  throw new Error("Refusing to resume saved audio under a different TTS chunking mode.");
+}
 if (RESUME_FOLDER_NAME && metadata.ttsChunkCount !== ttsChunks.length) {
   throw new Error("Saved generation chunk count does not match the current narration.");
 }
+config.ttsRequestCount = metadata.ttsRequestCount ?? 0;
+metadata.ttsGenerationMode = ttsMode;
+metadata.ttsHttpAttemptLimitPerTake = ONE_TAKE_PILOT ? 2 : 4;
 metadata.ttsChunkCount = ttsChunks.length;
 metadata.chunkSceneIds = ttsChunks.map((chunk) => chunk.sceneIds);
-metadata.chunkingStrategy = "scene boundaries; at most 12000 narration characters per TTS and transcription request";
+metadata.chunkingStrategy = ONE_TAKE_PILOT
+  ? "one exact unchanged narration take per language/package (max 12000 chars)"
+  : "scene boundaries; at most 12000 narration characters per TTS and transcription request";
 metadata.previousVoiceProvider = episode.voiceProvider ?? null;
 metadata.previousVoiceProfileId = episode.voiceProfileId ?? null;
 await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
@@ -1050,6 +1072,7 @@ try {
       await fs.writeFile(chunkPath, wav, { flag: "wx" });
     }
     completedTtsChunks += 1;
+    metadata.ttsRequestCount = config.ttsRequestCount;
     metadata.completedTtsChunks = completedTtsChunks;
     metadata.status = "audio-generating";
     await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
@@ -1449,6 +1472,7 @@ try {
   console.log(`Word-timed VTT: ${path.join(outputDir, "captions.vtt")}`);
   console.log(`Metadata: ${metadataPath}`);
 } catch (error) {
+  metadata.ttsRequestCount = config.ttsRequestCount;
   if (!metadata.status || ["starting", "audio-generating", "audio-ready", "ready-for-import"].includes(metadata.status))
     metadata.status = "failed";
   metadata.error = safeErrorMessage(error);

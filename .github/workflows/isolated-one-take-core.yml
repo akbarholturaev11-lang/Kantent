@@ -1,0 +1,35 @@
+name: Isolated one-take TTS core safety (no Gemini calls)
+
+on:
+  pull_request:
+    paths:
+      - 'hsk-tu-vous/scripts/continuous-tts-plan.mjs'
+      - 'hsk-tu-vous/scripts/continuous-tts-plan.test.mjs'
+      - 'hsk-tu-vous/scripts/generate-voice-gemini.mjs'
+      - '.github/workflows/isolated-one-take-core.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  voice:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JS syntax and both voice source tests
+        run: |
+          node --check scripts/continuous-tts-plan.mjs
+          node --check scripts/continuous-tts-plan.test.mjs
+          node --check scripts/generate-voice-gemini.mjs
+          node --test scripts/continuous-tts-plan.test.mjs scripts/gemini-word-recovery.test.mjs
+      - name: Project source consistency
+        run: |
+          npm ci --no-audit --no-fund
+          npm run check:consistency
