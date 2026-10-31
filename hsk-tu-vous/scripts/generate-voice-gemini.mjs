@@ -690,10 +690,10 @@ async function recoverSilenceGuidedAnnotations({
     throw new Error("FFmpeg failed to measure original WAV pauses.");
   const pauses=[];
   let startMs=null;
-  for(const line of detection.stderr.split(/\\r?\\n/u)){
-    const start=line.match(/silence_start:\\s*(\\d+(?:\\.\\d+)?)/u);
+  for(const line of detection.stderr.split(/\r?\n/u)){
+    const start=line.match(/silence_start:\s*(\d+(?:\.\d+)?)/u);
     if(start) startMs=Number(start[1])*1000;
-    const end=line.match(/silence_end:\\s*(\\d+(?:\\.\\d+)?)/u);
+    const end=line.match(/silence_end:\s*(\d+(?:\.\d+)?)/u);
     if(end && startMs!==null){
       pauses.push({startMs,endMs:Number(end[1])*1000});
       startMs=null;
@@ -704,7 +704,7 @@ async function recoverSilenceGuidedAnnotations({
   await fs.mkdir(directory,{recursive:true});
   await fs.writeFile(path.join(directory,"cuts.json"),JSON.stringify({
     sourceAudio:path.basename(audioPath),durationMs,measuredPauses:pauses,clips,
-  },null,2)+"\\n");
+  },null,2)+"\n");
   const wordAnnotations=[];
   const transcripts=[];
   for(const [i,clip] of clips.entries()){
@@ -750,7 +750,7 @@ async function recoverSilenceGuidedAnnotations({
       clip,measuredMs,model:config.transcribeModel,
       languageCodes:transcriptionLanguages,annotations:raw,
       transcript:response.data.output_text??"",
-    },null,2)+"\\n");
+    },null,2)+"\n");
     if(!raw.length) throw new Error(
       `Gemini returned no word annotations for measured audio span ${i+1}/${clips.length}; original audio preserved.`);
     for(const block of timedBlocks(raw,measuredMs)){
@@ -1249,6 +1249,21 @@ try {
       transcription = await readJson(transcriptPath);
     } catch (error) {
       if (error?.code !== "ENOENT") throw error;
+    }
+    // A failed run archives each real model response under attempt-N.
+    // On resume, reuse the last actual response instead of discarding source
+    // anchors or repeating already-paid whole-audio ASR calls.
+    if (!transcription && RESUME_FOLDER_NAME) {
+      const priorAttempts = metadata.transcriptionAttempts?.[index] ?? 0;
+      if (priorAttempts > 0) {
+        const savedAttemptPath = path.join(outputDir,
+          `transcription-part-${chunkNumber}-attempt-${priorAttempts}.json`);
+        try {
+          transcription = await readJson(savedAttemptPath);
+        } catch (error) {
+          if (error?.code !== "ENOENT") throw error;
+        }
+      }
     }
     let chunkAlignment;
     if (transcription?.wordAnnotations?.length) {
