@@ -1296,7 +1296,11 @@ try {
       }
     }
     let attempts = metadata.transcriptionAttempts?.[index] ?? (transcription ? 1 : 0);
-    while (!chunkAlignment?.captions && attempts < 3) {
+    // Repeating the same full-audio ASR request is ineffective for severe
+    // mixed-language omissions. In the opt-in pilot try it once, then inspect
+    // the saved WAV using bounded recovery, with no new TTS request.
+    const maxFullTranscribeAttempts = CONTINUOUS_TTS_PILOT ? 1 : 3;
+    while (!chunkAlignment?.captions && attempts < maxFullTranscribeAttempts) {
       attempts += 1;
       // Keep resumable upload atomic per key; a rejected start may switch to a
       // backup and start a NEW upload. Transcribe + cleanup use that SAME key.
