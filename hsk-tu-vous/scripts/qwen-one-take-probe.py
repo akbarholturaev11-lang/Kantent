@@ -99,7 +99,7 @@ def main():
                  "end": round(w["end"] + start, 3)} for w in words],
             "validation": "MODEL-CANDIDATE-NOT-VERIFIED-NOT-FOR-CAPTIONS"})
         print(json.dumps({"language":spec["language"],"words":len(words),
-              "first":words[0],"last":words[-1]},ensure_ascii=False,flush=True))
+              "first":words[0],"last":words[-1]},ensure_ascii=False),flush=True)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
     print("WROTE_DIAGNOSTIC_ONLY", args.out)
