@@ -521,6 +521,9 @@ function createTtsChunks(episode, maxCharacters = 12000) {
 }
 
 async function generateTtsWav(config, text) {
+  if (process.env.HSK_AI_CONTINUOUS_TTS_RESUME_ONLY === "true") {
+    throw new Error("Resume-only diagnosis forbids new TTS API calls; original WAV must exist.");
+  }
   const content = [{ type: "text", text }];
   if (config.style) {
     content[0].annotations = [
