@@ -1,0 +1,83 @@
+name: Isolated scene-review MP4 from archived one-take RU/TJ
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/scene-review-one-take.yml'
+      - 'hsk-tu-vous/scripts/render-one-take-scene-review.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  scene-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: ru
+            folder: 2026-10-31T08-07-45-724Z
+            subpath: ''
+            artifact: gemini-continuous-pr46-ru-41183287146
+            audio_sha: 562c368a0dd5800f11da724a54480797631ed141625bcabba248111184cc652c
+            text_sha: 75d2bad12fc1c5347ea097cb0d772c0abd1d4390178078ddc0987bace022ef59
+          - language: tg
+            folder: 2026-10-31T08-07-45-540Z
+            subpath: tg/
+            artifact: gemini-continuous-pr46-tg-41183287146
+            audio_sha: df7d2073f37d0c4bbd23f6542ac99cf9368823196f54a47104d29ce71bb80c23
+            text_sha: 4bbb1e7ff18c262004f8a454c0efa804dd67780dffda478ad3ef18ac37335842
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore untouched original one-take voice and episode
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 41183287146
+          name: ${{ matrix.artifact }}
+          github-token: ${{ github.token }}
+          path: hsk-tu-vous/review
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install local review-only renderer requirements
+        run: |
+          python -m pip install --quiet numpy pillow
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-cjk fonts-dejavu-core
+          python -m py_compile scripts/render-one-take-scene-review.py
+      - name: Render archived voice + source-authored scene-card MP4 (no API)
+        env:
+          LANG_ID: ${{ matrix.language }}
+          SUBPATH: ${{ matrix.subpath }}
+          VOICE_FOLDER: ${{ matrix.folder }}
+          WAV_HASH: ${{ matrix.audio_sha }}
+          TEXT_HASH: ${{ matrix.text_sha }}
+        run: |
+          set -euo pipefail
+          ROOT="review/youdianr-vs-yidianr-price-20261030/${SUBPATH}"
+          python scripts/render-one-take-scene-review.py \
+            --wav "${ROOT}gemini-production/${VOICE_FOLDER}/voice.wav" \
+            --episode "${ROOT}episode.json" \
+            --audio-sha256 "$WAV_HASH" \
+            --narration-sha256 "$TEXT_HASH" \
+            --language "$LANG_ID" \
+            --visual-system content/visual-system.json \
+            --out "/tmp/hsk-scene-review/hsk-ai-$LANG_ID-review-only.mp4" \
+            --evidence "/tmp/hsk-scene-review/hsk-ai-$LANG_ID-evidence.json"
+      - name: Persist only non-publishable preview artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hskai-safe-one-take-scene-review-${{ matrix.language }}-${{ github.run_id }}
+          path: /tmp/hsk-scene-review
+          retention-days: 7
+          if-no-files-found: warn
+
+# Does NOT modify source, approve episode, create word captions or publish.
