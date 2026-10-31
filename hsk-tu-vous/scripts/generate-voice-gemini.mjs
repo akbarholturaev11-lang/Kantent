@@ -302,6 +302,8 @@ function flattenRecognized(annotations, audioDurationMs, timingRepairs) {
     }
     let startMs = rawStartMs;
     if (rawStartMs < previousStartMs) {
+      if (CONTINUOUS_TTS_PILOT) throw new Error(
+        "Continuous TTS pilot refuses repaired/backwards provider word timestamps.");
       const correctionMs = previousStartMs - rawStartMs;
       if (correctionMs <= 250) {
         startMs = previousStartMs;
@@ -324,6 +326,8 @@ function flattenRecognized(annotations, audioDurationMs, timingRepairs) {
     }
     let endMs = rawEndMs;
     if (endMs <= startMs) {
+      if (CONTINUOUS_TTS_PILOT) throw new Error(
+        "Continuous TTS pilot refuses invented end offsets for zero-length word annotations.");
       const correctionMs = startMs + 1 - endMs;
       if (correctionMs > 250)
         throw new Error("Gemini returned a word ending before its start by more than 250 ms.");
