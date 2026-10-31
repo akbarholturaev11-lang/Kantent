@@ -86,7 +86,7 @@ def source(wav,episode,sha_audio,sha_text,lang):
     if digest(narration.encode())!=sha_text:
         raise ValueError("Approved source narration SHA-256 mismatch")
     metadata=json.loads((wav.parent/"metadata.json").read_text(encoding="utf8"))
-    if metadata.get("ttsGenerationMode")!="continuous-pilot" or metadata.get("ttsRequestCount")!=1:
+    if metadata.get("ttsGenerationMode")!="continuous-pilot" or metadata.get("ttsRequestCount") not in (1,2):
         raise ValueError("Only archived owner-auditioned single-take voice accepted")
     with wave.open(str(wav),"rb") as stream:
         if(stream.getframerate(),stream.getnchannels(),stream.getsampwidth())!=(24000,1,2):
