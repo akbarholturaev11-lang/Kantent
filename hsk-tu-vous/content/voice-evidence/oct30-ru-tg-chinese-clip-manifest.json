@@ -1,0 +1,162 @@
+{
+  "version": 1,
+  "status": "DIAGNOSTIC-ONLY-NOT-FOR-CAPTIONS",
+  "model": "Qwen/Qwen3-ForcedAligner-0.6B",
+  "episodeId": "youdianr-vs-yidianr-price-20261030",
+  "languages": {
+    "ru": {
+      "languageCode": "ru-RU",
+      "wavSha256": "562c368a0dd5800f11da724a54480797631ed141625bcabba248111184cc652c",
+      "narrationSha256": "75d2bad12fc1c5347ea097cb0d772c0abd1d4390178078ddc0987bace022ef59",
+      "windows": [
+        {
+          "id": 1,
+          "text": "这个有点儿贵",
+          "start": 5.399,
+          "end": 6.462,
+          "boundaryEvidence": "previously Qwen tested measured silence"
+        },
+        {
+          "id": 2,
+          "text": "有点儿",
+          "start": 7.29,
+          "end": 8,
+          "boundaryEvidence": "candidate bounded by nearby Gemini ASR word anchors or measured source silence; boundaries NOT independently speech-verified"
+        },
+        {
+          "id": 3,
+          "text": "贵",
+          "start": 9.1,
+          "end": 9.78,
+          "boundaryEvidence": "candidate bounded by nearby Gemini ASR word anchors or measured source silence; boundaries NOT independently speech-verified"
+        },
+        {
+          "id": 4,
+          "text": "这个有点儿贵",
+          "start": 10.24,
+          "end": 11.26,
+          "boundaryEvidence": "candidate bounded by nearby Gemini ASR word anchors or measured source silence; boundaries NOT independently speech-verified"
+        },
+        {
+          "id": 5,
+          "text": "便宜一点儿，可以吗",
+          "start": 16.34,
+          "end": 18.35,
+          "boundaryEvidence": "candidate bounded by nearby Gemini ASR word anchors or measured source silence; boundaries NOT independently speech-verified"
+        },
+        {
+          "id": 6,
+          "text": "有点儿贵",
+          "start": 22.16,
+          "end": 23.4,
+          "boundaryEvidence": "candidate bounded by nearby Gemini ASR word anchors or measured source silence; boundaries NOT independently speech-verified"
+        },
+        {
+          "id": 7,
+          "text": "便宜一点儿",
+          "start": 25.02,
+          "end": 26.4,
+          "boundaryEvidence": "candidate bounded by nearby Gemini ASR word anchors or measured source silence; boundaries NOT independently speech-verified"
+        },
+        {
+          "id": 8,
+          "text": "一点儿",
+          "start": 28.7,
+          "end": 29.21,
+          "boundaryEvidence": "candidate bounded by nearby Gemini ASR word anchors or measured source silence; boundaries NOT independently speech-verified"
+        },
+        {
+          "id": 9,
+          "text": "有点儿贵",
+          "start": 30.4,
+          "end": 31.39,
+          "boundaryEvidence": "candidate bounded by nearby Gemini ASR word anchors or measured source silence; boundaries NOT independently speech-verified"
+        },
+        {
+          "id": 10,
+          "text": "便宜一点儿，可以吗",
+          "start": 33.09,
+          "end": 35.03,
+          "boundaryEvidence": "candidate bounded by nearby Gemini ASR word anchors or measured source silence; boundaries NOT independently speech-verified"
+        }
+      ]
+    },
+    "tg": {
+      "languageCode": "tg-TJ",
+      "wavSha256": "df7d2073f37d0c4bbd23f6542ac99cf9368823196f54a47104d29ce71bb80c23",
+      "narrationSha256": "4bbb1e7ff18c262004f8a454c0efa804dd67780dffda478ad3ef18ac37335842",
+      "windows": [
+        {
+          "id": 1,
+          "text": "这个有点儿贵",
+          "start": 4.2,
+          "end": 5.36,
+          "boundaryEvidence": "candidate from original Tajik Vosk model word-time anchors; NOT independently speech-verified"
+        },
+        {
+          "id": 2,
+          "text": "有点儿",
+          "start": 6.28,
+          "end": 6.96,
+          "boundaryEvidence": "candidate from original Tajik Vosk model word-time anchors; NOT independently speech-verified"
+        },
+        {
+          "id": 3,
+          "text": "贵",
+          "start": 7.84,
+          "end": 8.28,
+          "boundaryEvidence": "candidate from original Tajik Vosk model word-time anchors; NOT independently speech-verified"
+        },
+        {
+          "id": 4,
+          "text": "这个有点儿贵",
+          "start": 9.16,
+          "end": 10.6,
+          "boundaryEvidence": "candidate from original Tajik Vosk model word-time anchors; NOT independently speech-verified"
+        },
+        {
+          "id": 5,
+          "text": "便宜一点儿，可以吗",
+          "start": 16.84,
+          "end": 18.8,
+          "boundaryEvidence": "candidate from original Tajik Vosk model word-time anchors; NOT independently speech-verified"
+        },
+        {
+          "id": 6,
+          "text": "有点儿贵",
+          "start": 22.6,
+          "end": 23.76,
+          "boundaryEvidence": "candidate from original Tajik Vosk model word-time anchors; NOT independently speech-verified"
+        },
+        {
+          "id": 7,
+          "text": "便宜一点儿",
+          "start": 25.2,
+          "end": 26.32,
+          "boundaryEvidence": "candidate from original Tajik Vosk model word-time anchors; NOT independently speech-verified"
+        },
+        {
+          "id": 8,
+          "text": "一点儿",
+          "start": 28.6,
+          "end": 29.4,
+          "boundaryEvidence": "candidate from original Tajik Vosk model word-time anchors; NOT independently speech-verified"
+        },
+        {
+          "id": 9,
+          "text": "有点儿贵",
+          "start": 31.08,
+          "end": 32.36,
+          "boundaryEvidence": "candidate from original Tajik Vosk model word-time anchors; NOT independently speech-verified"
+        },
+        {
+          "id": 10,
+          "text": "便宜一点儿，可以吗",
+          "start": 34.32,
+          "end": 36.2,
+          "boundaryEvidence": "candidate from original Tajik Vosk model word-time anchors; NOT independently speech-verified"
+        }
+      ]
+    }
+  }
+}

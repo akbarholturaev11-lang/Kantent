@@ -1,9 +1,13 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
+import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
+import { splitExperimentalMandarinUnits } from "./mandarin-erhua-units.mjs";
+import { verifyExternalWordCues } from "./external-word-cue-gate.mjs";
+import { planSilenceClips } from "./silence-clip-plan.mjs";
 import { requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
@@ -31,19 +35,28 @@ import {
 
 const API_ROOT = "https://generativelanguage.googleapis.com";
 const API_REVISION = "2026-05-20";
+// Opt-in only: no approved production voice/model changes until a real audio audition.
+const CONTINUOUS_TTS_PILOT = process.env.HSK_AI_CONTINUOUS_TTS_PILOT === "true";
 const EPISODE_ID = process.argv[2];
 const CLI_OPTIONS = process.argv.slice(3);
 let PLATFORM;
 let RESUME_FOLDER_NAME;
+let EXTERNAL_WORD_CUES_FILE;
 for (let index = 0; index < CLI_OPTIONS.length; index += 1) {
   const option = CLI_OPTIONS[index];
   if (option === "--platform" && !PLATFORM) {
     PLATFORM = CLI_OPTIONS[++index];
   } else if (option === "--resume" && !RESUME_FOLDER_NAME) {
     RESUME_FOLDER_NAME = CLI_OPTIONS[++index];
+  } else if (option === "--aligned-cues" && !EXTERNAL_WORD_CUES_FILE) {
+    EXTERNAL_WORD_CUES_FILE = CLI_OPTIONS[++index];
   } else {
-    throw new Error("Use [--platform tiktok] [--resume <generation-folder>].");
+    throw new Error("Use [--platform tiktok] [--resume <generation-folder>] [--aligned-cues <file.json>].");
   }
+}
+if (EXTERNAL_WORD_CUES_FILE && (!CONTINUOUS_TTS_PILOT || !RESUME_FOLDER_NAME ||
+    !EXTERNAL_WORD_CUES_FILE.endsWith(".json"))) {
+  throw new Error("Aligned cue import requires the opt-in continuous pilot, an existing --resume folder and a JSON file.");
 }
 
 function requireEpisodeId(value) {
@@ -56,6 +69,17 @@ function requireEpisodeId(value) {
 }
 
 async function loadGeminiEnvironment(profile) {
+  // Strict offline cue import: reuse the archived TTS WAV without keys.
+  if (EXTERNAL_WORD_CUES_FILE) {
+    return {
+      apiKey: null, credentialState: null, ttsRequestCount: 0, transcriptionRequestCount: 0,
+      ttsModel: profile.ttsModel, voice: profile.voiceName,
+      transcribeModel: profile.transcriptionModel,
+      style: profile.spokenStyle || "",
+      mp3BitrateKbps: profile.mp3BitrateKbps,
+      sampleRateHz: profile.sampleRateHz, channels: profile.channels,
+    };
+  }
   if (
     (!process.env.GEMINI_API_KEY || !process.env.HSK_AI_ALLOW_GEMINI_API) &&
     typeof process.loadEnvFile === "function"
@@ -76,6 +100,8 @@ async function loadGeminiEnvironment(profile) {
   return {
     apiKey: slots[0].secret,
     credentialState,
+    ttsRequestCount: 0,
+    transcriptionRequestCount: 0,
     ttsModel: profile.ttsModel,
     voice: profile.voiceName,
     transcribeModel: profile.transcriptionModel,
@@ -86,9 +112,11 @@ async function loadGeminiEnvironment(profile) {
   };
 }
 
-async function requestJson(url, options, label) {
-  const maxAttempts = 4;
+async function requestJson(url, options, label, { maxAttempts = 4, onAttempt } = {}) {
+  if (EXTERNAL_WORD_CUES_FILE)
+    throw new Error("Aligned cue import forbids every Gemini API request.");
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    onAttempt?.();
     const response = await fetch(url, {
       ...options,
       signal: options.signal ?? AbortSignal.timeout(120_000),
@@ -131,6 +159,21 @@ async function requestJson(url, options, label) {
     );
   }
   throw new Error(`${label} failed after ${maxAttempts} attempts.`);
+}
+
+function pilotTranscriptRequestOptions(config) {
+  if (!CONTINUOUS_TTS_PILOT) return {};
+  return {
+    maxAttempts: 2,
+    onAttempt: () => {
+      // One archived voice: no more than eight actual ASR HTTP calls across
+      // every retry/resume. TTS is counted and limited separately.
+      if (config.transcriptionRequestCount >= 8) {
+        throw new Error("Continuous voice pilot ASR budget exhausted: 8 HTTP requests per saved take. Keep existing audio and diagnostics.");
+      }
+      config.transcriptionRequestCount += 1;
+    },
+  };
 }
 
 function getAudioData(interaction) {
@@ -221,9 +264,10 @@ function tokenParts(value) {
     // the written narration has no spaces. Keep the source phrase as one
     // caption word while aligning its characters against those timed units.
     if (/^\p{Script=Han}+$/u.test(normalized)) {
-      return Array.from(normalized, (character) =>
-        transcriptionAliases[character] ?? character,
-      );
+      const units = CONTINUOUS_TTS_PILOT
+        ? splitExperimentalMandarinUnits(normalized)
+        : Array.from(normalized);
+      return units.map((unit) => transcriptionAliases[unit] ?? unit);
     }
     return [transcriptionAliases[normalized] ?? normalized];
   });
@@ -276,6 +320,8 @@ function flattenRecognized(annotations, audioDurationMs, timingRepairs) {
     }
     let startMs = rawStartMs;
     if (rawStartMs < previousStartMs) {
+      if (CONTINUOUS_TTS_PILOT) throw new Error(
+        "Continuous TTS pilot refuses repaired/backwards provider word timestamps.");
       const correctionMs = previousStartMs - rawStartMs;
       if (correctionMs <= 250) {
         startMs = previousStartMs;
@@ -298,6 +344,8 @@ function flattenRecognized(annotations, audioDurationMs, timingRepairs) {
     }
     let endMs = rawEndMs;
     if (endMs <= startMs) {
+      if (CONTINUOUS_TTS_PILOT) throw new Error(
+        "Continuous TTS pilot refuses invented end offsets for zero-length word annotations.");
       const correctionMs = startMs + 1 - endMs;
       if (correctionMs > 250)
         throw new Error("Gemini returned a word ending before its start by more than 250 ms.");
@@ -516,6 +564,9 @@ function createTtsChunks(episode, maxCharacters = 12000) {
 }
 
 async function generateTtsWav(config, text) {
+  if (EXTERNAL_WORD_CUES_FILE || process.env.HSK_AI_CONTINUOUS_TTS_RESUME_ONLY === "true") {
+    throw new Error("Offline cue import/resume forbids new TTS API calls; original WAV must exist.");
+  }
   const content = [{ type: "text", text }];
   if (config.style) {
     content[0].annotations = [
@@ -543,6 +594,17 @@ async function generateTtsWav(config, text) {
         }),
       },
       "Gemini speech generation",
+      {
+        maxAttempts: CONTINUOUS_TTS_PILOT ? 2 : 4,
+        onAttempt: () => {
+          // Each continuous take gets at most two actual TTS HTTP requests,
+          // including retries/credential rotation. Never burn quota blindly.
+          if (CONTINUOUS_TTS_PILOT && config.ttsRequestCount >= 2) {
+            throw new Error("Continuous TTS pilot stopped after two HTTP attempts; keep any saved audio.");
+          }
+          config.ttsRequestCount += 1;
+        },
+      },
     ),
   );
   config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
@@ -651,6 +713,142 @@ function timedBlocks(annotations, durationMs) {
   });
 }
 
+/**
+ * Continuous-TTS-only fallback for an empty full-audio transcript.
+ * Cuts are taken exclusively from measured waveform silences, not guessed
+ * from text. Every accepted word offset still comes from Gemini Transcribe.
+ * Existing exact whole-script and language safety gates remain unchanged.
+ */
+async function recoverSilenceGuidedAnnotations({
+  audioPath, durationMs, outputDir, chunkNumber,
+  config, ffmpegRuntime, transcriptionLanguages,
+}) {
+  const ffmpeg = ffmpegRuntime.ffmpegPath;
+  const detection = spawnSync(ffmpeg, [
+    "-hide_banner","-nostdin","-i",audioPath,
+    "-af","silencedetect=noise=-37dB:d=0.30",
+    "-f","null","-",
+  ], { env:ffmpegRuntime.env,encoding:"utf8",maxBuffer:2*1024*1024 });
+  if (detection.error || detection.status !== 0)
+    throw new Error("FFmpeg failed to measure original WAV pauses.");
+  const pauses=[];
+  let startMs=null;
+  for(const line of detection.stderr.split(/\r?\n/u)){
+    const start=line.match(/silence_start:\s*(\d+(?:\.\d+)?)/u);
+    if(start) startMs=Number(start[1])*1000;
+    const end=line.match(/silence_end:\s*(\d+(?:\.\d+)?)/u);
+    if(end && startMs!==null){
+      pauses.push({startMs,endMs:Number(end[1])*1000});
+      startMs=null;
+    }
+  }
+  const clips=planSilenceClips(durationMs,pauses);
+  const directory=path.join(outputDir,"silence-recovery","chunk-"+chunkNumber);
+  await fs.mkdir(directory,{recursive:true});
+  await fs.writeFile(path.join(directory,"cuts.json"),JSON.stringify({
+    sourceAudio:path.basename(audioPath),durationMs,measuredPauses:pauses,clips,
+  },null,2)+"\n");
+  const wordAnnotations=[];
+  const transcripts=[];
+  for(const [i,clip] of clips.entries()){
+    const name="silence-"+String(i+1).padStart(2,"0");
+    const localPath=path.join(directory,name+".wav");
+    execFileSync(ffmpeg,[
+      "-hide_banner","-loglevel","error","-nostdin","-y",
+      "-i",audioPath,"-ss",(clip.startMs/1000).toFixed(3),
+      "-t",((clip.endMs-clip.startMs)/1000).toFixed(3),
+      "-map","0:a:0","-ac","1","-ar",String(config.sampleRateHz),
+      "-c:a","pcm_s16le",localPath,
+    ],{env:ffmpegRuntime.env,stdio:["ignore","pipe","pipe"]});
+    const measuredMs=mediaDurationMs(localPath,ffmpegRuntime);
+    if(Math.abs(measuredMs-(clip.endMs-clip.startMs))>50)
+      throw new Error("Source audio clip duration does not match measured silence boundaries.");
+    const clipHash=createHash("sha256").update(await fs.readFile(localPath)).digest("hex");
+    const cachePath=path.join(directory,name+".json");
+    let cached;
+    try {
+      cached=await readJson(cachePath);
+    } catch(error) {
+      if(error?.code!=="ENOENT") throw error;
+    }
+    const hint=[transcriptionLanguages[0]];
+    // Reuse a model response only when the actual audio clip, measured
+    // offsets, exact model and language hint match. Never bill an API twice
+    // for previously archived identical speech.
+    if(cached && (
+      cached.clipSha256!==clipHash ||
+      JSON.stringify(cached.clip)!==JSON.stringify(clip) ||
+      cached.model!==config.transcribeModel ||
+      JSON.stringify(cached.languageCodes)!==JSON.stringify(hint) ||
+      !Array.isArray(cached.annotations)
+    )) throw new Error("Archived word-cue clip provenance changed; refusing to reuse or re-bill.");
+
+    let raw, transcriptText;
+    if(cached) {
+      raw=cached.annotations;
+      transcriptText=cached.transcript??"";
+    } else {
+      const uploaded=await withGeminiKeyFailover(config.credentialState,(key)=>
+        uploadForTranscription(key,localPath,"hsk-silence-"+EPISODE_ID+"-"+name));
+      config.apiKey=config.credentialState.slots[config.credentialState.index].secret;
+      let response;
+      try{
+        response=await requestJson(
+          API_ROOT+"/v1beta/interactions",{
+            method:"POST",headers:{
+              "x-goog-api-key":config.apiKey,"Content-Type":"application/json",
+              "Api-Revision":API_REVISION,
+            },body:JSON.stringify({
+              model:config.transcribeModel,
+              input:[{type:"audio",uri:uploaded.uri,mime_type:"audio/wav"}],
+              generation_config:{transcription_config:{
+                language_codes:hint,
+                mode:{type:"verbatim",timestamp_granularities:["word"]},
+              }},
+            }),
+          },"Gemini silence-bounded transcription",pilotTranscriptRequestOptions(config));
+      }finally{
+        await deleteGeminiFile(config.apiKey,uploaded.name);
+      }
+      raw=getWordAnnotations(response.data).map(w=>({
+        text:w.text,startOffset:w.start_offset,endOffset:w.end_offset,
+      }));
+      transcriptText=response.data.output_text??"";
+      await fs.writeFile(cachePath,JSON.stringify({
+        clip,clipSha256:clipHash,measuredMs,model:config.transcribeModel,
+        languageCodes:hint,annotations:raw,transcript:transcriptText,
+      },null,2)+"\n");
+    }
+    if(!raw.length) throw new Error(
+      `Gemini returned no word annotations for measured audio span ${i+1}/${clips.length}; original audio preserved.`);
+    // Zero/negative/out-of-clip provider timestamps are rejected individually.
+    // Never assign a synthetic positive duration to an invalid word.
+    const eligible=raw.filter(word=>{
+      try {
+        const start=parseOffsetMs(word.startOffset);
+        const end=parseOffsetMs(word.endOffset);
+        return start>=0 && end>start && end<=measuredMs+100;
+      } catch {
+        return false;
+      }
+    });
+    await fs.writeFile(path.join(directory,name+"-rejected.json"),JSON.stringify({
+      reason:"provider timestamp has zero/negative duration or lies outside measured clip",
+      rejected:raw.filter(word=>!eligible.includes(word)),
+    },null,2)+"\n");
+    if(!eligible.length) throw Error("No words with valid provider timestamps in bounded clip.");
+    for(const block of timedBlocks(eligible,measuredMs)){
+      wordAnnotations.push({
+        text:block.text,
+        startOffset:((block.startMs+clip.startMs)/1000).toFixed(3)+"s",
+        endOffset:((block.endMs+clip.startMs)/1000).toFixed(3)+"s",
+      });
+    }
+    transcripts.push(transcriptText);
+  }
+  return {wordAnnotations,transcript:transcripts.join(" "),clips};
+}
+
 async function recoverActualWordClips({
   chunkText, originalAnnotations, audioPath, durationMs, outputDir,
   chunkNumber, config, ffmpegRuntime, transcriptionLanguages
@@ -662,8 +860,9 @@ async function recoverActualWordClips({
   }));
   const original = timedBlocks(originalAnnotations, durationMs);
   const plan = buildRecoveryPlan(expected, original, durationMs);
-  if (!plan.gaps.length || plan.gaps.length > 8)
-    throw new Error("Recovery requires 1–8 independently bounded missing speech spans.");
+  const maxSpans = CONTINUOUS_TTS_PILOT ? 16 : 8;
+  if (!plan.gaps.length || plan.gaps.length > maxSpans)
+    throw new Error(`Recovery requires 1–${maxSpans} independently bounded missing speech spans.`);
   const directory = path.join(outputDir, "recovery-diagnostic", "chunk-" + chunkNumber);
   await fs.mkdir(directory, { recursive: true });
   await fs.writeFile(path.join(directory,"plan.json"),JSON.stringify({
@@ -706,7 +905,7 @@ async function recoverActualWordClips({
             language_codes:[languageCode],
             mode:{type:"verbatim",timestamp_granularities:["word"]},
           }},
-        })},"Gemini recovery word transcription");
+        })},"Gemini recovery word transcription",pilotTranscriptRequestOptions(config));
     } finally {
       await deleteGeminiFile(config.apiKey,uploaded.name);
     }
@@ -1005,16 +1204,28 @@ if (RESUME_FOLDER_NAME) {
 }
 
 const ffmpegRuntime = await resolveFfmpegRuntime();
-const ttsChunks = createTtsChunks(
-  PLATFORM ? { ...episode, scenes: [tiktokCtaScene] } : episode,
-);
+const ttsEpisode = PLATFORM ? { ...episode, scenes: [tiktokCtaScene] } : episode;
+const ttsGenerationMode = CONTINUOUS_TTS_PILOT ? "continuous-pilot" : "scene";
+const ttsChunks = CONTINUOUS_TTS_PILOT
+  ? createContinuousTtsChunks(ttsEpisode, { expectedNarration: narration })
+  : createTtsChunks(ttsEpisode);
 if (!ttsChunks.length) throw new Error("No narration chunks were created.");
+if (RESUME_FOLDER_NAME && (metadata.ttsGenerationMode ?? "scene") !== ttsGenerationMode) {
+  throw new Error("Saved voice uses another TTS generation mode; resume the original mode only.");
+}
 if (RESUME_FOLDER_NAME && metadata.ttsChunkCount !== ttsChunks.length) {
   throw new Error("Saved generation chunk count does not match the current narration.");
 }
+config.ttsRequestCount = metadata.ttsRequestCount ?? 0;
+config.transcriptionRequestCount = metadata.transcriptionRequestCount ?? 0;
+metadata.transcriptionRequestBudget = CONTINUOUS_TTS_PILOT ? 8 : null;
+metadata.ttsGenerationMode = ttsGenerationMode;
 metadata.ttsChunkCount = ttsChunks.length;
 metadata.chunkSceneIds = ttsChunks.map((chunk) => chunk.sceneIds);
-metadata.chunkingStrategy = "scene boundaries; at most 12000 narration characters per TTS and transcription request";
+metadata.chunkingStrategy = CONTINUOUS_TTS_PILOT
+  ? "single exact-script take per language/package (max 12000 characters)"
+  : "scene boundaries; at most 12000 narration characters per TTS and transcription request";
+metadata.ttsHttpAttemptLimitPerRequest = CONTINUOUS_TTS_PILOT ? 2 : 4;
 metadata.previousVoiceProvider = episode.voiceProvider ?? null;
 metadata.previousVoiceProfileId = episode.voiceProfileId ?? null;
 await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
@@ -1050,6 +1261,7 @@ try {
       await fs.writeFile(chunkPath, wav, { flag: "wx" });
     }
     completedTtsChunks += 1;
+    metadata.ttsRequestCount = config.ttsRequestCount;
     metadata.completedTtsChunks = completedTtsChunks;
     metadata.status = "audio-generating";
     await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
@@ -1124,8 +1336,58 @@ try {
     } catch (error) {
       if (error?.code !== "ENOENT") throw error;
     }
+    // A failed run archives each real model response under attempt-N.
+    // On resume, reuse the last actual response instead of discarding source
+    // anchors or repeating already-paid whole-audio ASR calls.
+    if (!transcription && RESUME_FOLDER_NAME) {
+      const priorAttempts = metadata.transcriptionAttempts?.[index] ?? 0;
+      if (priorAttempts > 0) {
+        const savedAttemptPath = path.join(outputDir,
+          `transcription-part-${chunkNumber}-attempt-${priorAttempts}.json`);
+        try {
+          transcription = await readJson(savedAttemptPath);
+        } catch (error) {
+          if (error?.code !== "ENOENT") throw error;
+        }
+      }
+    }
     let chunkAlignment;
-    if (transcription?.wordAnnotations?.length) {
+    if (EXTERNAL_WORD_CUES_FILE) {
+      if (ttsChunks.length !== 1)
+        throw new Error("Offline aligned cue import requires exactly one saved continuous TTS take.");
+      const payload = await readJson(path.resolve(EXTERNAL_WORD_CUES_FILE));
+      const verified = verifyExternalWordCues({
+        payload,
+        wavBytes: await fs.readFile(wavPath),
+        narration,
+        languageCode: voiceProfile.locale,
+        durationMs: metadata.chunkDurationsMs[index],
+      });
+      const alignment = alignWords(
+        ttsChunks[index].text,
+        verified.wordAnnotations,
+        metadata.chunkDurationsMs[index],
+      );
+      // "Exact" excludes the generator's legacy 1ms synthesized end repairs.
+      if (alignment.mismatches.length || !alignment.captions ||
+          alignment.timingRepairs.length)
+        throw new Error("External aligned word cues failed exact script/timing validation; no captions were written.");
+      transcription = {
+        transcript: narration, wordAnnotations: verified.wordAnnotations,
+        alignmentSource: verified.source,
+      };
+      chunkAlignment = alignment;
+      await fs.writeFile(transcriptPath,
+        JSON.stringify(transcription, null, 2) + "\n");
+      metadata.externalWordCueSource = verified.source;
+      metadata.actualWordTimingModel = verified.source.model;
+      metadata.actualWordTimingMethod = verified.source.method;
+      metadata.actualWordTimingProvider = "external";
+      metadata.wordAlignment = "External original-audio forced alignment + exact canonical token gate; owner listening review required";
+      await fs.writeFile(metadataPath,
+        JSON.stringify(metadata, null, 2) + "\n");
+    }
+    if (!chunkAlignment && transcription?.wordAnnotations?.length) {
       try {
         chunkAlignment = alignWords(
           ttsChunks[index].text,
@@ -1137,7 +1399,11 @@ try {
       }
     }
     let attempts = metadata.transcriptionAttempts?.[index] ?? (transcription ? 1 : 0);
-    while (!chunkAlignment?.captions && attempts < 3) {
+    // Repeating the same full-audio ASR request is ineffective for severe
+    // mixed-language omissions. In the opt-in pilot try it once, then inspect
+    // the saved WAV using bounded recovery, with no new TTS request.
+    const maxFullTranscribeAttempts = CONTINUOUS_TTS_PILOT ? 1 : 3;
+    while (!chunkAlignment?.captions && attempts < maxFullTranscribeAttempts) {
       attempts += 1;
       // Keep resumable upload atomic per key; a rejected start may switch to a
       // backup and start a NEW upload. Transcribe + cleanup use that SAME key.
@@ -1176,6 +1442,7 @@ try {
             }),
           },
           "Gemini word transcription",
+          pilotTranscriptRequestOptions(config),
         );
         const annotations = getWordAnnotations(response.data);
         const transcriptText = response.data.output_text ??
@@ -1257,6 +1524,30 @@ try {
     }
     metadata.transcriptionAttempts ??= [];
     metadata.transcriptionAttempts[index] = attempts;
+    metadata.transcriptionRequestCount = config.transcriptionRequestCount;
+    const severeWordLoss=chunkAlignment?.mismatches?.some(m=>
+      m.kind==="token-count" && m.expected-m.recognized>=15);
+    if (CONTINUOUS_TTS_PILOT && !chunkAlignment?.captions &&
+        (!transcription?.wordAnnotations?.length || severeWordLoss)) {
+      try {
+        const bounded=await recoverSilenceGuidedAnnotations({
+          audioPath:transcriptionAudioPath,
+          durationMs:metadata.chunkDurationsMs[index],
+          outputDir,chunkNumber,config,ffmpegRuntime,transcriptionLanguages,
+        });
+        transcription={transcript:bounded.transcript,wordAnnotations:bounded.wordAnnotations};
+        await fs.writeFile(transcriptPath,JSON.stringify(transcription,null,2)+"\\n");
+        metadata.silenceRecoveryClips ??= [];
+        metadata.silenceRecoveryClips.push({chunk:index+1,clips:bounded.clips});
+        chunkAlignment=alignWords(ttsChunks[index].text,
+          transcription.wordAnnotations,metadata.chunkDurationsMs[index]);
+      }catch(error) {
+        metadata.lastSilenceRecoveryError=safeErrorMessage(error);
+        console.warn("GEMINI_SILENCE_RECOVERY_BLOCKED "+JSON.stringify({
+          language:voiceProfile.locale,chunk:index+1,
+          reason:metadata.lastSilenceRecoveryError}));
+      }
+    }
     if (!chunkAlignment?.captions && transcription?.wordAnnotations?.length) {
       try {
         const clips = await recoverActualWordClips({
@@ -1298,6 +1589,7 @@ try {
     }
     if (!chunkAlignment?.captions) {
       metadata.status = "transcript-mismatch";
+      metadata.transcriptionRequestCount = config.transcriptionRequestCount;
       metadata.transcriptMismatchCount = metadata.lastTranscriptionMismatch?.mismatches?.length ?? 1;
       metadata.firstTranscriptMismatches = metadata.lastTranscriptionMismatch?.mismatches ?? [];
       await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
@@ -1449,6 +1741,8 @@ try {
   console.log(`Word-timed VTT: ${path.join(outputDir, "captions.vtt")}`);
   console.log(`Metadata: ${metadataPath}`);
 } catch (error) {
+  metadata.ttsRequestCount = config.ttsRequestCount;
+  metadata.transcriptionRequestCount = config.transcriptionRequestCount;
   if (!metadata.status || ["starting", "audio-generating", "audio-ready", "ready-for-import"].includes(metadata.status))
     metadata.status = "failed";
   metadata.error = safeErrorMessage(error);
