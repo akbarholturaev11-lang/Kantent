@@ -518,6 +518,14 @@
       "status": "planned"
     },
     {
+      "id": "shop-shirt-size-20261105",
+      "date": "2026-11-05",
+      "contentType": "advertisement",
+      "topic": "В магазине одежды: репетиция вопроса о размере через AI Voice",
+      "promoFile": "promos/shop-shirt-size-20261105.json",
+      "status": "planned"
+    },
+    {
       "id": "ji-vs-duoshao-books-price-20261106",
       "date": "2026-11-06",
       "week": 6,
