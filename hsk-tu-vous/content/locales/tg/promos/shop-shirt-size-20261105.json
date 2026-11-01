@@ -1,0 +1,942 @@
+{
+  "schemaVersion": 1,
+  "id": "shop-shirt-size-20261105",
+  "kind": "advertisement",
+  "status": "draft",
+  "title": "Пеш аз пурсидани андоза: машқи кӯтоҳ",
+  "language": "tg",
+  "languageCode": "tg-TJ",
+  "styleId": "minimal-story-v1",
+  "formatId": "life-friction-demo",
+  "benefit": "AI Voice дар HSK AI имкон медиҳад, ки пеш аз суҳбат дар мағоза гуфторро бо овоз машқ кунӣ; натиҷаи суҳбат ваъда дода намешавад.",
+  "situation": {
+    "setting": "Назди рафи футболкаҳо дар мағозаи либос",
+    "learnerGoal": "Аз фурӯшанда андозаи калонтарро пурсидан",
+    "friction": "Медонӣ чӣ пурсидан мехоҳӣ, вале саволро ба чинӣ бо овоз гуфтан душвор аст"
+  },
+  "storyType": "illustrative",
+  "storyDisclosure": "Тасаввур кун",
+  "evidence": [
+    {
+      "id": "verified-ai-voice-20261101",
+      "kind": "product-source",
+      "sourcePath": "public/promo-captures/ai-voice-original.png",
+      "checkedAt": "2026-11-01",
+      "supports": "Existing genuine HSK AI AI Voice screenshot previously inspected 2026-10-31; GitHub file verified 2026-11-01 at blob 81f7be1cbadeca7a820cc5877c893fc91e65f267. Current HSK-AI-Bot main (HEAD 12480fbb1131a0810ed3464ce23c969ac50bf477) app/static/course-v3.html blob bc60ab8e4ae55c5bb5996a936fc3d97a8a60a76b contains VOICE_HTML, vc-root and vc-mic button: https://github.com/akbarholturaev11-lang/HSK-AI-Bot/blob/main/app/static/course-v3.html . Supports presence of speaking-practice interface and microphone, not learner results or recorded responses."
+    }
+  ],
+  "claims": [
+    {
+      "id": "ai-voice-practice",
+      "text": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст.",
+      "evidenceIds": [
+        "verified-ai-voice-20261101"
+      ]
+    },
+    {
+      "id": "microphone-button",
+      "text": "Дар ин режим тугмаи микрофон ҳаст.",
+      "evidenceIds": [
+        "verified-ai-voice-20261101"
+      ]
+    }
+  ],
+  "beats": [
+    {
+      "id": "shirt-rack",
+      "role": "situation",
+      "narration": "Тасаввур кун: дар мағозаи либос футболкаро мебинӣ ва мехоҳӣ андозаи калонтарашро пурсӣ.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Футболка дар овезак ва дасти харидор",
+        "action": "Даст ба футболка наздик мешавад, то интихоби андозаро нишон диҳад",
+        "continuityKey": "same-shopper-shirt-size",
+        "cueText": "андозаи калонтарашро",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Футболкаи калони аслӣ дар овезак, раф ва як даст; тамға бе матн",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "rack",
+              "type": "line",
+              "attrs": {
+                "x1": 145,
+                "y1": 142,
+                "x2": 650,
+                "y2": 142,
+                "stroke": "gold",
+                "strokeWidth": 16,
+                "strokeLinecap": "round"
+              }
+            },
+            {
+              "id": "rack-left",
+              "type": "line",
+              "attrs": {
+                "x1": 155,
+                "y1": 142,
+                "x2": 155,
+                "y2": 502,
+                "stroke": "muted",
+                "strokeWidth": 12
+              }
+            },
+            {
+              "id": "rack-right",
+              "type": "line",
+              "attrs": {
+                "x1": 640,
+                "y1": 142,
+                "x2": 640,
+                "y2": 502,
+                "stroke": "muted",
+                "strokeWidth": 12
+              }
+            },
+            {
+              "id": "hanger",
+              "type": "path",
+              "attrs": {
+                "d": "M 395 142 C 375 110 420 101 418 129 L 420 154 L 482 198 L 315 198 Z",
+                "fill": "none",
+                "stroke": "teal",
+                "strokeWidth": 10,
+                "strokeLinejoin": "round"
+              }
+            },
+            {
+              "id": "shirt",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "shirt-body",
+              "type": "path",
+              "parentId": "shirt",
+              "attrs": {
+                "d": "M 320 218 L 365 196 L 385 213 L 415 213 L 435 196 L 480 218 L 510 300 L 463 318 L 442 280 L 442 468 L 358 468 L 358 280 L 337 318 L 290 300 Z",
+                "fill": "poolDeck",
+                "stroke": "teal",
+                "strokeWidth": 7,
+                "strokeLinejoin": "round"
+              }
+            },
+            {
+              "id": "collar",
+              "type": "path",
+              "parentId": "shirt",
+              "attrs": {
+                "d": "M 365 196 Q 400 243 435 196",
+                "fill": "none",
+                "stroke": "foreground",
+                "strokeWidth": 8
+              }
+            },
+            {
+              "id": "seam",
+              "type": "line",
+              "parentId": "shirt",
+              "attrs": {
+                "x1": 362,
+                "y1": 434,
+                "x2": 438,
+                "y2": 434,
+                "stroke": "gold",
+                "strokeWidth": 5
+              }
+            },
+            {
+              "id": "size-tag",
+              "type": "circle",
+              "parentId": "shirt",
+              "attrs": {
+                "cx": 452,
+                "cy": 234,
+                "r": 12,
+                "fill": "red"
+              }
+            },
+            {
+              "id": "hand",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "sleeve",
+              "type": "rect",
+              "parentId": "hand",
+              "attrs": {
+                "x": 65,
+                "y": 340,
+                "width": 120,
+                "height": 42,
+                "rx": 18,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "palm",
+              "type": "ellipse",
+              "parentId": "hand",
+              "attrs": {
+                "cx": 202,
+                "cy": 357,
+                "rx": 38,
+                "ry": 24,
+                "fill": "gold"
+              }
+            },
+            {
+              "id": "finger",
+              "type": "rect",
+              "parentId": "hand",
+              "attrs": {
+                "x": 221,
+                "y": 341,
+                "width": 42,
+                "height": 14,
+                "rx": 7,
+                "fill": "gold"
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "hand",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": -55
+                },
+                {
+                  "atMs": 850,
+                  "value": 68
+                },
+                {
+                  "atMs": 1450,
+                  "value": 90
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "hesitation",
+      "role": "complication",
+      "narration": "Футболка пеши чашмат аст, аммо саволро ба забони чинӣ бо овоз гуфтан ҳоло душвор аст.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Ҳамон футболка ва дасти дудила",
+        "action": "Даст ақиб меравад, ҳубоби таваққуф бе матни сохта пайдо мешавад",
+        "continuityKey": "same-shopper-shirt-size",
+        "cueText": "бо овоз гуфтан",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Ҳамон ашё; се нуқта танҳо дудиларо нишон медиҳанд",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "rack",
+              "type": "line",
+              "attrs": {
+                "x1": 145,
+                "y1": 142,
+                "x2": 650,
+                "y2": 142,
+                "stroke": "gold",
+                "strokeWidth": 16,
+                "strokeLinecap": "round"
+              }
+            },
+            {
+              "id": "rack-left",
+              "type": "line",
+              "attrs": {
+                "x1": 155,
+                "y1": 142,
+                "x2": 155,
+                "y2": 502,
+                "stroke": "muted",
+                "strokeWidth": 12
+              }
+            },
+            {
+              "id": "rack-right",
+              "type": "line",
+              "attrs": {
+                "x1": 640,
+                "y1": 142,
+                "x2": 640,
+                "y2": 502,
+                "stroke": "muted",
+                "strokeWidth": 12
+              }
+            },
+            {
+              "id": "hanger",
+              "type": "path",
+              "attrs": {
+                "d": "M 395 142 C 375 110 420 101 418 129 L 420 154 L 482 198 L 315 198 Z",
+                "fill": "none",
+                "stroke": "teal",
+                "strokeWidth": 10,
+                "strokeLinejoin": "round"
+              }
+            },
+            {
+              "id": "shirt",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "shirt-body",
+              "type": "path",
+              "parentId": "shirt",
+              "attrs": {
+                "d": "M 320 218 L 365 196 L 385 213 L 415 213 L 435 196 L 480 218 L 510 300 L 463 318 L 442 280 L 442 468 L 358 468 L 358 280 L 337 318 L 290 300 Z",
+                "fill": "poolDeck",
+                "stroke": "teal",
+                "strokeWidth": 7,
+                "strokeLinejoin": "round"
+              }
+            },
+            {
+              "id": "collar",
+              "type": "path",
+              "parentId": "shirt",
+              "attrs": {
+                "d": "M 365 196 Q 400 243 435 196",
+                "fill": "none",
+                "stroke": "foreground",
+                "strokeWidth": 8
+              }
+            },
+            {
+              "id": "seam",
+              "type": "line",
+              "parentId": "shirt",
+              "attrs": {
+                "x1": 362,
+                "y1": 434,
+                "x2": 438,
+                "y2": 434,
+                "stroke": "gold",
+                "strokeWidth": 5
+              }
+            },
+            {
+              "id": "size-tag",
+              "type": "circle",
+              "parentId": "shirt",
+              "attrs": {
+                "cx": 452,
+                "cy": 234,
+                "r": 12,
+                "fill": "red"
+              }
+            },
+            {
+              "id": "hand",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "sleeve",
+              "type": "rect",
+              "parentId": "hand",
+              "attrs": {
+                "x": 65,
+                "y": 340,
+                "width": 120,
+                "height": 42,
+                "rx": 18,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "palm",
+              "type": "ellipse",
+              "parentId": "hand",
+              "attrs": {
+                "cx": 202,
+                "cy": 357,
+                "rx": 38,
+                "ry": 24,
+                "fill": "gold"
+              }
+            },
+            {
+              "id": "finger",
+              "type": "rect",
+              "parentId": "hand",
+              "attrs": {
+                "x": 221,
+                "y": 341,
+                "width": 42,
+                "height": 14,
+                "rx": 7,
+                "fill": "gold"
+              }
+            },
+            {
+              "id": "speech",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "bubble",
+              "type": "ellipse",
+              "parentId": "speech",
+              "attrs": {
+                "cx": 625,
+                "cy": 258,
+                "rx": 88,
+                "ry": 62,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "dot1",
+              "type": "circle",
+              "parentId": "speech",
+              "attrs": {
+                "cx": 590,
+                "cy": 260,
+                "r": 10,
+                "fill": "foreground"
+              }
+            },
+            {
+              "id": "dot2",
+              "type": "circle",
+              "parentId": "speech",
+              "attrs": {
+                "cx": 625,
+                "cy": 260,
+                "r": 10,
+                "fill": "foreground"
+              }
+            },
+            {
+              "id": "dot3",
+              "type": "circle",
+              "parentId": "speech",
+              "attrs": {
+                "cx": 660,
+                "cy": 260,
+                "r": 10,
+                "fill": "foreground"
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "hand",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 90
+                },
+                {
+                  "atMs": 600,
+                  "value": 52
+                },
+                {
+                  "atMs": 1350,
+                  "value": 52
+                }
+              ]
+            },
+            {
+              "nodeId": "speech",
+              "property": "opacity",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 700,
+                  "value": 0.75
+                },
+                {
+                  "atMs": 1300,
+                  "value": 0.2
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "phone-before-talk",
+      "role": "attempt",
+      "narration": "Пеш аз суҳбат бо фурӯшанда телефонро мебарорӣ, то саволатро оромона машқ кунӣ.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Телефон дар дасти харидор",
+        "action": "Даст телефонро ба пеш мебардорад, бе тақлиди интерфейси барнома",
+        "continuityKey": "same-shopper-shirt-size",
+        "cueText": "телефонро мебарорӣ",
+        "backgroundToken": "surface",
+        "drawingBrief": "Телефони аслӣ бо экрани холии бетараф; баъд экрани воқеии маҳсулот",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "counter",
+              "type": "ellipse",
+              "attrs": {
+                "cx": 400,
+                "cy": 492,
+                "rx": 315,
+                "ry": 30,
+                "fill": "teal"
+              }
+            },
+            {
+              "id": "shelf",
+              "type": "line",
+              "attrs": {
+                "x1": 150,
+                "y1": 145,
+                "x2": 640,
+                "y2": 145,
+                "stroke": "gold",
+                "strokeWidth": 13
+              }
+            },
+            {
+              "id": "hand",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "forearm",
+              "type": "rect",
+              "parentId": "hand",
+              "attrs": {
+                "x": 155,
+                "y": 360,
+                "width": 160,
+                "height": 48,
+                "rx": 22,
+                "fill": "gold"
+              }
+            },
+            {
+              "id": "palm",
+              "type": "ellipse",
+              "parentId": "hand",
+              "attrs": {
+                "cx": 330,
+                "cy": 380,
+                "rx": 54,
+                "ry": 41,
+                "fill": "gold"
+              }
+            },
+            {
+              "id": "phone",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "frame",
+              "type": "rect",
+              "parentId": "phone",
+              "attrs": {
+                "x": 325,
+                "y": 155,
+                "width": 185,
+                "height": 310,
+                "rx": 27,
+                "fill": "foreground",
+                "stroke": "teal",
+                "strokeWidth": 9
+              }
+            },
+            {
+              "id": "blank-screen",
+              "type": "rect",
+              "parentId": "phone",
+              "attrs": {
+                "x": 343,
+                "y": 185,
+                "width": 149,
+                "height": 232,
+                "rx": 13,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "home-dot",
+              "type": "circle",
+              "parentId": "phone",
+              "attrs": {
+                "cx": 418,
+                "cy": 439,
+                "r": 9,
+                "fill": "gold"
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "phone",
+              "property": "y",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 90
+                },
+                {
+                  "atMs": 1000,
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "nodeId": "hand",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": -55
+                },
+                {
+                  "atMs": 1000,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "real-ai-voice",
+      "role": "product-demo",
+      "narration": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст. Дар экрани воқеӣ панда дида мешавад.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Экрани воқеии AI Voice",
+        "action": "Намои воқеии маҳсулотро дар лаҳзаи зикри AI Voice нишон диҳед",
+        "continuityKey": "same-shopper-shirt-size",
+        "cueText": "AI Voice",
+        "backgroundToken": "foreground",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "zxx",
+        "sourceUiLanguage": "tg-TJ",
+        "languageNeutralCrop": true,
+        "crop": {
+          "x": 285,
+          "y": 580,
+          "width": 600,
+          "height": 540,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        }
+      },
+      "claimIds": [
+        "ai-voice-practice"
+      ]
+    },
+    {
+      "id": "real-microphone",
+      "role": "product-demo",
+      "narration": "Дар ин режим тугмаи микрофон ҳаст. Метавонӣ саволи худро бо овоз гуфта бинӣ.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Тугмаи воқеии микрофон",
+        "action": "Намои тугмаи микрофонро аз скриншоти аслӣ нишон диҳед",
+        "continuityKey": "same-shopper-shirt-size",
+        "cueText": "тугмаи микрофон",
+        "backgroundToken": "foreground",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "zxx",
+        "sourceUiLanguage": "tg-TJ",
+        "languageNeutralCrop": true,
+        "crop": {
+          "x": 440,
+          "y": 2180,
+          "width": 290,
+          "height": 245,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        }
+      },
+      "claimIds": [
+        "microphone-button"
+      ]
+    },
+    {
+      "id": "return-to-shop",
+      "role": "resolution",
+      "narration": "Пас аз машқ метавонӣ ба назди фурӯшанда баргашта, саволатро худат диҳӣ. Баъд суҳбати воқеӣ оғоз мешавад.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Футболка, даст ва ишораи савол",
+        "action": "Даст боз ба футболка наздик мешавад; ҳубоби бе матн нияти саволро нишон медиҳад",
+        "continuityKey": "same-shopper-shirt-size",
+        "cueText": "ба назди фурӯшанда баргашта",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Ҳамон футболка; се нуқта бе ҷавоби сохтаи фурӯшанда",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "rack",
+              "type": "line",
+              "attrs": {
+                "x1": 145,
+                "y1": 142,
+                "x2": 650,
+                "y2": 142,
+                "stroke": "gold",
+                "strokeWidth": 16,
+                "strokeLinecap": "round"
+              }
+            },
+            {
+              "id": "rack-left",
+              "type": "line",
+              "attrs": {
+                "x1": 155,
+                "y1": 142,
+                "x2": 155,
+                "y2": 502,
+                "stroke": "muted",
+                "strokeWidth": 12
+              }
+            },
+            {
+              "id": "rack-right",
+              "type": "line",
+              "attrs": {
+                "x1": 640,
+                "y1": 142,
+                "x2": 640,
+                "y2": 502,
+                "stroke": "muted",
+                "strokeWidth": 12
+              }
+            },
+            {
+              "id": "hanger",
+              "type": "path",
+              "attrs": {
+                "d": "M 395 142 C 375 110 420 101 418 129 L 420 154 L 482 198 L 315 198 Z",
+                "fill": "none",
+                "stroke": "teal",
+                "strokeWidth": 10,
+                "strokeLinejoin": "round"
+              }
+            },
+            {
+              "id": "shirt",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "shirt-body",
+              "type": "path",
+              "parentId": "shirt",
+              "attrs": {
+                "d": "M 320 218 L 365 196 L 385 213 L 415 213 L 435 196 L 480 218 L 510 300 L 463 318 L 442 280 L 442 468 L 358 468 L 358 280 L 337 318 L 290 300 Z",
+                "fill": "poolDeck",
+                "stroke": "teal",
+                "strokeWidth": 7,
+                "strokeLinejoin": "round"
+              }
+            },
+            {
+              "id": "collar",
+              "type": "path",
+              "parentId": "shirt",
+              "attrs": {
+                "d": "M 365 196 Q 400 243 435 196",
+                "fill": "none",
+                "stroke": "foreground",
+                "strokeWidth": 8
+              }
+            },
+            {
+              "id": "seam",
+              "type": "line",
+              "parentId": "shirt",
+              "attrs": {
+                "x1": 362,
+                "y1": 434,
+                "x2": 438,
+                "y2": 434,
+                "stroke": "gold",
+                "strokeWidth": 5
+              }
+            },
+            {
+              "id": "size-tag",
+              "type": "circle",
+              "parentId": "shirt",
+              "attrs": {
+                "cx": 452,
+                "cy": 234,
+                "r": 12,
+                "fill": "red"
+              }
+            },
+            {
+              "id": "hand",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "sleeve",
+              "type": "rect",
+              "parentId": "hand",
+              "attrs": {
+                "x": 65,
+                "y": 340,
+                "width": 120,
+                "height": 42,
+                "rx": 18,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "palm",
+              "type": "ellipse",
+              "parentId": "hand",
+              "attrs": {
+                "cx": 202,
+                "cy": 357,
+                "rx": 38,
+                "ry": 24,
+                "fill": "gold"
+              }
+            },
+            {
+              "id": "finger",
+              "type": "rect",
+              "parentId": "hand",
+              "attrs": {
+                "x": 221,
+                "y": 341,
+                "width": 42,
+                "height": 14,
+                "rx": 7,
+                "fill": "gold"
+              }
+            },
+            {
+              "id": "speech",
+              "type": "g",
+              "attrs": {}
+            },
+            {
+              "id": "bubble",
+              "type": "ellipse",
+              "parentId": "speech",
+              "attrs": {
+                "cx": 625,
+                "cy": 258,
+                "rx": 88,
+                "ry": 62,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "dot1",
+              "type": "circle",
+              "parentId": "speech",
+              "attrs": {
+                "cx": 590,
+                "cy": 260,
+                "r": 10,
+                "fill": "foreground"
+              }
+            },
+            {
+              "id": "dot2",
+              "type": "circle",
+              "parentId": "speech",
+              "attrs": {
+                "cx": 625,
+                "cy": 260,
+                "r": 10,
+                "fill": "foreground"
+              }
+            },
+            {
+              "id": "dot3",
+              "type": "circle",
+              "parentId": "speech",
+              "attrs": {
+                "cx": 660,
+                "cy": 260,
+                "r": 10,
+                "fill": "foreground"
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "hand",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": -30
+                },
+                {
+                  "atMs": 850,
+                  "value": 100
+                }
+              ]
+            },
+            {
+              "nodeId": "speech",
+              "property": "opacity",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0
+                },
+                {
+                  "atMs": 900,
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "caption": "Вазъияти тасаввурӣ дар мағозаи либос: аввал машқи овозӣ, баъд суҳбати воқеӣ. Порае аз экрани аслии AI Voice дар HSK AI.",
+  "hashtags": [
+    "#HSKAI",
+    "#забоничинӣ",
+    "#HSK"
+  ],
+  "durationTargetSec": 40,
+  "localization": {
+    "language": "tg",
+    "sourcePromoId": "shop-shirt-size-20261105",
+    "sourceHash": "51ac588768ca02eeaca18a5a1141dafccbd5dbd89640916f9791b02cbace9eaf",
+    "authoredOn": "2026-11-05",
+    "status": "draft"
+  }
+}
