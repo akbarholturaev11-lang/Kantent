@@ -116,3 +116,17 @@ test("a longer director crossfade keeps pose and camera seek-safe through frame 
   assert.equal(camera(t,77).xPx,32);
   assert.deepEqual(camera(t,71),camera(t,71));
 });
+
+test("M5 cinematic effects cannot exceed cue spacing or fake persistent SVG",()=>{
+  const original=structuredClone(scene);
+  original.motionDirection.shots[1].transition={kind:"slide-match",frames:12,direction:"left"};
+  assert.equal(compile(original,resolved).shots[1].transition.kind,"slide-match");
+  original.motionDirection.shots[1].transition={kind:"masked-reveal",frames:12,direction:"right"};
+  assert.equal(compile(original,resolved).shots[1].transition.kind,"masked-reveal");
+  original.motionDirection.shots[1].transition={kind:"focus-reveal",frames:12};
+  assert.equal(compile(original,resolved).shots[1].transition.kind,"focus-reveal");
+  original.motionDirection.shots[1].transition={kind:"flash",frames:12};
+  assert.throws(()=>compile(original,resolved),/Motion transition/);
+  original.motionDirection.shots[1].transition={kind:"slide-match",frames:12};
+  assert.throws(()=>compile(original,resolved),/requires direction/);
+});

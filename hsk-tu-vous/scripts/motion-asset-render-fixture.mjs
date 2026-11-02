@@ -16,8 +16,8 @@ const scene={
  ],
  motionDirection:{schemaVersion:1,shots:[
   {shotId:"book-shot",beatId:"book",meaningCue:"Книга",assetIds:["asset:study-book"],camera:{xPx:0,yPx:0,scale:1},transition:{kind:"cut",frames:0},focalRole:"object",zIndex:0},
-  {shotId:"tea-shot",beatId:"tea",meaningCue:"чай",assetIds:["asset:tea-cup"],camera:{xPx:20,yPx:-10,scale:1.04},transition:{kind:"crossfade",frames:12},focalRole:"object",zIndex:0},
-  {shotId:"market-shot",beatId:"market",meaningCue:"магазин",assetIds:["asset:market-stall"],camera:{xPx:0,yPx:0,scale:1.05},transition:{kind:"crossfade",frames:12},focalRole:"object",zIndex:0}
+  {shotId:"tea-shot",beatId:"tea",meaningCue:"чай",assetIds:["asset:tea-cup"],camera:{xPx:20,yPx:-10,scale:1.04},transition:{kind:"slide-match",frames:12,direction:"left"},focalRole:"object",zIndex:0},
+  {shotId:"market-shot",beatId:"market",meaningCue:"магазин",assetIds:["asset:market-stall"],camera:{xPx:0,yPx:0,scale:1.05},transition:{kind:"masked-reveal",frames:12,direction:"right"},focalRole:"object",zIndex:0}
  ]}
 };
 const episode={id:"assets-synthetic-review-only",languageCode:"ru-RU",title:"M4 Asset Smoke",level:"HSK 1",topic:"book tea",motionDesign:true,motionDesignStyle:"explain-actions-v1",

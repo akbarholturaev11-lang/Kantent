@@ -1,10 +1,11 @@
 import type {ResolvedMotionBeat,MotionBeat} from "./motion-design-plan.mjs";
+import type {DirectedTransition} from "./motion-transition-plan.mjs";
 export type DirectedCamera={xPx:number;yPx:number;scale:number};
 export type DirectedShot={
   shotId:string;beatId:string;meaningCue:string;cueOccurrence?:number;
   assetIds:string[];persistentElementIds?:string[];
   camera:DirectedCamera;
-  transition:{kind:"cut"|"crossfade";frames:number};
+  transition:DirectedTransition;
   focalRole:"action"|"object"|"comparison"|"phrase";
   zIndex:number;
 };

@@ -1,5 +1,6 @@
 import {graphicNodeState} from "./graphic-scene.mjs";
 import {getMotionAsset} from "./motion-assets.mjs";
+import {validateMotionTransition} from "./motion-transition-plan.mjs";
 /**
  * Optional Motion Director v1: explicit, source-backed shot plan with exact
  * imported word-cue timing. No authoring guesses, no runtime network/media.
@@ -8,12 +9,12 @@ import {getMotionAsset} from "./motion-assets.mjs";
 const ID=/^[a-z][a-z0-9-]{0,63}$/;
 const CAMERA_LIMIT={xPx:48,yPx:48,scaleMin:0.94,scaleMax:1.08};
 const ROLES=new Set(["action","object","comparison","phrase"]);
-const TRANSITIONS=new Set(["cut","crossfade"]);
+const TRANSITIONS=new Set(["cut","crossfade","slide-match","masked-reveal","focus-reveal"]);
 const KEYS={
   plan:["schemaVersion","shots"],
   shot:["shotId","beatId","meaningCue","cueOccurrence","assetIds","persistentElementIds","camera","transition","focalRole","zIndex"],
   camera:["xPx","yPx","scale"],
-  transition:["kind","frames"],
+  transition:["kind","frames","direction"],
 };
 const isObject=x=>x!==null&&typeof x==="object"&&!Array.isArray(x);
 const keys=(obj,allowed,label)=>{
@@ -98,10 +99,9 @@ export function compileMotionDirectorScene(scene,resolvedBeats) {
       fail(scene,"camera outside bounded safe-stage limits");
     keys(shot.transition,KEYS.transition,"Motion transition");
     const {kind,frames}=shot.transition;
-    if(!TRANSITIONS.has(kind)||!Number.isInteger(frames)||
-      frames<0||frames>16||(kind==="cut"&&frames!==0)||
+    validateMotionTransition(shot.transition);
+    if(!TRANSITIONS.has(kind)||
       (i===0&&(kind!=="cut"||frames!==0))||
-      (i>0&&kind==="crossfade"&&frames<2)||
       (i>0&&frames>beat.localFrame-resolvedBeats[i-1].localFrame))
       fail(scene,"invalid duration/transition or overlapping neighboring cue");
     if(!ROLES.has(shot.focalRole)||!Number.isInteger(shot.zIndex)||
@@ -139,7 +139,7 @@ export function compileMotionDirectorScene(scene,resolvedBeats) {
             fail(scene,"persistent nested animation tracks require a dedicated pose adapter");
         }
       }
-      if(kind==="cut")fail(scene,"persistent element cannot jump through cut");
+      if(kind!=="crossfade")fail(scene,"persistent root groups require ordinary crossfade; effect could otherwise duplicate the group");
     }
     entries.push({
       shotId:shot.shotId,beatId:beat.id,meaningCue:beat.cueText,
