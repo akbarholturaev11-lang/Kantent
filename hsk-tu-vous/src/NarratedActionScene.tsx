@@ -4,7 +4,7 @@ import type {ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
 import visual from "../content/visual-system.json";
 import {GraphicScene} from "./GraphicScene";
 import {resolveActionBeatLayers} from "../scripts/action-beat-continuity.mjs";
-import {resolveDirectorCamera} from "../scripts/motion-director-plan.mjs";
+import {resolveDirectorCamera,resolvePersistentRootPose} from "../scripts/motion-director-plan.mjs";
 import type {MotionDirectorTimeline} from "../scripts/motion-director-plan.mjs";
 
 const C=visual.colors;
@@ -74,14 +74,14 @@ const OrdinalStage:React.FC<{model:ActionModel;frame:number;compact?:boolean}>=(
   })}
 </svg>;
 
-const ModelStage:React.FC<{model:ActionModel;kind:string;frame:number;compact?:boolean}>=({model,kind,frame,compact=false})=><>
-  {kind==="graphic"&&model.graphic&&<GraphicScene plan={model.graphic} frame={frame} height={compact?A.comparisonObjectHeightPx:A.graphicHeightPx}/>}
+const ModelStage:React.FC<{model:ActionModel;kind:string;frame:number;compact?:boolean;omitGraphicRoots?:string[]}>=({model,kind,frame,compact=false,omitGraphicRoots=[]})=><>
+  {kind==="graphic"&&model.graphic&&<GraphicScene plan={model.graphic} frame={frame} height={compact?A.comparisonObjectHeightPx:A.graphicHeightPx} omitRootIds={omitGraphicRoots}/>}
   {(kind==="quantity"||model.count)&&<QuantityStage model={model} frame={frame} compact={compact}/>}
   {kind==="numeral"&&<NumberStage model={model} frame={frame} compact={compact}/>}
   {kind==="ordinal"&&<OrdinalStage model={model} frame={frame} compact={compact}/>}
 </>;
 
-const ActionBeatArtwork:React.FC<{beat:ResolvedMotionBeat;frame:number;context?:ActionModel}>=({beat,frame,context})=>{
+const ActionBeatArtwork:React.FC<{beat:ResolvedMotionBeat;frame:number;context?:ActionModel;omitGraphicRoots?:string[]}>=({beat,frame,context,omitGraphicRoots=[]})=>{
   const model=beat.visual;
   if(!model) throw Error("Narrated action is missing its authored visual payload.");
   const stageModel=model.object||beat.kind!=="phrase"?model:context?{...context,...model,object:context.object,count:context.count}:model;
@@ -90,13 +90,17 @@ const ActionBeatArtwork:React.FC<{beat:ResolvedMotionBeat;frame:number;context?:
   </div>:beat.kind==="choice"?<>
     {model.count?<QuantityStage model={model} frame={frame}/>:context&&<svg width="100%" height={A.objectHeightPx} viewBox="0 0 820 320"><g transform="translate(410 160)"><ObjectGlyph object={context.object??"tea-cup"} frame={frame}/></g></svg>}
     {model.selected&&<svg width="80" height="70" viewBox="0 0 80 70" aria-label="correct choice"><path d="M12 33 32 53 68 12" fill="none" stroke={C.brandGold} strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" opacity={enter(frame)}/></svg>}
-  </>:<ModelStage model={stageModel} kind={beat.kind} frame={frame}/>;
+  </>:<ModelStage model={stageModel} kind={beat.kind} frame={frame} omitGraphicRoots={omitGraphicRoots}/>;
 };
 
 export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat[];director?:MotionDirectorTimeline|null}>=({frame,beats,director=null})=>{
   const camera=resolveDirectorCamera(director,frame);
   const layers=resolveActionBeatLayers(beats,frame,visual.motion.actionBeatCrossfadeFrames);
   const context=beats.map(beat=>beat.visual).find(entry=>entry?.object&&entry.count);
+  const directedShot=director?.shots.find(shot=>shot.beatId===layers.active.id);
+  const sharedRoots=layers.outgoing&&directedShot?.persistentElementIds?.length&&
+    layers.incoming.beat.kind==="graphic"&&layers.outgoing.beat.kind==="graphic"
+    ? directedShot.persistentElementIds.map(id=>id.slice(5)) : [];
   const artwork=[
     ...(layers.outgoing?[{...layers.outgoing,role:"outgoing" as const}]:[]),
     {...layers.incoming,role:"incoming" as const}
@@ -106,8 +110,20 @@ export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat
     <div data-action-id={layers.active.id} data-action-kind={layers.active.kind} data-motion-director={director?"v1":"off"} style={{position:"absolute",top:A.stageTopPx,left:80,right:80,height:A.graphicHeightPx,translate:`${camera.xPx}px ${camera.yPx}px`,scale:camera.scale,transformOrigin:"50% 50%"}}>
       {artwork.map(layer=><div key={layer.role+":"+layer.beat.id} data-transition-layer={layer.role} data-layer-action-id={layer.beat.id}
         style={{position:"absolute",inset:0,opacity:layer.opacity,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:A.gapPx}}>
-        <ActionBeatArtwork beat={layer.beat} frame={layer.localFrame} context={context}/>
+        <ActionBeatArtwork beat={layer.beat} frame={layer.localFrame} context={context} omitGraphicRoots={sharedRoots}/>
       </div>)}
+      {sharedRoots.map(rootId=>{
+        const previous=layers.outgoing!.beat.visual?.graphic;
+        const incoming=layers.incoming.beat.visual?.graphic;
+        if(!previous||!incoming)throw Error("Directed shared SVG root missing drawable plans");
+        const pose=resolvePersistentRootPose(previous,incoming,rootId,
+          layers.outgoing!.localFrame,layers.incoming.localFrame,directedShot!.transition.frames);
+        return <div key={rootId} data-persistent-root={rootId} style={{position:"absolute",inset:0,
+          pointerEvents:"none",display:"flex",alignItems:"center",justifyContent:"center"}}>
+          <GraphicScene plan={incoming} frame={layers.incoming.localFrame} height={A.graphicHeightPx}
+            onlyRootIds={[rootId]} rootPoseOverrides={{[rootId]:pose}}/>
+        </div>;
+      })}
     </div>
   </AbsoluteFill>;
 };
