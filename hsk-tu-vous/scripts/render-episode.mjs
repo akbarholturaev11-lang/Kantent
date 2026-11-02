@@ -15,6 +15,8 @@ import { renderSharedPlatformVideos } from "./render-platform-videos.mjs";
 import { prepareSemanticRender } from "./semantic-review-integration.mjs";
 import { validateProductionDuration } from "./duration-policy.mjs";
 import { compileMotionDesignTimeline } from "./motion-design-plan.mjs";
+import {assertMotionAssetsProductionApproved} from "./motion-assets.mjs";
+import {verifyMotionAssetFiles} from "./verify-motion-assets.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import {
   getEpisode,
@@ -41,6 +43,10 @@ const visualSystem = await readJson(
   path.join(PROJECT_ROOT, "content", "visual-system.json"),
 );
 validateEpisode(episode);
+if(episode.scenes.some(scene=>scene.motionBeats?.some(beat=>beat.kind==="asset"))){
+  verifyMotionAssetFiles(); // check SVG security and SHA-256 before writes
+  assertMotionAssetsProductionApproved(episode); // review-only assets cannot enter production
+}
 validateLessonPresentation(episode, visualSystem.lessonPresentation);
 const ctaValidation = await requireCurrentCta(episode);
 const voiceProfile = await requireApprovedVoiceProfile(id);

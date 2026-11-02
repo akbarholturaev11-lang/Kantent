@@ -1,4 +1,5 @@
 import {graphicNodeState} from "./graphic-scene.mjs";
+import {getMotionAsset} from "./motion-assets.mjs";
 /**
  * Optional Motion Director v1: explicit, source-backed shot plan with exact
  * imported word-cue timing. No authoring guesses, no runtime network/media.
@@ -48,7 +49,11 @@ const assetDefinitions=beat=>{
     for(const node of graphicRoots(model.graphic))
       assets.set("node:"+node.id,signature(model.graphic,node.id));
   }
-  if(model.object)assets.set("object:"+model.object,"object:"+model.object);
+  if(model.object)assets.set("object:"+model.object,"object:"+model.object");
+  if(beat.kind==="asset" && model.assetId) {
+    getMotionAsset(model.assetId);
+    assets.set("asset:"+model.assetId,"asset:"+model.assetId);
+  }
   // Other beat kinds can still animate the existing scene; their visual
   // geometry is not verified for shared-element persistence in v1.
   if(!assets.size)assets.set("beat:"+beat.id,"beat:"+beat.id);
