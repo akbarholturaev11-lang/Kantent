@@ -49,7 +49,7 @@ const assetDefinitions=beat=>{
     for(const node of graphicRoots(model.graphic))
       assets.set("node:"+node.id,signature(model.graphic,node.id));
   }
-  if(model.object)assets.set("object:"+model.object,"object:"+model.object");
+  if(model.object)assets.set("object:"+model.object,"object:"+model.object);
   if(beat.kind==="asset" && model.assetId) {
     getMotionAsset(model.assetId);
     assets.set("asset:"+model.assetId,"asset:"+model.assetId);
