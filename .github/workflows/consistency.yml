@@ -59,6 +59,14 @@ jobs:
           npm run content:promo-plan -- speaking-cafe-example > /tmp/promo-story-plan.json
       - name: Typecheck existing renderer and semantic opt-in preview
         run: npm run lint
+      - name: Render action beat continuity before, at and after exact synthetic cue
+        run: |
+          node scripts/action-continuity-render-fixture.mjs /tmp/action-continuity-props.json
+          npx remotion still src/index.ts HSKAI-Episode /tmp/action-before.png --props /tmp/action-continuity-props.json --frame=65
+          npx remotion still src/index.ts HSKAI-Episode /tmp/action-cue.png --props /tmp/action-continuity-props.json --frame=66
+          npx remotion still src/index.ts HSKAI-Episode /tmp/action-mid.png --props /tmp/action-continuity-props.json --frame=69
+          npx remotion still src/index.ts HSKAI-Episode /tmp/action-settled.png --props /tmp/action-continuity-props.json --frame=74
+          node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const stages=['before','cue','mid','settled'];const hashes=stages.map(s=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/action-'+s+'.png')).digest('hex'));if(new Set(hashes).size!==4)throw Error('Action continuity motion frames identical');"
       - name: Verify real dated plan selects semantic renderer, not static school template
         run: |
           node scripts/semantic-planned-fixture.mjs /tmp/semantic-planned-props.json
