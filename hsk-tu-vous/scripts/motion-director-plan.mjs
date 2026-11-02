@@ -1,3 +1,4 @@
+import {graphicNodeState} from "./graphic-scene.mjs";
 /**
  * Optional Motion Director v1: explicit, source-backed shot plan with exact
  * imported word-cue timing. No authoring guesses, no runtime network/media.
@@ -110,6 +111,27 @@ export function compileMotionDirectorScene(scene,resolvedBeats) {
           from.get(a)!==known.get(a) || a.startsWith("beat:"))
           fail(scene,"persistent element must exist in both shots with identical drawable geometry: "+a);
       }
+      // V1 can truly carry an authored SVG root group. Count-based stock
+      // object glyphs cannot be detached yet: reject misleading persistence.
+      for(const a of persistent) {
+        if(!a.startsWith("node:")||beat.kind!=="graphic"||resolvedBeats[i-1].kind!=="graphic")
+          fail(scene,"persistent v1 supports only same authored SVG root groups");
+        const id=a.slice(5);
+        const currentGraphic=beat.visual?.graphic,previousGraphic=resolvedBeats[i-1].visual?.graphic;
+        const roots=[graphicRoots(currentGraphic).find(n=>n.id===id),graphicRoots(previousGraphic).find(n=>n.id===id)];
+        if(roots.some(root=>!root||root.type!=="g"))
+          fail(scene,"persistent element must be a drawable SVG root group");
+        const descendant=(graphic,nodeId)=>{
+          const ids=new Set([nodeId]);let changed=true;
+          while(changed){changed=false;for(const n of graphic.nodes)if(n.parentId&&ids.has(n.parentId)&&!ids.has(n.id)){ids.add(n.id);changed=true}}
+          ids.delete(nodeId);return ids;
+        };
+        for(const graphic of [currentGraphic,previousGraphic]) {
+          const ids=descendant(graphic,id);
+          if((graphic.tracks??[]).some(t=>ids.has(t.nodeId)))
+            fail(scene,"persistent nested animation tracks require a dedicated pose adapter");
+        }
+      }
       if(kind==="cut")fail(scene,"persistent element cannot jump through cut");
     }
     entries.push({
@@ -146,4 +168,24 @@ export function resolveDirectorCamera(timeline,frame) {
     yPx:previous.camera.yPx+(current.camera.yPx-previous.camera.yPx)*n,
     scale:previous.camera.scale+(current.camera.scale-previous.camera.scale)*n,
   };
+}
+
+/** Render one visible SVG root, interpolating only its scene pose. Children
+ * must have matching stable authored geometry; schema forbids nested tracks.
+ */
+export function resolvePersistentRootPose(previousGraphic,currentGraphic,rootId,fromFrame,toFrame,transitionFrames,fps=30){
+  if(!ID.test(rootId)||!Number.isFinite(fromFrame)||!Number.isFinite(toFrame)||
+    !Number.isInteger(transitionFrames)||transitionFrames<2||transitionFrames>16||
+    !finite(fps)||fps<=0)throw Error("Invalid persistent SVG pose request");
+  const fromRoot=graphicRoots(previousGraphic).find(n=>n.id===rootId);
+  const toRoot=graphicRoots(currentGraphic).find(n=>n.id===rootId);
+  if(!fromRoot||!toRoot||fromRoot.type!=="g"||toRoot.type!=="g"||
+    signature(previousGraphic,rootId)!==signature(currentGraphic,rootId))
+    throw Error("Persistent SVG root has no matching geometry");
+  const left=graphicNodeState(previousGraphic,fromRoot,fromFrame*1000/fps);
+  const right=graphicNodeState(currentGraphic,toRoot,toFrame*1000/fps);
+  const progress=ease((toFrame+1)/transitionFrames);
+  return Object.fromEntries(["x","y","scale","rotate","opacity"].map(
+    key=>[key,left[key]+(right[key]-left[key])*progress]
+  ));
 }
