@@ -19,3 +19,9 @@ export function compileMotionDirectorScene(
   resolvedBeats:ResolvedMotionBeat[],
 ):MotionDirectorTimeline|null;
 export function resolveDirectorCamera(timeline:MotionDirectorTimeline|null,frame:number):DirectedCamera;
+
+export function resolvePersistentRootPose(
+  previousGraphic:import("./graphic-scene.mjs").GraphicScene,
+  currentGraphic:import("./graphic-scene.mjs").GraphicScene,
+  rootId:string,fromFrame:number,toFrame:number,transitionFrames:number,fps?:number
+):{x:number;y:number;scale:number;rotate:number;opacity:number};
