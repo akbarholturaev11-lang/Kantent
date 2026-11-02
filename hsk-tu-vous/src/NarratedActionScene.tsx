@@ -4,6 +4,8 @@ import type {ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
 import visual from "../content/visual-system.json";
 import {GraphicScene} from "./GraphicScene";
 import {resolveActionBeatLayers} from "../scripts/action-beat-continuity.mjs";
+import {resolveDirectorCamera} from "../scripts/motion-director-plan.mjs";
+import type {MotionDirectorTimeline} from "../scripts/motion-director-plan.mjs";
 
 const C=visual.colors;
 const L=visual.narratedMotionLayout;
@@ -91,7 +93,8 @@ const ActionBeatArtwork:React.FC<{beat:ResolvedMotionBeat;frame:number;context?:
   </>:<ModelStage model={stageModel} kind={beat.kind} frame={frame}/>;
 };
 
-export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat[]}>=({frame,beats})=>{
+export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat[];director?:MotionDirectorTimeline|null}>=({frame,beats,director=null})=>{
+  const camera=resolveDirectorCamera(director,frame);
   const layers=resolveActionBeatLayers(beats,frame,visual.motion.actionBeatCrossfadeFrames);
   const context=beats.map(beat=>beat.visual).find(entry=>entry?.object&&entry.count);
   const artwork=[
@@ -100,7 +103,7 @@ export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat
   ];
   return <AbsoluteFill style={{background:`radial-gradient(ellipse at 50% 49%, ${C.brandTeal}22, transparent 65%), ${P.background}`,color:P.foreground}}>
     <div style={{position:"absolute",top:visual.motion.brandTopInsetPx,left:0,right:0,display:"flex",alignItems:"center",justifyContent:"center",gap:14,fontSize:30,fontWeight:900}}><Img src={staticFile("branding/hsk-ai-logo-1024.png")} style={{width:42,height:42,borderRadius:12}}/>HSK <span style={{color:C.brandGold}}>AI</span></div>
-    <div data-action-id={layers.active.id} data-action-kind={layers.active.kind} style={{position:"absolute",top:A.stageTopPx,left:80,right:80,height:A.graphicHeightPx}}>
+    <div data-action-id={layers.active.id} data-action-kind={layers.active.kind} data-motion-director={director?"v1":"off"} style={{position:"absolute",top:A.stageTopPx,left:80,right:80,height:A.graphicHeightPx,translate:`${camera.xPx}px ${camera.yPx}px`,scale:camera.scale,transformOrigin:"50% 50%"}}>
       {artwork.map(layer=><div key={layer.role+":"+layer.beat.id} data-transition-layer={layer.role} data-layer-action-id={layer.beat.id}
         style={{position:"absolute",inset:0,opacity:layer.opacity,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:A.gapPx}}>
         <ActionBeatArtwork beat={layer.beat} frame={layer.localFrame} context={context}/>
