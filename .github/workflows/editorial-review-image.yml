@@ -1,0 +1,29 @@
+name: Editorial review image for reference-grade motion
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/editorial-review-image.yml'
+      - 'hsk-tu-vous/public/editorial-review/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reference-art:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify review-only generated photo exists
+        run: |
+          test -s hsk-tu-vous/public/editorial-review/20261030-tote-firefly.jpg
+          file hsk-tu-vous/public/editorial-review/20261030-tote-firefly.jpg
+          sha256sum hsk-tu-vous/public/editorial-review/20261030-tote-firefly.jpg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: editorial-review-generated-tote
+          path: hsk-tu-vous/public/editorial-review/20261030-tote-firefly.jpg
+          retention-days: 7
+          if-no-files-found: error
+# Generated visual subject only. No release, voice change, or auto-publication.
