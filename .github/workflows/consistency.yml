@@ -99,6 +99,28 @@ jobs:
             /tmp/motion-director-technical.mp4
           retention-days: 3
           if-no-files-found: error
+      - name: Render original review-only Motion Asset Library at actual word cues
+        run: |
+          node --check scripts/motion-asset-render-fixture.mjs
+          node scripts/verify-motion-assets.mjs
+          node scripts/motion-asset-render-fixture.mjs /tmp/assets-props.json
+          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-book.png --props /tmp/assets-props.json --frame=55
+          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-cue.png --props /tmp/assets-props.json --frame=66
+          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-transition.png --props /tmp/assets-props.json --frame=72
+          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-tea.png --props /tmp/assets-props.json --frame=78
+          node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const names=['book','cue','transition','tea'];const hashes=names.map(n=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/asset-'+n+'.png')).digest('hex'));if(new Set(hashes).size!==4)throw Error('Library-backed action did not visually change by exact cue');"
+      - name: Save original review-only library preview
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: motion-asset-library-review
+          path: |
+            /tmp/asset-book.png
+            /tmp/asset-cue.png
+            /tmp/asset-transition.png
+            /tmp/asset-tea.png
+          retention-days: 3
+          if-no-files-found: error
       - name: Verify real dated plan selects semantic renderer, not static school template
         run: |
           node scripts/semantic-planned-fixture.mjs /tmp/semantic-planned-props.json
