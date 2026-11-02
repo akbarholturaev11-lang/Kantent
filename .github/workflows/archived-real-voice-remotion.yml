@@ -65,7 +65,7 @@ jobs:
         run: |
           npx remotion render src/index.ts HSKAI-Episode /tmp/canonical-real-voice/hsk-ai-${{ matrix.language }}-remotion-REVIEW-ONLY.mp4 \
             --props /tmp/canonical-real-voice/${{ matrix.language }}-props.json \
-            --scale=0.6666666667 --codec=h264 --pixel-format=yuv420p --color-space=bt709 \
+            --scale=0.6666666666666666 --codec=h264 --pixel-format=yuv420p --color-space=bt709 \
             --audio-codec=aac --concurrency=2 --log=error
           test -s /tmp/canonical-real-voice/hsk-ai-${{ matrix.language }}-remotion-REVIEW-ONLY.mp4
       - name: Validate actual audio/video streams, full voice length and make contact sheet
