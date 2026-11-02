@@ -27,6 +27,8 @@ import {
   writeJson,
 } from "./lib.mjs";
 import { verifyPlatformVideo } from "./render-platform-videos.mjs";
+import {assertMotionAssetsProductionApproved} from "./motion-assets.mjs";
+import {verifyMotionAssetFiles} from "./verify-motion-assets.mjs";
 
 const id = process.argv[2];
 if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id ?? "")) {
@@ -49,6 +51,10 @@ if (!ctaValidation.valid) {
   throw new Error(`CTA rejasi yangilanishi kerak:\n${ctaValidation.errors.join("\n")}`);
 }
 validateEpisode(episode);
+if(episode.scenes.some(scene=>scene.motionBeats?.some(beat=>beat.kind==="asset"))){
+  verifyMotionAssetFiles();
+  assertMotionAssetsProductionApproved(episode);
+}
 const voiceProfile = await requireApprovedVoiceProfile(id);
 if (episode.voiceProvider !== voiceProfile.provider || episode.voiceProfileId !== voiceProfile.profileId) {
   throw new Error("TikTok review voice does not match the approved profile.");
