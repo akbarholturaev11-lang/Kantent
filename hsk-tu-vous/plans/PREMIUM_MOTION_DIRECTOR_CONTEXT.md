@@ -2,6 +2,7 @@
 
 **Read this first on every resumed turn.** Canonical detailed tasks: [PREMIUM_MOTION_DIRECTOR_IMPLEMENTATION.md](./PREMIUM_MOTION_DIRECTOR_IMPLEMENTATION.md).  
 **Updated:** 2026-11-02 (Asia/Shanghai). **Branch:** `feature/premium-motion-director`.  
+**Draft PR:** [#51](https://github.com/akbarholturaev11-lang/Kantent/pull/51) — no merge.
 **Starting main HEAD:** `b39b4a9b691fdd079be020ff8bc4b7448fa8492f`.  
 **Mission:** transform current meaning-linked Remotion action lessons into a professional, voice-directed, continuity-preserving motion graphic system. No main merge without owner viewing an actual pilot.
 
@@ -29,11 +30,11 @@
 |---|---|---|
 | M0 architecture review | TESTED | Existing code/docs inspected from source; baseline identified |
 | M0 original video baseline render | TODO | Need actual real MP4 and accessible approved audio/captions |
-| M1 pure continuity helper | IN_PROGRESS | Implement in this branch; independent unit tests |
-| M1 action scene renderer | TODO | Refactor incoming/outgoing visual only |
-| M1 local unit tests | TODO | Node built-in test, negative/seek cases |
-| M1 complete lint/consistency/render smoke | TODO | Requires installed repository dependency tree and runner |
-| M2 motion director schema | TODO | Not yet coded |
+| M1 pure continuity helper | TESTED | Cue-safe selector + declaration; CI Node tests passed in run 41415222269 |
+| M1 action scene renderer | TESTED | Dual artwork layers, prior pose frozen, first incoming cue; CI lint + synthetic still passed |
+| M1 local unit tests | TESTED | Strict cues, seek repeatability, invalid plans, immutability; PR CI completed stage |
+| M1 lint/consistency/action-still smoke | TESTED | Synthetic-only stage passed; real RU/TJ voice-linked MP4 A/B remains TODO |
+| M2 motion director schema | TODO | Next target: persistent IDs, camera/transition shot contract, exact cue validator |
 | M3 persistent asset/camera engine | TODO | Not yet coded |
 | M4 verified asset library | TODO | Not yet coded |
 | M5 optional effects packages | TODO | Not yet evaluated |
@@ -61,3 +62,7 @@
 ## Append-only progress log
 
 - **2026-11-02 — INIT:** Owner approved detailed plan, context file and work start. Identified M1 first safe incremental change. Feature branch created from main `b39b4a9`. No main edit or video publication authorized.
+
+- **2026-11-02 — M1 CODE:** Added `scripts/action-beat-continuity.mjs` / `.d.mts` / `.test.mjs`, and refactored `src/NarratedActionScene.tsx` to crossfade only visual artwork (not logo/voice/captions). Added canonical `visual-system.json#motion.actionBeatCrossfadeFrames=8`; aligned `EDITING_SPEC.md`.
+- **2026-11-02 — M1 TECHNICAL PROOF:** Added `scripts/action-continuity-render-fixture.mjs`, 65/66/69/74 frame still-render CI and duplicate-image guard. PR run `41414893909`: both jobs success. PR run `41415222269`: continuity Node test, lint, consistency and synthetic action still stage passed; remaining unrelated/general semantic MP4 smoke in progress when this entry was written. Synthetic test timing is NOT real Gemini proof and no real user-facing video was produced.
+- **2026-11-02 — NEXT:** Finish PR CI check; inspect generated action stills and create real valid RU/TJ pilot with original voice assets; design M2 director schema + persistent element IDs; do not merge or post.
