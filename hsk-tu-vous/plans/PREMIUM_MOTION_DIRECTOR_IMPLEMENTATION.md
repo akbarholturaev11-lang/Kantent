@@ -1,6 +1,6 @@
 # Premium Motion Director — implementation plan (HSK AI Content Studio)
 
-**Status:** ACTIVE / isolated feature branch. **Owner authorization:** 2026-11-02.  
+**Status:** ACTIVE / M1 technically implemented and CI-tested (synthetic still only); real-pilot QA pending / isolated feature branch. **Owner authorization:** 2026-11-02.  
 **Branch:** `feature/premium-motion-director` (no direct main writes).  
 **Baseline main:** `b39b4a9b691fdd079be020ff8bc4b7448fa8492f`.  
 **Living handoff:** [PREMIUM_MOTION_DIRECTOR_CONTEXT.md](./PREMIUM_MOTION_DIRECTOR_CONTEXT.md).
@@ -35,13 +35,13 @@ Owner reference: video supplied in ChatGPT 2026-11-02 (82.8s; inspect source/fra
 - [ ] Establish phone-sized before/after stills, full MP4 with audio, 30fps/1080x1920, SRT and baseline load/time/size metrics.
 
 ### M1 — Beat continuity V1 (first code stage; no new dependency) [P0]
-- [ ] Implement pure `scripts/action-beat-continuity.mjs` selector taking monotonic resolved beat cues, scene-local frame and a configured transition window.
-- [ ] Preserve previous visual's settled final state while new beat appears; avoid disappearing at the cue boundary. Smoothstep eased opacity; no early portrayal of the new spoken action.
-- [ ] Expose typed `.d.mts` contract for TS renderer imports.
-- [ ] Refactor `src/NarratedActionScene.tsx` so the same rendering of choice/comparison/graphic/quantity/phrase can appear as *incoming* and frozen *outgoing* layers; background, logo, subtitles are not doubled.
-- [ ] Read transition length from one canonical `visual-system.json#motion` token; do not hard-code a second copy. Default only the newly selected action presentation.
-- [ ] Tests: first beat, exact cue frame, mid-window, end-window, repeated same-cue rejection, zero/invalid window, before-first cue, seeking back/forth, deterministic floating-point sum = 1.
-- [ ] Re-run full ordinary tests, a Remotion render smoke and inspect before/cue/settled frames for no dropped graphic/no accidental doubled caption.
+- [x] Implement pure `scripts/action-beat-continuity.mjs` selector taking monotonic resolved beat cues, scene-local frame and a configured transition window.
+- [x] Preserve previous visual's settled final state while new beat appears; avoid disappearing at the cue boundary. Smoothstep eased opacity; no early portrayal of the new spoken action.
+- [x] Expose typed `.d.mts` contract for TS renderer imports.
+- [x] Refactor `src/NarratedActionScene.tsx` so the same rendering of choice/comparison/graphic/quantity/phrase can appear as *incoming* and frozen *outgoing* layers; background, logo, subtitles are not doubled.
+- [x] Read transition length from one canonical `visual-system.json#motion` token; do not hard-code a second copy. Default only the newly selected action presentation.
+- [x] Tests: first beat, exact cue frame, mid-window, end-window, repeated same-cue rejection, zero/invalid window, before-first cue, seeking back/forth, deterministic floating-point sum = 1.
+- [x] Re-run all existing CI tests and synthetic Remotion action still smoke at frames 65, 66, 69 and 74; CI checks no duplicate frame hash. **Still pending:** owner-viewed real RU/TJ final MP4 + true cue/CTA quality review.
 - **Exit:** same audio/CTA/duration/caption data, smooth beat crossfade in action rendering, no regression in old non-action/CTA rendering.
 
 ### M2 — Motion Director data model and semantic storyboard [P0]
