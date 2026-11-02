@@ -61,12 +61,12 @@ Owner reference: video supplied in ChatGPT 2026-11-02 (82.8s; inspect source/fra
 - [ ] Ensure existing `GraphicScene` tracks can run without arbitrary first-frame resets; keep old untagged graphic behavior stable.
 
 ### M4 — Asset Library and visual vocabulary [P1]
-- [ ] Define asset manifest: id, type, source, license, dimensions, verified subject, language relevance, safe bounding box, transparency, approved palette and hash.
-- [ ] Add local curated vector/PNG/WebP and optional Lottie, real object cutouts, teacher/student characters, contextual maps, timelines and comparison components. Start from 3–5 high-value teaching objects, **not** a mass preset pack.
-- [ ] Asset loading via Remotion `staticFile` and `Img` with verified availability; no runtime network reads, CDN dependencies or broken license chains.
+- [x] Define 3-entry original SVG manifest: id, file/type, SHA-256, project provenance/license claim, size, subject, RU/TJ, safe bounds, transparency, palette and review-only status; no owner production approval implied.
+- [ ] **Partial:** three first-party SVG illustrations (book, cup, market) exist and are used by technical renders. Real licensed portraits/cutouts, verified photos/screenshots, responsive narrative maps/comparisons and Lottie/PNG/WebP ingestion are **not implemented**.
+- [x] Add explicit `asset` action kind, local Remotion `staticFile` + `Img`, SHA-256/file safety verifier and pre-paid-voice/production/TikTok approval gates; CI tests verify reviewed synthetic stills. Real RU/TJ full QA pending.
 - [ ] If Lottie is genuinely required, add `@remotion/lottie` with version alignment and smoke-tested render; otherwise keep no extra dependency.
 - [ ] Source real UI only from verified product screenshots, no invented app screens or fake performance/people.
-- [ ] Provide understandable blank/error states for unapproved assets; never silently substitute unrelated imagery.
+- [x] Reject unknown IDs, changed/missing files, unsafe SVG, invalid provenance and review-only assets in production; never silently fall back to another visual.
 
 ### M5 — Transition/effects pack [P1]
 - [ ] Evaluate compatible `@remotion/transitions` without changing full video duration, scene timing, continuous audio or CTA boundaries. Test overlaps explicitly; `TransitionSeries` shortens durations unless compensated.
