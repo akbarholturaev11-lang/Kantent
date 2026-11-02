@@ -29,17 +29,17 @@
 | Stage | State | Evidence / blocker |
 |---|---|---|
 | M0 architecture review | TESTED | Existing code/docs inspected from source; baseline identified |
-| M0 original video baseline render | TODO | Need actual real MP4 and accessible approved audio/captions |
+| M0 original video baseline render | IN_PROGRESS | Archived dated 2026-10-30 RU/TJ real-voice scene reviews recovered; original audio present, accepted word captions missing |
 | M1 pure continuity helper | TESTED | Cue-safe selector + declaration; CI Node tests passed in run 41415222269 |
 | M1 action scene renderer | TESTED | Dual artwork layers, prior pose frozen, first incoming cue; CI lint + synthetic still passed |
 | M1 local unit tests | TESTED | Strict cues, seek repeatability, invalid plans, immutability; PR CI completed stage |
 | M1 lint/consistency/action-still smoke | TESTED | Synthetic-only stage passed; real RU/TJ voice-linked MP4 A/B remains TODO |
 | M2 motion director schema | TESTED | Exact voice cue and asset contract, bounded camera, review trace; passed CI run 41416786473 (synthetic) |
 | M3 persistent asset/camera engine | IN_PROGRESS | 12-frame cue-safe shared SVG + camera rendered in real 57-frame silent MP4; CI 41418252599 green; broader assets/real RU+TJ QA remain |
-| M4 verified asset library | IN_PROGRESS | 3 SHA-256 verified original review-only SVGs, explicit `asset` beats, production/TTS/TikTok gates; first 2-asset CI 41420018646 passed, full 3-asset silent MP4 check pending |
+| M4 verified asset library | IN_PROGRESS | Three original SVG files, SHA-256/rights checks and all-asset 122-frame silent MP4 CI passed; production permission and licensed real-media library still missing |
 | M5 optional effects packages | IN_PROGRESS | Cue-bound slide, mask and focus plus crossfade; added visual tests, real-motion-blur and interscene shared zoom intentionally not installed |
 | M6 visual QA automation | IN_PROGRESS | Exact shot↔cue evidence and stage-only PNG hero/bounds/change gate in CI, plus late-subtitle fix; real RU/TJ and universal typography/CTA checks pending |
-| M7 RU/TJ A/B owner pilot | TODO | Not rendered/approved |
+| M7 RU/TJ A/B owner pilot | IN_PROGRESS | Two actual archived RU/TJ one-take WAVs used in new six-scene animated 720x1280 previews; unverified word cues, no canonical Remotion A/B or owner approval |
 
 ## Handoff checklist
 
