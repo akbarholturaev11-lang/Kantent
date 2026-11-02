@@ -44,6 +44,8 @@ jobs:
           node --test scripts/motion-director-plan.test.mjs
           node --check scripts/motion-transition-plan.mjs
           node --test scripts/motion-transition-plan.test.mjs
+          node --check scripts/action-caption-grouping.mjs
+          node --test scripts/action-caption-grouping.test.mjs
           node --check scripts/motion-assets.mjs
           node --check scripts/verify-motion-assets.mjs
           node scripts/verify-motion-assets.mjs
