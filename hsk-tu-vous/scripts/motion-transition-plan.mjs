@@ -38,19 +38,19 @@ export function resolveMotionTransition(value,frame,{slideDistancePx=44,focusBlu
   }else if(value.kind==="slide-match"){
     const direction=value.direction==="left"?-1:1;
     incoming.opacity=progress;outgoing.opacity=1-progress;
-    incoming.transform=\`translateX(\${-direction*(1-progress)*slideDistancePx}px)\`;
-    outgoing.transform=\`translateX(\${direction*progress*slideDistancePx}px)\`;
+    incoming.transform=`translateX(${-direction*(1-progress)*slideDistancePx}px)`;
+    outgoing.transform=`translateX(${direction*progress*slideDistancePx}px)`;
   }else if(value.kind==="masked-reveal"){
     // The complete previous scene stays under the incoming scene. Never hide
     // future visual content before the real word cue.
     const covered=100*(1-progress);
     incoming.clipPath=value.direction==="left"
-      ?\`inset(0 \${covered}% 0 0)\`
-      :\`inset(0 0 0 \${covered}%)\`;
+      ?`inset(0 ${covered}% 0 0)`
+      :`inset(0 0 0 ${covered}%)`;
   }else if(value.kind==="focus-reveal"){
     incoming.opacity=progress;outgoing.opacity=1-progress;
-    incoming.transform=\`scale(\${0.98+0.02*progress})\`;
-    incoming.filter=\`blur(\${focusBlurPx*(1-progress)}px)\`;
+    incoming.transform=`scale(${0.98+0.02*progress})`;
+    incoming.filter=`blur(${focusBlurPx*(1-progress)}px)`;
   }
   return {progress,incoming,outgoing};
 }
