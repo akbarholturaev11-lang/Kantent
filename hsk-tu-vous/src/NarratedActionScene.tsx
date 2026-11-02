@@ -78,7 +78,7 @@ const OrdinalStage:React.FC<{model:ActionModel;frame:number;compact?:boolean}>=(
 
 const ModelStage:React.FC<{model:ActionModel;kind:string;frame:number;compact?:boolean;omitGraphicRoots?:string[]}>=({model,kind,frame,compact=false,omitGraphicRoots=[]})=><>
   {kind==="graphic"&&model.graphic&&<GraphicScene plan={model.graphic} frame={frame} height={compact?A.comparisonObjectHeightPx:A.graphicHeightPx} omitRootIds={omitGraphicRoots}/>}
-  {kind==="asset"&&model.assetId&&<Img src={staticFile(getMotionAsset(model.assetId).path)} style={{width:"100%",height:compact?A.comparisonObjectHeightPx:A.graphicHeightPx,objectFit:"contain"}}/>}
+  {kind==="asset"&&model.assetId&&<Img src={staticFile(getMotionAsset(model.assetId).path)} style={{width:"100%",height:compact?A.comparisonObjectHeightPx:A.graphicHeightPx,objectFit:"contain",transform:`scale(${getMotionAsset(model.assetId).stageScale})`,transformOrigin:"center"}}/>}
   {(kind==="quantity"||model.count)&&<QuantityStage model={model} frame={frame} compact={compact}/>}
   {kind==="numeral"&&<NumberStage model={model} frame={frame} compact={compact}/>}
   {kind==="ordinal"&&<OrdinalStage model={model} frame={frame} compact={compact}/>}

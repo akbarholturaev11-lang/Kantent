@@ -14,6 +14,8 @@ test("all first-party original SVG files match their SHA-256 provenance and path
   assert.equal(value.verified.length,3);
   assert.deepEqual(value.verified,["study-book","tea-cup","market-stall"]);
   assert.equal(getMotionAsset("tea-cup").status,"review-only");
+  assert.equal(getMotionAsset("study-book").stageScale,1);
+  assert.equal(getMotionAsset("tea-cup").stageScale,1.16);
 });
 test("path traversal, missing provenance and unapproved status cannot enter canonical manifest",()=>{
   const e=clone();e.assets[0].path="../secret.svg";
@@ -22,6 +24,8 @@ test("path traversal, missing provenance and unapproved status cannot enter cano
   assert.throws(()=>validateMotionAssetManifest(u),/copyright/);
   const bad=clone();bad.assets[0].status="auto-approved";
   assert.throws(()=>validateMotionAssetManifest(bad),/approval/);
+  const oversize=clone();oversize.assets[1].stageScale=1.7;
+  assert.throws(()=>validateMotionAssetManifest(oversize),/stageScale/);
   const dupe=clone();dupe.assets[1].sha256=dupe.assets[0].sha256;
   assert.throws(()=>validateMotionAssetManifest(dupe),/unsafe\/duplicate/);
   assert.throws(()=>getMotionAsset("../secret"),/invalid requested/);

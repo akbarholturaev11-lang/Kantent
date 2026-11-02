@@ -7,7 +7,7 @@ const object=v=>v!==null&&typeof v==="object"&&!Array.isArray(v);
 const fail=message=>{throw Error("Motion asset registry: "+message)};
 const knownFields={
   manifest:["schemaVersion","assetRoot","assets"],
-  asset:["id","kind","path","sha256","width","height","transparent","safeBounds","subject","description","locales","palette","provenance","status"],
+  asset:["id","kind","path","sha256","width","height","transparent","safeBounds","stageScale","subject","description","locales","palette","provenance","status"],
   provenance:["kind","author","createdOn","license","sourceReference"],
   bounds:["x","y","width","height"]
 };
@@ -31,6 +31,8 @@ export function validateMotionAssetManifest(value=manifest){
        !Number.isInteger(asset.height)||asset.height<240||asset.height>2048||
        asset.transparent!==true)
       fail("unsupported dimensions or transparency");
+    if(typeof asset.stageScale!=="number"||!Number.isFinite(asset.stageScale)||asset.stageScale<1||asset.stageScale>1.18)
+      fail("asset stageScale must be bounded [1,1.18]");
     onlyKeys(asset.safeBounds,knownFields.bounds,"safeBounds");
     const b=asset.safeBounds;
     if(![b.x,b.y,b.width,b.height].every(Number.isFinite)||

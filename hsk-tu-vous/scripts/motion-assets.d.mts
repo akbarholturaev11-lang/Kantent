@@ -1,6 +1,6 @@
 export type MotionAsset={
   id:string;kind:"svg";path:string;sha256:string;width:number;height:number;
-  transparent:true;safeBounds:{x:number;y:number;width:number;height:number};
+  transparent:true;stageScale:number;safeBounds:{x:number;y:number;width:number;height:number};
   subject:string;description:string;locales:string[];palette:string;
   provenance:{kind:"first-party-original";author:string;createdOn:string;license:"project-owned-original";sourceReference:string};
   status:"review-only"|"production-approved";

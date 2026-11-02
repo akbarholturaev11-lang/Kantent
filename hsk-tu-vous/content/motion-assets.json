@@ -30,7 +30,8 @@
         "license": "project-owned-original",
         "sourceReference": "authored for this repository"
       },
-      "status": "review-only"
+      "status": "review-only",
+      "stageScale": 1
     },
     {
       "id": "tea-cup",
@@ -60,7 +61,8 @@
         "license": "project-owned-original",
         "sourceReference": "authored for this repository"
       },
-      "status": "review-only"
+      "status": "review-only",
+      "stageScale": 1.16
     },
     {
       "id": "market-stall",
@@ -90,7 +92,8 @@
         "license": "project-owned-original",
         "sourceReference": "authored for this repository"
       },
-      "status": "review-only"
+      "status": "review-only",
+      "stageScale": 1.16
     }
   ]
 }
