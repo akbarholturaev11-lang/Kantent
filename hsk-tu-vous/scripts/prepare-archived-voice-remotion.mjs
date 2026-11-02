@@ -87,6 +87,7 @@ export function prepareArchivedVoicePreview(root,language,archiveRoot,baselineEv
   audioSrc:mediaName,
   audioDurationMs:Math.round(wav.durationSec*1000),
   motionDesign:false,
+  motionDesignStyle:undefined, // archived source failed ASR; do not assert an action-word lesson
   captions:[],
   captionSource:"asr-rejected-review-only"
  };
