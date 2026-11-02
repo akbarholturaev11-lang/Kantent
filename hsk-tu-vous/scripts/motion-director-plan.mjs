@@ -118,6 +118,8 @@ export function compileMotionDirectorScene(scene,resolvedBeats) {
           fail(scene,"persistent v1 supports only same authored SVG root groups");
         const id=a.slice(5);
         const currentGraphic=beat.visual?.graphic,previousGraphic=resolvedBeats[i-1].visual?.graphic;
+        if(currentGraphic.width!==previousGraphic.width||currentGraphic.height!==previousGraphic.height)
+          fail(scene,"persistent SVG groups require matching canvas dimensions");
         const roots=[graphicRoots(currentGraphic).find(n=>n.id===id),graphicRoots(previousGraphic).find(n=>n.id===id)];
         if(roots.some(root=>!root||root.type!=="g"))
           fail(scene,"persistent element must be a drawable SVG root group");

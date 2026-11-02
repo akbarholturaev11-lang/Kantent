@@ -11,9 +11,9 @@ const file=process.argv[2];
 if(!file)throw Error("Usage: node scripts/motion-director-render-fixture.mjs /tmp/props.json");
 const graphic=x=>({width:820,height:400,nodes:[
   {id:"book",type:"g",attrs:{},x},
-  {id:"cover",type:"rect",parentId:"book",attrs:{x:330,y:125,width:145,height:184,rx:12,fill:"teal"}},
-  {id:"spine",type:"rect",parentId:"book",attrs:{x:342,y:132,width:21,height:168,rx:4,fill:"gold"}},
-  {id:"pages",type:"line",parentId:"book",attrs:{x1:380,y1:173,x2:443,y2:173,stroke:"foreground",strokeWidth:6}},
+  {id:"cover",type:"rect",parentId:"book",attrs:{x:280,y:65,width:250,height:286,rx:14,fill:"teal"}},
+  {id:"spine",type:"rect",parentId:"book",attrs:{x:292,y:75,width:28,height:265,rx:5,fill:"gold"}},
+  {id:"pages",type:"line",parentId:"book",attrs:{x1:347,y1:159,x2:480,y2:159,stroke:"foreground",strokeWidth:8}},
   {id:"base",type:"line",attrs:{x1:90,y1:340,x2:730,y2:340,stroke:"secondary",strokeWidth:5}}
 ],tracks:[]});
 const scene={

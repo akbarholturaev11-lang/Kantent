@@ -44,6 +44,38 @@ For newly authored or deliberately revised, not-yet-voiced **CTA-free** plans, t
 - `validateEpisode` rejects malformed authored metadata. No metadata is added to old drafts automatically. Hook Lab still owns the opening format and analytics, CTA Lab still owns the platform-specific closing and voice/cue timestamps still own actual synchronization.
 
 
+## Optional Motion Director v1 (isolated premium QA branch)
+
+New, unapproved \`explain-actions-v1\` review drafts may opt into \`scene.motionDirection\` under the feature branch. The source is **author-authored, not auto-generated** and is validated by \`scripts/motion-director-plan.mjs\`. Legacy episodes without this field are unchanged. No CTA, social-publication permission or voice override is conferred.
+
+The optional structure is:
+
+\`\`\`json
+{
+  "schemaVersion": 1,
+  "shots": [
+    {
+      "shotId": "book-left",
+      "beatId": "show-book",
+      "meaningCue": "книга",
+      "assetIds": ["node:book"],
+      "camera": {"xPx": 0, "yPx": 0, "scale": 1},
+      "transition": {"kind": "cut", "frames": 0},
+      "focalRole": "object",
+      "zIndex": 0
+    }
+  ]
+}
+\`\`\`
+
+There must be exactly one ordered shot per authored \`motionBeats[]\` item. \`beatId\`, \`meaningCue\` and optional \`cueOccurrence\` must **exactly** match the source beat; execution times come only from approved locale-specific imported word timestamps. The compiled trace records \`cueStartMs\`, \`cueEndMs\` and local \`cueFrame\`, never guessed time slices. Each assetId must refer to an actually drawable authored SVG top-level \`node:<id>\` or a validated stock \`object:<name>\`, otherwise use the fallback \`beat:<beatId>\` only for a nonpersistent drawing. Unrecognized assets fail preflight.
+
+Camera movement is limited to ±48px in x/y and 0.94–1.08 scale within the existing action stage. \`transition\` accepts \`cut\` (0 frames) or \`crossfade\` (2–16 frames) after the opening cut; transitions cannot exceed preceding cue gaps. Do not add decorative 3D or simulate action before its actual cue. \`focalRole\` must be \`action\`, \`object\`, \`comparison\` or \`phrase\`. \`zIndex\` is reserved for future multi-layer rendering, range 0–5.
+
+\`persistentElementIds\` (optional) currently allows **only** a shared top-level SVG \`g\` group identified as \`node:<id>\` in two successive graphic beats. The group and its static descendant geometry must match. Viewport dimensions must also match. Animated descendant tracks, mismatched group shapes, non-SVG stock object persistence and cuts are rejected rather than pretending an element was moved. The renderer omits both duplicate group drawings during the transition and renders one shared group with interpolated root pose. The old \`GraphicScene\` without direction remains unchanged.
+
+\`render-episode.mjs\` writes \`motion-director-timeline.json\` to the private review directory only when directed scenes are present. This trace, technical synthetic frame tests and even successful CI are **not** acceptance of the real RU/TJ narrated MP4: visually inspect the exact authenticated audio, localized subtitles, cue frame, completion, scale, contrast and CTA in a fresh preview. Do not backfill approved or published source records.
+
 ## Canonical episode record
 
 ### Reusable narrated actions (approved default)

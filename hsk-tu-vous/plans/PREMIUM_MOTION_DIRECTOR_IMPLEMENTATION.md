@@ -1,6 +1,6 @@
 # Premium Motion Director — implementation plan (HSK AI Content Studio)
 
-**Status:** ACTIVE / M1 technically implemented and CI-tested (synthetic still only); real-pilot QA pending / isolated feature branch. **Owner authorization:** 2026-11-02.  
+**Status:** ACTIVE / M1 complete in technical CI; M2 complete as optional schema + trace; M3 limited SVG carry/camera under isolated QA. Real RU/TJ owner-reviewed A/B still pending. **Owner authorization:** 2026-11-02.  
 **Branch:** `feature/premium-motion-director` (no direct main writes).  
 **Baseline main:** `b39b4a9b691fdd079be020ff8bc4b7448fa8492f`.  
 **Living handoff:** [PREMIUM_MOTION_DIRECTOR_CONTEXT.md](./PREMIUM_MOTION_DIRECTOR_CONTEXT.md).
@@ -45,12 +45,12 @@ Owner reference: video supplied in ChatGPT 2026-11-02 (82.8s; inspect source/fra
 - **Exit:** same audio/CTA/duration/caption data, smooth beat crossfade in action rendering, no regression in old non-action/CTA rendering.
 
 ### M2 — Motion Director data model and semantic storyboard [P0]
-- [ ] Draft `motionDirection` optional schema v1, scene-scoped: `shotId`, `meaningCue`, `cueOccurrence`, `assetIds`, `persistentElementIds`, `camera`, `transition`, `durationFrames`, `easing`, `focalRole`, `zIndex` and safe-area limits.
-- [ ] Enforce deterministic mapping from exact imported `motionBeats` to director cues; reject unknown assets, missing/multiple cue matches and cue-order reversal.
-- [ ] Add compatible source parser/validator in `scripts/`, structured fixture and negative-case tests. Keep source without motionDirection valid and deterministic.
-- [ ] Prevent jumps across distinct objects with reused IDs, unrecognized state transformations or unsupported asset coordinates.
-- [ ] Keep planning metadata out of the single subtitle renderer.
-- [ ] Introduce a renderable trace: `review/<id>/motion-director-timeline.json` with frame-indexed incoming/outgoing assets and cue evidence; compare with `motion-timeline.json`.
+- [x] Draft `motionDirection` optional schema v1, scene-scoped: `shotId`, `meaningCue`, `cueOccurrence`, `assetIds`, `persistentElementIds`, `camera`, `transition`, `durationFrames`, `easing`, `focalRole`, `zIndex` and safe-area limits.
+- [x] Enforce deterministic mapping from exact imported `motionBeats` to director cues; reject unknown assets, missing/multiple cue matches and cue-order reversal.
+- [x] Add compatible source parser/validator in `scripts/`, structured fixture and negative-case tests. Keep source without motionDirection valid and deterministic.
+- [x] Prevent jumps across distinct objects with reused IDs, unrecognized state transformations or unsupported asset coordinates.
+- [x] Keep planning metadata out of the single subtitle renderer.
+- [x] Introduce a renderable trace: `review/<id>/motion-director-timeline.json` with frame-indexed incoming/outgoing assets and cue evidence; compare with `motion-timeline.json`.
 
 ### M3 — Persistent elements / scene choreography [P0]
 - [ ] Establish canonical coordinate spaces, anchored subject size and per-object stable IDs.
