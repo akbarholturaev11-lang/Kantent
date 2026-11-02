@@ -6,10 +6,10 @@ import {
   useVideoConfig,
 } from "remotion";
 import {
-  groupTimedCaptions,
   type TimedCaption,
 } from "../scripts/caption-utils.mjs";
 import visualSystem from "../content/visual-system.json";
+import {groupExactActionCaptions} from "../scripts/action-caption-grouping.mjs";
 import { actionTextAtFrame, actionSubtitlePresentation, type ActionCaptionScene } from "../scripts/action-text-layout.mjs";
 
 export type { TimedCaption } from "../scripts/caption-utils.mjs";
@@ -48,11 +48,9 @@ export const CaptionOverlay: React.FC<{
   const { fps } = useVideoConfig();
   const pages = useMemo(
     () =>
-      groupTimedCaptions(captions, {
-        ...CAPTION_STYLE,
-        sections: sceneSections,
-      }),
-    [captions, sceneSections],
+      groupExactActionCaptions(captions,CAPTION_STYLE,sceneSections,
+        motionDesign&&plainMotionDesign?actionCaptionScenes:[],fps),
+    [captions,sceneSections,motionDesign,plainMotionDesign,actionCaptionScenes,fps],
   );
   const timeMs = (frame / fps) * 1000;
   const page = pages.find(
