@@ -96,6 +96,10 @@ await invalidateReviewArtifacts(id);
 if (semanticTimeline) await writeJson(path.join(folder, "visual-timeline.json"), semanticTimeline);
 if (promoTimeline) await writeJson(path.join(folder,"promo-timeline.json"),promoTimeline);
 if (motionTimeline) await writeJson(path.join(folder, "motion-timeline.json"), motionTimeline);
+const directedScenes=motionTimeline?.scenes.filter(scene=>scene.motionDirector).map(scene=>scene.motionDirector)??[];
+if (directedScenes.length) await writeJson(path.join(folder,"motion-director-timeline.json"),{
+  schemaVersion:1,episodeId:episode.id,timingSource:"gemini-word-timestamps",scenes:directedScenes
+});
 await writeStatus(id, {
   stage: "rendering",
   sourceRevision,
