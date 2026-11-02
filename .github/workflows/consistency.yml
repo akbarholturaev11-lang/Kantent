@@ -69,6 +69,26 @@ jobs:
           npx remotion still src/index.ts HSKAI-Episode /tmp/action-mid.png --props /tmp/action-continuity-props.json --frame=69
           npx remotion still src/index.ts HSKAI-Episode /tmp/action-settled.png --props /tmp/action-continuity-props.json --frame=74
           node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const stages=['before','cue','mid','settled'];const hashes=stages.map(s=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/action-'+s+'.png')).digest('hex'));if(new Set(hashes).size!==4)throw Error('Action continuity motion frames identical');"
+      - name: Render Motion Director shared SVG root and bounded camera on exact cue
+        run: |
+          node scripts/motion-director-render-fixture.mjs /tmp/director-graphics-props.json
+          npx remotion still src/index.ts HSKAI-Episode /tmp/director-before.png --props /tmp/director-graphics-props.json --frame=65
+          npx remotion still src/index.ts HSKAI-Episode /tmp/director-cue.png --props /tmp/director-graphics-props.json --frame=66
+          npx remotion still src/index.ts HSKAI-Episode /tmp/director-mid.png --props /tmp/director-graphics-props.json --frame=69
+          npx remotion still src/index.ts HSKAI-Episode /tmp/director-settled.png --props /tmp/director-graphics-props.json --frame=74
+          node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const names=['before','cue','mid','settled'];const hashes=names.map(n=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/director-'+n+'.png')).digest('hex'));if(new Set(hashes).size!==4)throw Error('Directed shared SVG/camera did not produce distinct cue frames');"
+      - name: Save technical-only Motion Director frame evidence
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: motion-director-synthetic-stills
+          path: |
+            /tmp/director-before.png
+            /tmp/director-cue.png
+            /tmp/director-mid.png
+            /tmp/director-settled.png
+          retention-days: 3
+          if-no-files-found: error
       - name: Verify real dated plan selects semantic renderer, not static school template
         run: |
           node scripts/semantic-planned-fixture.mjs /tmp/semantic-planned-props.json
