@@ -639,6 +639,7 @@
         "uiLanguage": "zxx",
         "sourceUiLanguage": "tg-TJ",
         "languageNeutralCrop": true,
+        "screenImage": "promo-captures/ai-voice-original.png",
         "crop": {
           "x": 285,
           "y": 580,
@@ -668,6 +669,7 @@
         "uiLanguage": "zxx",
         "sourceUiLanguage": "tg-TJ",
         "languageNeutralCrop": true,
+        "screenImage": "promo-captures/ai-voice-original.png",
         "crop": {
           "x": 440,
           "y": 2180,
@@ -935,8 +937,8 @@
   "localization": {
     "language": "tg",
     "sourcePromoId": "shop-shirt-size-20261105",
-    "sourceHash": "51ac588768ca02eeaca18a5a1141dafccbd5dbd89640916f9791b02cbace9eaf",
-    "authoredOn": "2026-11-05",
+    "sourceHash": "a0803beb2c11cfe4edf9f29c0406dae00102ec08a11b9178aed86722e057ca02",
+    "authoredOn": "2026-11-01",
     "status": "draft"
   }
 }
