@@ -95,7 +95,14 @@ const ActionBeatArtwork:React.FC<{beat:ResolvedMotionBeat;frame:number;context?:
 
 export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat[];director?:MotionDirectorTimeline|null}>=({frame,beats,director=null})=>{
   const camera=resolveDirectorCamera(director,frame);
-  const layers=resolveActionBeatLayers(beats,frame,visual.motion.actionBeatCrossfadeFrames);
+  const currentBeat=[...beats].reverse().find(beat=>frame>=beat.localFrame)??beats[0];
+  const plannedShot=director?.shots.find(shot=>shot.beatId===currentBeat.id);
+  // The director controls both fading and camera movement with one duration;
+  // non-directed scenes retain the canonical M1 default.
+  const transitionFrames=plannedShot
+    ? plannedShot.transition.kind==="cut"?0:plannedShot.transition.frames
+    : visual.motion.actionBeatCrossfadeFrames;
+  const layers=resolveActionBeatLayers(beats,frame,transitionFrames);
   const context=beats.map(beat=>beat.visual).find(entry=>entry?.object&&entry.count);
   const directedShot=director?.shots.find(shot=>shot.beatId===layers.active.id);
   const sharedRoots=layers.outgoing&&directedShot?.persistentElementIds?.length&&

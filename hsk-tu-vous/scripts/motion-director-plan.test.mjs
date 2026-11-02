@@ -106,3 +106,13 @@ test("persistent SVG root poses move without frame-order dependency",()=>{
   assert.equal(resolvePersistentRootPose(svg(-40),svg(40),"book",40,7,8).x,40);
   assert.throws(()=>resolvePersistentRootPose(svg(-40),svg(40),"absent",40,3,8),/matching geometry/);
 });
+
+test("a longer director crossfade keeps pose and camera seek-safe through frame 12",()=>{
+  const copy=structuredClone(scene);
+  copy.motionDirection.shots[1].transition.frames=12;
+  const t=compile(copy,resolved);
+  assert.ok(camera(t,69).xPx>0&&camera(t,69).xPx<32);
+  assert.ok(camera(t,76).xPx<32);
+  assert.equal(camera(t,77).xPx,32);
+  assert.deepEqual(camera(t,71),camera(t,71));
+});

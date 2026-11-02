@@ -31,7 +31,7 @@ const scene={
       camera:{xPx:0,yPx:0,scale:1},transition:{kind:"cut",frames:0},focalRole:"object",zIndex:0},
     {shotId:"right",beatId:"book-right",meaningCue:"справа",assetIds:["node:book"],
       persistentElementIds:["node:book"],camera:{xPx:32,yPx:-8,scale:1.05},
-      transition:{kind:"crossfade",frames:8},focalRole:"action",zIndex:0}
+      transition:{kind:"crossfade",frames:12},focalRole:"action",zIndex:0
   ]}
 };
 const episode={
