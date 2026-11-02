@@ -639,6 +639,7 @@
         "uiLanguage": "zxx",
         "sourceUiLanguage": "tg-TJ",
         "languageNeutralCrop": true,
+        "screenImage": "promo-captures/ai-voice-original.png",
         "crop": {
           "x": 285,
           "y": 580,
@@ -668,6 +669,7 @@
         "uiLanguage": "zxx",
         "sourceUiLanguage": "tg-TJ",
         "languageNeutralCrop": true,
+        "screenImage": "promo-captures/ai-voice-original.png",
         "crop": {
           "x": 440,
           "y": 2180,
