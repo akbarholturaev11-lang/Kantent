@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {compileMotionDirectorScene as compile,resolveDirectorCamera as camera} from "./motion-director-plan.mjs";
+import {compileMotionDirectorScene as compile,resolveDirectorCamera as camera,resolvePersistentRootPose} from "./motion-director-plan.mjs";
 import {resolveMotionBeats} from "./motion-design-plan.mjs";
 
 const scene={
@@ -13,7 +13,6 @@ const scene={
     {shotId:"first",beatId:"two",meaningCue:"Две",assetIds:["object:tea-cup"],
       camera:{xPx:0,yPx:0,scale:1},transition:{kind:"cut",frames:0},focalRole:"object",zIndex:0},
     {shotId:"second",beatId:"three",meaningCue:"три",assetIds:["object:tea-cup"],
-      persistentElementIds:["object:tea-cup"],
       camera:{xPx:32,yPx:-12,scale:1.06},transition:{kind:"crossfade",frames:8},
       focalRole:"action",zIndex:1}
   ]}
@@ -32,7 +31,7 @@ test("opt-in only, exact cue times and frame-local director trace",()=>{
   assert.equal(result.timingSource,"verified-word-cues");
   assert.deepEqual(result.shots.map(s=>s.cueFrame),[27,66]);
   assert.deepEqual(result.shots.map(s=>s.cueStartMs),[900,2200]);
-  assert.equal(result.shots[1].persistentElementIds[0],"object:tea-cup");
+  assert.deepEqual(result.shots[1].persistentElementIds,[]);
   assert.equal(result.shots[0].cueOccurrence,null);
 });
 
@@ -54,13 +53,14 @@ test("reject hallucinated assets, conflicting persistence, and wrong voices",()=
   assert.throws(()=>work(s=>s.motionDirection.shots[1].beatId="two"),/original beat ID/);
   assert.throws(()=>work(s=>s.motionDirection.shots[1].cueOccurrence=2),/matching occurrence/);
   assert.throws(()=>work(s=>s.motionDirection.shots[1].persistentElementIds=["object:book"]),/persistent/);
+  assert.throws(()=>work(s=>s.motionDirection.shots[1].persistentElementIds=["object:tea-cup"]),/supports only same authored SVG root/);
   assert.throws(()=>work(s=>s.motionDirection.shots[1].assetIds=["object:tea-cup","object:tea-cup"]),/distinct/);
 });
 
 test("reject unsupported transition, cue timing inversion and unsafe framing",()=>{
   assert.throws(()=>work(s=>s.motionDirection.shots[1].transition.frames=99),/invalid duration/);
   assert.throws(()=>work(s=>s.motionDirection.shots[0].transition={kind:"crossfade",frames:8}),/invalid duration/);
-  assert.throws(()=>work(s=>s.motionDirection.shots[1].transition={kind:"cut",frames:0}),/cannot jump through cut/);
+  assert.equal(work(s=>s.motionDirection.shots[1].transition={kind:"cut",frames:0}).shots[1].transition.kind,"cut");
   assert.throws(()=>work(s=>s.motionDirection.shots[1].camera.scale=1.4),/bounded safe-stage/);
   assert.throws(()=>work(s=>s.motionDirection.shots[1].camera.xPx=100),/bounded safe-stage/);
   assert.throws(()=>work(s=>s.motionDirection.shots[1].zIndex=8),/focal role/);
@@ -86,6 +86,7 @@ test("unknown/reused graphic group identity cannot masquerade as same object",()
   assert.throws(()=>compile(from,graphicBeats),/identical drawable geometry/);
   from.motionBeats[1].visual.graphic=graphic("teal");
   assert.equal(compile(from,graphicBeats).shots[1].persistentElementIds[0],"node:cup-group");
+  assert.deepEqual(resolvePersistentRootPose(from.motionBeats[0].visual.graphic,from.motionBeats[1].visual.graphic,"cup-group",39,3,8),{x:0,y:0,scale:1,rotate:0,opacity:1});
 });
 
 test("inputs untouched and metadata without direction remains valid",()=>{
@@ -94,4 +95,14 @@ test("inputs untouched and metadata without direction remains valid",()=>{
   assert.equal(JSON.stringify(scene),original);
   assert.equal(JSON.stringify(resolved),raw);
   assert.equal(compile({id:"legacy"},[]),null);
+});
+
+test("persistent SVG root poses move without frame-order dependency",()=>{
+  const svg=x=>({nodes:[{id:"book",type:"g",x,attrs:{}},
+    {id:"cover",type:"rect",parentId:"book",attrs:{x:50,y:50,width:70,height:80,fill:"teal"}}],tracks:[]});
+  const a=resolvePersistentRootPose(svg(-40),svg(40),"book",40,3,8);
+  assert.equal(a.x,0);
+  assert.deepEqual(a,resolvePersistentRootPose(svg(-40),svg(40),"book",40,3,8));
+  assert.equal(resolvePersistentRootPose(svg(-40),svg(40),"book",40,7,8).x,40);
+  assert.throws(()=>resolvePersistentRootPose(svg(-40),svg(40),"absent",40,3,8),/matching geometry/);
 });
