@@ -43,6 +43,7 @@ Earlier lessons outside the active presentation policy can retain their `scene.s
 
 The following describe the retained legacy cinematic renderer, not defaults for new action lessons:
 
+- Action caption QA: for new narrated `explain-actions-v1` lessons, show only the word(s) whose own imported timestamp has begun; never pre-display the next narration word in a two-word group. Keep CTA and legacy grouping as they were. A new subtitle page may fade in briefly from its exact word cue but cannot show future narration. Validate at cue-1, cue and cue+1 frames plus the full voiced review.
 - Make the illustrated frame feel alive with gentle camera drift, character bob/sway and narration-relevant gestures. Combine one dominant teaching action with restrained ambient movement, keeping the words readable. Read motion amounts from `content/visual-system.json#storyboardLayout`.
 - Give Chinese teaching text a short, decaying entrance quiver and a settled reading hold. Use the canonical `heroQuiverPx` and `heroQuiverDeg` tokens. When a beat uses a drawing or text reveal, let the reveal unfold visibly in time with its spoken cue before holding the completed form.
 - Keep 在 and all other Hanzi compact and lower in the teaching composition, with pinyin and Russian meaning grouped below. The active `hanziScale` and `heroTopPx` tokens in `content/visual-system.json#storyboardLayout` own their size and vertical position; apply them consistently to every Chinese teaching beat. Preserve caption separation and phone readability.

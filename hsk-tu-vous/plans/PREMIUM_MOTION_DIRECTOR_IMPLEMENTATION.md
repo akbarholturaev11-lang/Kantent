@@ -78,8 +78,8 @@ Owner reference: video supplied in ChatGPT 2026-11-02 (82.8s; inspect source/fra
 ### M6 — Voice-first art director and automatic review [P1]
 - [ ] Compute cue-to-action map strictly from word timestamps; require exact phrase occurrence indexes, no equal-duration fallback.
 - [ ] Build ordered preproduction shot list with `subject / action / word cue / camera / transition / proof of meaning`.
-- [ ] Build automated still/contact-sheet sampling at cue-1, cue+1, transition midpoint/end, full-scene intervals and 270x480.
-- [ ] Add mechanical gates for missing assets, zero frame changes, empty stage, overlapping/cropped safe-area objects, repeated unrelated shots, clips shorter than meaningful action, forbidden extra text.
+- [ ] **Partial:** CI renders 8 stills and short silent MP4 at key cue windows; contact-sheet manually inspected at 270×480. Generic per-cue shot QA and automatic safe-area scoring are still TODO.
+- [ ] **Partial:** asset SHA-256/security/preview and non-identical frame hash tests are active; action subtitle grouping now cannot show future imported words early (unit+actual render regression). Automatic safe-area/duplicate/scene-complexity checks and full real voice proof remain TODO.
 - [ ] Separate subjective human/AI visual approval from structural proof. A green unit test **never** means professional visuals.
 - [ ] Preserve existing audio/SRT/hash workflows and owner approval; optional audio-reactive SFX only under current limits.
 
