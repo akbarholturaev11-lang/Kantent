@@ -9,10 +9,10 @@ const directional=new Set(["slide-match","masked-reveal"]);
 const object=x=>x!==null&&typeof x==="object"&&!Array.isArray(x);
 
 export function validateMotionTransition(value){
-  if(!object(value)||Object.keys(value).some(k=>!["kind","frames","direction"].includes(k))||
-     !supported.has(value.kind)||!Number.isInteger(value.frames)||
-     value.frames<0||value.frames>16)
-    throw Error("Motion transition: invalid kind/frames/fields");
+  if(!object(value)||Object.keys(value).some(k=>!["kind","frames","direction"].includes(k))||!supported.has(value.kind))
+    throw Error("Motion transition: invalid kind/fields");
+  if(!Number.isInteger(value.frames)||value.frames<0||value.frames>16)
+    throw Error("Motion transition: invalid duration/frames");
   if(value.kind==="cut"&&value.frames!==0||
      value.kind!=="cut"&&value.frames<2)
     throw Error("Motion transition: invalid duration");
