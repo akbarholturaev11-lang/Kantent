@@ -108,7 +108,12 @@ jobs:
           npx remotion still src/index.ts HSKAI-Episode /tmp/asset-cue.png --props /tmp/assets-props.json --frame=66
           npx remotion still src/index.ts HSKAI-Episode /tmp/asset-transition.png --props /tmp/assets-props.json --frame=72
           npx remotion still src/index.ts HSKAI-Episode /tmp/asset-tea.png --props /tmp/assets-props.json --frame=78
-          node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const names=['book','cue','transition','tea'];const hashes=names.map(n=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/asset-'+n+'.png')).digest('hex'));if(new Set(hashes).size!==4)throw Error('Library-backed action did not visually change by exact cue');"
+          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-market.png --props /tmp/assets-props.json --frame=116
+          node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const names=['book','cue','transition','tea','market'];const hashes=names.map(n=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/asset-'+n+'.png')).digest('hex'));if(new Set(hashes).size!==5)throw Error('Library-backed action did not visually change by exact cue');"
+      - name: Render all three review-only assets in silent technical MP4
+        run: |
+          npx remotion render src/index.ts HSKAI-Episode /tmp/motion-assets-technical.mp4 --props /tmp/assets-props.json --frames 38-125 --codec h264 --pixel-format yuv420p --muted --concurrency=2
+          test -s /tmp/motion-assets-technical.mp4
       - name: Save original review-only library preview
         if: ${{ github.event_name == 'pull_request' }}
         uses: actions/upload-artifact@v4
@@ -119,6 +124,8 @@ jobs:
             /tmp/asset-cue.png
             /tmp/asset-transition.png
             /tmp/asset-tea.png
+            /tmp/asset-market.png
+            /tmp/motion-assets-technical.mp4
           retention-days: 3
           if-no-files-found: error
       - name: Verify real dated plan selects semantic renderer, not static school template
