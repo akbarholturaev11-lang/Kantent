@@ -71,6 +71,7 @@ jobs:
           node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const stages=['before','cue','mid','settled'];const hashes=stages.map(s=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/action-'+s+'.png')).digest('hex'));if(new Set(hashes).size!==4)throw Error('Action continuity motion frames identical');"
       - name: Render Motion Director shared SVG root and bounded camera on exact cue
         run: |
+          node --check scripts/motion-director-render-fixture.mjs
           node scripts/motion-director-render-fixture.mjs /tmp/director-graphics-props.json
           npx remotion still src/index.ts HSKAI-Episode /tmp/director-before.png --props /tmp/director-graphics-props.json --frame=65
           npx remotion still src/index.ts HSKAI-Episode /tmp/director-cue.png --props /tmp/director-graphics-props.json --frame=66
