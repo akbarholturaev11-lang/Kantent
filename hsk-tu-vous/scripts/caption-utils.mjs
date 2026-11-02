@@ -21,7 +21,7 @@ export function groupTimedCaptions(captions, style) {
       (caption) =>
         caption.startMs >= section.startMs && caption.startMs < section.endMs,
     );
-    pages.push(...groupCaptionSection(sectionCaptions, {...style,maxWordsPerPage:section.maxWordsPerPage??style.maxWordsPerPage}, section));
+    pages.push(...groupCaptionSection(sectionCaptions, style, section));
   }
 
   return pages;

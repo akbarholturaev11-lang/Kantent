@@ -4,8 +4,6 @@ This is the drawing contract for `explain-actions-v1`'s `graphic` beat. Presenta
 
 Keep each language's authored cues and imported word timestamps independent under the localization contract in `EPISODE_SCHEMA.md`. Geometry may be shared where its meaning is unchanged; copied source-language cue text or timing is not a localized motion plan.
 
-To use source-verified original SVG media instead of authored geometry, select the explicit `asset` beat and the registry described in [EPISODE_SCHEMA.md](EPISODE_SCHEMA.md#motion-asset-library-review-only-original-illustrations-m4). Never place an unrelated or unlicensed image behind a teaching claim, and do not present vector art as real footage.
-
 ## Authoring procedure
 
 1. Identify the real objects, actions and changes in the narration. Write an `explains` rationale and exact spoken `cueText` for every change. Preserve the learning point and verified narration.

@@ -44,46 +44,6 @@ For newly authored or deliberately revised, not-yet-voiced **CTA-free** plans, t
 - `validateEpisode` rejects malformed authored metadata. No metadata is added to old drafts automatically. Hook Lab still owns the opening format and analytics, CTA Lab still owns the platform-specific closing and voice/cue timestamps still own actual synchronization.
 
 
-## Optional Motion Director v1 (isolated premium QA branch)
-
-New, unapproved \`explain-actions-v1\` review drafts may opt into \`scene.motionDirection\` under the feature branch. The source is **author-authored, not auto-generated** and is validated by \`scripts/motion-director-plan.mjs\`. Legacy episodes without this field are unchanged. No CTA, social-publication permission or voice override is conferred.
-
-The optional structure is:
-
-\`\`\`json
-{
-  "schemaVersion": 1,
-  "shots": [
-    {
-      "shotId": "book-left",
-      "beatId": "show-book",
-      "meaningCue": "книга",
-      "assetIds": ["node:book"],
-      "camera": {"xPx": 0, "yPx": 0, "scale": 1},
-      "transition": {"kind": "cut", "frames": 0},
-      "focalRole": "object",
-      "zIndex": 0
-    }
-  ]
-}
-\`\`\`
-
-There must be exactly one ordered shot per authored \`motionBeats[]\` item. \`beatId\`, \`meaningCue\` and optional \`cueOccurrence\` must **exactly** match the source beat; execution times come only from approved locale-specific imported word timestamps. The compiled trace records \`cueStartMs\`, \`cueEndMs\` and local \`cueFrame\`, never guessed time slices. Each assetId must refer to an actually drawable authored SVG top-level `node:<id>`, a known stock `object:<name>`, or a matching registered `asset:<assetId>` for an explicit `asset` beat. The `asset` kind can crossfade but cannot fake persistent SVG morphing. Unrecognized assets fail preflight.
-
-Camera movement is limited to ±48px in x/y and 0.94–1.08 scale within the existing action stage. M5 directed transitions accept cut (0 frames), crossfade, slide-match, masked-reveal or focus-reveal (2–16 frames). Slide-match and masked-reveal require an authored left/right direction; direction is prohibited for other kinds. Adjacent cue spacing bounds the effect length, and audio/CTA/episode duration never changes. Slide-match uses at most 44px horizontal easing; masked-reveal progressively unveils the incoming authored object over the intact outgoing one; focus-reveal allows only 2px of spatial focus blur and 0.98→1 artwork scale. Spatial focus blur is NOT multi-sampled photographic motion blur. Never select flash, glitch, strobe or large/repeated zoom. Shared top-level SVG group persistence is supported only with ordinary crossfade, not other effects, so a shared object cannot be falsely duplicated. Existing scenes without Motion Director remain unchanged. `focalRole` is still restricted to action/object/comparison/phrase; `zIndex` remains reserved for future work (0–5).
-
-\`persistentElementIds\` (optional) currently allows **only** a shared top-level SVG \`g\` group identified as \`node:<id>\` in two successive graphic beats. The group and its static descendant geometry must match. Viewport dimensions must also match. Animated descendant tracks, mismatched group shapes, non-SVG stock object persistence and cuts are rejected rather than pretending an element was moved. The renderer omits both duplicate group drawings during the transition and renders one shared group with interpolated root pose. The old \`GraphicScene\` without direction remains unchanged.
-
-\`render-episode.mjs\` writes \`motion-director-timeline.json\` to the private review directory only when directed scenes are present. This trace, technical synthetic frame tests and even successful CI are **not** acceptance of the real RU/TJ narrated MP4: visually inspect the exact authenticated audio, localized subtitles, cue frame, completion, scale, contrast and CTA in a fresh preview. Do not backfill approved or published source records.
-
-## Motion Asset Library: review-only original illustrations (M4)
-
-`content/motion-assets.json` is the **single source of truth** for reusable `asset` visuals. Each entry has an ID, file path, SHA-256, subject and meaning, size, transparent-safe bounds, default RU/TJ locale applicability, original creator/license provenance and an explicit `review-only` or `production-approved` state. The initial three SVGs (`study-book`, `tea-cup`, `market-stall`) are created for this project and **review-only**. They are editorial illustrations, not photographs, verified screenshots or photorealistic footage.
-
-Author a normal `explain-actions-v1` `motionBeats[]` item with `kind:"asset"`, its precise translated spoken `cueText`, rationale `explains` and `visual:{title,hanzi,pinyin,meaning,assetId}`. Do not combine the `asset` kind with `graphic` geometry or quantity objects, invent an asset ID or reuse another language's narration/cues. An optional Motion Director shot uses `assetIds:["asset:study-book"]` only for the actual authored `visual.assetId:"study-book"`. The engine uses a local `staticFile` path with Remotion `Img` and conservative exact-cue crossfade; arbitrary asset-to-asset morph or fabricated continuity is unsupported.
-
-The pure registry validator is `scripts/motion-assets.mjs`. The Node-only `scripts/verify-motion-assets.mjs` validates actual file existence, SHA-256, dimensions, local safe paths, file size, approved license metadata and rejects active/external SVG content. It is run in CI and before real asset-based voice/video production. Before the source-rights and full phone-size visual review are approved by the owner, `render-episode.mjs`, the Gemini TTS entrypoint, and TikTok renderer must reject `review-only` assets. Technical-only Remotion synthetic voice-cue fixtures are **not** permission to publish. PNG/WebP/Lottie/real person photo support is not active in this initial M4 increment. All existing published scenes and central CTA remain intact.
-
 ## Canonical episode record
 
 ### Reusable narrated actions (approved default)

@@ -38,23 +38,6 @@ jobs:
           node --check scripts/graphic-scene.mjs
           node --check scripts/graphic-voice-proof.mjs
           node --test scripts/graphic-scene.test.mjs scripts/graphic-voice-proof.test.mjs scripts/action-design-plan.test.mjs scripts/action-text-layout.test.mjs scripts/motion-design-plan.test.mjs scripts/lesson-presentation-policy.test.mjs
-          node --check scripts/action-beat-continuity.mjs
-          node --test scripts/action-beat-continuity.test.mjs
-          node --check scripts/motion-director-plan.mjs
-          node --test scripts/motion-director-plan.test.mjs
-          node --check scripts/motion-transition-plan.mjs
-          node --test scripts/motion-transition-plan.test.mjs
-          node --check scripts/action-caption-grouping.mjs
-          node --test scripts/action-caption-grouping.test.mjs
-          node --check scripts/motion-visual-qa.mjs
-          node --test scripts/motion-visual-qa.test.mjs
-          node --check scripts/motion-frame-qa.mjs
-          node --test scripts/motion-frame-qa.test.mjs
-          node --check scripts/write-motion-qa-plan.mjs
-          node --check scripts/motion-assets.mjs
-          node --check scripts/verify-motion-assets.mjs
-          node scripts/verify-motion-assets.mjs
-          node --test scripts/motion-assets.test.mjs
       - name: Test read-only adaptive storytelling and legacy plan compatibility
         run: |
           node --check scripts/storytelling-plan.mjs
@@ -74,83 +57,6 @@ jobs:
           npm run content:promo-plan -- speaking-cafe-example > /tmp/promo-story-plan.json
       - name: Typecheck existing renderer and semantic opt-in preview
         run: npm run lint
-      - name: Render action beat continuity before, at and after exact synthetic cue
-        run: |
-          node scripts/action-continuity-render-fixture.mjs /tmp/action-continuity-props.json
-          npx remotion still src/index.ts HSKAI-Episode /tmp/action-before.png --props /tmp/action-continuity-props.json --frame=65
-          npx remotion still src/index.ts HSKAI-Episode /tmp/action-cue.png --props /tmp/action-continuity-props.json --frame=66
-          npx remotion still src/index.ts HSKAI-Episode /tmp/action-mid.png --props /tmp/action-continuity-props.json --frame=69
-          npx remotion still src/index.ts HSKAI-Episode /tmp/action-settled.png --props /tmp/action-continuity-props.json --frame=74
-          node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const stages=['before','cue','mid','settled'];const hashes=stages.map(s=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/action-'+s+'.png')).digest('hex'));if(new Set(hashes).size!==4)throw Error('Action continuity motion frames identical');"
-      - name: Render Motion Director shared SVG root and bounded camera on exact cue
-        run: |
-          node --check scripts/motion-director-render-fixture.mjs
-          node scripts/motion-director-render-fixture.mjs /tmp/director-graphics-props.json
-          npx remotion still src/index.ts HSKAI-Episode /tmp/director-before.png --props /tmp/director-graphics-props.json --frame=65
-          npx remotion still src/index.ts HSKAI-Episode /tmp/director-cue.png --props /tmp/director-graphics-props.json --frame=66
-          npx remotion still src/index.ts HSKAI-Episode /tmp/director-mid.png --props /tmp/director-graphics-props.json --frame=72
-          npx remotion still src/index.ts HSKAI-Episode /tmp/director-settled.png --props /tmp/director-graphics-props.json --frame=78
-          node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const names=['before','cue','mid','settled'];const hashes=names.map(n=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/director-'+n+'.png')).digest('hex'));if(new Set(hashes).size!==4)throw Error('Directed shared SVG/camera did not produce distinct cue frames');"
-      - name: Render full-frame silent Motion Director transition MP4 (technical only)
-        run: |
-          npx remotion render src/index.ts HSKAI-Episode /tmp/motion-director-technical.mp4 --props /tmp/director-graphics-props.json --frames 40-96 --codec h264 --pixel-format yuv420p --muted --concurrency=2
-          test -s /tmp/motion-director-technical.mp4
-      - name: Save technical-only Motion Director frame evidence
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: motion-director-synthetic-stills
-          path: |
-            /tmp/director-before.png
-            /tmp/director-cue.png
-            /tmp/director-mid.png
-            /tmp/director-settled.png
-            /tmp/motion-director-technical.mp4
-          retention-days: 3
-          if-no-files-found: error
-      - name: Render original review-only Motion Asset Library at actual word cues
-        run: |
-          node --check scripts/motion-asset-render-fixture.mjs
-          node scripts/verify-motion-assets.mjs
-          node scripts/motion-asset-render-fixture.mjs /tmp/assets-props.json
-          node scripts/write-motion-qa-plan.mjs /tmp/assets-props.json /tmp/motion-cue-review.json
-          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-book.png --props /tmp/assets-props.json --frame=55
-          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-cue.png --props /tmp/assets-props.json --frame=66
-          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-transition.png --props /tmp/assets-props.json --frame=72
-          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-tea.png --props /tmp/assets-props.json --frame=78
-          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-market.png --props /tmp/assets-props.json --frame=116
-          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-focus-cue.png --props /tmp/assets-props.json --frame=132
-          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-focus-mid.png --props /tmp/assets-props.json --frame=138
-          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-focus-settled.png --props /tmp/assets-props.json --frame=144
-          node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const names=['book','cue','transition','tea','market','focus-cue','focus-mid','focus-settled'];const hashes=names.map(n=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/asset-'+n+'.png')).digest('hex'));if(new Set(hashes).size!==8)throw Error('Library-backed action did not visually change by exact cue');"
-      - name: Verify central artwork safe-area, presence and meaning change on actual Remotion PNGs
-        run: |
-          node scripts/motion-frame-qa.mjs /tmp/motion-frame-qa.json /tmp/asset-book.png /tmp/asset-tea.png /tmp/asset-market.png /tmp/asset-focus-settled.png
-          test -s /tmp/motion-cue-review.json
-          test -s /tmp/motion-frame-qa.json
-      - name: Render four semantic beats with three curated assets in silent technical MP4
-        run: |
-          npx remotion render src/index.ts HSKAI-Episode /tmp/motion-assets-technical.mp4 --props /tmp/assets-props.json --frames 38-159 --codec h264 --pixel-format yuv420p --muted --concurrency=2
-          test -s /tmp/motion-assets-technical.mp4
-      - name: Save original review-only library preview
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: motion-asset-library-review
-          path: |
-            /tmp/asset-book.png
-            /tmp/asset-cue.png
-            /tmp/asset-transition.png
-            /tmp/asset-tea.png
-            /tmp/asset-market.png
-            /tmp/asset-focus-cue.png
-            /tmp/asset-focus-mid.png
-            /tmp/asset-focus-settled.png
-            /tmp/motion-cue-review.json
-            /tmp/motion-frame-qa.json
-            /tmp/motion-assets-technical.mp4
-          retention-days: 3
-          if-no-files-found: error
       - name: Verify real dated plan selects semantic renderer, not static school template
         run: |
           node scripts/semantic-planned-fixture.mjs /tmp/semantic-planned-props.json

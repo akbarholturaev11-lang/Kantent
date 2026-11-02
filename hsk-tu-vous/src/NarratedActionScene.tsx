@@ -3,11 +3,6 @@ import type {ActionModel} from "../scripts/action-design-plan.mjs";
 import type {ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
 import visual from "../content/visual-system.json";
 import {GraphicScene} from "./GraphicScene";
-import {resolveActionBeatLayers} from "../scripts/action-beat-continuity.mjs";
-import {getMotionAsset} from "../scripts/motion-assets.mjs";
-import {resolveMotionTransition} from "../scripts/motion-transition-plan.mjs";
-import {resolveDirectorCamera,resolvePersistentRootPose} from "../scripts/motion-director-plan.mjs";
-import type {MotionDirectorTimeline} from "../scripts/motion-director-plan.mjs";
 
 const C=visual.colors;
 const L=visual.narratedMotionLayout;
@@ -76,70 +71,32 @@ const OrdinalStage:React.FC<{model:ActionModel;frame:number;compact?:boolean}>=(
   })}
 </svg>;
 
-const ModelStage:React.FC<{model:ActionModel;kind:string;frame:number;compact?:boolean;omitGraphicRoots?:string[]}>=({model,kind,frame,compact=false,omitGraphicRoots=[]})=><>
-  {kind==="graphic"&&model.graphic&&<GraphicScene plan={model.graphic} frame={frame} height={compact?A.comparisonObjectHeightPx:A.graphicHeightPx} omitRootIds={omitGraphicRoots}/>}
-  {kind==="asset"&&model.assetId&&<Img src={staticFile(getMotionAsset(model.assetId).path)} style={{width:"100%",height:compact?A.comparisonObjectHeightPx:A.graphicHeightPx,objectFit:"contain",transform:`scale(${getMotionAsset(model.assetId).stageScale})`,transformOrigin:"center"}}/>}
+const ModelStage:React.FC<{model:ActionModel;kind:string;frame:number;compact?:boolean}>=({model,kind,frame,compact=false})=><>
+  {kind==="graphic"&&model.graphic&&<GraphicScene plan={model.graphic} frame={frame} height={compact?A.comparisonObjectHeightPx:A.graphicHeightPx}/>}
   {(kind==="quantity"||model.count)&&<QuantityStage model={model} frame={frame} compact={compact}/>}
   {kind==="numeral"&&<NumberStage model={model} frame={frame} compact={compact}/>}
   {kind==="ordinal"&&<OrdinalStage model={model} frame={frame} compact={compact}/>}
 </>;
 
-const ActionBeatArtwork:React.FC<{beat:ResolvedMotionBeat;frame:number;context?:ActionModel;omitGraphicRoots?:string[]}>=({beat,frame,context,omitGraphicRoots=[]})=>{
-  const model=beat.visual;
+export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat[]}>=({frame,beats})=>{
+  const elapsed=beats.filter(b=>frame>=b.localFrame);
+  const active=elapsed[elapsed.length-1]??beats[0];
+  const model=active.visual;
   if(!model) throw Error("Narrated action is missing its authored visual payload.");
-  const stageModel=model.object||beat.kind!=="phrase"?model:context?{...context,...model,object:context.object,count:context.count}:model;
-  return beat.kind==="comparison"?<div style={{display:"flex",alignItems:"center",width:"100%",gap:A.comparisonGapPx}}>
-    {model.models?.map((m,i)=><div key={i} style={{flex:1,minWidth:0,display:"flex",flexDirection:"column",alignItems:"center",gap:A.gapPx}}><ModelStage model={m} kind={m.kind??"phrase"} frame={frame} compact/></div>)}
-  </div>:beat.kind==="choice"?<>
-    {model.count?<QuantityStage model={model} frame={frame}/>:context&&<svg width="100%" height={A.objectHeightPx} viewBox="0 0 820 320"><g transform="translate(410 160)"><ObjectGlyph object={context.object??"tea-cup"} frame={frame}/></g></svg>}
-    {model.selected&&<svg width="80" height="70" viewBox="0 0 80 70" aria-label="correct choice"><path d="M12 33 32 53 68 12" fill="none" stroke={C.brandGold} strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" opacity={enter(frame)}/></svg>}
-  </>:<ModelStage model={stageModel} kind={beat.kind} frame={frame} omitGraphicRoots={omitGraphicRoots}/>;
-};
-
-export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat[];director?:MotionDirectorTimeline|null}>=({frame,beats,director=null})=>{
-  const camera=resolveDirectorCamera(director,frame);
-  const currentBeat=[...beats].reverse().find(beat=>frame>=beat.localFrame)??beats[0];
-  const plannedShot=director?.shots.find(shot=>shot.beatId===currentBeat.id);
-  // The director controls both fading and camera movement with one duration;
-  // non-directed scenes retain the canonical M1 default.
-  const transitionFrames=plannedShot
-    ? plannedShot.transition.kind==="cut"?0:plannedShot.transition.frames
-    : visual.motion.actionBeatCrossfadeFrames;
-  const layers=resolveActionBeatLayers(beats,frame,transitionFrames);
+  // Reuse only an object/count explicitly authored in this scene, so phrase
+  // explanations retain context without another text layer.
   const context=beats.map(beat=>beat.visual).find(entry=>entry?.object&&entry.count);
-  const directedShot=director?.shots.find(shot=>shot.beatId===layers.active.id);
-  const sharedRoots=layers.outgoing&&directedShot?.persistentElementIds?.length&&
-    layers.incoming.beat.kind==="graphic"&&layers.outgoing.beat.kind==="graphic"
-    ? directedShot.persistentElementIds.map(id=>id.slice(5)) : [];
-  const effect=layers.outgoing&&plannedShot?.transition.kind!=="cut"&&plannedShot
-    ? resolveMotionTransition(plannedShot.transition,layers.incoming.localFrame,{slideDistancePx:visual.motion.slideDistancePx,focusBlurPx:visual.motion.actionFocusBlurPx}) : null;
-  const artwork=[
-    ...(layers.outgoing?[{...layers.outgoing,role:"outgoing" as const}]:[]),
-    {...layers.incoming,role:"incoming" as const}
-  ];
+  const stageModel=model.object||active.kind!=="phrase"?model:context?{...context,...model,object:context.object,count:context.count}:model;
+  const local=Math.max(0,frame-active.localFrame);
   return <AbsoluteFill style={{background:`radial-gradient(ellipse at 50% 49%, ${C.brandTeal}22, transparent 65%), ${P.background}`,color:P.foreground}}>
     <div style={{position:"absolute",top:visual.motion.brandTopInsetPx,left:0,right:0,display:"flex",alignItems:"center",justifyContent:"center",gap:14,fontSize:30,fontWeight:900}}><Img src={staticFile("branding/hsk-ai-logo-1024.png")} style={{width:42,height:42,borderRadius:12}}/>HSK <span style={{color:C.brandGold}}>AI</span></div>
-    <div data-action-id={layers.active.id} data-action-kind={layers.active.kind} data-motion-director={director?"v1":"off"} style={{position:"absolute",top:A.stageTopPx,left:80,right:80,height:A.graphicHeightPx,translate:`${camera.xPx}px ${camera.yPx}px`,scale:camera.scale,transformOrigin:"50% 50%"}}>
-      {artwork.map(layer=><div key={layer.role+":"+layer.beat.id} data-transition-layer={layer.role} data-layer-action-id={layer.beat.id}
-        style={{position:"absolute",inset:0,opacity:effect?effect[layer.role].opacity:layer.opacity,
-          transform:effect?effect[layer.role].transform:undefined,
-          clipPath:effect?effect[layer.role].clipPath:undefined,
-          filter:effect?effect[layer.role].filter:undefined,
-          display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:A.gapPx}}>
-        <ActionBeatArtwork beat={layer.beat} frame={layer.localFrame} context={context} omitGraphicRoots={sharedRoots}/>
-      </div>)}
-      {sharedRoots.map(rootId=>{
-        const previous=layers.outgoing!.beat.visual?.graphic;
-        const incoming=layers.incoming.beat.visual?.graphic;
-        if(!previous||!incoming)throw Error("Directed shared SVG root missing drawable plans");
-        const pose=resolvePersistentRootPose(previous,incoming,rootId,
-          layers.outgoing!.localFrame,layers.incoming.localFrame,directedShot!.transition.frames);
-        return <div key={rootId} data-persistent-root={rootId} style={{position:"absolute",inset:0,
-          pointerEvents:"none",display:"flex",alignItems:"center",justifyContent:"center"}}>
-          <GraphicScene plan={incoming} frame={layers.incoming.localFrame} height={A.graphicHeightPx}
-            onlyRootIds={[rootId]} rootPoseOverrides={{[rootId]:pose}}/>
-        </div>;
-      })}
+    <div data-action-id={active.id} data-action-kind={active.kind} style={{position:"absolute",top:A.stageTopPx,left:80,right:80,height:A.graphicHeightPx,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:A.gapPx}}>
+      {active.kind==="comparison"?<div style={{display:"flex",alignItems:"center",width:"100%",gap:A.comparisonGapPx}}>
+        {model.models?.map((m,i)=><div key={i} style={{flex:1,minWidth:0,display:"flex",flexDirection:"column",alignItems:"center",gap:A.gapPx}}><ModelStage model={m} kind={m.kind??"phrase"} frame={local} compact/></div>)}
+      </div>:active.kind==="choice"?<>
+        {model.count?<QuantityStage model={model} frame={local}/>:context&&<svg width="100%" height={A.objectHeightPx} viewBox="0 0 820 320"><g transform="translate(410 160)"><ObjectGlyph object={context.object??"tea-cup"} frame={local}/></g></svg>}
+        {model.selected&&<svg width="80" height="70" viewBox="0 0 80 70" aria-label="correct choice"><path d="M12 33 32 53 68 12" fill="none" stroke={C.brandGold} strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" opacity={enter(local)}/></svg>}
+      </>:<ModelStage model={stageModel} kind={active.kind} frame={local}/> }
     </div>
   </AbsoluteFill>;
 };

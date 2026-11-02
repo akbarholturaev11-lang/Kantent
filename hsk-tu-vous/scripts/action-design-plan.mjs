@@ -1,8 +1,7 @@
 // Content-driven teaching actions. No episode IDs, Chinese examples or narration
 // are embedded in the renderer contract.
 import {validateGraphicScene,graphicFingerprint} from "./graphic-scene.mjs";
-import {getMotionAsset} from "./motion-assets.mjs";
-export const ACTION_KINDS = ["quantity", "phrase", "numeral", "ordinal", "comparison", "choice", "graphic", "asset"];
+export const ACTION_KINDS = ["quantity", "phrase", "numeral", "ordinal", "comparison", "choice", "graphic"];
 export const ACTION_OBJECTS = ["tea-cup", "book", "apple"];
 
 export function validateActionVisual(beat) {
@@ -12,14 +11,6 @@ export function validateActionVisual(beat) {
   for (const key of ["title", "hanzi", "pinyin", "meaning"])
     if (typeof v[key] !== "string" || v[key].length > 180)
       throw Error(beat.id + ": invalid visual " + key);
-  if (beat.kind === "asset") {
-    const asset=getMotionAsset(v.assetId);
-    if(["graphic","object","count","models","choices","value","grouped","parts","selected"].some(key=>v[key]!==undefined))
-      throw Error(beat.id+": asset beat cannot duplicate an unrelated drawing or quantity");
-    if(!asset.locales.includes("ru-RU")||!asset.locales.includes("tg-TJ"))
-      throw Error(beat.id+": motion asset lacks default-language coverage");
-  }
-  else if(v.assetId!==undefined)throw Error(beat.id+": visual asset requires explicit asset kind");
   if (beat.kind === "graphic") {
     validateGraphicScene(v.graphic);
     if (["object","count","models","choices","value"].some(key => v[key] !== undefined))
@@ -60,7 +51,6 @@ export function validateActionVisual(beat) {
 function visibleModel(kind, model, context) {
   const quantity = model.count ? {object:model.object,count:model.count,grouped:!!model.grouped} : null;
   if (kind === "graphic") return {graphic:graphicFingerprint(model.graphic)};
-  if (kind === "asset") return {assetId:model.assetId};
   if (kind === "quantity") return {quantity};
   if (kind === "phrase") return quantity ? {quantity} : context ?
     {quantity:{object:context.object,count:context.count,grouped:!!(model.grouped ?? context.grouped)}} : null;

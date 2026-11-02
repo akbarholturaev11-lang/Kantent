@@ -1,5 +1,5 @@
 import type {GraphicScene} from "./graphic-scene.mjs";
-export type ActionModel = {kind?:string;title:string;hanzi:string;pinyin:string;meaning:string;object?:string;count?:number;grouped?:boolean;focus?:string;parts?:string[];value?:number;choices?:string[];selected?:string;models?:ActionModel[];graphic?:GraphicScene;assetId?:string};
+export type ActionModel = {kind?:string;title:string;hanzi:string;pinyin:string;meaning:string;object?:string;count?:number;grouped?:boolean;focus?:string;parts?:string[];value?:number;choices?:string[];selected?:string;models?:ActionModel[];graphic?:GraphicScene};
 export const ACTION_KINDS:string[];
 export const ACTION_OBJECTS:string[];
 export function validateActionVisual(beat:{id:string;kind:string;explains?:string;visual?:ActionModel}):void;

@@ -26,7 +26,6 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Standalone advertising stories, minimalist presentation and production procedure | `content/creative-formats.json#promoPolicy`, `content/visual-system.json#promoPresentation` and `content/PROMO_WORKFLOW.md` |
 | Design tokens, active lesson presentation/date, full-video duration, caption numbers and motion parameters | `content/visual-system.json` |
 | Visual editorial method | `content/EDITING_SPEC.md` |
-| Rights-reviewed reusable motion illustrations and approval status | `content/motion-assets.json`, with usage contract in `content/EPISODE_SCHEMA.md` |
 | Semantic shot/action enumeration and rollout status | `content/semantic-visual-system.json`, explained by `content/SEMANTIC_VISUAL_SCHEMA.md` |
 | P3 evidence-based shot suggestion rules | `content/semantic-shot-intents.json`, explained by `content/SEMANTIC_SHOT_ADVISER.md` |
 | Episode schema and invalidation | `content/EPISODE_SCHEMA.md` |

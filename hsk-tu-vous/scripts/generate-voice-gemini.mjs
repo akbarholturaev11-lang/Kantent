@@ -8,8 +8,6 @@ import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
 import { requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
-import {assertMotionAssetsProductionApproved} from "./motion-assets.mjs";
-import {verifyMotionAssetFiles} from "./verify-motion-assets.mjs";
 import { languageEnvironment, languageSettings } from "./language-context.mjs";
 import {
   assertReusableVoiceMetadata,
@@ -889,10 +887,6 @@ if (episode.id !== EPISODE_ID) {
   throw new Error("Review episode ID does not match the requested episode.");
 }
 validateEpisode(episode);
-if(episode.scenes.some(scene=>scene.motionBeats?.some(beat=>beat.kind==="asset"))){
-  verifyMotionAssetFiles();
-  assertMotionAssetsProductionApproved(episode);
-}
 const visualSystem = await readJson(path.join(PROJECT_ROOT, "content", "visual-system.json"));
 validateLessonPresentation(episode, visualSystem.lessonPresentation);
 await requireCurrentCta(episode);

@@ -19,7 +19,7 @@ export type CaptionGroupingStyle = {
   maxPageDurationMs: number;
   maxGapMs: number;
   holdAfterWordMs: number;
-  sections?: Array<{ startMs: number; endMs: number; styleId: string; maxWordsPerPage?: number }>;
+  sections?: Array<{ startMs: number; endMs: number; styleId: string }>;
 };
 
 export const CAPTION_STYLE_IDS: readonly ["headline", "pill", "highlight"];
