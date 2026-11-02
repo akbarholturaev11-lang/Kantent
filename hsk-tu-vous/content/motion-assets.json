@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "assetRoot": "public/motion-assets",
+  "assets": [
+    {
+      "id": "study-book",
+      "kind": "svg",
+      "path": "motion-assets/study-book.svg",
+      "sha256": "a07a162b5f50d5d5973e77dfd79527f3d41f479ffd902d01b5ed2d76f60f9bae",
+      "width": 640,
+      "height": 480,
+      "transparent": true,
+      "subject": "open-book",
+      "description": "Original open illustrated study book and pencil",
+      "safeBounds": {
+        "x": 90,
+        "y": 20,
+        "width": 470,
+        "height": 420
+      },
+      "locales": [
+        "ru-RU",
+        "tg-TJ"
+      ],
+      "palette": "HSK AI canonical",
+      "provenance": {
+        "kind": "first-party-original",
+        "author": "HSK AI Content Studio",
+        "createdOn": "2026-11-02",
+        "license": "project-owned-original",
+        "sourceReference": "authored for this repository"
+      },
+      "status": "review-only",
+      "stageScale": 1
+    },
+    {
+      "id": "tea-cup",
+      "kind": "svg",
+      "path": "motion-assets/tea-cup.svg",
+      "sha256": "9551ffc22c44bb337ba56200fdf8a5ae4fe82e598d64a75a59aa7b7ed528b5b4",
+      "width": 640,
+      "height": 480,
+      "transparent": true,
+      "subject": "tea-cup",
+      "description": "Original porcelain tea cup on saucer",
+      "safeBounds": {
+        "x": 90,
+        "y": 20,
+        "width": 480,
+        "height": 420
+      },
+      "locales": [
+        "ru-RU",
+        "tg-TJ"
+      ],
+      "palette": "HSK AI canonical",
+      "provenance": {
+        "kind": "first-party-original",
+        "author": "HSK AI Content Studio",
+        "createdOn": "2026-11-02",
+        "license": "project-owned-original",
+        "sourceReference": "authored for this repository"
+      },
+      "status": "review-only",
+      "stageScale": 1.16
+    },
+    {
+      "id": "market-stall",
+      "kind": "svg",
+      "path": "motion-assets/market-stall.svg",
+      "sha256": "939bf124e80e645e8815c9211f2301ed8e780f64a53f9f725c13fbffdd24b88d",
+      "width": 640,
+      "height": 480,
+      "transparent": true,
+      "subject": "market-stall",
+      "description": "Original market counter with striped awning",
+      "safeBounds": {
+        "x": 80,
+        "y": 58,
+        "width": 485,
+        "height": 400
+      },
+      "locales": [
+        "ru-RU",
+        "tg-TJ"
+      ],
+      "palette": "HSK AI canonical",
+      "provenance": {
+        "kind": "first-party-original",
+        "author": "HSK AI Content Studio",
+        "createdOn": "2026-11-02",
+        "license": "project-owned-original",
+        "sourceReference": "authored for this repository"
+      },
+      "status": "review-only",
+      "stageScale": 1.16
+    }
+  ]
+}

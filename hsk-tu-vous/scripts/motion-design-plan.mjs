@@ -1,4 +1,5 @@
 import {ACTION_KINDS, validateActionLesson, validateVisualHold} from "./action-design-plan.mjs";
+import {compileMotionDirectorScene} from "./motion-director-plan.mjs";
 // Visual changes are anchored to verified spoken words, never equal scene slices.
 export const MOTION_KINDS = [
   "question", "two-meanings", "compare-preview", "example", "purchase",
@@ -61,6 +62,8 @@ export function compileMotionDesignTimeline(episode, presentationPolicy) {
   if(!["le-context-v1", "explain-actions-v1"].includes(episode.motionDesignStyle))
     throw Error("Unsupported narrated motion style; add a truthful renderer before using a new lesson treatment.");
   if(scenes.some(scene=>scene.kind==="cta")) throw Error("Central CTA cannot contain lesson motion beats.");
+  if(episode.scenes.some(s=>s.motionDirection && (s.kind==="cta" || episode.motionDesignStyle!=="explain-actions-v1" || !s.motionBeats?.length)))
+    throw Error("Motion Director requires a non-CTA explain-actions-v1 scene with narrated action beats");
   const coverage = episode.motionDesignStyle==="explain-actions-v1" ? validateActionLesson(episode) : undefined;
   if (!coverage && scenes.some(s=>s.motionBeats.some(b=>ACTION_KINDS.includes(b.kind))))
     throw Error("Reusable actions require explain-actions-v1; legacy styles cannot silently render them.");
@@ -71,6 +74,7 @@ export function compileMotionDesignTimeline(episode, presentationPolicy) {
       const visualHold = presentationPolicy && episode.motionDesignStyle==="explain-actions-v1" &&
         episode.date >= presentationPolicy.visibleStateValidationFromDate
         ? validateVisualHold(scene,beats,presentationPolicy.maximumVisualHoldSec) : undefined;
-      return {sceneId:scene.id,beats,...(visualHold ? {visualHold} : {})};
+      const motionDirector=compileMotionDirectorScene(scene,beats);
+      return {sceneId:scene.id,beats,...(visualHold ? {visualHold} : {}),...(motionDirector?{motionDirector}:{})};
     })};
 }

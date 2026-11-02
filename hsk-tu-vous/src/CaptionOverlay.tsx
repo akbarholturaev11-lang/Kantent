@@ -6,10 +6,10 @@ import {
   useVideoConfig,
 } from "remotion";
 import {
-  groupTimedCaptions,
   type TimedCaption,
 } from "../scripts/caption-utils.mjs";
 import visualSystem from "../content/visual-system.json";
+import {groupExactActionCaptions} from "../scripts/action-caption-grouping.mjs";
 import { actionTextAtFrame, actionSubtitlePresentation, type ActionCaptionScene } from "../scripts/action-text-layout.mjs";
 
 export type { TimedCaption } from "../scripts/caption-utils.mjs";
@@ -48,11 +48,9 @@ export const CaptionOverlay: React.FC<{
   const { fps } = useVideoConfig();
   const pages = useMemo(
     () =>
-      groupTimedCaptions(captions, {
-        ...CAPTION_STYLE,
-        sections: sceneSections,
-      }),
-    [captions, sceneSections],
+      groupExactActionCaptions(captions,CAPTION_STYLE,sceneSections,
+        motionDesign&&plainMotionDesign?actionCaptionScenes:[],fps),
+    [captions,sceneSections,motionDesign,plainMotionDesign,actionCaptionScenes,fps],
   );
   const timeMs = (frame / fps) * 1000;
   const page = pages.find(
@@ -66,6 +64,8 @@ export const CaptionOverlay: React.FC<{
     variants.pill) as CaptionVariant;
   const isCtaFooter = page.styleId === "ctaFooter";
   const plainMotionCaption = motionDesign && plainMotionDesign && !isCtaFooter;
+  const cleanActionSubtitle = plainMotionCaption && actionCaptionScenes.some(scene =>
+    scene.beats.length>0 && frame>=scene.from && frame<scene.from+scene.durationFrames);
   const actionText = isCtaFooter ? null : actionTextAtFrame(actionCaptionScenes, frame);
   const presentation = actionSubtitlePresentation(page.text, actionText);
   const displayText = presentation.text;
@@ -124,24 +124,24 @@ export const CaptionOverlay: React.FC<{
           data-subtitle-block
           style={{
             maxWidth: motionDesign ? 960 : CAPTION_STYLE.maxWidthPx,
-            padding: plainMotionCaption
+            padding: cleanActionSubtitle ? "0" : plainMotionCaption
               ? "8px 18px"
               : motionDesign && !plainMotionDesign
               ? "12px 26px"
               : `${variant.verticalPaddingPx}px ${variant.horizontalPaddingPx}px`,
-            borderRadius: plainMotionCaption ? 16 : motionDesign && !plainMotionDesign ? 999 : variant.borderRadiusPx,
-            border: plainMotionCaption
+            borderRadius: cleanActionSubtitle ? 0 : plainMotionCaption ? 16 : motionDesign && !plainMotionDesign ? 999 : variant.borderRadiusPx,
+            border: cleanActionSubtitle ? "none" : plainMotionCaption
               ? "1px solid rgba(33,29,23,.16)"
               : motionDesign && !plainMotionDesign ? "2px solid rgba(255,255,255,.42)" : variant.border,
-            background: plainMotionCaption
+            background: cleanActionSubtitle ? "transparent" : plainMotionCaption
               ? "rgba(253,249,240,.96)"
               : motionDesign && !plainMotionDesign ? "rgba(24,20,25,.86)" : variant.background,
-            boxShadow: plainMotionCaption
+            boxShadow: cleanActionSubtitle ? "none" : plainMotionCaption
               ? "0 8px 24px rgba(33,29,23,.16)"
               : motionDesign && !plainMotionDesign
               ? "0 20px 56px rgba(0,0,0,.32)"
               : variant.boxShadow,
-            color: plainMotionCaption
+            color: cleanActionSubtitle ? visualSystem.narratedActionPalette.foreground : plainMotionCaption
               ? visualSystem.colors.foreground
               : motionDesign ? "#FFF5DF" : CAPTION_STYLE.foreground,
             fontSize: actionText ? visualSystem.narratedActionLayout.subtitleFontPx
@@ -149,7 +149,7 @@ export const CaptionOverlay: React.FC<{
             fontWeight: variant.fontWeight,
             lineHeight: CAPTION_STYLE.lineHeight,
             textAlign: variant.textAlign,
-            textShadow: motionDesign ? "none" : variant.textShadow,
+            textShadow: cleanActionSubtitle ? "0 2px 10px rgba(0,0,0,.32)" : motionDesign ? "none" : variant.textShadow,
             textWrap: "balance",
             overflowWrap: "anywhere",
           }}
