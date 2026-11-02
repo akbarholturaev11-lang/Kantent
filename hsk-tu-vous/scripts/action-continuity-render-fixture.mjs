@@ -32,7 +32,7 @@ scene.motionDirection={schemaVersion:1,shots:[
   {shotId:"two-cups-shot",beatId:"two-cups",meaningCue:"Две",assetIds:["object:tea-cup"],
     camera:{xPx:0,yPx:0,scale:1},transition:{kind:"cut",frames:0},focalRole:"object",zIndex:0},
   {shotId:"three-cups-shot",beatId:"three-cups",meaningCue:"три",assetIds:["object:tea-cup"],
-    persistentElementIds:["object:tea-cup"],camera:{xPx:30,yPx:-8,scale:1.06},
+    camera:{xPx:30,yPx:-8,scale:1.06},
     transition:{kind:"crossfade",frames:8},focalRole:"action",zIndex:0}
 ]};
 validateActionLesson(episode,{requireVisibleChange:true});
