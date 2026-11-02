@@ -76,11 +76,11 @@ Owner reference: video supplied in ChatGPT 2026-11-02 (82.8s; inspect source/fra
 - [ ] Performance fallback for slow/failed effects must retain meaningful semantic composition.
 
 ### M6 — Voice-first art director and automatic review [P1]
-- [ ] Compute cue-to-action map strictly from word timestamps; require exact phrase occurrence indexes, no equal-duration fallback.
-- [ ] Build ordered preproduction shot list with `subject / action / word cue / camera / transition / proof of meaning`.
-- [ ] **Partial:** CI renders 8 stills and short silent MP4 at key cue windows; contact-sheet manually inspected at 270×480. Generic per-cue shot QA and automatic safe-area scoring are still TODO.
-- [ ] **Partial:** asset SHA-256/security/preview and non-identical frame hash tests are active; action subtitle grouping now cannot show future imported words early (unit+actual render regression). Automatic safe-area/duplicate/scene-complexity checks and full real voice proof remain TODO.
-- [ ] Separate subjective human/AI visual approval from structural proof. A green unit test **never** means professional visuals.
+- [x] Derive ordered cue-to-shot QA map from exact imported word timestamps, occurrence and original caption index; explicitly report audio authenticity as not verified.
+- [x] Generate an inspectable authored shot checklist: subject, reason/teaching meaning, asset IDs, exact word cue, camera, transition, sample frames; human proof remains false.
+- [ ] **Partial:** CI renders 8 stills, silent MP4, cue review JSON and automatic central-stage PNG bounds/size/change QA. Generalized per-cue screenshot coverage for any lesson and typography/CTA geometry checks remain TODO.
+- [ ] **Partial:** action word captions avoid future words; original asset SHA-256, local-path security, stage hero presence/safe margins, and meaningful stage pixel change all run in CI. Generic duplicate/scene-complexity, text overflow and real voice proof are still TODO.
+- [x] Structural reports explicitly mark production approval and human meaning review false; synthetic silence cannot authenticate approved RU/TJ audio or meet premium visual sign-off.
 - [ ] Preserve existing audio/SRT/hash workflows and owner approval; optional audio-reactive SFX only under current limits.
 
 ### M7 — Pilot comparison, rollout and merge [P0 release gate]
