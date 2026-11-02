@@ -82,9 +82,10 @@ test("unknown/reused graphic group identity cannot masquerade as same object",()
   for(const s of from.motionDirection.shots){
     s.assetIds=["node:cup-group"];s.persistentElementIds=s.shotId==="second"?["node:cup-group"]:[];
   }
-  assert.throws(()=>compile(from,resolved),/identical drawable geometry/);
+  const graphicBeats=resolveMotionBeats(from,captions);
+  assert.throws(()=>compile(from,graphicBeats),/identical drawable geometry/);
   from.motionBeats[1].visual.graphic=graphic("teal");
-  assert.equal(compile(from,resolved).shots[1].persistentElementIds[0],"node:cup-group");
+  assert.equal(compile(from,graphicBeats).shots[1].persistentElementIds[0],"node:cup-group");
 });
 
 test("inputs untouched and metadata without direction remains valid",()=>{
