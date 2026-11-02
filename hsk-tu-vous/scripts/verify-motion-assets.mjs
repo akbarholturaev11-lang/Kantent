@@ -18,8 +18,9 @@ export function verifyMotionAssetFiles(collection=manifest,base=root){
     if(createHash("sha256").update(blob).digest("hex")!==item.sha256)
       throw Error("Motion asset changed without registry hash update: "+item.id);
     const svg=blob.toString("utf8");
-    if(!svg.startsWith("<svg ")||!/viewBox="0 0 640 480"/.test(svg)||
-      /<!DOCTYPE|<!ENTITY|<script|<foreignObject|<image|<text\b|<use\b|<style|<animate|<iframe|<video|<audio|<a\b|\bon[a-z]+\s*=|(?:xlink:)?href\s*=|https?:|data:|@import|url\(\s*['"]?(?!#)/i.test(svg))
+    const svgWithoutNamespace=svg.replace('xmlns="http://www.w3.org/2000/svg"','');
+    if(!svg.startsWith("<svg ")||!svg.includes('xmlns="http://www.w3.org/2000/svg"')||!/viewBox="0 0 640 480"/.test(svg)||
+      /<!DOCTYPE|<!ENTITY|<script|<foreignObject|<image|<text\b|<use\b|<style|<animate|<iframe|<video|<audio|<a\b|\bon[a-z]+\s*=|(?:xlink:)?href\s*=|https?:|data:|@import|url\(\s*['"]?(?!#)/i.test(svgWithoutNamespace))
       throw Error("Motion asset has unsafe or unsupported SVG feature: "+item.id);
     const declared=svg.match(/width="(\d+)" height="(\d+)"/);
     if(!declared||Number(declared[1])!==item.width||Number(declared[2])!==item.height)
