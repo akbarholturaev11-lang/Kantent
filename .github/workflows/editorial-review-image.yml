@@ -19,11 +19,13 @@ jobs:
         run: |
           test -s hsk-tu-vous/public/editorial-review/20261030-tote-firefly.jpg
           file hsk-tu-vous/public/editorial-review/20261030-tote-firefly.jpg
+          test -s hsk-tu-vous/public/editorial-review/20261030-retail-negotiation-firefly.jpg
+          file hsk-tu-vous/public/editorial-review/20261030-retail-negotiation-firefly.jpg
           sha256sum hsk-tu-vous/public/editorial-review/20261030-tote-firefly.jpg
       - uses: actions/upload-artifact@v4
         with:
           name: editorial-review-generated-tote
-          path: hsk-tu-vous/public/editorial-review/20261030-tote-firefly.jpg
+          path: hsk-tu-vous/public/editorial-review/*.jpg
           retention-days: 7
           if-no-files-found: error
 # Generated visual subject only. No release, voice change, or auto-publication.
