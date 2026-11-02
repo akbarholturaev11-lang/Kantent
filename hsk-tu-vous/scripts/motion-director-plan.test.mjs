@@ -73,7 +73,7 @@ test("unknown/reused graphic group identity cannot masquerade as same object",()
   const graphic=fill=>({nodes:[
     {id:"cup-group",type:"g",attrs:{}},
     {id:"cup-body",parentId:"cup-group",type:"rect",attrs:{x:80,y:80,width:100,height:100,fill}},
-  ]});
+  ],tracks:[]});
   const from=structuredClone(scene);
   from.motionBeats=[
     {id:"two",kind:"graphic",cueText:"Две",visual:{graphic:graphic("teal")}},
