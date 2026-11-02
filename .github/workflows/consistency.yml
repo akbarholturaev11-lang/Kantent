@@ -111,10 +111,13 @@ jobs:
           npx remotion still src/index.ts HSKAI-Episode /tmp/asset-transition.png --props /tmp/assets-props.json --frame=72
           npx remotion still src/index.ts HSKAI-Episode /tmp/asset-tea.png --props /tmp/assets-props.json --frame=78
           npx remotion still src/index.ts HSKAI-Episode /tmp/asset-market.png --props /tmp/assets-props.json --frame=116
-          node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const names=['book','cue','transition','tea','market'];const hashes=names.map(n=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/asset-'+n+'.png')).digest('hex'));if(new Set(hashes).size!==5)throw Error('Library-backed action did not visually change by exact cue');"
-      - name: Render all three review-only assets in silent technical MP4
+          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-focus-cue.png --props /tmp/assets-props.json --frame=132
+          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-focus-mid.png --props /tmp/assets-props.json --frame=138
+          npx remotion still src/index.ts HSKAI-Episode /tmp/asset-focus-settled.png --props /tmp/assets-props.json --frame=144
+          node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const names=['book','cue','transition','tea','market','focus-cue','focus-mid','focus-settled'];const hashes=names.map(n=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/asset-'+n+'.png')).digest('hex'));if(new Set(hashes).size!==8)throw Error('Library-backed action did not visually change by exact cue');"
+      - name: Render four semantic beats with three curated assets in silent technical MP4
         run: |
-          npx remotion render src/index.ts HSKAI-Episode /tmp/motion-assets-technical.mp4 --props /tmp/assets-props.json --frames 38-125 --codec h264 --pixel-format yuv420p --muted --concurrency=2
+          npx remotion render src/index.ts HSKAI-Episode /tmp/motion-assets-technical.mp4 --props /tmp/assets-props.json --frames 38-159 --codec h264 --pixel-format yuv420p --muted --concurrency=2
           test -s /tmp/motion-assets-technical.mp4
       - name: Save original review-only library preview
         if: ${{ github.event_name == 'pull_request' }}
@@ -127,6 +130,9 @@ jobs:
             /tmp/asset-transition.png
             /tmp/asset-tea.png
             /tmp/asset-market.png
+            /tmp/asset-focus-cue.png
+            /tmp/asset-focus-mid.png
+            /tmp/asset-focus-settled.png
             /tmp/motion-assets-technical.mp4
           retention-days: 3
           if-no-files-found: error
