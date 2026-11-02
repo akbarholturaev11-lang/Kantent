@@ -77,6 +77,10 @@ jobs:
           npx remotion still src/index.ts HSKAI-Episode /tmp/director-mid.png --props /tmp/director-graphics-props.json --frame=69
           npx remotion still src/index.ts HSKAI-Episode /tmp/director-settled.png --props /tmp/director-graphics-props.json --frame=74
           node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const names=['before','cue','mid','settled'];const hashes=names.map(n=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/director-'+n+'.png')).digest('hex'));if(new Set(hashes).size!==4)throw Error('Directed shared SVG/camera did not produce distinct cue frames');"
+      - name: Render full-frame silent Motion Director transition MP4 (technical only)
+        run: |
+          npx remotion render src/index.ts HSKAI-Episode /tmp/motion-director-technical.mp4 --props /tmp/director-graphics-props.json --frames 40-96 --codec h264 --pixel-format yuv420p --muted --concurrency=2
+          test -s /tmp/motion-director-technical.mp4
       - name: Save technical-only Motion Director frame evidence
         if: ${{ github.event_name == 'pull_request' }}
         uses: actions/upload-artifact@v4
@@ -87,6 +91,7 @@ jobs:
             /tmp/director-cue.png
             /tmp/director-mid.png
             /tmp/director-settled.png
+            /tmp/motion-director-technical.mp4
           retention-days: 3
           if-no-files-found: error
       - name: Verify real dated plan selects semantic renderer, not static school template
