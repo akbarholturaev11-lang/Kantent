@@ -3,6 +3,7 @@ import type {ActionModel} from "../scripts/action-design-plan.mjs";
 import type {ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
 import visual from "../content/visual-system.json";
 import {GraphicScene} from "./GraphicScene";
+import {resolveActionBeatLayers} from "../scripts/action-beat-continuity.mjs";
 
 const C=visual.colors;
 const L=visual.narratedMotionLayout;
@@ -78,25 +79,32 @@ const ModelStage:React.FC<{model:ActionModel;kind:string;frame:number;compact?:b
   {kind==="ordinal"&&<OrdinalStage model={model} frame={frame} compact={compact}/>}
 </>;
 
-export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat[]}>=({frame,beats})=>{
-  const elapsed=beats.filter(b=>frame>=b.localFrame);
-  const active=elapsed[elapsed.length-1]??beats[0];
-  const model=active.visual;
+const ActionBeatArtwork:React.FC<{beat:ResolvedMotionBeat;frame:number;context?:ActionModel}>=({beat,frame,context})=>{
+  const model=beat.visual;
   if(!model) throw Error("Narrated action is missing its authored visual payload.");
-  // Reuse only an object/count explicitly authored in this scene, so phrase
-  // explanations retain context without another text layer.
+  const stageModel=model.object||beat.kind!=="phrase"?model:context?{...context,...model,object:context.object,count:context.count}:model;
+  return beat.kind==="comparison"?<div style={{display:"flex",alignItems:"center",width:"100%",gap:A.comparisonGapPx}}>
+    {model.models?.map((m,i)=><div key={i} style={{flex:1,minWidth:0,display:"flex",flexDirection:"column",alignItems:"center",gap:A.gapPx}}><ModelStage model={m} kind={m.kind??"phrase"} frame={frame} compact/></div>)}
+  </div>:beat.kind==="choice"?<>
+    {model.count?<QuantityStage model={model} frame={frame}/>:context&&<svg width="100%" height={A.objectHeightPx} viewBox="0 0 820 320"><g transform="translate(410 160)"><ObjectGlyph object={context.object??"tea-cup"} frame={frame}/></g></svg>}
+    {model.selected&&<svg width="80" height="70" viewBox="0 0 80 70" aria-label="correct choice"><path d="M12 33 32 53 68 12" fill="none" stroke={C.brandGold} strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" opacity={enter(frame)}/></svg>}
+  </>:<ModelStage model={stageModel} kind={beat.kind} frame={frame}/>;
+};
+
+export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat[]}>=({frame,beats})=>{
+  const layers=resolveActionBeatLayers(beats,frame,visual.motion.actionBeatCrossfadeFrames);
   const context=beats.map(beat=>beat.visual).find(entry=>entry?.object&&entry.count);
-  const stageModel=model.object||active.kind!=="phrase"?model:context?{...context,...model,object:context.object,count:context.count}:model;
-  const local=Math.max(0,frame-active.localFrame);
+  const artwork=[
+    ...(layers.outgoing?[{...layers.outgoing,role:"outgoing" as const}]:[]),
+    {...layers.incoming,role:"incoming" as const}
+  ];
   return <AbsoluteFill style={{background:`radial-gradient(ellipse at 50% 49%, ${C.brandTeal}22, transparent 65%), ${P.background}`,color:P.foreground}}>
     <div style={{position:"absolute",top:visual.motion.brandTopInsetPx,left:0,right:0,display:"flex",alignItems:"center",justifyContent:"center",gap:14,fontSize:30,fontWeight:900}}><Img src={staticFile("branding/hsk-ai-logo-1024.png")} style={{width:42,height:42,borderRadius:12}}/>HSK <span style={{color:C.brandGold}}>AI</span></div>
-    <div data-action-id={active.id} data-action-kind={active.kind} style={{position:"absolute",top:A.stageTopPx,left:80,right:80,height:A.graphicHeightPx,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:A.gapPx}}>
-      {active.kind==="comparison"?<div style={{display:"flex",alignItems:"center",width:"100%",gap:A.comparisonGapPx}}>
-        {model.models?.map((m,i)=><div key={i} style={{flex:1,minWidth:0,display:"flex",flexDirection:"column",alignItems:"center",gap:A.gapPx}}><ModelStage model={m} kind={m.kind??"phrase"} frame={local} compact/></div>)}
-      </div>:active.kind==="choice"?<>
-        {model.count?<QuantityStage model={model} frame={local}/>:context&&<svg width="100%" height={A.objectHeightPx} viewBox="0 0 820 320"><g transform="translate(410 160)"><ObjectGlyph object={context.object??"tea-cup"} frame={local}/></g></svg>}
-        {model.selected&&<svg width="80" height="70" viewBox="0 0 80 70" aria-label="correct choice"><path d="M12 33 32 53 68 12" fill="none" stroke={C.brandGold} strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" opacity={enter(local)}/></svg>}
-      </>:<ModelStage model={stageModel} kind={active.kind} frame={local}/> }
+    <div data-action-id={layers.active.id} data-action-kind={layers.active.kind} style={{position:"absolute",top:A.stageTopPx,left:80,right:80,height:A.graphicHeightPx}}>
+      {artwork.map(layer=><div key={layer.role+":"+layer.beat.id} data-transition-layer={layer.role} data-layer-action-id={layer.beat.id}
+        style={{position:"absolute",inset:0,opacity:layer.opacity,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:A.gapPx}}>
+        <ActionBeatArtwork beat={layer.beat} frame={layer.localFrame} context={context}/>
+      </div>)}
     </div>
   </AbsoluteFill>;
 };
