@@ -69,10 +69,10 @@ Owner reference: video supplied in ChatGPT 2026-11-02 (82.8s; inspect source/fra
 - [x] Reject unknown IDs, changed/missing files, unsafe SVG, invalid provenance and review-only assets in production; never silently fall back to another visual.
 
 ### M5 — Transition/effects pack [P1]
-- [ ] Evaluate compatible `@remotion/transitions` without changing full video duration, scene timing, continuous audio or CTA boundaries. Test overlaps explicitly; `TransitionSeries` shortens durations unless compensated.
-- [ ] Add restrained eased slide, masked reveal, radial focus, shared-element zoom, crossfade and optional motion blur only when meaning-linked.
+- [x] Verified official `@remotion/transitions` documentation: TransitionSeries overlap shortens total composition duration. **Do not install/use for ordinary HSK scenes** until exact audio/CTA length compensation and full A/B validation exist. Current M5 effect pack is within preexisting frame durations.
+- [x] Added deterministic `slide-match`, `masked-reveal`, `focus-reveal` and existing `crossfade` for meaningful authored beat changes, with frame, direction, duration, slide and blur caps. **Still missing:** true shared-element zoom between independent assets and realistic temporal motion blur.
 - [ ] Motion blur: evaluate `@remotion/motion-blur` cost/artifacts; use selectively, not global.
-- [ ] Keep flash/glitch/large repeated zoom disabled under active editorial policy. Keep effect selection explicit and testable.
+- [x] Hard-reject flash/glitch/unsupported effects, direction on wrong kinds, invalid frames and shared-root overlap with non-crossfade effects. Tests and synthetic Remotion QA exercise all three new effect types.
 - [ ] Performance fallback for slow/failed effects must retain meaningful semantic composition.
 
 ### M6 — Voice-first art director and automatic review [P1]
