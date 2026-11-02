@@ -46,6 +46,11 @@ jobs:
           node --test scripts/motion-transition-plan.test.mjs
           node --check scripts/action-caption-grouping.mjs
           node --test scripts/action-caption-grouping.test.mjs
+          node --check scripts/motion-visual-qa.mjs
+          node --test scripts/motion-visual-qa.test.mjs
+          node --check scripts/motion-frame-qa.mjs
+          node --test scripts/motion-frame-qa.test.mjs
+          node --check scripts/write-motion-qa-plan.mjs
           node --check scripts/motion-assets.mjs
           node --check scripts/verify-motion-assets.mjs
           node scripts/verify-motion-assets.mjs
@@ -108,6 +113,7 @@ jobs:
           node --check scripts/motion-asset-render-fixture.mjs
           node scripts/verify-motion-assets.mjs
           node scripts/motion-asset-render-fixture.mjs /tmp/assets-props.json
+          node scripts/write-motion-qa-plan.mjs /tmp/assets-props.json /tmp/motion-cue-review.json
           npx remotion still src/index.ts HSKAI-Episode /tmp/asset-book.png --props /tmp/assets-props.json --frame=55
           npx remotion still src/index.ts HSKAI-Episode /tmp/asset-cue.png --props /tmp/assets-props.json --frame=66
           npx remotion still src/index.ts HSKAI-Episode /tmp/asset-transition.png --props /tmp/assets-props.json --frame=72
@@ -117,6 +123,11 @@ jobs:
           npx remotion still src/index.ts HSKAI-Episode /tmp/asset-focus-mid.png --props /tmp/assets-props.json --frame=138
           npx remotion still src/index.ts HSKAI-Episode /tmp/asset-focus-settled.png --props /tmp/assets-props.json --frame=144
           node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const names=['book','cue','transition','tea','market','focus-cue','focus-mid','focus-settled'];const hashes=names.map(n=>crypto.createHash('sha256').update(fs.readFileSync('/tmp/asset-'+n+'.png')).digest('hex'));if(new Set(hashes).size!==8)throw Error('Library-backed action did not visually change by exact cue');"
+      - name: Verify central artwork safe-area, presence and meaning change on actual Remotion PNGs
+        run: |
+          node scripts/motion-frame-qa.mjs /tmp/motion-frame-qa.json /tmp/asset-book.png /tmp/asset-tea.png /tmp/asset-market.png /tmp/asset-focus-settled.png
+          test -s /tmp/motion-cue-review.json
+          test -s /tmp/motion-frame-qa.json
       - name: Render four semantic beats with three curated assets in silent technical MP4
         run: |
           npx remotion render src/index.ts HSKAI-Episode /tmp/motion-assets-technical.mp4 --props /tmp/assets-props.json --frames 38-159 --codec h264 --pixel-format yuv420p --muted --concurrency=2
@@ -135,6 +146,8 @@ jobs:
             /tmp/asset-focus-cue.png
             /tmp/asset-focus-mid.png
             /tmp/asset-focus-settled.png
+            /tmp/motion-cue-review.json
+            /tmp/motion-frame-qa.json
             /tmp/motion-assets-technical.mp4
           retention-days: 3
           if-no-files-found: error
