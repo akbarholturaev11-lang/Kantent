@@ -121,6 +121,7 @@ test("M5 cinematic effects cannot exceed cue spacing or fake persistent SVG",()=
   const original=structuredClone(scene);
   original.motionDirection.shots[1].transition={kind:"slide-match",frames:12,direction:"left"};
   assert.equal(compile(original,resolved).shots[1].transition.kind,"slide-match");
+  assert.equal(compile(original,resolved).shots[1].transition.direction,"left");
   original.motionDirection.shots[1].transition={kind:"masked-reveal",frames:12,direction:"right"};
   assert.equal(compile(original,resolved).shots[1].transition.kind,"masked-reveal");
   original.motionDirection.shots[1].transition={kind:"focus-reveal",frames:12};
