@@ -146,7 +146,7 @@ export function compileMotionDirectorScene(scene,resolvedBeats) {
       cueOccurrence:beat.cueOccurrence??null,
       cueStartMs:beat.startMs,cueEndMs:beat.endMs,cueFrame:beat.localFrame,
       assetIds:[...shot.assetIds],persistentElementIds:[...persistent],
-      camera:{...camera},transition:{kind,frames},
+      camera:{...camera},transition:{...shot.transition},
       focalRole:shot.focalRole,zIndex:shot.zIndex,
     });
   }
