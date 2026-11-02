@@ -38,6 +38,8 @@ jobs:
           node --check scripts/graphic-scene.mjs
           node --check scripts/graphic-voice-proof.mjs
           node --test scripts/graphic-scene.test.mjs scripts/graphic-voice-proof.test.mjs scripts/action-design-plan.test.mjs scripts/action-text-layout.test.mjs scripts/motion-design-plan.test.mjs scripts/lesson-presentation-policy.test.mjs
+          node --check scripts/action-beat-continuity.mjs
+          node --test scripts/action-beat-continuity.test.mjs
       - name: Test read-only adaptive storytelling and legacy plan compatibility
         run: |
           node --check scripts/storytelling-plan.mjs
