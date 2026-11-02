@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" fill="none" role="img" aria-label="Porcelain tea cup on saucer">
+<defs><linearGradient id="ceramic" x1="160" y1="185" x2="420" y2="380" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF5DF"/><stop offset="1" stop-color="#D2C6B4"/></linearGradient><linearGradient id="tea" x1="212" y1="184" x2="410" y2="223" gradientUnits="userSpaceOnUse"><stop stop-color="#E9A916"/><stop offset="1" stop-color="#826438"/></linearGradient></defs>
+<ellipse cx="330" cy="405" rx="235" ry="26" fill="#161A23" opacity=".13"/>
+<ellipse cx="320" cy="377" rx="220" ry="39" fill="#D2C6B4"/><ellipse cx="320" cy="368" rx="204" ry="28" fill="#FFF5DF"/><ellipse cx="320" cy="370" rx="137" ry="14" fill="#D2C6B4" opacity=".75"/>
+<path d="M440 225C540 197 553 339 434 340" stroke="#FFF5DF" stroke-width="44" stroke-linecap="round"/><path d="M442 240C511 224 518 305 443 313" stroke="#29313E" stroke-width="15" stroke-linecap="round"/>
+<path d="M173 194H443L421 316Q414 372 322 377Q231 372 209 315Z" fill="url(#ceramic)"/>
+<ellipse cx="306" cy="194" rx="137" ry="29" fill="#FFF5DF"/><ellipse cx="306" cy="194" rx="112" ry="18" fill="url(#tea)"/>
+<path d="M225 228Q232 309 284 343" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" opacity=".55"/><path d="M340 283L353 290L344 307" stroke="#2FA06A" stroke-width="8" stroke-linecap="round"/>
+<path d="M267 151C235 127 294 109 268 77C252 56 279 43 276 29M336 151C305 124 359 109 335 78C319 55 349 40 338 25" stroke="#D2C6B4" stroke-width="12" stroke-linecap="round" opacity=".78"/>
+</svg>
