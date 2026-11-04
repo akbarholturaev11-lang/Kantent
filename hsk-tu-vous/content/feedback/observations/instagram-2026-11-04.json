@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "description": "Append-only instagram owned Zernio lifetime video snapshot 2026-11-04; no exact fixed-age windows.",
+  "description": "Append-only instagram owned Zernio lifetime video snapshot 2026-11-04; no exact fixed-age windows. TJ native-ID missing rows quarantined in unmappedProviderPosts.",
   "collection": {
     "collectedAt": "2026-11-04T00:52:46.956Z",
     "analysisLookbackDays": 30,
@@ -34,9 +34,10 @@
         "staleAccountCount": null
       }
     ],
-    "postsSaved": 16,
+    "postsSaved": 14,
     "syncedMetricRows": 13,
-    "unsyncedMetricRows": 3
+    "unsyncedMetricRows": 1,
+    "unmappedTjPostCount": 2
   },
   "observations": [
     {
@@ -976,7 +977,9 @@
         }
       },
       "metricCaveat": "Provider lifetime cumulative; no provider-exact post-age 24h/7d record. Unavailable/unsupported metrics null."
-    },
+    }
+  ],
+  "unmappedProviderPosts": [
     {
       "platform": "instagram",
       "platformPostId": null,
