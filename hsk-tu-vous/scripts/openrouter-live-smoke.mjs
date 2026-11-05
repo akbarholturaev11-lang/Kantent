@@ -33,6 +33,7 @@ try {
     const result = await transcribeOpenRouter({
       apiKey:key,model:"gemini-3.5-transcribe",audioPath:filename,
     });
+    console.log("STT_DIAGNOSTIC",locale,JSON.stringify({transcript:result.transcript,wordCount:result.wordAnnotations.length,words:result.wordAnnotations.map(w=>({text:w.text,start:w.startOffset,end:w.endOffset}))}));
     assert.ok(result.wordAnnotations.length >= 3, "Not enough word timestamps");
     assert.ok(result.wordAnnotations.every(w=>/^\d+\.\d{3}s$/.test(w.startOffset) && /^\d+\.\d{3}s$/.test(w.endOffset)));
     console.log("STT_SUCCESS",locale,"word_count="+result.wordAnnotations.length);
