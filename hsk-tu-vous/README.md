@@ -4,6 +4,12 @@ A local AI-assisted production system for short HSK lesson videos. It plans epis
 
 New standalone advertisements follow [PROMO_WORKFLOW.md](content/PROMO_WORKFLOW.md): an original life situation, a supported product demonstration and a minimalist frame. `npm run content:promo-plan -- speaking-cafe-example` (MCP `get_promo_plan`) defaults to every production language in `content/languages.json` and validates each source-bound story, sources and outstanding artwork/media work. Use `--language tg` only for an explicit one-language request. Missing/stale translations are reported per language without fallback. Shared promos live in `content/promos/`; translations live in each configured content root's `promos/` folder. This planning command does not generate or publish a video; the selected existing engine, approved voice, central CTA and exact final-preview process still apply.
 
+## Voice API routing (OpenRouter primary, Google Gemini secondary)
+
+`content/voice-profile.json` and `content/locales/tg/voice-profile.json` remain the canonical owner-approved models and Kore voice. The default `HSK_AI_VOICE_API_PROVIDER=openrouter` routes speech (`/audio/speech`) and provider word-timed transcription (`/audio/transcriptions`) through OpenRouter with `OPENROUTER_API_KEY`. Audio and word timestamps are validated before import; if OpenRouter does not provide valid exact word timings, video production blocks rather than fabricating subtitles.
+
+To explicitly use the independent secondary direct-Gemini route, set `HSK_AI_VOICE_API_PROVIDER=gemini-direct`, `HSK_AI_ALLOW_GEMINI_API=true`, and a valid `GEMINI_API_KEY`. There is **no automatic fallback** or unapproved provider/voice change after an audio attempt. For GitHub Actions, store `OPENROUTER_API_KEY` in repository Actions Secrets and optionally set Actions Variable `HSK_AI_VOICE_API_PROVIDER` to `gemini-direct` only when switching manually.
+
 ## Start locally
 
 Requires Node.js 20+.
