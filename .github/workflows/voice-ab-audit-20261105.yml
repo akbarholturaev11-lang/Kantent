@@ -1,0 +1,38 @@
+name: Isolated voice A/B quality audit (no publishing)
+
+on:
+  push:
+    branches:
+      - test/openrouter-live-smoke-20261105
+    paths:
+      - .github/workflows/voice-ab-audit-20261105.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ab-voice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate one-take versus scene-take audio for RU and TG
+        run: |
+          test -n "$OPENROUTER_API_KEY" || { echo '::error::OpenRouter key missing'; exit 1; }
+          node scripts/voice-ab-audit.mjs voice-ab-audit-output
+      - name: Store exact voice samples and objective audio measurements
+        uses: actions/upload-artifact@v4
+        with:
+          name: voice-ab-audit-ru-tg-${{ github.run_id }}
+          path: hsk-tu-vous/voice-ab-audit-output/
+          if-no-files-found: error
+          retention-days: 7
