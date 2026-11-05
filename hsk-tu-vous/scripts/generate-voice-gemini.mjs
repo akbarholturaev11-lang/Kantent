@@ -10,6 +10,7 @@ import {
   resolveVoiceApi, requireOpenRouterKey, synthesizeOpenRouterWav,
   transcribeOpenRouter,
 } from "./openrouter-voice.mjs";
+import { openRouterBackupKey, withOpenRouterBackup, isOpenRouterBackupEligible, fallbackEvent } from "./voice-transport-backup.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { languageEnvironment, languageSettings } from "./language-context.mjs";
@@ -85,8 +86,14 @@ async function loadVoiceEnvironment(profile) {
     credentialState = { slots, index: 0 };
     apiKey = slots[0].secret;
   }
+  const backupKey = openRouterBackupKey(process.env, apiProvider);
   return {
     apiProvider, apiKey, credentialState,
+    openRouterBackupKey: backupKey,
+    ttsTransport: apiProvider,
+    transcriptionTransport: apiProvider,
+    fallbackEvents: [],
+    completedTtsChunks: 0,
     ttsRequestCount: 0,
     ttsModel: profile.ttsModel,
     voice: profile.voiceName,
@@ -528,10 +535,10 @@ function createTtsChunks(episode, maxCharacters = 12000) {
 }
 
 async function generateTtsWav(config, text) {
-  if (config.apiProvider === "openrouter") {
-    // No silent re-generation or paid fallback; one transport call per take.
+  if (config.ttsTransport === "openrouter") {
+    // Primary OpenRouter or recorded fallback; never regenerate completed chunks.
     return synthesizeOpenRouterWav({
-      apiKey: config.apiKey,
+      apiKey: config.apiProvider === "openrouter" ? config.apiKey : config.openRouterBackupKey,
       model: config.ttsModel,
       voice: config.voice,
       text,
@@ -549,7 +556,11 @@ async function generateTtsWav(config, text) {
   }
   // Rotate credentials only if this standalone TTS call fails. Do not
   // regenerate a successful take or change provider, model, voice or cues.
-  const tts = await withGeminiKeyFailover(
+  const tts = await withOpenRouterBackup({
+    stage: "tts",
+    enabled: Boolean(config.openRouterBackupKey),
+    allowFallback: config.completedTtsChunks === 0,
+    primary: () => withGeminiKeyFailover(
     config.credentialState,
     (apiKey) => requestJson(
       `${API_ROOT}/v1beta/interactions`,
@@ -577,7 +588,25 @@ async function generateTtsWav(config, text) {
         },
       },
     ),
-  );
+    ),
+    backup: () => synthesizeOpenRouterWav({
+      apiKey: config.openRouterBackupKey,
+      model: config.ttsModel,
+      voice: config.voice,
+      text,
+      style: config.style,
+      sampleRateHz: config.sampleRateHz,
+      channels: config.channels,
+      onAttempt: () => { config.ttsRequestCount += 1; },
+    }),
+    onFallback: (event) => {
+      // Do not mix already produced Gemini Direct audio with backup speech.
+      config.ttsTransport = "openrouter";
+      config.transcriptionTransport = "openrouter";
+      config.fallbackEvents.push(event);
+    },
+  });
+  if (config.ttsTransport === "openrouter") return tts;
   config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
   const wav = getAudioData(tts.data);
   if (
@@ -722,9 +751,10 @@ async function recoverActualWordClips({
     const languageCode = gap.language === "zh"
       ? transcriptionLanguages.at(-1) : transcriptionLanguages[0];
     let annotations;
-    if (config.apiProvider === "openrouter") {
+    if (config.transcriptionTransport === "openrouter") {
       const response = await transcribeOpenRouter({
-        apiKey: config.apiKey, model: config.transcribeModel, audioPath: clipPath,
+        apiKey: config.apiProvider === "openrouter" ? config.apiKey : config.openRouterBackupKey,
+        model: config.transcribeModel, audioPath: clipPath,
       });
       annotations = response.wordAnnotations;
     } else {
@@ -757,7 +787,7 @@ async function recoverActualWordClips({
     // Save the exact provider response/provenance before attempting alignment.
     await fs.writeFile(path.join(directory,clipName+".json"),
       JSON.stringify({languageCode,clipStartMs:gap.startMs,clipEndMs:gap.endMs,
-        actualClipDurationMs:actualMs,annotations,provider:config.apiProvider,
+        actualClipDurationMs:actualMs,annotations,provider:config.transcriptionTransport,
         model:config.transcribeModel},null,2)+"\n");
     const blocks = timedBlocks(annotations,actualMs);
     const selected = selectRecoveredBlocks(gap.tokens,blocks);
@@ -1022,6 +1052,13 @@ if (RESUME_FOLDER_NAME) {
   if ((metadata.apiTransport ?? "gemini-direct") !== config.apiProvider) {
     throw new Error("Resume transport differs from the original audio; refusing provider switch.");
   }
+  config.ttsTransport = metadata.ttsTransport ?? config.apiProvider;
+  config.transcriptionTransport = metadata.transcriptionTransport ?? config.apiProvider;
+  config.fallbackEvents = metadata.fallbackEvents ?? [];
+  if ((config.ttsTransport === "openrouter" || config.transcriptionTransport === "openrouter") &&
+      config.apiProvider === "gemini-direct" && !config.openRouterBackupKey) {
+    throw new Error("Resuming OpenRouter-backed voice requires the same opt-in and API key.");
+  }
   delete metadata.error;
   metadata.status = "starting";
   metadata.sourceRevision = sourceRevision;
@@ -1040,6 +1077,9 @@ if (RESUME_FOLDER_NAME) {
     createdAt: new Date().toISOString(),
     provider: "gemini-api",
     apiTransport: config.apiProvider,
+    ttsTransport: config.ttsTransport,
+    transcriptionTransport: config.transcriptionTransport,
+    fallbackEvents: [],
     languageCode: voiceProfile.locale,
     voiceProfileId: voiceProfile.profileId,
     ttsModel: config.ttsModel,
@@ -1066,6 +1106,8 @@ if (RESUME_FOLDER_NAME && metadata.ttsChunkCount !== ttsChunks.length) {
 config.ttsRequestCount = metadata.ttsRequestCount ?? 0;
 metadata.ttsGenerationMode = ttsMode;
 metadata.ttsHttpAttemptLimitPerTake = config.apiProvider === "openrouter" ? 1 : (ONE_TAKE_PILOT ? 2 : 4);
+metadata.openRouterBackupHttpAttemptsPerChunk = config.openRouterBackupKey ? 1 : 0;
+metadata.googleQuotaKeyRotationEnabled = false;
 metadata.ttsChunkCount = ttsChunks.length;
 metadata.chunkSceneIds = ttsChunks.map((chunk) => chunk.sceneIds);
 metadata.chunkingStrategy = ONE_TAKE_PILOT
@@ -1102,11 +1144,15 @@ try {
         throw new Error(`Saved TTS chunk ${index + 1} is not a WAV file.`);
     } catch (error) {
       if (error?.code !== "ENOENT") throw error;
+      config.completedTtsChunks = completedTtsChunks;
       const wav = await generateTtsWav(config, chunk.text);
       await fs.writeFile(chunkPath, wav, { flag: "wx" });
     }
     completedTtsChunks += 1;
     metadata.ttsRequestCount = config.ttsRequestCount;
+    metadata.ttsTransport = config.ttsTransport;
+    metadata.transcriptionTransport = config.transcriptionTransport;
+    metadata.fallbackEvents = config.fallbackEvents;
     metadata.completedTtsChunks = completedTtsChunks;
     metadata.status = "audio-generating";
     await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
@@ -1196,11 +1242,12 @@ try {
     let attempts = metadata.transcriptionAttempts?.[index] ?? (transcription ? 1 : 0);
     while (!chunkAlignment?.captions && attempts < 3) {
       attempts += 1;
-      if (config.apiProvider === "openrouter") {
+      try {
+      if (config.transcriptionTransport === "openrouter") {
         // OpenRouter accepts inline base64 and does not create a remote upload.
         // A missing word-level result is rejected by the adapter, never guessed.
         transcription = await transcribeOpenRouter({
-          apiKey: config.apiKey,
+          apiKey: config.apiProvider === "openrouter" ? config.apiKey : config.openRouterBackupKey,
           model: config.transcribeModel,
           audioPath: transcriptionAudioPath,
         });
@@ -1282,6 +1329,20 @@ try {
           await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
         }
       }
+      } catch (error) {
+        if (config.transcriptionTransport !== "gemini-direct" ||
+            !config.openRouterBackupKey || !isOpenRouterBackupEligible(error)) throw error;
+        // Retry transcription using the exact saved WAV/MP3; never regenerate speech.
+        transcription = await transcribeOpenRouter({
+          apiKey: config.openRouterBackupKey,
+          model: config.transcribeModel,
+          audioPath: transcriptionAudioPath,
+        });
+        config.transcriptionTransport = "openrouter";
+        config.fallbackEvents.push(fallbackEvent("stt", error));
+      }
+      metadata.transcriptionTransport = config.transcriptionTransport;
+      metadata.fallbackEvents = config.fallbackEvents;
       const attemptPath = path.join(
         outputDir,
         `transcription-part-${chunkNumber}-attempt-${attempts}.json`,
@@ -1482,6 +1543,10 @@ try {
     "utf8",
   );
   metadata.status = "ready-for-import";
+  metadata.transcriptionTransport = config.transcriptionTransport;
+  metadata.fallbackEvents = config.fallbackEvents;
+  if (config.transcriptionTransport === "openrouter")
+    metadata.wordAlignment = "OpenRouter word timestamps + exact token alignment; direct Gemini language-hint parity not verified";
   metadata.captionWordCount = alignment.captions.length;
   await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
   execFileSync(
