@@ -10,21 +10,22 @@ This opt-in pipeline uses the existing Gemini + Remotion lesson renderer. It doe
 
 ## Required configuration
 
-1. GitHub repository Settings → Secrets and variables → Actions: create encrypted secret GEMINI_API_KEY with an appropriately capped Gemini API key. Never put it in code, PRs or logs.
+1. GitHub repository Settings → Secrets and variables → Actions: for the **default voice transport**, set encrypted `OPENROUTER_API_KEY` with an approved spending cap. Only if `HSK_AI_VOICE_API_PROVIDER=gemini-direct` is explicitly selected, use `GEMINI_API_KEY` (and permitted backups) and its opt-in flag. The actual workflow defaults to OpenRouter; never put secrets in code, PRs or logs.
 2. Confirm GitHub Actions minutes, artifact storage, Node.js 22, FFmpeg and FFprobe.
 3. Keep both existing approved language voice profiles unchanged.
 4. After this feature is merged to default branch, open Actions → HSK AI video review automation → Run workflow. Enter episode ID er-vs-liang-cafe-20261026 and choose language ru for an initial independent test. Later use all after the protected Tajik audio issue is resolved; other input forms are today or exact YYYY-MM-DD.
 
-## GitHub Secrets: four separate Zernio connections, four Gemini candidates
+## GitHub Secrets: current OpenRouter default, optional direct Gemini and four Zernio connections
 
-The current owner-provided repository secret names (never values) are:
-- GEMINI_API_KEY, GEMINI_API_KEY_BACKUP_1, GEMINI_API_KEY_BACKUP_2, GEMINI_API_KEY_BACKUP_3.
+The configured voice API secret names (never values) are:
+- Default: `OPENROUTER_API_KEY` for OpenRouter transport using the unchanged approved Gemini TTS/STT models.
+- Optional explicitly opted-in direct Gemini: `GEMINI_API_KEY`, `GEMINI_API_KEY_BACKUP_1`, `GEMINI_API_KEY_BACKUP_2`, `GEMINI_API_KEY_BACKUP_3`. Direct Gemini quota errors do not cause key rotation.
 - ZERNIO_API_KEY is the legacy **Russian Zernio** key. ZERNIO_TG_API_KEY is the separate **Tajik Zernio** key. No renaming is required.
 - Optional ZERNIO_RU_API_KEY takes precedence only if equal to the legacy credential. Conflicting RU keys block the routing helper; never silently mix accounts.
 - The new video-credentials module guarantees no RU-to-TG fallback and never displays credential contents.
 - All eight RU/TJ video language-and-platform routes have canonical IDs and connection groups in `content/publication-destinations.json`, based on connected Zernio readbacks on 2026-10-28. **Before every future upload, independently verify the current exact account ID, username and active connection using the selected credential group**; neither a historical readback nor a GitHub Secret name proves current API authorization.
 
-The review workflow consumes the four Gemini secret variables **only in the explicitly authorized render job**. It never consumes Zernio publishing credentials or initiates Zernio upload, draft, schedule or post. The preview's exact language, platform, account ID, CTA and video hash are still approval prerequisites.
+The review workflow passes the configured voice transport and its encrypted secrets **only to the authorized render job**; its default `HSK_AI_VOICE_API_PROVIDER` is `openrouter`, requiring `OPENROUTER_API_KEY`. Direct Gemini variables are optional only for the explicitly selected direct transport. This workflow never consumes Zernio publishing credentials and never initiates Zernio upload, draft, schedule or post. The preview's exact language, platform, account ID, CTA and video hash are still approval prerequisites.
 
 The Gemini helper switches to another candidate only for certain credential rejection errors, at a **standalone TTS or upload request boundary**. It never replaces a successful voice take. **HTTP 429 never rotates to another Google account or project to bypass quota**: Google's API Terms forbid circumventing documented rate limits, including through separate accounts. Respect provider reset/backoff guidance or request authorized quota increases or an appropriate billing tier instead. For transcription failures after an audio file has already been uploaded, the script retains fail-closed matching-audio safeguards. Synthetic CI tests use fake secrets and cannot verify production API availability.
 
@@ -50,7 +51,7 @@ Production must block the Tajik version until the exact approved audio/captions 
 1. Resolve the exact canonical date or episode ID and requested language(s); do not silently change the date.
 2. Refuse duplicate verified publications and prohibited regeneration of approved sample audio.
 3. Check the API secret and install frozen dependencies.
-4. Run existing npm run content:make with the exact episode and language, using real Gemini speech, word-level captions and Remotion exports.
+4. Run existing `npm run content:make` with the exact episode and language, using approved Gemini speech/transcription models through the **configured OpenRouter or opted-in direct Gemini transport**, real word-level captions and Remotion exports. The first take should meet listening/Chinese-pronunciation QA; do not regenerate a good WAV to fix an STT mismatch.
 5. Require rendered-pending-owner-approval per language; check Instagram, YouTube, TikTok and Facebook MP4s, SRT, post copy, embedded audio, portrait dimensions, duration, size and SHA-256. Telegram is not a video destination.
 6. Upload only MP4s, SRTs, post copy and a limited hash manifest in a 7-day GitHub Actions artifact. Never upload model request dumps, unfiltered review folders, .env files, transcription diagnostics or approvals.
 7. The owner examines the actual video, voice, Mandarin accuracy, pinyin, animations, caption timing, CTA, disclosures, exact account, time and final post preview. Each platform/language needs its own approval.
