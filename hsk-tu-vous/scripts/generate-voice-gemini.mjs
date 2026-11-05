@@ -6,6 +6,10 @@ import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
 import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
 import { requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
+import {
+  resolveVoiceApi, requireOpenRouterKey, synthesizeOpenRouterWav,
+  transcribeOpenRouter,
+} from "./openrouter-voice.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { languageEnvironment, languageSettings } from "./language-context.mjs";
@@ -58,27 +62,31 @@ function requireEpisodeId(value) {
   return value;
 }
 
-async function loadGeminiEnvironment(profile) {
-  if (
-    (!process.env.GEMINI_API_KEY || !process.env.HSK_AI_ALLOW_GEMINI_API) &&
-    typeof process.loadEnvFile === "function"
-  ) {
+async function loadVoiceEnvironment(profile) {
+  const provider = resolveVoiceApi(process.env);
+  if (typeof process.loadEnvFile === "function" &&
+      (!process.env.OPENROUTER_API_KEY || !process.env.GEMINI_API_KEY)) {
     try {
       process.loadEnvFile(path.join(PROJECT_ROOT, ".env.local"));
     } catch (error) {
       if (error?.code !== "ENOENT") throw error;
     }
   }
-  if (process.env.HSK_AI_ALLOW_GEMINI_API !== "true") {
-    throw new Error(
-      "Gemini production TTS uchun .env.local ichida HSK_AI_ALLOW_GEMINI_API=true bo‘lishi kerak.",
-    );
+  const apiProvider = resolveVoiceApi(process.env);
+  let apiKey;
+  let credentialState = null;
+  if (apiProvider === "openrouter") {
+    apiKey = requireOpenRouterKey(process.env);
+  } else {
+    if (process.env.HSK_AI_ALLOW_GEMINI_API !== "true") {
+      throw new Error("Direct Gemini API requires HSK_AI_ALLOW_GEMINI_API=true.");
+    }
+    const slots = requireGeminiKeySlots(process.env);
+    credentialState = { slots, index: 0 };
+    apiKey = slots[0].secret;
   }
-  const slots = requireGeminiKeySlots(process.env);
-  const credentialState = { slots, index: 0 };
   return {
-    apiKey: slots[0].secret,
-    credentialState,
+    apiProvider, apiKey, credentialState,
     ttsRequestCount: 0,
     ttsModel: profile.ttsModel,
     voice: profile.voiceName,
@@ -520,6 +528,19 @@ function createTtsChunks(episode, maxCharacters = 12000) {
 }
 
 async function generateTtsWav(config, text) {
+  if (config.apiProvider === "openrouter") {
+    // No silent re-generation or paid fallback; one transport call per take.
+    return synthesizeOpenRouterWav({
+      apiKey: config.apiKey,
+      model: config.ttsModel,
+      voice: config.voice,
+      text,
+      style: config.style,
+      sampleRateHz: config.sampleRateHz,
+      channels: config.channels,
+      onAttempt: () => { config.ttsRequestCount += 1; },
+    });
+  }
   const content = [{ type: "text", text }];
   if (config.style) {
     content[0].annotations = [
@@ -700,35 +721,43 @@ async function recoverActualWordClips({
     if (actualMs <= 0) throw Error("Gemini recovery clip was empty.");
     const languageCode = gap.language === "zh"
       ? transcriptionLanguages.at(-1) : transcriptionLanguages[0];
-    const uploaded = await withGeminiKeyFailover(config.credentialState,(apiKey)=>
-      uploadForTranscription(apiKey,clipPath,
-        "hsk-recovery-"+EPISODE_ID+"-"+chunkNumber+"-"+clipName));
-    config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
-    let response;
-    try {
-      response = await requestJson(
-        API_ROOT + "/v1beta/interactions",
-        {method:"POST",headers:{
-          "x-goog-api-key":config.apiKey,"Content-Type":"application/json",
-          "Api-Revision":API_REVISION,
-        },body:JSON.stringify({
-          model:config.transcribeModel,
-          input:[{type:"audio",uri:uploaded.uri,mime_type:audioMimeType(clipPath)}],
-          generation_config:{transcription_config:{
-            language_codes:[languageCode],
-            mode:{type:"verbatim",timestamp_granularities:["word"]},
-          }},
-        })},"Gemini recovery word transcription");
-    } finally {
-      await deleteGeminiFile(config.apiKey,uploaded.name);
+    let annotations;
+    if (config.apiProvider === "openrouter") {
+      const response = await transcribeOpenRouter({
+        apiKey: config.apiKey, model: config.transcribeModel, audioPath: clipPath,
+      });
+      annotations = response.wordAnnotations;
+    } else {
+      const uploaded = await withGeminiKeyFailover(config.credentialState,(apiKey)=>
+        uploadForTranscription(apiKey,clipPath,
+          "hsk-recovery-"+EPISODE_ID+"-"+chunkNumber+"-"+clipName));
+      config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
+      let response;
+      try {
+        response = await requestJson(
+          API_ROOT + "/v1beta/interactions",
+          {method:"POST",headers:{
+            "x-goog-api-key":config.apiKey,"Content-Type":"application/json",
+            "Api-Revision":API_REVISION,
+          },body:JSON.stringify({
+            model:config.transcribeModel,
+            input:[{type:"audio",uri:uploaded.uri,mime_type:audioMimeType(clipPath)}],
+            generation_config:{transcription_config:{
+              language_codes:[languageCode],
+              mode:{type:"verbatim",timestamp_granularities:["word"]},
+            }},
+          })},"Gemini recovery word transcription");
+      } finally {
+        await deleteGeminiFile(config.apiKey,uploaded.name);
+      }
+      annotations=getWordAnnotations(response.data).map(w=>({
+        text:w.text,startOffset:w.start_offset,endOffset:w.end_offset,
+      }));
     }
-    const annotations=getWordAnnotations(response.data).map(w=>({
-      text:w.text,startOffset:w.start_offset,endOffset:w.end_offset,
-    }));
     // Save the exact provider response/provenance before attempting alignment.
     await fs.writeFile(path.join(directory,clipName+".json"),
       JSON.stringify({languageCode,clipStartMs:gap.startMs,clipEndMs:gap.endMs,
-        actualClipDurationMs:actualMs,annotations,provider:"Gemini Transcribe",
+        actualClipDurationMs:actualMs,annotations,provider:config.apiProvider,
         model:config.transcribeModel},null,2)+"\n");
     const blocks = timedBlocks(annotations,actualMs);
     const selected = selectRecoveredBlocks(gap.tokens,blocks);
@@ -746,7 +775,7 @@ async function recoverActualWordClips({
   if(verified.mismatches.length)throw Error(
     "Recovery clips still failed exact whole-narration word alignment.");
   await fs.writeFile(path.join(directory,"verified-merge.json"),
-    JSON.stringify({provider:"Gemini Transcribe",model:config.transcribeModel,
+    JSON.stringify({provider:config.apiProvider,model:config.transcribeModel,
       actualClipOffsets:plan.gaps,wordAnnotations:joinedAnnotations,
       exactAlignment:true},null,2)+"\n");
   return {wordAnnotations:joinedAnnotations,alignment:verified,
@@ -873,7 +902,7 @@ const voiceProfile = await requireApprovedVoiceProfile(EPISODE_ID);
 if (voiceProfile.provider !== "gemini-api") {
   throw new Error("Faol ovoz profili Gemini API provayderiga mos emas.");
 }
-const config = await loadGeminiEnvironment(voiceProfile);
+const config = await loadVoiceEnvironment(voiceProfile);
 const targetReviewDir = PLATFORM
   ? path.join(reviewDir(EPISODE_ID), PLATFORM)
   : reviewDir(EPISODE_ID);
@@ -951,7 +980,8 @@ await writeTargetStatus({
   stage: "gemini-voice-generating",
   sourceRevision,
   updatedAt: new Date().toISOString(),
-  provider: voiceProfile.serviceName,
+  provider: config.apiProvider === "openrouter" ? "OpenRouter (Gemini models)" : voiceProfile.serviceName,
+  apiTransport: config.apiProvider,
   voiceProfileId: voiceProfile.profileId,
   voice: voiceProfile.voiceName,
   voiceTextHash: currentNarrationHash,
@@ -989,6 +1019,9 @@ if (RESUME_FOLDER_NAME) {
       "Existing Gemini production text does not match the current narration.",
     );
   }
+  if ((metadata.apiTransport ?? "gemini-direct") !== config.apiProvider) {
+    throw new Error("Resume transport differs from the original audio; refusing provider switch.");
+  }
   delete metadata.error;
   metadata.status = "starting";
   metadata.sourceRevision = sourceRevision;
@@ -1006,6 +1039,7 @@ if (RESUME_FOLDER_NAME) {
     sourceRevision,
     createdAt: new Date().toISOString(),
     provider: "gemini-api",
+    apiTransport: config.apiProvider,
     languageCode: voiceProfile.locale,
     voiceProfileId: voiceProfile.profileId,
     ttsModel: config.ttsModel,
@@ -1031,7 +1065,7 @@ if (RESUME_FOLDER_NAME && metadata.ttsChunkCount !== ttsChunks.length) {
 }
 config.ttsRequestCount = metadata.ttsRequestCount ?? 0;
 metadata.ttsGenerationMode = ttsMode;
-metadata.ttsHttpAttemptLimitPerTake = ONE_TAKE_PILOT ? 2 : 4;
+metadata.ttsHttpAttemptLimitPerTake = config.apiProvider === "openrouter" ? 1 : (ONE_TAKE_PILOT ? 2 : 4);
 metadata.ttsChunkCount = ttsChunks.length;
 metadata.chunkSceneIds = ttsChunks.map((chunk) => chunk.sceneIds);
 metadata.chunkingStrategy = ONE_TAKE_PILOT
@@ -1162,87 +1196,91 @@ try {
     let attempts = metadata.transcriptionAttempts?.[index] ?? (transcription ? 1 : 0);
     while (!chunkAlignment?.captions && attempts < 3) {
       attempts += 1;
-      // Keep resumable upload atomic per key; a rejected start may switch to a
-      // backup and start a NEW upload. Transcribe + cleanup use that SAME key.
-      const uploadedFile = await withGeminiKeyFailover(
-        config.credentialState,
-        (apiKey) => uploadForTranscription(
-          apiKey,
-          transcriptionAudioPath,
-          `hsk-production-${EPISODE_ID}-${index + 1}-attempt-${attempts}`,
-        ),
-      );
-      config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
-      try {
-        const response = await requestJson(
-          `${API_ROOT}/v1beta/interactions`,
-          {
-            method: "POST",
-            headers: {
-              "x-goog-api-key": config.apiKey,
-              "Content-Type": "application/json",
-              "Api-Revision": API_REVISION,
-            },
-            body: JSON.stringify({
-              model: config.transcribeModel,
-              input: [{
-                type: "audio",
-                uri: uploadedFile.uri,
-                mime_type: audioMimeType(transcriptionAudioPath),
-              }],
-              generation_config: {
-                transcription_config: {
-                  language_codes: transcriptionLanguages,
-                  mode: { type: "verbatim", timestamp_granularities: ["word"] },
-                },
-              },
-            }),
-          },
-          "Gemini word transcription",
+      if (config.apiProvider === "openrouter") {
+        // OpenRouter accepts inline base64 and does not create a remote upload.
+        // A missing word-level result is rejected by the adapter, never guessed.
+        transcription = await transcribeOpenRouter({
+          apiKey: config.apiKey,
+          model: config.transcribeModel,
+          audioPath: transcriptionAudioPath,
+        });
+      } else {
+        // Keep resumable upload atomic per key; rejected credentials may start a NEW upload.
+        const uploadedFile = await withGeminiKeyFailover(
+          config.credentialState,
+          (apiKey) => uploadForTranscription(
+            apiKey,
+            transcriptionAudioPath,
+            `hsk-production-${EPISODE_ID}-${index + 1}-attempt-${attempts}`,
+          ),
         );
-        const annotations = getWordAnnotations(response.data);
-        const transcriptText = response.data.output_text ??
-          (response.data.steps ?? [])
-            .filter((step) => step.type === "model_output")
-            .flatMap((step) => step.content ?? [])
-            .filter((block) => block.type === "text")
-            .map((block) => block.text ?? "")
-            .join("");
-        transcription = {
-          transcript: transcriptText,
-          wordAnnotations: annotations.map((word) => ({
-            text: word.text,
-            startOffset: word.start_offset,
-            endOffset: word.end_offset,
-          })),
-        };
-      } finally {
+        config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
         try {
-          await deleteGeminiFile(config.apiKey, uploadedFile.name);
-          metadata.transcriptionUploadCleanupResults.push({
-            chunk: index + 1,
-            attempt: attempts,
-            deleted: true,
-          });
-        } catch (error) {
-          metadata.transcriptionUploadCleanupResults.push({
-            chunk: index + 1,
-            attempt: attempts,
-            deleted: false,
-            error: safeErrorMessage(error),
-          });
-          metadata.transcriptionUploadCleanupErrors ??= [];
-          metadata.transcriptionUploadCleanupErrors.push({
-            chunk: index + 1,
-            attempt: attempts,
-            fileName: uploadedFile.name,
-            error: safeErrorMessage(error),
-          });
+          const response = await requestJson(
+            `${API_ROOT}/v1beta/interactions`,
+            {
+              method: "POST",
+              headers: {
+                "x-goog-api-key": config.apiKey,
+                "Content-Type": "application/json",
+                "Api-Revision": API_REVISION,
+              },
+              body: JSON.stringify({
+                model: config.transcribeModel,
+                input: [{
+                  type: "audio",
+                  uri: uploadedFile.uri,
+                  mime_type: audioMimeType(transcriptionAudioPath),
+                }],
+                generation_config: {
+                  transcription_config: {
+                    language_codes: transcriptionLanguages,
+                    mode: { type: "verbatim", timestamp_granularities: ["word"] },
+                  },
+                },
+              }),
+            },
+            "Gemini word transcription",
+          );
+          const annotations = getWordAnnotations(response.data);
+          const transcriptText = response.data.output_text ??
+            (response.data.steps ?? [])
+              .filter((step) => step.type === "model_output")
+              .flatMap((step) => step.content ?? [])
+              .filter((block) => block.type === "text")
+              .map((block) => block.text ?? "")
+              .join("");
+          transcription = {
+            transcript: transcriptText,
+            wordAnnotations: annotations.map((word) => ({
+              text: word.text,
+              startOffset: word.start_offset,
+              endOffset: word.end_offset,
+            })),
+          };
+        } finally {
+          try {
+            await deleteGeminiFile(config.apiKey, uploadedFile.name);
+            metadata.transcriptionUploadCleanupResults.push({
+              chunk: index + 1, attempt: attempts, deleted: true,
+            });
+          } catch (error) {
+            metadata.transcriptionUploadCleanupResults.push({
+              chunk: index + 1, attempt: attempts, deleted: false,
+              error: safeErrorMessage(error),
+            });
+            metadata.transcriptionUploadCleanupErrors ??= [];
+            metadata.transcriptionUploadCleanupErrors.push({
+              chunk: index + 1, attempt: attempts,
+              fileName: uploadedFile.name,
+              error: safeErrorMessage(error),
+            });
+          }
+          metadata.transcriptionUploadDeleted = metadata.transcriptionUploadCleanupResults.every(
+            (result) => result.deleted === true,
+          );
+          await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
         }
-        metadata.transcriptionUploadDeleted = metadata.transcriptionUploadCleanupResults.every(
-          (result) => result.deleted === true,
-        );
-        await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
       }
       const attemptPath = path.join(
         outputDir,
@@ -1468,7 +1506,7 @@ try {
     await writeJson(languageSettings().voiceProfilePath, voiceProfile);
   }
   await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
-  console.log(`Gemini production voice imported: ${mp3Path}`);
+  console.log(`${config.apiProvider} production voice imported: ${mp3Path}`);
   console.log(`Word-timed VTT: ${path.join(outputDir, "captions.vtt")}`);
   console.log(`Metadata: ${metadataPath}`);
 } catch (error) {
