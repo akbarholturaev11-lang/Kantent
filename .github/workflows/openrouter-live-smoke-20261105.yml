@@ -1,0 +1,36 @@
+name: One-shot OpenRouter RU/TJ live smoke (no publishing)
+
+on:
+  push:
+    branches:
+      - test/openrouter-live-smoke-20261105
+    paths:
+      - .github/workflows/openrouter-live-smoke-20261105.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live-voice-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify key is connected (do not print value)
+        run: |
+          if [[ -z "$OPENROUTER_API_KEY" ]]; then
+            echo "::error::OPENROUTER_API_KEY not found in repository secrets"
+            exit 1
+          fi
+          echo "OPENROUTER_KEY_PRESENT"
+      - name: Generate two tiny TTS samples and verify word-level timestamps
+        run: node scripts/openrouter-live-smoke.mjs
