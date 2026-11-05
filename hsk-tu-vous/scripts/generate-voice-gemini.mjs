@@ -1326,6 +1326,7 @@ try {
           );
           await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
         }
+      }
       } catch (error) {
         if (config.transcriptionTransport !== "gemini-direct" ||
             !config.openRouterBackupKey || !isOpenRouterBackupEligible(error)) throw error;
