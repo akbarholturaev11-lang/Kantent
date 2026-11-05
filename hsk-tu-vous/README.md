@@ -2,6 +2,8 @@
 
 A local AI-assisted production system for short HSK lesson videos. It plans episodes from a calendar, prepares narration, imports timed voice/captions, renders through Remotion, validates a review package, and prepares an **owner-approved** social publication. This is the content studio, not the HSK AI learner app.
 
+**New chat or coding agent?** Start with the root [`START_HERE.md`](../START_HERE.md), then [`AGENTS.md`](AGENTS.md) and the concise [`CURRENT_TASKS.md`](docs/audits/CURRENT_TASKS.md) status index. The full [V1–V7 technical audit](docs/audits/KANTENT_FULL_TECHNICAL_AUDIT_V5_2026-11-05.md) is evidence, not a list of implemented fixes. Read live config and current source code before acting.
+
 New standalone advertisements follow [PROMO_WORKFLOW.md](content/PROMO_WORKFLOW.md): an original life situation, a supported product demonstration and a minimalist frame. `npm run content:promo-plan -- speaking-cafe-example` (MCP `get_promo_plan`) defaults to every production language in `content/languages.json` and validates each source-bound story, sources and outstanding artwork/media work. Use `--language tg` only for an explicit one-language request. Missing/stale translations are reported per language without fallback. Shared promos live in `content/promos/`; translations live in each configured content root's `promos/` folder. This planning command does not generate or publish a video; the selected existing engine, approved voice, central CTA and exact final-preview process still apply.
 
 ## Voice API routing (OpenRouter primary, Google Gemini secondary)
