@@ -1758,3 +1758,36 @@ V3-15  Real provider 200 + words=[] => bounded STT retry/diagnostic, same audio 
 - Chinese grammar verification: [HSK Companion 几/多少](https://hskcompanion.org/grammar/question-ji-duoshao/) · [HanziStack 几/多少](https://char.hanzistack.com/grammar/ji-duoshao-asking-quantities) · [Mango Languages 还是/或者](https://www.mangolanguages.com/resources/learn/grammar/mandarin-chinese/how-to-distinguish-the-conjunctions-haishi-and-huozhe-in-mandarin)
 
 **V5 якуний чегара:** V1–V4 аниқ ва ноаниқ нуқталари устидан баъзи масалалар **асосли ёпилди** (`hui` gate, `bi` compare, `ji` price tag, crop bounds, screenshot blob); бошқалар **аниқ хато/чеклов** сифатида чиқди (`haishi` semantic regression, 29 SVG/199 beats, mixed-caption pinyin conditional, product UI provenance drift). Долзарб таълим маъноси ва жорий UI учун **инсон кўриши/эшитиши + actual media** барибир охирги gate бўлади.
+
+
+# P. Owner decision log — 2026-11-05 — овозга маъно жиҳатидан мос кадрлар
+
+**Owner тасдиқлаган асосий талаб:** ҳар бир муҳим айтилган фикрга айнан шу фикрни тушунтирадиган кадр ва ҳаракат мос келсин. Кадр маъноси ва унинг қабул мезонлари TTS'дан олдин сценарийда ёзилади. Кейин ҳақиқий сўз вақтлари бўйича қўйилади; якуний MP4'да телефон ўлчами, кадр маъноси, визуал давомийлик ва аудио синхронизацияси QA'дан ўтади. Шунчаки ҳаракатланган SVG ёки мазмунга алоқаси йўқ generic кадр қабул қилинмайди.
+
+**Статус:** бу асосий талаб тасдиқланган; P01–P12 — ҳали owner жавобини кутаётган қарорлар. A устуни тавсия, ҳозирча owner тасдиғи эмас. Бу ҳужжатни main'га қўшиш production код, аудио ёки нашр қилиш рухсати эмас.
+
+| ID | Очиқ қарор | A — тавсия этилган вариант | B — муқобил | Ҳолат |
+|---|---|---|---|---|
+| P01 | Янги кадр стандарти қайси роликларга? | Янги ва unpublished/unapproved; эски approved/published ўзгармайди | Эскиларини ҳам қайта тайёрлаш | OPEN |
+| P02 | Мавжуд SVG маънони кўрсатишга етмаса? | Мавзуга мос янги original vector, зарур бўлса текширилган AI illustration; preview ва provenance билан | Фақат SVG, иложсиз бўлса тўхташ | OPEN |
+| P03 | Абстракт грамматикада қандай кадр? | Сўз тартиби, таъкид ва сабаб-натижа схемаси; сунъий персонаж шарт эмас | Ҳар доим ҳаётий саҳна | OPEN |
+| P04 | Кадр ўзгаришининг вақт нуқтаси? | Аниқ spoken cue бошланиши; кейинги маъно келгунча settle ҳолати | Айрим кадрни 100–200ms олдин кўрсатиш | OPEN |
+| P05 | Хитойча Hanzi ва pinyin қаерда? | Битта synced subtitle'да tone-marked pinyin ва selective focus, қўшимча duplicate headline йўқ | Марказда алоҳида teaching panel | OPEN |
+| P06 | RU/TG кадрлари бир хил бўлиши керакми? | Факт/объектлар изчил, cue/тайминг ва зарур саҳналар тилга мос | Иккала тилда ҳар кадр 1:1 | OPEN |
+| P07 | Кадр маънога зид ёки телефонда ўқилмаса? | Block; муаммоли кадрни тузатиб қайта QA; generic filler мумкин эмас | Ҳар хатода owner аралашиши | OPEN |
+| P08 | Визуал auto-repair лимити? | 2 та мақсадли уриниш; кейин аниқ blocker ва кадр далили | 1 та ёки чексиз regeneration | OPEN |
+| P09 | Owner QA пакети? | Якуний MP4 + муҳим cue'лар contact sheet + machine QA хулосаси; якуний видео битта тасдиқланади | Ҳар кадр owner томонидан тасдиқланади | OPEN |
+| P10 | Маҳсулотнинг ҳақиқий UI скриншотлари? | Ҳозирги илова экранидан verified capture, locale/crop/hash; UI ўзгарса recertify | Эски asset'ларни доим reuse | OPEN |
+| P11 | Continuous TTS'ни default қилиш? | Аввал full RU/TG real A/B + инсон тинглаш; ўтса фақат янги ишларга жорий қилиш | Scene-wise default'ни қолдириш | OPEN |
+| P12 | Эски қоидалар ва docs миграцияси? | Тасдиқланган қарорларни каноник EDITING_SPEC, GRAPHIC_SCENES, WORKFLOW ва QA'га киритиш, эски баённи архивлаш | Фақат аудит файлида сақлаш | OPEN |
+
+## P.2. Owner саволи эмас, ижро ва реал далил билан ёпиладиган ишлар
+
+- Биринчи навбатда ҳақиқий Remotion кадрлари: ҳар meaning-bearing cue учун before/cue/settled still, 1080×1920 ҳамда 270×480 contact sheet. Мазмун, объект танилиши, фон/контраст, subtitle тўсилиши текширилсин.
+- RU ва TG'нинг ҳақиқий TTS/STT audio-текшируви; Chinese word accuracy, такрорланувчи cue occurrence, визуал ҳаракатнинг кейинги cue'гача тугаши. Қўлбола timestamp тақиқ.
+- WAV checkpoint, автоматик resume ва STT failure'да қайта TTS қилмаслик. Old approved аудио immutable.
+- Promo Panda/microphone crop pixel QA, current UI code revision'га evidence matching, customer-facing product capture сохталаштирилмасин.
+- Frame/voice/source/video SHA, frame-qa summary, test status ва exact-final-preview owner approval алоҳида сақлансин.
+- Яшил CI, JSON validity ёки GIF/SVG ҳаракати педагогик маънонинг 100% тўғрилигини исботлай олмайди.
+
+**P01–P12 вариантлари жавоб берилмагунча “default A”ни owner-approved деб белгиламанг. Янги frame contract ҳозирча талаб + техник таклиф, production implementation эмас.**
