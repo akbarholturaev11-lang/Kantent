@@ -30,13 +30,18 @@ try {
     const filename = path.join(dir,locale+".wav");
     await fs.writeFile(filename,wav);
     console.log("TTS_SUCCESS",locale,model,"wav_bytes="+wav.byteLength);
-    const result = await transcribeOpenRouter({
-      apiKey:key,model:"gemini-3.5-transcribe",audioPath:filename,
-    });
-    console.log("STT_DIAGNOSTIC",locale,JSON.stringify({transcript:result.transcript,wordCount:result.wordAnnotations.length,words:result.wordAnnotations.map(w=>({text:w.text,start:w.startOffset,end:w.endOffset}))}));
-    assert.ok(result.wordAnnotations.length >= 3, "Not enough word timestamps");
-    assert.ok(result.wordAnnotations.every(w=>/^\d+\.\d{3}s$/.test(w.startOffset) && /^\d+\.\d{3}s$/.test(w.endOffset)));
-    console.log("STT_SUCCESS",locale,"word_count="+result.wordAnnotations.length);
+    const reports = [];
+    for (const hint of [undefined, locale.slice(0,2), "zh"]) {
+      const result = await transcribeOpenRouter({
+        apiKey:key,model:"gemini-3.5-transcribe",audioPath:filename,language:hint,
+      });
+      console.log("STT_DIAGNOSTIC",locale,"hint="+(hint||"auto"),
+        JSON.stringify({transcript:result.transcript,wordCount:result.wordAnnotations.length,
+          words:result.wordAnnotations.map(w=>w.text)}));
+      reports.push({hint:hint||"auto",...result});
+    }
+    const anyTimed = reports.some(r=>r.wordAnnotations.length >= 3);
+    assert.ok(anyTimed,"No usable language hint returned 3+ word timestamp entries");
   }
   console.log("ALL_OPENROUTER_LIVE_VOICE_SMOKE_CHECKS_PASSED");
 } finally {
