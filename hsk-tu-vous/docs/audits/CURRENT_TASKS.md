@@ -1,0 +1,31 @@
+# Kantent — current engineering tasks (verified review, 2026-11-05)
+
+**Purpose:** Fast, prioritized entry point for a new coding-agent chat. This is a **status index**, not a second policy source. [AGENTS.md](../../AGENTS.md) and [AI_RULES.md](../../AI_RULES.md) govern behavior. Read latest `main` and reverify each item before modifying code. Read the [full V1–V7 evidence audit](KANTENT_FULL_TECHNICAL_AUDIT_V5_2026-11-05.md) (legacy filename retained).
+
+**Owner decisions:** All P01–P12 confirmed. Change new/unapproved videos only; keep historical approved/published voice/videos immutable. First-take natural RU/TJ speech and accurate Mandarin. Every important spoken idea needs a meaning-accurate visual at the actual word cue. Agent fixes root cause instead of stopping after two identical failed visual retries. When feasible, capture *current genuine* HSK AI PWA screenshots automatically in an authorized browser. Never auto-publish video; final per-target preview requires owner's explicit approval.
+
+## Prioritized unresolved work
+
+| Priority | Task | Evidence in full audit | Current status / required proof |
+|---|---|---|---|
+| P0 | Preserve first good TTS audio, resume STT/import after failures; test mixed Mandarin/TJ speech, controlled one-take vs scene-wise and Linux duration measurement | X-01, X-04, X-05, X-08–X-11, Y-05, Y-13, V6-08 | **OPEN**. Existing imported-voice reuse partially works; default continuous pilot is not yet proven, and direct MCP regeneration/resume differs. Need stable WAV hashes, first-take listening QA and bounded retry. |
+| P0 | Make MCP, CLI and renderer use the **same validated episode + compiled timing**, preserving locale and current hashes | Y-01–Y-04, V6-02, V6-03 | **OPEN**. Refresh episode after child processes; pass locale and canonical cue/scene timelines to renderer; simulate first-run, stale voice, and RU/TJ cases. |
+| P1 | Actual visual semantic correctness: first frame/reveal, choice answer state, track completion before next cue, off-canvas/empty SVG rejection | S-07, S-15, S-20, V5-01/02/21, V6-01/04, V7-02/03/05/06/07 | **OPEN**. Need before/on/settled frames at 1080×1920 and 270×480 plus negative tests. Shape-valid ≠ meaning-valid. |
+| P1 | Caption visibility and correct Hanzi/pinyin across scene boundaries and multilingual spoken words | V5-07/08, V7-01, V7-04 | **OPEN**. Regression for a word crossing 6000ms section boundary and split Chinese expressions (e.g. 游泳 / yóuyǒng). |
+| P1 | Pre-voice script/frame validation and autonomous, **root-cause** repair | S-16–S-18, S-35, V6-09/10 | **OPEN**. Detect duplicate/ambiguous cue before paid TTS; two same-method repair attempts max, then diagnose actual defect, test, continue if safe. Fail closed with concrete blocker if unresolved. |
+| P1 | Current genuine PWA screenshots + asset freshness/crop QA in promotions | V5-13–V5-20, V6-07, V7-08 | **OPEN IN PIPELINE**. Older Telegram mini-app PNG is genuine (verified blob), but owner says it is obsolete for new work. Requires authorized browser capture, current viewport/locale, SHA and real crop. No synthetic UI. |
+| P1 | Review-package completeness, exact preview approval, cross-route publication idempotency and per-platform attribution | Y-03/04/07, X-06/07, V3–V5 release gates | **OPEN**. Existing strict approval/publishing guards must remain intact. Do not post for testing. |
+| P2 | Reuse SVG geometry meaningfully, avoid blind A→B→A and stale source notes; consolidate legacy/active docs | S-01–S-14, V5-03–V5-05, P12 | **PARTIAL**. Six canonical .md docs updated in V6. The remainder of repo/legacy guidance needs reconciliation; don't delete historical evidence. |
+
+## Reality checks / implementation status
+
+- **COMPLETED documentation:** owner P12=A recorded; six canonical operating/rule documents aligned with OpenRouter default, voice priorities and semantic frame QA. The V1–V7 audit is retained with historic filename.
+- **NOT COMPLETED runtime:** no confirmed implementation or end-to-end validated real RU/TJ MP4 for the above P0/P1 improvements merely because their docs were updated.
+- **TESTS:** `npm run check:consistency`, targeted Node tests, TypeScript/ESLint and synthetic MP4 are necessary but insufficient. Run full real voice/cue/MP4 QA when explicitly authorized and supported; don't conflate skipped jobs or synthetic green with production quality.
+- **PUBLICATION:** Owner exact final video approval always required. Static 4:3 photo-news uses a separate authorization, so do not let this video task alter it.
+
+## Hand-off discipline
+
+On each new coding task: (1) fetch current main/PRs, (2) inspect code + related audit lines, (3) label the defect as code-confirmed / reproduced / conditional / gap, (4) test and patch the smallest safe path, (5) re-run regression and CI, (6) only then update this status index from **OPEN** to **VERIFIED FIXED** with test/run/commit references. Never update tasks to DONE based on plan, promises, or a green synthetic-only check.
+
+Audit provenance: [full report](KANTENT_FULL_TECHNICAL_AUDIT_V5_2026-11-05.md), last reviewed against `main@e0eb9a7f93dd732647d47dbd33d7c01efd8aec77` before creating this onboarding layer. Revalidate latest main at use time.
