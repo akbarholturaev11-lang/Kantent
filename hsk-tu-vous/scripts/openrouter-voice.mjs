@@ -99,13 +99,16 @@ export async function synthesizeOpenRouterWav({
 }
 
 export async function transcribeOpenRouter({
-  apiKey, model, audioPath, fetchImpl = fetch, readFile = fs.readFile,
+  apiKey, model, audioPath, language, fetchImpl = fetch, readFile = fs.readFile,
 }) {
   const slug = openRouterModel(model);
   if (!slug.endsWith("-transcribe")) throw new Error("The requested model is not transcription.");
   const format = path.extname(audioPath).slice(1).toLowerCase();
   if (format !== "mp3" && format !== "wav") {
     throw new Error("Only MP3/WAV input is approved for OpenRouter transcription.");
+  }
+  if (language !== undefined && !/^[a-z]{2}$/.test(language)) {
+    throw new Error("OpenRouter STT language must be an ISO 639-1 code.");
   }
   const bytes = await readFile(audioPath);
   if (!bytes.length) throw new Error("Cannot transcribe empty audio.");
@@ -117,6 +120,7 @@ export async function transcribeOpenRouter({
       input_audio: { data: bytes.toString("base64"), format },
       response_format: "verbose_json",
       timestamp_granularities: ["word"],
+      ...(language ? { language } : {}),
       // Intentionally no single-language hint: narration mixes Russian/Tajik and Mandarin.
     }),
     signal: AbortSignal.timeout(120000),
