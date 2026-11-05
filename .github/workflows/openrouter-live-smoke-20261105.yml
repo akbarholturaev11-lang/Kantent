@@ -6,6 +6,7 @@ on:
       - test/openrouter-live-smoke-20261105
     paths:
       - .github/workflows/openrouter-live-smoke-20261105.yml
+      - hsk-tu-vous/scripts/openrouter-live-smoke.mjs
   workflow_dispatch:
 
 permissions:
