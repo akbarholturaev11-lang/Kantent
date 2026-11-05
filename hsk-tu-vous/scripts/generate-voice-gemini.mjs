@@ -1106,6 +1106,8 @@ if (RESUME_FOLDER_NAME && metadata.ttsChunkCount !== ttsChunks.length) {
 config.ttsRequestCount = metadata.ttsRequestCount ?? 0;
 metadata.ttsGenerationMode = ttsMode;
 metadata.ttsHttpAttemptLimitPerTake = config.apiProvider === "openrouter" ? 1 : (ONE_TAKE_PILOT ? 2 : 4);
+metadata.openRouterBackupHttpAttemptsPerChunk = config.openRouterBackupKey ? 1 : 0;
+metadata.googleQuotaKeyRotationEnabled = false;
 metadata.ttsChunkCount = ttsChunks.length;
 metadata.chunkSceneIds = ttsChunks.map((chunk) => chunk.sceneIds);
 metadata.chunkingStrategy = ONE_TAKE_PILOT
