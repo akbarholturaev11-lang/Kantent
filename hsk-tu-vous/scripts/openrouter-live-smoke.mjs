@@ -31,7 +31,7 @@ try {
     await fs.writeFile(filename,wav);
     console.log("TTS_SUCCESS",locale,model,"wav_bytes="+wav.byteLength);
     const reports = [];
-    for (const hint of [undefined, locale.slice(0,2), "zh"]) {
+    for (const hint of [undefined]) {
       const result = await transcribeOpenRouter({
         apiKey:key,model:"gemini-3.5-transcribe",audioPath:filename,language:hint,
       });
@@ -40,7 +40,7 @@ try {
           words:result.wordAnnotations.map(w=>w.text)}));
       reports.push({hint:hint||"auto",...result});
     }
-    for (const candidate of ["openai/whisper-large-v3","microsoft/mai-transcribe-2"]) {
+    for (const candidate of ["elevenlabs/scribe-v2"]) {
       const response = await fetch("https://openrouter.ai/api/v1/audio/transcriptions", {
         method: "POST",
         headers: { Authorization:"Bearer "+key, "Content-Type":"application/json" },
