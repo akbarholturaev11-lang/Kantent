@@ -40,6 +40,24 @@ try {
           words:result.wordAnnotations.map(w=>w.text)}));
       reports.push({hint:hint||"auto",...result});
     }
+    for (const candidate of ["openai/whisper-large-v3","microsoft/mai-transcribe-2"]) {
+      const response = await fetch("https://openrouter.ai/api/v1/audio/transcriptions", {
+        method: "POST",
+        headers: { Authorization:"Bearer "+key, "Content-Type":"application/json" },
+        body: JSON.stringify({
+          model:candidate,
+          input_audio: {data:wav.toString("base64"),format:"wav"},
+          response_format:"verbose_json",
+          timestamp_granularities:["word"],
+        }),
+        signal:AbortSignal.timeout(120000),
+      });
+      const body = await response.json();
+      console.log("ALTERNATE_STT_DIAGNOSTIC",locale,candidate,
+        JSON.stringify({status:response.status,text:body?.text||null,
+          words:(body?.words||[]).map(w=>w.word||w.text).slice(0,40),
+          code:body?.error?.code||null}));
+    }
     const anyTimed = reports.some(r=>r.wordAnnotations.length >= 3);
     assert.ok(anyTimed,"No usable language hint returned 3+ word timestamp entries");
   }
