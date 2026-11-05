@@ -6,7 +6,7 @@ New standalone advertisements follow [PROMO_WORKFLOW.md](content/PROMO_WORKFLOW.
 
 ## Voice API routing (OpenRouter primary, Google Gemini secondary)
 
-`content/voice-profile.json` and `content/locales/tg/voice-profile.json` remain the canonical owner-approved models and Kore voice. The default `HSK_AI_VOICE_API_PROVIDER=openrouter` routes speech (`/audio/speech`) and provider word-timed transcription (`/audio/transcriptions`) through OpenRouter with `OPENROUTER_API_KEY`. Audio and word timestamps are validated before import; if OpenRouter does not provide valid exact word timings, video production blocks rather than fabricating subtitles.
+`content/voice-profile.json` and `content/locales/tg/voice-profile.json` remain the canonical owner-approved models and voice identity. The default `HSK_AI_VOICE_API_PROVIDER=openrouter` routes speech (`/audio/speech`) and provider word-timed transcription (`/audio/transcriptions`) through OpenRouter with `OPENROUTER_API_KEY`. Audio and word timestamps are validated before import; if OpenRouter does not provide valid exact word timings, video production blocks rather than fabricating subtitles.
 
 To explicitly use the independent secondary direct-Gemini route, set `HSK_AI_VOICE_API_PROVIDER=gemini-direct`, `HSK_AI_ALLOW_GEMINI_API=true`, and a valid `GEMINI_API_KEY`. There is **no automatic fallback** or unapproved provider/voice change after an audio attempt. For GitHub Actions, store `OPENROUTER_API_KEY` in repository Actions Secrets and optionally set Actions Variable `HSK_AI_VOICE_API_PROVIDER` to `gemini-direct` only when switching manually.
 
