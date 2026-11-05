@@ -6,6 +6,8 @@ on:
       - 'hsk-tu-vous/scripts/continuous-tts-plan.mjs'
       - 'hsk-tu-vous/scripts/continuous-tts-plan.test.mjs'
       - 'hsk-tu-vous/scripts/generate-voice-gemini.mjs'
+      - 'hsk-tu-vous/scripts/openrouter-voice.mjs'
+      - 'hsk-tu-vous/scripts/openrouter-voice.test.mjs'
       - '.github/workflows/isolated-one-take-core.yml'
   workflow_dispatch:
 
@@ -28,7 +30,9 @@ jobs:
           node --check scripts/continuous-tts-plan.mjs
           node --check scripts/continuous-tts-plan.test.mjs
           node --check scripts/generate-voice-gemini.mjs
-          node --test scripts/continuous-tts-plan.test.mjs scripts/gemini-word-recovery.test.mjs
+          node --check scripts/openrouter-voice.mjs
+          node --check scripts/openrouter-voice.test.mjs
+          node --test scripts/continuous-tts-plan.test.mjs scripts/gemini-word-recovery.test.mjs scripts/openrouter-voice.test.mjs
       - name: Project source consistency
         run: |
           npm ci --no-audit --no-fund

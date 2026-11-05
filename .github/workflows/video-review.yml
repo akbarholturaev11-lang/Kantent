@@ -11,6 +11,8 @@ on:
       - hsk-tu-vous/scripts/video-credentials.mjs
       - hsk-tu-vous/scripts/video-credentials.test.mjs
       - hsk-tu-vous/scripts/generate-voice-gemini.mjs
+      - hsk-tu-vous/scripts/openrouter-voice.mjs
+      - hsk-tu-vous/scripts/openrouter-voice.test.mjs
       - hsk-tu-vous/scripts/gemini-word-recovery.mjs
       - hsk-tu-vous/scripts/gemini-word-recovery.test.mjs
       - .github/workflows/zernio-approved-publish.yml
@@ -26,6 +28,8 @@ on:
       - hsk-tu-vous/scripts/video-credentials.mjs
       - hsk-tu-vous/scripts/video-credentials.test.mjs
       - hsk-tu-vous/scripts/generate-voice-gemini.mjs
+      - hsk-tu-vous/scripts/openrouter-voice.mjs
+      - hsk-tu-vous/scripts/openrouter-voice.test.mjs
       - hsk-tu-vous/scripts/gemini-word-recovery.mjs
       - hsk-tu-vous/scripts/gemini-word-recovery.test.mjs
       - .github/workflows/zernio-approved-publish.yml
@@ -86,13 +90,15 @@ jobs:
           node --check scripts/video-credentials.mjs
           node --check scripts/video-credentials.test.mjs
           node --check scripts/generate-voice-gemini.mjs
+          node --check scripts/openrouter-voice.mjs
+          node --check scripts/openrouter-voice.test.mjs
           node --check scripts/gemini-word-recovery.mjs
           node --check scripts/gemini-word-recovery.test.mjs
           node --check scripts/zernio-publication-core.mjs
           node --check scripts/zernio-publication-core.test.mjs
           node --check scripts/zernio-approved-publish.mjs
           node --check scripts/zernio-approved-publish.test.mjs
-          node --test scripts/gemini-word-recovery.test.mjs
+          node --test scripts/gemini-word-recovery.test.mjs scripts/openrouter-voice.test.mjs
           npm run check:consistency
       - name: Install FFmpeg and FFprobe for real synthetic MP4 tests
         run: |
@@ -103,7 +109,7 @@ jobs:
         run: node --test scripts/github-video-pipeline.test.mjs scripts/video-credentials.test.mjs scripts/zernio-publication-core.test.mjs scripts/zernio-approved-publish.test.mjs
 
   render-review:
-    name: Gemini narration -> Remotion -> verified private review artifact
+    name: Approved Gemini voices via selected API -> verified private review artifact
     if: >-
       ${{
         github.event_name == 'workflow_dispatch' ||
@@ -118,6 +124,8 @@ jobs:
       run:
         working-directory: hsk-tu-vous
     env:
+      HSK_AI_VOICE_API_PROVIDER: ${{ vars.HSK_AI_VOICE_API_PROVIDER || 'openrouter' }}
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
       HSK_AI_ALLOW_GEMINI_API: "true"
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GEMINI_API_KEY_BACKUP_1: ${{ secrets.GEMINI_API_KEY_BACKUP_1 }}
@@ -137,10 +145,20 @@ jobs:
           node-version: "22"
           cache: npm
           cache-dependency-path: hsk-tu-vous/package-lock.json
-      - name: Check API secret without exposing it
+      - name: Check selected voice API credential without exposing it
         run: |
-          if [[ -z "$GEMINI_API_KEY" && -z "$GEMINI_API_KEY_BACKUP_1" && -z "$GEMINI_API_KEY_BACKUP_2" && -z "$GEMINI_API_KEY_BACKUP_3" ]]; then
-            echo "::error::No Gemini API credential is configured in Actions secrets."
+          if [[ "$HSK_AI_VOICE_API_PROVIDER" == "openrouter" ]]; then
+            if [[ -z "$OPENROUTER_API_KEY" ]]; then
+              echo "::error::Set OPENROUTER_API_KEY in GitHub Actions secrets for primary voice production."
+              exit 1
+            fi
+          elif [[ "$HSK_AI_VOICE_API_PROVIDER" == "gemini-direct" ]]; then
+            if [[ -z "$GEMINI_API_KEY" && -z "$GEMINI_API_KEY_BACKUP_1" && -z "$GEMINI_API_KEY_BACKUP_2" && -z "$GEMINI_API_KEY_BACKUP_3" ]]; then
+              echo "::error::Direct Gemini selected but no Gemini credential exists."
+              exit 1
+            fi
+          else
+            echo "::error::Invalid HSK_AI_VOICE_API_PROVIDER."
             exit 1
           fi
       - name: Install production dependencies
@@ -154,7 +172,7 @@ jobs:
       - name: Resolve exact lesson and fail closed for protected approved audio
         id: episode
         run: node scripts/github-video-pipeline.mjs resolve "$REQUESTED_EPISODE" "$REQUESTED_LANGUAGE"
-      - name: Use existing Gemini narration and real-word-cue Remotion pipeline
+      - name: Use selected voice API and verified word-cue Remotion pipeline
         env:
           EPISODE_ID: ${{ steps.episode.outputs.episode_id }}
         run: npm run content:make -- "$EPISODE_ID" --language "$REQUESTED_LANGUAGE"
