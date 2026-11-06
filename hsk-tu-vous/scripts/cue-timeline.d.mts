@@ -15,15 +15,11 @@ export type CueTimeline = {
   fps: number;
   voiceTextHash: string;
   audioSha256: string | null;
-  wordCuesHash: string;
-  cueSourceHash: string;
+  cueSource: any;
   wordCues: import("../src/CaptionOverlay").TimedCaption[];
   captionSections: { startMs: number; endMs: number; styleId: string }[];
   scenes: CueTimelineScene[];
   semanticTimeline?: SemanticTimeline;
 };
-export function compileCueTimeline(
-  episode: any,
-  options?: { fps?: number; presentationPolicy?: any; semanticTimeline?: SemanticTimeline | null },
-): CueTimeline;
+export function cueTimelineSource(episode: any): any;
 export function assertCueTimelineMatches(episode: any, timeline: CueTimeline, fps?: number): true;

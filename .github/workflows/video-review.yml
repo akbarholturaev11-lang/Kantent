@@ -32,6 +32,8 @@ on:
       - hsk-tu-vous/scripts/caption-utils.test.mjs
       - hsk-tu-vous/scripts/cue-timeline.mjs
       - hsk-tu-vous/scripts/cue-timeline.d.mts
+      - hsk-tu-vous/scripts/compile-cue-timeline.mjs
+      - hsk-tu-vous/scripts/compile-cue-timeline.d.mts
       - hsk-tu-vous/scripts/cue-timeline.test.mjs
       - hsk-tu-vous/scripts/narrated-beat-state.mjs
       - hsk-tu-vous/scripts/narrated-beat-state.test.mjs
@@ -84,6 +86,8 @@ on:
       - hsk-tu-vous/scripts/caption-utils.test.mjs
       - hsk-tu-vous/scripts/cue-timeline.mjs
       - hsk-tu-vous/scripts/cue-timeline.d.mts
+      - hsk-tu-vous/scripts/compile-cue-timeline.mjs
+      - hsk-tu-vous/scripts/compile-cue-timeline.d.mts
       - hsk-tu-vous/scripts/cue-timeline.test.mjs
       - hsk-tu-vous/scripts/narrated-beat-state.mjs
       - hsk-tu-vous/scripts/narrated-beat-state.test.mjs
@@ -168,6 +172,7 @@ jobs:
           node --check scripts/media-duration.mjs
           node --check scripts/voice-caption-boundary.mjs
           node --check scripts/cue-timeline.mjs
+          node --check scripts/compile-cue-timeline.mjs
           node --check scripts/narrated-beat-state.mjs
           node --check scripts/render-episode.mjs
           node --check scripts/render-tiktok-review.mjs

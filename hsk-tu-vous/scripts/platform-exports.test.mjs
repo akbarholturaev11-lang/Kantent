@@ -4,7 +4,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
 import { spawnSync } from "node:child_process";
-import { compileCueTimeline } from "./cue-timeline.mjs";
+import { compileCueTimeline } from "./compile-cue-timeline.mjs";
 import {
   readCtaLab,
   createCtaExperiment,

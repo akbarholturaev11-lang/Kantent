@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { compileCueTimeline, assertCueTimelineMatches } from "./cue-timeline.mjs";
+import { compileCueTimeline } from "./compile-cue-timeline.mjs";
+import { assertCueTimelineMatches } from "./cue-timeline.mjs";
 import { narrationHash } from "./lib.mjs";
 
 function episode(languageCode = "ru-RU") {

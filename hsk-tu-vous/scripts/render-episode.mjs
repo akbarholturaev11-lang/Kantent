@@ -14,7 +14,7 @@ import { renderSharedPlatformVideos } from "./render-platform-videos.mjs";
 import { prepareSemanticRender } from "./semantic-review-integration.mjs";
 import { validateProductionDuration } from "./duration-policy.mjs";
 import { compileMotionDesignTimeline } from "./motion-design-plan.mjs";
-import { compileCueTimeline } from "./cue-timeline.mjs";
+import { compileCueTimeline } from "./compile-cue-timeline.mjs";
 import { assertImportedAudioHash } from "./voice-import-state.mjs";
 import { sha256 } from "./voice-checkpoint.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
