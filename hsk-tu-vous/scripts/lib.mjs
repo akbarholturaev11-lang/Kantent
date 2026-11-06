@@ -158,6 +158,8 @@ export async function invalidateReviewArtifacts(
     "render-props.json",
     "visual-timeline.json",
     "motion-timeline.json",
+    "promo-timeline.json",
+    "cue-timeline.json",
     "approval.json",
   ];
   if (narrationChanged) files.push("tts-input.txt");

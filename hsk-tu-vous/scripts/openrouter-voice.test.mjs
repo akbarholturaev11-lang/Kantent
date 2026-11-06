@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { createHash } from "node:crypto";
 import {
   resolveVoiceApi, requireOpenRouterKey, openRouterModel,
   synthesizeOpenRouterWav, transcribeOpenRouter,
+  TranscriptionResponseError, transcribeUntilAligned,
 } from "./openrouter-voice.mjs";
 
 test("default provider is OpenRouter; direct Gemini is explicit secondary", () => {
@@ -103,4 +105,62 @@ test("missing/invalid provider word timing blocks transcription", async () => {
       text:"hello",words:[{word:"hello",start:2,end:1}],
     }),{status:200}) }),
     /Invalid OpenRouter provider word timestamp/);
+});
+
+test("200 with empty words retries STT only and keeps the original audio bytes", async () => {
+  const audio = Buffer.from("immutable-source-audio");
+  const audioHash = createHash("sha256").update(audio).digest("hex");
+  const submittedAudio = [];
+  let sttCalls = 0;
+  const result = await transcribeUntilAligned({
+    transcribe: async () => {
+      return transcribeOpenRouter({
+        apiKey: "key",
+        model: "gemini-3.5-transcribe",
+        audioPath: "/tmp/voice.mp3",
+        readFile: async () => audio,
+        fetchImpl: async (_url, options) => {
+          sttCalls += 1;
+          const submitted = Buffer.from(JSON.parse(options.body).input_audio.data, "base64");
+          submittedAudio.push(submitted);
+          const response = sttCalls === 1
+            ? { text: "" }
+            : { text: "你好", words: [{ word: "你好", start: 0, end: 0.5 }] };
+          return new Response(JSON.stringify(response), { status: 200 });
+        },
+      });
+    },
+    align: (transcription) => ({ captions: transcription.wordAnnotations }),
+  });
+  assert.equal(result.attempts, 2);
+  assert.equal(sttCalls, 2);
+  assert.equal(result.alignment.captions[0].text, "你好");
+  assert.deepEqual(submittedAudio, [audio, audio]);
+  assert.equal(createHash("sha256").update(audio).digest("hex"), audioHash);
+});
+
+test("STT retry budget is bounded and permanent HTTP errors are not retried", async () => {
+  let transientCalls = 0;
+  const exhausted = await transcribeUntilAligned({
+    transcribe: async () => {
+      transientCalls += 1;
+      throw new TranscriptionResponseError("empty words", { retryable: true, httpStatus: 200 });
+    },
+    align: () => ({ captions: [] }),
+  });
+  assert.equal(transientCalls, 3);
+  assert.equal(exhausted.attempts, 3);
+  assert.equal(exhausted.retryable, true);
+
+  let permanentCalls = 0;
+  const permanent = await transcribeUntilAligned({
+    transcribe: async () => {
+      permanentCalls += 1;
+      throw new TranscriptionResponseError("bad request", { retryable: false, httpStatus: 400 });
+    },
+    align: () => ({ captions: [] }),
+  });
+  assert.equal(permanentCalls, 1);
+  assert.equal(permanent.retryable, false);
+  assert.equal(permanent.error.httpStatus, 400);
 });

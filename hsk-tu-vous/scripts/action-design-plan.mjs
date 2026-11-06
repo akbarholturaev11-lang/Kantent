@@ -48,6 +48,25 @@ export function validateActionVisual(beat) {
   }
 }
 
+export function validateVisualStateIntent(episode) {
+  for (const scene of episode.scenes ?? []) {
+    for (const beat of scene.motionBeats ?? []) {
+      const intent = beat.visualStateIntent;
+      if (!intent) continue;
+      if (intent.type !== "both-allowed" || beat.kind !== "graphic" ||
+          !Array.isArray(intent.requiredNodeIds) || intent.requiredNodeIds.length < 2 ||
+          new Set(intent.requiredNodeIds).size !== intent.requiredNodeIds.length) {
+        throw Error(`${scene.id}/${beat.id}: invalid visual-state intent.`);
+      }
+      const nodeIds = new Set(beat.visual?.graphic?.nodes?.map((node) => node.id) ?? []);
+      if (intent.requiredNodeIds.some((id) => !nodeIds.has(id))) {
+        throw Error(`${scene.id}/${beat.id}: both-allowed state is missing one or more accepted-option cues.`);
+      }
+    }
+  }
+  return true;
+}
+
 function visibleModel(kind, model, context) {
   const quantity = model.count ? {object:model.object,count:model.count,grouped:!!model.grouped} : null;
   if (kind === "graphic") return {graphic:graphicFingerprint(model.graphic)};
@@ -62,6 +81,7 @@ function visibleModel(kind, model, context) {
 }
 
 export function validateActionLesson(episode, {requireVisibleChange = false} = {}) {
+  validateVisualStateIntent(episode);
   const lessons = episode.scenes.filter(s => s.kind !== "cta");
   for (const scene of lessons) {
     if (scene.motionBeats?.length < 2 || !scene.motionBeats?.length)

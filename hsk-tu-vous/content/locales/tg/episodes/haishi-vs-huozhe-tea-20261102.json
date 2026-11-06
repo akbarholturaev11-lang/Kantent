@@ -556,7 +556,8 @@
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
         }
-      ]
+      ],
+      "headline": "ЧОЙ Ё ҚАҲВА?"
     },
     {
       "id": "choice",
@@ -1069,7 +1070,8 @@
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
         }
-      ]
+      ],
+      "headline": "САВОЛ БО 还是"
     },
     {
       "id": "options",
@@ -1409,7 +1411,14 @@
               ]
             }
           },
-          "explains": "Тағйири намоён барои маънои нав: Дар тоҷикӣ ҳарду бо «ё» ифода мешаванд, аммо чинӣ онҳоро фарқ мекунад."
+          "explains": "Тағйири намоён барои маънои нав: Дар тоҷикӣ ҳарду бо «ё» ифода мешаванд, аммо чинӣ онҳоро фарқ мекунад.",
+          "visualStateIntent": {
+            "type": "both-allowed",
+            "requiredNodeIds": [
+              "tick-tea",
+              "tick-coffee"
+            ]
+          }
         },
         {
           "id": "options-action-3",
@@ -1560,6 +1569,19 @@
                   }
                 },
                 {
+                  "type": "polyline",
+                  "id": "tick-coffee",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "417,280 441,300 472,262",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
                   "type": "line",
                   "id": "choice-line",
                   "parentId": "stage",
@@ -1592,9 +1614,17 @@
               ]
             }
           },
-          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
+          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан.",
+          "visualStateIntent": {
+            "type": "both-allowed",
+            "requiredNodeIds": [
+              "tick-tea",
+              "tick-coffee"
+            ]
+          }
         }
-      ]
+      ],
+      "headline": "或者 — ФАҚАТ ВАРИАНТҲО"
     },
     {
       "id": "contrast",
@@ -2124,7 +2154,8 @@
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
         }
-      ]
+      ],
+      "headline": "САВОЛ ВА ҶАВОБ"
     },
     {
       "id": "recall",
@@ -2654,7 +2685,8 @@
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
         }
-      ]
+      ],
+      "headline": "БОЗ ЁД ОР"
     }
   ],
   "captions": [],
@@ -2705,7 +2737,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "haishi-vs-huozhe-tea-20261102",
-    "sourceHash": "a42d43e65e8987bafc8b30705ded6503e5b82fb403bfd4762802dca3eb4ff7bd",
+    "sourceHash": "35a1f2634210b2a248a40d92c5a8ff7baa974537e1bd6851e3b9943a89912919",
     "authoredOn": "2026-10-28",
     "status": "draft-awaiting-audio-review"
   }

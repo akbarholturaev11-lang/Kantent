@@ -32,10 +32,10 @@ export function validatePromoMedia(episode) {
  }
  return true;
 }
-export function compilePromoTimeline(episode) {
+export function compilePromoTimeline(episode, fps=30) {
  if(episode.kind!=='advertisement')return null;
  validatePromoMedia(episode);
  if(episode.captionSource!=='gemini-word-timestamps'||!episode.captions?.length)throw Error('Promo requires real word timestamps');
  return {schemaVersion:1,episodeId:episode.id,timingSource:episode.captionSource,
-  scenes:episode.scenes.filter(s=>s.kind!=='cta').map(scene=>({sceneId:scene.id,cue:resolvePromoCue(scene,episode.captions,30,episode.languageCode)}))};
+  scenes:episode.scenes.filter(s=>s.kind!=='cta').map(scene=>({sceneId:scene.id,cue:resolvePromoCue(scene,episode.captions,fps,episode.languageCode)}))};
 }

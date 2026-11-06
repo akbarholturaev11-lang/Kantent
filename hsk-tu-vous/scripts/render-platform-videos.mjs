@@ -3,6 +3,8 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { PROJECT_ROOT, FPS, writeJson } from "./lib.mjs";
 import { assertSharedLesson, sharedRenderRanges } from "./platform-exports.mjs";
+import { assertCueTimelineMatches } from "./cue-timeline.mjs";
+import { buildCaptionSections } from "./caption-utils.mjs";
 
 function run(args) {
   // Remotion handles composition; ffmpeg/ffprobe are separate executables.
@@ -76,20 +78,27 @@ export async function renderSharedPlatformVideos({
   workDir,
   renderOptions = [],
   semanticTimeline = null,
+  cueTimeline = null,
   execute = run,
   log = console.log,
 }) {
   const base = episodes.instagram;
   const ranges = sharedRenderRanges(base);
-  for (const episode of Object.values(episodes))
+  for (const episode of Object.values(episodes)) {
     assertSharedLesson(base, episode);
+    if (cueTimeline) assertCueTimelineMatches(episode, cueTimeline, FPS);
+  }
   await fs.mkdir(workDir, { recursive: true });
   const props = {};
   for (const [platform, episode] of Object.entries(episodes)) {
     props[platform] = path.join(workDir, `${platform}-props.json`);
     // Platform-specific CTA differs, but assertSharedLesson already proves
     // narration/timing/lesson body matches the single exact-cue timeline.
-    await writeJson(props[platform], { episode, ...(semanticTimeline ? {semanticTimeline} : {}) });
+    await writeJson(props[platform], {
+      episode,
+      ...(cueTimeline ? { cueTimeline } : semanticTimeline ? { semanticTimeline } : {}),
+      ...(cueTimeline ? { captionSections: buildCaptionSections(episode.scenes, FPS) } : {}),
+    });
   }
   const browser = process.env.HSK_REMOTION_BROWSER_EXECUTABLE
     ? ["--browser-executable", process.env.HSK_REMOTION_BROWSER_EXECUTABLE]

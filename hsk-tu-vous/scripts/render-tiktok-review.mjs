@@ -10,9 +10,8 @@ import { prepareSemanticRender } from "./semantic-review-integration.mjs";
 import { validateProductionDuration } from "./duration-policy.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { compileMotionDesignTimeline } from "./motion-design-plan.mjs";
-import {
-  buildCaptionSections,
-} from "./caption-utils.mjs";
+import { compileCueTimeline } from "./cue-timeline.mjs";
+import { assertImportedAudioHash } from "./voice-import-state.mjs";
 import {
   captionsToSrt,
   episodeContentHash,
@@ -67,7 +66,12 @@ if (perWordCueCount / episode.captions.length < 0.8) {
 }
 const semanticTimeline = prepareSemanticRender(episode);
 const motionTimeline = compileMotionDesignTimeline(episode,visualSystem.lessonPresentation);
-await fs.access(path.join(PROJECT_ROOT, "public", episode.audioSrc));
+const cueTimeline = compileCueTimeline(episode, {
+  fps: 30,
+  presentationPolicy: visualSystem.lessonPresentation,
+  semanticTimeline,
+});
+assertImportedAudioHash(episode, await fs.readFile(path.join(PROJECT_ROOT, "public", episode.audioSrc)));
 try {
   await fs.access(path.join(folder, "approval.json"));
   throw new Error("An approval record exists; this TikTok review package cannot be replaced.");
@@ -82,7 +86,8 @@ if (semanticTimeline) {
   await writeJson(path.join(folder, "visual-timeline.json"), semanticTimeline);
 }
 if (motionTimeline) await writeJson(path.join(folder, "motion-timeline.json"), motionTimeline);
-await writeJson(propsPath, { episode, ...(semanticTimeline ? { semanticTimeline } : {}) });
+await writeJson(path.join(folder, "cue-timeline.json"), cueTimeline);
+await writeJson(propsPath, { episode, cueTimeline });
 const remotion = path.join(PROJECT_ROOT, "node_modules", ".bin", "remotion");
 const render = spawnSync(
   remotion,
@@ -117,7 +122,7 @@ await verifyPlatformVideo(videoPath, totalFrames, (args) => {
   return result.stdout;
 });
 
-const sections = buildCaptionSections(episode.scenes, 30);
+const sections = cueTimeline.captionSections;
 await fs.writeFile(
   path.join(folder, "captions.srt"),
   captionsToSrt(episode.captions, visualSystem.captions, sections),

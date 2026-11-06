@@ -3,6 +3,7 @@ import type {ActionModel} from "../scripts/action-design-plan.mjs";
 import type {ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
 import visual from "../content/visual-system.json";
 import {GraphicScene} from "./GraphicScene";
+import {activeNarratedBeat} from "../scripts/narrated-beat-state.mjs";
 
 const C=visual.colors;
 const L=visual.narratedMotionLayout;
@@ -79,8 +80,10 @@ const ModelStage:React.FC<{model:ActionModel;kind:string;frame:number;compact?:b
 </>;
 
 export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat[]}>=({frame,beats})=>{
-  const elapsed=beats.filter(b=>frame>=b.localFrame);
-  const active=elapsed[elapsed.length-1]??beats[0];
+  const active=activeNarratedBeat(beats,frame);
+  if(!active)return <AbsoluteFill style={{background:`radial-gradient(ellipse at 50% 49%, ${C.brandTeal}22, transparent 65%), ${P.background}`}}>
+    <div style={{position:"absolute",top:visual.motion.brandTopInsetPx,left:0,right:0,display:"flex",alignItems:"center",justifyContent:"center",gap:14,fontSize:30,fontWeight:900}}><Img src={staticFile("branding/hsk-ai-logo-1024.png")} style={{width:42,height:42,borderRadius:12}}/>HSK <span style={{color:C.brandGold}}>AI</span></div>
+  </AbsoluteFill>;
   const model=active.visual;
   if(!model) throw Error("Narrated action is missing its authored visual payload.");
   // Reuse only an object/count explicitly authored in this scene, so phrase

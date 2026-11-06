@@ -2,7 +2,10 @@ import { requireFreshGitMain } from './git-freshness.mjs';
 import { assertNotPreviouslyPublished } from './published-evidence.mjs';
 import fs from "node:fs/promises";
 import path from "node:path";
+import { sha256 } from "./voice-checkpoint.mjs";
 import { spawnSync } from "node:child_process";
+import { readMediaDurationMs } from "./media-duration.mjs";
+import { assertCaptionsDoNotCrossBoundary } from "./voice-caption-boundary.mjs";
 import { generatedVoicePath } from "./language-context.mjs";
 import { assertVoiceEpisodeLanguage, normalizeVoiceToken } from "./voice-language.mjs";
 import {
@@ -172,15 +175,7 @@ if (perWordCueCount / captions.length < 0.8) {
   );
 }
 
-const readDurationMs = (filePath) => {
-  const info = spawnSync("afinfo", [filePath], { encoding: "utf8" });
-  if (info.error || info.status !== 0) return 0;
-  const match = `${info.stdout}\n${info.stderr}`.match(
-    /(?:estimated\s+)?duration:\s*([\d.]+)\s*sec/i,
-  );
-  return match ? Math.round(Number(match[1]) * 1000) : 0;
-};
-let durationMs = readDurationMs(audioPath) || Math.max(...captions.map((caption) => caption.endMs));
+let durationMs = readMediaDurationMs(audioPath);
 if (!Number.isFinite(durationMs) || durationMs <= 0) {
   throw new Error("Audio davomiyligini aniqlab bo‘lmadi.");
 }
@@ -199,8 +194,8 @@ if (platform === "tiktok") {
   if (!Number.isFinite(ctaStartMs) || ctaStartMs <= 0) {
     throw new Error("The verified lesson CTA boundary is missing.");
   }
-  const lessonCaptions = baseEpisode.captions.filter((caption) => caption.endMs <= ctaStartMs);
-  if (!lessonCaptions.length || lessonCaptions.at(-1).endMs > ctaStartMs) {
+  const lessonCaptions = assertCaptionsDoNotCrossBoundary(baseEpisode.captions, ctaStartMs);
+  if (!lessonCaptions.length) {
     throw new Error("Verified lesson captions do not end before the CTA boundary.");
   }
   const lessonAudioPath = path.join(PROJECT_ROOT, "public", baseEpisode.audioSrc);
@@ -227,7 +222,7 @@ if (platform === "tiktok") {
     })),
   ];
   audioPath = composedAudioPath;
-  durationMs = readDurationMs(audioPath) || ctaStartMs + durationMs;
+  durationMs = readMediaDurationMs(audioPath);
 }
 
 const audioBuffer = await fs.readFile(audioPath);
@@ -336,7 +331,7 @@ for (const [index] of episode.scenes.entries()) {
     firstCaptionStartMs - (beatEntryLeadFrames / FPS) * 1000,
   );
   const previousStartFrame = sceneStartFrames[index - 1];
-  const targetStartFrame = Math.round((targetStartMs / 1000) * FPS);
+  const targetStartFrame = Math.ceil((targetStartMs / 1000) * FPS);
   // Keep the historical six-second Russian hook cap. Tajik samples speak
   // more slowly, so their first transition follows the verified next-scene
   // cue and keeps the spoken answer inside the hook.
@@ -400,6 +395,7 @@ if (platform === "tiktok") {
 }
 
 episode.audioSrc = `${assetBase}/${platform ? `${platform}/` : ""}${audioFilename}`;
+episode.audioSha256 = sha256(audioBuffer);
 episode.voiceProfileId = voiceProfile.profileId;
 episode.voiceProvider = voiceProfile.provider;
 episode.voiceLocale = voiceProfile.locale;

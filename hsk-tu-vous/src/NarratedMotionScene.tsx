@@ -1,5 +1,6 @@
 import {AbsoluteFill, Easing, Img, interpolate, staticFile} from "remotion";
 import visual from "../content/visual-system.json";
+import {activeNarratedBeat} from "../scripts/narrated-beat-state.mjs";
 
 export type NarratedMotionBeat = {id:string;kind:string;cueText:string;cueOccurrence?:number;localFrame:number};
 const C=visual.colors;
@@ -74,8 +75,14 @@ const phrases={
 export const NarratedMotionScene:React.FC<{
   sceneId:string;frame:number;beats:NarratedMotionBeat[];
 }>=({sceneId,frame,beats})=>{
-  const elapsed=beats.filter(beat=>frame>=beat.localFrame);
-  const active=elapsed[elapsed.length-1];
+  const active=activeNarratedBeat(beats,frame);
+  if(!active) {
+    const field=sceneId==="completed"?"#651C30":sceneId==="change"?"#10493E":sceneId==="contrast"?"#1C2032":"#191321";
+    return <AbsoluteFill style={{overflow:"hidden",background:field,color:cream,fontFamily:"'Arial','PingFang SC',sans-serif"}}>
+      <AbsoluteFill style={{background:`linear-gradient(160deg,${field},#17131D)`}}/>
+      <div style={{position:"absolute",top:visual.motion.brandTopInsetPx,left:0,right:0,display:"flex",justifyContent:"center",alignItems:"center",gap:14,fontSize:30,fontWeight:900,letterSpacing:".04em"}}><Img src={staticFile("branding/hsk-ai-logo-1024.png")} style={{width:42,height:42,borderRadius:12}}/>HSK <span style={{color:C.brandGold,marginLeft:-7}}>AI</span></div>
+    </AbsoluteFill>;
+  }
   const kind=active?.kind??(sceneId==="hook"?"question":sceneId==="change"?"intention":sceneId==="contrast"?"completed-reminder":"example");
   const start=active?.localFrame??0;
   const enter=progress(frame,start);

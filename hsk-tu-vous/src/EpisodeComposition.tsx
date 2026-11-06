@@ -1,5 +1,4 @@
 import {PromoScene,type PromoVisual} from './PromoScene';
-import {resolvePromoCue} from '../scripts/promo-visual.mjs';
 import { useMemo } from "react";
 import {
   AbsoluteFill,
@@ -21,8 +20,9 @@ import { BoldMotionScene } from "./BoldMotionScene";
 import { NarratedMotionScene } from "./NarratedMotionScene";
 import { NarratedActionScene } from "./NarratedActionScene";
 import {validateActionLesson} from "../scripts/action-design-plan.mjs";
-import type {MotionBeat} from "../scripts/motion-design-plan.mjs";
-import { resolveMotionBeats } from "../scripts/motion-design-plan.mjs";
+import type {MotionBeat, ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
+import { assertCueTimelineMatches } from "../scripts/cue-timeline.mjs";
+import type { CueTimeline } from "../scripts/cue-timeline.mjs";
 import { CinematicStoryScene, type Storyboard } from "./CinematicStoryScene";
 import { SemanticStoryScene, type SemanticShot, type SemanticTimeline, type SemanticTimelineScene } from "./SemanticStoryScene";
 import { NarrativeVisual, type VisualFocus } from "./NarrativeVisual";
@@ -75,7 +75,12 @@ type LessonEpisode = {
   captionSource?: string;
 };
 
-type EpisodeProps = { episode: LessonEpisode; semanticTimeline?: SemanticTimeline };
+type EpisodeProps = {
+  episode: LessonEpisode;
+  cueTimeline?: CueTimeline;
+  semanticTimeline?: SemanticTimeline;
+  captionSections?: { startMs: number; endMs: number; styleId: string }[];
+};
 export type VisualBeat = {
   hero: string;
   pinyin?: string;
@@ -996,9 +1001,11 @@ const LessonSlide: React.FC<{
   timelineStartMs: number;
   captions: TimedCaption[];
   semanticScene?: SemanticTimelineScene;
+  motionBeats?: ResolvedMotionBeat[];
+  promoCue?: ResolvedMotionBeat | null;
   motionDesignEnabled?: boolean;
   motionDesignStyle?: string;
-}> = ({ episodeId, scene, index, sceneCount, durationFrames, timelineStartMs, captions, semanticScene, motionDesignEnabled = false, motionDesignStyle }) => {
+}> = ({ episodeId, scene, index, sceneCount, durationFrames, timelineStartMs, captions, semanticScene, motionBeats = [], promoCue, motionDesignEnabled = false, motionDesignStyle }) => {
   // A semantic scene must be bound to a compiled, exact-cue timeline.
   if (scene.semanticShot && (!semanticScene || semanticScene.sceneId !== scene.id))
     throw new Error("Semantic scene missing a matching audio-cue timeline: " + scene.id);
@@ -1006,14 +1013,13 @@ const LessonSlide: React.FC<{
     throw new Error("Unmatched semantic timeline in " + scene.id);
   const frame = useCurrentFrame();
   const motionDesign = motionDesignEnabled || episodeId === "zhe-na-ge";
-  const narratedBeats = useMemo(() => scene.motionBeats?.length
-    ? resolveMotionBeats(scene, captions, FPS) : [], [scene, captions]);
+  const narratedBeats = motionBeats;
   if (motionDesignStyle==="explain-actions-v1" && scene.kind!=="cta") validateActionLesson({scenes:[scene]});
   if (narratedBeats.length && (!motionDesign || !["le-context-v1","explain-actions-v1"].includes(motionDesignStyle??"")))
     throw new Error("Narrated beats need a supported explicit motion style.");
   if(scene.promoVisual) {
-    const cue=resolvePromoCue(scene,captions,FPS);
-    return <PromoScene visual={scene.promoVisual} frame={frame} cueFrame={cue.localFrame} durationFrames={durationFrames} first={index===0}/>;
+    if (!promoCue) throw new Error("Promo visual is missing its canonical word-cue timeline: " + scene.id);
+    return <PromoScene visual={scene.promoVisual} frame={frame} cueFrame={promoCue.localFrame} durationFrames={durationFrames} first={index===0}/>;
   }
   const fadeIn = index === 0
     ? 1
@@ -1351,8 +1357,14 @@ const LessonSlide: React.FC<{
   );
 };
 
-const LessonVideo: React.FC<EpisodeProps> = ({ episode, semanticTimeline }) => {
+const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, captionSections: variantCaptionSections, semanticTimeline: legacySemanticTimeline }) => {
   const { durationInFrames } = useVideoConfig();
+  if (cueTimeline) assertCueTimelineMatches(episode, cueTimeline, FPS);
+  const semanticTimeline = cueTimeline?.semanticTimeline ?? legacySemanticTimeline;
+  const needsCueTimeline = episode.scenes.some((scene) => scene.motionBeats?.length || scene.promoVisual) ||
+    episode.motionDesignStyle === "explain-actions-v1";
+  if (needsCueTimeline && !cueTimeline)
+    throw new Error("Episode motion and promo cues require a compiled canonical cue timeline.");
   if (episode.semanticVisual) {
     if (!semanticTimeline || semanticTimeline.episodeId !== episode.id ||
         semanticTimeline.schemaVersion !== 1 || semanticTimeline.fps !== FPS)
@@ -1364,8 +1376,8 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, semanticTimeline }) => {
     scene.semanticShot && !semanticTimeline?.scenes.some(s => s.sceneId === scene.id)))
     throw new Error("Missing compiled timeline for semantic shot");
   const captionSections = useMemo(
-    () => buildCaptionSections(episode.scenes, FPS),
-    [episode.scenes],
+    () => variantCaptionSections ?? cueTimeline?.captionSections ?? buildCaptionSections(episode.scenes, FPS),
+    [variantCaptionSections, cueTimeline, episode.scenes],
   );
   const timeline = episode.scenes.map((scene, index) => {
     const from = episode.scenes
@@ -1379,12 +1391,11 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, semanticTimeline }) => {
     let from = 0;
     return episode.scenes.map((scene) => {
       const durationFrames = sceneFrames(scene);
-      const entry = { from, durationFrames, beats: scene.kind !== "cta"
-        ? resolveMotionBeats(scene, episode.captions ?? [], FPS) : [] };
+      const entry = { from, durationFrames, beats: cueTimeline?.scenes.find((item) => item.sceneId === scene.id)?.motionBeats ?? [] };
       from += durationFrames;
       return entry;
     });
-  }, [episode.motionDesignStyle, episode.scenes, episode.captions]);
+  }, [cueTimeline, episode.motionDesignStyle, episode.scenes]);
 
   return (
     <AbsoluteFill>
@@ -1406,8 +1417,10 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, semanticTimeline }) => {
             sceneCount={episode.scenes.length}
             durationFrames={durationFrames}
             timelineStartMs={(from / FPS) * 1000}
-            captions={episode.captions ?? []}
+            captions={cueTimeline?.wordCues ?? episode.captions ?? []}
             semanticScene={semanticTimeline?.scenes.find(item => item.sceneId === scene.id)}
+            motionBeats={cueTimeline?.scenes.find((item) => item.sceneId === scene.id)?.motionBeats}
+            promoCue={cueTimeline?.scenes.find((item) => item.sceneId === scene.id)?.promoCue}
             motionDesignEnabled={episode.motionDesign === true}
             motionDesignStyle={episode.motionDesignStyle}
           />
@@ -1463,7 +1476,7 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, semanticTimeline }) => {
         />
       )}
       <CaptionOverlay
-        captions={episode.captions ?? []}
+        captions={cueTimeline?.wordCues ?? episode.captions ?? []}
         sceneSections={captionSections}
         motionDesign={episode.motionDesign === true || episode.id === "zhe-na-ge"}
         plainMotionDesign={episode.scenes.some(scene => Boolean(scene.motionBeats?.length || scene.promoVisual))}

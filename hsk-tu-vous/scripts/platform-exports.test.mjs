@@ -4,6 +4,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
 import { spawnSync } from "node:child_process";
+import { compileCueTimeline } from "./cue-timeline.mjs";
 import {
   readCtaLab,
   createCtaExperiment,
@@ -213,6 +214,40 @@ test("render workflow draws one lesson, three shared-voice CTA endings and one c
     await assert.rejects(fs.access(path.join(folder, "work")), {
       code: "ENOENT",
     });
+  } finally {
+    await fs.rm(folder, { recursive: true, force: true });
+  }
+});
+
+test("all platform renders receive the same locale- and voice-bound cue timeline", async () => {
+  const { base, lab } = await fixture("canonical-cue-render-test");
+  const { episodes } = prepareExportEpisodes(base, lab);
+  const cueTimeline = compileCueTimeline(base);
+  const ranges = sharedRenderRanges(base);
+  const folder = await fs.mkdtemp(path.join(os.tmpdir(), "hsk-canonical-cue-render-"));
+  const seen = [];
+  try {
+    await renderSharedPlatformVideos({
+      episodes,
+      cueTimeline,
+      outputs: Object.fromEntries(Object.keys(episodes).map((platform) => [platform, path.join(folder, `${platform}.mp4`)])),
+      workDir: path.join(folder, "work"),
+      execute: async (args) => {
+        if (args[0] === "render") {
+          const propsPath = args[args.indexOf("--props") + 1];
+          const props = JSON.parse(await fs.readFile(propsPath, "utf8"));
+          seen.push(props.cueTimeline);
+          return;
+        }
+        if (args[0] === "ffprobe") return JSON.stringify({ streams: [
+          { codec_type: "video", codec_name: "h264", width: 1080, height: 1920, pix_fmt: "yuv420p", color_space: "bt709", r_frame_rate: "30/1", nb_frames: ranges.totalFrames, duration: ranges.totalFrames / 30 },
+          { codec_type: "audio", codec_name: "aac", duration: ranges.totalFrames / 30 },
+        ] });
+      },
+      log: () => {},
+    });
+    assert.equal(seen.length, 5);
+    assert.ok(seen.every((timeline) => JSON.stringify(timeline) === JSON.stringify(cueTimeline)));
   } finally {
     await fs.rm(folder, { recursive: true, force: true });
   }

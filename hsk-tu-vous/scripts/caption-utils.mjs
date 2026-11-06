@@ -68,13 +68,13 @@ function groupCaptionSection(captions, style, section) {
 
   const flush = () => {
     if (!words.length) return;
+    const lastWordEndMs = words[words.length - 1].endMs;
     pages.push({
       text: words.map((word) => word.text.trim()).join(" "),
       startMs: words[0].startMs,
-      endMs: Math.min(
-        words[words.length - 1].endMs + style.holdAfterWordMs,
-        section.endMs,
-      ),
+      endMs: Math.max(lastWordEndMs,
+        Math.min(lastWordEndMs + style.holdAfterWordMs, section.endMs)),
+      lastWordEndMs,
       styleId: section.styleId,
     });
     words = [];
@@ -103,8 +103,11 @@ function groupCaptionSection(captions, style, section) {
 
   return pages.map((page, index) => {
     const nextStart = pages[index + 1]?.startMs;
-    return nextStart === undefined
-      ? page
-      : { ...page, endMs: Math.min(page.endMs, nextStart) };
+    if (nextStart !== undefined && nextStart < page.lastWordEndMs) {
+      throw new Error("Overlapping caption pages would hide an audible word; verify the imported word timestamps.");
+    }
+    const endMs = nextStart === undefined ? page.endMs : Math.min(page.endMs, nextStart);
+    const { lastWordEndMs: _lastWordEndMs, ...visiblePage } = page;
+    return { ...visiblePage, endMs };
   });
 }

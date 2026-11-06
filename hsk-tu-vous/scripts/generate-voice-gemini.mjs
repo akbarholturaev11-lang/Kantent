@@ -2,13 +2,18 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import {
+  atomicWriteFile, atomicWriteJson, findReusableVoiceCheckpoint,
+  isValidWavBuffer, sha256,
+} from "./voice-checkpoint.mjs";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
+import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
 import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
 import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
 import { requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
 import {
   resolveVoiceApi, requireOpenRouterKey, synthesizeOpenRouterWav,
-  transcribeOpenRouter,
+  transcribeOpenRouter, transcribeUntilAligned,
 } from "./openrouter-voice.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
@@ -902,7 +907,6 @@ const voiceProfile = await requireApprovedVoiceProfile(EPISODE_ID);
 if (voiceProfile.provider !== "gemini-api") {
   throw new Error("Faol ovoz profili Gemini API provayderiga mos emas.");
 }
-const config = await loadVoiceEnvironment(voiceProfile);
 const targetReviewDir = PLATFORM
   ? path.join(reviewDir(EPISODE_ID), PLATFORM)
   : reviewDir(EPISODE_ID);
@@ -970,6 +974,15 @@ const currentNarrationHash = narrationHash(episode);
 if (episode.voiceTextHash && episode.voiceTextHash !== currentNarrationHash) {
   throw new Error("Saved voice script fingerprint no longer matches the narration.");
 }
+if (!RESUME_FOLDER_NAME && !CLI_OPTIONS.includes("--resume") &&
+    await hasCurrentImportedVoice(episode, voiceProfile, { projectRoot: PROJECT_ROOT })) {
+  await new Promise((resolve) => process.stdout.write(
+    "Matching imported voice and word-timed captions are intact; reusing the first take without TTS/STT calls.\n",
+    resolve,
+  ));
+  process.exit(0);
+}
+const config = await loadVoiceEnvironment(voiceProfile);
 episode.voiceTextHash = currentNarrationHash;
 await writeJson(episodePath, episode);
 await fs.writeFile(path.join(targetReviewDir, "tts-input.txt"), `${narration}\n`, "utf8");
@@ -987,18 +1000,52 @@ await writeTargetStatus({
   voiceTextHash: currentNarrationHash,
 });
 
-const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 const productionRoot = path.join(targetReviewDir, "gemini-production");
+const textHash = createHash("sha256").update(narration, "utf8").digest("hex");
+const ttsSource = PLATFORM ? { ...episode, scenes: [tiktokCtaScene] } : episode;
+const ttsMode = ONE_TAKE_PILOT ? "continuous-pilot" : "scene";
+const ttsChunks = ONE_TAKE_PILOT
+  ? createContinuousTtsChunks(ttsSource, { expectedNarration: narration })
+  : createTtsChunks(ttsSource);
+if (!ttsChunks.length) throw new Error("No narration chunks were created.");
+if (!RESUME_FOLDER_NAME) {
+  const checkpoint = await findReusableVoiceCheckpoint({
+    productionRoot,
+    profile: voiceProfile,
+    expected: {
+      episodeId: EPISODE_ID,
+      platform: PLATFORM ?? null,
+      apiTransport: config.apiProvider,
+      narrationTextHash: textHash,
+      ttsGenerationMode: ttsMode,
+      ttsChunkCount: ttsChunks.length,
+    },
+  });
+  if (checkpoint) {
+    RESUME_FOLDER_NAME = checkpoint.folderName;
+    console.log(`Resuming verified TTS checkpoint ${checkpoint.folderName}; saved audio will not be regenerated.`);
+  }
+}
+const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 const outputDir = path.join(productionRoot, RESUME_FOLDER_NAME ?? timestamp);
 await fs.mkdir(outputDir, { recursive: true });
 const wavPath = path.join(outputDir, "voice.wav");
 const mp3Path = path.join(outputDir, "voice.mp3");
 const transcriptionPath = path.join(outputDir, "transcription.json");
 const metadataPath = path.join(outputDir, "metadata.json");
-const textHash = createHash("sha256").update(narration, "utf8").digest("hex");
+const checkpointPath = path.join(outputDir, "checkpoint.json");
 let metadata;
 if (RESUME_FOLDER_NAME) {
-  metadata = await readJson(metadataPath);
+  try {
+    metadata = await readJson(metadataPath);
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
+    metadata = await readJson(checkpointPath);
+    metadata.status ??= "audio-ready";
+    metadata.ttsRequestCount ??= metadata.chunks?.length ?? 0;
+    metadata.ttsChunks ??= metadata.chunks ?? [];
+    metadata.transcriptionAttempts ??= metadata.transcriptionAttemptsByChunk ?? [];
+  }
   assertReusableVoiceMetadata(metadata, voiceProfile);
   if (
     metadata?.production !== true ||
@@ -1011,13 +1058,12 @@ if (RESUME_FOLDER_NAME) {
       "Existing Gemini production metadata or narration hash does not match this episode.",
     );
   }
-  const savedText = (
-    await fs.readFile(path.join(outputDir, "tts-input.txt"), "utf8")
-  ).trim();
-  if (savedText !== narration) {
-    throw new Error(
-      "Existing Gemini production text does not match the current narration.",
-    );
+  try {
+    const savedText = (await fs.readFile(path.join(outputDir, "tts-input.txt"), "utf8")).trim();
+    if (savedText !== narration)
+      throw new Error("Existing Gemini production text does not match the current narration.");
+  } catch (error) {
+    if (error?.code !== "ENOENT" || metadata.narrationTextHash !== textHash) throw error;
   }
   if ((metadata.apiTransport ?? "gemini-direct") !== config.apiProvider) {
     throw new Error("Resume transport differs from the original audio; refusing provider switch.");
@@ -1051,12 +1097,6 @@ if (RESUME_FOLDER_NAME) {
 }
 
 const ffmpegRuntime = await resolveFfmpegRuntime();
-const ttsSource = PLATFORM ? { ...episode, scenes: [tiktokCtaScene] } : episode;
-const ttsMode = ONE_TAKE_PILOT ? "continuous-pilot" : "scene";
-const ttsChunks = ONE_TAKE_PILOT
-  ? createContinuousTtsChunks(ttsSource, { expectedNarration: narration })
-  : createTtsChunks(ttsSource);
-if (!ttsChunks.length) throw new Error("No narration chunks were created.");
 if (RESUME_FOLDER_NAME && (metadata.ttsGenerationMode ?? "scene") !== ttsMode) {
   throw new Error("Refusing to resume saved audio under a different TTS chunking mode.");
 }
@@ -1073,7 +1113,36 @@ metadata.chunkingStrategy = ONE_TAKE_PILOT
   : "scene boundaries; at most 12000 narration characters per TTS and transcription request";
 metadata.previousVoiceProvider = episode.voiceProvider ?? null;
 metadata.previousVoiceProfileId = episode.voiceProfileId ?? null;
-await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
+metadata.ttsChunks ??= [];
+const persistMetadata = () => atomicWriteJson(metadataPath, metadata);
+const persistCheckpoint = () => atomicWriteJson(checkpointPath, {
+  schemaVersion: 1,
+  production: true,
+  status: metadata.status,
+  episodeId: EPISODE_ID,
+  platform: PLATFORM ?? null,
+  provider: "gemini-api",
+  apiTransport: config.apiProvider,
+  languageCode: voiceProfile.locale,
+  voiceProfileId: voiceProfile.profileId,
+  ttsModel: config.ttsModel,
+  voice: config.voice,
+  transcriptionModel: config.transcribeModel,
+  narrationTextHash: textHash,
+  masterWavSha256: metadata.wavSha256 ?? null,
+  mp3Sha256: metadata.mp3Sha256 ?? null,
+  audioDurationMs: metadata.audioDurationMs ?? null,
+  chunkDurationsMs: metadata.chunkDurationsMs ?? null,
+  ttsGenerationMode: ttsMode,
+  ttsChunkCount: ttsChunks.length,
+  ttsRequestCount: config.ttsRequestCount,
+  createdAt: metadata.createdAt,
+  sampleOnly: metadata.sampleOnly === true,
+  chunks: metadata.ttsChunks.filter(Boolean),
+  transcriptionAttemptsByChunk: metadata.transcriptionAttempts ?? [],
+});
+await persistMetadata();
+await persistCheckpoint();
 
 try {
   if (!RESUME_FOLDER_NAME) {
@@ -1091,29 +1160,37 @@ try {
   let completedTtsChunks = 0;
   for (const [index, chunk] of ttsChunks.entries()) {
     const chunkPath = chunkWavPaths[index];
+    const chunkFile = path.basename(chunkPath);
+    const recordedChunk = metadata.ttsChunks[index];
+    let chunkBytes;
     try {
-      await fs.access(chunkPath);
-      const header = await fs.open(chunkPath, "r");
-      const signature = Buffer.alloc(12);
-      await header.read(signature, 0, 12, 0);
-      await header.close();
-      if (signature.subarray(0, 4).toString("ascii") !== "RIFF" ||
-          signature.subarray(8, 12).toString("ascii") !== "WAVE")
-        throw new Error(`Saved TTS chunk ${index + 1} is not a WAV file.`);
+      chunkBytes = await fs.readFile(chunkPath);
     } catch (error) {
       if (error?.code !== "ENOENT") throw error;
-      const wav = await generateTtsWav(config, chunk.text);
-      await fs.writeFile(chunkPath, wav, { flag: "wx" });
     }
+    const recordedHashMatches = !recordedChunk?.sha256 ||
+      (chunkBytes && sha256(chunkBytes) === recordedChunk.sha256);
+    if (!chunkBytes || !isValidWavBuffer(chunkBytes) || !recordedHashMatches) {
+      await fs.rm(chunkPath, { force: true });
+      const generated = await generateTtsWav(config, chunk.text);
+      if (!isValidWavBuffer(generated))
+        throw new Error(`TTS chunk ${index + 1} is not a complete RIFF/WAVE audio file.`);
+      await atomicWriteFile(chunkPath, generated);
+      chunkBytes = generated;
+    }
+    metadata.ttsChunks[index] = { file: chunkFile, bytes: chunkBytes.length, sha256: sha256(chunkBytes) };
     completedTtsChunks += 1;
     metadata.ttsRequestCount = config.ttsRequestCount;
     metadata.completedTtsChunks = completedTtsChunks;
     metadata.status = "audio-generating";
-    await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
+    await persistMetadata();
+    await persistCheckpoint();
   }
 
   if (ttsChunks.length > 1) {
     const concatListPath = path.join(outputDir, "audio-concat.txt");
+    const combinedWavTemp = path.join(outputDir, "voice-combined.tmp.wav");
+    await fs.rm(combinedWavTemp, { force: true });
     await fs.writeFile(
       concatListPath,
       chunkWavPaths.map((chunkPath) => `file '${path.basename(chunkPath)}'`).join("\n") + "\n",
@@ -1125,44 +1202,64 @@ try {
         "-hide_banner", "-loglevel", "error", "-nostdin", "-y",
         "-f", "concat", "-safe", "0", "-i", concatListPath,
         "-c:a", "pcm_s16le", "-ar", String(config.sampleRateHz),
-        "-ac", String(config.channels), wavPath,
+        "-ac", String(config.channels), combinedWavTemp,
       ],
       { cwd: outputDir, env: ffmpegRuntime.env, stdio: ["ignore", "pipe", "pipe"] },
     );
+    const combinedBytes = await fs.readFile(combinedWavTemp);
+    if (!isValidWavBuffer(combinedBytes))
+      throw new Error("Concatenated TTS audio is not a complete RIFF/WAVE file.");
+    await fs.rename(combinedWavTemp, wavPath);
   }
 
-  await fs.access(mp3Path).then(
-    () => {
-      if (!RESUME_FOLDER_NAME)
-        throw new Error("Production MP3 output already exists; refusing to overwrite it.");
-    },
-    (error) => {
-      if (error?.code !== "ENOENT") throw error;
-    },
-  );
+  const masterWav = await fs.readFile(wavPath);
+  if (!isValidWavBuffer(masterWav))
+    throw new Error("Saved TTS master is not a complete RIFF/WAVE file.");
+  let mp3Exists = false;
   try {
     await fs.access(mp3Path);
+    mp3Exists = true;
   } catch (error) {
     if (error?.code !== "ENOENT") throw error;
+  }
+  if (mp3Exists && !RESUME_FOLDER_NAME)
+    throw new Error("Production MP3 output already exists; refusing to overwrite it.");
+  let mp3Ready = false;
+  if (mp3Exists) {
+    try {
+      await audioDurationMs(mp3Path, ffmpegRuntime);
+      mp3Ready = true;
+    } catch {
+      await fs.rm(mp3Path, { force: true });
+    }
+  }
+  if (!mp3Ready) {
+    const mp3Temp = path.join(outputDir, "voice.tmp.mp3");
+    await fs.rm(mp3Temp, { force: true });
     execFileSync(
       ffmpegRuntime.ffmpegPath,
       [
         "-hide_banner", "-loglevel", "error", "-nostdin", "-y",
         "-i", wavPath, "-map", "0:a:0", "-vn", "-c:a", "libmp3lame",
         "-b:a", `${config.mp3BitrateKbps}k`, "-ar", String(config.sampleRateHz),
-        "-ac", String(config.channels), "-map_metadata", "-1", "-f", "mp3", mp3Path,
+        "-ac", String(config.channels), "-map_metadata", "-1", "-f", "mp3", mp3Temp,
       ],
       { env: ffmpegRuntime.env, stdio: ["ignore", "pipe", "pipe"] },
     );
+    await audioDurationMs(mp3Temp, ffmpegRuntime);
+    await fs.rename(mp3Temp, mp3Path);
   }
   metadata.wavBytes = (await fs.stat(wavPath)).size;
   metadata.mp3Bytes = (await fs.stat(mp3Path)).size;
+  metadata.wavSha256 = sha256(masterWav);
+  metadata.mp3Sha256 = sha256(await fs.readFile(mp3Path));
   metadata.audioDurationMs = audioDurationMs(mp3Path, ffmpegRuntime);
   metadata.chunkDurationsMs = await Promise.all(
     chunkWavPaths.map((chunkPath) => mediaDurationMs(chunkPath, ffmpegRuntime)),
   );
   metadata.status = "audio-ready";
-  await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
+  await persistMetadata();
+  await persistCheckpoint();
 
   const combinedAnnotations = [];
   const chunkTranscripts = [];
@@ -1194,93 +1291,123 @@ try {
       }
     }
     let attempts = metadata.transcriptionAttempts?.[index] ?? (transcription ? 1 : 0);
-    while (!chunkAlignment?.captions && attempts < 3) {
-      attempts += 1;
-      if (config.apiProvider === "openrouter") {
-        // OpenRouter accepts inline base64 and does not create a remote upload.
-        // A missing word-level result is rejected by the adapter, never guessed.
-        transcription = await transcribeOpenRouter({
-          apiKey: config.apiKey,
-          model: config.transcribeModel,
-          audioPath: transcriptionAudioPath,
-        });
-      } else {
-        // Keep resumable upload atomic per key; rejected credentials may start a NEW upload.
-        const uploadedFile = await withGeminiKeyFailover(
-          config.credentialState,
-          (apiKey) => uploadForTranscription(
-            apiKey,
-            transcriptionAudioPath,
-            `hsk-production-${EPISODE_ID}-${index + 1}-attempt-${attempts}`,
-          ),
-        );
-        config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
-        try {
-          const response = await requestJson(
-            `${API_ROOT}/v1beta/interactions`,
-            {
-              method: "POST",
-              headers: {
-                "x-goog-api-key": config.apiKey,
-                "Content-Type": "application/json",
-                "Api-Revision": API_REVISION,
-              },
-              body: JSON.stringify({
-                model: config.transcribeModel,
-                input: [{
-                  type: "audio",
-                  uri: uploadedFile.uri,
-                  mime_type: audioMimeType(transcriptionAudioPath),
-                }],
-                generation_config: {
-                  transcription_config: {
-                    language_codes: transcriptionLanguages,
-                    mode: { type: "verbatim", timestamp_granularities: ["word"] },
-                  },
-                },
-              }),
-            },
-            "Gemini word transcription",
-          );
-          const annotations = getWordAnnotations(response.data);
-          const transcriptText = response.data.output_text ??
-            (response.data.steps ?? [])
-              .filter((step) => step.type === "model_output")
-              .flatMap((step) => step.content ?? [])
-              .filter((block) => block.type === "text")
-              .map((block) => block.text ?? "")
-              .join("");
-          transcription = {
-            transcript: transcriptText,
-            wordAnnotations: annotations.map((word) => ({
-              text: word.text,
-              startOffset: word.start_offset,
-              endOffset: word.end_offset,
-            })),
-          };
-        } finally {
-          try {
-            await deleteGeminiFile(config.apiKey, uploadedFile.name);
-            metadata.transcriptionUploadCleanupResults.push({
-              chunk: index + 1, attempt: attempts, deleted: true,
-            });
-          } catch (error) {
-            metadata.transcriptionUploadCleanupResults.push({
-              chunk: index + 1, attempt: attempts, deleted: false,
-              error: safeErrorMessage(error),
-            });
-            metadata.transcriptionUploadCleanupErrors ??= [];
-            metadata.transcriptionUploadCleanupErrors.push({
-              chunk: index + 1, attempt: attempts,
-              fileName: uploadedFile.name,
-              error: safeErrorMessage(error),
+    if (!chunkAlignment?.captions && attempts < 3) {
+      const result = await transcribeUntilAligned({
+        previousAttempts: attempts,
+        maxAttempts: 3,
+        onAttempt: async (attempt) => {
+          attempts = attempt;
+          metadata.transcriptionAttempts ??= [];
+          metadata.transcriptionAttempts[index] = attempt;
+          await persistMetadata();
+          await persistCheckpoint();
+        },
+        onRetry: async (error) => {
+          metadata.lastTranscriptionError = safeErrorMessage(error);
+          await persistMetadata();
+          await persistCheckpoint();
+        },
+        transcribe: async (attempt) => {
+          if (config.apiProvider === "openrouter") {
+            // A malformed/empty 200 retries this STT request only. The saved
+            // TTS WAV/MP3 remain the immutable input to every attempt.
+            return transcribeOpenRouter({
+              apiKey: config.apiKey,
+              model: config.transcribeModel,
+              audioPath: transcriptionAudioPath,
             });
           }
-          metadata.transcriptionUploadDeleted = metadata.transcriptionUploadCleanupResults.every(
-            (result) => result.deleted === true,
+          // Keep resumable upload atomic per key; rejected credentials may start a NEW upload.
+          const uploadedFile = await withGeminiKeyFailover(
+            config.credentialState,
+            (apiKey) => uploadForTranscription(
+              apiKey,
+              transcriptionAudioPath,
+              `hsk-production-${EPISODE_ID}-${index + 1}-attempt-${attempt}`,
+            ),
           );
-          await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
-        }
+          config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
+          try {
+            const response = await requestJson(
+              `${API_ROOT}/v1beta/interactions`,
+              {
+                method: "POST",
+                headers: {
+                  "x-goog-api-key": config.apiKey,
+                  "Content-Type": "application/json",
+                  "Api-Revision": API_REVISION,
+                },
+                body: JSON.stringify({
+                  model: config.transcribeModel,
+                  input: [{
+                    type: "audio",
+                    uri: uploadedFile.uri,
+                    mime_type: audioMimeType(transcriptionAudioPath),
+                  }],
+                  generation_config: {
+                    transcription_config: {
+                      language_codes: transcriptionLanguages,
+                      mode: { type: "verbatim", timestamp_granularities: ["word"] },
+                    },
+                  },
+                }),
+              },
+              "Gemini word transcription",
+            );
+            const annotations = getWordAnnotations(response.data);
+            const transcriptText = response.data.output_text ??
+              (response.data.steps ?? [])
+                .filter((step) => step.type === "model_output")
+                .flatMap((step) => step.content ?? [])
+                .filter((block) => block.type === "text")
+                .map((block) => block.text ?? "")
+                .join("");
+            transcription = {
+              transcript: transcriptText,
+              wordAnnotations: annotations.map((word) => ({
+                text: word.text,
+                startOffset: word.start_offset,
+                endOffset: word.end_offset,
+              })),
+            };
+          } finally {
+            try {
+              await deleteGeminiFile(config.apiKey, uploadedFile.name);
+              metadata.transcriptionUploadCleanupResults.push({
+                chunk: index + 1, attempt, deleted: true,
+              });
+            } catch (error) {
+              metadata.transcriptionUploadCleanupResults.push({
+                chunk: index + 1, attempt, deleted: false,
+                error: safeErrorMessage(error),
+              });
+              metadata.transcriptionUploadCleanupErrors ??= [];
+              metadata.transcriptionUploadCleanupErrors.push({
+                chunk: index + 1, attempt,
+                fileName: uploadedFile.name,
+                error: safeErrorMessage(error),
+              });
+            }
+            metadata.transcriptionUploadDeleted = metadata.transcriptionUploadCleanupResults.every(
+              (result) => result.deleted === true,
+            );
+            await persistMetadata();
+          }
+          return transcription;
+        },
+        align: (response) => alignWords(
+          ttsChunks[index].text,
+          response.wordAnnotations,
+          metadata.chunkDurationsMs[index],
+        ),
+      });
+      attempts = result.attempts;
+      transcription = result.transcription;
+      chunkAlignment = result.alignment;
+      if (result.error) {
+        metadata.lastTranscriptionError = safeErrorMessage(result.error);
+        if (!result.retryable)
+          throw result.error;
       }
       const attemptPath = path.join(
         outputDir,
@@ -1289,16 +1416,6 @@ try {
       await fs.writeFile(attemptPath, `${JSON.stringify(transcription, null, 2)}\n`);
       metadata.transcriptionAttempts ??= [];
       metadata.transcriptionAttempts[index] = attempts;
-      try {
-        chunkAlignment = alignWords(
-          ttsChunks[index].text,
-          transcription.wordAnnotations,
-          metadata.chunkDurationsMs[index],
-        );
-      } catch (error) {
-        metadata.lastTranscriptionError = safeErrorMessage(error);
-        chunkAlignment = undefined;
-      }
       if (chunkAlignment?.captions) {
         await fs.writeFile(
           transcriptPath,
@@ -1313,7 +1430,7 @@ try {
           mismatches: chunkAlignment?.mismatches?.slice(0, 12) ?? [],
           error: metadata.lastTranscriptionError ?? null,
         };
-        await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
+        await persistMetadata();
       }
     }
     metadata.transcriptionAttempts ??= [];
@@ -1339,7 +1456,7 @@ try {
           model:config.transcribeModel});
         delete metadata.lastTranscriptionError;
         delete metadata.lastTranscriptionMismatch;
-        await fs.writeFile(metadataPath,JSON.stringify(metadata,null,2)+"\n");
+        await persistMetadata();
         console.log("GEMINI_CLIP_RECOVERY_VERIFIED "+JSON.stringify({
           language:voiceProfile.locale,chunk:index+1,spans:clips.recoverySpans}));
       } catch(recoveryError) {
@@ -1361,7 +1478,7 @@ try {
       metadata.status = "transcript-mismatch";
       metadata.transcriptMismatchCount = metadata.lastTranscriptionMismatch?.mismatches?.length ?? 1;
       metadata.firstTranscriptMismatches = metadata.lastTranscriptionMismatch?.mismatches ?? [];
-      await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
+      await persistMetadata();
       const fallback = await findVerifiedSampleFallback({
         episodeId: EPISODE_ID,
         episode,
@@ -1430,7 +1547,7 @@ try {
       };
       metadata.status = "audio-ready";
       verifiedSampleFallbackUsed = true;
-      await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
+      await persistMetadata();
       console.warn(
         "Gemini transcription failed exact alignment; using the existing fully verified sample audio for this designated sample episode.",
       );
@@ -1464,7 +1581,7 @@ try {
     metadata.status = "transcript-mismatch";
     metadata.transcriptMismatchCount = alignment.mismatches.length;
     metadata.firstTranscriptMismatches = alignment.mismatches.slice(0, 12);
-    await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
+    await persistMetadata();
     throw new Error(
       `Gemini transcript differs from the narration in ${alignment.mismatches.length} place(s); audio was kept, VTT was not written.`,
     );
@@ -1483,7 +1600,8 @@ try {
   );
   metadata.status = "ready-for-import";
   metadata.captionWordCount = alignment.captions.length;
-  await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
+  await persistMetadata();
+  await persistCheckpoint();
   execFileSync(
     process.execPath,
     [
@@ -1505,7 +1623,8 @@ try {
     voiceProfile.sampleCaptions = path.relative(PROJECT_ROOT, path.join(outputDir, "captions.vtt"));
     await writeJson(languageSettings().voiceProfilePath, voiceProfile);
   }
-  await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
+  await persistMetadata();
+  await persistCheckpoint();
   console.log(`${config.apiProvider} production voice imported: ${mp3Path}`);
   console.log(`Word-timed VTT: ${path.join(outputDir, "captions.vtt")}`);
   console.log(`Metadata: ${metadataPath}`);
@@ -1514,7 +1633,8 @@ try {
   if (!metadata.status || ["starting", "audio-generating", "audio-ready", "ready-for-import"].includes(metadata.status))
     metadata.status = "failed";
   metadata.error = safeErrorMessage(error);
-  await fs.writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
+  await persistMetadata();
+  await persistCheckpoint();
   await writeTargetStatus({
     stage: "gemini-voice-blocked",
     sourceRevision,
