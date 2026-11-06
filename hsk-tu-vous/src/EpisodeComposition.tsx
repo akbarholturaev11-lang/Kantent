@@ -13,6 +13,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { buildCaptionSections } from "../scripts/caption-utils.mjs";
+import { buildActionCaptionScenes } from "../scripts/action-text-layout.mjs";
 import seedEpisode from "../content/episodes/ni-nin-nimen-20260928.json";
 import visualSystem from "../content/visual-system.json";
 import { CaptionOverlay, type TimedCaption } from "./CaptionOverlay";
@@ -1386,16 +1387,10 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, captionSect
     return { scene, index, from, durationFrames: sceneFrames(scene) };
   });
   const voiceTrack = timeline.filter(({ scene }) => scene.audioSrc);
-  const actionCaptionScenes = useMemo(() => {
-    if (episode.motionDesignStyle !== "explain-actions-v1") return [];
-    let from = 0;
-    return episode.scenes.map((scene) => {
-      const durationFrames = sceneFrames(scene);
-      const entry = { from, durationFrames, beats: cueTimeline?.scenes.find((item) => item.sceneId === scene.id)?.motionBeats ?? [] };
-      from += durationFrames;
-      return entry;
-    });
-  }, [cueTimeline, episode.motionDesignStyle, episode.scenes]);
+  const actionCaptionScenes = useMemo(
+    () => buildActionCaptionScenes(episode, cueTimeline, FPS),
+    [cueTimeline, episode],
+  );
 
   return (
     <AbsoluteFill>

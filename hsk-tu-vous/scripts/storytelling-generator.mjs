@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { readStorytellingPolicy, inspectStorytelling, validateStorytellingEpisode } from "./storytelling-plan.mjs";
+import { validateMotionBeatNarration } from "./motion-design-plan.mjs";
 import { readLanguages } from "./language-context.mjs";
 
 const clone = (value) => structuredClone(value);
@@ -41,6 +42,9 @@ export function makeAdaptiveBrief(source, policy = readStorytellingPolicy()) {
   const scenes = source.scenes.map(s => ({
     sceneId: s.id, kind: s.kind, durationSec: s.durationSec ?? null,
     narration: s.narration,
+    motionCues: (s.motionBeats ?? []).map(beat => ({
+      beatId: beat.id, cueText: beat.cueText, cueOccurrence: beat.cueOccurrence ?? null,
+    })),
     verifiedChineseCards: (s.cards ?? []).map(x => ({
       hanzi: x.hanzi, pinyin: x.pinyin, meaning: x.meaning
     }))
@@ -60,6 +64,7 @@ export function makeAdaptiveBrief(source, policy = readStorytellingPolicy()) {
       "One accurate HSK 1-2 learning outcome; no novel Chinese claims, testimonials, product features or fabricated statistics.",
       "Preserve the entire hook narration and hookExperiment registration verbatim.",
       "Preserve all Chinese character runs in the same order, scene by scene.",
+      "Preserve every existing motionCues cueText verbatim and in order in its edited scene; do not change the cue plan.",
       `May reword only ${selected.name} narration in existing non-hook scenes; no new/deleted/reordered scenes. Return the matching languageCode.`,
       "Preserve each exact Chinese spoken example and learning fact; never invent a new Chinese teaching claim.",
       "First real answer must be in the first 30 percent of the teaching video.",
@@ -118,6 +123,8 @@ export function evaluateAdaptiveCandidate(source, proposal, policy = readStoryte
     draft.scenes[i].narration = next;
   }
   draft.storytelling = clone(proposal.storytelling);
+  for (const scene of draft.scenes)
+    errors.push(...validateMotionBeatNarration(scene,draft.languageCode));
   errors.push(...validateStorytellingEpisode(draft, policy));
   if (JSON.stringify(draft.scenes.map(s => ({id:s.id,kind:s.kind,durationSec:s.durationSec,cards:s.cards,visualBeats:s.visualBeats}))) !==
       JSON.stringify(source.scenes.map(s => ({id:s.id,kind:s.kind,durationSec:s.durationSec,cards:s.cards,visualBeats:s.visualBeats})))) {

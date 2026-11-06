@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import {validateActionVisual,validateActionLesson} from "./action-design-plan.mjs";
+import {validateActionVisual,validateActionLesson,visibleActionStates} from "./action-design-plan.mjs";
 import {compileMotionDesignTimeline} from "./motion-design-plan.mjs";
 const visual={title:"Количество",hanzi:"两本书",pinyin:"liǎng běn shū",meaning:"две книги",object:"book",count:2};
 const beat={id:"count-books",kind:"quantity",cueText:"две",explains:"Show the spoken quantity",visual};
@@ -24,6 +24,33 @@ test("unrenderable or misleading payloads fail instead of falling back to a gene
   assert.throws(()=>validateActionVisual({...beat,kind:"phrase",visual:{...visual,parts:["两","杯","茶"]}}),/exact shown phrase/);
   assert.throws(()=>compileMotionDesignTimeline({...episode,motionDesignStyle:"le-context-v1"}),/legacy styles/);
   assert.throws(()=>validateActionVisual({...beat,kind:"comparison",visual:{...visual,models:[{...visual,kind:"comparison"},{...visual,kind:"quantity"}]}}),/Nested/);
+});
+test("pinyin span maps cover the full Hanzi phrase and contain readable pinyin",()=>{
+  const mapped={...visual,hanzi:"便宜一点儿",pinyin:"piányi yìdiǎnr",pinyinSegments:[
+    {hanzi:"便宜",pinyin:"piányi"},{hanzi:"一",pinyin:"yì"},{hanzi:"点儿",pinyin:"diǎnr"},
+  ]};
+  assert.doesNotThrow(()=>validateActionVisual({...beat,visual:mapped}));
+  assert.throws(()=>validateActionVisual({...beat,visual:{...mapped,pinyinSegments:mapped.pinyinSegments.slice(1)}}),/pinyinSegments/);
+  assert.throws(()=>validateActionVisual({...beat,visual:{...mapped,pinyinSegments:[...mapped.pinyinSegments.slice(0,2),{hanzi:"点儿",pinyin:"点儿"}]}}),/pinyinSegments/);
+});
+test("choice states preserve both exact alternatives and the selected value",()=>{
+  const model={...visual,choices:["二","两"]};
+  const state=selected=>visibleActionStates({motionBeats:[{kind:"choice",visual:{...model,...(selected?{selected}:{})}}]})[0];
+  assert.deepEqual(state("两"),{choices:["二","两"],selected:"两",quantity:{object:"book",count:2,grouped:false}});
+  assert.notDeepEqual(state("二"),state("两"));
+  assert.notDeepEqual(state("二"),state(undefined));
+  const inherited=visibleActionStates({motionBeats:[{kind:"quantity",visual},{kind:"choice",visual:{...visual,object:undefined,count:undefined,choices:["二","两"],selected:"两"}}]})[1];
+  assert.deepEqual(inherited.quantity,{object:"book",count:2,grouped:false});
+  assert.throws(()=>validateActionVisual({...beat,kind:"choice",visual:{...model,choices:["两","两"]}}),/two distinct options/);
+});
+test("comparisons reject phrase models that have no drawable structure",()=>{
+  const comparison={...visual,models:[
+    {...visual,kind:"phrase",object:undefined,count:undefined},
+    {...visual,kind:"quantity"},
+  ]};
+  assert.throws(()=>validateActionVisual({...beat,kind:"comparison",visual:comparison}),/comparison phrase needs a drawable/);
+  comparison.models[0]={...visual,kind:"phrase",object:"book",count:1};
+  assert.doesNotThrow(()=>validateActionVisual({...beat,kind:"comparison",visual:comparison}));
 });
 test("owner-approved pilot plan covers every authored lesson scene with diverse actions",()=>{
   const plan=JSON.parse(fs.readFileSync(new URL("../content/pilots/quantity-cafe-20261026.json",import.meta.url)));

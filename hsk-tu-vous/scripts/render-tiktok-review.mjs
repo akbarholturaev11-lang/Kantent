@@ -11,6 +11,8 @@ import { validateProductionDuration } from "./duration-policy.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { compileMotionDesignTimeline } from "./motion-design-plan.mjs";
 import { compileCueTimeline } from "./compile-cue-timeline.mjs";
+import { groupTimedCaptions } from "./caption-utils.mjs";
+import { buildActionCaptionScenes, validateActionSubtitlePages } from "./action-text-layout.mjs";
 import { assertImportedAudioHash } from "./voice-import-state.mjs";
 import {
   captionsToSrt,
@@ -71,6 +73,14 @@ const cueTimeline = compileCueTimeline(episode, {
   presentationPolicy: visualSystem.lessonPresentation,
   semanticTimeline,
 });
+validateActionSubtitlePages(
+  groupTimedCaptions(cueTimeline.wordCues, {
+    ...visualSystem.captions,
+    sections: cueTimeline.captionSections,
+  }),
+  buildActionCaptionScenes(episode, cueTimeline, 30),
+  30,
+);
 assertImportedAudioHash(episode, await fs.readFile(path.join(PROJECT_ROOT, "public", episode.audioSrc)));
 try {
   await fs.access(path.join(folder, "approval.json"));

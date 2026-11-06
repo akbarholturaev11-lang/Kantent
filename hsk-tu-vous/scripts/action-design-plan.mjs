@@ -23,6 +23,18 @@ export function validateActionVisual(beat) {
     throw Error(beat.id + ": unsupported visible object");
   if ((v.count !== undefined) !== (v.object !== undefined))
     throw Error(beat.id + ": an object and its visible count must be specified together");
+  if (v.pinyinSegments !== undefined) {
+    const segments = v.pinyinSegments;
+    const hanzi = (v.hanzi.match(/\p{Script=Han}/gu) ?? []).join("");
+    if (!Array.isArray(segments) || segments.length < 1 || segments.length > 60 ||
+        segments.some(segment => !segment || typeof segment.hanzi !== "string" ||
+          !/^\p{Script=Han}+$/u.test(segment.hanzi) || typeof segment.pinyin !== "string" ||
+          !segment.pinyin.trim() || !/\p{Script=Latin}/u.test(segment.pinyin) ||
+          /\p{Script=Han}/u.test(segment.pinyin)) ||
+        segments.map(segment => segment.hanzi).join("") !== hanzi) {
+      throw Error(beat.id + ": pinyinSegments must map every Hanzi span exactly once to nonempty pinyin");
+    }
+  }
   if (v.grouped !== undefined && typeof v.grouped !== "boolean")
     throw Error(beat.id + ": grouped must be a boolean");
   if (v.focus !== undefined && (typeof v.focus !== "string" || !v.focus || !v.hanzi.includes(v.focus)))
@@ -33,9 +45,10 @@ export function validateActionVisual(beat) {
       (!Number.isInteger(v.value) || v.value < 1 || v.value > (beat.kind === "ordinal" ? 6 : 30)))
     throw Error(beat.id + ": invalid represented number");
   if (beat.kind === "choice" && (!Array.isArray(v.choices) || v.choices.length !== 2 ||
-      v.choices.some(x => typeof x !== "string" || !x.trim()) ||
+      v.choices.some(x => typeof x !== "string" || !x.trim() || x.length > 32) ||
+      new Set(v.choices).size !== 2 ||
       (v.selected !== undefined && !v.choices.includes(v.selected))))
-    throw Error(beat.id + ": choice needs two options and a valid answer");
+    throw Error(beat.id + ": choice needs two distinct options of at most 32 characters and a valid answer");
   if (v.parts && (!Array.isArray(v.parts) || v.parts.length < 2 || v.parts.length > 6 ||
       v.parts.some(x => typeof x !== "string" || !x.trim()) || v.parts.join("") !== v.hanzi.replace(/[。！？]/gu,"")))
     throw Error(beat.id + ": phrase parts must assemble the exact shown phrase");
@@ -43,6 +56,8 @@ export function validateActionVisual(beat) {
     if (!Array.isArray(v.models) || v.models.length !== 2) throw Error(beat.id + ": comparison needs two models");
     for (const model of v.models) {
       if (["comparison", "choice"].includes(model.kind)) throw Error("Nested comparisons/choices are unsupported");
+      if (model.kind === "phrase" && !(model.object && model.count))
+        throw Error(beat.id + ": comparison phrase needs a drawable object/count model");
       validateActionVisual({id:beat.id,kind:model.kind,explains:beat.explains,visual:model});
     }
   }
@@ -74,8 +89,8 @@ function visibleModel(kind, model, context) {
   if (kind === "phrase") return quantity ? {quantity} : context ?
     {quantity:{object:context.object,count:context.count,grouped:!!(model.grouped ?? context.grouped)}} : null;
   if (kind === "numeral" || kind === "ordinal") return {kind,value:model.value,quantity};
-  if (kind === "choice") return quantity || context ?
-    {quantity:quantity ?? {object:context.object,count:1},selected:!!model.selected} : null;
+  if (kind === "choice") return {choices:[...(model.choices??[])],selected:model.selected??null,
+    quantity:quantity??(context?{object:context.object,count:context.count,grouped:!!context.grouped}:null)};
   if (kind === "comparison") return {models:model.models.map(entry => visibleModel(entry.kind,entry))};
   return null;
 }

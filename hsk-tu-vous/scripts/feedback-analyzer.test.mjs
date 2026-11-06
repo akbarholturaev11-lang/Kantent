@@ -35,7 +35,7 @@ test('fixed-window cohorts keep HSK level separate',()=>{
  const a=source();a.window='24h';a.hookFormat='question';a.hskLevel='HSK 1';a.episodeId='sample-hsk1';
  attachExactWindow(a);
  const b=structuredClone(a);b.platformPostId='17961571305238268';b.hskLevel='HSK 2';b.episodeId='sample-hsk2';
- const r=analyzeObservations([a,b]);assert.equal(r.comparableGroups.length,2);assert.ok(r.comparableGroups.every(x=>x.readiness==='insufficient-sample'));
+ const r=analyzeObservations([a,b],{}, {asOf:'2026-10-10T20:11:11.872Z'});assert.equal(r.comparableGroups.length,2);assert.ok(r.comparableGroups.every(x=>x.readiness==='insufficient-sample'));
 });
 test('provider watch time is milliseconds',()=>{
  const m=deriveMetrics(source());assert.equal(m.averageWatchSeconds,5.266);assert.equal(m.averageWatchRatio,0.1549);assert.equal(m.savesPer1000Views,16.64);assert.equal(durationBand(22),'under-25s');

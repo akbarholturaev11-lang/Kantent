@@ -166,6 +166,7 @@ export const createServer = () => {
   const actionModelSchema = z.object({
     kind:z.enum(["quantity","phrase","numeral","ordinal","graphic"]).optional(),
     title:z.string().max(180),hanzi:z.string().max(180),pinyin:z.string().max(180),meaning:z.string().max(180),
+    pinyinSegments:z.array(z.object({hanzi:z.string().min(1).max(32),pinyin:z.string().min(1).max(64)})).min(1).max(60).optional(),
     object:z.enum(["tea-cup","book","apple"]).optional(),count:z.number().int().min(1).max(6).optional(),
     grouped:z.boolean().optional(),focus:z.string().max(32).optional(),
     parts:z.array(z.string().min(1).max(32)).min(2).max(6).optional(),value:z.number().int().min(1).max(30).optional(),

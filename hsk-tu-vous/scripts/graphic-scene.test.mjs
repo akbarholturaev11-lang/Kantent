@@ -38,6 +38,24 @@ test("text, executable/remote nodes, invalid geometry, cycles and hidden drawing
   const flashing=structuredClone(swim);flashing.tracks[0]={nodeId:"swimmer",property:"opacity",loop:true,keyframes:[{atMs:0,value:1},{atMs:400,value:0},{atMs:800,value:1}]};
   assert.throws(()=>validateGraphicScene(flashing),/non-flashing/);
 });
+test("SVG line geometry needs a stroke because fill alone paints no line pixels",()=>{
+  const fillOnly={width:400,height:400,nodes:[{id:"invisible-line",type:"line",attrs:{x1:40,y1:50,x2:350,y2:50,fill:"teal"}}],tracks:[]};
+  assert.throws(()=>validateGraphicScene(fillOnly),/line geometry requires a visible stroke/);
+  assert.doesNotThrow(()=>validateGraphicScene({...fillOnly,nodes:[{...fillOnly.nodes[0],attrs:{x1:40,y1:50,x2:350,y2:50,stroke:"teal",strokeWidth:3}}]}));
+  assert.throws(()=>validateGraphicScene({...fillOnly,nodes:[{...fillOnly.nodes[0],attrs:{x1:40,y1:50,x2:350,y2:50,stroke:"teal",strokeWidth:0.25}}]}),/visible stroke width/);
+  assert.throws(()=>validateGraphicScene({...fillOnly,nodes:[{...fillOnly.nodes[0],attrs:{x1:40,y1:50,x2:40,y2:50,stroke:"teal",strokeWidth:3}}]}),/nonzero length/);
+});
+test("drawings wholly outside the SVG viewBox fail after nested transforms and path geometry",()=>{
+  const outside={width:400,height:400,nodes:[{id:"off-canvas",type:"rect",attrs:{x:2000,y:2000,width:100,height:100,fill:"teal"}}],tracks:[]};
+  assert.throws(()=>validateGraphicScene(outside),/outside the SVG viewBox/);
+  const grouped={width:400,height:400,nodes:[
+    {id:"off-canvas-group",type:"g",attrs:{},x:2000,y:2000},
+    {id:"child",parentId:"off-canvas-group",type:"circle",attrs:{cx:0,cy:0,r:50,fill:"gold"}},
+  ],tracks:[]};
+  assert.throws(()=>validateGraphicScene(grouped),/outside the SVG viewBox/);
+  const path={width:400,height:400,nodes:[{id:"path",type:"path",attrs:{d:"M 2000 2000 L 2100 2000 L 2100 2100 Z",fill:"red"}}],tracks:[]};
+  assert.throws(()=>validateGraphicScene(path),/outside the SVG viewBox/);
+});
 test("changing subtitles/metadata or renaming drawing IDs cannot fake visible variety",()=>{
   const renamed=structuredClone(swim);
   for(const node of renamed.nodes){node.id="new-"+node.id;if(node.parentId)node.parentId="new-"+node.parentId;}
@@ -58,6 +76,7 @@ test("actual word anchors start new drawings and long unchanged holds fail befor
   assert.throws(()=>compileMotionDesignTimeline(missing,policy),/missing\/ambiguous/);
   const metadata=structuredClone(episode);
   metadata.scenes[0].motionBeats.splice(1,0,{...beat("same-scene",swim,"тоже"),visual:{...beat("same-scene",swim,"тоже").visual,title:"Different planning title"}});
+  metadata.scenes[0].motionBeats.slice(0,2).forEach(entry=>{entry.visual.graphic.tracks=[];});
   metadata.captions.splice(1,0,{text:"тоже",startMs:1000,endMs:1200});
   metadata.captions[2].startMs=7000;metadata.captions[2].endMs=7400;
   assert.throws(()=>compileMotionDesignTimeline(metadata,policy),/unchanged visual holds 7.00s/);

@@ -14,7 +14,7 @@ const proposal = () => {
   return {
     schemaVersion:1, episodeId:e.id, originalSha256:b.originalSha256,
     narrationEdits:[{sceneId:"request",
-      narration:"А как вежливо попросить сделать чуть дешевле? 便宜一点儿，可以吗？ Это значит: «Можно немного дешевле?»"}],
+      narration:"А как вежливо попросить сделать чуть дешевле? Это просьба продавцу: 便宜一点儿，可以吗？ Это значит: «Можно немного дешевле?»"}],
     storytelling:{
       schemaVersion:1,pattern:"single-rehook",
       firstPayoff:{sceneId:"hook",cueText:"这个有点儿贵。"},
@@ -34,6 +34,8 @@ test("local brief contains only author-verified learner facts and keeps Hook/CTA
   assert.equal(b.episodeId,e.id);
   assert.equal(b.scenes[0].kind,"hook");
   assert.equal(b.scenes[0].narration,e.scenes[0].narration);
+  assert.deepEqual(b.scenes.find(scene=>scene.sceneId==="request").motionCues.map(cue=>cue.cueText),
+    e.scenes.find(scene=>scene.id==="request").motionBeats.map(beat=>beat.cueText));
   assert.ok(b.referenceFacts.length>0);
   assert.ok(b.sourceReceipts.length>0);
   assert.equal(JSON.stringify(e),snapshot);
@@ -50,6 +52,15 @@ test("valid Russian request rehook may be proposed without changing original con
   assert.equal(result.draft.scenes[2].narration.startsWith("А как"),true);
   assert.deepEqual(validateStorytellingEpisode(result.draft),[]);
   assert.equal(JSON.stringify(e),initial);
+});
+
+test("narration edits cannot break exact action cues that would otherwise fail after TTS",()=>{
+  const e=load(),p=proposal();
+  p.narrationEdits[0].narration="А как вежливо попросить сделать чуть дешевле? 便宜一点儿，可以吗？ Это новая формулировка.";
+  const result=evaluateAdaptiveCandidate(e,p);
+  assert.equal(result.valid,false);
+  assert.match(result.errors.join(" "),/request\/request-action-1: motion cue is missing or ambiguous in narration/);
+  assert.equal(result.draft,null);
 });
 
 test("tampered hash, hook edits and new Chinese teaching phrases fail closed",()=>{
