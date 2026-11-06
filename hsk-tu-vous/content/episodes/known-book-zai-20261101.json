@@ -3,11 +3,11 @@
   "date": "2026-11-01",
   "timezone": "Asia/Shanghai",
   "languageCode": "ru-RU",
-  "title": "Где та книга? Предмет + 在 + место",
+  "title": "Новая книга — 有, та самая — 在",
   "level": "HSK 1–2",
-  "topic": "Известный предмет + 在 + место: 那本书在桌子上",
-  "durationTargetSec": 43,
-  "caption": "那本书在桌子上 — та книга на столе. Сначала известная книга, потом 在 и место.",
+  "topic": "Новая книга с 有 и местоположение уже известной книги с 在",
+  "durationTargetSec": 20,
+  "caption": "桌子上有一本书 — на столе есть книга. 那本书在桌子上 — та книга на столе. Разница между 有 и 在.",
   "hashtags": [
     "#HSKAI",
     "#китайскийязык",
@@ -16,7 +16,8 @@
   ],
   "voiceProvider": "gemini-api",
   "learningFacts": [
-    "Когда предмет уже известен, его местоположение выражают как предмет + 在 + место: 那本书在桌子上 (Nà běn shū zài zhuōzi shang.) — «Та книга на столе»."
+    "桌子上有一本书。 Zhuōzi shang yǒu yì běn shū. — На столе есть книга. Для нового предмета сначала называют место, затем 有 и предмет.",
+    "那本书在桌子上。 Nà běn shū zài zhuōzi shang. — Та книга на столе. Для известного предмета сначала называют предмет, затем 在 и место."
   ],
   "examples": [
     "那本书 nà běn shū — та книга",
@@ -29,10 +30,15 @@
     {
       "id": "hook",
       "kind": "hook",
-      "durationSec": 7,
-      "headline": "ГДЕ ТА КНИГА?",
-      "narration": "Книгу уже видели. Где теперь та книга? 那本书在桌子上 — та книга на столе.",
+      "durationSec": 5,
+      "headline": "НОВАЯ: 有  /  ТА САМАЯ: 在",
+      "narration": "Новая книга — 有. Та самая — 在. В чём разница?",
       "cards": [
+        {
+          "hanzi": "桌子上有一本书。",
+          "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+          "meaning": "На столе есть книга."
+        },
         {
           "hanzi": "那本书在桌子上。",
           "pinyin": "Nà běn shū zài zhuōzi shang.",
@@ -44,13 +50,13 @@
         {
           "id": "hook-action-1",
           "kind": "graphic",
-          "cueText": "Книгу уже видели",
-          "explains": "Выделить уже знакомую книгу как предмет поиска.",
+          "cueText": "Новая книга",
+          "explains": "Показать появление новой книги.",
           "visual": {
-            "title": "Та книга на столе.",
-            "hanzi": "那本书在桌子上。",
-            "pinyin": "Nà běn shū zài zhuōzi shang.",
-            "meaning": "Та книга на столе.",
+            "title": "Книга появляется",
+            "hanzi": "桌子上有一本书。",
+            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+            "meaning": "На столе есть книга.",
             "graphic": {
               "width": 820,
               "height": 400,
@@ -184,13 +190,13 @@
         {
           "id": "hook-action-2",
           "kind": "graphic",
-          "cueText": "Где теперь та книга",
-          "explains": "Перенести внимание на место, которое ищут.",
+          "cueText": "有",
+          "explains": "Показать наличие книги через 有.",
           "visual": {
-            "title": "Та книга на столе.",
-            "hanzi": "那本书在桌子上。",
-            "pinyin": "Nà běn shū zài zhuōzi shang.",
-            "meaning": "Та книга на столе.",
+            "title": "Книга есть на столе",
+            "hanzi": "桌子上有一本书。",
+            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+            "meaning": "На столе есть книга.",
             "graphic": {
               "width": 820,
               "height": 400,
@@ -242,6 +248,54 @@
                   }
                 },
                 {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
                   "id": "focus",
                   "type": "g",
                   "attrs": {},
@@ -276,6 +330,20 @@
                       "value": 0
                     }
                   ]
+                },
+                {
+                  "nodeId": "book",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -75
+                    },
+                    {
+                      "atMs": 680,
+                      "value": 0
+                    }
+                  ]
                 }
               ]
             }
@@ -284,10 +352,10 @@
         {
           "id": "hook-action-3",
           "kind": "graphic",
-          "cueText": "那本书在桌子上",
-          "explains": "Показать книгу на столе в момент готового ответа.",
+          "cueText": "在",
+          "explains": "Выделить место знакомой книги через 在.",
           "visual": {
-            "title": "Та книга на столе.",
+            "title": "Та же книга на месте",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Та книга на столе.",
@@ -434,14 +502,14 @@
     {
       "id": "location",
       "kind": "example",
-      "durationSec": 12,
-      "headline": "ПРЕДМЕТ + 在 + МЕСТО",
-      "narration": "那本书在桌子上. Сначала известный предмет: 那本书. Потом 在 и место: 桌子上. Это ответ на вопрос «где книга?»",
+      "durationSec": 6,
+      "headline": "МЕСТО + 有 + НОВАЯ КНИГА",
+      "narration": "桌子上有一本书 — на столе есть книга. Сначала место, потом 有.",
       "cards": [
         {
-          "hanzi": "那本书在桌子上。",
-          "pinyin": "Nà běn shū zài zhuōzi shang.",
-          "meaning": "Та книга на столе."
+          "hanzi": "桌子上有一本书。",
+          "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+          "meaning": "На столе есть книга."
         }
       ],
       "captionStyleId": "highlight",
@@ -449,13 +517,13 @@
         {
           "id": "location-action-1",
           "kind": "graphic",
-          "cueText": "那本书在桌子上",
-          "explains": "Книга находится на столе.",
+          "cueText": "桌子上有一本书",
+          "explains": "Показать новую книгу на столе.",
           "visual": {
-            "title": "Та книга на столе.",
-            "hanzi": "那本书在桌子上。",
-            "pinyin": "Nà běn shū zài zhuōzi shang.",
-            "meaning": "Та книга на столе.",
+            "title": "На столе есть книга",
+            "hanzi": "桌子上有一本书。",
+            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+            "meaning": "На столе есть книга.",
             "graphic": {
               "width": 820,
               "height": 400,
@@ -597,13 +665,13 @@
         {
           "id": "location-action-2",
           "kind": "graphic",
-          "cueText": "известный предмет",
-          "explains": "Выделить знакомую книгу перед указанием места.",
+          "cueText": "на столе есть книга",
+          "explains": "Связать место и факт наличия книги.",
           "visual": {
-            "title": "Та книга на столе.",
-            "hanzi": "那本书在桌子上。",
-            "pinyin": "Nà běn shū zài zhuōzi shang.",
-            "meaning": "Та книга на столе.",
+            "title": "Место и новая книга",
+            "hanzi": "桌子上有一本书。",
+            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+            "meaning": "На столе есть книга.",
             "graphic": {
               "width": 820,
               "height": 400,
@@ -737,13 +805,13 @@
         {
           "id": "location-action-3",
           "kind": "graphic",
-          "cueText": "место",
-          "explains": "Обвести стол как конечное место книги.",
+          "cueText": "Сначала место",
+          "explains": "Выделить место перед 有.",
           "visual": {
-            "title": "Та книга на столе.",
-            "hanzi": "那本书在桌子上。",
-            "pinyin": "Nà běn shū zài zhuōzi shang.",
-            "meaning": "Та книга на столе.",
+            "title": "Сначала место, затем 有",
+            "hanzi": "桌子上有一本书。",
+            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+            "meaning": "На столе есть книга.",
             "graphic": {
               "width": 820,
               "height": 400,
@@ -887,9 +955,9 @@
     {
       "id": "contrast",
       "kind": "context",
-      "durationSec": 12,
-      "headline": "有 ИЛИ 在?",
-      "narration": "Сравните два вопроса. Что есть на столе? 桌子上有一本书. Где та книга? 那本书在桌子上. Сейчас ищем место знакомой книги.",
+      "durationSec": 5,
+      "headline": "ТА САМАЯ КНИГА + 在",
+      "narration": "那本书 — та самая книга. 在桌子上 — находится на столе.",
       "cards": [
         {
           "hanzi": "那本书在桌子上。",
@@ -902,10 +970,10 @@
         {
           "id": "contrast-action-1",
           "kind": "graphic",
-          "cueText": "Что есть на столе",
-          "explains": "Сначала показать пустой стол как основу для 有.",
+          "cueText": "那本书",
+          "explains": "Показать уже знакомую книгу как отправную точку.",
           "visual": {
-            "title": "Та книга на столе.",
+            "title": "Та самая книга",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Та книга на столе.",
@@ -960,6 +1028,54 @@
                   }
                 },
                 {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
                   "id": "focus",
                   "type": "g",
                   "attrs": {},
@@ -1002,10 +1118,10 @@
         {
           "id": "contrast-action-2",
           "kind": "graphic",
-          "cueText": "桌子上有一本书",
-          "explains": "Новая книга появляется при 有.",
+          "cueText": "在桌子上",
+          "explains": "Показать место, где находится эта книга.",
           "visual": {
-            "title": "Та книга на столе.",
+            "title": "Находится на столе",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Та книга на столе.",
@@ -1130,10 +1246,10 @@
         {
           "id": "contrast-action-3",
           "kind": "graphic",
-          "cueText": "那本书在桌子上",
-          "explains": "Уже известная книга остаётся на столе при 在.",
+          "cueText": "та самая книга",
+          "explains": "Закрепить 在 для места знакомого предмета.",
           "visual": {
-            "title": "Та книга на столе.",
+            "title": "Известный предмет и его место",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Та книга на столе.",
@@ -1280,9 +1396,9 @@
     {
       "id": "recall",
       "kind": "example",
-      "durationSec": 12,
-      "headline": "ГДЕ КНИГА?",
-      "narration": "Запомните: 那本书在桌子上 — та книга на столе. Сначала книга, потом 在, затем место. Скажите ещё раз: 那本书在桌子上.",
+      "durationSec": 4,
+      "headline": "ГДЕ ТА КНИГА?",
+      "narration": "Где та книга? 那本书在桌子上.",
       "cards": [
         {
           "hanzi": "那本书在桌子上。",
@@ -1295,10 +1411,10 @@
         {
           "id": "recall-action-1",
           "kind": "graphic",
-          "cueText": "那本书在桌子上",
-          "explains": "Показать точное место известной книги.",
+          "cueText": "Где та книга",
+          "explains": "Поставить вопрос о месте знакомой книги.",
           "visual": {
-            "title": "Та книга на столе.",
+            "title": "Вспомни ответ",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Та книга на столе.",
@@ -1443,10 +1559,10 @@
         {
           "id": "recall-action-2",
           "kind": "graphic",
-          "cueText": "Сначала книга",
-          "explains": "Выделить предмет, о котором уже говорили.",
+          "cueText": "那本书",
+          "explains": "Подсветить ту самую книгу.",
           "visual": {
-            "title": "Та книга на столе.",
+            "title": "Та самая книга",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Та книга на столе.",
@@ -1583,10 +1699,10 @@
         {
           "id": "recall-action-3",
           "kind": "graphic",
-          "cueText": "затем место",
-          "explains": "Вернуть внимание к столу, на котором книга лежит.",
+          "cueText": "在桌子上",
+          "explains": "Выделить место книги на столе.",
           "visual": {
-            "title": "Та книга на столе.",
+            "title": "На столе",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Та книга на столе.",
@@ -1756,29 +1872,29 @@
     }
   ],
   "hookExperiment": {
-    "id": "known-book-zai-20261101-ru-hook-v1",
-    "formatId": "scenario",
-    "hypothesis": "Переход от уже показанной книги к поиску её места может помочь различить 在 и 有; результаты пока неизвестны.",
+    "id": "known-book-zai-20261101-ru-hook-v2",
+    "formatId": "contrast",
+    "hypothesis": "Короткое визуальное сравнение новой книги с уже знакомой может повысить трёхсекундное удержание; результат пока не измерен.",
     "primaryMetric": "three-second-hold-rate",
     "fallbackMetric": "average-watch-ratio",
-    "registeredAt": "2026-10-28"
+    "registeredAt": "2026-10-31"
   },
-  "audienceProblem": "Ученик уже знает о книге, но вместо её местоположения снова пытается объявить, что книга существует.",
-  "learningOutcome": "Ответить, где находится известная книга: 那本书在桌子上.",
+  "audienceProblem": "Начинающий смешивает сообщение о новой книге на столе с ответом о месте уже известной книги.",
+  "learningOutcome": "Различать 桌子上有一本书 и 那本书在桌子上 по тому, новый предмет или уже известный.",
   "motionDesign": true,
   "motionDesignStyle": "explain-actions-v1",
   "storytelling": {
     "schemaVersion": 1,
     "pattern": "direct",
     "situation": {
-      "setting": "Знакомую книгу ищут на том же столе",
-      "learnerGoal": "Ответить, где именно та книга",
-      "obstacle": "Смешиваются сообщение о новой книге и указание места известной книги"
+      "setting": "Сначала книга появляется на столе, затем спрашивают о той же книге.",
+      "learnerGoal": "Отличить сообщение о новой книге от места уже известной книги.",
+      "obstacle": "Начинающий смешивает 有 для наличия нового предмета и 在 для места известного предмета."
     },
-    "selectionReason": "Продолжение вчерашней ситуации позволяет сразу показать ответ на вопрос «где?» без искусственного второго сюжета.",
+    "selectionReason": "Контраст сразу показывает два контекста одной книги; первый полный пример звучит в первые секунды без искусственной интриги.",
     "firstPayoff": {
-      "sceneId": "hook",
-      "cueText": "那本书在桌子上"
+      "sceneId": "location",
+      "cueText": "桌子上有一本书"
     },
     "reHooks": []
   }

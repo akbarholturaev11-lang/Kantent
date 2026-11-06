@@ -3,11 +3,11 @@
   "date": "2026-11-01",
   "timezone": "Asia/Shanghai",
   "languageCode": "tg-TJ",
-  "title": "Он китоб дар куҷост? Чиз + 在 + ҷой",
+  "title": "Китоби нав — 有, ҳамон — 在",
   "level": "HSK 1–2",
-  "topic": "Чизи маълум + 在 + ҷой: 那本书在桌子上",
-  "durationTargetSec": 43,
-  "caption": "那本书在桌子上 — он китоб дар рӯи миз аст. Аввал китоб, баъд 在 ва ҷой.",
+  "topic": "Китоби нав бо 有 ва ҷойи китоби маълум бо 在",
+  "durationTargetSec": 20,
+  "caption": "桌子上有一本书 — рӯи миз як китоб ҳаст. 那本书在桌子上 — ҳамон китоб дар рӯи миз аст.",
   "hashtags": [
     "#HSKAI",
     "#ЗабониЧинӣ",
@@ -16,7 +16,8 @@
   ],
   "voiceProvider": "gemini-api",
   "learningFacts": [
-    "Барои нишон додани ҷойи чизи аллакай маълум сохтори чиз + 在 + ҷой истифода мешавад: 那本书在桌子上 (Nà běn shū zài zhuōzi shang.) — «Он китоб дар рӯи миз аст»."
+    "桌子上有一本书。 Zhuōzi shang yǒu yì běn shū. — Рӯи миз як китоб ҳаст. Барои ашёи нав аввал ҷой, баъд 有 ва ашё меояд.",
+    "那本书在桌子上。 Nà běn shū zài zhuōzi shang. — Он китоб дар рӯи миз аст. Барои ашёи маълум аввал ашё, баъд 在 ва ҷой меояд."
   ],
   "examples": [
     "那本书 nà běn shū — он китоб",
@@ -29,9 +30,14 @@
     {
       "id": "hook",
       "kind": "hook",
-      "durationSec": 7,
-      "narration": "Китобро аллакай дидаем. Акнун он китоб дар куҷост? 那本书在桌子上 — он китоб дар рӯи миз аст.",
+      "durationSec": 5,
+      "narration": "Китоби нав — 有. Ҳамон китоб — 在. Фарқаш чист?",
       "cards": [
+        {
+          "hanzi": "桌子上有一本书。",
+          "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+          "meaning": "Рӯи миз як китоб ҳаст."
+        },
         {
           "hanzi": "那本书在桌子上。",
           "pinyin": "Nà běn shū zài zhuōzi shang.",
@@ -43,13 +49,13 @@
         {
           "id": "hook-action-1",
           "kind": "graphic",
-          "cueText": "Китобро аллакай дидаем",
-          "explains": "Китоби маълумро ҳамчун объекти ҷустуҷӯ нишон додан.",
+          "cueText": "Китоби нав",
+          "explains": "Китоби навро дар рӯи миз пайдо кардан.",
           "visual": {
-            "title": "Он китоб дар рӯи миз аст.",
-            "hanzi": "那本书在桌子上。",
-            "pinyin": "Nà běn shū zài zhuōzi shang.",
-            "meaning": "Он китоб дар рӯи миз аст.",
+            "title": "Китоб пайдо мешавад",
+            "hanzi": "桌子上有一本书。",
+            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+            "meaning": "Рӯи миз як китоб ҳаст.",
             "graphic": {
               "width": 820,
               "height": 400,
@@ -183,13 +189,13 @@
         {
           "id": "hook-action-2",
           "kind": "graphic",
-          "cueText": "он китоб дар куҷост",
-          "explains": "Ҷойи ҷустуҷӯшавандаро нишон додан.",
+          "cueText": "有",
+          "explains": "Ҳаст будани китобро бо 有 нишон додан.",
           "visual": {
-            "title": "Он китоб дар рӯи миз аст.",
-            "hanzi": "那本书在桌子上。",
-            "pinyin": "Nà běn shū zài zhuōzi shang.",
-            "meaning": "Он китоб дар рӯи миз аст.",
+            "title": "Дар рӯи миз китоб ҳаст",
+            "hanzi": "桌子上有一本书。",
+            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+            "meaning": "Рӯи миз як китоб ҳаст.",
             "graphic": {
               "width": 820,
               "height": 400,
@@ -241,6 +247,54 @@
                   }
                 },
                 {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
                   "id": "focus",
                   "type": "g",
                   "attrs": {},
@@ -275,6 +329,20 @@
                       "value": 0
                     }
                   ]
+                },
+                {
+                  "nodeId": "book",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -75
+                    },
+                    {
+                      "atMs": 680,
+                      "value": 0
+                    }
+                  ]
                 }
               ]
             }
@@ -283,10 +351,10 @@
         {
           "id": "hook-action-3",
           "kind": "graphic",
-          "cueText": "那本书在桌子上",
-          "explains": "Китобро дар рӯи миз нишон додан.",
+          "cueText": "在",
+          "explains": "Ҷойи китоби маълумро бо 在 таъкид кардан.",
           "visual": {
-            "title": "Он китоб дар рӯи миз аст.",
+            "title": "Ҳамон китоб дар ҷой аст",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Он китоб дар рӯи миз аст.",
@@ -428,18 +496,19 @@
             }
           }
         }
-      ]
+      ],
+      "headline": "НАВ: 有  /  ҲАМОН: 在"
     },
     {
       "id": "location",
       "kind": "example",
-      "durationSec": 12,
-      "narration": "那本书在桌子上. Аввал чизи маълум: 那本书. Баъд 在 ва ҷой: 桌子上. Ин ҷавоби саволи «китоб дар куҷост?» аст.",
+      "durationSec": 6,
+      "narration": "桌子上有一本书 — рӯи миз як китоб ҳаст. Аввал ҷой, баъд 有.",
       "cards": [
         {
-          "hanzi": "那本书在桌子上。",
-          "pinyin": "Nà běn shū zài zhuōzi shang.",
-          "meaning": "Он китоб дар рӯи миз аст."
+          "hanzi": "桌子上有一本书。",
+          "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+          "meaning": "Рӯи миз як китоб ҳаст."
         }
       ],
       "captionStyleId": "highlight",
@@ -447,13 +516,13 @@
         {
           "id": "location-action-1",
           "kind": "graphic",
-          "cueText": "那本书在桌子上",
-          "explains": "Ҷойи китоби маълум дар рӯи миз.",
+          "cueText": "桌子上有一本书",
+          "explains": "Китоби навро дар рӯи миз нишон додан.",
           "visual": {
-            "title": "Он китоб дар рӯи миз аст.",
-            "hanzi": "那本书在桌子上。",
-            "pinyin": "Nà běn shū zài zhuōzi shang.",
-            "meaning": "Он китоб дар рӯи миз аст.",
+            "title": "Рӯи миз як китоб ҳаст",
+            "hanzi": "桌子上有一本书。",
+            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+            "meaning": "Рӯи миз як китоб ҳаст.",
             "graphic": {
               "width": 820,
               "height": 400,
@@ -595,13 +664,13 @@
         {
           "id": "location-action-2",
           "kind": "graphic",
-          "cueText": "чизи маълум",
-          "explains": "Аввал китоби аллакай шинохташударо нишон додан.",
+          "cueText": "рӯи миз як китоб ҳаст",
+          "explains": "Ҷой ва ҳаст будани китобро пайваст кардан.",
           "visual": {
-            "title": "Он китоб дар рӯи миз аст.",
-            "hanzi": "那本书在桌子上。",
-            "pinyin": "Nà běn shū zài zhuōzi shang.",
-            "meaning": "Он китоб дар рӯи миз аст.",
+            "title": "Ҷой ва китоби нав",
+            "hanzi": "桌子上有一本书。",
+            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+            "meaning": "Рӯи миз як китоб ҳаст.",
             "graphic": {
               "width": 820,
               "height": 400,
@@ -735,10 +804,175 @@
         {
           "id": "location-action-3",
           "kind": "graphic",
-          "cueText": "ҷой",
-          "explains": "Баъд мизро ҳамчун ҷой нишон додан.",
+          "cueText": "Аввал ҷой",
+          "explains": "Ҷойро пеш аз 有 таъкид кардан.",
           "visual": {
-            "title": "Он китоб дар рӯи миз аст.",
+            "title": "Аввал ҷой, баъд 有",
+            "hanzi": "桌子上有一本书。",
+            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+            "meaning": "Рӯи миз як китоб ҳаст.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -65
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -65
+                    },
+                    {
+                      "atMs": 620,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "headline": "ҶОЙ + 有 + КИТОБИ НАВ"
+    },
+    {
+      "id": "contrast",
+      "kind": "context",
+      "durationSec": 5,
+      "narration": "那本书 — ҳамон китоб. 在桌子上 — дар рӯи миз аст.",
+      "cards": [
+        {
+          "hanzi": "那本书在桌子上。",
+          "pinyin": "Nà běn shū zài zhuōzi shang.",
+          "meaning": "Он китоб дар рӯи миз аст."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "contrast-action-1",
+          "kind": "graphic",
+          "cueText": "那本书",
+          "explains": "Китоби аллакай маълумро нишон додан.",
+          "visual": {
+            "title": "Ҳамон китоб",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Он китоб дар рӯи миз аст.",
@@ -879,130 +1113,14 @@
               ]
             }
           }
-        }
-      ]
-    },
-    {
-      "id": "contrast",
-      "kind": "context",
-      "durationSec": 12,
-      "narration": "Ду саволро муқоиса кун. Дар рӯи миз чӣ ҳаст? 桌子上有一本书. Он китоб дар куҷост? 那本书在桌子上. Ҳоло ҷойи китоби маълумро мегӯем.",
-      "cards": [
-        {
-          "hanzi": "那本书在桌子上。",
-          "pinyin": "Nà běn shū zài zhuōzi shang.",
-          "meaning": "Он китоб дар рӯи миз аст."
-        }
-      ],
-      "captionStyleId": "highlight",
-      "motionBeats": [
-        {
-          "id": "contrast-action-1",
-          "kind": "graphic",
-          "cueText": "Дар рӯи миз чӣ ҳаст",
-          "explains": "Мизро пеш аз пайдо шудани китоб нишон додан.",
-          "visual": {
-            "title": "Он китоб дар рӯи миз аст.",
-            "hanzi": "那本书在桌子上。",
-            "pinyin": "Nà běn shū zài zhuōzi shang.",
-            "meaning": "Он китоб дар рӯи миз аст.",
-            "graphic": {
-              "width": 820,
-              "height": 400,
-              "nodes": [
-                {
-                  "id": "table",
-                  "type": "g",
-                  "attrs": {}
-                },
-                {
-                  "id": "tabletop",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 220,
-                    "y": 219,
-                    "width": 390,
-                    "height": 25,
-                    "rx": 12,
-                    "fill": "secondary",
-                    "stroke": "foreground",
-                    "strokeWidth": 3
-                  }
-                },
-                {
-                  "id": "left-leg",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 248,
-                    "y": 243,
-                    "width": 22,
-                    "height": 116,
-                    "rx": 6,
-                    "fill": "muted"
-                  }
-                },
-                {
-                  "id": "right-leg",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 561,
-                    "y": 243,
-                    "width": 22,
-                    "height": 116,
-                    "rx": 6,
-                    "fill": "muted"
-                  }
-                },
-                {
-                  "id": "focus",
-                  "type": "g",
-                  "attrs": {},
-                  "x": -65
-                },
-                {
-                  "id": "table-ring",
-                  "parentId": "focus",
-                  "type": "ellipse",
-                  "attrs": {
-                    "cx": 415,
-                    "cy": 230,
-                    "rx": 208,
-                    "ry": 47,
-                    "fill": "none",
-                    "stroke": "teal",
-                    "strokeWidth": 6
-                  }
-                }
-              ],
-              "tracks": [
-                {
-                  "nodeId": "focus",
-                  "property": "x",
-                  "keyframes": [
-                    {
-                      "atMs": 0,
-                      "value": -65
-                    },
-                    {
-                      "atMs": 620,
-                      "value": 0
-                    }
-                  ]
-                }
-              ]
-            }
-          }
         },
         {
           "id": "contrast-action-2",
           "kind": "graphic",
-          "cueText": "桌子上有一本书",
-          "explains": "Китоби нав бо 有 пайдо мешавад.",
+          "cueText": "在桌子上",
+          "explains": "Ҷойи китобро нишон додан.",
           "visual": {
-            "title": "Он китоб дар рӯи миз аст.",
+            "title": "Дар рӯи миз аст",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Он китоб дар рӯи миз аст.",
@@ -1127,10 +1245,10 @@
         {
           "id": "contrast-action-3",
           "kind": "graphic",
-          "cueText": "那本书在桌子上",
-          "explains": "Китоби маълум бо 在 дар ҷойи худ нишон дода мешавад.",
+          "cueText": "ҳамон китоб",
+          "explains": "在-ро бо ҷойи ашёи маълум пайваст кардан.",
           "visual": {
-            "title": "Он китоб дар рӯи миз аст.",
+            "title": "Китоби маълум",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Он китоб дар рӯи миз аст.",
@@ -1272,13 +1390,14 @@
             }
           }
         }
-      ]
+      ],
+      "headline": "ҲАМОН КИТОБ + 在"
     },
     {
       "id": "recall",
       "kind": "example",
-      "durationSec": 12,
-      "narration": "Дар ёд дор: 那本书在桌子上 — он китоб дар рӯи миз аст. Аввал китоб, баъд 在, сипас ҷой. Боз бигӯ: 那本书在桌子上.",
+      "durationSec": 4,
+      "narration": "Он китоб куҷост? 那本书在桌子上.",
       "cards": [
         {
           "hanzi": "那本书在桌子上。",
@@ -1291,10 +1410,10 @@
         {
           "id": "recall-action-1",
           "kind": "graphic",
-          "cueText": "那本书在桌子上",
-          "explains": "Ҷойи китоби маълум нишон дода мешавад.",
+          "cueText": "Он китоб куҷост",
+          "explains": "Ҷойи китоби маълумро пурсидан.",
           "visual": {
-            "title": "Он китоб дар рӯи миз аст.",
+            "title": "Ҷавобро ба ёд биёр",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Он китоб дар рӯи миз аст.",
@@ -1439,10 +1558,10 @@
         {
           "id": "recall-action-2",
           "kind": "graphic",
-          "cueText": "Аввал китоб",
-          "explains": "Китоби маълум дар маркази диққат.",
+          "cueText": "那本书",
+          "explains": "Ҳамон китобро таъкид кардан.",
           "visual": {
-            "title": "Он китоб дар рӯи миз аст.",
+            "title": "Ҳамон китоб",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Он китоб дар рӯи миз аст.",
@@ -1579,10 +1698,10 @@
         {
           "id": "recall-action-3",
           "kind": "graphic",
-          "cueText": "сипас ҷой",
-          "explains": "Ҷойи китоб дар рӯи миз таъкид мешавад.",
+          "cueText": "在桌子上",
+          "explains": "Ҷойи китобро дар рӯи миз нишон додан.",
           "visual": {
-            "title": "Он китоб дар рӯи миз аст.",
+            "title": "Дар рӯи миз",
             "hanzi": "那本书在桌子上。",
             "pinyin": "Nà běn shū zài zhuōzi shang.",
             "meaning": "Он китоб дар рӯи миз аст.",
@@ -1724,7 +1843,8 @@
             }
           }
         }
-      ]
+      ],
+      "headline": "ОН КИТОБ КУҶОСТ?"
     }
   ],
   "captions": [],
@@ -1752,37 +1872,37 @@
     }
   ],
   "hookExperiment": {
-    "id": "known-book-zai-20261101-tg-hook-v1",
-    "formatId": "scenario",
-    "hypothesis": "Ҷустуҷӯи китоби аллакай дидашуда метавонад фарқи 在 ва 有-ро равшан кунад; ин танҳо фарзияи санҷиданашуда аст.",
+    "id": "known-book-zai-20261101-tg-hook-v2",
+    "formatId": "contrast",
+    "hypothesis": "Муқоисаи кӯтоҳи китоби нав ва китоби маълум метавонад нигоҳдории се-сонияро беҳтар кунад; натиҷа ҳанӯз чен нашудааст.",
     "primaryMetric": "three-second-hold-rate",
     "fallbackMetric": "average-watch-ratio",
-    "registeredAt": "2026-10-28"
+    "registeredAt": "2026-10-31"
   },
-  "audienceProblem": "Навомӯз китобро аллакай мешиносад, вале барои гуфтани ҷойи он 有 ва 在-ро омехта мекунад.",
-  "learningOutcome": "Бо 那本书在桌子上 ҷойи китоби маълумро дуруст гӯяд.",
+  "audienceProblem": "Навомӯз истифодаи 有 барои китоби нав ва 在 барои ҷойи китоби маълумро омехта мекунад.",
+  "learningOutcome": "Фарқи 桌子上有一本书 ва 那本书在桌子上-ро аз рӯи нав ё маълум будани китоб фаҳмад.",
   "motionDesign": true,
   "motionDesignStyle": "explain-actions-v1",
   "storytelling": {
     "schemaVersion": 1,
     "pattern": "direct",
     "situation": {
-      "setting": "Китоби аллакай дидашударо дар ҳамон миз меҷӯянд",
-      "learnerGoal": "Ҷойи он китобро гӯяд",
-      "obstacle": "Гуфтани мавҷудияти китоб ва нишон додани ҷойи китоб омехта мешавад"
+      "setting": "Аввал китоб рӯи миз пайдо мешавад, баъд дар бораи ҳамон китоб мепурсанд.",
+      "learnerGoal": "Фарқи гуфтани китоби нав ва ҷойи китоби маълумро фаҳмад.",
+      "obstacle": "Навомӯз 有-ро барои ашёи нав ва 在-ро барои ҷойи ашёи маълум омехта мекунад."
     },
-    "selectionReason": "Давоми воқеаи қисми аввал ҷавоби фаврӣ ба «дар куҷост?» медиҳад ва re-hook-и сохтаро талаб намекунад.",
+    "selectionReason": "Муқоиса ду ҳолати як китобро дарҳол нишон медиҳад; мисоли аввал дар сонияҳои аввал садо медиҳад ва интизори сунъӣ нест.",
     "firstPayoff": {
-      "sceneId": "hook",
-      "cueText": "那本书在桌子上"
+      "sceneId": "location",
+      "cueText": "桌子上有一本书"
     },
     "reHooks": []
   },
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "known-book-zai-20261101",
-    "sourceHash": "1f87b0efa13ad59aa3945a7b2ad03ce4bc26f0f98bfc0ecb7b67597eec109e15",
-    "authoredOn": "2026-10-28",
+    "sourceHash": "27e7ba10c2eac2309e7d929ef06042647ca26670acc80af388e508408b0a9cac",
+    "authoredOn": "2026-10-31",
     "status": "draft-awaiting-audio-review"
   }
 }
