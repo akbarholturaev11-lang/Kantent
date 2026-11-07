@@ -14,7 +14,7 @@ test("three-day agent and original Telegram authorization are preserved",()=>{
   assert.equal(news.source.repository,"akbarholturaev11-lang/HSK-AI-Bot");
   assert.equal(news.source.branch,"main");
   assert.equal(news.source.lookbackDays,3);
-  assert.equal(news.channel.account,"@aibotsakbar");
+  assert.equal(news.channel.account,"@hskaiapp");
   assert.equal(news.channel.accountId,"6ae1661bf80a20df8f31158e");
   assert.equal(news.channel.allowVideo,false);
   assert.equal(news.output.noApprovalNeeded,true);
@@ -28,7 +28,7 @@ test("static photo news has exactly four language-strict owner-authorized accoun
   assert.equal(d.postType,"photo-feed-post");
   assert.equal(d.perPostOwnerApprovalRequired,false);
   const expected=[
-    ["telegram","tg","@aibotsakbar","6ae1661bf80a20df8f31158e","tiktok-telegram"],
+    ["telegram","tg","@hskaiapp","6ae1661bf80a20df8f31158e","tiktok-telegram"],
     ["instagram","ru","@hskai.app","6a411e989d9472faae10a430","ru-primary"],
     ["instagram","tg","@hskai.apptj","6ae0f16205fd6f5357f8503d","tg-primary"],
     ["facebook","tg","Akbarholturaev","6ae161de384955d3b3ff194b","tiktok-facebook"],
