@@ -29,6 +29,7 @@
       "id": "hook",
       "kind": "hook",
       "durationSec": 7,
+      "headline": "ДАР РӮИ МИЗ КИТОБ ҲАСТ",
       "narration": "Мизи холиро мебинӣ. Як китоб пайдо шуд. Чӣ тавр мегӯем: «Дар рӯи миз як китоб ҳаст»? 桌子上有一本书.",
       "cards": [
         {
@@ -421,6 +422,7 @@
       "id": "structure",
       "kind": "example",
       "durationSec": 12,
+      "headline": "ҶОЙ + 有 + ЧИЗ",
       "narration": "桌子上有一本书 — дар рӯи миз як китоб ҳаст. Аввал ҷой: 桌子上. Баъд 有 ва чизи нав: 一本书.",
       "cards": [
         {
@@ -793,6 +795,7 @@
       "id": "word-order",
       "kind": "context",
       "durationSec": 12,
+      "headline": "АВВАЛ ҶОЙ",
       "narration": "Аввал ҷойро номбар кун: 桌子上. Баъд 有一本书-ро илова кун. Ҳамин тавр мефаҳмонӣ, ки дар он ҷо китоб ҳаст.",
       "cards": [
         {
@@ -1185,6 +1188,7 @@
       "id": "recall",
       "kind": "example",
       "durationSec": 12,
+      "headline": "ҶУМЛАРО ТАКРОР КУН",
       "narration": "Дар куҷо? Дар рӯи миз. Он ҷо чӣ ҳаст? Як китоб. Такрор кун: 桌子上有一本书. Аввал ҷой, баъд чиз.",
       "cards": [
         {
@@ -1622,7 +1626,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "zhuozi-you-book-20261031",
-    "sourceHash": "3716a80154d4189a2bd005b57e7a4a801dc63c6e8ff482def948db89dc0907a6",
+    "sourceHash": "16c3430343fa04423621189815e65c030bb75d836aaf8029791ba1715ea6f9a4",
     "authoredOn": "2026-10-28",
     "status": "draft-awaiting-audio-review"
   }

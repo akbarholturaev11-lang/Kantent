@@ -5,6 +5,7 @@ import { languageEnvironment, languageSettings } from "./language-context.mjs";
 import { resolveTodayVideo } from "./resolve-production-date.mjs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
+import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
 import {
   PROJECT_ROOT,
   CALENDAR_PATH,
@@ -53,12 +54,7 @@ const result = await prepareLanguagePackages(languages, async (language) => {
     throw new Error("Episode voice provider does not match " + languageSettings().voiceProfilePath);
 
   const folder = reviewDir(item.id);
-  const hasImportedVoice =
-    episode.audioSrc &&
-    episode.voiceProfileId === voiceProfile.profileId &&
-    episode.voiceTextHash === narrationHash(episode) &&
-    episode.captionSource === "gemini-word-timestamps" &&
-    episode.captions?.length;
+  const hasImportedVoice = await hasCurrentImportedVoice(episode, voiceProfile, { projectRoot: PROJECT_ROOT });
   const runStage = (script, ...stageArgs) => {
     const result = spawnSync(
       process.execPath,

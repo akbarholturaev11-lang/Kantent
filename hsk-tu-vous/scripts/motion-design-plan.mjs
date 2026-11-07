@@ -13,6 +13,45 @@ const normalize = (text, locale) => {
 };
 const same = (a,b) => JSON.stringify(a) === JSON.stringify(b);
 
+/** Check that authored visual cues still occur once, in order, in the current narration. */
+export function validateMotionBeatNarration(scene, locale = "ru-RU") {
+  if (!scene.motionBeats?.length) return [];
+  const words=normalize(scene.narration,locale),errors=[];
+  let previous=-1;
+  for(const beat of scene.motionBeats){
+    const cue=normalize(beat.cueText,locale),matches=[];
+    for(let start=0;cue.length&&start+cue.length<=words.length;start++)
+      if(same(words.slice(start,start+cue.length),cue))matches.push(start);
+    const occurrence=beat.cueOccurrence;
+    if(!matches.length||(occurrence===undefined&&matches.length!==1)||
+       (occurrence!==undefined&&(!Number.isInteger(occurrence)||occurrence<1||occurrence>matches.length))){
+      errors.push(`${scene.id}/${beat.id}: motion cue is missing or ambiguous in narration: ${beat.cueText}`);
+      continue;
+    }
+    const start=matches[(occurrence??1)-1];
+    if(start<=previous)errors.push(`${scene.id}/${beat.id}: motion cue is out of narration order: ${beat.cueText}`);
+    previous=start;
+  }
+  return errors;
+}
+
+export function validateGraphicTrackTiming(scene, beats) {
+  for(let index=0;index<beats.length;index++){
+    const beat=beats[index];
+    if(beat.kind!=="graphic")continue;
+    const deadline=beats[index+1]?.startMs??scene.endMs;
+    const availableMs=deadline-beat.startMs;
+    for(const track of beat.visual.graphic.tracks){
+      if(track.loop)continue;
+      const settleMs=track.keyframes.at(-1).atMs;
+      if(settleMs>availableMs){
+        throw Error(`${scene.id}/${beat.id}: ${track.nodeId}/${track.property} settles at ${settleMs}ms but the next spoken cue arrives after ${availableMs}ms.`);
+      }
+    }
+  }
+  return true;
+}
+
 export function resolveMotionBeats(scene, captions, fps = 30, locale = "ru-RU") {
   if (!scene.motionBeats?.length) return [];
   if (!Number.isFinite(scene.startMs) || !Number.isFinite(scene.endMs) ||
@@ -68,6 +107,7 @@ export function compileMotionDesignTimeline(episode, presentationPolicy) {
     ...(coverage ? {coverage} : {}),
     scenes:scenes.map(scene=>{
       const beats=resolveMotionBeats(scene,episode.captions,30,episode.languageCode);
+      if(episode.motionDesignStyle==="explain-actions-v1")validateGraphicTrackTiming(scene,beats);
       const visualHold = presentationPolicy && episode.motionDesignStyle==="explain-actions-v1" &&
         episode.date >= presentationPolicy.visibleStateValidationFromDate
         ? validateVisualHold(scene,beats,presentationPolicy.maximumVisualHoldSec) : undefined;

@@ -24,6 +24,7 @@ import {
 import { resolveTodayVideo } from "./resolve-production-date.mjs";
 import { verifiedPublishedRecords, confirmedPublishedIds, confirmedPublishedFor } from "./published-evidence.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
+import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
 import { activeLanguage, languageSettings, languageEnvironment, withLanguage, assertEpisodeLanguage } from "./language-context.mjs";
 import { requestedLanguages, prepareLanguagePackages } from "./bilingual-production.mjs";
 import { confirmedPublishedInAllLanguages } from "./published-evidence.mjs";
@@ -33,6 +34,7 @@ import {
   PROJECT_ROOT,
   getCalendarItemByDate,
   episodeContentHash,
+  narrationHash,
   getPlannedEpisode,
   getRunEpisodeByDate,
   synchronizeAutoStoryboard,
@@ -164,6 +166,7 @@ export const createServer = () => {
   const actionModelSchema = z.object({
     kind:z.enum(["quantity","phrase","numeral","ordinal","graphic"]).optional(),
     title:z.string().max(180),hanzi:z.string().max(180),pinyin:z.string().max(180),meaning:z.string().max(180),
+    pinyinSegments:z.array(z.object({hanzi:z.string().min(1).max(32),pinyin:z.string().min(1).max(64)})).min(1).max(60).optional(),
     object:z.enum(["tea-cup","book","apple"]).optional(),count:z.number().int().min(1).max(6).optional(),
     grouped:z.boolean().optional(),focus:z.string().max(32).optional(),
     parts:z.array(z.string().min(1).max(32)).min(2).max(6).optional(),value:z.number().int().min(1).max(30).optional(),
@@ -773,17 +776,22 @@ export const createServer = () => {
     },
     async ({ date }) =>
       withToolErrors(async () => {
-        const { item, episode } = await currentEpisode(date);
-        const { item: runItem } = await ensureRunCopy(date);
+        const { item, episode } = await ensureRunCopy(date);
         const voiceProfile = await requireApprovedVoiceProfile(item.id);
         if (episode.voiceProvider !== voiceProfile.provider)
           throw new Error(
             "Episode voice provider does not match the approved Gemini profile.",
           );
-        const result = await runScript("generate-voice-gemini.mjs", runItem.id);
+        const reusedImportedVoice = await hasCurrentImportedVoice(episode, voiceProfile, { projectRoot: PROJECT_ROOT });
+        const result = reusedImportedVoice
+          ? { log: "Reused matching imported voice and word-timed captions; no TTS or STT request was made." }
+          : await runScript("generate-voice-gemini.mjs", item.id);
+        const refreshed = await ensureRunCopy(date);
         return {
           date,
           episodeId: item.id,
+          voiceTextHash: refreshed.episode.voiceTextHash ?? null,
+          reusedImportedVoice,
           status: await readStatus(item.id),
           log: result.log,
           requiresHumanAction: false,

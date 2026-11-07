@@ -11,8 +11,45 @@ on:
       - hsk-tu-vous/scripts/video-credentials.mjs
       - hsk-tu-vous/scripts/video-credentials.test.mjs
       - hsk-tu-vous/scripts/generate-voice-gemini.mjs
+      - hsk-tu-vous/scripts/voice-checkpoint.mjs
+      - hsk-tu-vous/scripts/voice-checkpoint.test.mjs
+      - hsk-tu-vous/scripts/voice-checkpoint-artifact.mjs
+      - hsk-tu-vous/scripts/voice-checkpoint-artifact.test.mjs
+      - hsk-tu-vous/scripts/voice-import-state.mjs
+      - hsk-tu-vous/scripts/voice-import-state.d.mts
+      - hsk-tu-vous/scripts/voice-import-state.test.mjs
+      - hsk-tu-vous/scripts/voice-reuse-integration.test.mjs
+      - hsk-tu-vous/scripts/mcp-server.mjs
+      - hsk-tu-vous/scripts/cta-mcp.test.mjs
       - hsk-tu-vous/scripts/openrouter-voice.mjs
       - hsk-tu-vous/scripts/openrouter-voice.test.mjs
+      - hsk-tu-vous/scripts/import-voice.mjs
+      - hsk-tu-vous/scripts/media-duration.mjs
+      - hsk-tu-vous/scripts/media-duration.test.mjs
+      - hsk-tu-vous/scripts/voice-caption-boundary.mjs
+      - hsk-tu-vous/scripts/voice-caption-boundary.test.mjs
+      - hsk-tu-vous/scripts/caption-utils.mjs
+      - hsk-tu-vous/scripts/caption-utils.test.mjs
+      - hsk-tu-vous/scripts/cue-timeline.mjs
+      - hsk-tu-vous/scripts/cue-timeline.d.mts
+      - hsk-tu-vous/scripts/compile-cue-timeline.mjs
+      - hsk-tu-vous/scripts/compile-cue-timeline.d.mts
+      - hsk-tu-vous/scripts/cue-timeline.test.mjs
+      - hsk-tu-vous/scripts/narrated-beat-state.mjs
+      - hsk-tu-vous/scripts/narrated-beat-state.test.mjs
+      - hsk-tu-vous/scripts/cta-current-registration.test.mjs
+      - hsk-tu-vous/scripts/both-allowed-state.test.mjs
+      - hsk-tu-vous/scripts/action-design-plan.mjs
+      - hsk-tu-vous/scripts/motion-design-plan.mjs
+      - hsk-tu-vous/scripts/promo-production.mjs
+      - hsk-tu-vous/scripts/render-platform-videos.mjs
+      - hsk-tu-vous/scripts/render-episode.mjs
+      - hsk-tu-vous/scripts/render-tiktok-review.mjs
+      - hsk-tu-vous/scripts/make-episode.mjs
+      - hsk-tu-vous/scripts/lib.mjs
+      - hsk-tu-vous/src/EpisodeComposition.tsx
+      - hsk-tu-vous/src/NarratedActionScene.tsx
+      - hsk-tu-vous/src/NarratedMotionScene.tsx
       - hsk-tu-vous/scripts/gemini-word-recovery.mjs
       - hsk-tu-vous/scripts/gemini-word-recovery.test.mjs
       - .github/workflows/zernio-approved-publish.yml
@@ -28,8 +65,45 @@ on:
       - hsk-tu-vous/scripts/video-credentials.mjs
       - hsk-tu-vous/scripts/video-credentials.test.mjs
       - hsk-tu-vous/scripts/generate-voice-gemini.mjs
+      - hsk-tu-vous/scripts/voice-checkpoint.mjs
+      - hsk-tu-vous/scripts/voice-checkpoint.test.mjs
+      - hsk-tu-vous/scripts/voice-checkpoint-artifact.mjs
+      - hsk-tu-vous/scripts/voice-checkpoint-artifact.test.mjs
+      - hsk-tu-vous/scripts/voice-import-state.mjs
+      - hsk-tu-vous/scripts/voice-import-state.d.mts
+      - hsk-tu-vous/scripts/voice-import-state.test.mjs
+      - hsk-tu-vous/scripts/voice-reuse-integration.test.mjs
+      - hsk-tu-vous/scripts/mcp-server.mjs
+      - hsk-tu-vous/scripts/cta-mcp.test.mjs
       - hsk-tu-vous/scripts/openrouter-voice.mjs
       - hsk-tu-vous/scripts/openrouter-voice.test.mjs
+      - hsk-tu-vous/scripts/import-voice.mjs
+      - hsk-tu-vous/scripts/media-duration.mjs
+      - hsk-tu-vous/scripts/media-duration.test.mjs
+      - hsk-tu-vous/scripts/voice-caption-boundary.mjs
+      - hsk-tu-vous/scripts/voice-caption-boundary.test.mjs
+      - hsk-tu-vous/scripts/caption-utils.mjs
+      - hsk-tu-vous/scripts/caption-utils.test.mjs
+      - hsk-tu-vous/scripts/cue-timeline.mjs
+      - hsk-tu-vous/scripts/cue-timeline.d.mts
+      - hsk-tu-vous/scripts/compile-cue-timeline.mjs
+      - hsk-tu-vous/scripts/compile-cue-timeline.d.mts
+      - hsk-tu-vous/scripts/cue-timeline.test.mjs
+      - hsk-tu-vous/scripts/narrated-beat-state.mjs
+      - hsk-tu-vous/scripts/narrated-beat-state.test.mjs
+      - hsk-tu-vous/scripts/cta-current-registration.test.mjs
+      - hsk-tu-vous/scripts/both-allowed-state.test.mjs
+      - hsk-tu-vous/scripts/action-design-plan.mjs
+      - hsk-tu-vous/scripts/motion-design-plan.mjs
+      - hsk-tu-vous/scripts/promo-production.mjs
+      - hsk-tu-vous/scripts/render-platform-videos.mjs
+      - hsk-tu-vous/scripts/render-episode.mjs
+      - hsk-tu-vous/scripts/render-tiktok-review.mjs
+      - hsk-tu-vous/scripts/make-episode.mjs
+      - hsk-tu-vous/scripts/lib.mjs
+      - hsk-tu-vous/src/EpisodeComposition.tsx
+      - hsk-tu-vous/src/NarratedActionScene.tsx
+      - hsk-tu-vous/src/NarratedMotionScene.tsx
       - hsk-tu-vous/scripts/gemini-word-recovery.mjs
       - hsk-tu-vous/scripts/gemini-word-recovery.test.mjs
       - .github/workflows/zernio-approved-publish.yml
@@ -90,7 +164,22 @@ jobs:
           node --check scripts/video-credentials.mjs
           node --check scripts/video-credentials.test.mjs
           node --check scripts/generate-voice-gemini.mjs
+          node --check scripts/voice-checkpoint.mjs
+          node --check scripts/voice-checkpoint-artifact.mjs
+          node --check scripts/voice-import-state.mjs
           node --check scripts/openrouter-voice.mjs
+          node --check scripts/import-voice.mjs
+          node --check scripts/media-duration.mjs
+          node --check scripts/voice-caption-boundary.mjs
+          node --check scripts/cue-timeline.mjs
+          node --check scripts/compile-cue-timeline.mjs
+          node --check scripts/narrated-beat-state.mjs
+          node --check scripts/render-episode.mjs
+          node --check scripts/render-tiktok-review.mjs
+          node --check scripts/render-platform-videos.mjs
+          node --check scripts/make-episode.mjs
+          node --check scripts/mcp-server.mjs
+          node --check scripts/caption-utils.mjs
           node --check scripts/openrouter-voice.test.mjs
           node --check scripts/gemini-word-recovery.mjs
           node --check scripts/gemini-word-recovery.test.mjs
@@ -98,7 +187,7 @@ jobs:
           node --check scripts/zernio-publication-core.test.mjs
           node --check scripts/zernio-approved-publish.mjs
           node --check scripts/zernio-approved-publish.test.mjs
-          node --test scripts/gemini-word-recovery.test.mjs scripts/openrouter-voice.test.mjs
+          node --test scripts/gemini-word-recovery.test.mjs scripts/openrouter-voice.test.mjs scripts/voice-checkpoint.test.mjs scripts/voice-checkpoint-artifact.test.mjs scripts/voice-import-state.test.mjs scripts/voice-reuse-integration.test.mjs scripts/media-duration.test.mjs scripts/voice-caption-boundary.test.mjs scripts/caption-utils.test.mjs scripts/cue-timeline.test.mjs scripts/narrated-beat-state.test.mjs scripts/cta-current-registration.test.mjs scripts/both-allowed-state.test.mjs scripts/action-design-plan.test.mjs scripts/motion-design-plan.test.mjs scripts/promo-production.test.mjs scripts/platform-exports.test.mjs scripts/semantic-review-integration.test.mjs scripts/cta-mcp.test.mjs
           npm run check:consistency
       - name: Install FFmpeg and FFprobe for real synthetic MP4 tests
         run: |
@@ -172,10 +261,34 @@ jobs:
       - name: Resolve exact lesson and fail closed for protected approved audio
         id: episode
         run: node scripts/github-video-pipeline.mjs resolve "$REQUESTED_EPISODE" "$REQUESTED_LANGUAGE"
+      - name: Restore unapproved voice recovery data from this workflow run
+        if: github.run_attempt > 1
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: hsk-voice-recovery-${{ steps.episode.outputs.episode_id }}-${{ github.run_id }}
+          path: hsk-tu-vous
       - name: Use selected voice API and verified word-cue Remotion pipeline
+        id: make
         env:
           EPISODE_ID: ${{ steps.episode.outputs.episode_id }}
         run: npm run content:make -- "$EPISODE_ID" --language "$REQUESTED_LANGUAGE"
+      - name: Prepare hash-verified recovery data after a failed render attempt
+        id: recovery
+        if: failure() && steps.episode.outcome == 'success'
+        env:
+          EPISODE_ID: ${{ steps.episode.outputs.episode_id }}
+        run: node scripts/voice-checkpoint-artifact.mjs package "$EPISODE_ID" /tmp/hsk-ai-voice-recovery
+      - name: Preserve unapproved voice recovery data for a workflow rerun
+        if: failure() && steps.recovery.outcome == 'success' && steps.recovery.outputs.files != '0'
+        uses: actions/upload-artifact@v4
+        with:
+          name: hsk-voice-recovery-${{ steps.episode.outputs.episode_id }}-${{ github.run_id }}
+          path: /tmp/hsk-ai-voice-recovery/
+          if-no-files-found: ignore
+          retention-days: 1
+          compression-level: 0
+          overwrite: true
       - name: Verify and isolate both platform MP4s per language (no publishing)
         env:
           EPISODE_ID: ${{ steps.episode.outputs.episode_id }}

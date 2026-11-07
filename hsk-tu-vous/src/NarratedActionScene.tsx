@@ -3,6 +3,7 @@ import type {ActionModel} from "../scripts/action-design-plan.mjs";
 import type {ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
 import visual from "../content/visual-system.json";
 import {GraphicScene} from "./GraphicScene";
+import {activeNarratedBeat} from "../scripts/narrated-beat-state.mjs";
 
 const C=visual.colors;
 const L=visual.narratedMotionLayout;
@@ -71,6 +72,31 @@ const OrdinalStage:React.FC<{model:ActionModel;frame:number;compact?:boolean}>=(
   })}
 </svg>;
 
+const ChoiceStage:React.FC<{model:ActionModel;frame:number}>=({model,frame})=>{
+  const choices=model.choices??[];
+  const hasQuantity=Boolean(model.object&&model.count);
+  return <div role="img" aria-label={`choices: ${choices.join(" or ")}; selected: ${model.selected??"none"}`} style={{
+    width:"100%",height:A.graphicHeightPx,display:"flex",flexDirection:"column",justifyContent:"center",gap:hasQuantity?8:A.gapPx,
+  }}>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:24,width:"100%",height:hasQuantity?180:280}}>
+      {choices.map((choice,index)=>{
+        const selected=choice===model.selected;
+        const fontSize=choice.length<=2?(hasQuantity?132:A.choiceFontPx):choice.length<=6?92:58;
+        return <div key={`${choice}-${index}`} data-choice-value={choice} data-choice-selected={selected} style={{
+          position:"relative",display:"flex",alignItems:"center",justifyContent:"center",textAlign:"center",padding:"18px 22px",
+          border:`${selected?7:3}px solid ${selected?C.brandGold:P.secondary}`,borderRadius:34,
+          background:selected?`${C.brandGold}22`:`${P.secondary}22`,color:selected?C.brandGold:P.foreground,
+          fontSize,fontWeight:900,lineHeight:1.05,overflowWrap:"anywhere",opacity:enter(frame,index*4),
+        }}>
+          {choice}
+          {selected&&<span aria-label="selected" style={{position:"absolute",right:14,top:8,fontSize:38,color:C.brandGold}}>✓</span>}
+        </div>;
+      })}
+    </div>
+    {hasQuantity&&<div style={{height:A.comparisonObjectHeightPx,overflow:"hidden"}}><QuantityStage model={model} frame={frame} compact/></div>}
+  </div>;
+};
+
 const ModelStage:React.FC<{model:ActionModel;kind:string;frame:number;compact?:boolean}>=({model,kind,frame,compact=false})=><>
   {kind==="graphic"&&model.graphic&&<GraphicScene plan={model.graphic} frame={frame} height={compact?A.comparisonObjectHeightPx:A.graphicHeightPx}/>}
   {(kind==="quantity"||model.count)&&<QuantityStage model={model} frame={frame} compact={compact}/>}
@@ -79,24 +105,24 @@ const ModelStage:React.FC<{model:ActionModel;kind:string;frame:number;compact?:b
 </>;
 
 export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat[]}>=({frame,beats})=>{
-  const elapsed=beats.filter(b=>frame>=b.localFrame);
-  const active=elapsed[elapsed.length-1]??beats[0];
+  const active=activeNarratedBeat(beats,frame);
+  if(!active)return <AbsoluteFill style={{background:`radial-gradient(ellipse at 50% 49%, ${C.brandTeal}22, transparent 65%), ${P.background}`}}>
+    <div style={{position:"absolute",top:visual.motion.brandTopInsetPx,left:0,right:0,display:"flex",alignItems:"center",justifyContent:"center",gap:14,fontSize:30,fontWeight:900}}><Img src={staticFile("branding/hsk-ai-logo-1024.png")} style={{width:42,height:42,borderRadius:12}}/>HSK <span style={{color:C.brandGold}}>AI</span></div>
+  </AbsoluteFill>;
   const model=active.visual;
   if(!model) throw Error("Narrated action is missing its authored visual payload.");
   // Reuse only an object/count explicitly authored in this scene, so phrase
   // explanations retain context without another text layer.
   const context=beats.map(beat=>beat.visual).find(entry=>entry?.object&&entry.count);
   const stageModel=model.object||active.kind!=="phrase"?model:context?{...context,...model,object:context.object,count:context.count}:model;
+  const choiceModel=active.kind==="choice"&&!model.object&&context?{...context,...model,object:context.object,count:context.count}:model;
   const local=Math.max(0,frame-active.localFrame);
   return <AbsoluteFill style={{background:`radial-gradient(ellipse at 50% 49%, ${C.brandTeal}22, transparent 65%), ${P.background}`,color:P.foreground}}>
     <div style={{position:"absolute",top:visual.motion.brandTopInsetPx,left:0,right:0,display:"flex",alignItems:"center",justifyContent:"center",gap:14,fontSize:30,fontWeight:900}}><Img src={staticFile("branding/hsk-ai-logo-1024.png")} style={{width:42,height:42,borderRadius:12}}/>HSK <span style={{color:C.brandGold}}>AI</span></div>
     <div data-action-id={active.id} data-action-kind={active.kind} style={{position:"absolute",top:A.stageTopPx,left:80,right:80,height:A.graphicHeightPx,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:A.gapPx}}>
       {active.kind==="comparison"?<div style={{display:"flex",alignItems:"center",width:"100%",gap:A.comparisonGapPx}}>
         {model.models?.map((m,i)=><div key={i} style={{flex:1,minWidth:0,display:"flex",flexDirection:"column",alignItems:"center",gap:A.gapPx}}><ModelStage model={m} kind={m.kind??"phrase"} frame={local} compact/></div>)}
-      </div>:active.kind==="choice"?<>
-        {model.count?<QuantityStage model={model} frame={local}/>:context&&<svg width="100%" height={A.objectHeightPx} viewBox="0 0 820 320"><g transform="translate(410 160)"><ObjectGlyph object={context.object??"tea-cup"} frame={local}/></g></svg>}
-        {model.selected&&<svg width="80" height="70" viewBox="0 0 80 70" aria-label="correct choice"><path d="M12 33 32 53 68 12" fill="none" stroke={C.brandGold} strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" opacity={enter(local)}/></svg>}
-      </>:<ModelStage model={stageModel} kind={active.kind} frame={local}/> }
+      </div>:active.kind==="choice"?<ChoiceStage model={choiceModel} frame={local}/>:<ModelStage model={stageModel} kind={active.kind} frame={local}/> }
     </div>
   </AbsoluteFill>;
 };

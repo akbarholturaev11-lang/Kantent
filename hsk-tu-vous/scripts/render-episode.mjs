@@ -4,7 +4,6 @@ import { requireFreshGitMain } from "./git-freshness.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { buildCaptionSections } from "./caption-utils.mjs";
 import { readCtaLab, writeCtaLab } from "./cta-lab.mjs";
 import {
   prepareExportEpisodes,
@@ -15,6 +14,11 @@ import { renderSharedPlatformVideos } from "./render-platform-videos.mjs";
 import { prepareSemanticRender } from "./semantic-review-integration.mjs";
 import { validateProductionDuration } from "./duration-policy.mjs";
 import { compileMotionDesignTimeline } from "./motion-design-plan.mjs";
+import { compileCueTimeline } from "./compile-cue-timeline.mjs";
+import { groupTimedCaptions } from "./caption-utils.mjs";
+import { buildActionCaptionScenes, validateActionSubtitlePages } from "./action-text-layout.mjs";
+import { assertImportedAudioHash } from "./voice-import-state.mjs";
+import { sha256 } from "./voice-checkpoint.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import {
   getEpisode,
@@ -60,6 +64,7 @@ if (episode.voiceTextHash !== narrationHash(episode))
   );
 const audioPath = path.join(PROJECT_ROOT, "public", episode.audioSrc);
 await fs.access(audioPath);
+assertImportedAudioHash(episode, await fs.readFile(audioPath));
 if (
   !episode.captions?.length ||
   episode.captionSource !== "gemini-word-timestamps"
@@ -82,6 +87,19 @@ const durationValidation = validateProductionDuration(episode, visualSystem.dura
 const semanticTimeline = prepareSemanticRender(episode);
 const promoTimeline=compilePromoTimeline(episode);
 const motionTimeline = compileMotionDesignTimeline(episode, visualSystem.lessonPresentation);
+const cueTimeline = compileCueTimeline(episode, {
+  fps: 30,
+  presentationPolicy: visualSystem.lessonPresentation,
+  semanticTimeline,
+});
+validateActionSubtitlePages(
+  groupTimedCaptions(cueTimeline.wordCues, {
+    ...visualSystem.captions,
+    sections: cueTimeline.captionSections,
+  }),
+  buildActionCaptionScenes(episode, cueTimeline, 30),
+  30,
+);
 const folder = reviewDir(id);
 await fs.mkdir(folder, { recursive: true });
 episode.publishingStatus = "pending-owner-review";
@@ -96,6 +114,7 @@ await invalidateReviewArtifacts(id);
 if (semanticTimeline) await writeJson(path.join(folder, "visual-timeline.json"), semanticTimeline);
 if (promoTimeline) await writeJson(path.join(folder,"promo-timeline.json"),promoTimeline);
 if (motionTimeline) await writeJson(path.join(folder, "motion-timeline.json"), motionTimeline);
+await writeJson(path.join(folder, "cue-timeline.json"), cueTimeline);
 await writeStatus(id, {
   stage: "rendering",
   sourceRevision,
@@ -128,6 +147,7 @@ try {
     ),
     workDir: path.join(folder, ".render-work"),
     semanticTimeline,
+    cueTimeline,
   });
   for (const [platform, variant] of Object.entries(episodes)) {
     const files = paths[platform];

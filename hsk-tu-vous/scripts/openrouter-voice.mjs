@@ -13,6 +13,64 @@ const MODELS = new Set([
   "gemini-3.5-transcribe",
 ]);
 
+export class TranscriptionResponseError extends Error {
+  constructor(message, { retryable = false, httpStatus } = {}) {
+    super(message);
+    this.name = "TranscriptionResponseError";
+    this.retryable = retryable;
+    if (httpStatus !== undefined) this.httpStatus = httpStatus;
+  }
+}
+
+export function isRetryableTranscriptionError(error) {
+  if (error?.retryable === true) return true;
+  return ["AbortError", "TimeoutError"].includes(error?.name) ||
+    (error?.name === "TypeError" && /fetch|network|connect/i.test(error.message ?? ""));
+}
+
+export async function transcribeUntilAligned({
+  transcribe,
+  align,
+  previousAttempts = 0,
+  maxAttempts = 3,
+  onAttempt = () => {},
+  onRetry = () => {},
+}) {
+  if (typeof transcribe !== "function" || typeof align !== "function")
+    throw new TypeError("Transcription retry needs transcribe and align functions.");
+  if (!Number.isInteger(previousAttempts) || previousAttempts < 0 ||
+      !Number.isInteger(maxAttempts) || maxAttempts < 1 || previousAttempts > maxAttempts)
+    throw new RangeError("Transcription attempt budget is invalid.");
+
+  let attempts = previousAttempts;
+  let transcription;
+  let alignment;
+  while (!alignment?.captions && attempts < maxAttempts) {
+    attempts += 1;
+    await onAttempt(attempts);
+    try {
+      transcription = await transcribe(attempts);
+    } catch (error) {
+      const retryable = isRetryableTranscriptionError(error);
+      if (!retryable || attempts >= maxAttempts)
+        return { attempts, transcription: null, alignment: null, error, retryable };
+      await onRetry(error, attempts);
+      continue;
+    }
+    try {
+      alignment = align(transcription);
+    } catch (error) {
+      if (attempts >= maxAttempts)
+        return { attempts, transcription, alignment: null, error, retryable: false };
+      await onRetry(error, attempts);
+      continue;
+    }
+    if (!alignment?.captions && attempts < maxAttempts)
+      await onRetry(new TranscriptionResponseError("Transcript did not match source narration.", { retryable: true }), attempts);
+  }
+  return { attempts, transcription, alignment, error: null, retryable: false };
+}
+
 export function resolveVoiceApi(env = process.env) {
   const provider = (env.HSK_AI_VOICE_API_PROVIDER || "openrouter").trim();
   if (provider !== "openrouter" && provider !== "gemini-direct") {
@@ -36,7 +94,7 @@ function authHeaders(apiKey) {
   return { Authorization: "Bearer " + apiKey, "Content-Type": "application/json" };
 }
 
-async function throwResponseError(response, operation) {
+async function throwResponseError(response, operation, { retryableStatuses = false } = {}) {
   let reason = "";
   try {
     const body = await response.json();
@@ -44,8 +102,16 @@ async function throwResponseError(response, operation) {
   } catch {
     // Do not echo arbitrary provider responses or secrets.
   }
-  throw new Error(operation + " failed (HTTP " + response.status + ")" +
-    (reason ? ": " + reason.slice(0, 300) : ""));
+  const message = operation + " failed (HTTP " + response.status + ")" +
+    (reason ? ": " + reason.slice(0, 300) : "");
+  if (retryableStatuses) {
+    throw new TranscriptionResponseError(message, {
+      httpStatus: response.status,
+      retryable: response.status === 408 || response.status === 409 ||
+        response.status === 425 || response.status === 429 || response.status >= 500,
+    });
+  }
+  throw new Error(message);
 }
 
 function pcmToWav(bytes, sampleRate, channels) {
@@ -121,10 +187,15 @@ export async function transcribeOpenRouter({
     }),
     signal: AbortSignal.timeout(120000),
   });
-  if (!response.ok) await throwResponseError(response, "OpenRouter transcription");
-  const result = await response.json();
+  if (!response.ok) await throwResponseError(response, "OpenRouter transcription", { retryableStatuses: true });
+  let result;
+  try {
+    result = await response.json();
+  } catch {
+    throw new TranscriptionResponseError("OpenRouter transcription returned malformed JSON.", { retryable: true });
+  }
   if (!Array.isArray(result?.words) || result.words.length === 0) {
-    throw new Error("OpenRouter transcription returned no provider word timestamps; stop before captions.");
+    throw new TranscriptionResponseError("OpenRouter transcription returned no provider word timestamps; retry STT before captions.", { retryable: true });
   }
   const wordAnnotations = result.words.map((item, index) => {
     const text = item?.word ?? item?.text;
@@ -134,7 +205,7 @@ export async function transcribeOpenRouter({
         typeof start !== "number" || !Number.isFinite(start) ||
         typeof end !== "number" || !Number.isFinite(end) ||
         start < 0 || end <= start) {
-      throw new Error("Invalid OpenRouter provider word timestamp at index " + index);
+      throw new TranscriptionResponseError("Invalid OpenRouter provider word timestamp at index " + index, { retryable: true });
     }
     return {
       text,

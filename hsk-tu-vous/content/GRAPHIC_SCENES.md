@@ -8,7 +8,7 @@ Keep each language's authored cues and imported word timestamps independent unde
 
 1. Identify the real objects, actions and changes in the narration. Write an `explains` rationale and exact spoken `cueText` for every change. Preserve the learning point and verified narration.
 2. Use existing quantity/number/ordinal models where they fit. For a new object or action, author a `graphic` drawing. Write the actual geometry and movement, not prose such as “show a swimmer”. `content/visual-examples/swimming-and-gate.json` provides reusable technical drawings without voice or production approval.
-3. Validate before TTS. After genuine word timestamps are imported, keyframes start at the exact spoken anchor. `atMs` is elapsed time since that anchor; it never replaces the imported cue. A later beat selects a new drawing state and stops the preceding tracks.
+3. Validate before TTS. After genuine word timestamps are imported, keyframes start at the exact spoken anchor. `atMs` is elapsed time since that anchor; it never replaces the imported cue. Every non-looping motion track must settle before the next spoken motion cue or the scene end; timing is checked against imported word anchors. A later beat selects a new drawing state and stops the preceding tracks.
 4. Inspect start, moving and settled poses, then their transitions in the real MP4 with actual narration. Apply the pass/fail review in `EDITING_SPEC.md#Review before delivery`; repair missing/misleading details and repeat the affected render. Mechanical checks do not prove teaching meaning, visual quality or phone readability.
 **Owner-approved pre-TTS frame-intent review (2026-11-05):** Each beat's authored explanation must be tied to a visible object/action/state and exact spoken cue. For the first beat, inspect what appears **before** the cue as well as at/after it; a frame may otherwise reveal the answer prematurely. Confirm that the final comparison state does not contradict the last spoken conclusion. Existing code validates shapes/change, **not semantic correctness**, so the agent must inspect actual rendered frames. When twice repeating a targeted visual fix fails, diagnose the underlying drawing/contract/timing defect, fix it and rerun tests rather than regenerating generic filler.
 
@@ -56,7 +56,7 @@ The moving circle above demonstrates syntax; it is not a generic replacement for
 - A `graphic` cannot mix legacy object/count/value/choice/model payloads. Use multiple nodes or separate beats.
 - Drawings cannot contain text, images, HTML, scripts, external resources or arbitrary attributes. Spoken text stays in the existing single subtitle. Do not draw headlines as paths to bypass that rule.
 
-Executable limits live in `scripts/graphic-scene.mjs` and its MCP input schema in `scripts/graphic-scene-schema.mjs`. Invalid drawings have no fallback.
+Executable limits live in `scripts/graphic-scene.mjs` and its MCP input schema in `scripts/graphic-scene-schema.mjs`. Lines need a visible stroke of at least one drawing unit and nonzero length; fill alone does not paint an SVG line. The validator checks conservative painted-geometry bounds after parent transforms against the SVG viewBox at the 30 fps render samples and authored key poses, and rejects a scene whose visible geometry never enters the canvas. Invalid drawings have no fallback. This is a blank/off-canvas guard, not proof that the drawing communicates the intended lesson.
 
 ## Visible coverage and timing
 

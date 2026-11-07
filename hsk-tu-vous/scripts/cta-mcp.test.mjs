@@ -3,6 +3,7 @@ import test from "node:test";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { createHash } from "node:crypto";
 import { spawn, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
@@ -38,9 +39,11 @@ test(
       );
       // This integration exercises CTA gates and invalidation, not paid TTS.
       await fs.writeFile(path.join(fixture, "scripts/generate-voice-gemini.mjs"), `
+import fs from 'node:fs/promises';
 import {getEpisode,requireCurrentCta,narrationHash,writeJson,writeStatus} from './lib.mjs';
 const id=process.argv[2]; const {episode,filePath}=await getEpisode(id);
 await requireCurrentCta(episode); episode.voiceTextHash=narrationHash(episode);
+const countPath='.voice-generation-count'; let count=0; try{count=Number(await fs.readFile(countPath,'utf8'))||0}catch(error){if(error.code!=='ENOENT')throw error} await fs.writeFile(countPath,String(count+1));
 await writeJson(filePath,episode); await writeStatus(id,{stage:'voice-script-ready'});
 `);
       await fs.symlink(
@@ -210,11 +213,18 @@ await writeJson(filePath,episode); await writeStatus(id,{stage:'voice-script-rea
       assert(run.voiceTextHash);
       Object.assign(run, {
         audioSrc: `generated/${item.id}/voice.mp3`,
+        audioSha256: createHash("sha256").update("fixture voice bytes").digest("hex"),
         audioDurationMs: 31000,
         captions: [{ text: "HSK", startMs: 100, endMs: 200 }],
         captionSource: "gemini-word-timestamps",
       });
       await write(path.join(folder, "episode.json"), run);
+      const voiceFile = path.join(fixture, "public", run.audioSrc);
+      await fs.mkdir(path.dirname(voiceFile), { recursive: true });
+      await fs.writeFile(voiceFile, "fixture voice bytes");
+      const reused = await call("generate_voice", { date: item.date });
+      assert.equal(reused.reusedImportedVoice, true);
+      assert.equal(await fs.readFile(path.join(fixture, ".voice-generation-count"), "utf8"), "1");
       for (const name of [
         "video.mp4",
         "captions.srt",

@@ -117,6 +117,13 @@ test("MCP exposes both-language production and separately scoped read/approval s
     assert.equal(results[1].structuredContent.profile.locale, "tg-TJ");
     const tgProfile = results[1].structuredContent.profile;
     assert.equal(results[1].structuredContent.sampleAudioPath, tgProfile.sampleAudio ? path.join(PROJECT_ROOT, tgProfile.sampleAudio) : null);
+    const pinyinEdit = tools.update_production_plan.inputSchema.safeParse({date:"2026-11-06",sceneEdits:[{
+      sceneId:"example",motionBeats:[{id:"pinyin-span",kind:"phrase",cueText:"游泳",visual:{
+        title:"游泳",hanzi:"我会游泳",pinyin:"Wǒ huì yóuyǒng",meaning:"уметь плавать",
+        pinyinSegments:[{hanzi:"我",pinyin:"Wǒ"},{hanzi:"会",pinyin:"huì"},{hanzi:"游泳",pinyin:"yóuyǒng"}],
+      }}],
+    }]});
+    assert.ok(pinyinEdit.success, JSON.stringify(pinyinEdit.error));
     assert.equal(tools.approve_voice_profile.inputSchema.safeParse({ language: "all", confirmation: "Tasdiqlayman" }).success, false);
   } finally { await server.close(); }
 });
