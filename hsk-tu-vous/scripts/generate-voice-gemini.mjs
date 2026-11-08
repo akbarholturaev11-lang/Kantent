@@ -4,7 +4,7 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
   atomicWriteFile, atomicWriteJson, findReusableVoiceCheckpoint,
-  isValidWavBuffer, matchesRecordedWavChunk, sha256,
+  isValidWavBuffer, matchesRecordedAudioHash, matchesRecordedWavChunk, sha256,
 } from "./voice-checkpoint.mjs";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
@@ -1219,6 +1219,10 @@ try {
   const masterWav = await fs.readFile(wavPath);
   if (!isValidWavBuffer(masterWav))
     throw new Error("Saved TTS master is not a complete RIFF/WAVE file.");
+  if (RESUME_FOLDER_NAME && metadata.wavSha256 &&
+      !matchesRecordedAudioHash(masterWav, metadata.wavSha256)) {
+    throw new Error("Saved master WAV hash differs from its checkpoint; preserving original for review.");
+  }
   let mp3Exists = false;
   try {
     await fs.access(mp3Path);
@@ -1230,12 +1234,16 @@ try {
     throw new Error("Production MP3 output already exists; refusing to overwrite it.");
   let mp3Ready = false;
   if (mp3Exists) {
-    try {
-      await audioDurationMs(mp3Path, ffmpegRuntime);
-      mp3Ready = true;
-    } catch {
-      await fs.rm(mp3Path, { force: true });
+    // A valid MP3 duration proves only decodability, not voice identity.
+    // A mismatched or unrecorded existing take must never be silently
+    // accepted, removed or replaced on resume.
+    if (!matchesRecordedAudioHash(await fs.readFile(mp3Path), metadata.mp3Sha256)) {
+      throw new Error(
+        "Saved MP3 lacks a matching recorded SHA-256; preserving the original file for manual review.",
+      );
     }
+    await audioDurationMs(mp3Path, ffmpegRuntime);
+    mp3Ready = true;
   }
   if (!mp3Ready) {
     const mp3Temp = path.join(outputDir, "voice.tmp.mp3");
