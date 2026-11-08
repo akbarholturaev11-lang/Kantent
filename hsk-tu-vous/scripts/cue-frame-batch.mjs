@@ -31,7 +31,7 @@ export async function extractCueFrameBatch(video,outputDir,requests,{execute=exe
     const temporary=path.join(outputDir,".frame-batch-"+label);
     await fs.mkdir(temporary,{recursive:false});
     try {
-      const selector=frames.map(frame=>"eq(n\\\\,"+frame+")").join("+");
+      const selector=frames.map(frame=>"eq(n"+String.fromCharCode(92)+","+frame+")").join("+");
       const filter="select="+selector+",scale="+width+":"+height+":flags=lanczos";
       await execute(["-hide_banner","-loglevel","error","-nostdin","-y",
         "-i",video,"-vf",filter,"-fps_mode","passthrough",
