@@ -10,7 +10,7 @@
   },
   "channel": {
     "platform": "telegram",
-    "account": "@aibotsakbar",
+    "account": "@hskaiapp",
     "accountId": "6ae1661bf80a20df8f31158e",
     "linkId": "link_6ae1682ea1088191baa9e9b69eb012fe",
     "credentialGroup": "tiktok-telegram",
@@ -193,7 +193,7 @@
       }
     ],
     "existingTelegram": {
-      "account": "@aibotsakbar",
+      "account": "@hskaiapp",
       "accountId": "6ae1661bf80a20df8f31158e",
       "languageCode": "tg",
       "connectorGroup": "tiktok-telegram",
@@ -202,7 +202,7 @@
     "videoPolicy": "No effect on existing RU/TJ video/CTA accounts, workflows, or owner-approval gates. No Instagram Reels, Facebook Reels, TikTok, YouTube, Stories, auto-DM, or Russian Facebook Zernio publishing.",
     "copyPolicy": {
       "evidence": "Read actual HSK-AI-Bot/main HEAD, last 72h commits/diffs and release/deploy evidence; mention only genuinely user-facing launched changes. If no verified news, skip all destinations.",
-      "languages": "Write independent Russian text for @hskai.app; independent Tajik Cyrillic text for @hskai.apptj, Facebook Akbarholturaev and Telegram @aibotsakbar; never translate hashtags or make up features.",
+      "languages": "Write independent Russian text for @hskai.app; independent Tajik Cyrillic text for @hskai.apptj, Facebook Akbarholturaev and Telegram @hskaiapp; never translate hashtags or make up features.",
       "formatting": "Brief human copy, one main news point or short fact-backed summary; no hype, no fake version claims. If platform requires caption, provide the caption separately from image."
     },
     "imagePolicy": {
