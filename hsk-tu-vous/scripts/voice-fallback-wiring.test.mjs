@@ -141,5 +141,6 @@ test("one-take is the default; long takes are transcribed in saved silence-bound
 });
 
 test("an alignment failure on the last STT attempt reaches recovery instead of aborting", () => {
-  assert.match(source, /if \(!result\.retryable && !result\.transcription\)\s*throw result\.error;/);
+  assert.match(source, /if \(!result\.transcription\) \{\s*await persistMetadata\(\);\s*await persistCheckpoint\(\);\s*throw result\.error;\s*\}/,
+    "a spent budget with no response is a transport failure, never written as a null attempt");
 });

@@ -1807,11 +1807,16 @@ try {
       chunkAlignment = result.alignment;
       if (result.error) {
         metadata.lastTranscriptionError = safeErrorMessage(result.error);
-        // Only a transport failure with no response is fatal here. A response
-        // that failed alignment (e.g. timings moving backwards, real RU
-        // one-take 2026-11-08) still goes to the recovery path below.
-        if (!result.retryable && !result.transcription)
+        // A failure with no provider response (transport/network, even a
+        // retryable one whose run budget is spent) is fatal here and is
+        // reported as such, not as a mismatch. A response that failed
+        // alignment (e.g. timings moving backwards, real RU one-take
+        // 2026-11-08) still goes to the recovery path below.
+        if (!result.transcription) {
+          await persistMetadata();
+          await persistCheckpoint();
           throw result.error;
+        }
       }
       const attemptPath = path.join(
         outputDir,
