@@ -84,7 +84,7 @@ test("tampered caption, locale, audio hash and scene invalidate a rendered revie
 test("no real cue plan cannot create fake semantic proof",()=>{
   const {episode,timeline}=fixture();
   timeline.scenes[0].motionBeats=[];
-  assert.throws(()=>planCueFrameReview(episode,timeline),/No compiled action\/promo cue/);
+  assert.throws(()=>planCueFrameReview(episode,timeline),/No compiled action\/promo\/semantic cue/);
 });
 
 test("reject off-scene cue, reversed cue time, unsafe beat id and unbounded work",()=>{
