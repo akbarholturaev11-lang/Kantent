@@ -81,3 +81,24 @@ test("readings come only from count-matched author pairs", () => {
   assert.deepEqual(Object.fromEntries([...readings].map(([k, v]) => [k, [...v]])), { 他: ["ta"], 比: ["bi"], 我: ["wo"], 高: ["gao"] });
   assert.equal(foldLocaleToken("Ещё", "ru-RU"), "еще");
 });
+
+test("real RU one-take probe: letter names, B for 比 and a joined word, still strict otherwise", () => {
+  const readings = buildHanziReadings([{ hanzi: "他比我高", pinyin: "Tā bǐ wǒ gāo" }, { hanzi: "很", pinyin: "hěn" }]);
+  const match = createSpokenMatcher({ locale: "ru-RU", readings });
+  // 2026-11-08 Gemini Transcribe of the isolated 0.6 s "比" clip, both providers: "B".
+  assert.equal(match("比", "B"), true);
+  assert.equal(match("很", "B"), false, "B is bi, never hen");
+  assert.equal(match("比", "D"), false);
+  assert.equal(match("冷", "B"), false, "no verified reading → strict");
+  // Window 5 (ru-RU hint): "A би би плюс признак" for "A 比 B плюс признак".
+  const expected = ["a", "比", "b", "плюс", "признак"].map((text) => ({ text }));
+  const heard = ["A", "би", "би", "плюс", "признак"].map((text, i) => ({ text: text.toLocaleLowerCase("und"), startMs: i * 100, endMs: i * 100 + 90 }));
+  assert.equal(alignSpokenTokens(expected, heard, match).aligned.length, 5);
+  assert.equal(match("a", "а"), true, "Cyrillic homoglyph of the variable A");
+  assert.equal(match("b", "в"), false, "В is a different letter");
+  // Gap 6: "Тоже" for "то же" — both written words get the one measured span.
+  const joined = alignSpokenTokens([{ text: "то" }, { text: "же" }, { text: "правило" }],
+    [{ text: "тоже", startMs: 0, endMs: 300 }, { text: "правило", startMs: 300, endMs: 700 }], match);
+  assert.deepEqual(joined.aligned.map((w) => [w.text, w.startMs, w.endMs]), [["тоже", 0, 300], ["тоже", 0, 300], ["правило", 300, 700]]);
+  assert.deepEqual(alignSpokenTokens([{ text: "то" }, { text: "же" }], [{ text: "тожи", startMs: 0, endMs: 300 }], match), { failedAt: 0 });
+});

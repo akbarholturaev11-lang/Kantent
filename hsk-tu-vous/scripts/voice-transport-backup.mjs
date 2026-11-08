@@ -19,9 +19,15 @@ const PRE_CONNECT_CODES = new Set([
   "ENETUNREACH", "EHOSTUNREACH", "ENETDOWN",
 ]);
 
+// A reset DURING the TLS handshake is also pre-request (real 2026-11-08
+// probe: "Client network socket disconnected before secure TLS connection
+// was established"); any other ECONNRESET may follow a sent request.
+const TLS_HANDSHAKE_RESET = /before secure TLS connection was established/i;
+
 export function isPreConnectFailure(error) {
   const causes = [error, error?.cause, ...(error?.cause?.errors ?? [])].filter(Boolean);
-  return causes.some((cause) => PRE_CONNECT_CODES.has(cause.code));
+  return causes.some((cause) => PRE_CONNECT_CODES.has(cause.code) ||
+    (cause.code === "ECONNRESET" && TLS_HANDSHAKE_RESET.test(String(cause.message ?? ""))));
 }
 
 export function isOpenRouterBackupEligible(error) {

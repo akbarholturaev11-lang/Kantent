@@ -87,13 +87,17 @@ test("never-connected failures are retried/backed up; failures after sending are
   const happyEyeballs = Object.assign(new TypeError("fetch failed"), { cause: Object.assign(new AggregateError([
     Object.assign(new Error("a"), { code: "ECONNREFUSED" }), Object.assign(new Error("b"), { code: "ENETUNREACH" }),
   ]), {}) });
-  for (const error of [connectTimeout, dns, happyEyeballs]) {
+  // Real 2026-11-08 probe: reset during the TLS handshake (nothing was sent).
+  const tlsHandshake = Object.assign(new TypeError("fetch failed"), { cause: Object.assign(
+    new Error("Client network socket disconnected before secure TLS connection was established"), { code: "ECONNRESET" }) });
+  for (const error of [connectTimeout, dns, happyEyeballs, tlsHandshake]) {
     assert.equal(isPreConnectFailure(error), true);
     assert.equal(isOpenRouterBackupEligible(error), true);
   }
   const reset = Object.assign(new TypeError("fetch failed"), { cause: Object.assign(new Error("other side closed"), { code: "UND_ERR_SOCKET" }) });
   const bodyTimeout = Object.assign(new Error("The operation was aborted due to timeout"), { name: "TimeoutError" });
-  for (const error of [reset, bodyTimeout, new Error("bad word timestamps")]) {
+  const resetAfterSend = Object.assign(new TypeError("fetch failed"), { cause: Object.assign(new Error("read ECONNRESET"), { code: "ECONNRESET" }) });
+  for (const error of [reset, resetAfterSend, bodyTimeout, new Error("bad word timestamps")]) {
     assert.equal(isPreConnectFailure(error), false);
     assert.equal(isOpenRouterBackupEligible(error), false);
   }

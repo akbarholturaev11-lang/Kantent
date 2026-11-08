@@ -97,3 +97,13 @@ test("X-10: single-hint language passes over the same audio fill what the mixed 
   assert.deepEqual(merged.map(b=>b.text),["Дуруст","他","比","我","高","Ӯ","аз","ман"]);
   assert.ok(merged.every((b,i)=>i===0||b.startMs>=merged[i-1].startMs),"time ordered");
 });
+test("one recognized word covering two written words keeps one measured span", () => {
+  const words = expected(["то","locale"],["же","locale"],["правило","locale"]);
+  const plan = buildRecoveryPlan(words, [block("Тоже",["тоже"],0,300), block("правило",["правило"],300,700)], 1000);
+  assert.equal(plan.gaps.length, 0);
+  const merged = mergeRecoveredBlocks(words, [block("Тоже",["тоже"],0,300), block("правило",["правило"],300,700)], plan, []);
+  assert.deepEqual(merged.map((b) => [b.text, b.covers ?? 1]), [["Тоже",2],["правило",1]]);
+  const gapPlan = buildRecoveryPlan(words, [block("правило",["правило"],500,900)], 1000);
+  const got = selectRecoveredBlocks(gapPlan.gaps[0].tokens, [block("Тоже",["тоже"],100,400)]);
+  assert.deepEqual(mergeRecoveredBlocks(words, [block("правило",["правило"],500,900)], gapPlan, [got.map((b) => ({ ...b }))]).map((b) => b.text), ["Тоже","правило"]);
+});

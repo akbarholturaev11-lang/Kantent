@@ -26,6 +26,18 @@ export function selectExactBlocks(expected, blocks, match = (wanted, heard) => w
             tokens.every((x,k)=>match(expected[j+k].text,x))) {
           set(i+1,j+tokens.length,score+tokens.length,{i,j,matched:true,count:1});
         }
+        // One recognized token may be the exact join of 2–3 written locale
+        // words ("тоже" for "то же"); the covered words share its span.
+        if (tokens.length===1) {
+          for (let words=2; words<=3 && j+words<=n; words++) {
+            const span=expected.slice(j,j+words).map(x=>x.text);
+            if (span.some(x=>/\p{Script=Han}/u.test(x))) break;
+            if (match(span.join(""),tokens[0])) {
+              set(i+1,j+words,score+words,{i,j,matched:true,count:1});
+              break;
+            }
+          }
+        }
         // A recognizer may split one written word into 2–3 timed words
         // ("қад"+"баландтар"); their exact concatenation can cover it.
         for (let count=2; count<=3 && j<n && i+count<=m; count++) {
@@ -105,7 +117,9 @@ export function selectRecoveredBlocks(tokens,blocks,{ match } = {}) {
 /** One annotation for a matched span (several split words → one word). */
 export function spanBlock(blocks,m) {
   const count=m.blockCount??1;
-  if(count===1)return blocks[m.blockIndex];
+  const covered=m.to-m.from;
+  if(count===1)return covered>1&&(blocks[m.blockIndex].tokens??[]).length===1
+    ?{...blocks[m.blockIndex],covers:covered}:blocks[m.blockIndex];
   const span=blocks.slice(m.blockIndex,m.blockIndex+count);
   return {...span[0],text:span.map(b=>b.text).join(""),tokens:[span.map(b=>b.tokens[0]).join("")],
     endMs:Math.max(...span.map(b=>b.endMs)),mergedBlocks:count};
@@ -119,8 +133,9 @@ export function mergeRecoveredBlocks(expected,original,plan,recovered) {
     if(!Array.isArray(blocks))throw Error("Missing recovered clip blocks.");
     let j=gap.from;
     for(const b of blocks){
-      combined.push({from:j,to:j+b.tokens.length,block:b});
-      j+=b.tokens.length;
+      const width=b.covers??b.tokens.length;
+      combined.push({from:j,to:j+width,block:b});
+      j+=width;
     }
     if(j!==gap.to)throw Error("Recovered clip did not cover the full missing passage.");
   }

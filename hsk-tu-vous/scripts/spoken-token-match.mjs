@@ -11,10 +11,22 @@
  *    word (a compound the recognizer split);
  *  - a Hanzi syllable written in Cyrillic or toneless pinyin, ONLY when that
  *    character's reading comes from an author-verified Hanzi/pinyin pair.
+ *  - (real 2026-11-08 one-take probe) a Hanzi heard as the Latin letter whose
+ *    Chinese letter name is that verified syllable ("B" for 比 bǐ), and a
+ *    Latin formula variable ("A 比 B") heard as its letter name ("А", "би");
+ *  - one recognized token that is the exact join of 2–3 written locale
+ *    tokens ("тоже" for "то же", "hskai" for "HSK AI"); every covered
+ *    written word gets that one measured span, nothing is subdivided.
  * Captions always display the source narration; nothing is invented.
  */
 
 const TAJIK_FOLD = [["ӣ", "и"], ["ӯ", "у"]];
+// Chinese names of Latin letters that equal a Mandarin syllable.
+const LETTER_AS_SYLLABLE = { b: "bi", d: "di", p: "pi", t: "ti" };
+// A one-letter Latin variable read aloud: homoglyph or Russian/Tajik letter name.
+const LETTER_NAMES = {
+  a: ["а", "эй"], b: ["би", "бэ"], c: ["си", "цэ"], d: ["ди", "дэ"], x: ["икс"],
+};
 
 export function foldLocaleToken(text, locale) {
   let value = String(text).toLocaleLowerCase("und");
@@ -111,9 +123,12 @@ export function createSpokenMatcher({ locale, readings = new Map() }) {
   return (expected, recognized) => {
     if (expected === recognized) return true;
     if (foldLocaleToken(expected, locale) === foldLocaleToken(recognized, locale)) return true;
-    if (!/^\p{Script=Han}$/u.test(expected) || !readings.has(expected)) return false;
     const heard = String(recognized);
+    const letter = String(expected).toLocaleLowerCase("und");
+    if (LETTER_NAMES[letter]?.includes(phoneticFold(heard))) return true;
+    if (!/^\p{Script=Han}$/u.test(expected) || !readings.has(expected)) return false;
     for (const syllable of readings.get(expected)) {
+      if (/^[a-z]$/iu.test(heard) && LETTER_AS_SYLLABLE[heard.toLowerCase()] === syllable) return true;
       if (/^[a-zÀ-ɏ]+$/iu.test(heard) && tonelessPinyin(heard) === syllable) return true;
       if (pinyinCyrillicCandidates(syllable).has(phoneticFold(heard))) return true;
     }
@@ -134,6 +149,19 @@ export function alignSpokenTokens(expected, recognized, match, { maxMergeParts =
     if (cursor < recognized.length && match(wanted, recognized[cursor].text)) {
       aligned.push(recognized[cursor]);
       cursor += 1;
+      continue;
+    }
+    // One recognized token may be the exact join of 2–3 written locale words.
+    let joined = 0;
+    for (let words = 2; words <= maxMergeParts && index + words <= expected.length && cursor < recognized.length; words += 1) {
+      const span = expected.slice(index, index + words).map((entry) => entry.text);
+      if (span.some((text) => /\p{Script=Han}/u.test(text))) break;
+      if (match(span.join(""), recognized[cursor].text)) { joined = words; break; }
+    }
+    if (joined) {
+      for (let part = 0; part < joined; part += 1) aligned.push({ ...recognized[cursor], sharedBy: joined });
+      cursor += 1;
+      index += joined - 1;
       continue;
     }
     let merged = null;

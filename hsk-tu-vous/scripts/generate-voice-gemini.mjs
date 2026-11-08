@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
   atomicWriteFile, atomicWriteJson, findReusableVoiceCheckpoint, findUnresumableSavedTakes,
@@ -12,10 +12,11 @@ import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
 import { requireSystemMediaTools } from "./media-duration.mjs";
 import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
 import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
+import { offsetAnnotations, parseSilences, planSttWindows, windowsTouching } from "./stt-windows.mjs";
 import { redactCredentials, requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
 import {
   resolveVoiceApi, requireOpenRouterKey, synthesizeOpenRouterWav,
-  transcribeOpenRouter, transcribeUntilAligned,
+  transcribeOpenRouter, transcribeUntilAligned, TranscriptionResponseError,
   OPENROUTER_TTS_MAX_ATTEMPTS, STT_ATTEMPTS_PER_RUN,
 } from "./openrouter-voice.mjs";
 import { isPreConnectFailure, openRouterBackupKey, withOpenRouterBackup } from "./voice-transport-backup.mjs";
@@ -48,8 +49,14 @@ import {
 
 const API_ROOT = "https://generativelanguage.googleapis.com";
 const API_REVISION = "2026-05-20";
-// Default OFF: no production video/caption change before end-to-end approval.
-const ONE_TAKE_PILOT = process.env.HSK_AI_CONTINUOUS_TTS_PILOT === "true";
+// Owner decision 2026-11-08 after listening to the bi-comparison RU/TG A/B:
+// one exact unchanged narration take per language is the DEFAULT (fewer
+// requests, no scene-joint stretching, steadier Tajik accent).
+// HSK_AI_TTS_MODE=scene keeps the older per-scene takes on explicit request.
+const TTS_MODE_SETTING = (process.env.HSK_AI_TTS_MODE ?? "one-take").trim() || "one-take";
+if (!["one-take", "scene"].includes(TTS_MODE_SETTING))
+  throw new Error("HSK_AI_TTS_MODE must be one-take (default) or scene.");
+const ONE_TAKE = TTS_MODE_SETTING === "one-take";
 const EPISODE_ID = process.argv[2];
 const CLI_OPTIONS = process.argv.slice(3);
 let PLATFORM;
@@ -281,6 +288,8 @@ function tokenParts(value) {
 function spokenParts(token) {
   if (token === "hsk") return ["эйч", "эс", "кей"];
   if (token === "ai") return ["эй", "ай"];
+  // Real RU one-take window 2026-11-08: "Попробуй HSKAI." for "HSK AI".
+  if (token === "hskai") return ["эйч", "эс", "кей", "эй", "ай"];
   if (token === "сюэсяо") return ["сюэ", "сяо"];
   return [token];
 }
@@ -657,9 +666,9 @@ async function generateTtsWav(config, text) {
       },
       "Gemini speech generation",
       {
-        maxAttempts: ONE_TAKE_PILOT ? 2 : 4,
+        maxAttempts: ONE_TAKE ? 2 : 4,
         onAttempt: () => {
-          if (ONE_TAKE_PILOT && config.ttsRequestCount >= 2)
+          if (ONE_TAKE && config.ttsRequestCount >= 2)
             throw new Error("One-take TTS limit of two HTTP attempts reached; original audio remains preserved.");
           config.ttsRequestCount += 1;
         },
@@ -813,126 +822,189 @@ async function transcribeDirectAudio(filePath, languageCodes, displayName, confi
   }));
 }
 
+const pad2 = (value) => String(value).padStart(2, "0");
+
+/** Exact WAV cut of saved audio; offsets are never inferred or expanded. */
+function cutWavClip(sourcePath, startMs, endMs, clipPath, ffmpegRuntime) {
+  // -ss after -i ensures an accurate cut.
+  execFileSync(ffmpegRuntime.ffmpegPath, [
+    "-hide_banner", "-loglevel", "error", "-nostdin", "-y",
+    "-i", sourcePath, "-ss", (startMs / 1000).toFixed(3),
+    "-t", ((endMs - startMs) / 1000).toFixed(3),
+    "-map", "0:a:0", "-ac", "1", "-ar", String(config.sampleRateHz),
+    "-c:a", "pcm_s16le", clipPath,
+  ], { env: ffmpegRuntime.env, stdio: ["ignore", "pipe", "pipe"] });
+  const actualMs = mediaDurationMs(clipPath, ffmpegRuntime);
+  if (actualMs <= 0) throw new Error("Gemini STT clip was empty.");
+  return actualMs;
+}
+
+/** Measured silences of saved audio (ffmpeg silencedetect, -35 dB, ≥0.25 s). */
+function measureSilences(sourcePath, ffmpegRuntime) {
+  const result = spawnSync(ffmpegRuntime.ffmpegPath, [
+    "-hide_banner", "-nostdin", "-i", sourcePath,
+    "-af", "silencedetect=noise=-35dB:d=0.25", "-f", "null", "-",
+  ], { env: ffmpegRuntime.env, encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
+  if (result.status !== 0) throw new Error("ffmpeg silence detection failed.");
+  return parseSilences(result.stderr);
+}
+
+/**
+ * One saved audio file -> provider word annotations. Gemini Direct with the
+ * given hints (opt-in OpenRouter backup on quota/5xx/unreachable), or the
+ * OpenRouter transport, which accepts no language hint. Same saved audio
+ * either way; speech is never regenerated here.
+ */
+async function transcribeSavedAudio(filePath, languageCodes, displayName, { stage, chunk }) {
+  const openRouter = async () => (await transcribeOpenRouter({
+    apiKey: openRouterKeyFor(config), model: config.transcribeModel, audioPath: filePath,
+  })).wordAnnotations;
+  if (config.transcriptionTransport === "openrouter")
+    return { annotations: await openRouter(), provider: "openrouter", languageCodes: [] };
+  let provider = "gemini-direct";
+  const annotations = await withOpenRouterBackup({
+    stage,
+    enabled: Boolean(config.openRouterBackupKey),
+    backup: async () => { provider = "openrouter"; return openRouter(); },
+    onFallback: (event) => {
+      config.transcriptionTransport = "openrouter";
+      config.fallbackEvents.push({ ...event, chunk });
+      if (metadata) {
+        metadata.transcriptionTransport = config.transcriptionTransport;
+        metadata.fallbackEvents = config.fallbackEvents;
+      }
+      console.warn("VOICE_TRANSPORT_FALLBACK " + JSON.stringify(event));
+    },
+    primary: () => transcribeDirectAudio(filePath, languageCodes, displayName, config),
+  });
+  return { annotations, provider, languageCodes: provider === "openrouter" ? [] : languageCodes };
+}
+
+/**
+ * A provider response for one exact clip is paid for once: it is saved and
+ * reused by later attempts and resumed runs (key = exact bounds + hints).
+ * Empty responses are not cached, so they may be requested again.
+ */
+async function cachedClipTranscription(cachePath, key, request) {
+  try {
+    const saved = await readJson(cachePath);
+    if (saved?.key === key && Array.isArray(saved.annotations) && saved.annotations.length) return saved;
+  } catch (error) {
+    if (error?.code !== "ENOENT" && !(error instanceof SyntaxError)) throw error;
+  }
+  const result = await request();
+  const record = { key, ...result, model: config.transcribeModel, savedAt: new Date().toISOString() };
+  if (record.annotations?.length)
+    await fs.writeFile(cachePath, JSON.stringify(record, null, 2) + "\n");
+  return record;
+}
+
 async function recoverActualWordClips({
   chunkText, originalAnnotations, audioPath, durationMs, outputDir,
-  chunkNumber, config, ffmpegRuntime, transcriptionLanguages
+  chunkNumber, ffmpegRuntime, transcriptionLanguages,
+  windows = [{ startMs: 0, endMs: durationMs }],
 }) {
   const words = sourceWords(chunkText);
   const expected = flattenExpected(words).map((entry) => ({
     text: entry.text,
     language: /\p{Script=Han}/u.test(words[entry.wordIndex].display) ? "zh" : "locale",
   }));
+  const match = spokenMatch();
+  const chunk = Number(chunkNumber);
   const directory = path.join(outputDir, "recovery-diagnostic", "chunk-" + chunkNumber);
   await fs.mkdir(directory, { recursive: true });
-  let original = timedBlocks(originalAnnotations, durationMs);
-  // X-10 (real 2026-11-08 run): a mixed-hint pass drops one language — RU lost
-  // "с 比 или с 很", TG chunk 2 kept only the Mandarin. One pass per single
-  // hint over the SAME saved audio keeps each language; the strict DP then
-  // selects one time-ordered exact cover. Direct transport only (hints).
+  const byTime = (a, b) => a.startMs - b.startMs || a.endMs - b.endMs;
+  const blocks = timedBlocks(originalAnnotations, durationMs).sort(byTime);
+  let plan = buildRecoveryPlan(expected, blocks, durationMs, { match });
+  // X-10 (real 2026-11-08 runs): a mixed-hint pass drops one language — RU
+  // lost every Mandarin sentence, TG chunk 2 kept only the Mandarin. One
+  // single-hint pass per language that is still MISSING, only over the
+  // silence-bounded windows that contain a gap, over the SAME saved audio.
+  // The strict DP then selects one time-ordered exact cover. Direct only:
+  // the OpenRouter transport takes no language hint.
   const languagePasses = [];
-  if (config.transcriptionTransport !== "openrouter" && transcriptionLanguages.length > 1) {
-    for (const code of transcriptionLanguages) {
-      try {
-        const annotations = await transcribeDirectAudio(audioPath, [code],
-          `hsk-language-pass-${EPISODE_ID}-${chunkNumber}-${code}`, config);
-        languagePasses.push({ languageCode: code, annotations });
-      } catch (error) {
-        languagePasses.push({ languageCode: code, error: safeErrorMessage(error) });
+  if (plan.gaps.length && config.transcriptionTransport !== "openrouter" && transcriptionLanguages.length > 1) {
+    const codesFor = (gap) => gap.language === "zh" ? [transcriptionLanguages.at(-1)]
+      : gap.language === "locale" ? [transcriptionLanguages[0]] : transcriptionLanguages;
+    for (const windowIndex of windowsTouching(windows, plan.gaps)) {
+      const window = windows[windowIndex];
+      const gapsHere = plan.gaps.filter((gap) => gap.startMs < window.endMs && gap.endMs > window.startMs);
+      for (const code of [...new Set(gapsHere.flatMap(codesFor))]) {
+        if (config.transcriptionTransport === "openrouter") break;
+        const name = `window-${pad2(windowIndex + 1)}-${code}`;
+        try {
+          const record = await cachedClipTranscription(path.join(directory, name + ".json"),
+            `${window.startMs}-${window.endMs}-${code}`, async () => {
+              const clipPath = path.join(directory, `window-${pad2(windowIndex + 1)}.wav`);
+              cutWavClip(audioPath, window.startMs, window.endMs, clipPath, ffmpegRuntime);
+              return transcribeSavedAudio(clipPath, [code],
+                `hsk-language-pass-${EPISODE_ID}-${chunkNumber}-${windowIndex + 1}-${code}`,
+                { stage: "stt-language-pass", chunk });
+            });
+          blocks.push(...timedBlocks(offsetAnnotations(record.annotations, window.startMs), durationMs));
+          languagePasses.push({ window: windowIndex + 1, languageCode: code, provider: record.provider, words: record.annotations.length });
+        } catch (error) {
+          languagePasses.push({ window: windowIndex + 1, languageCode: code, error: safeErrorMessage(error) });
+        }
       }
     }
     await fs.writeFile(path.join(directory, "language-passes.json"),
-      JSON.stringify({ sourceAudio: path.basename(audioPath), languagePasses }, null, 2) + "\n");
-    const passBlocks = languagePasses.filter((pass) => pass.annotations?.length)
-      .flatMap((pass) => timedBlocks(pass.annotations, durationMs));
-    original = [...original, ...passBlocks].sort((a, b) => a.startMs - b.startMs || a.endMs - b.endMs);
+      JSON.stringify({ sourceAudio: path.basename(audioPath), windows, languagePasses }, null, 2) + "\n");
+    blocks.sort(byTime);
+    plan = buildRecoveryPlan(expected, blocks, durationMs, { match });
   }
-  const plan = buildRecoveryPlan(expected, original, durationMs, { match: spokenMatch() });
-  if (!plan.gaps.length && languagePasses.length) {
-    const joined = mergeRecoveredBlocks(expected, original, plan, []);
-    const joinedAnnotations = joined.map((b) => ({
-      text: b.text, startOffset: (b.startMs / 1000).toFixed(3) + "s", endOffset: (b.endMs / 1000).toFixed(3) + "s",
-    }));
-    const verified = alignWords(chunkText, joinedAnnotations, durationMs);
-    if (verified.mismatches.length) throw Error("Language passes still failed exact whole-narration word alignment.");
-    await fs.writeFile(path.join(directory, "verified-merge.json"), JSON.stringify({
-      provider: config.transcriptionTransport, model: config.transcribeModel, languagePasses: languagePasses.map((p) => p.languageCode),
-      wordAnnotations: joinedAnnotations, exactAlignment: true,
-    }, null, 2) + "\n");
-    return { wordAnnotations: joinedAnnotations, alignment: verified, transcript: chunkText, recoverySpans: 0 };
-  }
-  if (!plan.gaps.length || plan.gaps.length > 8)
-    throw new Error("Recovery requires 1–8 independently bounded missing speech spans.");
-  await fs.writeFile(path.join(directory,"plan.json"),JSON.stringify({
-    sourceAudio: path.basename(audioPath), originalAnnotations,
+  const recovered = [];
+  // Bounded: at most 8 independently bounded spans per STT window.
+  if (plan.gaps.length > 8 * windows.length)
+    throw new Error(`Recovery allows at most ${8 * windows.length} bounded missing speech spans; found ${plan.gaps.length}.`);
+  await fs.writeFile(path.join(directory, "plan.json"), JSON.stringify({
+    sourceAudio: path.basename(audioPath), windows, originalAnnotations,
     missingGaps: plan.gaps, matchedTokenCount: plan.matchedTokenCount,
     expectedTokens: expected.length,
-  },null,2)+"\n");
-  const recovered = [];
-  for (const [gapIndex,gap] of plan.gaps.entries()) {
-    if (gap.endMs - gap.startMs < 80) throw Error("Recoverable speech clip is too short.");
-    const clipName = "span-" + String(gapIndex+1).padStart(2,"0");
-    const clipPath = path.join(directory,clipName+".wav");
-    // -ss after -i ensures an accurate cut; offsets are not inferred or expanded.
-    execFileSync(ffmpegRuntime.ffmpegPath,[
-      "-hide_banner","-loglevel","error","-nostdin","-y",
-      "-i",audioPath,"-ss",(gap.startMs/1000).toFixed(3),
-      "-t",((gap.endMs-gap.startMs)/1000).toFixed(3),
-      "-map","0:a:0","-ac","1","-ar",String(config.sampleRateHz),
-      "-c:a","pcm_s16le",clipPath,
-    ],{env:ffmpegRuntime.env,stdio:["ignore","pipe","pipe"]});
-    const actualMs = mediaDurationMs(clipPath,ffmpegRuntime);
-    if (actualMs <= 0) throw Error("Gemini recovery clip was empty.");
-    const languageCode = gap.language === "zh" ? transcriptionLanguages.at(-1)
-      : gap.language === "mixed" ? null : transcriptionLanguages[0];
-    let annotations;
-    const openRouterClip = async () => (await transcribeOpenRouter({
-      apiKey: openRouterKeyFor(config), model: config.transcribeModel, audioPath: clipPath,
-    })).wordAnnotations;
-    if (config.transcriptionTransport === "openrouter") {
-      annotations = await openRouterClip();
-    } else {
-      // Same saved clip audio either way; a Direct quota/5xx may use the
-      // opt-in OpenRouter backup. The strict exact-token gate still decides.
-      annotations = await withOpenRouterBackup({
-        stage: "stt-recovery",
-        enabled: Boolean(config.openRouterBackupKey),
-        backup: openRouterClip,
-        onFallback: (event) => {
-          config.transcriptionTransport = "openrouter";
-          config.fallbackEvents.push({ ...event, chunk: Number(chunkNumber) });
-          console.warn("VOICE_TRANSPORT_FALLBACK " + JSON.stringify(event));
-        },
-        // A mixed RU/TG+Mandarin gap gets both hints (strict gate decides).
-        primary: () => transcribeDirectAudio(clipPath, languageCode ? [languageCode] : transcriptionLanguages,
-          "hsk-recovery-"+EPISODE_ID+"-"+chunkNumber+"-"+clipName, config),
-      });
+  }, null, 2) + "\n");
+  for (const gap of plan.gaps) {
+    if (gap.endMs - gap.startMs < 80) throw new Error("Recoverable speech clip is too short.");
+    const clipName = `span-${gap.startMs}-${gap.endMs}`;
+    // A mixed RU/TG+Mandarin gap gets one single-hint pass per language on
+    // Direct (a mixed hint drops one of them); OpenRouter takes no hint.
+    const hintSets = config.transcriptionTransport === "openrouter" ? [[]]
+      : gap.language === "zh" ? [[transcriptionLanguages.at(-1)]]
+        : gap.language === "locale" ? [[transcriptionLanguages[0]]]
+          : transcriptionLanguages.map((code) => [code]);
+    const clipPath = path.join(directory, clipName + ".wav");
+    const gapBlocks = [];
+    for (const hints of hintSets) {
+      const label = hints.length ? hints.join("+") : "nohint";
+      const record = await cachedClipTranscription(path.join(directory, `${clipName}-${label}.json`),
+        `${gap.startMs}-${gap.endMs}-${label}`, async () => {
+          const actualMs = cutWavClip(audioPath, gap.startMs, gap.endMs, clipPath, ffmpegRuntime);
+          return { ...(await transcribeSavedAudio(clipPath, hints.length ? hints : transcriptionLanguages,
+            `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${clipName}-${label}`, { stage: "stt-recovery", chunk })),
+          clipStartMs: gap.startMs, clipEndMs: gap.endMs, actualClipDurationMs: actualMs };
+        });
+      const clipMs = record.actualClipDurationMs ?? (gap.endMs - gap.startMs);
+      gapBlocks.push(...timedBlocks(record.annotations, clipMs)
+        .map((b) => ({ ...b, startMs: b.startMs + gap.startMs, endMs: b.endMs + gap.startMs })));
     }
-    // Save the exact provider response/provenance before attempting alignment.
-    await fs.writeFile(path.join(directory,clipName+".json"),
-      JSON.stringify({languageCode:languageCode ?? transcriptionLanguages.join("+"),clipStartMs:gap.startMs,clipEndMs:gap.endMs,
-        actualClipDurationMs:actualMs,annotations,provider:config.transcriptionTransport,
-        model:config.transcribeModel},null,2)+"\n");
-    const blocks = timedBlocks(annotations,actualMs);
-    const selected = selectRecoveredBlocks(gap.tokens,blocks,{ match: spokenMatch() });
-    recovered.push(selected.map(b=>({
-      ...b,startMs:b.startMs+gap.startMs,endMs:b.endMs+gap.startMs,
-    })));
+    gapBlocks.sort(byTime);
+    recovered.push(selectRecoveredBlocks(gap.tokens, gapBlocks, { match }));
   }
-  const joined=mergeRecoveredBlocks(expected,original,plan,recovered);
-  const joinedAnnotations=joined.map(b=>({
-    text:b.text,
-    startOffset:(b.startMs/1000).toFixed(3)+"s",
-    endOffset:(b.endMs/1000).toFixed(3)+"s",
+  const joined = mergeRecoveredBlocks(expected, blocks, plan, recovered);
+  const joinedAnnotations = joined.map((b) => ({
+    text: b.text,
+    startOffset: (b.startMs / 1000).toFixed(3) + "s",
+    endOffset: (b.endMs / 1000).toFixed(3) + "s",
   }));
-  const verified=alignWords(chunkText,joinedAnnotations,durationMs);
-  if(verified.mismatches.length)throw Error(
-    "Recovery clips still failed exact whole-narration word alignment.");
-  await fs.writeFile(path.join(directory,"verified-merge.json"),
-    JSON.stringify({provider:config.transcriptionTransport,model:config.transcribeModel,
-      actualClipOffsets:plan.gaps,wordAnnotations:joinedAnnotations,
-      exactAlignment:true},null,2)+"\n");
-  return {wordAnnotations:joinedAnnotations,alignment:verified,
-    transcript:chunkText,recoverySpans:plan.gaps.length};
+  const verified = alignWords(chunkText, joinedAnnotations, durationMs);
+  if (verified.mismatches.length)
+    throw new Error("Recovered words still failed exact whole-narration word alignment.");
+  await fs.writeFile(path.join(directory, "verified-merge.json"), JSON.stringify({
+    provider: config.transcriptionTransport, model: config.transcribeModel,
+    windows, languagePasses, actualClipOffsets: plan.gaps,
+    wordAnnotations: joinedAnnotations, exactAlignment: true,
+  }, null, 2) + "\n");
+  return { wordAnnotations: joinedAnnotations, alignment: verified, transcript: chunkText,
+    recoverySpans: plan.gaps.length, languagePasses: languagePasses.length };
 }
 
 function safeErrorMessage(error) {
@@ -1150,8 +1222,10 @@ await writeTargetStatus({
 const productionRoot = path.join(targetReviewDir, "gemini-production");
 const textHash = createHash("sha256").update(narration, "utf8").digest("hex");
 const ttsSource = PLATFORM ? { ...episode, scenes: [tiktokCtaScene] } : episode;
-const ttsMode = ONE_TAKE_PILOT ? "continuous-pilot" : "scene";
-const ttsChunks = ONE_TAKE_PILOT
+// "continuous-pilot" is the stored id of one-take audio since the pilot;
+// kept unchanged so saved takes stay resumable (checkpoints compare it).
+const ttsMode = ONE_TAKE ? "continuous-pilot" : "scene";
+const ttsChunks = ONE_TAKE
   ? createContinuousTtsChunks(ttsSource, { expectedNarration: narration })
   : createTtsChunks(ttsSource);
 if (!ttsChunks.length) throw new Error("No narration chunks were created.");
@@ -1293,7 +1367,7 @@ if (RESUME_FOLDER_NAME && metadata.ttsChunkCount !== ttsChunks.length) {
 config.ttsRequestCount = metadata.ttsRequestCount ?? 0;
 metadata.ttsGenerationMode = ttsMode;
 metadata.ttsHttpAttemptLimitPerTake = config.apiProvider === "openrouter"
-  ? OPENROUTER_TTS_MAX_ATTEMPTS : (ONE_TAKE_PILOT ? 2 : 4);
+  ? OPENROUTER_TTS_MAX_ATTEMPTS : (ONE_TAKE ? 2 : 4);
 metadata.openRouterBackupHttpAttemptsPerChunk = config.openRouterBackupKey ? OPENROUTER_TTS_MAX_ATTEMPTS : 0;
 metadata.googleQuotaKeyRotationEnabled = false;
 metadata.ttsTransport = config.ttsTransport;
@@ -1301,7 +1375,7 @@ metadata.transcriptionTransport = config.transcriptionTransport;
 metadata.fallbackEvents = config.fallbackEvents;
 metadata.ttsChunkCount = ttsChunks.length;
 metadata.chunkSceneIds = ttsChunks.map((chunk) => chunk.sceneIds);
-metadata.chunkingStrategy = ONE_TAKE_PILOT
+metadata.chunkingStrategy = ONE_TAKE
   ? "one exact unchanged narration take per language/package (max 12000 chars)"
   : "scene boundaries; at most 12000 narration characters per TTS and transcription request";
 metadata.previousVoiceProvider = episode.voiceProvider ?? null;
@@ -1552,6 +1626,51 @@ try {
         // Still fails the gate: not reused, a fresh bounded attempt follows.
       }
     }
+    // Long one-take audio is transcribed in silence-bounded windows (see
+    // stt-windows.mjs); a scene chunk under 25 s stays one request. The
+    // windows are fixed per take so saved window responses stay valid.
+    metadata.sttWindows ??= [];
+    let sttWindows = metadata.sttWindows[index];
+    if (!Array.isArray(sttWindows) || !sttWindows.length ||
+        sttWindows.at(-1).endMs !== metadata.chunkDurationsMs[index]) {
+      try {
+        sttWindows = planSttWindows({
+          durationMs: metadata.chunkDurationsMs[index],
+          silences: metadata.chunkDurationsMs[index] >= 25_000 ? measureSilences(chunkWavPath, ffmpegRuntime) : [],
+        });
+      } catch (error) {
+        // No measured silence: keep the whole-file request, never cut speech.
+        metadata.sttWindowError = safeErrorMessage(error);
+        sttWindows = [{ startMs: 0, endMs: metadata.chunkDurationsMs[index] }];
+      }
+      metadata.sttWindows[index] = sttWindows;
+      await persistMetadata();
+    }
+    const windowedStt = sttWindows.length > 1;
+    async function transcribeWindows(attempt) {
+      const windowDir = path.join(outputDir, "stt-windows");
+      await fs.mkdir(windowDir, { recursive: true });
+      const annotations = [];
+      for (const [windowIndex, window] of sttWindows.entries()) {
+        const name = `part-${chunkNumber}-window-${pad2(windowIndex + 1)}`;
+        const record = await cachedClipTranscription(path.join(windowDir, name + ".json"),
+          `${window.startMs}-${window.endMs}-${transcriptionLanguages.join("+")}`, async () => {
+            const clipPath = path.join(windowDir, name + ".wav");
+            cutWavClip(chunkWavPath, window.startMs, window.endMs, clipPath, ffmpegRuntime);
+            return transcribeSavedAudio(clipPath, transcriptionLanguages,
+              `hsk-production-${EPISODE_ID}-${index + 1}-w${windowIndex + 1}-attempt-${attempt}`,
+              { stage: "stt", chunk: index + 1 });
+          });
+        annotations.push(...offsetAnnotations(record.annotations, window.startMs));
+      }
+      if (!annotations.length)
+        throw new TranscriptionResponseError("Windowed STT returned no provider word timestamps.", { retryable: true });
+      return {
+        transcript: annotations.map((word) => word.text).join(" "),
+        wordAnnotations: annotations,
+        sttWindows,
+      };
+    }
     if (!chunkAlignment?.captions) {
       // Direct Gemini STT on the saved audio (upload, transcribe, always delete).
       async function transcribeDirect(attempt) {
@@ -1635,7 +1754,10 @@ try {
       }
       const result = await transcribeUntilAligned({
         previousAttempts: attempts,
-        maxAttempts: attempts + STT_ATTEMPTS_PER_RUN,
+        // Windowed: saved window responses are reused, so a second attempt
+        // only re-requests windows that failed; an identical mismatch retry
+        // would buy nothing. Gaps go to bounded recovery instead.
+        maxAttempts: attempts + (windowedStt ? 2 : STT_ATTEMPTS_PER_RUN),
         onAttempt: async (attempt) => {
           attempts = attempt;
           metadata.transcriptionAttempts ??= [];
@@ -1649,6 +1771,7 @@ try {
           await persistCheckpoint();
         },
         transcribe: async (attempt) => {
+          if (windowedStt) return transcribeWindows(attempt);
           // A malformed/empty 200 retries this STT request only. The saved
           // TTS WAV/MP3 remain the immutable input to every attempt.
           const openRouterStt = () => transcribeOpenRouter({
@@ -1721,9 +1844,11 @@ try {
         const clips = await recoverActualWordClips({
           chunkText:ttsChunks[index].text,
           originalAnnotations:transcription.wordAnnotations,
-          audioPath:transcriptionAudioPath,
+          // Exact cuts from the WAV whose duration the timings were checked against.
+          audioPath:chunkWavPath,
           durationMs:metadata.chunkDurationsMs[index],
-          outputDir,chunkNumber,config,ffmpegRuntime,transcriptionLanguages,
+          outputDir,chunkNumber,ffmpegRuntime,transcriptionLanguages,
+          windows:sttWindows,
         });
         chunkAlignment=clips.alignment;
         transcription={
@@ -1734,7 +1859,7 @@ try {
         await fs.writeFile(transcriptPath,JSON.stringify(transcription,null,2)+"\n");
         metadata.recoveredClips ??= [];
         metadata.recoveredClips.push({chunk:index+1,spans:clips.recoverySpans,
-          model:config.transcribeModel});
+          languagePasses:clips.languagePasses,model:config.transcribeModel});
         delete metadata.lastTranscriptionError;
         delete metadata.lastTranscriptionMismatch;
         await persistMetadata();

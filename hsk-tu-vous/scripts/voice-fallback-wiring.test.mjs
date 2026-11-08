@@ -25,15 +25,19 @@ test("PR #56 fallback: Direct TTS may switch to OpenRouter only before any saved
 
 test("STT and clip recovery fall back on the SAME saved audio; per-run budget", () => {
   const stt = between("const result = await transcribeUntilAligned({", "attempts = result.attempts;");
-  assert.match(stt, /maxAttempts: attempts \+ STT_ATTEMPTS_PER_RUN/);
+  assert.match(stt, /maxAttempts: attempts \+ \(windowedStt \? 2 : STT_ATTEMPTS_PER_RUN\)/);
+  assert.match(stt, /if \(windowedStt\) return transcribeWindows\(attempt\);/);
   assert.match(stt, /if \(config\.transcriptionTransport === "openrouter"\) return openRouterStt\(\);/);
   assert.match(stt, /stage: "stt",[\s\S]*backup: openRouterStt,[\s\S]*primary: \(\) => transcribeDirect\(attempt\)/);
   assert.match(stt, /audioPath: transcriptionAudioPath/);
   assert.doesNotMatch(source, /captions && attempts < 3/, "no cumulative cap that strands a resumed take");
   const recovery = between("async function recoverActualWordClips", "function safeErrorMessage");
   assert.match(recovery, /stage: "stt-recovery"/);
-  assert.match(recovery, /audioPath: clipPath/);
-  assert.match(recovery, /provider:config\.transcriptionTransport/);
+  const saved = between("async function transcribeSavedAudio(", "async function cachedClipTranscription(");
+  assert.match(saved, /apiKey: openRouterKeyFor\(config\), model: config\.transcribeModel, audioPath: filePath,/);
+  assert.match(saved, /primary: \(\) => transcribeDirectAudio\(filePath, languageCodes, displayName, config\),/,
+    "Direct and backup read the same saved clip");
+  assert.match(recovery, /provider: config\.transcriptionTransport/);
 });
 
 test("resume and checkpoints carry the actual transports; no OpenRouter key -> no silent resume", () => {
@@ -96,9 +100,10 @@ test("V-10/V-11 wiring: main alignment and recovery share one verified spoken ma
   const captions = between("function captionsFromAligned(", "async function uploadForTranscription");
   assert.match(captions, /text: word\.display,/, "captions always show the source narration, never the ASR spelling");
   assert.match(source, /const pairs = collectHanziPinyinPairs\(episode\);/);
-  assert.match(source, /buildRecoveryPlan\(expected, original, durationMs, \{ match: spokenMatch\(\) \}\)/);
-  assert.match(source, /selectRecoveredBlocks\(gap\.tokens,blocks,\{ match: spokenMatch\(\) \}\)/);
-  assert.match(source, /transcribeDirectAudio\(clipPath, languageCode \? \[languageCode\] : transcriptionLanguages,/);
+  const recovery = between("async function recoverActualWordClips({", "function safeErrorMessage");
+  assert.match(recovery, /const match = spokenMatch\(\);/);
+  assert.equal((recovery.match(/buildRecoveryPlan\(expected, blocks, durationMs, \{ match \}\)/g) ?? []).length, 2);
+  assert.match(recovery, /selectRecoveredBlocks\(gap\.tokens, gapBlocks, \{ match \}\)/);
 });
 
 test("a resumed take re-checks its saved STT responses before spending a new attempt", () => {
@@ -109,15 +114,30 @@ test("a resumed take re-checks its saved STT responses before spending a new att
   assert.match(stt, /metadata\.reusedSavedTranscriptions\.push\(\{ chunk: index \+ 1, attempt: saved \}\)/);
 });
 
-test("X-10 wiring: single-hint language passes run before gap clips, Direct transport only", () => {
+test("X-10 wiring: single-hint passes only for missing languages, only in windows with a gap, Direct only", () => {
   const recovery = between("async function recoverActualWordClips({", "function safeErrorMessage");
-  const passes = recovery.indexOf("for (const code of transcriptionLanguages) {");
-  const plan = recovery.indexOf("const plan = buildRecoveryPlan(expected, original, durationMs, { match: spokenMatch() });");
-  assert.ok(passes > 0 && plan > passes, "language passes feed the plan");
-  assert.match(recovery, /if \(config\.transcriptionTransport !== "openrouter" && transcriptionLanguages\.length > 1\)/);
-  assert.match(recovery, /transcribeDirectAudio\(audioPath, \[code\],/);
+  const first = recovery.indexOf("let plan = buildRecoveryPlan(expected, blocks, durationMs, { match });");
+  const passes = recovery.indexOf("for (const windowIndex of windowsTouching(windows, plan.gaps)) {");
+  const replan = recovery.indexOf("plan = buildRecoveryPlan(expected, blocks, durationMs, { match });", passes);
+  const clips = recovery.indexOf("for (const gap of plan.gaps) {");
+  assert.ok(first > 0 && passes > first && replan > passes && clips > replan, "plan -> passes on gap windows -> re-plan -> gap clips");
+  assert.match(recovery, /if \(plan\.gaps\.length && config\.transcriptionTransport !== "openrouter" && transcriptionLanguages\.length > 1\)/);
+  assert.match(recovery, /transcribeSavedAudio\(clipPath, \[code\],/);
   assert.match(recovery, /language-passes\.json/);
-  assert.match(recovery, /if \(!plan\.gaps\.length && languagePasses\.length\) \{[\s\S]*const verified = alignWords\(chunkText, joinedAnnotations, durationMs\);/);
+  assert.match(recovery, /cachedClipTranscription\(path\.join\(directory, name \+ "\.json"\)/, "a paid pass is saved and reused");
+  assert.match(recovery, /if \(plan\.gaps\.length > 8 \* windows\.length\)/);
+});
+
+test("one-take is the default; long takes are transcribed in saved silence-bounded windows", () => {
+  assert.match(source, /const TTS_MODE_SETTING = \(process\.env\.HSK_AI_TTS_MODE \?\? "one-take"\)/);
+  assert.match(source, /const ttsMode = ONE_TAKE \? "continuous-pilot" : "scene";/, "stored id unchanged: saved takes stay resumable");
+  const loop = between("metadata.sttWindows ??= [];", "if (!chunkAlignment?.captions) {\n      // Direct Gemini STT");
+  assert.match(loop, /planSttWindows\(\{/);
+  assert.match(loop, /cutWavClip\(chunkWavPath, window\.startMs, window\.endMs, clipPath, ffmpegRuntime\);/);
+  assert.match(loop, /annotations\.push\(\.\.\.offsetAnnotations\(record\.annotations, window\.startMs\)\);/);
+  assert.match(loop, /metadata\.sttWindows\[index\] = sttWindows;\s*await persistMetadata\(\);/, "windows are fixed per take");
+  const cache = between("async function cachedClipTranscription(", "async function recoverActualWordClips(");
+  assert.match(cache, /if \(saved\?\.key === key && Array\.isArray\(saved\.annotations\) && saved\.annotations\.length\) return saved;/);
 });
 
 test("an alignment failure on the last STT attempt reaches recovery instead of aborting", () => {
