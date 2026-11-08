@@ -209,20 +209,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "overlay": "rise"
@@ -379,20 +379,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "overlay": "link"
@@ -521,20 +521,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               }
             }
@@ -684,20 +684,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               }
             }
@@ -853,20 +853,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "overlay": "marks"
@@ -1036,20 +1036,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "overlay": "rise"
@@ -1207,20 +1207,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "focus": "a"
@@ -1377,20 +1377,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "overlay": "link"
@@ -1548,20 +1548,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "focus": "b"
@@ -1731,20 +1731,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "overlay": "rise"
@@ -1923,20 +1923,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "overlay": "link"
@@ -2093,20 +2093,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "overlay": "marks"
@@ -2332,20 +2332,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "overlay": "cross"
@@ -2515,20 +2515,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "overlay": "rise"
@@ -2679,8 +2679,8 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "yesterday-warm",
-                "today-cold"
+                "panda-summer",
+                "panda-winter"
               ],
               "icons": [
                 "icon-warm",
@@ -2838,8 +2838,8 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "yesterday-warm",
-                "today-cold"
+                "panda-summer",
+                "panda-winter"
               ],
               "icons": [
                 "icon-warm",
@@ -2998,8 +2998,8 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "yesterday-warm",
-                "today-cold"
+                "panda-summer",
+                "panda-winter"
               ],
               "icons": [
                 "icon-warm",
@@ -3187,8 +3187,8 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "yesterday-warm",
-                "today-cold"
+                "panda-summer",
+                "panda-winter"
               ],
               "icons": [
                 "icon-warm",
@@ -3376,8 +3376,8 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "yesterday-warm",
-                "today-cold"
+                "panda-summer",
+                "panda-winter"
               ],
               "icons": [
                 "icon-warm",
@@ -3536,8 +3536,8 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "yesterday-warm",
-                "today-cold"
+                "panda-summer",
+                "panda-winter"
               ],
               "icons": [
                 "icon-warm",
@@ -3719,20 +3719,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "overlay": "marks"
@@ -3861,20 +3861,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               }
             }
@@ -4043,20 +4043,20 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "two-people"
+                "panda-and-friend"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.21,
-                  "y": 0.355,
-                  "w": 0.3,
-                  "h": 0.605
+                  "x": 0.1,
+                  "y": 0.275,
+                  "w": 0.38,
+                  "h": 0.675
                 },
                 "b": {
-                  "x": 0.54,
-                  "y": 0.405,
-                  "w": 0.27,
-                  "h": 0.55
+                  "x": 0.52,
+                  "y": 0.61,
+                  "w": 0.37,
+                  "h": 0.34
                 }
               },
               "overlay": "rise"
@@ -4185,8 +4185,8 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "yesterday-warm",
-                "today-cold"
+                "panda-summer",
+                "panda-winter"
               ],
               "icons": [
                 "icon-warm",
@@ -4344,8 +4344,8 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "yesterday-warm",
-                "today-cold"
+                "panda-summer",
+                "panda-winter"
               ],
               "icons": [
                 "icon-warm",
@@ -4681,7 +4681,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "bi-comparison-height-20261104",
-    "sourceHash": "4616c8847afb2bbede50ba2f4aafb602bf9744a125e1c280a9b6df427c053d3e",
+    "sourceHash": "96f79c52a9069a52f4a007fe59c685694dcf7073a5e4fc5eb5a07ae7c71cf70e",
     "authoredOn": "2026-10-28",
     "status": "draft-awaiting-audio-review"
   }

@@ -37,7 +37,7 @@ export const LiquidGlassDefs:React.FC=()=><svg width="0" height="0" style={{posi
   </filter>
 </svg>;
 
-export const LiquidGlass:React.FC<{children:React.ReactNode;style?:React.CSSProperties;radius?:number;tint?:string}>=({children,style,radius=40,tint="rgba(255,255,255,.14)"})=>
+export const LiquidGlass:React.FC<{children:React.ReactNode;style?:React.CSSProperties;radius?:number;tint?:string}>=({children,style,radius=40,tint="rgba(14,16,22,.42)"})=>
   <div style={{position:"relative",borderRadius:radius,overflow:"hidden",background:tint,
     backdropFilter:"url(#liquid-glass) blur(16px) saturate(1.7)",WebkitBackdropFilter:"blur(16px) saturate(1.7)",
     border:"1.5px solid rgba(255,255,255,.38)",
@@ -51,8 +51,8 @@ const art=(episodeId:string,name:string)=>staticFile(`lesson-art/${episodeId}/${
 type Camera={scale:number;cx:number;cy:number};
 const cameraFor=(ill:Illustration|undefined):Camera=>{
   const box=ill?.focus&&ill.anchors?.[ill.focus];
-  if(ill?.layout==="scene"&&box) return {scale:1.32,cx:box.x+box.w/2,cy:box.y+box.h*.42};
-  return {scale:1.04,cx:.5,cy:.62};
+  if(ill?.layout==="scene"&&box) return {scale:1.28,cx:box.x+box.w/2,cy:box.y+box.h*.42};
+  return {scale:1,cx:.5,cy:.6};
 };
 const pct=(value:number)=>`${value*100}%`;
 
@@ -75,7 +75,8 @@ const Link:React.FC<{from:Box;to:Box;local:number;label:string}>=({from,to,local
   const d=`M${x1} ${y1} Q${mx} ${my} ${x2} ${y2}`;
   return <>
     <svg viewBox="0 0 1 1" preserveAspectRatio="none" style={{position:"absolute",inset:0,width:"100%",height:"100%",overflow:"visible"}}>
-      <path d={d} fill="none" stroke="#FFFFFF" strokeWidth="4" strokeDasharray="2 14" strokeLinecap="round" vectorEffect="non-scaling-stroke"
+      <path d={d} fill="none" stroke="#FFFFFF" strokeWidth="8" strokeDasharray="1 18" strokeLinecap="round" vectorEffect="non-scaling-stroke"
+        filter="drop-shadow(0 0 6px rgba(0,0,0,.6))"
         pathLength={1} strokeDashoffset={0} opacity={p} style={{clipPath:`inset(0 ${(1-p)*100}% 0 0)`}}/>
     </svg>
     <div style={{position:"absolute",left:pct(mx),top:pct(my+.015),translate:"-50% -50%",scale:.6+.4*pop(local,8,10),opacity:pop(local,8,8)}}>
@@ -90,10 +91,9 @@ const FocusTag:React.FC<{box:Box;local:number;label:string}>=({box,local,label})
   <div style={{position:"absolute",left:pct(box.x-.015),top:pct(box.y-.012),width:pct(box.w+.03),height:pct(box.h+.02),
     borderRadius:36,border:`5px solid ${C.brandGold}`,boxShadow:`0 0 40px ${C.brandGold}88, inset 0 0 30px ${C.brandGold}44`,
     opacity:pop(local,2,10),scale:1.06-.06*pop(local,2,12)}}/>
-  <div style={{position:"absolute",left:pct(box.x+box.w/2),top:pct(box.y-.035),translate:"-50% -100%",opacity:pop(local,6,8),scale:.7+.3*pop(local,6,10)}}>
-    <LiquidGlass radius={999} style={{padding:"8px 26px"}}>
-      <span style={{fontFamily:G.hanziFontFamily,fontSize:52,fontWeight:800,color:"#FFFFFF"}}>{label}</span>
-    </LiquidGlass>
+  <div style={{position:"absolute",left:pct(box.x+box.w/2),top:pct(box.y+.012),translate:"-50% 0",opacity:pop(local,6,8),scale:.7+.3*pop(local,6,10)}}>
+    <div style={{padding:"6px 26px",borderRadius:999,background:C.brandGold,color:"#1A1408",fontSize:50,fontWeight:900,
+      boxShadow:"0 12px 30px rgba(0,0,0,.4), inset 0 2px 0 rgba(255,255,255,.45)"}}>{label}</div>
   </div>
 </>;
 
@@ -107,15 +107,20 @@ const Stamp:React.FC<{local:number}>=({local})=><div style={{position:"absolute"
 
 const SceneLayer:React.FC<{episodeId:string;ill:Illustration;beat:ResolvedMotionBeat;local:number;camera:Camera}>=({episodeId,ill,beat,local,camera})=>{
   const a=ill.anchors?.a, b=ill.anchors?.b;
-  // Cover-fit a 9:16 illustration; the overlays share the camera transform.
-  return <div style={{position:"absolute",left:0,top:0,width:W,height:H,transformOrigin:`${camera.cx*100}% ${camera.cy*100}%`,scale:camera.scale}}>
-    <Img src={art(episodeId,ill.images[0])} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover"}}/>
+  // The 9:16 illustration sits just below the headline/chip stack so faces
+  // are never covered; a blurred copy fills the frame. Overlays share the
+  // image's camera transform, so anchors stay on the drawn subjects.
+  return <>
+  <Img src={art(episodeId,ill.images[0])} style={{position:"absolute",inset:-60,width:W+120,height:H+120,objectFit:"cover",filter:"blur(30px) brightness(.6)"}}/>
+  <div style={{position:"absolute",left:16,top:130,width:1048,height:1877,transformOrigin:`${camera.cx*100}% ${camera.cy*100}%`,scale:camera.scale}}>
+    <Img src={art(episodeId,ill.images[0])} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",borderRadius:0}}/>
     {a&&b&&(ill.overlay==="marks"||ill.overlay==="rise"||ill.overlay==="cross")&&<Marks a={a} b={b} local={local} rise={ill.overlay!=="marks"}/>}
     {a&&b&&ill.overlay==="link"&&<Link from={a} to={b} local={local} label="比"/>}
     {ill.focus&&ill.anchors?.[ill.focus]&&<FocusTag box={ill.anchors[ill.focus]} local={local} label={ill.focus==="a"?"A":"B"}/>}
     {ill.overlay==="cross"&&<Stamp local={local}/>}
     <span data-beat={beat.id} style={{display:"none"}}/>
-  </div>;
+  </div>
+  </>;
 };
 
 const PairLayer:React.FC<{episodeId:string;ill:Illustration;local:number}>=({episodeId,ill,local})=>{
@@ -126,7 +131,7 @@ const PairLayer:React.FC<{episodeId:string;ill:Illustration;local:number}>=({epi
       {ill.images.slice(0,2).map((name,index)=>{
         const focused=index===focusIndex, dimmed=focusIndex>=0&&!focused;
         const icon=ill.icons?.[index];
-        return <div key={name} style={{position:"relative",flex:1,opacity:dimmed?.55:1,scale:focused?1.06:1,transition:"none",
+        return <div key={name} style={{position:"relative",flex:1,opacity:dimmed?.55:1,scale:focused?1.06:1,
           translate:`0 ${(1-pop(local,index*3,12))*40}px`}}>
           <div style={{position:"absolute",inset:0,borderRadius:44,overflow:"hidden",
             border:`${focused?6:2}px solid ${focused?C.brandGold:"rgba(255,255,255,.5)"}`,
@@ -162,8 +167,8 @@ const BoardLayer:React.FC<{episodeId:string;ill:Illustration;local:number}>=({ep
       const p=pop(local,index*4,10);
       const hanzi=/\p{Script=Han}/u.test(part);
       return <div key={index} style={{opacity:p,scale:.6+.4*p,translate:`0 ${(1-p)*30}px`}}>
-        <div style={{padding:"18px 30px",borderRadius:28,background:hanzi?C.brandGold:"#211D17",color:"#FFFFFF",
-          fontFamily:hanzi?G.hanziFontFamily:G.fontFamily,fontSize:hanzi?76:60,fontWeight:800,
+        <div style={{padding:"22px 40px",borderRadius:34,background:hanzi?C.brandGold:"#211D17",color:"#FFFFFF",
+          fontFamily:hanzi?G.hanziFontFamily:G.fontFamily,fontSize:hanzi?104:84,fontWeight:850,
           boxShadow:"0 16px 34px rgba(0,0,0,.28), inset 0 2px 0 rgba(255,255,255,.3)"}}>{part}</div>
       </div>;
     })}

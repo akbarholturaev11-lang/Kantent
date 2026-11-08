@@ -203,6 +203,113 @@
         }
       },
       "generatedAt": "2026-11-08T16:45:34.018Z"
+    },
+    "panda-and-friend": {
+      "file": "panda-and-friend.png",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "d885aaabb3c73cf4c6224a4bc5375935bfe83694e6848238456d5031277eae1f",
+      "character": "aobao-panda",
+      "references": [],
+      "sha256": "1fcb69d85156070e8d624a2fe4e772c35d13a5c7de65fe2c791fd269be74e67a",
+      "generationId": "gen-1794157172-ud9p6FZYfoIJPF3Ouz2V",
+      "usage": {
+        "prompt_tokens": 1426,
+        "completion_tokens": 1120,
+        "total_tokens": 2546,
+        "cost": 0.067913,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.067913,
+          "upstream_inference_prompt_cost": 0.000713,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T16:59:48.046Z"
+    },
+    "panda-summer": {
+      "file": "panda-summer.png",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "2be48e983fc79a8ff544474db3dc84e03ffb662398bcfaad010f09b62f51bf19",
+      "character": "aobao-panda",
+      "references": [
+        "panda-and-friend"
+      ],
+      "sha256": "bd3927ffade1ada46cfba67489114e83d0ad565b38604406202fcc061858ef34",
+      "generationId": "gen-1794157190-2k7cnx6rlTXjVyZB5Pwc",
+      "usage": {
+        "prompt_tokens": 2493,
+        "completion_tokens": 1120,
+        "total_tokens": 3613,
+        "cost": 0.0684465,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0684465,
+          "upstream_inference_prompt_cost": 0.0012465,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T17:00:04.212Z"
+    },
+    "panda-winter": {
+      "file": "panda-winter.png",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "056336aad2f61776ff4e8da704d325da412f72cdd68b6cd4f63e1ede8fc04c3e",
+      "character": "aobao-panda",
+      "references": [
+        "panda-and-friend",
+        "panda-summer"
+      ],
+      "sha256": "5e5f81dedfe6569a39b5d9971d19c5c27022b5794e92c0542ed65f6122f2fd29",
+      "generationId": "gen-1794157205-i24naiI4yHtDzm2Ir595",
+      "usage": {
+        "prompt_tokens": 3632,
+        "completion_tokens": 1120,
+        "total_tokens": 4752,
+        "cost": 0.069016,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.069016,
+          "upstream_inference_prompt_cost": 0.001816,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T17:00:17.763Z"
     }
   }
 }

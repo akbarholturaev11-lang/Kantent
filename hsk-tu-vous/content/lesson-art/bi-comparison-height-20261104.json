@@ -4,26 +4,29 @@
   "style": "Polished semi-realistic digital illustration for a premium vertical explainer reel: warm cinematic lighting, soft cel shading, clean confident linework, rich but natural colours, detailed believable background, gentle depth of field. Absolutely no text, letters, numbers, signs with writing, logos or watermarks anywhere in the image.",
   "assets": [
     {
-      "name": "two-people",
+      "name": "panda-and-friend",
       "aspectRatio": "9:16",
-      "prompt": "Two young adult men stand side by side on a calm Beijing hutong street at golden hour, full bodies visible from head to shoes, both facing the viewer with friendly smiles. The man on the LEFT is clearly much taller, a full head taller, slim, short black hair, wearing a teal jacket and dark trousers. The man on the RIGHT is clearly shorter, short brown hair, wearing a mustard-yellow sweater and jeans. Leave generous empty sky and wall space above their heads in the upper third. The two men stand in the lower two thirds, centred, with a small gap between them."
+      "character": "aobao-panda",
+      "prompt": "A calm Beijing hutong street at golden hour. On the LEFT stands a tall, slim young man (full body, head to shoes), short black hair, teal jacket, dark trousers, friendly smile, facing the viewer. On the RIGHT stands Aobao the panda exactly as in the first reference image, full body, clearly shorter: the top of Aobao's head reaches only the man's chest. Both face the viewer. Leave generous empty sky and wall space in the upper third. Both figures stand in the lower two thirds with a small gap between them. Aobao stays a flat vector mascot with thick black outlines inside the illustrated street."
     },
     {
-      "name": "yesterday-warm",
+      "name": "panda-summer",
       "aspectRatio": "4:5",
+      "character": "aobao-panda",
       "references": [
-        "two-people"
+        "panda-and-friend"
       ],
-      "prompt": "The same hutong street as in the reference image on a hot sunny summer day: bright blue sky, warm sunlight, green leaves. Only the shorter man from the reference (same face, same brown hair) stands in the centre, full body, relaxed and squinting in the sun, wearing a light t-shirt, shorts and sunglasses pushed up on his head. Warm golden colours."
+      "prompt": "The same hutong street as in the second reference image on a hot sunny summer day: bright blue sky, warm sunlight, green leaves. Only Aobao the panda (exactly as the first reference, flat vector, thick outline, red neckerchief) stands in the centre, full body, happy in the heat, wearing small dark sunglasses pushed up on the head. Warm golden colours."
     },
     {
-      "name": "today-cold",
+      "name": "panda-winter",
       "aspectRatio": "4:5",
+      "character": "aobao-panda",
       "references": [
-        "two-people",
-        "yesterday-warm"
+        "panda-and-friend",
+        "panda-summer"
       ],
-      "prompt": "The same hutong street and the same shorter man as in the reference images, but now in winter: heavy snowfall, snow on roofs and the street, cold blue light, grey sky. He stands in the same spot and pose, full body, shivering, wearing a thick puffer winter coat, a scarf and a knitted hat, breath visible as mist. Cold blue colours."
+      "prompt": "The same hutong street as in the second reference image in winter: heavy snowfall, snow on roofs and the street, cold blue light, grey sky. Only Aobao the panda (exactly as the first reference: same face, closed smiling eyes, thick outline, red neckerchief) stands in the same spot, full body, shivering, wearing a knitted blue winter hat and a small puffer coat open at the neck so the red neckerchief stays visible. Cold blue colours."
     },
     {
       "name": "notebook-desk",

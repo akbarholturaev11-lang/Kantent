@@ -32,6 +32,8 @@ export function validateArtManifest(manifest) {
     names.add(asset.name);
     if (typeof asset.prompt !== "string" || asset.prompt.length < 30) throw new Error(asset.name + ": prompt is too short.");
     if (!["9:16", "1:1", "4:5", "16:9"].includes(asset.aspectRatio)) throw new Error(asset.name + ": unsupported aspect ratio.");
+    if (asset.character !== undefined && asset.character !== "aobao-panda")
+      throw new Error(asset.name + ": the only lesson character is aobao-panda (content/characters).");
     for (const reference of asset.references ?? [])
       if (!names.has(reference)) throw new Error(asset.name + ": a reference must be an earlier asset.");
     for (const [id, box] of Object.entries(asset.anchors ?? {})) {
@@ -82,18 +84,24 @@ async function main() {
   try { provenance = JSON.parse(await fs.readFile(provenancePath, "utf8")); } catch (error) { if (error?.code !== "ENOENT") throw error; }
   for (const asset of manifest.assets) {
     const file = path.join(outDir, asset.name + ".png");
-    const prompt = `${manifest.style}\n\n${asset.prompt}`;
+    // The HSK AI panda is the only character: its canonical file is always
+    // the first reference image and its identity text is part of the prompt.
+    const character = asset.character ? JSON.parse(await fs.readFile(path.join(PROJECT_ROOT, "content", "characters", asset.character + ".json"), "utf8")) : null;
+    const prompt = `${manifest.style}\n\n${character ? `CHARACTER (first reference image, keep exactly): ${character.identity}\n\n` : ""}${asset.prompt}`;
     const exists = await fs.access(file).then(() => true, () => false);
     if (exists && !regenerate.has(asset.name)) {
       console.log(`kept ${asset.name}.png (saved image is never regenerated without --regenerate)`);
       continue;
     }
-    const referencePngs = await Promise.all((asset.references ?? []).map((name) => fs.readFile(path.join(outDir, name + ".png"))));
+    const referencePngs = [
+      ...(character ? [await fs.readFile(path.join(PROJECT_ROOT, character.reference))] : []),
+      ...await Promise.all((asset.references ?? []).map((name) => fs.readFile(path.join(outDir, name + ".png")))),
+    ];
     try {
       const result = await generate({ apiKey, model: manifest.model, prompt, aspectRatio: asset.aspectRatio, referencePngs });
       await fs.writeFile(file, result.bytes);
       provenance.assets[asset.name] = { file: asset.name + ".png", model: manifest.model, format: result.format,
-        promptSha256: sha256(prompt), references: asset.references ?? [], sha256: sha256(result.bytes),
+        promptSha256: sha256(prompt), character: asset.character ?? null, references: asset.references ?? [], sha256: sha256(result.bytes),
         generationId: result.id, usage: result.usage, generatedAt: new Date().toISOString() };
       await fs.writeFile(provenancePath, JSON.stringify(provenance, null, 2) + "\n");
       console.log(`generated ${asset.name}.png (${result.bytes.length} bytes, cost ${result.usage?.cost ?? "unknown"})`);
