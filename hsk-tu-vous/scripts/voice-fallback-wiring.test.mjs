@@ -119,3 +119,7 @@ test("X-10 wiring: single-hint language passes run before gap clips, Direct tran
   assert.match(recovery, /language-passes\.json/);
   assert.match(recovery, /if \(!plan\.gaps\.length && languagePasses\.length\) \{[\s\S]*const verified = alignWords\(chunkText, joinedAnnotations, durationMs\);/);
 });
+
+test("an alignment failure on the last STT attempt reaches recovery instead of aborting", () => {
+  assert.match(source, /if \(!result\.retryable && !result\.transcription\)\s*throw result\.error;/);
+});

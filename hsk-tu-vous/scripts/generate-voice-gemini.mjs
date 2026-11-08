@@ -1684,7 +1684,10 @@ try {
       chunkAlignment = result.alignment;
       if (result.error) {
         metadata.lastTranscriptionError = safeErrorMessage(result.error);
-        if (!result.retryable)
+        // Only a transport failure with no response is fatal here. A response
+        // that failed alignment (e.g. timings moving backwards, real RU
+        // one-take 2026-11-08) still goes to the recovery path below.
+        if (!result.retryable && !result.transcription)
           throw result.error;
       }
       const attemptPath = path.join(
