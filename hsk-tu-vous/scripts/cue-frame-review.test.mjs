@@ -89,7 +89,8 @@ test("no real cue plan cannot create fake semantic proof",()=>{
 test("reject off-scene cue, reversed cue time, unsafe beat id and unbounded work",()=>{
   for(const [mutate,pattern] of [
     [(e,t)=>{t.scenes[0].motionBeats[1].localFrame=999;},/real cue localFrame/],
-    [(e,t)=>{t.scenes[0].motionBeats[1].localFrame=12;},/next word cue/],
+    [(e,t)=>{t.scenes[0].motionBeats[1].localFrame=12;},/compiled word cue frame/],
+    [(e,t)=>{const b=t.scenes[0].motionBeats[1];b.startMs=300;b.endMs=500;b.startFrame=9;b.localFrame=9;},/next word cue/],
     [(e,t)=>{t.scenes[0].motionBeats[0].id="../source";},/Unsafe scene\/beat/],
     [(e,t)=>{},/requires 2\+ beats/],
   ]){
@@ -105,7 +106,7 @@ test("promo cue is included without lesson motion design",()=>{
   timeline.cueSource=cueTimelineSource(episode);
   timeline.scenes[0].motionBeats=[];
   timeline.scenes[0].promoCue={id:"promo-action",cueText:"Китоб",
-    localFrame:12,startMs:400,endMs:700};
+    startFrame:12,localFrame:12,startMs:400,endMs:700};
   const planned=planCueFrameReview(episode,timeline);
   assert.equal(planned.samples.length,1);
   assert.equal(planned.samples[0].beatId,"promo-action");
