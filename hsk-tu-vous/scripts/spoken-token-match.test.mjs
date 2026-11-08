@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import {
   alignSpokenTokens, buildHanziReadings, collectHanziPinyinPairs, createSpokenMatcher,
-  foldLocaleToken, pinyinCyrillicCandidates,
+  foldLocaleToken, pinyinCyrillicCandidates, pinyinSyllables,
 } from "./spoken-token-match.mjs";
 
 const words = (text, locale) => (text.match(/[\p{L}\p{N}]+/gu) ?? []).flatMap((word) =>
@@ -77,8 +77,15 @@ test("readings come only from count-matched author pairs", () => {
     { hanzi: "今天比昨天冷。", pinyin: "Jīntiān bǐ zuótiān lěng." },
     { hanzi: "他比我高。", pinyin: "Tā bǐ wǒ gāo." },
   ]);
-  assert.equal(readings.has("冷"), false, "4 written words for 6 characters: skipped, never guessed");
-  assert.deepEqual(Object.fromEntries([...readings].map(([k, v]) => [k, [...v]])), { 他: ["ta"], 比: ["bi"], 我: ["wo"], 高: ["gao"] });
+  // Real RU one-take 2026-11-08: window heard "признак leng"; the author's
+  // "Jīntiān … zuótiān lěng" has exactly one valid syllable split for 6 Hanzi.
+  assert.deepEqual(Object.fromEntries([...readings].map(([k, v]) => [k, [...v]])),
+    { 今: ["jin"], 天: ["tian"], 比: ["bi"], 昨: ["zuo"], 冷: ["leng"], 他: ["ta"], 我: ["wo"], 高: ["gao"] });
+  assert.equal(pinyinSyllables("Xī'ān", 2).join(" "), "xi an");
+  assert.equal(pinyinSyllables("xian", 1).join(" "), "xian");
+  assert.equal(pinyinSyllables("xian xian", 3), null, "ambiguous split → no reading, never guessed");
+  assert.equal(pinyinSyllables("hello", 2), null, "not pinyin → no reading");
+  assert.equal(buildHanziReadings([{ hanzi: "冷", pinyin: "lěng lěng" }]).has("冷"), false, "count mismatch → skipped");
   assert.equal(foldLocaleToken("Ещё", "ru-RU"), "еще");
 });
 

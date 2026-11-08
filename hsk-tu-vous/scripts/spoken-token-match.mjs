@@ -92,14 +92,55 @@ export function pinyinCyrillicCandidates(syllable) {
   return new Set(spellings.map(phoneticFold));
 }
 
+// Every toneless pinyin syllable the tables above can spell.
+const VALID_SYLLABLES = new Set([
+  ...Object.keys(ZERO_INITIAL),
+  ...Object.keys(INITIALS).flatMap((initial) => Object.keys(FINALS).map((final) => initial + final)),
+  ...["zhi", "chi", "shi", "ri", "zi", "ci", "si", "ju", "jue", "juan", "jun", "qu", "que", "quan", "qun",
+    "xu", "xue", "xuan", "xun", "lv", "nv", "lve", "nve", "lue", "nue"],
+]);
+
+/** All ways to read one written pinyin word as valid syllables. */
+function syllableSplits(word) {
+  const splits = [];
+  const walk = (rest, acc) => {
+    if (!rest) { splits.push(acc); return; }
+    for (let size = Math.min(6, rest.length); size >= 1; size -= 1) {
+      const head = rest.slice(0, size);
+      if (VALID_SYLLABLES.has(head)) walk(rest.slice(size), [...acc, head]);
+    }
+  };
+  walk(word, []);
+  return splits;
+}
+
+/**
+ * The author's pinyin words ("Jīntiān bǐ zuótiān lěng") as one syllable per
+ * Hanzi. Used only when EXACTLY one combination of valid splits gives the
+ * written character count; anything ambiguous returns null (never guessed).
+ */
+export function pinyinSyllables(pinyin, characterCount) {
+  const words = String(pinyin).split(/[\s·'’\-–—/≠≈+…,.!?;:，。！？、]+/u).map(tonelessPinyin).filter(Boolean);
+  const options = words.map(syllableSplits);
+  if (options.some((list) => !list.length)) return null;
+  const found = [];
+  const walk = (index, acc) => {
+    if (found.length > 1 || acc.length > characterCount) return;
+    if (index === words.length) { if (acc.length === characterCount) found.push(acc); return; }
+    for (const split of options[index]) walk(index + 1, [...acc, ...split]);
+  };
+  walk(0, []);
+  return found.length === 1 ? found[0] : null;
+}
+
 /** Author-verified Hanzi → toneless syllables, only from count-matched pairs. */
 export function buildHanziReadings(pairs) {
   const readings = new Map();
   for (const { hanzi, pinyin } of pairs) {
     if (typeof hanzi !== "string" || typeof pinyin !== "string") continue;
     const characters = hanzi.match(/\p{Script=Han}/gu) ?? [];
-    const syllables = pinyin.split(/[\s·'’\-–—/≠≈+…,.!?;:，。！？、]+/u).map(tonelessPinyin).filter(Boolean);
-    if (!characters.length || characters.length !== syllables.length) continue;
+    const syllables = characters.length ? pinyinSyllables(pinyin, characters.length) : null;
+    if (!syllables || characters.length !== syllables.length) continue;
     characters.forEach((character, index) => {
       if (!readings.has(character)) readings.set(character, new Set());
       readings.get(character).add(syllables[index]);

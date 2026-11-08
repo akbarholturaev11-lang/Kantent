@@ -106,6 +106,12 @@ test("missing/invalid provider word timing blocks transcription", async () => {
       text:"hello",words:[{word:"hello",start:2,end:1}],
     }),{status:200}) }),
     /Invalid OpenRouter provider word timestamp/);
+  // Real 2026-11-08 RU one-take window: a zero-length word is passed through
+  // for the shared ≤250 ms repair instead of failing the whole paid response.
+  const zero = await transcribeOpenRouter({ ...opts, fetchImpl:async()=>new Response(JSON.stringify({
+    text:"и 他",words:[{word:"и",start:7.1,end:7.1},{word:"他",start:7.1,end:7.3}],
+  }),{status:200}) });
+  assert.deepEqual(zero.wordAnnotations.map((w)=>[w.startOffset,w.endOffset]),[["7.100s","7.100s"],["7.100s","7.300s"]]);
 });
 
 test("200 with empty words retries STT only and keeps the original audio bytes", async () => {

@@ -954,6 +954,7 @@ async function recoverActualWordClips({
     plan = buildRecoveryPlan(expected, blocks, durationMs, { match });
   }
   const recovered = [];
+  const unconfirmed = [];
   // Bounded: at most 8 independently bounded spans per STT window.
   if (plan.gaps.length > 8 * windows.length)
     throw new Error(`Recovery allows at most ${8 * windows.length} bounded missing speech spans; found ${plan.gaps.length}.`);
@@ -973,21 +974,66 @@ async function recoverActualWordClips({
           : transcriptionLanguages.map((code) => [code]);
     const clipPath = path.join(directory, clipName + ".wav");
     const gapBlocks = [];
-    for (const hints of hintSets) {
-      const label = hints.length ? hints.join("+") : "nohint";
-      const record = await cachedClipTranscription(path.join(directory, `${clipName}-${label}.json`),
-        `${gap.startMs}-${gap.endMs}-${label}`, async () => {
-          const actualMs = cutWavClip(audioPath, gap.startMs, gap.endMs, clipPath, ffmpegRuntime);
-          return { ...(await transcribeSavedAudio(clipPath, hints.length ? hints : transcriptionLanguages,
-            `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${clipName}-${label}`, { stage: "stt-recovery", chunk })),
-          clipStartMs: gap.startMs, clipEndMs: gap.endMs, actualClipDurationMs: actualMs };
-        });
-      const clipMs = record.actualClipDurationMs ?? (gap.endMs - gap.startMs);
-      gapBlocks.push(...timedBlocks(record.annotations, clipMs)
-        .map((b) => ({ ...b, startMs: b.startMs + gap.startMs, endMs: b.endMs + gap.startMs })));
+    try {
+      for (const hints of hintSets) {
+        const label = hints.length ? hints.join("+") : "nohint";
+        const record = await cachedClipTranscription(path.join(directory, `${clipName}-${label}.json`),
+          `${gap.startMs}-${gap.endMs}-${label}`, async () => {
+            const actualMs = cutWavClip(audioPath, gap.startMs, gap.endMs, clipPath, ffmpegRuntime);
+            return { ...(await transcribeSavedAudio(clipPath, hints.length ? hints : transcriptionLanguages,
+              `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${clipName}-${label}`, { stage: "stt-recovery", chunk })),
+            clipStartMs: gap.startMs, clipEndMs: gap.endMs, actualClipDurationMs: actualMs };
+          });
+        const clipMs = record.actualClipDurationMs ?? (gap.endMs - gap.startMs);
+        gapBlocks.push(...timedBlocks(record.annotations, clipMs)
+          .map((b) => ({ ...b, startMs: b.startMs + gap.startMs, endMs: b.endMs + gap.startMs })));
+      }
+      gapBlocks.sort(byTime);
+      let selected;
+      try {
+        selected = selectRecoveredBlocks(gap.tokens, gapBlocks, { match });
+      } catch (firstError) {
+        // One bounded second request per unconfirmed span: the same saved
+        // audio with ~0.7 s of neighbouring speech on each side, because a
+        // bare 1 s clip loses context (real RU one-take: "HSK AI" → "HSGKAI").
+        // Neighbour words are extras the strict selection discards; the
+        // missing words must still be heard exactly, inside the span.
+        const contextStart = Math.max(0, gap.startMs - 700);
+        const contextEnd = Math.min(durationMs, gap.endMs + 700);
+        const contextName = `context-${contextStart}-${contextEnd}`;
+        const contextPath = path.join(directory, contextName + ".wav");
+        const record = await cachedClipTranscription(path.join(directory, `${contextName}-${hintSets[0].join("+") || "nohint"}.json`),
+          `${contextStart}-${contextEnd}-${hintSets[0].join("+") || "nohint"}`, async () => {
+            const actualMs = cutWavClip(audioPath, contextStart, contextEnd, contextPath, ffmpegRuntime);
+            return { ...(await transcribeSavedAudio(contextPath, hintSets[0].length ? hintSets[0] : transcriptionLanguages,
+              `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${contextName}`, { stage: "stt-recovery", chunk })),
+            clipStartMs: contextStart, clipEndMs: contextEnd, actualClipDurationMs: actualMs };
+          });
+        const inside = timedBlocks(record.annotations, record.actualClipDurationMs ?? (contextEnd - contextStart))
+          .map((b) => ({ ...b, startMs: b.startMs + contextStart, endMs: b.endMs + contextStart }))
+          // Provider times are kept as returned; only words lying inside the
+          // span (±120 ms tolerance) may fill it.
+          .filter((b) => b.startMs >= gap.startMs - 120 && b.endMs <= gap.endMs + 120);
+        gapBlocks.push(...inside);
+        try {
+          selected = selectRecoveredBlocks(gap.tokens, inside, { match });
+        } catch {
+          throw firstError;
+        }
+      }
+      recovered.push(selected);
+    } catch (error) {
+      // Keep going: every other gap's evidence is saved now (a network error
+      // on one clip re-requests only that clip next run), so one run shows
+      // the complete list of words the provider did not confirm.
+      unconfirmed.push({ startMs: gap.startMs, endMs: gap.endMs, expected: gap.tokens.join(" "),
+        heard: gapBlocks.map((b) => b.text).join(" "), reason: safeErrorMessage(error) });
     }
-    gapBlocks.sort(byTime);
-    recovered.push(selectRecoveredBlocks(gap.tokens, gapBlocks, { match }));
+  }
+  if (unconfirmed.length) {
+    await fs.writeFile(path.join(directory, "unconfirmed-gaps.json"), JSON.stringify(unconfirmed, null, 2) + "\n");
+    throw new Error(`Recovery could not confirm ${unconfirmed.length} of ${plan.gaps.length} spans: ` +
+      unconfirmed.map((u) => `${u.startMs}-${u.endMs} "${u.expected}" heard "${u.heard}"`).join("; "));
   }
   const joined = mergeRecoveredBlocks(expected, blocks, plan, recovered);
   const joinedAnnotations = joined.map((b) => ({

@@ -270,7 +270,11 @@ export async function transcribeOpenRouter({
     if (typeof text !== "string" || !text.trim() ||
         typeof start !== "number" || !Number.isFinite(start) ||
         typeof end !== "number" || !Number.isFinite(end) ||
-        start < 0 || end <= start) {
+        // V8-01 policy, as on Gemini Direct: a zero-length or slightly
+        // inverted word (≤250 ms, real OpenRouter window 2026-11-08) is passed
+        // through unchanged; the shared aligner repairs it with a 1 ms end
+        // and still rejects anything larger. Nothing is invented here.
+        start < 0 || end < 0 || end < start - 0.25) {
       throw new TranscriptionResponseError("Invalid OpenRouter provider word timestamp at index " + index, { retryable: true });
     }
     return {
