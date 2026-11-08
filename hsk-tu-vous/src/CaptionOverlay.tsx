@@ -10,7 +10,7 @@ import {
   type TimedCaption,
 } from "../scripts/caption-utils.mjs";
 import visualSystem from "../content/visual-system.json";
-import { subtitleTopFor } from "../scripts/illustrated-layout.mjs";
+import { subtitleSlotFor } from "../scripts/illustrated-layout.mjs";
 import { actionTextAtFrame, actionSubtitlePresentation, type ActionCaptionScene } from "../scripts/action-text-layout.mjs";
 
 export type { TimedCaption } from "../scripts/caption-utils.mjs";
@@ -86,12 +86,13 @@ export const CaptionOverlay: React.FC<{
     if (spokenHan && !/[^\p{Script=Han}\p{P}\p{Z}]/u.test(displayText) &&
         han(String(actionText.model?.hanzi ?? "")).includes(spokenHan)) return null;
     const words = displayText.split(/\s+/).filter(Boolean);
+    const illustration = (actionText.model as {illustration?: unknown} | undefined)?.illustration;
+    const slot = illustration ? subtitleSlotFor(illustration) : null;
     return (
       <AbsoluteFill style={{ pointerEvents: "none", zIndex: 20 }}>
-        <div data-subtitle-block style={{ position: "absolute", left: 80, right: 80,
+        <div data-subtitle-block style={{ position: "absolute", left: slot ? slot.left : 80, right: slot ? 1080 - slot.right : 80,
           // Illustrated beats: the first safe-zone slot that covers no head/card.
-          top: (actionText.model as {illustration?: unknown} | undefined)?.illustration
-            ? subtitleTopFor((actionText.model as {illustration?: unknown}).illustration) : G.subtitleTopPx,
+          top: slot ? slot.top : G.subtitleTopPx,
           display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "baseline", columnGap: 16,
           fontFamily: G.fontFamily, fontSize: G.subtitleFontPx, fontWeight: G.subtitleWeight, lineHeight: 1.15,
           color: "#FFFFFF", textShadow: "0 4px 24px rgba(0,0,0,.45)", textAlign: "center" }}>

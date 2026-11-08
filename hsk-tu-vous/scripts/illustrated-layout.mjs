@@ -24,25 +24,54 @@ export function cameraFor(ill) {
   return { scale: 1, cx: 0.5, cy: 0.6 };
 }
 
-/** Screen-space vertical bands that text must not cover for this beat. */
-export function blockedBands(ill) {
+/**
+ * Screen-space boxes text must not cover for this beat: each subject's head
+ * (a square as tall as the subject is wide, so a big-headed panda and a
+ * slim man are both protected), the pair cards or the formula.
+ */
+export function blockedBoxes(ill) {
   const L = ILLUSTRATED_LAYOUT;
   if (!ill) return [];
-  if (ill.layout === "pair") return [[L.pairTopPx - 20, L.pairTopPx + L.pairHeightPx + 30]];
-  if (ill.layout === "board") return [[L.boardTopPx - 40, L.boardTopPx + L.boardHeightPx]];
+  if (ill.layout === "pair") return [{ x0: 0, x1: L.width, y0: L.pairTopPx - 20, y1: L.pairTopPx + L.pairHeightPx + 30 }];
+  if (ill.layout === "board") return [{ x0: 0, x1: L.width, y0: L.boardTopPx - 40, y1: L.boardTopPx + L.boardHeightPx }];
   const camera = cameraFor(ill);
-  const h = L.sceneImageHeightPx;
-  const screenY = (v) => L.sceneImageTopPx + camera.cy * h + (v - camera.cy) * h * camera.scale;
-  // The head is the top part of each subject box.
-  return Object.values(ill.anchors ?? {}).map((box) => [screenY(box.y) - 20, screenY(box.y + box.h * 0.3) + 10]);
+  const h = L.sceneImageHeightPx, w = L.width;
+  const sy = (v) => L.sceneImageTopPx + camera.cy * h + (v - camera.cy) * h * camera.scale;
+  const sx = (u) => camera.cx * w + (u - camera.cx) * w * camera.scale;
+  return Object.values(ill.anchors ?? {}).map((box) => {
+    const top = sy(box.y);
+    return { x0: sx(box.x) - 20, x1: sx(box.x + box.w) + 20, y0: top - 20,
+      y1: Math.min(sy(box.y + box.h), top + box.w * w * camera.scale) + 10 };
+  });
+}
+
+/** Back-compatible vertical view of the blocked boxes. */
+export function blockedBands(ill) {
+  return blockedBoxes(ill).map((box) => [box.y0, box.y1]);
+}
+
+const SLOT_WIDTH = { center: [80, 1000], left: [50, 510], right: [570, 1030] };
+const SLOTS = [
+  ["center", 720], ["center", 1090], ["center", 1200],
+  ["left", 1430], ["right", 1430], ["left", 1090], ["right", 1090], ["left", 1200], ["right", 1200], ["center", 1430],
+];
+
+/** The subtitle box for a beat: the first slot that covers no blocked box. */
+export function subtitleSlotFor(ill) {
+  const L = ILLUSTRATED_LAYOUT;
+  const boxes = blockedBoxes(ill);
+  const candidates = SLOTS.map(([align, top]) => {
+    const [left, right] = SLOT_WIDTH[align];
+    const height = align === "center" ? L.subtitleHeightPx : L.subtitleHeightPx * 1.75;
+    return { align, top, left, right, height };
+  }).filter((slot) => slot.top >= L.chipBottomPx && slot.top + slot.height <= L.safeBottomPx + 40);
+  const overlap = (slot) => boxes.reduce((sum, box) => sum +
+    Math.max(0, Math.min(box.x1, slot.right) - Math.max(box.x0, slot.left)) *
+    Math.max(0, Math.min(box.y1, slot.top + slot.height) - Math.max(box.y0, slot.top)), 0);
+  return candidates.find((slot) => overlap(slot) === 0) ??
+    candidates.reduce((best, slot) => (overlap(slot) < overlap(best) ? slot : best), candidates[0]);
 }
 
 export function subtitleTopFor(ill) {
-  const L = ILLUSTRATED_LAYOUT;
-  const bands = blockedBands(ill);
-  const overlap = (top) => bands.reduce((sum, [a, b]) =>
-    sum + Math.max(0, Math.min(b, top + L.subtitleHeightPx) - Math.max(a, top)), 0);
-  const slots = L.subtitleSlotsPx.filter((top) => top >= L.chipBottomPx && top + L.subtitleHeightPx <= L.safeBottomPx);
-  return slots.find((top) => overlap(top) === 0) ??
-    slots.reduce((best, top) => (overlap(top) < overlap(best) ? top : best), slots[0]);
+  return subtitleSlotFor(ill).top;
 }
