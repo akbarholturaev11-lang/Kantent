@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { validateIllustration } from "./action-design-plan.mjs";
+import { validateDistinctTextRoles, validateIllustration } from "./action-design-plan.mjs";
 import { validateArtManifest } from "./generate-lesson-art.mjs";
 import { readFileSync } from "node:fs";
 
@@ -22,4 +22,13 @@ test("the lesson-art manifest is valid and its images contain no text by prompt"
   validateArtManifest(manifest);
   assert.match(manifest.style, /no text/i);
   assert.throws(() => validateArtManifest({ ...manifest, assets: [{ ...manifest.assets[1], references: ["missing"] }] }), /earlier asset/);
+});
+
+test("headline, chip and subtitle each keep their own job", () => {
+  const ill = { layout: "board", images: ["notebook-desk"], parts: ["A"] };
+  const beat = (title, cueText = "Формула одна", meaning = "A 比 B") => ({ id: "b", cueText, visual: { title, meaning, illustration: ill } });
+  validateDistinctTextRoles(beat("Схема"));
+  assert.throws(() => validateDistinctTextRoles(beat("Формула")), /spoken word "формула"/);
+  assert.throws(() => validateDistinctTextRoles(beat("比?")), /Hanzi/);
+  assert.throws(() => validateDistinctTextRoles(beat("Он выше меня", "他比我高", "Он выше меня.")), /chip meaning/);
 });

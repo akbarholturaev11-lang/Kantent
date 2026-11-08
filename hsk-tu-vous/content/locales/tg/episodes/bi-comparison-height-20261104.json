@@ -52,7 +52,7 @@
           "kind": "graphic",
           "cueText": "қадбаландтар",
           "visual": {
-            "title": "Ӯ аз ман қадбаландтар",
+            "title": "Кӣ баландтар?",
             "hanzi": "高",
             "pinyin": "gāo",
             "meaning": "баланд",
@@ -235,7 +235,7 @@
           "kind": "graphic",
           "cueText": "бо 比",
           "visual": {
-            "title": "比?",
+            "title": "Варианти якум",
             "hanzi": "比",
             "pinyin": "bǐ",
             "meaning": "муқоиса",
@@ -405,7 +405,7 @@
           "kind": "graphic",
           "cueText": "бо 很",
           "visual": {
-            "title": "很?",
+            "title": "Ё дуюм?",
             "hanzi": "很",
             "pinyin": "hěn",
             "meaning": "хеле",
@@ -568,7 +568,7 @@
           "kind": "graphic",
           "cueText": "Ду одамро",
           "visual": {
-            "title": "Ду одам",
+            "title": "Ду нафар",
             "hanzi": "他 · 我",
             "pinyin": "tā · wǒ",
             "meaning": "ӯ · ман",
@@ -709,7 +709,7 @@
           "kind": "graphic",
           "cueText": "муқоиса кун",
           "visual": {
-            "title": "Муқоиса кун",
+            "title": "Интихоби ту",
             "hanzi": "比 · 很",
             "pinyin": "bǐ · hěn",
             "meaning": "интихоб",
@@ -879,7 +879,7 @@
           "kind": "graphic",
           "cueText": "他比我高",
           "visual": {
-            "title": "Дуруст",
+            "title": "Ҷавоби дуруст",
             "hanzi": "他比我高。",
             "pinyin": "Tā bǐ wǒ gāo.",
             "meaning": "Ӯ аз ман баландтар аст.",
@@ -1062,7 +1062,7 @@
           "kind": "graphic",
           "cueText": "Аввал 他",
           "visual": {
-            "title": "A = 他",
+            "title": "Қадами 1 — A",
             "hanzi": "他",
             "pinyin": "tā",
             "meaning": "ӯ",
@@ -1233,7 +1233,7 @@
           "kind": "graphic",
           "cueText": "баъд 比",
           "visual": {
-            "title": "比",
+            "title": "Қадами 2 — пайванд",
             "hanzi": "比",
             "pinyin": "bǐ",
             "meaning": "муқоиса",
@@ -1403,7 +1403,7 @@
           "kind": "graphic",
           "cueText": "сипас 我",
           "visual": {
-            "title": "B = 我",
+            "title": "Қадами 3 — B",
             "hanzi": "我",
             "pinyin": "wǒ",
             "meaning": "ман",
@@ -1574,7 +1574,7 @@
           "kind": "graphic",
           "cueText": "сифати 高",
           "visual": {
-            "title": "Сифат",
+            "title": "Қадами 4 — хусусият",
             "hanzi": "高",
             "pinyin": "gāo",
             "meaning": "баланд",
@@ -1779,7 +1779,7 @@
           "kind": "graphic",
           "cueText": "муқоисаи одӣ",
           "visual": {
-            "title": "Муқоисаи одӣ",
+            "title": "Қоидаи муҳим",
             "hanzi": "比",
             "pinyin": "bǐ",
             "meaning": "муқоиса",
@@ -1949,7 +1949,7 @@
           "kind": "graphic",
           "cueText": "пеш аз сифат",
           "visual": {
-            "title": "Сифат",
+            "title": "Ҷойи хусусият",
             "hanzi": "高",
             "pinyin": "gāo",
             "meaning": "баланд",
@@ -2119,7 +2119,7 @@
           "kind": "graphic",
           "cueText": "很 намегузорем",
           "visual": {
-            "title": "Бе 很",
+            "title": "Калимаи зиёдатӣ",
             "hanzi": "很",
             "pinyin": "hěn",
             "meaning": "лозим нест",
@@ -2358,7 +2358,7 @@
           "kind": "graphic",
           "cueText": "他比我高",
           "visual": {
-            "title": "Ҳамин кофист",
+            "title": "Хулоса",
             "hanzi": "他比我高。",
             "pinyin": "Tā bǐ wǒ gāo.",
             "meaning": "Ӯ аз ман баландтар аст.",
@@ -2563,7 +2563,7 @@
           "kind": "graphic",
           "cueText": "обу ҳаво",
           "visual": {
-            "title": "Обу ҳаво",
+            "title": "Мисоли нав",
             "hanzi": "今天 · 昨天",
             "pinyin": "jīntiān · zuótiān",
             "meaning": "имрӯз · дирӯз",
@@ -2695,7 +2695,7 @@
           "kind": "graphic",
           "cueText": "今天比昨天冷",
           "visual": {
-            "title": "Имрӯз хунуктар",
+            "title": "Ҳарорат",
             "hanzi": "今天比昨天冷。",
             "pinyin": "Jīntiān bǐ zuótiān lěng.",
             "meaning": "Имрӯз аз дирӯз хунуктар аст.",
@@ -2855,7 +2855,7 @@
           "kind": "graphic",
           "cueText": "хунуктар аст",
           "visual": {
-            "title": "Имрӯз хунуктар",
+            "title": "Рӯзҳоро муқоиса кун",
             "hanzi": "今天比昨天冷。",
             "pinyin": "Jīntiān bǐ zuótiān lěng.",
             "meaning": "Имрӯз аз дирӯз хунуктар аст.",
@@ -3015,7 +3015,7 @@
           "kind": "graphic",
           "cueText": "Аввал имрӯз",
           "visual": {
-            "title": "A = 今天",
+            "title": "A — якум",
             "hanzi": "今天",
             "pinyin": "jīntiān",
             "meaning": "имрӯз",
@@ -3204,7 +3204,7 @@
           "kind": "graphic",
           "cueText": "дирӯз ва",
           "visual": {
-            "title": "B = 昨天",
+            "title": "B — дуюм",
             "hanzi": "昨天",
             "pinyin": "zuótiān",
             "meaning": "дирӯз",
@@ -3393,7 +3393,7 @@
           "kind": "graphic",
           "cueText": "сифати 冷",
           "visual": {
-            "title": "Сифат",
+            "title": "Хусусият дар охир",
             "hanzi": "冷",
             "pinyin": "lěng",
             "meaning": "хунук",
@@ -3575,7 +3575,7 @@
           "kind": "graphic",
           "cueText": "Худатро бисанҷ",
           "visual": {
-            "title": "Худатро бисанҷ",
+            "title": "Санҷиши хурд",
             "hanzi": "比",
             "pinyin": "bǐ",
             "meaning": "муқоиса",
@@ -3745,7 +3745,7 @@
           "kind": "graphic",
           "cueText": "Ӯ аз ман баландтар",
           "visual": {
-            "title": "Ӯ аз ман баландтар",
+            "title": "Чӣ тавр мегӯӣ?",
             "hanzi": "高",
             "pinyin": "gāo",
             "meaning": "баландтар",
@@ -4069,7 +4069,7 @@
           "kind": "graphic",
           "cueText": "Имрӯз аз дирӯз хунуктар",
           "visual": {
-            "title": "Имрӯз хунуктар",
+            "title": "Ин чӣ?",
             "hanzi": "冷",
             "pinyin": "lěng",
             "meaning": "хунуктар",
@@ -4361,7 +4361,7 @@
           "kind": "graphic",
           "cueText": "Формула яктост",
           "visual": {
-            "title": "Формула",
+            "title": "Схема",
             "hanzi": "比",
             "pinyin": "bǐ",
             "meaning": "A 比 B",
@@ -4467,7 +4467,7 @@
           "kind": "graphic",
           "cueText": "ва сифат",
           "visual": {
-            "title": "A 比 B + сифат",
+            "title": "Дар хотир дор",
             "hanzi": "高 · 冷",
             "pinyin": "gāo · lěng",
             "meaning": "сифат",
@@ -4681,7 +4681,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "bi-comparison-height-20261104",
-    "sourceHash": "1be3124c42b22880fe7d6814ed937e0d3862a02ff0b99ee490afa916f29fd872",
+    "sourceHash": "3c93c45d822fa9d5d1d755fc066236a87d493d1d43fe3536f31e1396ed71d008",
     "authoredOn": "2026-10-28",
     "status": "draft-awaiting-audio-review"
   }

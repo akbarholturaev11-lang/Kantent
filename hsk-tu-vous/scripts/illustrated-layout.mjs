@@ -51,9 +51,13 @@ export function blockedBands(ill) {
 }
 
 const SLOT_WIDTH = { center: [80, 1000], left: [50, 510], right: [570, 1030] };
+// Owner rule 2026-11-09: subtitles prefer the BOTTOM of the safe band and
+// move up or sideways only when the bottom would cover a face, card or formula.
 const SLOTS = [
-  ["center", 720], ["center", 1090], ["center", 1200],
-  ["left", 1430], ["right", 1430], ["left", 1090], ["right", 1090], ["left", 1200], ["right", 1200], ["center", 1430],
+  ["center", 1430], ["left", 1430], ["right", 1430],
+  ["center", 1320], ["left", 1320], ["right", 1320],
+  ["center", 1200], ["left", 1200], ["right", 1200],
+  ["center", 1090], ["left", 1090], ["right", 1090], ["center", 720],
 ];
 
 /** The subtitle box for a beat: the first slot that covers no blocked box. */
@@ -62,7 +66,7 @@ export function subtitleSlotFor(ill) {
   const boxes = blockedBoxes(ill);
   const candidates = SLOTS.map(([align, top]) => {
     const [left, right] = SLOT_WIDTH[align];
-    const height = align === "center" ? L.subtitleHeightPx : L.subtitleHeightPx * 1.75;
+    const height = align === "center" ? L.subtitleHeightPx : L.subtitleHeightPx * 1.6;
     return { align, top, left, right, height };
   }).filter((slot) => slot.top >= L.chipBottomPx && slot.top + slot.height <= L.safeBottomPx + 40);
   const overlap = (slot) => boxes.reduce((sum, box) => sum +

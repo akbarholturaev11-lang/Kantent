@@ -30,6 +30,25 @@ export function validateIllustration(id, ill) {
     fail("board needs 1–6 short parts");
 }
 
+/**
+ * Owner rule 2026-11-09 (illustrated lesson format): the headline, the chip
+ * and the subtitle each have one job and never repeat one another. The
+ * headline names the teaching step in plain words: no Hanzi (the chip owns
+ * them), not the chip's meaning, and no word the narration speaks at its cue.
+ */
+export function validateDistinctTextRoles(beat) {
+  const v = beat.visual;
+  if (!v?.illustration) return;
+  const fold = (value) => String(value ?? "").toLocaleLowerCase("und").replace(/[^\p{L}\p{N}\s]/gu, " ").trim();
+  const title = fold(v.title);
+  if (!title) throw Error(beat.id + ": headline is required");
+  if (/\p{Script=Han}/u.test(v.title)) throw Error(beat.id + ": headline must not contain Hanzi; the chip shows them");
+  if (title === fold(v.meaning)) throw Error(beat.id + ": headline repeats the chip meaning");
+  const spoken = new Set(fold(beat.cueText).split(/\s+/).filter((word) => word.length >= 4));
+  const repeated = title.split(/\s+/).find((word) => spoken.has(word));
+  if (repeated) throw Error(beat.id + `: headline repeats the spoken word "${repeated}"; name the teaching step instead`);
+}
+
 export function validateActionVisual(beat) {
   const v = beat.visual;
   if (!ACTION_KINDS.includes(beat.kind) || !v || !beat.explains?.trim())
@@ -37,7 +56,7 @@ export function validateActionVisual(beat) {
   for (const key of ["title", "hanzi", "pinyin", "meaning"])
     if (typeof v[key] !== "string" || v[key].length > 180)
       throw Error(beat.id + ": invalid visual " + key);
-  if (v.illustration !== undefined) validateIllustration(beat.id, v.illustration);
+  if (v.illustration !== undefined) { validateIllustration(beat.id, v.illustration); validateDistinctTextRoles(beat); }
   if (beat.kind === "graphic") {
     validateGraphicScene(v.graphic);
     if (["object","count","models","choices","value"].some(key => v[key] !== undefined))

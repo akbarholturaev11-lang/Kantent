@@ -85,6 +85,11 @@ export const CaptionOverlay: React.FC<{
     const spokenHan = han(displayText);
     if (spokenHan && !/[^\p{Script=Han}\p{P}\p{Z}]/u.test(displayText) &&
         han(String(actionText.model?.hanzi ?? "")).includes(spokenHan)) return null;
+    // Owner rule 2026-11-09: each text layer has its own job. Words the chip's
+    // meaning already shows are not repeated as a subtitle at the same time.
+    const letters = (value: string) => value.toLocaleLowerCase("und").replace(/[^\p{L}\p{N}]/gu, "");
+    const spokenLetters = letters(displayText);
+    if (spokenLetters.length >= 4 && letters(String(actionText.model?.meaning ?? "")).includes(spokenLetters)) return null;
     const words = displayText.split(/\s+/).filter(Boolean);
     const illustration = (actionText.model as {illustration?: unknown} | undefined)?.illustration;
     const slot = illustration ? subtitleSlotFor(illustration) : null;

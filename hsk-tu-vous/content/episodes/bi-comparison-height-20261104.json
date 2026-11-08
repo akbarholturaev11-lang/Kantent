@@ -55,7 +55,7 @@
           "kind": "graphic",
           "cueText": "Он выше меня",
           "visual": {
-            "title": "Он выше меня",
+            "title": "Загадка",
             "hanzi": "高",
             "pinyin": "gāo",
             "meaning": "высокий",
@@ -238,7 +238,7 @@
           "kind": "graphic",
           "cueText": "с 比",
           "visual": {
-            "title": "比?",
+            "title": "Вариант первый",
             "hanzi": "比",
             "pinyin": "bǐ",
             "meaning": "сравнение",
@@ -408,7 +408,7 @@
           "kind": "graphic",
           "cueText": "с 很",
           "visual": {
-            "title": "很?",
+            "title": "Или второй?",
             "hanzi": "很",
             "pinyin": "hěn",
             "meaning": "очень",
@@ -573,7 +573,7 @@
           "kind": "graphic",
           "cueText": "двух людей",
           "visual": {
-            "title": "Два человека",
+            "title": "Сравниваем двоих",
             "hanzi": "他 · 我",
             "pinyin": "tā · wǒ",
             "meaning": "он · я",
@@ -714,7 +714,7 @@
           "kind": "graphic",
           "cueText": "выберите",
           "visual": {
-            "title": "Выберите",
+            "title": "Твой выбор",
             "hanzi": "比 · 很",
             "pinyin": "bǐ · hěn",
             "meaning": "выбор",
@@ -884,7 +884,7 @@
           "kind": "graphic",
           "cueText": "他比我高",
           "visual": {
-            "title": "Правильно",
+            "title": "Верный ответ",
             "hanzi": "他比我高。",
             "pinyin": "Tā bǐ wǒ gāo.",
             "meaning": "Он выше меня.",
@@ -1067,7 +1067,7 @@
           "kind": "graphic",
           "cueText": "Сначала он",
           "visual": {
-            "title": "A = 他",
+            "title": "Шаг 1 — A",
             "hanzi": "他",
             "pinyin": "tā",
             "meaning": "он",
@@ -1238,7 +1238,7 @@
           "kind": "graphic",
           "cueText": "потом 比",
           "visual": {
-            "title": "比",
+            "title": "Шаг 2 — связка",
             "hanzi": "比",
             "pinyin": "bǐ",
             "meaning": "сравнение",
@@ -1408,7 +1408,7 @@
           "kind": "graphic",
           "cueText": "затем я",
           "visual": {
-            "title": "B = 我",
+            "title": "Шаг 3 — B",
             "hanzi": "我",
             "pinyin": "wǒ",
             "meaning": "я",
@@ -1579,7 +1579,7 @@
           "kind": "graphic",
           "cueText": "признак 高",
           "visual": {
-            "title": "Признак",
+            "title": "Шаг 4 — качество",
             "hanzi": "高",
             "pinyin": "gāo",
             "meaning": "высокий",
@@ -1786,7 +1786,7 @@
           "kind": "graphic",
           "cueText": "простом сравнении",
           "visual": {
-            "title": "Простое сравнение",
+            "title": "Важное правило",
             "hanzi": "比",
             "pinyin": "bǐ",
             "meaning": "сравнение",
@@ -1956,7 +1956,7 @@
           "kind": "graphic",
           "cueText": "не добавляйте 很",
           "visual": {
-            "title": "Без 很",
+            "title": "Лишнее слово",
             "hanzi": "很",
             "pinyin": "hěn",
             "meaning": "не нужно",
@@ -2195,7 +2195,7 @@
           "kind": "graphic",
           "cueText": "перед прилагательным",
           "visual": {
-            "title": "Прилагательное",
+            "title": "Где стоит качество",
             "hanzi": "高",
             "pinyin": "gāo",
             "meaning": "высокий",
@@ -2365,7 +2365,7 @@
           "kind": "graphic",
           "cueText": "他比我高",
           "visual": {
-            "title": "Достаточно",
+            "title": "Итог",
             "hanzi": "他比我高。",
             "pinyin": "Tā bǐ wǒ gāo.",
             "meaning": "Он выше меня.",
@@ -2572,7 +2572,7 @@
           "kind": "graphic",
           "cueText": "погодой",
           "visual": {
-            "title": "Погода",
+            "title": "Новый пример",
             "hanzi": "今天 · 昨天",
             "pinyin": "jīntiān · zuótiān",
             "meaning": "сегодня · вчера",
@@ -2704,7 +2704,7 @@
           "kind": "graphic",
           "cueText": "今天比昨天冷",
           "visual": {
-            "title": "Сегодня холоднее",
+            "title": "Температура",
             "hanzi": "今天比昨天冷。",
             "pinyin": "Jīntiān bǐ zuótiān lěng.",
             "meaning": "Сегодня холоднее, чем вчера.",
@@ -2864,7 +2864,7 @@
           "kind": "graphic",
           "cueText": "Сегодня холоднее",
           "visual": {
-            "title": "Сегодня холоднее",
+            "title": "Сравни дни",
             "hanzi": "今天比昨天冷。",
             "pinyin": "Jīntiān bǐ zuótiān lěng.",
             "meaning": "Сегодня холоднее, чем вчера.",
@@ -3024,7 +3024,7 @@
           "kind": "graphic",
           "cueText": "первый день",
           "visual": {
-            "title": "A = 今天",
+            "title": "A — начало",
             "hanzi": "今天",
             "pinyin": "jīntiān",
             "meaning": "сегодня",
@@ -3213,7 +3213,7 @@
           "kind": "graphic",
           "cueText": "второй день",
           "visual": {
-            "title": "B = 昨天",
+            "title": "B — с кем сравниваем",
             "hanzi": "昨天",
             "pinyin": "zuótiān",
             "meaning": "вчера",
@@ -3402,7 +3402,7 @@
           "kind": "graphic",
           "cueText": "признак 冷",
           "visual": {
-            "title": "Признак",
+            "title": "Качество в конце",
             "hanzi": "冷",
             "pinyin": "lěng",
             "meaning": "холодный",
@@ -3586,7 +3586,7 @@
           "kind": "graphic",
           "cueText": "Проверьте себя",
           "visual": {
-            "title": "Проверьте себя",
+            "title": "Мини-тест",
             "hanzi": "比",
             "pinyin": "bǐ",
             "meaning": "сравнение",
@@ -3756,7 +3756,7 @@
           "kind": "graphic",
           "cueText": "Он выше меня",
           "visual": {
-            "title": "Он выше меня",
+            "title": "Как сказать?",
             "hanzi": "高",
             "pinyin": "gāo",
             "meaning": "выше",
@@ -4080,7 +4080,7 @@
           "kind": "graphic",
           "cueText": "Сегодня холоднее",
           "visual": {
-            "title": "Сегодня холоднее",
+            "title": "А это?",
             "hanzi": "冷",
             "pinyin": "lěng",
             "meaning": "холоднее",
@@ -4372,7 +4372,7 @@
           "kind": "graphic",
           "cueText": "Формула одна",
           "visual": {
-            "title": "Формула",
+            "title": "Схема",
             "hanzi": "比",
             "pinyin": "bǐ",
             "meaning": "A 比 B",
@@ -4478,7 +4478,7 @@
           "kind": "graphic",
           "cueText": "плюс признак",
           "visual": {
-            "title": "A 比 B + признак",
+            "title": "Запомни",
             "hanzi": "高 · 冷",
             "pinyin": "gāo · lěng",
             "meaning": "признак",

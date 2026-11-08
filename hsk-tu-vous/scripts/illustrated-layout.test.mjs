@@ -23,6 +23,7 @@ test("the subtitle moves to a slot that covers no head, card or formula", () => 
     assert.ok(free(ill), JSON.stringify(ill));
   // Real Aobao frame: the man's head blocks the upper slots and Aobao's big
   // head the lower right, so the line moves to the left, below the head.
-  assert.deepEqual([subtitleSlotFor({ layout: "scene", anchors }).align, subtitleTopFor({ layout: "scene", anchors })], ["left", 1200]);
-  assert.equal(subtitleTopFor({ layout: "pair" }), L.subtitleSlotsPx[0]);
+  assert.deepEqual([subtitleSlotFor({ layout: "scene", anchors }).align, subtitleTopFor({ layout: "scene", anchors })], ["left", 1430]);
+  assert.equal(subtitleTopFor({ layout: "pair" }), 1430, "bottom first when nothing is covered");
+  assert.equal(subtitleTopFor({ layout: "board" }), 1430);
 });
