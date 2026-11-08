@@ -216,6 +216,9 @@ jobs:
       HSK_AI_VOICE_API_PROVIDER: ${{ vars.HSK_AI_VOICE_API_PROVIDER || 'openrouter' }}
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
       HSK_AI_ALLOW_GEMINI_API: "true"
+      # Owner opt-in (2026-11-08): Gemini Direct first, OpenRouter backup on
+      # Direct 429/5xx. Set the Actions VARIABLE to "true"; default stays off.
+      HSK_AI_OPENROUTER_FALLBACK_ENABLED: ${{ vars.HSK_AI_OPENROUTER_FALLBACK_ENABLED || 'false' }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GEMINI_API_KEY_BACKUP_1: ${{ secrets.GEMINI_API_KEY_BACKUP_1 }}
       GEMINI_API_KEY_BACKUP_2: ${{ secrets.GEMINI_API_KEY_BACKUP_2 }}
@@ -244,6 +247,10 @@ jobs:
           elif [[ "$HSK_AI_VOICE_API_PROVIDER" == "gemini-direct" ]]; then
             if [[ -z "$GEMINI_API_KEY" && -z "$GEMINI_API_KEY_BACKUP_1" && -z "$GEMINI_API_KEY_BACKUP_2" && -z "$GEMINI_API_KEY_BACKUP_3" ]]; then
               echo "::error::Direct Gemini selected but no Gemini credential exists."
+              exit 1
+            fi
+            if [[ "$HSK_AI_OPENROUTER_FALLBACK_ENABLED" == "true" && -z "$OPENROUTER_API_KEY" ]]; then
+              echo "::error::OpenRouter backup is enabled but OPENROUTER_API_KEY is not set in Actions secrets."
               exit 1
             fi
           else

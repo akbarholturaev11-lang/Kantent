@@ -332,11 +332,15 @@ for (const [index] of episode.scenes.entries()) {
   );
   const previousStartFrame = sceneStartFrames[index - 1];
   const targetStartFrame = Math.ceil((targetStartMs / 1000) * FPS);
-  // Keep the historical six-second Russian hook cap. Tajik samples speak
-  // more slowly, so their first transition follows the verified next-scene
-  // cue and keeps the spoken answer inside the hook.
+  // Keep the historical six-second Russian hook cap, but never cut the
+  // hook's OWN speech: a cut before its last word moves hook words onto the
+  // next scene's visuals (real 2026-11-08 bi-comparison RU: an 8.1 s hook,
+  // "двух людей" at 6.6 s, both in the scene-wise and the one-take audio).
+  // Tajik samples speak more slowly, so their first transition follows the
+  // verified next-scene cue and keeps the spoken answer inside the hook.
+  const hookSpeechEndFrame = Math.ceil((previousCaptionEndMs / 1000) * FPS);
   const cueAlignedFrame = index === 1 && episode.languageCode === "ru-RU" && episode.kind !== "advertisement"
-    ? Math.min(targetStartFrame, 180)
+    ? Math.min(targetStartFrame, Math.max(180, hookSpeechEndFrame))
     : targetStartFrame;
   sceneStartFrames.push(Math.max(previousStartFrame + 1, cueAlignedFrame));
 }

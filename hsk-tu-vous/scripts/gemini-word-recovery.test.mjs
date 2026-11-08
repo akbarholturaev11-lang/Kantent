@@ -47,9 +47,22 @@ test("do not accept a recovered clip out of time sequence",()=>{
     block("a",["a"],900,1100),block("b",["b"],200,500),
   ]),/moves backwards/);
 });
-test("cannot transcribe across a language boundary without verified anchor",()=>{
-  const words=expected(["дар","locale"],["有","zh"]);
-  assert.throws(()=>buildRecoveryPlan(words,[],2000),/mixes languages/);
+test("an interleaved locale+Mandarin gap is one mixed clip; unknown language mixes still fail",()=>{
+  // Real 2026-11-08 RU take: "с 比 или с 很" dropped between verified words.
+  const words=expected(["по","locale"],["с","locale"],["比","zh"],["или","locale"],["с","locale"],["很","zh"],["посмотрите","locale"]);
+  const original=[block("по",["по"],2500,3400),block("посмотрите",["посмотрите"],5900,6500)];
+  const plan=buildRecoveryPlan(words,original,8000);
+  assert.deepEqual(plan.gaps.map(g=>[g.language,g.startMs,g.endMs,g.tokens]),[["mixed",3400,5900,["с","比","или","с","很"]]]);
+  assert.throws(()=>buildRecoveryPlan([{text:"x",language:"en"},{text:"有",language:"zh"}],[],2000),/mixes languages/);
+});
+test("a provided matcher accepts verified spellings in original and recovered blocks",()=>{
+  const words=expected(["бо","locale"],["比","zh"]);
+  const match=(wanted,heard)=>wanted===heard||(wanted==="比"&&heard==="би");
+  const plan=buildRecoveryPlan(words,[block("бо",["бо"],0,300),block("би",["би"],300,600)],1000,{match});
+  assert.equal(plan.gaps.length,0);
+  assert.equal(buildRecoveryPlan(words,[block("бо",["бо"],0,300),block("би",["би"],300,600)],1000).gaps.length,1,
+    "without a matcher the default stays strict");
+  assert.deepEqual(selectRecoveredBlocks(["比"],[block("би",["би"],10,200)],{match}).map(b=>b.text),["би"]);
 });
 test("discard extra unverified words, never use them to fill missing tokens",()=>{
   const words=expected(["а","locale"],["这","zh"],["贵","zh"]);
@@ -57,4 +70,46 @@ test("discard extra unverified words, never use them to fill missing tokens",()=
   const p=buildRecoveryPlan(words,original,1800);
   assert.equal(p.matches.length,1);
   assert.deepEqual(p.gaps[0].tokens,["这","贵"]);
+});
+test("split recognizer words cover one written word, as one merged annotation",()=>{
+  const words=expected(["ман","locale"],["қадбаландтар","locale"],["аст","locale"]);
+  const original=[block("ман",["ман"],0,500),block("қад",["қад"],500,700),block("баландтар",["баландтар"],700,1300),block("аст",["аст"],1300,1600)];
+  const plan=buildRecoveryPlan(words,original,2000);
+  assert.equal(plan.gaps.length,0);
+  assert.deepEqual(plan.matches.map(m=>[m.from,m.to,m.blockCount]),[[0,1,1],[1,2,2],[2,3,1]]);
+  const merged=mergeRecoveredBlocks(words,original,plan,[]);
+  assert.deepEqual(merged.map(b=>[b.text,b.startMs,b.endMs]),[["ман",0,500],["қадбаландтар",500,1300],["аст",1300,1600]]);
+  // Concatenation must be exact: a different second half is not accepted.
+  const wrong=[block("ман",["ман"],0,500),block("қад",["қад"],500,700),block("баланд",["баланд"],700,1300),block("аст",["аст"],1300,1600)];
+  assert.equal(buildRecoveryPlan(words,wrong,2000).gaps.length,1);
+});
+test("X-10: single-hint language passes over the same audio fill what the mixed pass dropped",()=>{
+  // Real TG chunk 2 shape: the mixed-hint pass returned only the Mandarin.
+  const words=expected(["дуруст","locale"],["他","zh"],["比","zh"],["我","zh"],["高","zh"],["ӯ","locale"],["аз","locale"],["ман","locale"]);
+  const mixedPass=[block("他",["他"],900,1100),block("比",["比"],1100,1300),block("我",["我"],1300,1500),block("高",["高"],1500,1800)];
+  const localePass=[block("Дуруст",["дуруст"],200,800),block("би",["би"],1100,1300),block("Ӯ",["ӯ"],2000,2200),block("аз",["аз"],2200,2400),block("ман",["ман"],2400,2800)];
+  const zhPass=[block("他",["他"],900,1100),block("比",["比"],1100,1300),block("我",["我"],1300,1500),block("高",["高"],1500,1800)];
+  assert.ok(buildRecoveryPlan(words,mixedPass,3000).gaps.length>0,"the mixed pass alone has gaps");
+  const combined=[...mixedPass,...localePass,...zhPass].sort((a,b)=>a.startMs-b.startMs||a.endMs-b.endMs);
+  const plan=buildRecoveryPlan(words,combined,3000);
+  assert.equal(plan.gaps.length,0);
+  const merged=mergeRecoveredBlocks(words,combined,plan,[]);
+  assert.deepEqual(merged.map(b=>b.text),["Дуруст","他","比","我","高","Ӯ","аз","ман"]);
+  assert.ok(merged.every((b,i)=>i===0||b.startMs>=merged[i-1].startMs),"time ordered");
+});
+test("one recognized word covering two written words keeps one measured span", () => {
+  const words = expected(["то","locale"],["же","locale"],["правило","locale"]);
+  const plan = buildRecoveryPlan(words, [block("Тоже",["тоже"],0,300), block("правило",["правило"],300,700)], 1000);
+  assert.equal(plan.gaps.length, 0);
+  const merged = mergeRecoveredBlocks(words, [block("Тоже",["тоже"],0,300), block("правило",["правило"],300,700)], plan, []);
+  assert.deepEqual(merged.map((b) => [b.text, b.covers ?? 1]), [["Тоже",2],["правило",1]]);
+  const gapPlan = buildRecoveryPlan(words, [block("правило",["правило"],500,900)], 1000);
+  const got = selectRecoveredBlocks(gapPlan.gaps[0].tokens, [block("Тоже",["тоже"],100,400)]);
+  assert.deepEqual(mergeRecoveredBlocks(words, [block("правило",["правило"],500,900)], gapPlan, [got.map((b) => ({ ...b }))]).map((b) => b.text), ["Тоже","правило"]);
+});
+test("a missing word between touching verified neighbours is marked, not fatal for other gaps", () => {
+  const words = expected(["a","locale"],["b","locale"],["c","locale"],["d","locale"],["e","locale"]);
+  const plan = buildRecoveryPlan(words, [block("a",["a"],0,300), block("c",["c"],300,600), block("e",["e"],900,1200)], 1500);
+  assert.deepEqual(plan.gaps.map((g) => [g.tokens.join(" "), g.startMs, g.endMs, Boolean(g.noAudio)]),
+    [["b",300,300,true],["d",600,900,false]]);
 });

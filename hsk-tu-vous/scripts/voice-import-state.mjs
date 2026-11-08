@@ -24,6 +24,8 @@ export async function hasCurrentImportedVoice(episode, voiceProfile, {
       episode.voiceProfileId !== voiceProfile?.profileId ||
       episode.languageCode !== voiceProfile?.locale ||
       episode.voiceTextHash !== episodeNarrationHash(episode) ||
+      // Missing/invalid hashes are legacy data, NOT evidence of an intact take.
+      !/^[a-f0-9]{64}$/.test(episode.audioSha256 ?? "") ||
       episode.captionSource !== "gemini-word-timestamps" || !episode.captions?.length) return false;
   const publicRoot = path.resolve(projectRoot, "public");
   const audioPath = path.resolve(publicRoot, episode.audioSrc);

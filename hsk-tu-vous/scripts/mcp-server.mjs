@@ -12,6 +12,7 @@ import {contentTypeOf} from "./content-schedule.mjs";
 import {proposeBuffer} from "./scenario-buffer-plan.mjs";
 import {dateInTimezone,isDraftReady} from "./self-improvement-check.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
+import { lessonArtPreflight } from "./review-lesson-art.mjs";
 import { suggestSemanticShots } from "./semantic-shot-adviser.mjs";
 import { CTA_PLATFORMS, getPlatformCtaStatus } from "./platform-cta.mjs";
 import { requirePlatformPackage, requireApprovedPlatformPackages } from "./platform-exports.mjs";
@@ -78,8 +79,8 @@ export const createServer = () => {
       "Для новых рекламных роликов читайте content/PROMO_WORKFLOW.md и creativeGuidance из recommend_skills. Сценарий строится на жизненной ситуации и доказанной пользе продукта; минималистичный кадр и один субтитр определяет content/visual-system.json#promoPresentation. Перед медиа вызовите get_promo_plan: по умолчанию он проверяет все языки из content/languages.json, включая отдельные переведённые реплики и cueText. Calendar Reserve drafts future ad sources only under calendar.weeklySchedule and WORKFLOW.md; it does not publish. " +
       "При написании новых учебных сценариев выбирайте структуру по content/creative-formats.json#storytellingPolicy и задаче ученика, а не по длине: никаких обязательных восьми блоков. Серии планируйте по content/calendar.json#seriesPolicy и content/WORKFLOW.md. " +
       "Для новых рисунков и действий читайте content/GRAPHIC_SCENES.md. Сценарий и рисунки пишет агент по content/WORKFLOW.md: Calendar Reserve для резерва, вызывающий AI-агент для ручного запроса; не используйте отдельную Gemini-модель сценариста. Используйте kind:graphic и декларативные nodes/tracks, когда готовых объектов недостаточно; автор обязан нарисовать смысловой кадр и привязать его к словам выбранного языка до озвучки. Смена метаданных не считается сменой видимого кадра. " +
-      "Перед подготовкой нового HSK-урока читайте content/EDITING_SPEC.md и content/EPISODE_SCHEMA.md. Утверждённый формат выбирается из content/visual-system.json#lessonPresentation. Автор должен заполнить смысловые motionBeats каждой сцены через update_production_plan до voice/render и зарегистрировать изменившийся CTA-контекст. Если prepare_today_video вернул action-plan-required, продолжайте планирование самостоятельно по указанным правилам и повторите подготовку после заполнения плана. " +
-      "На команду «Бугунги видеони тайёрла» вызывайте prepare_today_video: по умолчанию он подготавливает выбранный календарный материал (урок, рекламу или часть серии) на всех языках из content/languages.json и для каждого языка создаёт пакеты всех owner-authorized видео-площадок из content/publication-destinations.json: Instagram, YouTube, TikTok и Facebook. TikTok — отдельный голосовой пакет; не считайте язык готовым, пока не проверены все его четыре экспорта. Если на сегодня нет слота, берите ближайший следующий planned по timezone календаря и сообщайте дату; явно названную дату обрабатывайте строго. Для чтения, редактирования, регистрации и approval версии указывайте language ru или tg; не подменяйте перевод, аудио или approval другим языком. До voice/render продолжайте авторство, если вернулся action-plan-required или незавершённый TikTok; partial/blocker сообщайте точно. После полного QA покажите один сгруппированный preview всех готовых RU/TJ × платформенных вариантов: точное видео, аккаунт, caption/hashtags, настройки/disclosure и собственное предложение времени для каждого аккаунта/площадки. Возьмите свежую статистику и активность из Zernio по процедуре content/WORKFLOW.md; если её не хватает, спросите конкретное решение о времени, не подставляйте общий слот. Один недвусмысленный ответ владельца может подтвердить весь показанный набор; пропущенные или заблокированные варианты не считать одобренными. После этого отдельно планируйте каждый одобренный пост, проверяйте Zernio GET/readback и сохраняйте ID. До такого подтверждения ничего не загружайте и не планируйте; команда не означает публикацию. Для точных CTA и аккаунтов читайте отдельные language CTA Lab и content/publication-destinations.json; Telegram остаётся текстом с изображением и никогда не получает видео. Перед видео вызывайте recommend_skills и читайте выбранный SKILL.md с content/SKILLS.md; обычный урок остаётся Remotion. Ovoz faqat tanlangan tilning voice-profile.json profilidan tayyorlanadi. modelDecisionRequired bo‘lsa egasining aniq model qarorisiz API chaqirmang; pending-owner-approval faqat designated sample uchun. Exact-token tekshiruvi va haqiqiy word timestamp saqlansin. Boshqa TTS/transkripsiya provayderiga o‘tmang. Har bir tilning to‘liq review paketini tekshiring; qisman natijani to‘liq deb aytmang. Use connected Zernio MCP only when exact account and accessible media URL are available; for Codex-local MP4 use the owner-only GitHub Actions handoff in AI_RULES.md, never the GitHub-render artifact route.",
+      "Перед подготовкой нового HSK-урока читайте content/EDITING_SPEC.md и content/EPISODE_SCHEMA.md. Утверждённый формат выбирается из content/visual-system.json#lessonPresentation. Автор должен заполнить смысловые motionBeats каждой сцены (с visual.illustration и HSK AI cast для уроков с illustratedFormatFromDate; content/EDITING_SPEC.md#illustrated-glass-lesson-format) через update_production_plan до voice/render и зарегистрировать изменившийся CTA-контекст. Пошаговый порядок — runbook в начале content/WORKFLOW.md. Если prepare_today_video вернул action-plan-required, продолжайте планирование самостоятельно по указанным правилам и повторите подготовку после заполнения плана. " +
+      "На команду «Бугунги видеони тайёрла» вызывайте prepare_today_video: по умолчанию он подготавливает выбранный календарный материал (урок, рекламу или часть серии) на всех языках из content/languages.json и для каждого языка создаёт пакеты всех owner-authorized видео-площадок из content/publication-destinations.json: Instagram, YouTube, TikTok и Facebook. TikTok — отдельный голосовой пакет; не считайте язык готовым, пока не проверены все его четыре экспорта. Если на сегодня нет слота, берите ближайший следующий planned по timezone календаря и сообщайте дату; если его тоже нет, prepare_today_video вернёт authoring-required: напишите урок/рекламу на сегодняшний слот weeklySchedule по content/WORKFLOW.md §1.3, зарегистрируйте его в календаре и повторите. Если вернулся lesson-art-required, Codex сам генерирует кадры по брифу, регистрирует их и проходит review-lesson-art, затем повторите. Явно названную дату обрабатывайте строго. Для чтения, редактирования, регистрации и approval версии указывайте language ru или tg; не подменяйте перевод, аудио или approval другим языком. До voice/render продолжайте авторство, если вернулся action-plan-required или незавершённый TikTok; partial/blocker сообщайте точно. После полного QA покажите один сгруппированный preview всех готовых RU/TJ × платформенных вариантов: точное видео, аккаунт, caption/hashtags, настройки/disclosure и собственное предложение времени для каждого аккаунта/площадки. Возьмите свежую статистику и активность из Zernio по процедуре content/WORKFLOW.md; если её не хватает, спросите конкретное решение о времени, не подставляйте общий слот. Один недвусмысленный ответ владельца может подтвердить весь показанный набор; пропущенные или заблокированные варианты не считать одобренными. После этого отдельно планируйте каждый одобренный пост, проверяйте Zernio GET/readback и сохраняйте ID. До такого подтверждения ничего не загружайте и не планируйте; команда не означает публикацию. Для точных CTA и аккаунтов читайте отдельные language CTA Lab и content/publication-destinations.json; Telegram остаётся текстом с изображением и никогда не получает видео. Перед видео вызывайте recommend_skills и читайте выбранный SKILL.md с content/SKILLS.md; обычный урок остаётся Remotion. Ovoz faqat tanlangan tilning voice-profile.json profilidan tayyorlanadi. modelDecisionRequired bo‘lsa egasining aniq model qarorisiz API chaqirmang; pending-owner-approval faqat designated sample uchun. Exact-token tekshiruvi va haqiqiy word timestamp saqlansin. Boshqa TTS/transkripsiya provayderiga o‘tmang. Har bir tilning to‘liq review paketini tekshiring; qisman natijani to‘liq deb aytmang. Use connected Zernio MCP only when exact account and accessible media URL are available; for Codex-local MP4 use the owner-only GitHub Actions handoff in AI_RULES.md, never the GitHub-render artifact route.",
     },
   );
 
@@ -771,10 +772,10 @@ export const createServer = () => {
     {
       title: "Generate Gemini voice and word-timed captions",
       description:
-        "Automatically generates MP3 and word-timed VTT with the approved Gemini TTS and Transcribe settings in content/voice-profile.json. A normalized exact-token match is required before media is imported. The script and generated audio are sent to Google.",
-      inputSchema: z.object({ date: dateSchema }),
+        "Generates MP3 and word-timed VTT with the approved Gemini TTS/Transcribe models in the selected language's voice-profile.json through the configured transport (OpenRouter by default; Gemini Direct with the opt-in OpenRouter backup when enabled). A normalized exact-token match is required before import. A matching imported take is reused, and a SHA-verified saved take resumes without new TTS. If an older paid take of the same narration cannot be resumed, the tool stops instead of buying another; set forceNewTake only on an explicit owner request after listening.",
+      inputSchema: z.object({ date: dateSchema, forceNewTake: z.boolean().optional() }),
     },
-    async ({ date }) =>
+    async ({ date, forceNewTake = false }) =>
       withToolErrors(async () => {
         const { item, episode } = await ensureRunCopy(date);
         const voiceProfile = await requireApprovedVoiceProfile(item.id);
@@ -782,10 +783,11 @@ export const createServer = () => {
           throw new Error(
             "Episode voice provider does not match the approved Gemini profile.",
           );
-        const reusedImportedVoice = await hasCurrentImportedVoice(episode, voiceProfile, { projectRoot: PROJECT_ROOT });
+        const reusedImportedVoice = !forceNewTake &&
+          await hasCurrentImportedVoice(episode, voiceProfile, { projectRoot: PROJECT_ROOT });
         const result = reusedImportedVoice
           ? { log: "Reused matching imported voice and word-timed captions; no TTS or STT request was made." }
-          : await runScript("generate-voice-gemini.mjs", item.id);
+          : await runScript("generate-voice-gemini.mjs", item.id, ...(forceNewTake ? ["--new-take"] : []));
         const refreshed = await ensureRunCopy(date);
         return {
           date,
@@ -914,6 +916,12 @@ export const createServer = () => {
             publishing: "nothing was published",
           };
         }
+        // Frames come before paid voice: an illustrated lesson stops here with
+        // the exact Codex frame brief until its frames pass the review service.
+        const art = await lessonArtPreflight(episode);
+        if (!art.ready) {
+          return { date, episodeId: item.id, reviewFolder: folder, ...art, publishing: "nothing was published" };
+        }
         const voiceProfile = await requireApprovedVoiceProfile(item.id);
         const needsVoice =
           !episode.audioSrc ||
@@ -1022,13 +1030,22 @@ export const createServer = () => {
     {
       title: "Prepare today's HSK video or the next planned episode",
       description:
-        "For «Бугунги видеони тайёрла» / bugungi videoni tayyorla: prepare BOTH Russian and Tajik versions by default for the selected calendar item (lesson, advertisement or series part). Finish all four mapped video exports per language: Instagram, YouTube, TikTok and Facebook; TikTok needs its separately voiced package. Skip an episode only when all requested languages have verified publication evidence. If no eligible today slot exists, use the nearest future planned slot and disclose its date. Return ready only when every required language/platform package validates; otherwise return partial/blocked with exact missing outputs. Nothing is uploaded, scheduled or published. After QA, workflow requires one grouped exact-preview bundle, fresh account/platform timing evidence, owner confirmation, then a separate verified schedule per approved target.",
+        "For «Бугунги видеони тайёрла» / bugungi videoni tayyorla: prepare BOTH Russian and Tajik versions by default for the selected calendar item (lesson, advertisement or series part). Finish all four mapped video exports per language: Instagram, YouTube, TikTok and Facebook; TikTok needs its separately voiced package. Skip an episode only when all requested languages have verified publication evidence. If no eligible today slot exists, use the nearest future planned slot and disclose its date; if none exists it returns stage authoring-required: author today's weeklySchedule slot (content/WORKFLOW.md §1.3), register it, and call again. An illustrated lesson returns stage lesson-art-required until Codex has generated and the review service has passed its frames. Return ready only when every required language/platform package validates; otherwise return partial/blocked with exact missing outputs. Nothing is uploaded, scheduled or published. After QA, workflow requires one grouped exact-preview bundle, fresh account/platform timing evidence, owner confirmation, then a separate verified schedule per approved target.",
       inputSchema: z.object({ language: z.enum(["all", "ru", "tg"]).optional() }),
     },
     async ({ language = "all" }) =>
       withToolErrors(async () => {
         const languages = requestedLanguages(language);
-        const resolved = resolveTodayVideo(await readJson(CALENDAR_PATH), new Date(), { confirmedPublishedEpisodeIds: confirmedPublishedInAllLanguages(languages) });
+        let resolved;
+        try {
+          resolved = resolveTodayVideo(await readJson(CALENDAR_PATH), new Date(), { confirmedPublishedEpisodeIds: confirmedPublishedInAllLanguages(languages) });
+        } catch (error) {
+          if (error?.code !== "AUTHORING_REQUIRED") throw error;
+          // Owner rule 2026-11-09: the today command authorizes authoring
+          // exactly today's weeklySchedule slot when the calendar has none.
+          return { stage: "authoring-required", ...error.authoring, nextAgentAction: error.message,
+            procedure: "content/WORKFLOW.md §1.3", publishing: "nothing was published" };
+        }
         const prepared = await prepareLanguagePackages(languages, () => prepareReviewForDate(resolved.selectedDate));
         return {
           ...prepared,

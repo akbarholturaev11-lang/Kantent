@@ -4,6 +4,21 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 
 **New-chat orientation:** From the repository root start at [`../START_HERE.md`](../START_HERE.md). For current unresolved tasks read [`docs/audits/CURRENT_TASKS.md`](docs/audits/CURRENT_TASKS.md); follow its links into the full V1–V7 evidence audit when needed. The task index is *not* a second production policy, and OPEN does not mean implemented. Check current main before resuming any prior work.
 
+**Active continuation handoff:** Read [`docs/audits/WORK_CONTEXT.md`](docs/audits/WORK_CONTEXT.md) for the current P0/P1 coding branch, tested changes, PR dependency, blockers and next action. It is a progress log, never an override of these canonical rules.
+
+## Agent roles (who does what)
+
+| Agent | Started by | Owns | Never |
+|---|---|---|---|
+| **Codex — local video producer** | the owner's chat command, e.g. «Бугунги видеони тайёрла» | the runbook at the top of `content/WORKFLOW.md`: authors today's slot when the calendar has none, completes action plans, **generates the lesson frames** (below), voice, render, QA and the grouped preview; after the owner's exact approval, the approved publications | publishing unapproved video; the paid image API unasked; regenerating a saved voice take or frame; inventing characters; editing approved/published history |
+| **Claude Code — engineering and audits** | the owner's request | code, tests, CI, rule migrations and audits on a branch, merged to `main` only with green checks; may run production on request under the same rules | pushing red checks to `main`; changing voice/CTA policy without the owner |
+| **Calendar Reserve — ChatGPT scheduled, daily** | its schedule | complete CTA-free future sources for the next `calendar.json#planningBuffer.targetFutureEpisodes` dates in every default language, including `visual.illustration` beats and `content/lesson-art/<id>.json` from `content:variety` (`content/WORKFLOW.md` reserve steps) | voice, frames, render, publication |
+| **Feedback — ChatGPT scheduled, Mon/Wed/Fri** | its schedule | Zernio observations, reports, hypotheses and Hook/CTA/visual-variety A/B readouts (`content/feedback/AGENT_PLAYBOOK.md`) | writing scripts or calendar rows, changing policy, publishing |
+| **HSK AI News — ChatGPT scheduled, every 3 days** | its schedule | source-verified static photo news to the four authorized feeds (`content/telegram-agent.json`) | video, Reels, Stories, RU Facebook |
+| **GitHub Actions** | push/PR, or an owner dispatch | consistency and test CI; `video-review.yml` review renders; the Zernio publish workflows only on an owner dispatch with exact hashes | publishing on their own |
+
+Handoffs: Calendar Reserve → Codex (complete sources); Codex → owner (one preview bundle); owner → Codex or Actions (exact approval); Feedback → Calendar Reserve (hypotheses and test IDs); any agent → `docs/audits/CURRENT_TASKS.md` (open defects). Every agent first reads the latest `main`.
+
 ## Source ownership (do not duplicate values)
 
 | Information | Canonical source |
@@ -32,10 +47,19 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | P3 evidence-based shot suggestion rules | `content/semantic-shot-intents.json`, explained by `content/SEMANTIC_SHOT_ADVISER.md` |
 | Episode schema and invalidation | `content/EPISODE_SCHEMA.md` |
 | Declarative teaching-drawing payload and authoring procedure | `content/GRAPHIC_SCENES.md` |
+| Illustrated-glass lesson format, text roles, safe zone and subtitle placement | `content/EDITING_SPEC.md#illustrated-glass-lesson-format` |
+| The only characters allowed in video frames (HSK AI cast: panda, dragon, crane, monkey, rabbit), their identity rules and exact app vectors | `content/characters/hsk-ai-characters.json` (+ rendered `content/characters/<id>-<mood>.png`) |
+| Per-lesson frame (lesson art) manifests; generated images and provenance | `content/lesson-art/<episode-id>.json`; `public/lesson-art/<episode-id>/` |
+| Visual variety (settings library, character roles, layout patterns, A/B experiments) | `content/visual-variety.json`, applied by `scripts/visual-variety-plan.mjs` |
+| Frame review requirements and render gate | `scripts/review-lesson-art.mjs` (rules in `content/EDITING_SPEC.md#illustrated-glass-lesson-format`) |
 | Runtime architecture, limitations and known technical gotchas | `PROJECT_MEMORY.md` |
 | Developer startup commands | `README.md` |
 | Installed skill inventory, functional categories and per-branch owners | `content/skill-catalog.json` |
 | Skill selection principles and precedence | `content/SKILLS.md` |
+
+## Codex: lesson frames
+
+Frames are a **Codex task** (owner decision 2026-11-09). When Codex prepares an illustrated-glass lesson it runs `node scripts/generate-lesson-art.mjs <episode-id>`, reads `review/<episode-id>/lesson-art-codex-brief.md`, generates every missing **background** frame with its own image generation exactly as briefed (text-free, no people, no characters, ≥1500 px JPEG at the given path, references for continuity), records each with `--record-codex <name>`, then runs `node scripts/review-lesson-art.mjs <episode-id>`, fixes failures, looks at each frame and confirms it with `--confirm-visual` (stored, hash-bound, in the committed `public/lesson-art/<id>/provenance.json`). `prepare_today_video`/`content:make` return `lesson-art-required` with this brief **before paid voice** until the review passes; commit the frames and provenance with the lesson. Characters are never generated (they are the HSK AI cast drawn from `content/characters/hsk-ai-characters.json`). Codex never invents a character, never calls the paid `--paid` fallback unless the owner asks, and never regenerates a saved frame unasked. Full procedure: `content/WORKFLOW.md` step 2.6.
 
 ## Automatic rule categorization
 
@@ -53,13 +77,13 @@ Before creating, changing, rendering or exporting any video, invoke the local MC
 
 ## Editorial skill selection for scheduled agents
 
-The daily Calendar Reserve, Monday/Wednesday/Friday Feedback and **every-three-day Telegram TJ News** agents are three separate scheduled ChatGPT tasks. Drafting and Feedback remain nonpublishing. The **single 3-day HSK AI News agent** is the only owner-authorized autonomous publisher of **source-verified static photo news**: Tajik Telegram `@aibotsakbar`, Russian Instagram Feed `@hskai.app`, Tajik Instagram Feed `@hskai.apptj`, and Tajik-only Facebook Feed `Akbarholturaev`. It never publishes video, Reels or Stories; Facebook RU automatic Zernio publishing stays disabled. See `content/telegram-agent.json` for the verified task ID, and `content/publication-destinations.json` for routing. Do not create duplicate schedulers or grant automatic VIDEO publishing. On each run read the latest `main` plus `content/skill-catalog.json`, then use `recommend_skills` when available, otherwise read the exact matching project-local SKILL.md according to `content/SKILLS.md`.
+The daily Calendar Reserve, Monday/Wednesday/Friday Feedback and **every-three-day Telegram TJ News** agents are three separate scheduled ChatGPT tasks. Drafting and Feedback remain nonpublishing. The **single 3-day HSK AI News agent** is the only owner-authorized autonomous publisher of **source-verified static photo news**: Tajik Telegram `@hskaiapp`, Russian Instagram Feed `@hskai.app`, Tajik Instagram Feed `@hskai.apptj`, and Tajik-only Facebook Feed `Akbarholturaev`. It never publishes video, Reels or Stories; Facebook RU automatic Zernio publishing stays disabled. See `content/telegram-agent.json` for the verified task ID, and `content/publication-destinations.json` for routing. Do not create duplicate schedulers or grant automatic VIDEO publishing. On each run read the latest `main` plus `content/skill-catalog.json`, then use `recommend_skills` when available, otherwise read the exact matching project-local SKILL.md according to `content/SKILLS.md`.
 
 - **Calendar Reserve:** when authoring or repairing a future, unapproved HSK 1–2 lesson for the shared Instagram Reels/YouTube Shorts body, consult `.agents/skills/ig-reel-planning/SKILL.md` *during editorial hook/storyboard planning only*. This must not replace `content/hook-lab.json`, fabricate Chinese facts or add a CTA to canonical episode source.
   Only this scheduled writer (or a separately owner-invoked drafting agent) owns new future source/calendar files for the content types in `calendar.json#weeklySchedule`; ads follow `PROMO_WORKFLOW.md`. Verify **all** default languages in `content/languages.json`, each locale's matching `localization.sourceHash`, current `content/visual-system.json#lessonPresentation`, complete cue-linked `motionBeats`, `GRAPHIC_SCENES.md` when custom objects/actions are needed, and topic-selected `storytelling` metadata for new/revised drafts. `scripts/self-improvement-check.mjs#inspectDraftReadiness` now checks every configured production language and source-hash binding. It is **static source readiness**, not proof of real Gemini timings, an approved render or a completed publication.
 - **Feedback (Mon/Wed/Fri):** Instagram caption review uses `ig-caption-quality` only for *proposed future publication copy* when that is explicitly part of the report; competitor benchmarking uses `ig-competitor-research` only when real authorized external references and comparable evidence are available. Neither is a prerequisite to own-account Zernio analysis, and no social-post or message is automatically sent.
   Feedback owns sourced per-platform observations, descriptive reports and **hypotheses only**. It must never write or repair future lesson/promo JSON or calendar entries, nor promote a Hook/storytelling/CTA policy without valid fixed-age 7d evidence and explicit owner approval. A detected buffer shortfall is a handoff to Calendar Reserve, not permission for the analytics task to author scripts.
-- **HSK AI News (every 3 days):** follow `content/telegram-agent.json#socialNewsDistribution` and `content/publication-destinations.json#newsPhotoDestinations`. Inspect the past 72h of actual `HSK-AI-Bot/main` user-facing releases, make verified original 4:3 photo with immutable GitHub RAW media URL, write RU captions for Instagram `@hskai.app` and TJ captions for Telegram `@aibotsakbar`, Instagram `@hskai.apptj` and Facebook `Akbarholturaev`, validate and auto-publish independently after per-account duplicate checks. No per-post owner approval for these image+caption news posts. Never send video, Reels, Stories, auto DM, or RU Facebook auto posts; missing media/source blocks corresponding publications.
+- **HSK AI News (every 3 days):** follow `content/telegram-agent.json#socialNewsDistribution` and `content/publication-destinations.json#newsPhotoDestinations`. Inspect the past 72h of actual `HSK-AI-Bot/main` user-facing releases, make verified original 4:3 photo with immutable GitHub RAW media URL, write RU captions for Instagram `@hskai.app` and TJ captions for Telegram `@hskaiapp`, Instagram `@hskai.apptj` and Facebook `Akbarholturaev`, validate and auto-publish independently after per-account duplicate checks. No per-post owner approval for these image+caption news posts. Never send video, Reels, Stories, auto DM, or RU Facebook auto posts; missing media/source blocks corresponding publications.
 - Regular voice, semantic cue validation, Remotion rendering, CTA and final-publication approval remain unchanged.
 
 ## Central CTA assembly for future lessons

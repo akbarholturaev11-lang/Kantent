@@ -1,0 +1,42 @@
+{
+  "$comment": "Owner decision 2026-11-09: illustrated lessons must not repeat one background, one character pair or one comparison layout. scripts/visual-variety-plan.mjs picks setting, supporting HSK AI character and layout pattern from the script and the history of earlier lessons, assigns A/B arms, and reads results back from fixed-age Zernio observations.",
+  "rotation": { "settingLookback": 4, "supportingCharacterLookback": 2, "patternLookback": 2 },
+  "settings": [
+    { "id": "hutong-street", "group": "outdoor-china", "prompt": "a calm Beijing hutong street with red lanterns, grey brick walls and wooden doors" },
+    { "id": "park-lake", "group": "outdoor-china", "prompt": "a Chinese park by a lake with willow trees, a stone bridge and a pavilion" },
+    { "id": "night-market", "group": "outdoor-china", "prompt": "a lively Chinese night market street with food stalls and warm lights (no readable signs)" },
+    { "id": "metro-station", "group": "outdoor-china", "prompt": "a clean modern Chinese metro platform with a train arriving (no readable signs)" },
+    { "id": "campus-gate", "group": "outdoor-china", "prompt": "a Chinese university campus gate and avenue with trees and bicycles" },
+    { "id": "classroom", "group": "indoor-daily", "prompt": "a bright classroom with desks, a blank whiteboard and plants" },
+    { "id": "cafe", "group": "indoor-daily", "prompt": "a cosy tea house with wooden tables, teapots and soft window light" },
+    { "id": "home-kitchen", "group": "indoor-daily", "prompt": "a warm home kitchen with a dining table, bowls and steaming dumplings" },
+    { "id": "bookstore", "group": "indoor-daily", "prompt": "a quiet bookstore with tall shelves of books with blank spines and reading chairs" },
+    { "id": "office", "group": "indoor-daily", "prompt": "a modern office with desks, laptops with blank screens and city windows" }
+  ],
+  "supportingCharacters": [
+    { "character": "crane", "reason": "tall and precise: comparisons and grammar structure", "keywords": ["выше", "ниже", "больше", "меньше", "холоднее", "теплее", "сравн", "比", "баланд", "хунук", "муқоиса", "калон"] },
+    { "character": "monkey", "reason": "drills and dialogue", "keywords": ["скажи", "спроси", "ответь", "диалог", "повтори", "мегӯ", "пурс", "ҷавоб", "такрор"] },
+    { "character": "rabbit", "reason": "memory and warnings", "keywords": ["ошибк", "не путай", "запомни", "не добавляйте", "лишн", "хато", "дар хотир", "намегузорем"] },
+    { "character": "dragon", "reason": "energy and milestones", "keywords": ["уровень", "получилось", "поздравл", "победа", "сатҳ", "табрик", "тайёр"] }
+  ],
+  "patterns": [
+    { "id": "two-subject", "keywords": ["выше", "больше", "меньше", "比", "баланд", "калон"] },
+    { "id": "before-after-cards", "keywords": ["сегодня", "вчера", "раньше", "теперь", "имрӯз", "дирӯз", "ҳоло"] },
+    { "id": "dialogue", "keywords": ["скажи", "спроси", "ответь", "мегӯ", "пурс"] },
+    { "id": "single-coach", "keywords": [] }
+  ],
+  "experiments": [
+    {
+      "id": "vv-setting-group-v1",
+      "status": "active",
+      "startDate": "2026-11-07",
+      "variable": "setting group",
+      "arms": { "A": "outdoor-china", "B": "indoor-daily" },
+      "hypothesis": "Everyday indoor settings keep viewers watching longer than outdoor China street settings for HSK 1–2 grammar lessons.",
+      "primaryMetric": "averageWatchRatio",
+      "secondaryMetrics": ["views", "sharesPer1000Views"],
+      "window": "7d",
+      "minimumPerArm": 3
+    }
+  ]
+}

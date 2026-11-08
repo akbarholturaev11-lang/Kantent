@@ -60,3 +60,15 @@ test("does not invent content if all remaining slots are closed", () => {
     /no upcoming planned video/i,
   );
 });
+
+test("no today/future slot asks the agent to author today's weeklySchedule slot, never a past date", async () => {
+  const calendar = JSON.parse(await (await import("node:fs/promises")).readFile(new URL("../content/calendar.json", import.meta.url), "utf8"));
+  const past = { ...calendar, items: calendar.items.filter((item) => item.date < "2026-11-09") };
+  let caught;
+  try { resolveTodayVideo(past, new Date("2026-11-09T04:00:00Z")); } catch (error) { caught = error; }
+  assert.equal(caught?.code, "AUTHORING_REQUIRED");
+  assert.equal(caught.authoring.date, "2026-11-09");
+  assert.equal(caught.authoring.slot.contentType, "lesson");
+  assert.match(caught.message, /no upcoming planned video/i);
+  assert.match(caught.message, /Never select a past date/);
+});

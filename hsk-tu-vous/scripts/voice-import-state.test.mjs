@@ -29,6 +29,15 @@ test("reuses only a matching imported voice whose current file hash is intact", 
   assert.equal(await hasCurrentImportedVoice({ ...valid, audioSha256: "bad" }, profile, {
     projectRoot: "/project", readFile: async () => bytes,
   }), false);
+  // Previously a missing SHA-256 was treated as an intact first take.
+  for (const audioSha256 of [undefined, null, "", "0".repeat(63)]) {
+    let reads = 0;
+    assert.equal(await hasCurrentImportedVoice({ ...valid, audioSha256 }, profile, {
+      projectRoot: "/project",
+      readFile: async () => { reads++; return bytes; },
+    }), false);
+    assert.equal(reads, 0, "Unverified audio must never enter the reuse path");
+  }
   assert.equal(await hasCurrentImportedVoice({ ...valid, audioSrc: "../private.mp3" }, profile, {
     projectRoot: "/project", readFile: async () => bytes,
   }), false);

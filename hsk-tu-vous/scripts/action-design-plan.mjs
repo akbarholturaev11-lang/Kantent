@@ -4,6 +4,61 @@ import {validateGraphicScene,graphicFingerprint} from "./graphic-scene.mjs";
 export const ACTION_KINDS = ["quantity", "phrase", "numeral", "ordinal", "comparison", "choice", "graphic"];
 export const ACTION_OBJECTS = ["tea-cup", "book", "apple"];
 
+// Illustrated-glass lesson beats (owner decision 2026-11-09): generated art
+// from public/lesson-art/<episode>/ plus the overlay that explains the cue.
+export const ILLUSTRATION_LAYOUTS = ["scene", "pair", "board"];
+export const ILLUSTRATION_OVERLAYS = ["rise", "marks", "link", "cross", "drop", "compare", "adjective"];
+// The HSK AI cast (content/characters/hsk-ai-characters.json; a test keeps
+// this list equal to the registry). No other character may appear.
+export const HSK_CHARACTER_IDS = ["panda", "dragon", "crane", "monkey", "rabbit"];
+export const HSK_CHARACTER_MOODS = ["idle", "talk", "correct", "wrong", "celebrate", "proud", "dismissive", "one-heart", "loading"];
+export function validateIllustration(id, ill) {
+  const fail = (message) => { throw Error(id + ": illustration " + message); };
+  if (!ill || typeof ill !== "object") fail("must be an object");
+  if (!ILLUSTRATION_LAYOUTS.includes(ill.layout)) fail("layout must be scene, pair or board");
+  const name = /^[a-z][a-z0-9-]{1,40}$/;
+  const wanted = ill.layout === "pair" ? 2 : 1;
+  if (!Array.isArray(ill.images) || ill.images.length !== wanted || ill.images.some((x) => !name.test(x)))
+    fail(`needs ${wanted} lesson-art image name(s)`);
+  if (ill.icons !== undefined && (!Array.isArray(ill.icons) || ill.icons.length !== wanted || ill.icons.some((x) => x !== null && !name.test(x))))
+    fail("icons must match the images");
+  if (ill.overlay !== undefined && !ILLUSTRATION_OVERLAYS.includes(ill.overlay)) fail("has an unsupported overlay");
+  for (const [key, box] of Object.entries(ill.anchors ?? {}))
+    if (!/^[a-z]+$/.test(key) || !["x", "y", "w", "h"].every((k) => Number.isFinite(box?.[k]) && box[k] >= 0 && box[k] <= 1)) fail("anchors are normalized boxes");
+  if (ill.focus !== undefined) {
+    const ok = ill.layout === "pair" ? ["left", "right"].includes(ill.focus) : Boolean(ill.anchors?.[ill.focus]);
+    if (!ok) fail("focus must name an anchor (scene) or left/right (pair)");
+  }
+  if (["link", "marks", "rise", "cross"].includes(ill.overlay) && !(ill.anchors?.a && ill.anchors?.b)) fail("needs anchors a and b for this overlay");
+  for (const member of ill.cast ?? []) {
+    if (!HSK_CHARACTER_IDS.includes(member?.id)) fail("cast may only use HSK AI characters (content/characters/hsk-ai-characters.json)");
+    if (member.mood !== undefined && !HSK_CHARACTER_MOODS.includes(member.mood)) fail("cast mood is not an HSK AI mood");
+    if (!["x", "y", "h"].every((k) => Number.isFinite(member[k]) && member[k] > 0 && member[k] <= 1)) fail("cast x, y and h are normalized");
+    if (ill.layout === "pair" ? ![0, 1].includes(member.card) : member.card !== undefined) fail("cast card is 0/1 only in a pair");
+  }
+  if (ill.layout === "board" && (!Array.isArray(ill.parts) || !ill.parts.length || ill.parts.length > 6 || ill.parts.some((x) => typeof x !== "string" || !x.trim() || x.length > 24)))
+    fail("board needs 1–6 short parts");
+}
+
+/**
+ * Owner rule 2026-11-09 (illustrated lesson format): the headline, the chip
+ * and the subtitle each have one job and never repeat one another. The
+ * headline names the teaching step in plain words: no Hanzi (the chip owns
+ * them), not the chip's meaning, and no word the narration speaks at its cue.
+ */
+export function validateDistinctTextRoles(beat) {
+  const v = beat.visual;
+  if (!v?.illustration) return;
+  const fold = (value) => String(value ?? "").toLocaleLowerCase("und").replace(/[^\p{L}\p{N}\s]/gu, " ").trim();
+  const title = fold(v.title);
+  if (!title) throw Error(beat.id + ": headline is required");
+  if (/\p{Script=Han}/u.test(v.title)) throw Error(beat.id + ": headline must not contain Hanzi; the chip shows them");
+  if (title === fold(v.meaning)) throw Error(beat.id + ": headline repeats the chip meaning");
+  const spoken = new Set(fold(beat.cueText).split(/\s+/).filter((word) => word.length >= 4));
+  const repeated = title.split(/\s+/).find((word) => spoken.has(word));
+  if (repeated) throw Error(beat.id + `: headline repeats the spoken word "${repeated}"; name the teaching step instead`);
+}
+
 export function validateActionVisual(beat) {
   const v = beat.visual;
   if (!ACTION_KINDS.includes(beat.kind) || !v || !beat.explains?.trim())
@@ -11,6 +66,7 @@ export function validateActionVisual(beat) {
   for (const key of ["title", "hanzi", "pinyin", "meaning"])
     if (typeof v[key] !== "string" || v[key].length > 180)
       throw Error(beat.id + ": invalid visual " + key);
+  if (v.illustration !== undefined) { validateIllustration(beat.id, v.illustration); validateDistinctTextRoles(beat); }
   if (beat.kind === "graphic") {
     validateGraphicScene(v.graphic);
     if (["object","count","models","choices","value"].some(key => v[key] !== undefined))

@@ -149,6 +149,7 @@ test("connection groups bind all 8 exact RU/TJ video targets without username-de
  assert.equal(zernioTargetAccount("tg","tiktok",env).expectedUsername,"@hskai.ru");
  assert.equal(telegramNewsRoute(env).accountId,"6ae1661bf80a20df8f31158e");
  assert.equal(telegramNewsRoute(env).secret,"ru-tiktok");
+ assert.equal(telegramNewsRoute(env).expectedUsername,"hskaiapp");
  assert.throws(()=>zernioRoute("ru",{ZERNIO_API_KEY:"only-ru"},"tiktok"),/No Zernio API key for tiktok-telegram/);
  assert.throws(()=>zernioRoute("tg",{ZERNIO_TG_API_KEY:"only-tg"},"tiktok"),/No Zernio API key for tiktok-facebook/);
  assert.throws(()=>zernioTargetAccount("tg","tiktok",{ZERNIO_TG_TIKTOK_ACCOUNT_ID:"6ae16327a2845fbdb07e5ccb"}),/conflicts/);

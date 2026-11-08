@@ -73,6 +73,17 @@ The active policy in `visual-system.json#lessonPresentation` selects this defaul
 - `audioTrimAfterFrames`, when present on an imported review episode, is Remotion's absolute source-frame endpoint (`Audio.trimAfter`), not a count of frames to remove from the tail. The importer sets it after the last timed word plus a short natural pause.
 - `publishingStatus`: records pending confirmation, owner-approved Zernio publication, or the per-version outcome (`published`, `scheduled`, `processing`, `partial`, or `failed`).
 
+### Illustrated-glass beat payload (`visual.illustration`)
+
+Required on every lesson beat from `lessonPresentation.illustratedFormatFromDate`; validated by `scripts/action-design-plan.mjs#validateIllustration` and `#validateDistinctTextRoles`.
+
+- `layout`: `scene` (one image + `anchors`), `pair` (two images, optional `icons`, `focus` `left`/`right`) or `board` (one image + 1–6 short formula `parts`).
+- `images`: lesson-art names from `content/lesson-art/<episode-id>.json` (files under `public/lesson-art/<episode-id>/`).
+- `anchors`: normalized `{x,y,w,h}` subject boxes measured on the image (`a`, `b`, …); `focus` names the subject the camera pushes to.
+- `overlay`: `rise`, `marks`, `link`, `cross`, `drop`, `compare` or `adjective`.
+- `cast`: HSK AI characters drawn from the registry on top of the art: `{id, mood, x, y, h, card?}` — `id` from `content/characters/hsk-ai-characters.json`, `mood` from its moods, `x` centre, `y` feet and `h` height normalized to the image (`card` 0/1 in a pair).
+- `visual.title` is the headline (teaching step, no Hanzi, not the meaning, no word spoken at the cue); `visual.hanzi`/`pinyin`/`meaning` fill the glass chip.
+
 ## Platform CTA variants
 
 For new lesson plans, omit top-level `cta`, `ctaExperiment` and the CTA scene. `scripts/episode-cta-assembly.mjs` joins a selected approved CTA ending to the shared lesson scenes. Instagram, YouTube and Facebook use the selected language's canonical offer and approved spoken cues; each receives a distinct registered CTA video. TikTok has a separate manual-DM CTA and its own audio/word cues. The connected Telegram account is text-update-only and never receives video.

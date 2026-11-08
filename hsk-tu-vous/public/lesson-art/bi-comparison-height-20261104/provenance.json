@@ -1,0 +1,521 @@
+{
+  "episodeId": "bi-comparison-height-20261104",
+  "assets": {
+    "two-people": {
+      "file": "two-people.png",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "a7dc45d39e3445e518ab7880adeeee21ef008b5ae46fce0a6000575b06d824ac",
+      "references": [],
+      "sha256": "509f4c60f5c9e2e44ffdeaaf83be6c82e05f63c3b7567b84919d96ae4a99ad40",
+      "generationId": "gen-1794156217-65sABoCojKRyVNPSFVSS",
+      "usage": {
+        "prompt_tokens": 184,
+        "completion_tokens": 1120,
+        "total_tokens": 1304,
+        "cost": 0.067292,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.067292,
+          "upstream_inference_prompt_cost": 0.000092,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T16:43:48.831Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
+    },
+    "yesterday-warm": {
+      "file": "yesterday-warm.png",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "a14d84bba9bfc64fd6c0eea8b5db367c8efe68315ac81229fc7b27a53e01b0ba",
+      "references": [
+        "two-people"
+      ],
+      "sha256": "0ff051a8cf2e2bba257aa4a0d58a378a241467df0a93df2f301cb85a02944cfd",
+      "generationId": "gen-1794156231-B8USa4WtlUOvng6vU4bo",
+      "usage": {
+        "prompt_tokens": 1262,
+        "completion_tokens": 1120,
+        "total_tokens": 2382,
+        "cost": 0.067831,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.067831,
+          "upstream_inference_prompt_cost": 0.000631,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T16:44:03.362Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
+    },
+    "today-cold": {
+      "file": "today-cold.png",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "6bd4597be1a144cb081d1170153852ed0c9e8923733a42a96ea2d50b72c7660a",
+      "references": [
+        "two-people",
+        "yesterday-warm"
+      ],
+      "sha256": "0786d5e66ae0effbea5c608dca5c4456d766a56484130e0d3e0fe65b991e9053",
+      "generationId": "gen-1794156244-EMQkBTzov4ljRmrG2IW6",
+      "usage": {
+        "prompt_tokens": 2379,
+        "completion_tokens": 1120,
+        "total_tokens": 3499,
+        "cost": 0.0683895,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0683895,
+          "upstream_inference_prompt_cost": 0.0011895,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T16:44:15.421Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
+    },
+    "notebook-desk": {
+      "file": "notebook-desk.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "e32777926696aec56e235fa4abed3cc9767c231b1189f3d86779bf796043ade4",
+      "characters": [],
+      "references": [],
+      "sha256": "f8b9be9ae6081a6b69841d45beb4fb831469c9e23bb7214bf24630f57cde261a",
+      "generationId": "gen-1794164250-4pvfkDuMoKmCgI7DGsKQ",
+      "usage": {
+        "prompt_tokens": 217,
+        "completion_tokens": 1680,
+        "total_tokens": 1897,
+        "cost": 0.1009085,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1009085,
+          "upstream_inference_prompt_cost": 0.0001085,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T18:57:48.897Z",
+      "rawSha256": "8c3be269108d7b086353148c3fa6407be16ec9bcec876661bbad7138a0d30524",
+      "visual": {
+        "by": "Claude looked at the frame 2026-11-09: text-free, no people, no baked character, matches prompt, continuous with references, sharp and clean",
+        "sha256": "f8b9be9ae6081a6b69841d45beb4fb831469c9e23bb7214bf24630f57cde261a",
+        "at": "2026-11-08T18:58:47.046Z"
+      }
+    },
+    "icon-cold": {
+      "file": "icon-cold.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "970cd6a93d3c05d422bb803c418a0573a163da258dd8141f0c94bb282a79bb4c",
+      "characters": [],
+      "references": [],
+      "sha256": "114f69be01e86276b6c93c51682263b2fea03761e853397c72082460492afce5",
+      "generationId": "gen-1794164269-TLUhUw8AtqPOpS8OP4yl",
+      "usage": {
+        "prompt_tokens": 204,
+        "completion_tokens": 1680,
+        "total_tokens": 1884,
+        "cost": 0.100902,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.100902,
+          "upstream_inference_prompt_cost": 0.000102,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T18:58:01.325Z",
+      "rawSha256": "268ed47004e1a9f50c6c33c3273d90fb8baae8007895ead906342b8cb835d84d",
+      "visual": {
+        "by": "Claude looked at the frame 2026-11-09: text-free, no people, no baked character, matches prompt, continuous with references, sharp and clean",
+        "sha256": "114f69be01e86276b6c93c51682263b2fea03761e853397c72082460492afce5",
+        "at": "2026-11-08T18:58:47.103Z"
+      }
+    },
+    "icon-warm": {
+      "file": "icon-warm.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "80219455e4c7494414cb68938199e052781f5d12c372d7758da4b2c25bb371fa",
+      "characters": [],
+      "references": [],
+      "sha256": "a14f8bf5c2c517adf847577014fc90746b2adc2103b8e7ed19b412c2d9fa9759",
+      "generationId": "gen-1794164281-FDtxExHcTuOadVY7hbar",
+      "usage": {
+        "prompt_tokens": 227,
+        "completion_tokens": 1680,
+        "total_tokens": 1907,
+        "cost": 0.1009135,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1009135,
+          "upstream_inference_prompt_cost": 0.0001135,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T18:58:13.920Z",
+      "rawSha256": "b8712abf5e7f3e0c62d966b50533f47512bc74c60adf17e1aeb7da77ee1a7189",
+      "visual": {
+        "by": "Claude looked at the frame 2026-11-09: text-free, no people, no baked character, matches prompt, continuous with references, sharp and clean",
+        "sha256": "a14f8bf5c2c517adf847577014fc90746b2adc2103b8e7ed19b412c2d9fa9759",
+        "at": "2026-11-08T18:58:47.160Z"
+      }
+    },
+    "panda-and-friend": {
+      "file": "panda-and-friend.png",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "6fc90f2448402ac9adb3b3718bbd94b72acc2c8a3504288f7a82974cd0aff399",
+      "character": "aobao-panda",
+      "references": [],
+      "sha256": "80124e2e2cfd457ff71149507a76a87817742d88046a8540c99d731bb5828d78",
+      "generationId": "gen-1794159229-djQ68bkPAEeEuHGrhOpB",
+      "usage": {
+        "prompt_tokens": 1506,
+        "completion_tokens": 1120,
+        "total_tokens": 2626,
+        "cost": 0.067953,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.067953,
+          "upstream_inference_prompt_cost": 0.000753,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T17:34:01.160Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
+    },
+    "panda-summer": {
+      "file": "panda-summer.png",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "5cc41414bd861c624799ff19a60d60c7dcb5b7bd0b49f944706e0c20011489eb",
+      "characters": [
+        "panda:celebrate"
+      ],
+      "references": [
+        "crane-and-panda"
+      ],
+      "sha256": "b76abaf3440c4b88c53e5d6418ba0f4506b9db0781db1451911f526f61449e39",
+      "generationId": "gen-1794161886-tuIa7Hjti7LGOTM3OcbP",
+      "usage": {
+        "prompt_tokens": 2555,
+        "completion_tokens": 1120,
+        "total_tokens": 3675,
+        "cost": 0.0684775,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0684775,
+          "upstream_inference_prompt_cost": 0.0012775,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T18:18:15.224Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
+    },
+    "panda-winter": {
+      "file": "panda-winter.png",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "jpeg",
+      "promptSha256": "c24661cef6277dee2f39b4b57fa90bd8be6e1d75b87298236b5fc3bb8a2c4528",
+      "characters": [
+        "panda:wrong"
+      ],
+      "references": [
+        "crane-and-panda",
+        "panda-summer"
+      ],
+      "sha256": "1d24e22ef0611c0852ba719282cc01730ad02197f07873fd603ded7c68176d5b",
+      "generationId": "gen-1794161896-y1QmWo2SGMcWV8NZ8pQ4",
+      "usage": {
+        "prompt_tokens": 1095,
+        "completion_tokens": 1386,
+        "total_tokens": 2481,
+        "cost": 0.0685455,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0685455,
+          "upstream_inference_prompt_cost": 0.0005475,
+          "upstream_inference_completions_cost": 0.067998
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T18:18:43.832Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
+    },
+    "crane-and-panda": {
+      "file": "crane-and-panda.png",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "c08de6cde3d78d492a64684b7891120bc56a9e74462fa1a4b9135a52a2e2f9f5",
+      "characters": [
+        "crane",
+        "panda"
+      ],
+      "references": [],
+      "sha256": "b39caa7203f39d63180edd21482ca81cc2a1fb6a7e5fee346b88ac2fc055d78d",
+      "generationId": "gen-1794161873-XdjNL55SNXIyGF5p9iVi",
+      "usage": {
+        "prompt_tokens": 2693,
+        "completion_tokens": 1120,
+        "total_tokens": 3813,
+        "cost": 0.0685465,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0685465,
+          "upstream_inference_prompt_cost": 0.0013465,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T18:18:04.498Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
+    },
+    "hutong-street": {
+      "file": "hutong-street.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "ffb355a27053eb9891dd361d9d4a1d3332af4f49c1683992f82459636ecf586b",
+      "characters": [],
+      "references": [],
+      "sha256": "e76bbe7aa3ab66706e54f2e788da8db8e03d6a10eeb9e306d52d0e4f595dda9f",
+      "generationId": "gen-1794161966-YlOHOhIfnRtfJQ2HfL44",
+      "usage": {
+        "prompt_tokens": 242,
+        "completion_tokens": 1680,
+        "total_tokens": 1922,
+        "cost": 0.100921,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.100921,
+          "upstream_inference_prompt_cost": 0.000121,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T18:19:44.699Z",
+      "convertedFromSha256": "72eb24f27847e1a177d413e08919bc3146fa8038e0971383ed41a9b644ee5e24",
+      "conversion": "PNG -> JPEG q2 (ffmpeg), 2026-11-09",
+      "visual": {
+        "by": "Claude looked at the frame 2026-11-09: text-free, no people, no baked character, matches prompt, continuous with references, sharp and clean",
+        "sha256": "e76bbe7aa3ab66706e54f2e788da8db8e03d6a10eeb9e306d52d0e4f595dda9f",
+        "at": "2026-11-08T18:58:46.847Z"
+      }
+    },
+    "hutong-summer": {
+      "file": "hutong-summer.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "64cde01ab9f41a0619aa0b6e60a677c64a0dd1676790e1b0050b4a5247d04802",
+      "characters": [],
+      "references": [
+        "hutong-street"
+      ],
+      "sha256": "cc8b8d44784c34fcda080f2713eee072235106df477caf1cbc63e62f659a63b1",
+      "generationId": "gen-1794161988-EQkNjhFuD4IYSxiRFDvc",
+      "usage": {
+        "prompt_tokens": 1339,
+        "completion_tokens": 1680,
+        "total_tokens": 3019,
+        "cost": 0.1014695,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1014695,
+          "upstream_inference_prompt_cost": 0.0006695,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T18:20:08.521Z",
+      "convertedFromSha256": "bf7f84955775d57d02755f2ba1d0bd544756cf4da00170b07eee53dd60d99196",
+      "conversion": "PNG -> JPEG q2 (ffmpeg), 2026-11-09",
+      "visual": {
+        "by": "Claude looked at the frame 2026-11-09: text-free, no people, no baked character, matches prompt, continuous with references, sharp and clean",
+        "sha256": "cc8b8d44784c34fcda080f2713eee072235106df477caf1cbc63e62f659a63b1",
+        "at": "2026-11-08T18:58:46.916Z"
+      }
+    },
+    "hutong-winter": {
+      "file": "hutong-winter.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "6eb2cbbe8d77677b33a26faff9cd26f624210b63701cbb27e1f9054c5b495c0e",
+      "characters": [],
+      "references": [
+        "hutong-street",
+        "hutong-summer"
+      ],
+      "sha256": "231488ba4ce3db5c9cfae1bb5af8b74c83dfa14333c68afb4ecb72e20699e264",
+      "generationId": "gen-1794162014-h45WDWJP2dyFRnwewBlM",
+      "usage": {
+        "prompt_tokens": 2460,
+        "completion_tokens": 1680,
+        "total_tokens": 4140,
+        "cost": 0.10203,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.10203,
+          "upstream_inference_prompt_cost": 0.00123,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T18:20:42.368Z",
+      "convertedFromSha256": "d48282b2d9356b879fe6369493289e6866c6f16e49be65cc7f0e25cee0a8c98e",
+      "conversion": "PNG -> JPEG q2 (ffmpeg), 2026-11-09",
+      "visual": {
+        "by": "Claude looked at the frame 2026-11-09: text-free, no people, no baked character, matches prompt, continuous with references, sharp and clean",
+        "sha256": "231488ba4ce3db5c9cfae1bb5af8b74c83dfa14333c68afb4ecb72e20699e264",
+        "at": "2026-11-08T18:58:46.984Z"
+      }
+    }
+  }
+}

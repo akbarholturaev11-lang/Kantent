@@ -28,6 +28,14 @@ export const ZERNIO_SECRET_NAMES = Object.freeze({
 });
 export const SOCIAL_CONNECTION_GROUPS = Object.freeze(Object.keys(ZERNIO_SECRET_NAMES));
 
+// Google API keys (AIza…), Google "AQ." keys, OpenRouter keys and bearer
+// tokens. Error text reaches logs, metadata and CI artifacts; never the key.
+const CREDENTIAL_PATTERN = /AIza[A-Za-z0-9_-]{20,}|\bAQ\.[A-Za-z0-9._-]{20,}|sk-or-[A-Za-z0-9_-]{16,}|Bearer\s+[A-Za-z0-9._~+/=-]{16,}/g;
+
+export function redactCredentials(value) {
+  return String(value).replace(CREDENTIAL_PATTERN, "[redacted]");
+}
+
 export function geminiKeySlots(env = process.env) {
   const seen = new Set();
   return GEMINI_SECRET_NAMES.flatMap((name) => {
@@ -159,7 +167,7 @@ export function telegramNewsRoute(env = process.env) {
   const telegram = PUBLICATION_DESTINATIONS.otherDestinations?.telegram;
   if (telegram?.language !== "tg" || telegram?.videoPublishingAuthorized !== false ||
       telegram?.cadenceDays !== 3 || !/^[a-f0-9]{24}$/.test(telegram?.verifiedAccountId ?? "") ||
-      telegram?.credentialGroup !== "tiktok-telegram" || telegram?.account !== "@aibotsakbar")
+      telegram?.credentialGroup !== "tiktok-telegram" || telegram?.account !== "@hskaiapp")
     throw Error("Telegram TJ text-news route differs from owner's canonical rules.");
   const variable = "ZERNIO_TG_TELEGRAM_ACCOUNT_ID";
   const configured = typeof env[variable] === "string" ? env[variable].trim() : "";
@@ -167,7 +175,7 @@ export function telegramNewsRoute(env = process.env) {
     throw Error("Telegram account ID conflicts with verified route.");
   const secretName = ZERNIO_SECRET_NAMES["tiktok-telegram"].find(name => env[name]?.trim());
   if (!secretName) throw Error("Missing TikTok/Telegram Zernio connection key.");
-  return {accountId:telegram.verifiedAccountId,expectedUsername:"aibotsakbar",
+  return {accountId:telegram.verifiedAccountId,expectedUsername:telegram.account.slice(1),
     platform:"telegram",language:"tg",group:"tiktok-telegram",secretName,secret:env[secretName].trim()};
 }
 

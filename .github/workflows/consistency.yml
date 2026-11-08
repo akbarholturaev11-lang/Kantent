@@ -38,6 +38,15 @@ jobs:
           node --check scripts/graphic-scene.mjs
           node --check scripts/graphic-voice-proof.mjs
           node --test scripts/graphic-scene.test.mjs scripts/graphic-voice-proof.test.mjs scripts/action-design-plan.test.mjs scripts/action-text-layout.test.mjs scripts/motion-design-plan.test.mjs scripts/lesson-presentation-policy.test.mjs
+      - name: Test hash-bound exact cue-frame contact sheet planning (no API, no publish)
+        run: |
+          node --check scripts/cue-frame-review.mjs
+          node --check scripts/cue-frame-batch.mjs
+          node --test scripts/cue-frame-review.test.mjs scripts/cue-frame-batch.test.mjs
+      - name: Ensure SFX subprocess failures persist a non-stuck render status
+        run: |
+          node --check scripts/render-episode.mjs
+          node --test scripts/render-sfx-step.test.mjs
       - name: Test read-only adaptive storytelling and legacy plan compatibility
         run: |
           node --check scripts/storytelling-plan.mjs
@@ -69,6 +78,8 @@ jobs:
           sudo apt-get install -y -qq ffmpeg
           ffmpeg -version | head -n 1
           ffprobe -version | head -n 1
+      - name: Verify exact decoded phone-size cue frames and hash-bound review without Gemini
+        run: node --test scripts/cue-frame-review.integration.test.mjs
       - name: Real semantic Instagram/YouTube MP4 smoke with synthetic test tone
         run: node scripts/semantic-mp4-smoke.mjs /tmp/semantic-mp4-smoke
       - name: Render semantic come/go frames and confirm visual difference
@@ -133,6 +144,14 @@ jobs:
         run: node --test scripts/storyboard-validation.test.mjs scripts/auto-storyboard.test.mjs
       - name: Install Remotion dependencies and typecheck cinematic renderer
         run: npm ci --no-audit --no-fund && npm run lint
+      - name: Test Gemini Direct/OpenRouter voice fallback and transport safety
+        run: |
+          node --check scripts/generate-voice-gemini.mjs
+          node --check scripts/voice-transport-backup.mjs
+          node --check scripts/voice-fallback-wiring.test.mjs
+          node --test scripts/voice-transport-backup.test.mjs scripts/voice-fallback-wiring.test.mjs scripts/voice-take-guard.test.mjs scripts/openrouter-voice.test.mjs scripts/video-credentials.test.mjs scripts/spoken-token-match.test.mjs scripts/stt-windows.test.mjs scripts/gemini-word-recovery.test.mjs scripts/import-hook-cap.test.mjs scripts/illustrated-layout.test.mjs scripts/illustration-validation.test.mjs scripts/review-lesson-art.test.mjs scripts/visual-variety-plan.test.mjs scripts/lesson-presentation-policy.test.mjs
+      - name: Every production script only uses defined identifiers (catches missing imports before a paid run)
+        run: node --test scripts/no-undefined-identifiers.test.mjs
       - name: Test independent language production, exact Tajik cues and scoped MCP tools
         run: node --test scripts/language-production.test.mjs scripts/voice-language.test.mjs scripts/cta-mcp.test.mjs
       - name: Generate multi-format visual stills without publishing

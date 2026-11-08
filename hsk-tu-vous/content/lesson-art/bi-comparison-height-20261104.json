@@ -1,0 +1,53 @@
+{
+  "episodeId": "bi-comparison-height-20261104",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Polished semi-realistic digital illustration for a premium vertical explainer reel: warm cinematic lighting, soft cel shading, clean confident linework, rich but natural colours, detailed believable background, gentle depth of field. Absolutely no text, letters, numbers, signs with writing, logos or watermarks anywhere in the image.",
+  "assets": [
+    {
+      "name": "hutong-street",
+      "aspectRatio": "9:16",
+      "prompt": "An empty, calm Beijing hutong street at golden hour with red lanterns, grey brick walls, wooden doors, potted plants and a soft glowing sky. Nobody is in the scene: no people, no animals, no characters. The paved street in the lower half is open and uncluttered so characters can be placed on it later; generous sky in the upper third. Rich detail, crisp linework, high resolution."
+    },
+    {
+      "name": "hutong-summer",
+      "aspectRatio": "4:5",
+      "references": [
+        "hutong-street"
+      ],
+      "prompt": "The same hutong street as the reference on a hot sunny summer day: bright blue sky, strong warm sunlight, green leaves, heat shimmer. Nobody is in the scene: no people, no animals, no characters. The street centre stays open. Warm golden colours, crisp detail, high resolution."
+    },
+    {
+      "name": "hutong-winter",
+      "aspectRatio": "4:5",
+      "references": [
+        "hutong-street",
+        "hutong-summer"
+      ],
+      "prompt": "The same hutong street as the references in winter: heavy snowfall, snow on roofs, lanterns and the street, cold blue light, grey sky. Nobody is in the scene: no people, no animals, no characters. The street centre stays open. Cold blue colours, crisp detail, high resolution."
+    },
+    {
+      "name": "notebook-desk",
+      "aspectRatio": "9:16",
+      "prompt": "Top-down view of an open notebook lying on a warm wooden desk, the notebook pages completely blank and clean, a cup of green tea and a pen beside it, soft morning window light with gentle shadows. The blank notebook fills the centre of the frame. Crisp detail, high resolution."
+    },
+    {
+      "name": "icon-cold",
+      "aspectRatio": "1:1",
+      "prompt": "A single glossy 3D clay-style icon of a thermometer with a low blue level and a small snowflake beside it, centred on a plain pure white background, soft studio lighting, subtle soft shadow, cute rounded proportions."
+    },
+    {
+      "name": "icon-warm",
+      "aspectRatio": "1:1",
+      "prompt": "A single glossy 3D clay-style icon of a thermometer with a high red level and a small sun beside it, isolated and centred on a plain pure white background that fills the whole square image edge to edge (no room, no card, no frame, no scenery), soft studio lighting, subtle soft shadow, cute rounded proportions."
+    }
+  ],
+  "variety": {
+    "date": "2026-11-04",
+    "setting": "hutong-street",
+    "coach": "panda",
+    "supportingCharacter": "crane",
+    "pattern": "two-subject",
+    "experiment": null,
+    "source": "scripts/visual-variety-plan.mjs (test lesson; before the first experiment start date)"
+  }
+}

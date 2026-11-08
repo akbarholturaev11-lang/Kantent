@@ -88,8 +88,26 @@ for (const target of publicationIntent.platforms) {
     target.platform,
   );
 }
+// X-14: the approval records exactly which source produced the media. A
+// render from uncommitted files is disclosed (not blocked: the pipeline
+// itself updates tracked ledgers such as cta-lab.json during a local run).
+const renderSource = status.sourceRevision ?? {};
+const renderSourceRevision = {
+  localHeadSha: renderSource.localHeadSha ?? null,
+  sourceTreeClean: renderSource.sourceTreeClean ?? null,
+  ...(renderSource.sourceTreeClean === false ? {
+    dirtyPathCount: renderSource.dirtyPathCount,
+    dirtyPaths: renderSource.dirtyPaths,
+    dirtySourceSha256: renderSource.dirtySourceSha256,
+  } : {}),
+};
+if (renderSource.sourceTreeClean === false)
+  console.warn("Approving media rendered from " + renderSource.dirtyPathCount +
+    " uncommitted project file(s) on top of " + String(renderSource.localHeadSha).slice(0, 12) +
+    "; recorded in approval.json. Commit them to make this video reproducible from Git.");
 const approval = {
   episodeId: id,
+  renderSourceRevision,
   state: "approved-for-zernio-publishing",
   approvedAt: new Date().toISOString(),
   ctaExperimentId: episode.ctaExperiment.id,

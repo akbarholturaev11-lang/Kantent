@@ -10,6 +10,7 @@ import {
   type TimedCaption,
 } from "../scripts/caption-utils.mjs";
 import visualSystem from "../content/visual-system.json";
+import { subtitleSlotFor } from "../scripts/illustrated-layout.mjs";
 import { actionTextAtFrame, actionSubtitlePresentation, type ActionCaptionScene } from "../scripts/action-text-layout.mjs";
 
 export type { TimedCaption } from "../scripts/caption-utils.mjs";
@@ -73,6 +74,47 @@ export const CaptionOverlay: React.FC<{
 
   const pageStartFrame = (page.startMs / 1000) * fps;
   const entryFrame = Math.max(0, frame - pageStartFrame);
+  // Reference-glass lessons (owner decision 2026-11-09): white kinetic words
+  // without a box, each word blurring in, Hanzi in brand gold with pinyin.
+  if (actionText && motionDesign) {
+    const G = visualSystem.referenceGlass;
+    const ease = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as const };
+    // A spoken Hanzi phrase the glass chip already shows (with pinyin and
+    // meaning) is not repeated as a second text line.
+    const han = (value: string) => (value.match(/\p{Script=Han}/gu) ?? []).join("");
+    const spokenHan = han(displayText);
+    if (spokenHan && !/[^\p{Script=Han}\p{P}\p{Z}]/u.test(displayText) &&
+        han(String(actionText.model?.hanzi ?? "")).includes(spokenHan)) return null;
+    // Owner rule 2026-11-09: each text layer has its own job. Words the chip's
+    // meaning already shows are not repeated as a subtitle at the same time.
+    const letters = (value: string) => value.toLocaleLowerCase("und").replace(/[^\p{L}\p{N}]/gu, "");
+    const spokenLetters = letters(displayText);
+    if (spokenLetters.length >= 4 && letters(String(actionText.model?.meaning ?? "")).includes(spokenLetters)) return null;
+    const words = displayText.split(/\s+/).filter(Boolean);
+    const illustration = (actionText.model as {illustration?: unknown} | undefined)?.illustration;
+    const slot = illustration ? subtitleSlotFor(illustration) : null;
+    return (
+      <AbsoluteFill style={{ pointerEvents: "none", zIndex: 20 }}>
+        <div data-subtitle-block style={{ position: "absolute", left: slot ? slot.left : 80, right: slot ? 1080 - slot.right : 80,
+          // Illustrated beats: the first safe-zone slot that covers no head/card.
+          top: slot ? slot.top : G.subtitleTopPx,
+          display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "baseline", columnGap: 16,
+          fontFamily: G.fontFamily, fontSize: G.subtitleFontPx, fontWeight: G.subtitleWeight, lineHeight: 1.15,
+          color: "#FFFFFF", textShadow: "0 2px 3px rgba(0,0,0,.95), 0 0 2px rgba(0,0,0,.9), 0 0 22px rgba(0,0,0,.75)", textAlign: "center" }}>
+          <span data-subtitle-text style={{ display: "contents" }}>{words.map((word, index) => {
+            const p = interpolate(entryFrame, [index * G.wordStaggerFrames, index * G.wordStaggerFrames + G.wordEntryFrames], [0, 1], ease);
+            const han = /\p{Script=Han}/u.test(word);
+            return <span key={index} style={{ display: "inline-block", opacity: p, filter: `blur(${(1 - p) * 8}px)`,
+              translate: `0 ${(1 - p) * 10}px`, color: han ? visualSystem.colors.brandGold : undefined,
+              fontFamily: han ? G.hanziFontFamily : undefined }}>{word}</span>;
+          })}</span>
+          {presentation.pinyin && <span data-subtitle-pinyin style={{ fontSize: Math.round(G.subtitleFontPx * .62),
+            fontWeight: 600, color: visualSystem.colors.brandGold, opacity: interpolate(entryFrame, [2, 2 + G.wordEntryFrames], [0, 1], ease) }}>
+            {presentation.pinyin}</span>}
+        </div>
+      </AbsoluteFill>
+    );
+  }
   const opacity = interpolate(
     entryFrame,
     [0, CAPTION_STYLE.entryFrames],

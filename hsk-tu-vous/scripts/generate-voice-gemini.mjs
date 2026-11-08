@@ -1,20 +1,28 @@
 import fs from "node:fs/promises";
+import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
-  atomicWriteFile, atomicWriteJson, findReusableVoiceCheckpoint,
-  isValidWavBuffer, sha256,
+  atomicWriteFile, atomicWriteJson, findReusableVoiceCheckpoint, findUnresumableSavedTakes,
+  isValidWavBuffer, matchesRecordedAudioHash, matchesRecordedWavChunk, measureWavQuality, sha256,
 } from "./voice-checkpoint.mjs";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
+import { requireSystemMediaTools } from "./media-duration.mjs";
 import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
 import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
-import { requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
+import { offsetAnnotations, parseSilences, planSttWindows, windowsTouching } from "./stt-windows.mjs";
+import { redactCredentials, requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
 import {
   resolveVoiceApi, requireOpenRouterKey, synthesizeOpenRouterWav,
-  transcribeOpenRouter, transcribeUntilAligned,
+  transcribeOpenRouter, transcribeUntilAligned, TranscriptionResponseError, openRouterLanguage,
+  OPENROUTER_TTS_MAX_ATTEMPTS, STT_ATTEMPTS_PER_RUN,
 } from "./openrouter-voice.mjs";
+import { isPreConnectFailure, openRouterBackupKey, withOpenRouterBackup } from "./voice-transport-backup.mjs";
+import {
+  alignSpokenTokens, buildHanziReadings, collectHanziPinyinPairs, createSpokenMatcher,
+} from "./spoken-token-match.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { languageEnvironment, languageSettings } from "./language-context.mjs";
@@ -41,27 +49,39 @@ import {
 
 const API_ROOT = "https://generativelanguage.googleapis.com";
 const API_REVISION = "2026-05-20";
-// Default OFF: no production video/caption change before end-to-end approval.
-const ONE_TAKE_PILOT = process.env.HSK_AI_CONTINUOUS_TTS_PILOT === "true";
+// Owner decision 2026-11-08 after listening to the bi-comparison RU/TG A/B:
+// one exact unchanged narration take per language is the DEFAULT (fewer
+// requests, no scene-joint stretching, steadier Tajik accent).
+// HSK_AI_TTS_MODE=scene keeps the older per-scene takes on explicit request.
+const TTS_MODE_SETTING = (process.env.HSK_AI_TTS_MODE ?? "one-take").trim() || "one-take";
+if (!["one-take", "scene"].includes(TTS_MODE_SETTING))
+  throw new Error("HSK_AI_TTS_MODE must be one-take (default) or scene.");
+const ONE_TAKE = TTS_MODE_SETTING === "one-take";
 const EPISODE_ID = process.argv[2];
 const CLI_OPTIONS = process.argv.slice(3);
 let PLATFORM;
 let RESUME_FOLDER_NAME;
+// Explicit owner decision after listening: buy a new paid take even though a
+// saved take of the same narration exists. Never chosen automatically.
+let NEW_TAKE = false;
 for (let index = 0; index < CLI_OPTIONS.length; index += 1) {
   const option = CLI_OPTIONS[index];
   if (option === "--platform" && !PLATFORM) {
     PLATFORM = CLI_OPTIONS[++index];
   } else if (option === "--resume" && !RESUME_FOLDER_NAME) {
     RESUME_FOLDER_NAME = CLI_OPTIONS[++index];
+  } else if (option === "--new-take" && !NEW_TAKE) {
+    NEW_TAKE = true;
   } else {
-    throw new Error("Use [--platform tiktok] [--resume <generation-folder>].");
+    throw new Error("Use [--platform tiktok] [--resume <generation-folder> | --new-take].");
   }
 }
+if (NEW_TAKE && RESUME_FOLDER_NAME) throw new Error("--new-take and --resume are mutually exclusive.");
 
 function requireEpisodeId(value) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value ?? "")) {
     throw new Error(
-      "Foydalanish: npm run content:voice -- <episode-ID> [--resume <generation-folder>]",
+      "Foydalanish: npm run content:voice -- <episode-ID> [--resume <generation-folder> | --new-take]",
     );
   }
   return value;
@@ -90,8 +110,16 @@ async function loadVoiceEnvironment(profile) {
     credentialState = { slots, index: 0 };
     apiKey = slots[0].secret;
   }
+  // Owner-enabled Gemini Direct -> OpenRouter backup (PR #56). Never a
+  // Google key rotation on quota; only a separate, explicitly enabled transport.
+  const backupKey = openRouterBackupKey(process.env, apiProvider);
   return {
     apiProvider, apiKey, credentialState,
+    openRouterBackupKey: backupKey,
+    ttsTransport: apiProvider,
+    transcriptionTransport: apiProvider,
+    fallbackEvents: [],
+    completedTtsChunks: 0,
     ttsRequestCount: 0,
     ttsModel: profile.ttsModel,
     voice: profile.voiceName,
@@ -106,10 +134,21 @@ async function loadVoiceEnvironment(profile) {
 async function requestJson(url, options, label, { maxAttempts = 4, onAttempt } = {}) {
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     onAttempt?.();
-    const response = await fetch(url, {
-      ...options,
-      signal: options.signal ?? AbortSignal.timeout(120_000),
-    });
+    let response;
+    try {
+      response = await fetch(url, {
+        ...options,
+        signal: options.signal ?? AbortSignal.timeout(120_000),
+      });
+    } catch (error) {
+      // Only a failure BEFORE the connection exists is retried here: the
+      // request never reached Google. Anything later is not repeated blindly.
+      if (!isPreConnectFailure(error) || attempt >= maxAttempts) throw error;
+      const delayMs = 2000 * 2 ** (attempt - 1);
+      console.warn(`${label} could not connect to Google; retrying in ${delayMs / 1000}s (${attempt}/${maxAttempts - 1}).`);
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+      continue;
+    }
     const text = await response.text();
     let data = {};
     if (text) {
@@ -249,6 +288,8 @@ function tokenParts(value) {
 function spokenParts(token) {
   if (token === "hsk") return ["эйч", "эс", "кей"];
   if (token === "ai") return ["эй", "ай"];
+  // Real RU one-take window 2026-11-08: "Попробуй HSKAI." for "HSK AI".
+  if (token === "hskai") return ["эйч", "эс", "кей", "эй", "ай"];
   if (token === "сюэсяо") return ["сюэ", "сяо"];
   return [token];
 }
@@ -340,6 +381,10 @@ function alignWords(text, annotations, audioDurationMs) {
   const expected = flattenExpected(words);
   const timingRepairs = [];
   const recognized = flattenRecognized(annotations, audioDurationMs, timingRepairs);
+  // V-10/V-11: accept only position-aligned spellings of the SAME spoken word
+  // (Tajik long-vowel marks, split compounds, verified Hanzi readings).
+  const spoken = alignSpokenTokens(expected, recognized, spokenMatch());
+  if (spoken.aligned) return captionsFromAligned(words, expected, spoken.aligned, audioDurationMs, timingRepairs);
   const mismatches = [];
   if (expected.length !== recognized.length) {
     mismatches.push({
@@ -360,7 +405,33 @@ function alignWords(text, annotations, audioDurationMs) {
     }
   }
   if (mismatches.length) return { mismatches, timingRepairs };
+  return captionsFromAligned(words, expected, recognized, audioDurationMs, timingRepairs);
+}
 
+// Hanzi readings come only from author-verified {hanzi, pinyin} pairs: this
+// episode first, then every lesson source in the repository. Built once.
+let cachedSpokenMatch;
+function spokenMatch() {
+  if (cachedSpokenMatch) return cachedSpokenMatch;
+  const pairs = collectHanziPinyinPairs(episode);
+  const dirs = [path.join(PROJECT_ROOT, "content", "episodes")];
+  try {
+    for (const locale of readdirSync(path.join(PROJECT_ROOT, "content", "locales")))
+      dirs.push(path.join(PROJECT_ROOT, "content", "locales", locale, "episodes"));
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
+  }
+  for (const dir of dirs) {
+    let files = [];
+    try { files = readdirSync(dir).filter((name) => name.endsWith(".json")); }
+    catch (error) { if (error?.code !== "ENOENT") throw error; }
+    for (const file of files) collectHanziPinyinPairs(JSON.parse(readFileSync(path.join(dir, file), "utf8")), pairs);
+  }
+  cachedSpokenMatch = createSpokenMatcher({ locale: voiceProfile.locale, readings: buildHanziReadings(pairs) });
+  return cachedSpokenMatch;
+}
+
+function captionsFromAligned(words, expected, recognized, audioDurationMs, timingRepairs) {
   const captions = words.map((word, wordIndex) => {
     const parts = recognized.filter(
       (part, index) => expected[index].wordIndex === wordIndex,
@@ -532,20 +603,28 @@ function createTtsChunks(episode, maxCharacters = 12000) {
   return chunks;
 }
 
+/** OpenRouter key for the current transport: primary key or the opt-in backup. */
+function openRouterKeyFor(config) {
+  return config.apiProvider === "openrouter" ? config.apiKey : config.openRouterBackupKey;
+}
+
+function synthesizeWithOpenRouter(config, text) {
+  return synthesizeOpenRouterWav({
+    apiKey: openRouterKeyFor(config),
+    model: config.ttsModel,
+    voice: config.voice,
+    text,
+    style: config.style,
+    sampleRateHz: config.sampleRateHz,
+    channels: config.channels,
+    onAttempt: () => { config.ttsRequestCount += 1; },
+  });
+}
+
 async function generateTtsWav(config, text) {
-  if (config.apiProvider === "openrouter") {
-    // No silent re-generation or paid fallback; one transport call per take.
-    return synthesizeOpenRouterWav({
-      apiKey: config.apiKey,
-      model: config.ttsModel,
-      voice: config.voice,
-      text,
-      style: config.style,
-      sampleRateHz: config.sampleRateHz,
-      channels: config.channels,
-      onAttempt: () => { config.ttsRequestCount += 1; },
-    });
-  }
+  // Primary OpenRouter, or a take that already switched to the recorded
+  // backup. Completed chunks are never regenerated.
+  if (config.ttsTransport === "openrouter") return synthesizeWithOpenRouter(config, text);
   const content = [{ type: "text", text }];
   if (config.style) {
     content[0].annotations = [
@@ -554,7 +633,20 @@ async function generateTtsWav(config, text) {
   }
   // Rotate credentials only if this standalone TTS call fails. Do not
   // regenerate a successful take or change provider, model, voice or cues.
-  const tts = await withGeminiKeyFailover(
+  // A quota/5xx failure may switch to the opt-in OpenRouter backup ONLY
+  // before this take has any saved Direct chunk: one video, one TTS vendor.
+  const tts = await withOpenRouterBackup({
+    stage: "tts",
+    enabled: Boolean(config.openRouterBackupKey),
+    allowFallback: config.completedTtsChunks === 0,
+    backup: () => synthesizeWithOpenRouter(config, text),
+    onFallback: (event) => {
+      config.ttsTransport = "openrouter";
+      config.transcriptionTransport = "openrouter";
+      config.fallbackEvents.push(event);
+      console.warn("VOICE_TRANSPORT_FALLBACK " + JSON.stringify(event));
+    },
+    primary: () => withGeminiKeyFailover(
     config.credentialState,
     (apiKey) => requestJson(
       `${API_ROOT}/v1beta/interactions`,
@@ -574,15 +666,18 @@ async function generateTtsWav(config, text) {
       },
       "Gemini speech generation",
       {
-        maxAttempts: ONE_TAKE_PILOT ? 2 : 4,
+        maxAttempts: ONE_TAKE ? 2 : 4,
         onAttempt: () => {
-          if (ONE_TAKE_PILOT && config.ttsRequestCount >= 2)
+          if (ONE_TAKE && config.ttsRequestCount >= 2)
             throw new Error("One-take TTS limit of two HTTP attempts reached; original audio remains preserved.");
           config.ttsRequestCount += 1;
         },
       },
     ),
-  );
+    ),
+  });
+  // The backup already returned a complete WAV from the same model/voice.
+  if (config.ttsTransport === "openrouter") return tts;
   config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
   const wav = getAudioData(tts.data);
   if (
@@ -676,122 +771,328 @@ async function deleteGeminiFile(apiKey, name) {
  * The same approved Gemini Transcribe model is used for every recovery clip.
  */
 function timedBlocks(annotations, durationMs) {
-  return annotations.map((word, annotationIndex) => {
+  // V8-01 (real 2026-11-03 zhuozi and 2026-11-08 bi-comparison RU takes): use
+  // the SAME provider-timing policy as flattenRecognized(). A zero-length word
+  // (e.g. "и" 7.100s→7.100s) gets a 1 ms end when the inversion is ≤250 ms,
+  // instead of aborting the whole Mandarin gap recovery. Larger inversions and
+  // times outside the audio are never used; no timestamp is invented.
+  // V9-01 (real TG one-take 2026-11-09: 他 10.30 s → 0.40 s in one window
+  // pass): ONE impossible provider word used to abort the whole recovery. It is
+  // now dropped as untimed, so its span becomes a gap that is re-recognized
+  // from a clip or stays unconfirmed (fail closed at the exact-token gate).
+  const blocks = [];
+  annotations.forEach((word, annotationIndex) => {
     const startMs = parseOffsetMs(word.startOffset ?? word.start_offset);
-    const endMs = parseOffsetMs(word.endOffset ?? word.end_offset);
-    if (startMs < 0 || endMs <= startMs || endMs > durationMs + 100)
-      throw new Error("Invalid Gemini source clip word timing.");
-    return {
+    let endMs = parseOffsetMs(word.endOffset ?? word.end_offset);
+    const outside = startMs < 0 || startMs > durationMs + 100 || endMs > durationMs + 100;
+    const inverted = endMs <= startMs && (startMs + 1 - endMs > 250 || startMs + 1 > durationMs + 100);
+    if (outside || inverted) {
+      console.warn("GEMINI_UNTIMED_WORD_DROPPED " + JSON.stringify({ text: word.text, startMs, endMs, reason: outside ? "outside-audio" : "inverted" }));
+      return;
+    }
+    if (endMs <= startMs) endMs = startMs + 1;
+    blocks.push({
       tokens: tokenParts(word.text).flatMap(spokenParts),
       text: word.text,
       startMs, endMs, annotationIndex,
-    };
+    });
   });
+  return blocks;
+}
+
+/** Direct Gemini word transcription of one saved audio file with explicit hints. */
+async function transcribeDirectAudio(filePath, languageCodes, displayName, config) {
+  const uploaded = await withGeminiKeyFailover(config.credentialState, (apiKey) =>
+    uploadForTranscription(apiKey, filePath, displayName));
+  config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
+  let response;
+  try {
+    response = await requestJson(
+      API_ROOT + "/v1beta/interactions",
+      { method: "POST", headers: {
+        "x-goog-api-key": config.apiKey, "Content-Type": "application/json",
+        "Api-Revision": API_REVISION,
+      }, body: JSON.stringify({
+        model: config.transcribeModel,
+        input: [{ type: "audio", uri: uploaded.uri, mime_type: audioMimeType(filePath) }],
+        generation_config: { transcription_config: {
+          language_codes: languageCodes,
+          mode: { type: "verbatim", timestamp_granularities: ["word"] },
+        } },
+      }) }, "Gemini word transcription");
+  } finally {
+    await deleteGeminiFile(config.apiKey, uploaded.name);
+  }
+  return getWordAnnotations(response.data).map((w) => ({
+    text: w.text, startOffset: w.start_offset, endOffset: w.end_offset,
+  }));
+}
+
+const pad2 = (value) => String(value).padStart(2, "0");
+
+/** Exact WAV cut of saved audio; offsets are never inferred or expanded. */
+function cutWavClip(sourcePath, startMs, endMs, clipPath, ffmpegRuntime) {
+  // -ss after -i ensures an accurate cut.
+  execFileSync(ffmpegRuntime.ffmpegPath, [
+    "-hide_banner", "-loglevel", "error", "-nostdin", "-y",
+    "-i", sourcePath, "-ss", (startMs / 1000).toFixed(3),
+    "-t", ((endMs - startMs) / 1000).toFixed(3),
+    "-map", "0:a:0", "-ac", "1", "-ar", String(config.sampleRateHz),
+    "-c:a", "pcm_s16le", clipPath,
+  ], { env: ffmpegRuntime.env, stdio: ["ignore", "pipe", "pipe"] });
+  const actualMs = mediaDurationMs(clipPath, ffmpegRuntime);
+  if (actualMs <= 0) throw new Error("Gemini STT clip was empty.");
+  return actualMs;
+}
+
+/** Measured silences of saved audio (ffmpeg silencedetect, -35 dB, ≥0.25 s). */
+function measureSilences(sourcePath, ffmpegRuntime) {
+  const result = spawnSync(ffmpegRuntime.ffmpegPath, [
+    "-hide_banner", "-nostdin", "-i", sourcePath,
+    "-af", "silencedetect=noise=-35dB:d=0.25", "-f", "null", "-",
+  ], { env: ffmpegRuntime.env, encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
+  if (result.status !== 0) throw new Error("ffmpeg silence detection failed.");
+  return parseSilences(result.stderr);
+}
+
+/**
+ * One saved audio file -> provider word annotations. Gemini Direct with the
+ * given hints (opt-in OpenRouter backup on quota/5xx/unreachable), or the
+ * OpenRouter transport with the first code as its single ISO hint. Same saved audio
+ * either way; speech is never regenerated here.
+ */
+async function transcribeSavedAudio(filePath, languageCodes, displayName, { stage, chunk, allowBackup = true }) {
+  const openRouterHint = openRouterLanguage(languageCodes[0]);
+  const openRouter = async () => (await transcribeOpenRouter({
+    apiKey: openRouterKeyFor(config), model: config.transcribeModel, audioPath: filePath,
+    language: openRouterHint,
+  })).wordAnnotations;
+  if (config.transcriptionTransport === "openrouter")
+    return { annotations: await openRouter(), provider: "openrouter", languageCodes: openRouterHint ? [openRouterHint] : [] };
+  let provider = "gemini-direct";
+  const annotations = await withOpenRouterBackup({
+    stage,
+    enabled: allowBackup && Boolean(config.openRouterBackupKey),
+    backup: async () => { provider = "openrouter"; return openRouter(); },
+    onFallback: (event) => {
+      config.transcriptionTransport = "openrouter";
+      config.fallbackEvents.push({ ...event, chunk });
+      if (metadata) {
+        metadata.transcriptionTransport = config.transcriptionTransport;
+        metadata.fallbackEvents = config.fallbackEvents;
+      }
+      console.warn("VOICE_TRANSPORT_FALLBACK " + JSON.stringify(event));
+    },
+    primary: () => transcribeDirectAudio(filePath, languageCodes, displayName, config),
+  });
+  return { annotations, provider,
+    languageCodes: provider === "openrouter" ? (openRouterHint ? [openRouterHint] : []) : languageCodes };
+}
+
+/**
+ * A provider response for one exact clip is paid for once: it is saved and
+ * reused by later attempts and resumed runs (key = exact bounds + hints).
+ * Empty responses are not cached, so they may be requested again.
+ * A backup (OpenRouter) answer is reused while STT runs on the backup; once
+ * Gemini Direct is available again the same clip is asked once on Direct
+ * WITHOUT a second backup call, and the backup answer is kept beside it as
+ * extra evidence (`alternates`) for the strict recovery selection.
+ */
+async function cachedClipTranscription(cachePath, key, request) {
+  const alternatePath = cachePath.replace(/\.json$/, ".openrouter.json");
+  const readRecord = async (file) => {
+    try {
+      const saved = await readJson(file);
+      return saved?.key === key && Array.isArray(saved.annotations) && saved.annotations.length ? saved : null;
+    } catch (error) {
+      if (error?.code !== "ENOENT" && !(error instanceof SyntaxError)) throw error;
+      return null;
+    }
+  };
+  const withAlternates = async (record) => {
+    const alternate = record.provider === "openrouter" ? null : await readRecord(alternatePath);
+    return alternate ? { ...record, alternates: [alternate.annotations] } : record;
+  };
+  const saved = await readRecord(cachePath);
+  if (saved && (saved.provider !== "openrouter" || config.transcriptionTransport === "openrouter"))
+    return withAlternates(saved);
+  let result;
+  try {
+    result = await request({ allowBackup: !saved });
+  } catch (error) {
+    if (saved) return saved;
+    throw error;
+  }
+  const record = { key, ...result, model: config.transcribeModel, savedAt: new Date().toISOString() };
+  if (!record.annotations?.length) return saved ?? record;
+  if (saved && record.provider !== saved.provider)
+    await fs.writeFile(alternatePath, JSON.stringify(saved, null, 2) + "\n");
+  await fs.writeFile(cachePath, JSON.stringify(record, null, 2) + "\n");
+  return withAlternates(record);
 }
 
 async function recoverActualWordClips({
   chunkText, originalAnnotations, audioPath, durationMs, outputDir,
-  chunkNumber, config, ffmpegRuntime, transcriptionLanguages
+  chunkNumber, ffmpegRuntime, transcriptionLanguages,
+  windows = [{ startMs: 0, endMs: durationMs }],
 }) {
   const words = sourceWords(chunkText);
   const expected = flattenExpected(words).map((entry) => ({
     text: entry.text,
     language: /\p{Script=Han}/u.test(words[entry.wordIndex].display) ? "zh" : "locale",
   }));
-  const original = timedBlocks(originalAnnotations, durationMs);
-  const plan = buildRecoveryPlan(expected, original, durationMs);
-  if (!plan.gaps.length || plan.gaps.length > 8)
-    throw new Error("Recovery requires 1–8 independently bounded missing speech spans.");
+  const match = spokenMatch();
+  const chunk = Number(chunkNumber);
   const directory = path.join(outputDir, "recovery-diagnostic", "chunk-" + chunkNumber);
   await fs.mkdir(directory, { recursive: true });
-  await fs.writeFile(path.join(directory,"plan.json"),JSON.stringify({
-    sourceAudio: path.basename(audioPath), originalAnnotations,
+  const byTime = (a, b) => a.startMs - b.startMs || a.endMs - b.endMs;
+  const blocks = timedBlocks(originalAnnotations, durationMs).sort(byTime);
+  let plan = buildRecoveryPlan(expected, blocks, durationMs, { match });
+  // X-10 (real 2026-11-08 runs): a mixed-hint pass drops one language — RU
+  // lost every Mandarin sentence, TG chunk 2 kept only the Mandarin. One
+  // single-hint pass per language that is still MISSING, only over the
+  // silence-bounded windows that contain a gap, over the SAME saved audio.
+  // The strict DP then selects one time-ordered exact cover. Direct only:
+  // On OpenRouter each pass sends its single ISO hint.
+  const languagePasses = [];
+  if (plan.gaps.length && transcriptionLanguages.length > 1) {
+    const codesFor = (gap) => gap.language === "zh" ? [transcriptionLanguages.at(-1)]
+      : gap.language === "locale" ? [transcriptionLanguages[0]] : transcriptionLanguages;
+    for (const windowIndex of windowsTouching(windows, plan.gaps)) {
+      const window = windows[windowIndex];
+      const gapsHere = plan.gaps.filter((gap) => gap.startMs < window.endMs && gap.endMs > window.startMs);
+      for (const code of [...new Set(gapsHere.flatMap(codesFor))]) {
+        const name = `window-${pad2(windowIndex + 1)}-${code}`;
+        try {
+          const record = await cachedClipTranscription(path.join(directory, name + ".json"),
+            `${window.startMs}-${window.endMs}-${code}`, async ({ allowBackup }) => {
+              const clipPath = path.join(directory, `window-${pad2(windowIndex + 1)}.wav`);
+              cutWavClip(audioPath, window.startMs, window.endMs, clipPath, ffmpegRuntime);
+              return transcribeSavedAudio(clipPath, [code],
+                `hsk-language-pass-${EPISODE_ID}-${chunkNumber}-${windowIndex + 1}-${code}`,
+                { stage: "stt-language-pass", chunk, allowBackup });
+            });
+          for (const annotations of [record.annotations, ...(record.alternates ?? [])])
+            blocks.push(...timedBlocks(offsetAnnotations(annotations, window.startMs), durationMs));
+          languagePasses.push({ window: windowIndex + 1, languageCode: code, provider: record.provider, words: record.annotations.length });
+        } catch (error) {
+          languagePasses.push({ window: windowIndex + 1, languageCode: code, error: safeErrorMessage(error) });
+        }
+      }
+    }
+    await fs.writeFile(path.join(directory, "language-passes.json"),
+      JSON.stringify({ sourceAudio: path.basename(audioPath), windows, languagePasses }, null, 2) + "\n");
+    blocks.sort(byTime);
+    plan = buildRecoveryPlan(expected, blocks, durationMs, { match });
+  }
+  const recovered = [];
+  const unconfirmed = [];
+  // Bounded: at most 8 independently bounded spans per STT window.
+  if (plan.gaps.length > 8 * windows.length)
+    throw new Error(`Recovery allows at most ${8 * windows.length} bounded missing speech spans; found ${plan.gaps.length}.`);
+  await fs.writeFile(path.join(directory, "plan.json"), JSON.stringify({
+    sourceAudio: path.basename(audioPath), windows, originalAnnotations,
     missingGaps: plan.gaps, matchedTokenCount: plan.matchedTokenCount,
     expectedTokens: expected.length,
-  },null,2)+"\n");
-  const recovered = [];
-  for (const [gapIndex,gap] of plan.gaps.entries()) {
-    if (gap.endMs - gap.startMs < 80) throw Error("Recoverable speech clip is too short.");
-    const clipName = "span-" + String(gapIndex+1).padStart(2,"0");
-    const clipPath = path.join(directory,clipName+".wav");
-    // -ss after -i ensures an accurate cut; offsets are not inferred or expanded.
-    execFileSync(ffmpegRuntime.ffmpegPath,[
-      "-hide_banner","-loglevel","error","-nostdin","-y",
-      "-i",audioPath,"-ss",(gap.startMs/1000).toFixed(3),
-      "-t",((gap.endMs-gap.startMs)/1000).toFixed(3),
-      "-map","0:a:0","-ac","1","-ar",String(config.sampleRateHz),
-      "-c:a","pcm_s16le",clipPath,
-    ],{env:ffmpegRuntime.env,stdio:["ignore","pipe","pipe"]});
-    const actualMs = mediaDurationMs(clipPath,ffmpegRuntime);
-    if (actualMs <= 0) throw Error("Gemini recovery clip was empty.");
-    const languageCode = gap.language === "zh"
-      ? transcriptionLanguages.at(-1) : transcriptionLanguages[0];
-    let annotations;
-    if (config.apiProvider === "openrouter") {
-      const response = await transcribeOpenRouter({
-        apiKey: config.apiKey, model: config.transcribeModel, audioPath: clipPath,
-      });
-      annotations = response.wordAnnotations;
-    } else {
-      const uploaded = await withGeminiKeyFailover(config.credentialState,(apiKey)=>
-        uploadForTranscription(apiKey,clipPath,
-          "hsk-recovery-"+EPISODE_ID+"-"+chunkNumber+"-"+clipName));
-      config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
-      let response;
-      try {
-        response = await requestJson(
-          API_ROOT + "/v1beta/interactions",
-          {method:"POST",headers:{
-            "x-goog-api-key":config.apiKey,"Content-Type":"application/json",
-            "Api-Revision":API_REVISION,
-          },body:JSON.stringify({
-            model:config.transcribeModel,
-            input:[{type:"audio",uri:uploaded.uri,mime_type:audioMimeType(clipPath)}],
-            generation_config:{transcription_config:{
-              language_codes:[languageCode],
-              mode:{type:"verbatim",timestamp_granularities:["word"]},
-            }},
-          })},"Gemini recovery word transcription");
-      } finally {
-        await deleteGeminiFile(config.apiKey,uploaded.name);
-      }
-      annotations=getWordAnnotations(response.data).map(w=>({
-        text:w.text,startOffset:w.start_offset,endOffset:w.end_offset,
-      }));
+  }, null, 2) + "\n");
+  for (const gap of plan.gaps) {
+    if (gap.noAudio || gap.endMs - gap.startMs < 80) {
+      unconfirmed.push({ startMs: gap.startMs, endMs: gap.endMs, expected: gap.tokens.join(" "), heard: "",
+        reason: gap.noAudio ? "No audible clip between verified word boundaries." : "Recoverable speech clip is too short." });
+      recovered.push(null);
+      continue;
     }
-    // Save the exact provider response/provenance before attempting alignment.
-    await fs.writeFile(path.join(directory,clipName+".json"),
-      JSON.stringify({languageCode,clipStartMs:gap.startMs,clipEndMs:gap.endMs,
-        actualClipDurationMs:actualMs,annotations,provider:config.apiProvider,
-        model:config.transcribeModel},null,2)+"\n");
-    const blocks = timedBlocks(annotations,actualMs);
-    const selected = selectRecoveredBlocks(gap.tokens,blocks);
-    recovered.push(selected.map(b=>({
-      ...b,startMs:b.startMs+gap.startMs,endMs:b.endMs+gap.startMs,
-    })));
+    const clipName = `span-${gap.startMs}-${gap.endMs}`;
+    // A mixed RU/TG+Mandarin gap gets one single-hint pass per language
+    // (a mixed hint drops one of them), on either transport.
+    const hintSets = gap.language === "zh" ? [[transcriptionLanguages.at(-1)]]
+        : gap.language === "locale" ? [[transcriptionLanguages[0]]]
+          : transcriptionLanguages.map((code) => [code]);
+    const clipPath = path.join(directory, clipName + ".wav");
+    const gapBlocks = [];
+    try {
+      for (const hints of hintSets) {
+        const label = hints.length ? hints.join("+") : "nohint";
+        const record = await cachedClipTranscription(path.join(directory, `${clipName}-${label}.json`),
+          `${gap.startMs}-${gap.endMs}-${label}`, async ({ allowBackup }) => {
+            const actualMs = cutWavClip(audioPath, gap.startMs, gap.endMs, clipPath, ffmpegRuntime);
+            return { ...(await transcribeSavedAudio(clipPath, hints.length ? hints : transcriptionLanguages,
+              `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${clipName}-${label}`, { stage: "stt-recovery", chunk, allowBackup })),
+            clipStartMs: gap.startMs, clipEndMs: gap.endMs, actualClipDurationMs: actualMs };
+          });
+        const clipMs = record.actualClipDurationMs ?? (gap.endMs - gap.startMs);
+        for (const annotations of [record.annotations, ...(record.alternates ?? [])])
+          gapBlocks.push(...timedBlocks(annotations, clipMs)
+            .map((b) => ({ ...b, startMs: b.startMs + gap.startMs, endMs: b.endMs + gap.startMs })));
+      }
+      gapBlocks.sort(byTime);
+      let selected;
+      try {
+        selected = selectRecoveredBlocks(gap.tokens, gapBlocks, { match });
+      } catch (firstError) {
+        // One bounded second request per unconfirmed span: the same saved
+        // audio with ~0.7 s of neighbouring speech on each side, because a
+        // bare 1 s clip loses context (real RU one-take: "HSK AI" → "HSGKAI").
+        // Neighbour words are extras the strict selection discards; the
+        // missing words must still be heard exactly, inside the span.
+        const contextStart = Math.max(0, gap.startMs - 700);
+        const contextEnd = Math.min(durationMs, gap.endMs + 700);
+        const contextName = `context-${contextStart}-${contextEnd}`;
+        const contextPath = path.join(directory, contextName + ".wav");
+        const record = await cachedClipTranscription(path.join(directory, `${contextName}-${hintSets[0].join("+") || "nohint"}.json`),
+          `${contextStart}-${contextEnd}-${hintSets[0].join("+") || "nohint"}`, async ({ allowBackup }) => {
+            const actualMs = cutWavClip(audioPath, contextStart, contextEnd, contextPath, ffmpegRuntime);
+            return { ...(await transcribeSavedAudio(contextPath, hintSets[0].length ? hintSets[0] : transcriptionLanguages,
+              `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${contextName}`, { stage: "stt-recovery", chunk, allowBackup })),
+            clipStartMs: contextStart, clipEndMs: contextEnd, actualClipDurationMs: actualMs };
+          });
+        const inside = [record.annotations, ...(record.alternates ?? [])]
+          .flatMap((annotations) => timedBlocks(annotations, record.actualClipDurationMs ?? (contextEnd - contextStart)))
+          .map((b) => ({ ...b, startMs: b.startMs + contextStart, endMs: b.endMs + contextStart }))
+          // Provider times are kept as returned; only words lying inside the
+          // span (±120 ms tolerance) may fill it.
+          .filter((b) => b.startMs >= gap.startMs - 120 && b.endMs <= gap.endMs + 120);
+        gapBlocks.push(...inside);
+        try {
+          selected = selectRecoveredBlocks(gap.tokens, inside, { match });
+        } catch {
+          throw firstError;
+        }
+      }
+      recovered.push(selected);
+    } catch (error) {
+      // Keep going: every other gap's evidence is saved now (a network error
+      // on one clip re-requests only that clip next run), so one run shows
+      // the complete list of words the provider did not confirm.
+      unconfirmed.push({ startMs: gap.startMs, endMs: gap.endMs, expected: gap.tokens.join(" "),
+        heard: gapBlocks.map((b) => b.text).join(" "), reason: safeErrorMessage(error) });
+    }
   }
-  const joined=mergeRecoveredBlocks(expected,original,plan,recovered);
-  const joinedAnnotations=joined.map(b=>({
-    text:b.text,
-    startOffset:(b.startMs/1000).toFixed(3)+"s",
-    endOffset:(b.endMs/1000).toFixed(3)+"s",
+  if (unconfirmed.length) {
+    await fs.writeFile(path.join(directory, "unconfirmed-gaps.json"), JSON.stringify(unconfirmed, null, 2) + "\n");
+    throw new Error(`Recovery could not confirm ${unconfirmed.length} of ${plan.gaps.length} spans: ` +
+      unconfirmed.map((u) => `${u.startMs}-${u.endMs} "${u.expected}" heard "${u.heard}"`).join("; "));
+  }
+  const joined = mergeRecoveredBlocks(expected, blocks, plan, recovered);
+  const joinedAnnotations = joined.map((b) => ({
+    text: b.text,
+    startOffset: (b.startMs / 1000).toFixed(3) + "s",
+    endOffset: (b.endMs / 1000).toFixed(3) + "s",
   }));
-  const verified=alignWords(chunkText,joinedAnnotations,durationMs);
-  if(verified.mismatches.length)throw Error(
-    "Recovery clips still failed exact whole-narration word alignment.");
-  await fs.writeFile(path.join(directory,"verified-merge.json"),
-    JSON.stringify({provider:config.apiProvider,model:config.transcribeModel,
-      actualClipOffsets:plan.gaps,wordAnnotations:joinedAnnotations,
-      exactAlignment:true},null,2)+"\n");
-  return {wordAnnotations:joinedAnnotations,alignment:verified,
-    transcript:chunkText,recoverySpans:plan.gaps.length};
+  const verified = alignWords(chunkText, joinedAnnotations, durationMs);
+  if (verified.mismatches.length)
+    throw new Error("Recovered words still failed exact whole-narration word alignment.");
+  await fs.writeFile(path.join(directory, "verified-merge.json"), JSON.stringify({
+    provider: config.transcriptionTransport, model: config.transcribeModel,
+    windows, languagePasses, actualClipOffsets: plan.gaps,
+    wordAnnotations: joinedAnnotations, exactAlignment: true,
+  }, null, 2) + "\n");
+  return { wordAnnotations: joinedAnnotations, alignment: verified, transcript: chunkText,
+    recoverySpans: plan.gaps.length, languagePasses: languagePasses.length };
 }
 
 function safeErrorMessage(error) {
-  return String(error?.message ?? error).replace(
-    /(?:AIza)[A-Za-z0-9_-]{20,}/g,
-    "[redacted]",
-  );
+  return redactCredentials(error?.message ?? error);
 }
 
 async function findVerifiedSampleFallback({ episodeId, episode, narration, textHash, profile }) {
@@ -983,6 +1284,8 @@ if (!RESUME_FOLDER_NAME && !CLI_OPTIONS.includes("--resume") &&
   process.exit(0);
 }
 const config = await loadVoiceEnvironment(voiceProfile);
+// Downstream import/render use system FFmpeg/FFprobe: prove they exist first.
+requireSystemMediaTools();
 episode.voiceTextHash = currentNarrationHash;
 await writeJson(episodePath, episode);
 await fs.writeFile(path.join(targetReviewDir, "tts-input.txt"), `${narration}\n`, "utf8");
@@ -1003,12 +1306,14 @@ await writeTargetStatus({
 const productionRoot = path.join(targetReviewDir, "gemini-production");
 const textHash = createHash("sha256").update(narration, "utf8").digest("hex");
 const ttsSource = PLATFORM ? { ...episode, scenes: [tiktokCtaScene] } : episode;
-const ttsMode = ONE_TAKE_PILOT ? "continuous-pilot" : "scene";
-const ttsChunks = ONE_TAKE_PILOT
+// "continuous-pilot" is the stored id of one-take audio since the pilot;
+// kept unchanged so saved takes stay resumable (checkpoints compare it).
+const ttsMode = ONE_TAKE ? "continuous-pilot" : "scene";
+const ttsChunks = ONE_TAKE
   ? createContinuousTtsChunks(ttsSource, { expectedNarration: narration })
   : createTtsChunks(ttsSource);
 if (!ttsChunks.length) throw new Error("No narration chunks were created.");
-if (!RESUME_FOLDER_NAME) {
+if (!RESUME_FOLDER_NAME && !NEW_TAKE) {
   const checkpoint = await findReusableVoiceCheckpoint({
     productionRoot,
     profile: voiceProfile,
@@ -1024,6 +1329,33 @@ if (!RESUME_FOLDER_NAME) {
   if (checkpoint) {
     RESUME_FOLDER_NAME = checkpoint.folderName;
     console.log(`Resuming verified TTS checkpoint ${checkpoint.folderName}; saved audio will not be regenerated.`);
+  } else {
+    // X-05/X-08: never silently buy another paid take of identical narration
+    // while a saved take exists that automatic resume cannot use.
+    const savedTakes = await findUnresumableSavedTakes({
+      productionRoot,
+      profile: voiceProfile,
+      expected: {
+        episodeId: EPISODE_ID,
+        platform: PLATFORM ?? null,
+        apiTransport: config.apiProvider,
+        narrationTextHash: textHash,
+        ttsGenerationMode: ttsMode,
+        ttsChunkCount: ttsChunks.length,
+      },
+    });
+    if (savedTakes.length) {
+      const list = savedTakes.map((take) => `${take.folderName} (${take.status ?? "unknown"}: ${take.reason})`).join("; ");
+      const reason = `A saved paid take of this exact narration already exists and was not resumed automatically: ${list}. ` +
+        "No new TTS was requested. Listen to it first: re-import an imported take with content:import-voice, " +
+        "resume a SHA-verified one with --resume <folder>, or buy a new take explicitly with --new-take.";
+      await writeTargetStatus({
+        stage: "gemini-voice-blocked", sourceRevision, updatedAt: new Date().toISOString(),
+        voiceProfileId: voiceProfile.profileId, voiceTextHash: currentNarrationHash,
+        reason, savedTakes,
+      });
+      throw new Error(reason);
+    }
   }
 }
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
@@ -1068,6 +1400,19 @@ if (RESUME_FOLDER_NAME) {
   if ((metadata.apiTransport ?? "gemini-direct") !== config.apiProvider) {
     throw new Error("Resume transport differs from the original audio; refusing provider switch.");
   }
+  // A take that already moved to the opt-in backup continues on it; its saved
+  // chunks are never regenerated and never mixed with new Direct speech.
+  config.ttsTransport = metadata.ttsTransport ?? config.apiProvider;
+  // STT only reads the saved audio, so a resumed run asks the requested
+  // transport first again (a spent Direct daily quota resets); it may fall
+  // back again on its own 429/5xx. Real TG one-take 2026-11-08: Tajik STT on
+  // the backup was far noisier than Direct with tg-TJ + Mandarin hints.
+  config.transcriptionTransport = config.apiProvider;
+  config.fallbackEvents = Array.isArray(metadata.fallbackEvents) ? metadata.fallbackEvents : [];
+  if (config.apiProvider === "gemini-direct" && !config.openRouterBackupKey &&
+      config.ttsTransport === "openrouter") {
+    throw new Error("Resuming an OpenRouter-backed take requires HSK_AI_OPENROUTER_FALLBACK_ENABLED=true and OPENROUTER_API_KEY.");
+  }
   delete metadata.error;
   metadata.status = "starting";
   metadata.sourceRevision = sourceRevision;
@@ -1084,8 +1429,12 @@ if (RESUME_FOLDER_NAME) {
     narrationTextHash: textHash,
     sourceRevision,
     createdAt: new Date().toISOString(),
+    ...(NEW_TAKE ? { newTakeRequested: true } : {}),
     provider: "gemini-api",
     apiTransport: config.apiProvider,
+    ttsTransport: config.ttsTransport,
+    transcriptionTransport: config.transcriptionTransport,
+    fallbackEvents: [],
     languageCode: voiceProfile.locale,
     voiceProfileId: voiceProfile.profileId,
     ttsModel: config.ttsModel,
@@ -1105,10 +1454,16 @@ if (RESUME_FOLDER_NAME && metadata.ttsChunkCount !== ttsChunks.length) {
 }
 config.ttsRequestCount = metadata.ttsRequestCount ?? 0;
 metadata.ttsGenerationMode = ttsMode;
-metadata.ttsHttpAttemptLimitPerTake = config.apiProvider === "openrouter" ? 1 : (ONE_TAKE_PILOT ? 2 : 4);
+metadata.ttsHttpAttemptLimitPerTake = config.apiProvider === "openrouter"
+  ? OPENROUTER_TTS_MAX_ATTEMPTS : (ONE_TAKE ? 2 : 4);
+metadata.openRouterBackupHttpAttemptsPerChunk = config.openRouterBackupKey ? OPENROUTER_TTS_MAX_ATTEMPTS : 0;
+metadata.googleQuotaKeyRotationEnabled = false;
+metadata.ttsTransport = config.ttsTransport;
+metadata.transcriptionTransport = config.transcriptionTransport;
+metadata.fallbackEvents = config.fallbackEvents;
 metadata.ttsChunkCount = ttsChunks.length;
 metadata.chunkSceneIds = ttsChunks.map((chunk) => chunk.sceneIds);
-metadata.chunkingStrategy = ONE_TAKE_PILOT
+metadata.chunkingStrategy = ONE_TAKE
   ? "one exact unchanged narration take per language/package (max 12000 chars)"
   : "scene boundaries; at most 12000 narration characters per TTS and transcription request";
 metadata.previousVoiceProvider = episode.voiceProvider ?? null;
@@ -1123,6 +1478,9 @@ const persistCheckpoint = () => atomicWriteJson(checkpointPath, {
   platform: PLATFORM ?? null,
   provider: "gemini-api",
   apiTransport: config.apiProvider,
+  ttsTransport: config.ttsTransport,
+  transcriptionTransport: config.transcriptionTransport,
+  fallbackEvents: config.fallbackEvents,
   languageCode: voiceProfile.locale,
   voiceProfileId: voiceProfile.profileId,
   ttsModel: config.ttsModel,
@@ -1137,6 +1495,7 @@ const persistCheckpoint = () => atomicWriteJson(checkpointPath, {
   ttsChunkCount: ttsChunks.length,
   ttsRequestCount: config.ttsRequestCount,
   createdAt: metadata.createdAt,
+  ...(metadata.newTakeRequested === true ? { newTakeRequested: true } : {}),
   sampleOnly: metadata.sampleOnly === true,
   chunks: metadata.ttsChunks.filter(Boolean),
   transcriptionAttemptsByChunk: metadata.transcriptionAttempts ?? [],
@@ -1168,18 +1527,44 @@ try {
     } catch (error) {
       if (error?.code !== "ENOENT") throw error;
     }
-    const recordedHashMatches = !recordedChunk?.sha256 ||
-      (chunkBytes && sha256(chunkBytes) === recordedChunk.sha256);
-    if (!chunkBytes || !isValidWavBuffer(chunkBytes) || !recordedHashMatches) {
-      await fs.rm(chunkPath, { force: true });
+    if (chunkBytes && !matchesRecordedWavChunk(chunkFile, chunkBytes, recordedChunk)) {
+      // A stale, altered or hashless WAV must never be passed off as a
+      // verified first take. Preserve it for diagnosis; no paid TTS retry.
+      throw new Error(
+        `Saved TTS WAV chunk ${chunkFile} failed SHA-256 or format verification; original file preserved. Manual review required.`,
+      );
+    }
+    let chunkTransport = recordedChunk?.transport ?? config.ttsTransport;
+    if (!chunkBytes) {
+      // Backup is allowed only while no chunk of this take exists yet.
+      config.completedTtsChunks = completedTtsChunks;
       const generated = await generateTtsWav(config, chunk.text);
       if (!isValidWavBuffer(generated))
         throw new Error(`TTS chunk ${index + 1} is not a complete RIFF/WAVE audio file.`);
       await atomicWriteFile(chunkPath, generated);
       chunkBytes = generated;
+      chunkTransport = config.ttsTransport;
     }
-    metadata.ttsChunks[index] = { file: chunkFile, bytes: chunkBytes.length, sha256: sha256(chunkBytes) };
+    // V-12: objective signal QA before any paid STT. A chunk that cannot be
+    // speech is kept as evidence and blocks; it is never silently re-voiced.
+    const audioQa = measureWavQuality(chunkBytes);
+    metadata.ttsChunks[index] = {
+      file: chunkFile, bytes: chunkBytes.length, sha256: sha256(chunkBytes), transport: chunkTransport,
+      audioQa,
+    };
+    if (audioQa.unusable) {
+      metadata.status = "audio-qa-failed";
+      await persistMetadata();
+      await persistCheckpoint();
+      throw new Error(
+        `TTS chunk ${index + 1} failed audio QA (${audioQa.problems.join(", ")}); original WAV preserved, ` +
+        "no STT was spent. Listen to it, then request --new-take explicitly if it is really unusable.",
+      );
+    }
     completedTtsChunks += 1;
+    metadata.ttsTransport = config.ttsTransport;
+    metadata.transcriptionTransport = config.transcriptionTransport;
+    metadata.fallbackEvents = config.fallbackEvents;
     metadata.ttsRequestCount = config.ttsRequestCount;
     metadata.completedTtsChunks = completedTtsChunks;
     metadata.status = "audio-generating";
@@ -1215,6 +1600,10 @@ try {
   const masterWav = await fs.readFile(wavPath);
   if (!isValidWavBuffer(masterWav))
     throw new Error("Saved TTS master is not a complete RIFF/WAVE file.");
+  if (RESUME_FOLDER_NAME && metadata.wavSha256 &&
+      !matchesRecordedAudioHash(masterWav, metadata.wavSha256)) {
+    throw new Error("Saved master WAV hash differs from its checkpoint; preserving original for review.");
+  }
   let mp3Exists = false;
   try {
     await fs.access(mp3Path);
@@ -1226,12 +1615,16 @@ try {
     throw new Error("Production MP3 output already exists; refusing to overwrite it.");
   let mp3Ready = false;
   if (mp3Exists) {
-    try {
-      await audioDurationMs(mp3Path, ffmpegRuntime);
-      mp3Ready = true;
-    } catch {
-      await fs.rm(mp3Path, { force: true });
+    // A valid MP3 duration proves only decodability, not voice identity.
+    // A mismatched or unrecorded existing take must never be silently
+    // accepted, removed or replaced on resume.
+    if (!matchesRecordedAudioHash(await fs.readFile(mp3Path), metadata.mp3Sha256)) {
+      throw new Error(
+        "Saved MP3 lacks a matching recorded SHA-256; preserving the original file for manual review.",
+      );
     }
+    await audioDurationMs(mp3Path, ffmpegRuntime);
+    mp3Ready = true;
   }
   if (!mp3Ready) {
     const mp3Temp = path.join(outputDir, "voice.tmp.mp3");
@@ -1290,33 +1683,85 @@ try {
         metadata.lastTranscriptionError = safeErrorMessage(error);
       }
     }
+    // `attempts` numbers every STT response this take ever received; the
+    // bounded budget is PER RUN. A cumulative cap left a resumed take with
+    // zero new STT attempts forever (real 2026-11-03 zhuozi RU take: 3/3
+    // used, chunk 3 never retried), which pushes operators to buy a new TTS.
     let attempts = metadata.transcriptionAttempts?.[index] ?? (transcription ? 1 : 0);
-    if (!chunkAlignment?.captions && attempts < 3) {
-      const result = await transcribeUntilAligned({
-        previousAttempts: attempts,
-        maxAttempts: 3,
-        onAttempt: async (attempt) => {
-          attempts = attempt;
-          metadata.transcriptionAttempts ??= [];
-          metadata.transcriptionAttempts[index] = attempt;
-          await persistMetadata();
-          await persistCheckpoint();
-        },
-        onRetry: async (error) => {
-          metadata.lastTranscriptionError = safeErrorMessage(error);
-          await persistMetadata();
-          await persistCheckpoint();
-        },
-        transcribe: async (attempt) => {
-          if (config.apiProvider === "openrouter") {
-            // A malformed/empty 200 retries this STT request only. The saved
-            // TTS WAV/MP3 remain the immutable input to every attempt.
-            return transcribeOpenRouter({
-              apiKey: config.apiKey,
-              model: config.transcribeModel,
-              audioPath: transcriptionAudioPath,
-            });
-          }
+    // Free first: a response an earlier run already paid for may pass the
+    // current gate (e.g. after a matcher fix). Newest saved attempt first.
+    for (let saved = attempts; saved >= 1 && !chunkAlignment?.captions; saved -= 1) {
+      let previous;
+      try {
+        previous = await readJson(path.join(outputDir, `transcription-part-${chunkNumber}-attempt-${saved}.json`));
+      } catch (error) {
+        if (error?.code !== "ENOENT" && !(error instanceof SyntaxError)) throw error;
+        continue;
+      }
+      if (!previous?.wordAnnotations?.length) continue;
+      try {
+        const reused = alignWords(ttsChunks[index].text, previous.wordAnnotations, metadata.chunkDurationsMs[index]);
+        if (reused.captions) {
+          transcription = previous;
+          chunkAlignment = reused;
+          await fs.writeFile(transcriptPath, `${JSON.stringify(previous, null, 2)}\n`);
+          metadata.reusedSavedTranscriptions ??= [];
+          metadata.reusedSavedTranscriptions.push({ chunk: index + 1, attempt: saved });
+          delete metadata.lastTranscriptionError;
+          delete metadata.lastTranscriptionMismatch;
+        }
+      } catch {
+        // Still fails the gate: not reused, a fresh bounded attempt follows.
+      }
+    }
+    // Long one-take audio is transcribed in silence-bounded windows (see
+    // stt-windows.mjs); a scene chunk under 25 s stays one request. The
+    // windows are fixed per take so saved window responses stay valid.
+    metadata.sttWindows ??= [];
+    let sttWindows = metadata.sttWindows[index];
+    if (!Array.isArray(sttWindows) || !sttWindows.length ||
+        sttWindows.at(-1).endMs !== metadata.chunkDurationsMs[index]) {
+      try {
+        sttWindows = planSttWindows({
+          durationMs: metadata.chunkDurationsMs[index],
+          silences: metadata.chunkDurationsMs[index] >= 25_000 ? measureSilences(chunkWavPath, ffmpegRuntime) : [],
+        });
+      } catch (error) {
+        // No measured silence: keep the whole-file request, never cut speech.
+        metadata.sttWindowError = safeErrorMessage(error);
+        sttWindows = [{ startMs: 0, endMs: metadata.chunkDurationsMs[index] }];
+      }
+      metadata.sttWindows[index] = sttWindows;
+      await persistMetadata();
+    }
+    const windowedStt = sttWindows.length > 1;
+    async function transcribeWindows(attempt) {
+      const windowDir = path.join(outputDir, "stt-windows");
+      await fs.mkdir(windowDir, { recursive: true });
+      const annotations = [];
+      for (const [windowIndex, window] of sttWindows.entries()) {
+        const name = `part-${chunkNumber}-window-${pad2(windowIndex + 1)}`;
+        const record = await cachedClipTranscription(path.join(windowDir, name + ".json"),
+          `${window.startMs}-${window.endMs}-${transcriptionLanguages.join("+")}`, async ({ allowBackup }) => {
+            const clipPath = path.join(windowDir, name + ".wav");
+            cutWavClip(chunkWavPath, window.startMs, window.endMs, clipPath, ffmpegRuntime);
+            return transcribeSavedAudio(clipPath, transcriptionLanguages,
+              `hsk-production-${EPISODE_ID}-${index + 1}-w${windowIndex + 1}-attempt-${attempt}`,
+              { stage: "stt", chunk: index + 1, allowBackup });
+          });
+        annotations.push(...offsetAnnotations(record.annotations, window.startMs));
+      }
+      if (!annotations.length)
+        throw new TranscriptionResponseError("Windowed STT returned no provider word timestamps.", { retryable: true });
+      return {
+        transcript: annotations.map((word) => word.text).join(" "),
+        wordAnnotations: annotations,
+        sttWindows,
+      };
+    }
+    if (!chunkAlignment?.captions) {
+      // Direct Gemini STT on the saved audio (upload, transcribe, always delete).
+      async function transcribeDirect(attempt) {
           // Keep resumable upload atomic per key; rejected credentials may start a NEW upload.
           const uploadedFile = await withGeminiKeyFailover(
             config.credentialState,
@@ -1394,6 +1839,51 @@ try {
             await persistMetadata();
           }
           return transcription;
+      }
+      const result = await transcribeUntilAligned({
+        previousAttempts: attempts,
+        // Windowed: saved window responses are reused, so a second attempt
+        // only re-requests windows that failed; an identical mismatch retry
+        // would buy nothing. Gaps go to bounded recovery instead.
+        maxAttempts: attempts + (windowedStt ? 2 : STT_ATTEMPTS_PER_RUN),
+        onAttempt: async (attempt) => {
+          attempts = attempt;
+          metadata.transcriptionAttempts ??= [];
+          metadata.transcriptionAttempts[index] = attempt;
+          await persistMetadata();
+          await persistCheckpoint();
+        },
+        onRetry: async (error) => {
+          metadata.lastTranscriptionError = safeErrorMessage(error);
+          await persistMetadata();
+          await persistCheckpoint();
+        },
+        transcribe: async (attempt) => {
+          if (windowedStt) return transcribeWindows(attempt);
+          // A malformed/empty 200 retries this STT request only. The saved
+          // TTS WAV/MP3 remain the immutable input to every attempt.
+          const openRouterStt = () => transcribeOpenRouter({
+            apiKey: openRouterKeyFor(config),
+            model: config.transcribeModel,
+            audioPath: transcriptionAudioPath,
+            language: openRouterLanguage(transcriptionLanguages[0]),
+          });
+          if (config.transcriptionTransport === "openrouter") return openRouterStt();
+          // Direct quota/5xx: same saved audio via the opt-in backup; speech is
+          // never regenerated and the exact-token gate is unchanged.
+          return withOpenRouterBackup({
+            stage: "stt",
+            enabled: Boolean(config.openRouterBackupKey),
+            backup: openRouterStt,
+            onFallback: (event) => {
+              config.transcriptionTransport = "openrouter";
+              config.fallbackEvents.push({ ...event, chunk: index + 1 });
+              metadata.transcriptionTransport = config.transcriptionTransport;
+              metadata.fallbackEvents = config.fallbackEvents;
+              console.warn("VOICE_TRANSPORT_FALLBACK " + JSON.stringify(event));
+            },
+            primary: () => transcribeDirect(attempt),
+          });
         },
         align: (response) => alignWords(
           ttsChunks[index].text,
@@ -1406,8 +1896,16 @@ try {
       chunkAlignment = result.alignment;
       if (result.error) {
         metadata.lastTranscriptionError = safeErrorMessage(result.error);
-        if (!result.retryable)
+        // A failure with no provider response (transport/network, even a
+        // retryable one whose run budget is spent) is fatal here and is
+        // reported as such, not as a mismatch. A response that failed
+        // alignment (e.g. timings moving backwards, real RU one-take
+        // 2026-11-08) still goes to the recovery path below.
+        if (!result.transcription) {
+          await persistMetadata();
+          await persistCheckpoint();
           throw result.error;
+        }
       }
       const attemptPath = path.join(
         outputDir,
@@ -1440,9 +1938,11 @@ try {
         const clips = await recoverActualWordClips({
           chunkText:ttsChunks[index].text,
           originalAnnotations:transcription.wordAnnotations,
-          audioPath:transcriptionAudioPath,
+          // Exact cuts from the WAV whose duration the timings were checked against.
+          audioPath:chunkWavPath,
           durationMs:metadata.chunkDurationsMs[index],
-          outputDir,chunkNumber,config,ffmpegRuntime,transcriptionLanguages,
+          outputDir,chunkNumber,ffmpegRuntime,transcriptionLanguages,
+          windows:sttWindows,
         });
         chunkAlignment=clips.alignment;
         transcription={
@@ -1453,7 +1953,7 @@ try {
         await fs.writeFile(transcriptPath,JSON.stringify(transcription,null,2)+"\n");
         metadata.recoveredClips ??= [];
         metadata.recoveredClips.push({chunk:index+1,spans:clips.recoverySpans,
-          model:config.transcribeModel});
+          languagePasses:clips.languagePasses,model:config.transcribeModel});
         delete metadata.lastTranscriptionError;
         delete metadata.lastTranscriptionMismatch;
         await persistMetadata();
@@ -1525,6 +2025,17 @@ try {
       metadata.audioDurationMs = fallback.metadata.audioDurationMs;
       metadata.wavBytes = (await fs.stat(wavPath)).size;
       metadata.mp3Bytes = (await fs.stat(mp3Path)).size;
+      // The folder now holds the verified sample copy, not the rejected take:
+      // its hashes must describe the imported bytes, or the checkpoint and the
+      // imported episode disagree and an explicit resume refuses the folder.
+      const sampleWavBytes = await fs.readFile(wavPath);
+      metadata.wavSha256 = sha256(sampleWavBytes);
+      metadata.mp3Sha256 = sha256(await fs.readFile(mp3Path));
+      if (ttsChunks.length === 1)
+        metadata.ttsChunks[0] = {
+          file: "voice.wav", bytes: sampleWavBytes.length, sha256: metadata.wavSha256,
+          transport: "verified-sample-copy",
+        };
       metadata.sampleFallbackUsed = {
         reason: "Fresh Gemini transcription failed exact narration alignment after three attempts.",
         sourceAudio: path.relative(PROJECT_ROOT, fallback.audioPath),
@@ -1548,6 +2059,7 @@ try {
       metadata.status = "audio-ready";
       verifiedSampleFallbackUsed = true;
       await persistMetadata();
+      await persistCheckpoint();
       console.warn(
         "Gemini transcription failed exact alignment; using the existing fully verified sample audio for this designated sample episode.",
       );
@@ -1599,6 +2111,11 @@ try {
     "utf8",
   );
   metadata.status = "ready-for-import";
+  metadata.ttsTransport = config.ttsTransport;
+  metadata.transcriptionTransport = config.transcriptionTransport;
+  metadata.fallbackEvents = config.fallbackEvents;
+  if (config.transcriptionTransport === "openrouter" && config.apiProvider === "gemini-direct")
+    metadata.wordAlignment = "OpenRouter backup word timestamps (one ISO-639-1 hint per request) + exact token alignment";
   metadata.captionWordCount = alignment.captions.length;
   await persistMetadata();
   await persistCheckpoint();

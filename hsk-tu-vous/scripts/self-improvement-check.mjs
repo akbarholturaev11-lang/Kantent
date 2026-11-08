@@ -3,6 +3,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateStorytellingEpisode } from './storytelling-plan.mjs';
 import { validateLessonPresentation } from './lesson-presentation-policy.mjs';
+import { validateArtManifest } from './generate-lesson-art.mjs';
+import { activeExperiment, armFor } from './visual-variety-plan.mjs';
 import { validateSeriesCalendar } from './series-plan.mjs';
 import {contentTypeOf,weeklyCoverage} from './content-schedule.mjs';
 import {reviewPromoVariants} from './promo-plan.mjs';
@@ -128,6 +130,30 @@ function checkLessonSource(episode, item, languageCode, visualSystem, { localize
     throw Error('missing translation status/source binding');
 }
 
+/** Illustrated-glass drafts need their lesson-art manifest (frames themselves are made by Codex at production). */
+function checkLessonArtSource(rootDirectory, episode, visualSystem) {
+  const from = visualSystem.lessonPresentation.illustratedFormatFromDate;
+  if (!from || episode.date < from) return;
+  const file = path.join(rootDirectory, 'content', 'lesson-art', episode.id + '.json');
+  if (!fs.existsSync(file)) throw Error('illustrated lesson missing content/lesson-art/' + episode.id + '.json');
+  const manifest = validateArtManifest(JSON.parse(fs.readFileSync(file, 'utf8')));
+  if (manifest.episodeId !== episode.id) throw Error('lesson-art manifest episodeId does not match');
+  const v = manifest.variety;
+  if (!v?.setting || !v?.supportingCharacter || !v?.pattern)
+    throw Error('lesson-art manifest missing the visual-variety-plan record (setting, supportingCharacter, pattern)');
+  // The A/B arm must be the planner's stable assignment, never a hand pick.
+  const variety = JSON.parse(fs.readFileSync(path.join(rootDirectory, 'content', 'visual-variety.json'), 'utf8'));
+  const experiment = activeExperiment(variety, episode.date);
+  if (experiment && (v.experiment?.id !== experiment.id || v.experiment?.arm !== armFor(experiment, episode.id)))
+    throw Error(`lesson-art variety must record experiment ${experiment.id} arm ${armFor(experiment, episode.id)} from content:variety`);
+  const names = new Set(manifest.assets.map(asset => asset.name));
+  for (const scene of episode.scenes ?? []) for (const beat of scene.motionBeats ?? []) {
+    const ill = beat.visual?.illustration;
+    for (const name of [...(ill?.images ?? []), ...(ill?.icons ?? []).filter(Boolean)])
+      if (!names.has(name)) throw Error(`${beat.id} uses frame ${name}, which is not in the lesson-art manifest`);
+  }
+}
+
 export function inspectDraftReadiness(rootDirectory, item) {
   const languages = {};
   try {
@@ -150,6 +176,7 @@ export function inspectDraftReadiness(rootDirectory, item) {
         const episode = language === 'ru' ? canonical : readEpisode(settings.contentRoot);
         if (language !== 'ru') assertLocalizedLessonSource(episode, canonical, language);
         checkLessonSource(episode, item, settings.languageCode, visualSystem, { localized: language !== 'ru' });
+        checkLessonArtSource(rootDirectory, episode, visualSystem);
         languages[language] = { ready: true };
       } catch (error) {
         languages[language] = { ready: false, reason: error.message };

@@ -10,7 +10,21 @@ New standalone advertisements follow [PROMO_WORKFLOW.md](content/PROMO_WORKFLOW.
 
 `content/voice-profile.json` and `content/locales/tg/voice-profile.json` remain the canonical owner-approved models and voice identity. The default `HSK_AI_VOICE_API_PROVIDER=openrouter` routes speech (`/audio/speech`) and provider word-timed transcription (`/audio/transcriptions`) through OpenRouter with `OPENROUTER_API_KEY`. Audio and word timestamps are validated before import; if OpenRouter does not provide valid exact word timings, video production blocks rather than fabricating subtitles.
 
-To explicitly use the independent secondary direct-Gemini route, set `HSK_AI_VOICE_API_PROVIDER=gemini-direct`, `HSK_AI_ALLOW_GEMINI_API=true`, and a valid `GEMINI_API_KEY`. There is **no automatic fallback** or unapproved provider/voice change after an audio attempt. For GitHub Actions, store `OPENROUTER_API_KEY` in repository Actions Secrets and optionally set Actions Variable `HSK_AI_VOICE_API_PROVIDER` to `gemini-direct` only when switching manually.
+To use Gemini Direct first, set `HSK_AI_VOICE_API_PROVIDER=gemini-direct`, `HSK_AI_ALLOW_GEMINI_API=true`, and a valid `GEMINI_API_KEY`. **Opt-in automatic OpenRouter backup** additionally requires `HSK_AI_OPENROUTER_FALLBACK_ENABLED=true` and `OPENROUTER_API_KEY`, with a provider account spending cap and owner-reviewed RU/TJ voice A/B test. It is disabled by default. Direct Gemini `429` or transient HTTP 5xx may switch to OpenRouter without rotating Google quota credentials. Successful Direct audio is never replaced; OpenRouter TTS is allowed only before the first completed TTS chunk, avoiding mixed-provider voices. STT fallback uses the already saved WAV/MP3 and still requires actual word timestamps/exact script alignment. It cannot silently change the approved model/voice or bypass an access denial. The current GitHub Actions default stays OpenRouter until the Direct-first configuration is deliberately enabled.
+
+## Read-only exact MP4/voice-cue frame review
+
+After an **existing** RU/TG episode has a genuine local imported-audio review package, run:
+
+```bash
+npm run content:review-frames -- <episode-id> ru instagram
+npm run content:review-frames -- <episode-id> tg youtube
+npm run content:review-frames -- <episode-id> tg facebook
+```
+
+The command does **not** generate TTS or publish. It validates the exact platform's stored MP4 SHA-256 and its CTA-specific episode/content hashes, the shared compiled voice timeline, H264/AAC codec, video/audio duration and encoded frame count. It extracts spoken-cue **before / onset / settled** frames, unanchored semantic static shots, plus each platform's CTA boundary and last encoded frame at 1080×1920 and phone-size 270×480. An immutable-by-default local `index.html` and `manifest.json` are written under the platform's `review/` package. Exact images are decoded in two FFmpeg passes.
+
+**This is evidence for manual visual/voice review, never automated semantic or owner approval.** TikTok uses a separate spoken CTA and is intentionally excluded until its own independently verified timeline and per-platform proof are implemented. New media, approval and publication remain subject to the rules in `AI_RULES.md` and `content/WORKFLOW.md`. Engineering progress, dependencies and blockers are in [WORK_CONTEXT.md](docs/audits/WORK_CONTEXT.md).
 
 ## Start locally
 
@@ -22,7 +36,7 @@ npm run check:consistency
 npm run dev
 ```
 
-Open this `hsk-tu-vous/` directory in your coding agent. The local MCP server is declared in `.mcp.json` and can also be launched with:
+Open this `hsk-tu-vous/` directory in your coding agent on an up-to-date `main`. The local MCP server is declared in `.mcp.json` (Claude Code) and `.codex/config.toml` (Codex) and can also be launched with:
 
 ```bash
 npm run mcp
@@ -35,6 +49,15 @@ npm run content:make -- today
 npm run content:make -- YYYY-MM-DD
 npm run content:make -- YYYY-MM-DD --language ru
 npm run content:make -- YYYY-MM-DD --language tg
+```
+
+The step-by-step path, including the stages the command returns (`authoring-required`, `action-plan-required`, `lesson-art-required`, `partial`, `ready-for-review`), is the runbook at the top of [`content/WORKFLOW.md`](content/WORKFLOW.md). Illustrated-glass lessons add the frame tools:
+
+```bash
+npm run content:variety -- <episode-id>          # setting, supporting HSK AI character, layout, A/B arm
+npm run content:art -- <episode-id>              # Codex frame brief (no paid API); --record-codex <name> after saving a frame
+npm run content:art:review -- <episode-id>       # frame review service; --confirm-visual <name> "<what you checked>"
+npm run content:characters                       # re-render the HSK AI cast reference PNGs
 ```
 
 Production MCP tools accept `language: "all"` by default, or a specific language. The batch ad planner `get_promo_plan` also defaults to `language: "all"`. Other per-language MCP read/edit/status/registration/approval tools accept `language: "ru"` or `"tg"`, defaulting to the legacy series. Individual voice/render CLIs use `HSK_CONTENT_LANGUAGE=tg`; this setting is inherited by child processes. Never reuse audio, word cues, CTA registration or approval from another language. A new locale profile may need an explicit model decision before generating its designated voice sample; read the selected profile and use `approve_voice_model_for_sample` only after the owner's exact decision.
@@ -73,7 +96,7 @@ The 12 October `zai-location` recut opts into a per-scene procedural cinematic i
 
 Run `npm run content:buffer` to check complete source-bound multilingual drafts in the calendar timezone; run `npm run content:buffer -- --json` for a machine-readable report. Calendar coverage thresholds are owned by `content/calendar.json#planningBuffer`. A report below minimum exits with code 2. Neither command writes, generates, publishes, edits CTA, nor calls any external API.
 
-`content/feedback/README.md` defines the evidence format and safeguards for future Zernio-to-ChatGPT analysis. Repository-local automatic Zernio ingestion and unattended scheduling are **not** implemented in this Node.js package. Separate **ChatGPT scheduled agents** perform the daily scenario reserve and Monday/Wednesday/Friday feedback, when enabled, through the existing GitHub/Zernio connectors under `content/WORKFLOW.md` and `content/feedback/AGENT_PLAYBOOK.md`. Those drafting/analytics agents do not publish. **One existing 3-day HSK AI product-news agent** is enabled (task `6ae1893b53a08191803177bea34d82b5`). It is authorized to automatically publish fact-checked HSK AI updates as **original 4:3 photo+localized caption** to Telegram TJ `@aibotsakbar`, Instagram RU `@hskai.app`, Instagram TJ `@hskai.apptj`, and Facebook TJ `Akbarholturaev`, with separate account checks, media verification and no fabricated/duplicate news; no individual approval is required for these static photo news posts. The canonical brief is `content/telegram-agent.json`, account map `content/publication-destinations.json`. Russian Facebook auto-post, Reels/Stories and video auto-posting are not authorized. No repo-local Telegram cron or automatic video publishing is enabled; the exact-video preview approval gate remains unchanged.
+`content/feedback/README.md` defines the evidence format and safeguards for future Zernio-to-ChatGPT analysis. Repository-local automatic Zernio ingestion and unattended scheduling are **not** implemented in this Node.js package. Separate **ChatGPT scheduled agents** perform the daily scenario reserve and Monday/Wednesday/Friday feedback, when enabled, through the existing GitHub/Zernio connectors under `content/WORKFLOW.md` and `content/feedback/AGENT_PLAYBOOK.md`. Those drafting/analytics agents do not publish. **One existing 3-day HSK AI product-news agent** is enabled (task `6ae1893b53a08191803177bea34d82b5`). It is authorized to automatically publish fact-checked HSK AI updates as **original 4:3 photo+localized caption** to Telegram TJ `@hskaiapp`, Instagram RU `@hskai.app`, Instagram TJ `@hskai.apptj`, and Facebook TJ `Akbarholturaev`, with separate account checks, media verification and no fabricated/duplicate news; no individual approval is required for these static photo news posts. The canonical brief is `content/telegram-agent.json`, account map `content/publication-destinations.json`. Russian Facebook auto-post, Reels/Stories and video auto-posting are not authorized. No repo-local Telegram cron or automatic video publishing is enabled; the exact-video preview approval gate remains unchanged.
 
 ## Agent scenario reserve
 

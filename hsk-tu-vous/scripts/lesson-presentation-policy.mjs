@@ -9,6 +9,11 @@ function applies(episode, policy) {
       !Number.isFinite(policy.maximumVisualHoldSec) || policy.maximumVisualHoldSec <= 0) {
     throw Error("Invalid content/visual-system.json#lessonPresentation policy.");
   }
+  if (policy.illustratedFormatFromDate !== undefined &&
+      (!/^\d{4}-\d{2}-\d{2}$/.test(policy.illustratedFormatFromDate) || policy.illustratedFormatFromDate < policy.effectiveFromDate ||
+       policy.illustratedFormat !== "illustrated-glass-v1")) {
+    throw Error("Invalid content/visual-system.json#lessonPresentation illustrated format.");
+  }
   if (!/^\d{4}-\d{2}-\d{2}$/.test(episode.date ?? "")) {
     throw Error("Lesson presentation requires a dated episode.");
   }
@@ -34,6 +39,15 @@ export function validateLessonPresentation(episode, policy) {
   if (episode.motionDesign !== true || episode.motionDesignStyle !== policy.styleId) {
     throw Error("The approved lesson format is required. Read content/EDITING_SPEC.md and author explain-actions-v1 motionBeats for every lesson scene before voice/render.");
   }
-  return validateActionLesson(episode, {requireVisibleChange:
+  const result = validateActionLesson(episode, {requireVisibleChange:
     episode.date >= policy.visibleStateValidationFromDate});
+  // Owner-approved illustrated-glass format (2026-11-09): from its date every
+  // lesson beat is a generated-art scene with validated text roles.
+  if (policy.illustratedFormatFromDate && episode.date >= policy.illustratedFormatFromDate) {
+    for (const scene of episode.scenes.filter((item) => item.kind !== "cta"))
+      for (const beat of scene.motionBeats ?? [])
+        if (!beat.visual?.illustration)
+          throw Error(`${scene.id}/${beat.id}: the illustrated-glass lesson format needs visual.illustration (lesson art). Read content/EDITING_SPEC.md#illustrated-glass-lesson-format.`);
+  }
+  return result;
 }
