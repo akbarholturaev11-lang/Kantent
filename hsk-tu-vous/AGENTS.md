@@ -4,6 +4,8 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 
 **New-chat orientation:** From the repository root start at [`../START_HERE.md`](../START_HERE.md). For current unresolved tasks read [`docs/audits/CURRENT_TASKS.md`](docs/audits/CURRENT_TASKS.md); follow its links into the full V1–V7 evidence audit when needed. The task index is *not* a second production policy, and OPEN does not mean implemented. Check current main before resuming any prior work.
 
+**Active continuation handoff:** Read [`docs/audits/WORK_CONTEXT.md`](docs/audits/WORK_CONTEXT.md) for the current P0/P1 coding branch, tested changes, PR dependency, blockers and next action. It is a progress log, never an override of these canonical rules.
+
 ## Source ownership (do not duplicate values)
 
 | Information | Canonical source |
