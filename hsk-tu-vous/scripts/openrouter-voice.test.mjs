@@ -5,6 +5,7 @@ import {
   resolveVoiceApi, requireOpenRouterKey, openRouterModel,
   synthesizeOpenRouterWav, transcribeOpenRouter,
   TranscriptionResponseError, transcribeUntilAligned,
+  OPENROUTER_TTS_MAX_ATTEMPTS, STT_ATTEMPTS_PER_RUN, parsePcmFormat,
 } from "./openrouter-voice.mjs";
 
 test("default provider is OpenRouter; direct Gemini is explicit secondary", () => {
@@ -163,4 +164,77 @@ test("STT retry budget is bounded and permanent HTTP errors are not retried", as
   assert.equal(permanentCalls, 1);
   assert.equal(permanent.retryable, false);
   assert.equal(permanent.error.httpStatus, 400);
+});
+
+const ttsOptions = (fetchImpl, extra = {}) => ({
+  apiKey: "key", text: "Salom", model: "gemini-3.8-flash-tts", voice: "Kore", fetchImpl, ...extra,
+});
+const pcmResponse = (bytes, type = "audio/pcm; rate=24000; channels=1") =>
+  new Response(bytes, { status: 200, headers: { "content-type": type } });
+const errorResponse = (status, headers = {}) =>
+  new Response(JSON.stringify({ error: { message: "upstream" } }),
+    { status, headers: { "content-type": "application/json", ...headers } });
+
+test("V-15: one bounded retry only for an HTTP error response that carried no audio", async () => {
+  const waits = [];
+  let attempts = 0;
+  const wav = await synthesizeOpenRouterWav(ttsOptions(async () =>
+    ++attempts === 1 ? errorResponse(502) : pcmResponse(Buffer.alloc(4)),
+  { onAttempt: () => {}, sleep: async (ms) => waits.push(ms) }));
+  assert.equal(attempts, 2);
+  assert.deepEqual(waits, [2000]);
+  assert.equal(wav.toString("ascii", 0, 4), "RIFF");
+  assert.equal(OPENROUTER_TTS_MAX_ATTEMPTS, 2);
+
+  attempts = 0;
+  await synthesizeOpenRouterWav(ttsOptions(async () =>
+    ++attempts === 1 ? errorResponse(429, { "retry-after": "3" }) : pcmResponse(Buffer.alloc(2)),
+  { sleep: async (ms) => waits.push(ms) }));
+  assert.equal(waits.at(-1), 3000, "Retry-After is honored");
+
+  for (const [status, headers] of [[503, {}], [429, { "retry-after": "120" }], [401, {}], [402, {}]]) {
+    attempts = 0;
+    await assert.rejects(synthesizeOpenRouterWav(ttsOptions(async () => { attempts += 1; return errorResponse(status, headers); },
+      { sleep: async () => {} })), new RegExp("HTTP " + status));
+    assert.equal(attempts, status === 503 ? 2 : 1, "status " + status + " attempts");
+  }
+});
+
+test("V-15: a timeout or network abort may have billed audio, so it is never retried", async () => {
+  let attempts = 0;
+  await assert.rejects(synthesizeOpenRouterWav(ttsOptions(async () => {
+    attempts += 1;
+    throw Object.assign(new Error("The operation was aborted due to timeout"), { name: "TimeoutError" });
+  }, { sleep: async () => {} })), /timeout/);
+  assert.equal(attempts, 1);
+});
+
+test("V-14: the declared PCM rate/channels label the WAV; unsafe formats fail closed", async () => {
+  const stereo = await synthesizeOpenRouterWav(ttsOptions(async () =>
+    pcmResponse(Buffer.alloc(8), "audio/pcm; rate=48000; channels=2")));
+  assert.equal(stereo.readUInt32LE(24), 48000);
+  assert.equal(stereo.readUInt16LE(22), 2);
+  assert.equal(stereo.readUInt32LE(28), 48000 * 4);
+  assert.equal(stereo.readUInt16LE(32), 4);
+  const plain = await synthesizeOpenRouterWav(ttsOptions(async () =>
+    pcmResponse(Buffer.alloc(2), "application/octet-stream")));
+  assert.equal(plain.readUInt32LE(24), 24000, "no declared format keeps the approved 24 kHz mono");
+  assert.deepEqual(parsePcmFormat("audio/pcm;Rate=16000"), { sampleRate: 16000, channels: 1 });
+  await assert.rejects(synthesizeOpenRouterWav(ttsOptions(async () =>
+    pcmResponse(Buffer.alloc(6), "audio/pcm; rate=24000; channels=2"))), /truncated/);
+  for (const type of ["audio/pcm; bits=24", "audio/pcm; rate=abc", "audio/pcm; channels=6", "audio/pcm; encoding=f32le"])
+    assert.throws(() => parsePcmFormat(type), /PCM/, type);
+});
+
+test("STT budget is per run: a resumed take with 3 spent attempts still gets 3 fresh ones", async () => {
+  let calls = 0;
+  const result = await transcribeUntilAligned({
+    previousAttempts: 3,
+    maxAttempts: 3 + STT_ATTEMPTS_PER_RUN,
+    transcribe: async () => { calls += 1; return { wordAnnotations: [{ text: "x" }] }; },
+    align: () => (calls === 2 ? { captions: [{ text: "x" }] } : { mismatches: ["x"] }),
+  });
+  assert.equal(calls, 2);
+  assert.equal(result.attempts, 5, "attempt numbering continues for saved files");
+  assert.ok(result.alignment.captions);
 });

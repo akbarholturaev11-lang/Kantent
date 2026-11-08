@@ -10,10 +10,11 @@ import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
 import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
 import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
-import { requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
+import { redactCredentials, requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
 import {
   resolveVoiceApi, requireOpenRouterKey, synthesizeOpenRouterWav,
   transcribeOpenRouter, transcribeUntilAligned,
+  OPENROUTER_TTS_MAX_ATTEMPTS, STT_ATTEMPTS_PER_RUN,
 } from "./openrouter-voice.mjs";
 import { openRouterBackupKey, withOpenRouterBackup } from "./voice-transport-backup.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
@@ -835,10 +836,7 @@ async function recoverActualWordClips({
 }
 
 function safeErrorMessage(error) {
-  return String(error?.message ?? error).replace(
-    /(?:AIza)[A-Za-z0-9_-]{20,}/g,
-    "[redacted]",
-  );
+  return redactCredentials(error?.message ?? error);
 }
 
 async function findVerifiedSampleFallback({ episodeId, episode, narration, textHash, profile }) {
@@ -1164,8 +1162,9 @@ if (RESUME_FOLDER_NAME && metadata.ttsChunkCount !== ttsChunks.length) {
 }
 config.ttsRequestCount = metadata.ttsRequestCount ?? 0;
 metadata.ttsGenerationMode = ttsMode;
-metadata.ttsHttpAttemptLimitPerTake = config.apiProvider === "openrouter" ? 1 : (ONE_TAKE_PILOT ? 2 : 4);
-metadata.openRouterBackupHttpAttemptsPerChunk = config.openRouterBackupKey ? 1 : 0;
+metadata.ttsHttpAttemptLimitPerTake = config.apiProvider === "openrouter"
+  ? OPENROUTER_TTS_MAX_ATTEMPTS : (ONE_TAKE_PILOT ? 2 : 4);
+metadata.openRouterBackupHttpAttemptsPerChunk = config.openRouterBackupKey ? OPENROUTER_TTS_MAX_ATTEMPTS : 0;
 metadata.googleQuotaKeyRotationEnabled = false;
 metadata.ttsTransport = config.ttsTransport;
 metadata.transcriptionTransport = config.transcriptionTransport;
@@ -1378,8 +1377,12 @@ try {
         metadata.lastTranscriptionError = safeErrorMessage(error);
       }
     }
+    // `attempts` numbers every STT response this take ever received; the
+    // bounded budget is PER RUN. A cumulative cap left a resumed take with
+    // zero new STT attempts forever (real 2026-11-03 zhuozi RU take: 3/3
+    // used, chunk 3 never retried), which pushes operators to buy a new TTS.
     let attempts = metadata.transcriptionAttempts?.[index] ?? (transcription ? 1 : 0);
-    if (!chunkAlignment?.captions && attempts < 3) {
+    if (!chunkAlignment?.captions) {
       // Direct Gemini STT on the saved audio (upload, transcribe, always delete).
       async function transcribeDirect(attempt) {
           // Keep resumable upload atomic per key; rejected credentials may start a NEW upload.
@@ -1462,7 +1465,7 @@ try {
       }
       const result = await transcribeUntilAligned({
         previousAttempts: attempts,
-        maxAttempts: 3,
+        maxAttempts: attempts + STT_ATTEMPTS_PER_RUN,
         onAttempt: async (attempt) => {
           attempts = attempt;
           metadata.transcriptionAttempts ??= [];

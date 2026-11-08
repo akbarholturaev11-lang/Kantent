@@ -15,7 +15,7 @@ import { prepareSemanticRender } from "./semantic-review-integration.mjs";
 import { validateProductionDuration } from "./duration-policy.mjs";
 import { compileMotionDesignTimeline } from "./motion-design-plan.mjs";
 import { compileCueTimeline } from "./compile-cue-timeline.mjs";
-import { groupTimedCaptions } from "./caption-utils.mjs";
+import { buildCaptionSections, groupTimedCaptions } from "./caption-utils.mjs";
 import { buildActionCaptionScenes, validateActionSubtitlePages } from "./action-text-layout.mjs";
 import { assertImportedAudioHash } from "./voice-import-state.mjs";
 import { sha256 } from "./voice-checkpoint.mjs";

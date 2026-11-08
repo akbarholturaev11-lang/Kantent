@@ -1,6 +1,6 @@
 # WORK_CONTEXT.md — Kantent engineering continuation
 
-**Updated:** 2026-11-08 (UTC), after SHA-bound imported voice/checkpoint/MP3 bugfix and isolated CI success. **Working branch:** `agent/continue-p0-p1-20261108` (dependent PR #59, unmerged).
+**Updated:** 2026-11-08 (UTC), after merging the owner-requested OpenRouter backup (PR #56) and the paid-API first-take fixes. **Working branch:** `agent/continue-p0-p1-20261108` (dependent PR #59, unmerged).
 
 This is the **one persistent task/handoff context file**. Update this file as part of each meaningful agent work session. It records progress and evidence, *not* a second source of production policy. Canonical sources: [root AGENTS](../../../AGENTS.md), [project AGENTS](../../AGENTS.md), [AI_RULES](../../AI_RULES.md), [WORKFLOW](../../content/WORKFLOW.md), [CURRENT_TASKS](CURRENT_TASKS.md), [full V1–V7 audit](KANTENT_FULL_TECHNICAL_AUDIT_V5_2026-11-05.md).
 
@@ -16,7 +16,7 @@ The owner explicitly clarified: **fix the existing bugs, do not add extra produc
 
 **In scope (P0/P1):** reproduce and repair concrete existing failures; TTS audio checkpoint/resume and STT reuse; exact RU/TG voice/caption/frame synchronization; misleading/early/missing visual states; SVG, pinyin and caption-boundary bugs; CTA/source/video hash mismatches; rendering error/status consistency and existing approval/publishing safeguards. Add only the smallest narrowly targeted regression tests needed to prove each fix. Real RU/TG end-to-end QA is verification, not a new feature.
 
-**Out of scope / explicitly deferred:** new PWA screenshot automation, new TikTok video functionality or platform routing, new autonomous AI agent/orchestrator, broad UI/UX redesign, new workflows, new voice modes, generalized monitoring, and gratuitous helper APIs. Gemini→OpenRouter fallback is already separately owner-requested in PR #56, but **do not merge it into this bugfix branch unless required to repair a reproduced defect and explicitly reviewed for the existing audio checkpoint behavior**. Preserve that PR separately; do not delete or silently enable it.
+**Out of scope / explicitly deferred:** new PWA screenshot automation, new TikTok video functionality or platform routing, new autonomous AI agent/orchestrator, broad UI/UX redesign, new workflows, new voice modes, generalized monitoring, and gratuitous helper APIs. Gemini Direct → OpenRouter backup (PR #56) is **now in scope**: on 2026-11-08 the owner explicitly instructed that it be kept exactly as designed and brought into this line (see the section below). It stays opt-in via `HSK_AI_OPENROUTER_FALLBACK_ENABLED=true` and never rotates Google keys on quota.
 
 **PR #59 scope caution:** It already contains internal QA-only frame extraction/contact-sheet tooling created before this clarification. Treat it as testing infrastructure, **not** a required new user-facing feature. Before merging, review each of these files for necessity and remove unnecessary runtime/CLI exposure. No additional feature expansion of that tool is authorized. Do not invalidate previously fixed bugs, alter approved media, or claim synthetic tests are real media QA. Prioritize bug reproduction, minimal code patches and regression proof, then CI and careful integration.
 
@@ -25,7 +25,7 @@ The owner explicitly clarified: **fix the existing bugs, do not add extra produc
 - [Claude branch](https://github.com/akbarholturaev11-lang/Kantent/tree/claude/local-fixes-20261106) at `6c1fe0eb33f70851907cd77edc5cacc9fa186426` changed 6 lesson/CTA JSON files. Codex branch is **3 commits ahead of it**, not a competing reset.
 - [Codex PR #58](https://github.com/akbarholturaev11-lang/Kantent/pull/58) at `2794d8002f736c6f6b8d475f648234c235ca9726` includes hash-verified WAV checkpoints/reuse, bounded STT retry, ffprobe duration, cue-scene/source binding, early visual reveal controls, SVG geometry checks, pinyin/caption page validation and tests, and fixes to the unapproved `haishi-vs-huozhe-tea` visual choice. Reports 404 Node tests passing, lint/TypeScript and consistency, and synthetic MP4 review.
 - GitHub PR #58 commit check-runs were all successful except **actual Gemini voices generation was SKIPPED** (not a failure). No production RU/TJ voice listening or real-audio/real-video semantic QA is proven. The Codex PR is unmerged.
-- [Draft PR #56](https://github.com/akbarholturaev11-lang/Kantent/pull/56) is **separate**, with optional `gemini-direct -> openrouter` fallback. Do not merge it blindly into PR #58: both edit `generate-voice-gemini.mjs`; reconcile with checkpoint/resume logic and the current owner/provider requirements first. Multiple distinct Google projects do not authorize circumvention of documented per-project rate limits.
+- [Draft PR #56](https://github.com/akbarholturaev11-lang/Kantent/pull/56) (opt-in `gemini-direct -> openrouter` backup) was **merged into this branch on 2026-11-08 on explicit owner instruction**, reconciled with the SHA-bound checkpoint/resume logic below. Multiple distinct Google projects still do not authorize circumvention of documented per-project rate limits.
 - Current `main` has 6 newer commits unrelated to this work (one recent `@hskaiapp` Telegram channel fix); rebase/merge only with explicit CI and conflict review. Preserve the news-agent source/publishing rules.
 
 ## Verified status and evidence
@@ -89,17 +89,39 @@ The owner explicitly clarified: **fix the existing bugs, do not add extra produc
 
 **Risk/compatibility note:** legacy imported files with no SHA are not silently deleted or mutated; automatic *reuse* now returns false until provenance is verified. If a resume finds an MP3 present but no stored SHA (e.g. interrupted metadata write), it fails closed and preserves the file for manual investigation. This favors correct voice identity over silent recovery and may require explicit intervention for old incomplete metadata. No paid API request was made, no video was published, no main merge occurred.
 
+## 2026-11-08 — owner instruction: OpenRouter backup + paid-API first-take bug fixes
+
+**Owner instruction (verbatim intent):** keep the backup Gemini keys, add OpenRouter as an automatic reserve when the free Gemini limits run out, exactly as designed; then fix the audit's most important bugs, starting with getting each paid generation right the first time without extra attempts. Base: `origin/agent/continue-p0-p1-20261108@4f10d30c` (424/424 local tests green before changes).
+
+**Merged:** `origin/feature/gemini-direct-openrouter-backup-20261106` (PR #56, merge commit on this branch). Its generator wiring targeted the old file, so it was re-applied by hand onto the PR #58/#59 generator:
+
+- TTS: Gemini Direct primary; HTTP 429/5xx switches to OpenRouter **only before any chunk of the take is saved** (one vendor per video). Each saved chunk records its `transport`; `ttsTransport`, `transcriptionTransport` and `fallbackEvents` are persisted in both `metadata.json` and `checkpoint.json`, so an automatic or explicit resume continues on the recorded transport and refuses to resume an OpenRouter-backed take without the opt-in and key.
+- STT and Mandarin clip recovery: a Direct 429/5xx retries the **same saved WAV/MP3/clip** via OpenRouter; the exact-token gate is unchanged. Real trigger: the 2026-11-03 zhuozi RU take's clip recovery was blocked by Gemini's 25-requests/day Free Tier (HTTP 429).
+- Google key rotation on 429 stays disabled (`googleQuotaKeyRotationEnabled: false`).
+
+**Bugs fixed (code-confirmed, regression-tested):**
+
+1. **Every lesson render crashed after the MP4s were rendered** — `render-episode.mjs` called `buildCaptionSections()` after `f15725b8` replaced its import (ReferenceError while writing SRT). Found by `scripts/no-undefined-identifiers.test.mjs` (ESLint `no-undef` over all production scripts), now in consistency CI.
+2. **Resumed take stranded with zero STT attempts** — the STT budget was cumulative per take (`attempts < 3`). The real zhuozi RU take had 3/3 used on chunk 3, so every resume skipped STT and pushed toward a new paid TTS. Budget is now `STT_ATTEMPTS_PER_RUN = 3` per run; attempt numbering continues for saved files.
+3. **V-15** — one OpenRouter TTS HTTP error aborted the run. Now one bounded retry only for 429/500/502/503/504 *error responses* (no audio was produced), honoring Retry-After ≤ 30 s; timeouts/network aborts are never retried because audio may already be billed.
+4. **V-14** — the OpenRouter PCM response's declared `rate`/`channels` were ignored and a fixed 24 kHz mono header was written (wrong speed/pitch → STT mismatch → wasted take). The declared format now labels the WAV; non-16-bit or unknown encodings fail closed; FFmpeg still resamples to the approved 24 kHz mono master.
+5. Error text written to logs/metadata/CI artifacts redacted only `AIza…` keys; `AQ.…` Google keys, `sk-or-…` OpenRouter keys and bearer tokens are now redacted too (`redactCredentials`).
+
+**Evidence (local, synthetic — NOT real media QA):** 438/438 Node tests, `npm run lint` (ESLint + tsc) and `npm run check:consistency` pass. No paid API call, no real RU/TG generation, no push, no main merge.
+
+**Still open for this objective:** set an OpenRouter credit limit (the configured key reported no per-key limit on 2026-11-08) and run one real RU and one TG episode with fallback enabled, then listen. This branch is 6 commits behind `main`, so `requireFreshGitMain` blocks real production runs from it until it is brought up to date.
+
 ## Next tasks / blockers — BUGS ONLY
 
 1. Check latest full CI on PR #59 (including consistency and semantic-foundation). Investigate any failures in the exact changed SHA before proposing a merge.
 2. Verify one **real existing** unapproved RU/TG audio import and final MP4 against real caption/voice timestamps and phone-size meaning-linked frames; no synthetic test or missing recording may be called a pass. Do not spend on new voice without explicit authorization.
 3. Review only remaining **code-confirmed defects** from V1–V7 (bad frame onset, subtitle/pinyin drift, wrong scene state, accidental voice regeneration, corrupt review hashes). Fix one minimal root cause at a time with a regression test.
-4. PR #59 is draft and dependent on PR #58. Keep new PWA capture, TikTok functionality, autonomous agent workflows and generalized UX improvements **out of scope**. PR #56's previously requested OpenRouter backup remains separate, not part of this bugfix scope. Do not merge into main before QA and integration/conflict checks.
+4. PR #59 is draft and dependent on PR #58. Keep new PWA capture, TikTok functionality, autonomous agent workflows and generalized UX improvements **out of scope**. PR #56's OpenRouter backup is merged here by owner instruction (2026-11-08); activating it still needs an OpenRouter spend cap and a real RU/TG listening check. Do not merge into main before QA and integration/conflict checks.
 5. The separate `main` feedback-analyzer failing test belongs to its own scope; do not amend unrelated product data here.
 
 ## Operating rules
 
-- Work on `agent/continue-p0-p1-20261108`; do not push these changes to main, Codex PR #58 branch, Claude branch, or draft fallback PR #56.
+- Work on `agent/continue-p0-p1-20261108`; do not push these changes to main, Codex PR #58 branch, Claude branch, or the original PR #56 branch (its history is merged here).
 - On each session update: base/head SHAs, verified changes, tests with exact run IDs/status, unresolved blockers and next **single** task. Do not label a test `passed` without observable CI evidence.
 - Use no real API key, no `OPENROUTER_API_KEY` or `GEMINI_API_KEY` in commits, logs or test fixtures. Do not run a paid voice or social publish operation.
 - When a bug cannot be reproduced without original audio/visual artifacts, distinguish **code fix / synthetic CI / real-media QA needed**.

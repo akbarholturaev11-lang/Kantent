@@ -28,6 +28,14 @@ export const ZERNIO_SECRET_NAMES = Object.freeze({
 });
 export const SOCIAL_CONNECTION_GROUPS = Object.freeze(Object.keys(ZERNIO_SECRET_NAMES));
 
+// Google API keys (AIza…), Google "AQ." keys, OpenRouter keys and bearer
+// tokens. Error text reaches logs, metadata and CI artifacts; never the key.
+const CREDENTIAL_PATTERN = /AIza[A-Za-z0-9_-]{20,}|\bAQ\.[A-Za-z0-9._-]{20,}|sk-or-[A-Za-z0-9_-]{16,}|Bearer\s+[A-Za-z0-9._~+/=-]{16,}/g;
+
+export function redactCredentials(value) {
+  return String(value).replace(CREDENTIAL_PATTERN, "[redacted]");
+}
+
 export function geminiKeySlots(env = process.env) {
   const seen = new Set();
   return GEMINI_SECRET_NAMES.flatMap((name) => {
