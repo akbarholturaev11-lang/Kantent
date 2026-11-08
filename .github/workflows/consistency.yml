@@ -42,6 +42,10 @@ jobs:
         run: |
           node --check scripts/cue-frame-review.mjs
           node --test scripts/cue-frame-review.test.mjs
+      - name: Ensure SFX subprocess failures persist a non-stuck render status
+        run: |
+          node --check scripts/render-episode.mjs
+          node --test scripts/render-sfx-step.test.mjs
       - name: Test read-only adaptive storytelling and legacy plan compatibility
         run: |
           node --check scripts/storytelling-plan.mjs
