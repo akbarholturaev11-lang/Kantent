@@ -19,7 +19,10 @@ export type Illustration={
   icons?:(string|null)[];
   anchors?:Record<string,Box>;
   focus?:string;
-  overlay?:"rise"|"marks"|"link"|"cross"|"drop"|"compare"|"adjective";
+  overlay?:"rise"|"marks"|"link"|"cross"|"drop"|"compare"|"adjective"|"stamp";
+  /** Text of the link/compare chip (default 比) and of the focus tag (default A/B). */
+  label?:string;
+  focusLabel?:string;
   parts?:string[];
   cast?:CastMember[];
 };
@@ -144,9 +147,9 @@ const SceneLayer:React.FC<{episodeId:string;ill:Illustration;beat:ResolvedMotion
     <Img src={art(episodeId,ill.images[0])} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",borderRadius:0}}/>
     {ill.cast&&<Cast cast={ill.cast} frame={frameAbs} local={local} width={W} height={LAY.sceneImageHeightPx}/>}
     {a&&b&&(ill.overlay==="marks"||ill.overlay==="rise"||ill.overlay==="cross")&&<Marks a={a} b={b} local={local} rise={ill.overlay!=="marks"}/>}
-    {a&&b&&ill.overlay==="link"&&<Link from={a} to={b} local={local} label="比"/>}
-    {ill.focus&&ill.anchors?.[ill.focus]&&<FocusTag box={ill.anchors[ill.focus]} local={local} label={ill.focus==="a"?"A":"B"}/>}
-    {ill.overlay==="cross"&&<Stamp local={local}/>}
+    {a&&b&&ill.overlay==="link"&&<Link from={a} to={b} local={local} label={ill.label??"比"}/>}
+    {ill.focus&&ill.anchors?.[ill.focus]&&<FocusTag box={ill.anchors[ill.focus]} local={local} label={ill.focusLabel??(ill.focus==="a"?"A":"B")}/>}
+    {(ill.overlay==="cross"||ill.overlay==="stamp")&&<Stamp local={local}/>}
     <span data-beat={beat.id} style={{display:"none"}}/>
   </div>
   </>;
@@ -174,14 +177,15 @@ const PairLayer:React.FC<{episodeId:string;ill:Illustration;local:number;frameAb
             <Img src={art(episodeId,icon)} style={{width:"100%",height:"100%",objectFit:"cover",scale:1.7}}/>
           </div>}
           {focused&&<div style={{position:"absolute",left:"50%",bottom:-36,translate:"-50% 0",opacity:pop(local,4,8)}}>
-            <LiquidGlass radius={999} style={{padding:"8px 30px"}}><span style={{fontSize:52,fontWeight:800,color:"#FFFFFF"}}>{index?"A":"B"}</span></LiquidGlass>
+            <LiquidGlass radius={999} style={{padding:"8px 30px"}}><span style={{fontSize:52,fontWeight:800,color:"#FFFFFF"}}>{ill.focusLabel??(index?"A":"B")}</span></LiquidGlass>
           </div>}
         </div>;
       })}
     </div>
     {ill.overlay==="compare"&&<div style={{position:"absolute",left:"50%",top:LAY.pairTopPx+LAY.pairHeightPx/2,translate:"-50% -50%",scale:.6+.4*pop(local,6,10),opacity:pop(local,6,8)}}>
-      <LiquidGlass radius={999} tint="rgba(233,169,22,.4)" style={{padding:"12px 30px"}}><span style={{fontFamily:G.hanziFontFamily,fontSize:60,fontWeight:800,color:"#FFFFFF"}}>比</span></LiquidGlass>
+      <LiquidGlass radius={999} tint="rgba(233,169,22,.4)" style={{padding:"12px 30px"}}><span style={{fontFamily:G.hanziFontFamily,fontSize:60,fontWeight:800,color:"#FFFFFF"}}>{ill.label??"比"}</span></LiquidGlass>
     </div>}
+    {ill.overlay==="stamp"&&<Stamp local={local}/>}
     {ill.overlay==="drop"&&<svg width={W} height={H} style={{position:"absolute",inset:0}}>
       <path d={`M 940 ${LAY.pairTopPx+40} L 940 ${LAY.pairTopPx+40+120*pop(local,6,12)}`} stroke="#9FD4FF" strokeWidth="12" strokeLinecap="round"/>
       <path d={`M 912 ${LAY.pairTopPx+130*pop(local,6,12)} L 940 ${LAY.pairTopPx+30+130*pop(local,6,12)} L 968 ${LAY.pairTopPx+130*pop(local,6,12)}`} fill="none" stroke="#9FD4FF" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" opacity={pop(local,10,6)}/>
@@ -203,6 +207,7 @@ const BoardLayer:React.FC<{episodeId:string;ill:Illustration;local:number}>=({ep
       </div>;
     })}
   </div>
+  {ill.overlay==="stamp"&&<Stamp local={local}/>}
 </>;
 
 export const IllustratedLessonScene:React.FC<{episodeId:string;frame:number;beats:ResolvedMotionBeat[]}>=({episodeId,frame,beats})=>{

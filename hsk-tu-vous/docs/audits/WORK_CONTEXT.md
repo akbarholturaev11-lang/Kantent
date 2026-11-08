@@ -187,6 +187,14 @@ Findings and fixes (branch `agent/continue-p0-p1-20261108`):
 | **V9-01 (real TG one-take):** one window pass returned 他 with an impossible time (10.30 s → 0.40 s); that single word made `timedBlocks` throw and aborted all gap recovery for the take | The impossible word is dropped as untimed (`GEMINI_UNTIMED_WORD_DROPPED`), so its span is re-recognized from a clip or stays unconfirmed; nothing is guessed — rerun 2026-11-09: recovery now runs and confirms 7 of 9 gap spans; 2 spans (21.6–25.0 s "пеш аз сифат 很 намегузорем ҳамин кофист" and one more) stay unconfirmed because Gemini Direct answered 429 (daily quota) and the OpenRouter backup repeated words. TJ import waits for the Direct quota reset; resume the same take, no new TTS |
 | Owner's main checkout is 116 commits behind `main` with 18 uncommitted Codex files (2026-11-06), so production there is blocked as stale | Snapshot preserved untouched as local branch `wip/owner-checkout-20261106` (5ac4e942); switching the checkout is the owner's call |
 
+## 2026-11-09 — today's lesson authored while Codex is rate-limited (owner: "xozircha koda tayorlap qo'y")
+
+- Today's Monday slot is now `ye-dou-placement-20261109` (HSK 1, 也/都 after the subject and before the verb): RU canonical, TG localization bound by `sourceHash`, 23 cue-linked illustrated beats per language, calendar row registered last. `inspectDraftReadiness` ready for RU+TG; `resolveTodayVideo` selects it for 2026-11-09.
+- Facts checked 2026-11-09 against three independent grammar references (`learningFactSources`); the lesson teaches only the placement of 也 and 都, not 也都 or other meanings of 都.
+- Visual plan from `content:variety`: setting `classroom` (A/B arm B, indoor-daily), monkey as the friend, panda as «я», rabbit as the third classmate, pattern `dialogue`. Manifest `content/lesson-art/ye-dou-placement-20261109.json` asks for 4 text-free frames (classroom, classroom-whiteboard, desk-alone, desks-together).
+- Renderer generalized for non-比 lessons without changing the 比 render: `illustration.label` (link/compare chip, default 比), `focusLabel` (focus tag, default A/B) and a stand-alone `stamp` overlay.
+- **Not done (Codex, after its limit resets):** the 4 frames + visual confirmation, voice, render, QA, preview. `prepare_today_video` will stop at `lesson-art-required` before paid voice with `review/ye-dou-placement-20261109/lesson-art-codex-brief.md`. Frame anchors and cast positions are authored blind; the first render must be checked for subtitle/face overlap.
+
 ## Next tasks / blockers
 
 See `CURRENT_TASKS.md` (owner actions first). Engineering-wise the next real proof is a Codex-made frame set for a new lesson and the TJ one-take import/render.

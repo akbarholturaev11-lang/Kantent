@@ -1,0 +1,3764 @@
+{
+  "id": "ye-dou-placement-20261109",
+  "date": "2026-11-09",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "也 и 都: где в китайском «тоже» и «все»",
+  "level": "HSK 1",
+  "topic": "Место 也 и 都: после подлежащего, перед глаголом",
+  "durationTargetSec": 37,
+  "caption": "«Я тоже студент» — 我也是学生 (Wǒ yě shì xuésheng). 也 и 都 стоят после подлежащего и перед глаголом: 我们都是学生 — «Мы все студенты».",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#грамматикакитайского"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "Наречие 也 (yě, «тоже») ставят после подлежащего и прямо перед глаголом: 我也是学生 — «Я тоже студент».",
+    "也 не ставят перед подлежащим и не переносят в конец фразы: 我也是学生, а не 也我是学生 или 我是学生也.",
+    "都 (dōu, «все») занимает то же место — после подлежащего, перед глаголом: 我们都是学生 — «Мы все студенты». Урок не разбирает сочетание 也都 и другие значения 都."
+  ],
+  "examples": [
+    "也 yě — тоже",
+    "都 dōu — все",
+    "是 shì — быть, являться",
+    "我是学生。 Wǒ shì xuésheng. — Я студент.",
+    "我也是学生。 Wǒ yě shì xuésheng. — Я тоже студент.",
+    "我们都是学生。 Wǒmen dōu shì xuésheng. — Мы все студенты."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "Я ТОЖЕ СТУДЕНТ: ГДЕ 也?",
+      "narration": "«Я тоже студент». Где поставить 也: перед 我 или после 我?",
+      "screenCaption": "也 — до 我 или после?",
+      "editPlan": "Сразу класс: друг и панда. Затем на доске два порядка — 也 我 и 我 也 — без ответа. Никаких логотипов и вступлений; вся надпись в безопасной зоне.",
+      "cards": [
+        {
+          "hanzi": "也",
+          "pinyin": "yě",
+          "meaning": "тоже"
+        },
+        {
+          "hanzi": "我也是学生。",
+          "pinyin": "Wǒ yě shì xuésheng.",
+          "meaning": "Я тоже студент."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "Я тоже студент",
+          "visual": {
+            "title": "Задача",
+            "hanzi": "也",
+            "pinyin": "yě",
+            "meaning": "тоже",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ]
+            }
+          },
+          "explains": "hook: Класс: друг и панда, один из них отвечает «тоже». Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "перед 我",
+          "visual": {
+            "title": "Вариант первый",
+            "hanzi": "也 · 我",
+            "pinyin": "yě · wǒ",
+            "meaning": "тоже · я",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "q-mark",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 320,
+                    "r": 16,
+                    "fill": "muted"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "q-mark",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "也",
+                "我"
+              ]
+            }
+          },
+          "explains": "hook: На доске порядок 也 перед 我 — пока без ответа. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "hook-action-3",
+          "kind": "graphic",
+          "cueText": "после 我",
+          "visual": {
+            "title": "Или второй?",
+            "hanzi": "我 · 也",
+            "pinyin": "wǒ · yě",
+            "meaning": "я · тоже",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "q-mark",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 320,
+                    "r": 16,
+                    "fill": "gold"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "q-mark",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我",
+                "也"
+              ]
+            }
+          },
+          "explains": "hook: На доске порядок 我 перед 也 — второй вариант. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        }
+      ]
+    },
+    {
+      "id": "answer",
+      "kind": "example",
+      "durationSec": 9,
+      "headline": "ПРАВИЛЬНО: 我也是学生",
+      "narration": "Друг говорит: 我是学生。 Ответьте: 我也是学生。 Я тоже студент. 也 стоит после 我, перед глаголом 是.",
+      "screenCaption": "我 + 也 + 是",
+      "editPlan": "Короткий обмен репликами в классе: друг говорит 我是学生, панда отвечает 我也是学生; линия 也 связывает их. Затем на доске по шагам 我 → 也 → 是.",
+      "cards": [
+        {
+          "hanzi": "我是学生。",
+          "pinyin": "Wǒ shì xuésheng.",
+          "meaning": "Я студент."
+        },
+        {
+          "hanzi": "我也是学生。",
+          "pinyin": "Wǒ yě shì xuésheng.",
+          "meaning": "Я тоже студент."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "answer-action-1",
+          "kind": "graphic",
+          "cueText": "Друг говорит",
+          "visual": {
+            "title": "Первая реплика",
+            "hanzi": "我是学生。",
+            "pinyin": "Wǒ shì xuésheng.",
+            "meaning": "Я студент.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 122,
+                    "y": 108,
+                    "width": 96,
+                    "height": 236,
+                    "rx": 20,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "friend-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ],
+              "focus": "a",
+              "focusLabel": "друг"
+            }
+          },
+          "explains": "answer: Выделен друг: он говорит 我是学生. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "answer-action-2",
+          "kind": "graphic",
+          "cueText": "我也是学生",
+          "visual": {
+            "title": "Верный ответ",
+            "hanzi": "我也是学生。",
+            "pinyin": "Wǒ yě shì xuésheng.",
+            "meaning": "Я тоже студент.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "ye-link",
+                  "type": "path",
+                  "attrs": {
+                    "d": "M200 140 Q300 70 400 140",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "ye-link",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "proud",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ],
+              "overlay": "link",
+              "label": "也"
+            }
+          },
+          "explains": "answer: Линия 也 связывает друга и панду: «я тоже». Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "answer-action-3",
+          "kind": "graphic",
+          "cueText": "Я тоже студент",
+          "visual": {
+            "title": "Смысл фразы",
+            "hanzi": "也",
+            "pinyin": "yě",
+            "meaning": "тоже",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 382,
+                    "y": 108,
+                    "width": 96,
+                    "height": 236,
+                    "rx": 20,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "me-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "idle",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ],
+              "focus": "b",
+              "focusLabel": "я"
+            }
+          },
+          "explains": "answer: Выделена панда, которая ответила «тоже». Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "answer-action-4",
+          "kind": "graphic",
+          "cueText": "после 我",
+          "visual": {
+            "title": "Шаг 1 — кто",
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "meaning": "я",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "slot-arrow",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "339,110 361,146 383,110",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "slot-arrow",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我",
+                "也"
+              ]
+            }
+          },
+          "explains": "answer: На доске 我, сразу за ним 也. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "answer-action-5",
+          "kind": "graphic",
+          "cueText": "перед глаголом 是",
+          "visual": {
+            "title": "Шаг 2 — действие",
+            "hanzi": "是",
+            "pinyin": "shì",
+            "meaning": "быть, являться",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 126,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 370,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "slot-arrow",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "400,110 422,146 444,110",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "slot-arrow",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我",
+                "也",
+                "是"
+              ]
+            }
+          },
+          "explains": "answer: К 我 也 добавляется 是: 也 стоит прямо перед ним. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        }
+      ]
+    },
+    {
+      "id": "mistake",
+      "kind": "context",
+      "durationSec": 7,
+      "headline": "НЕ В НАЧАЛЕ И НЕ В КОНЦЕ",
+      "narration": "Частая ошибка — ставить 也 в начало, перед 我. В конец фразы 也 тоже не ставят. Только так: 我也是学生。",
+      "screenCaption": "也 — только перед глаголом",
+      "editPlan": "Неверные порядки 也我是 и 我是学生也 появляются на доске только с красным штампом; карточка всегда показывает верную фразу. В конце — верная схема без штампа.",
+      "cards": [
+        {
+          "hanzi": "也",
+          "pinyin": "yě",
+          "meaning": "тоже"
+        },
+        {
+          "hanzi": "我也是学生。",
+          "pinyin": "Wǒ yě shì xuésheng.",
+          "meaning": "Я тоже студент."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "mistake-action-1",
+          "kind": "graphic",
+          "cueText": "Частая ошибка",
+          "visual": {
+            "title": "Внимание",
+            "hanzi": "也",
+            "pinyin": "yě",
+            "meaning": "тоже",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-a",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 270,
+                    "y1": 60,
+                    "x2": 330,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-b",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 330,
+                    "y1": 60,
+                    "x2": 270,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-a",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-b",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "wrong",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ],
+              "overlay": "stamp"
+            }
+          },
+          "explains": "mistake: Друг ошибается: красный штамп в классе. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "mistake-action-2",
+          "kind": "graphic",
+          "cueText": "в начало, перед 我",
+          "visual": {
+            "title": "Неверный порядок",
+            "hanzi": "我也是学生。",
+            "pinyin": "Wǒ yě shì xuésheng.",
+            "meaning": "Я тоже студент.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 126,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 370,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-a",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 470,
+                    "y1": 70,
+                    "x2": 530,
+                    "y2": 130,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-b",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 530,
+                    "y1": 70,
+                    "x2": 470,
+                    "y2": 130,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-a",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-b",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "也",
+                "我",
+                "是"
+              ],
+              "overlay": "stamp"
+            }
+          },
+          "explains": "mistake: На доске 也 我 是 со штампом; в карточке — верная фраза. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "mistake-action-3",
+          "kind": "graphic",
+          "cueText": "В конец фразы",
+          "visual": {
+            "title": "И не в хвосте",
+            "hanzi": "我也是学生。",
+            "pinyin": "Wǒ yě shì xuésheng.",
+            "meaning": "Я тоже студент.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 65,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-o",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-3-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 431,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-a",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 500,
+                    "y1": 60,
+                    "x2": 560,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-b",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 560,
+                    "y1": 60,
+                    "x2": 500,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-a",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-b",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我",
+                "是",
+                "学生",
+                "也"
+              ],
+              "overlay": "stamp"
+            }
+          },
+          "explains": "mistake: На доске 我 是 学生 也 со штампом. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "mistake-action-4",
+          "kind": "graphic",
+          "cueText": "我也是学生",
+          "visual": {
+            "title": "Верная схема",
+            "hanzi": "我也是学生。",
+            "pinyin": "Wǒ yě shì xuésheng.",
+            "meaning": "Я тоже студент.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 65,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-3-o",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 431,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我",
+                "也",
+                "是",
+                "学生"
+              ]
+            }
+          },
+          "explains": "mistake: На доске верный порядок 我 也 是 学生 без штампа. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        }
+      ]
+    },
+    {
+      "id": "dou",
+      "kind": "example",
+      "durationSec": 8,
+      "headline": "ТАК ЖЕ С 都",
+      "narration": "Так же работает 都 — «все»: 我们都是学生。 Мы все студенты. Сначала 我们, потом 都, затем 是.",
+      "screenCaption": "我们 + 都 + 是",
+      "editPlan": "Две карточки: одна парта с пандой и ряд парт со всей группой; на 我们都是学生 выделяется группа и чип 都. Затем на доске по шагам 我们 → 都 → 是.",
+      "cards": [
+        {
+          "hanzi": "都",
+          "pinyin": "dōu",
+          "meaning": "все"
+        },
+        {
+          "hanzi": "我们都是学生。",
+          "pinyin": "Wǒmen dōu shì xuésheng.",
+          "meaning": "Мы все студенты."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "dou-action-1",
+          "kind": "graphic",
+          "cueText": "Так же работает 都",
+          "visual": {
+            "title": "Новое слово",
+            "hanzi": "都",
+            "pinyin": "dōu",
+            "meaning": "все",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "p1-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 130,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 99,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 84,
+                    "y1": 336,
+                    "x2": 176,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 269,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 254,
+                    "y1": 336,
+                    "x2": 346,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 470,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 439,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 424,
+                    "y1": 336,
+                    "x2": 516,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "desk-alone",
+                "desks-together"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.5,
+                  "card": 0
+                },
+                {
+                  "id": "monkey",
+                  "mood": "idle",
+                  "x": 0.2,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "idle",
+                  "x": 0.8,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
+            }
+          },
+          "explains": "dou: Две карточки: одна парта и вся группа за партами. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "dou-action-2",
+          "kind": "graphic",
+          "cueText": "我们都是学生",
+          "visual": {
+            "title": "Вся группа",
+            "hanzi": "我们都是学生。",
+            "pinyin": "Wǒmen dōu shì xuésheng.",
+            "meaning": "Мы все студенты.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "p1-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 130,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 99,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 84,
+                    "y1": 336,
+                    "x2": 176,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 269,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 254,
+                    "y1": 336,
+                    "x2": 346,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 470,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 439,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 424,
+                    "y1": 336,
+                    "x2": 516,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "dou-bracket",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "90,120 90,96 510,96 510,120",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "dou-bracket",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "desk-alone",
+                "desks-together"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.5,
+                  "card": 0
+                },
+                {
+                  "id": "monkey",
+                  "mood": "celebrate",
+                  "x": 0.2,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "celebrate",
+                  "x": 0.8,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "label": "都",
+              "focusLabel": "мы"
+            }
+          },
+          "explains": "dou: Выделена группа, чип 都 между карточками. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "dou-action-3",
+          "kind": "graphic",
+          "cueText": "Сначала 我们",
+          "visual": {
+            "title": "Шаг 1 — кто",
+            "hanzi": "我们",
+            "pinyin": "wǒmen",
+            "meaning": "мы",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我们"
+              ]
+            }
+          },
+          "explains": "dou: На доске только 我们. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "dou-action-4",
+          "kind": "graphic",
+          "cueText": "потом 都",
+          "visual": {
+            "title": "Шаг 2 — наречие",
+            "hanzi": "都",
+            "pinyin": "dōu",
+            "meaning": "все",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "slot-arrow",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "339,110 361,146 383,110",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "slot-arrow",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我们",
+                "都"
+              ]
+            }
+          },
+          "explains": "dou: За 我们 появляется 都. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "dou-action-5",
+          "kind": "graphic",
+          "cueText": "затем 是",
+          "visual": {
+            "title": "Шаг 3 — действие",
+            "hanzi": "是",
+            "pinyin": "shì",
+            "meaning": "быть, являться",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 126,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 370,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我们",
+                "都",
+                "是"
+              ]
+            }
+          },
+          "explains": "dou: За 都 появляется 是. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        }
+      ]
+    },
+    {
+      "id": "recall",
+      "kind": "example",
+      "durationSec": 8,
+      "headline": "ОДИН ПОРЯДОК — ДВА СЛОВА",
+      "narration": "Проверьте себя. Я тоже студент — 我也是学生。 Мы все студенты — 我们都是学生。 Порядок один: кто, потом 也 или 都, потом глагол.",
+      "screenCaption": "кто + 也 / 都 + глагол",
+      "editPlan": "Сначала класс и первая фраза, затем группа и вторая. В конце только схема «кто + 也/都 + глагол». Никаких CTA, подписок или просьб о комментариях.",
+      "cards": [
+        {
+          "hanzi": "我也是学生。",
+          "pinyin": "Wǒ yě shì xuésheng.",
+          "meaning": "Я тоже студент."
+        },
+        {
+          "hanzi": "我们都是学生。",
+          "pinyin": "Wǒmen dōu shì xuésheng.",
+          "meaning": "Мы все студенты."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recall-action-1",
+          "kind": "graphic",
+          "cueText": "Проверьте себя",
+          "visual": {
+            "title": "Мини-тест",
+            "hanzi": "也 · 都",
+            "pinyin": "yě · dōu",
+            "meaning": "тоже · все",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ]
+            }
+          },
+          "explains": "recall: Повторение: снова класс с другом и пандой. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "recall-action-2",
+          "kind": "graphic",
+          "cueText": "Я тоже студент",
+          "visual": {
+            "title": "Как сказать?",
+            "hanzi": "也",
+            "pinyin": "yě",
+            "meaning": "тоже",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 382,
+                    "y": 108,
+                    "width": 96,
+                    "height": 236,
+                    "rx": 20,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "me-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "idle",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ],
+              "focus": "b",
+              "focusLabel": "я"
+            }
+          },
+          "explains": "recall: Выделена панда: как сказать «я тоже». Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "recall-action-3",
+          "kind": "graphic",
+          "cueText": "我也是学生",
+          "visual": {
+            "title": "Ответ",
+            "hanzi": "我也是学生。",
+            "pinyin": "Wǒ yě shì xuésheng.",
+            "meaning": "Я тоже студент.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "ye-link",
+                  "type": "path",
+                  "attrs": {
+                    "d": "M200 140 Q300 70 400 140",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "ye-link",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "proud",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ],
+              "overlay": "link",
+              "label": "也"
+            }
+          },
+          "explains": "recall: Линия 也 подтверждает ответ. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "recall-action-4",
+          "kind": "graphic",
+          "cueText": "Мы все студенты",
+          "visual": {
+            "title": "А это?",
+            "hanzi": "都",
+            "pinyin": "dōu",
+            "meaning": "все",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "p1-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 130,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 99,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 84,
+                    "y1": 336,
+                    "x2": 176,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 269,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 254,
+                    "y1": 336,
+                    "x2": 346,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 470,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 439,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 424,
+                    "y1": 336,
+                    "x2": 516,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "desk-alone",
+                "desks-together"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.5,
+                  "card": 0
+                },
+                {
+                  "id": "monkey",
+                  "mood": "idle",
+                  "x": 0.2,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "idle",
+                  "x": 0.8,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
+            }
+          },
+          "explains": "recall: Вопрос: вся группа студентов. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "recall-action-5",
+          "kind": "graphic",
+          "cueText": "我们都是学生",
+          "visual": {
+            "title": "Второй ответ",
+            "hanzi": "我们都是学生。",
+            "pinyin": "Wǒmen dōu shì xuésheng.",
+            "meaning": "Мы все студенты.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "p1-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 130,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 99,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 84,
+                    "y1": 336,
+                    "x2": 176,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 269,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 254,
+                    "y1": 336,
+                    "x2": 346,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 470,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 439,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 424,
+                    "y1": 336,
+                    "x2": 516,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "dou-bracket",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "90,120 90,96 510,96 510,120",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "dou-bracket",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "desk-alone",
+                "desks-together"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.5,
+                  "card": 0
+                },
+                {
+                  "id": "monkey",
+                  "mood": "celebrate",
+                  "x": 0.2,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "celebrate",
+                  "x": 0.8,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "label": "都",
+              "focusLabel": "мы"
+            }
+          },
+          "explains": "recall: Выделена группа, чип 都 — ответ. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "recall-action-6",
+          "kind": "graphic",
+          "cueText": "Порядок один",
+          "visual": {
+            "title": "Схема",
+            "hanzi": "也 · 都",
+            "pinyin": "yě · dōu",
+            "meaning": "тоже · все",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 126,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 370,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "order-arrow",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "130,310 470,310 446,292",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "order-arrow",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "кто",
+                "也 / 都",
+                "глагол"
+              ]
+            }
+          },
+          "explains": "recall: Общая схема: кто, 也 или 都, глагол. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "Adverbs 也 (yě) and 都 (dōu) — HSK Lord",
+      "url": "https://hsklord.com/grammar/adverb-ye-dou",
+      "checkedAt": "2026-11-09",
+      "supports": "Verifies that 也 and 都 go after the subject and before the verb, with 我也是学生 and 他们都是中国人 as examples, and that the combined order is 也都."
+    },
+    {
+      "title": "都 (dōu) — all — Hanpanda Grammar",
+      "url": "https://grammar-hanpanda.pages.dev/dou-all",
+      "checkedAt": "2026-11-09",
+      "supports": "Independently verifies that 都 must come after the subject and before the verb: 我们都是学生 is correct and 都我们是学生 is marked incorrect."
+    },
+    {
+      "title": "也/都 placement mistakes — Elon.io",
+      "url": "https://elon.io/grammar/chinese-mandarin/mistakes/ye-dou-placement",
+      "checkedAt": "2026-11-09",
+      "supports": "Confirms the learner mistake corrected here: 也 and 都 sit after the subject and before the verb, never before the subject or at the end of the clause (我也去, not 我去也)."
+    }
+  ],
+  "hookExperiment": {
+    "id": "ye-dou-placement-20261109-hook-v1",
+    "formatId": "question",
+    "hypothesis": "Вопрос «Я тоже студент: где 也?» с двумя порядками слов на доске может удержать новичка до ответа 我也是学生; эффективность ещё не измерена.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-09"
+  },
+  "audienceProblem": "Новичок переносит свободный порядок русского «тоже» и ставит 也 или 都 перед подлежащим или в конец фразы.",
+  "learningOutcome": "Ставить 也 и 都 после подлежащего и перед глаголом: 我也是学生, 我们都是学生.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Класс: друг говорит, что он студент, вы отвечаете «я тоже», затем вся группа",
+      "learnerGoal": "Сказать «я тоже студент» и «мы все студенты» с правильным местом 也 и 都",
+      "obstacle": "В русском «тоже» может стоять в разных местах, а в китайском 也 и 都 стоят только после подлежащего, перед глаголом"
+    },
+    "selectionReason": "Короткий обмен репликами в классе прямо показывает место 也, а группа студентов — место 都; дополнительный сюжет только отложил бы ответ",
+    "firstPayoff": {
+      "sceneId": "answer",
+      "cueText": "我也是学生"
+    },
+    "reHooks": []
+  }
+}

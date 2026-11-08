@@ -1,0 +1,51 @@
+{
+  "episodeId": "ye-dou-placement-20261109",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Polished semi-realistic digital illustration for a premium vertical explainer reel: warm cinematic lighting, soft cel shading, clean confident linework, rich but natural colours, detailed believable background, gentle depth of field. Absolutely no text, letters, numbers, signs with writing, logos or watermarks anywhere in the image.",
+  "assets": [
+    {
+      "name": "classroom",
+      "aspectRatio": "9:16",
+      "prompt": "An empty, bright classroom in the morning: rows of light wooden desks and chairs, a large blank white whiteboard on the back wall, green potted plants on the window sills and soft sunlight through tall windows. Nobody is in the scene: no people, no animals, no characters. The floor in the lower third is open and uncluttered in front of the desks so two characters can be placed on it later; the whiteboard stays completely blank. Rich detail, crisp linework, high resolution."
+    },
+    {
+      "name": "classroom-whiteboard",
+      "aspectRatio": "9:16",
+      "references": [
+        "classroom"
+      ],
+      "prompt": "A close-up of the same classroom as the reference, facing the large whiteboard: the clean, completely blank white board fills the middle of the frame, with a wooden marker tray below it, a plant at one side and soft window light from the left. Nobody is in the scene: no people, no animals, no characters. No writing, drawings or marks on the board. Crisp detail, high resolution."
+    },
+    {
+      "name": "desk-alone",
+      "aspectRatio": "4:5",
+      "references": [
+        "classroom"
+      ],
+      "prompt": "The same classroom as the reference: a single light wooden school desk with one chair, standing on its own near the window, an open blank notebook and a pencil on the desk, soft morning light. Nobody is in the scene: no people, no animals, no characters. Open floor in front of the desk. Warm colours, crisp detail, high resolution."
+    },
+    {
+      "name": "desks-together",
+      "aspectRatio": "4:5",
+      "references": [
+        "classroom",
+        "desk-alone"
+      ],
+      "prompt": "The same classroom as the references: a row of three identical light wooden school desks pushed side by side, each with a chair and an open blank notebook, the same soft morning window light. Nobody is in the scene: no people, no animals, no characters. Open floor in front of the desks. Warm colours, crisp detail, high resolution."
+    }
+  ],
+  "variety": {
+    "date": "2026-11-09",
+    "setting": "classroom",
+    "coach": "panda",
+    "supportingCharacter": "monkey",
+    "pattern": "dialogue",
+    "experiment": {
+      "id": "vv-setting-group-v1",
+      "arm": "B",
+      "variable": "setting group",
+      "value": "indoor-daily"
+    },
+    "source": "scripts/visual-variety-plan.mjs (2026-11-09): monkey for the friend's dialogue line, panda as \"я\"; the third classmate in desks-together is the rabbit."
+  }
+}

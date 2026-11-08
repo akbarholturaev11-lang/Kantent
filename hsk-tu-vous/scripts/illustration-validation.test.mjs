@@ -17,6 +17,13 @@ test("illustrated beats name real art, a valid subject and a known overlay", () 
   assert.throws(() => validateIllustration("x", { layout: "board", images: ["notebook-desk"], parts: [] }), /1–6/);
 });
 
+test("overlays carry the lesson's own word and a stamp works in any layout", () => {
+  validateIllustration("ok", { layout: "scene", images: ["two-people"], anchors: { a: box, b: box }, overlay: "link", label: "也", focusLabel: "我" });
+  validateIllustration("ok", { layout: "board", images: ["notebook-desk"], parts: ["也", "我", "是"], overlay: "stamp" });
+  assert.throws(() => validateIllustration("x", { layout: "scene", images: ["two-people"], anchors: { a: box, b: box }, overlay: "link", label: "" }), /label is 1–6/);
+  assert.throws(() => validateIllustration("x", { layout: "scene", images: ["two-people"], anchors: { a: box }, focus: "a", focusLabel: "much too long" }), /focusLabel is 1–6/);
+});
+
 test("the lesson-art manifest is valid and its images contain no text by prompt", () => {
   const manifest = JSON.parse(readFileSync(new URL("../content/lesson-art/bi-comparison-height-20261104.json", import.meta.url), "utf8"));
   validateArtManifest(manifest);

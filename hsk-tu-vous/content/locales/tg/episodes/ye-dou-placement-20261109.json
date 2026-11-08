@@ -1,0 +1,3770 @@
+{
+  "id": "ye-dou-placement-20261109",
+  "date": "2026-11-09",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "tg-TJ",
+  "title": "也 ва 都: «ҳам» ва «ҳама» дар чинӣ куҷо меистанд",
+  "level": "HSK 1",
+  "topic": "Ҷойи 也 ва 都: баъд аз мубтадо, пеш аз феъл",
+  "durationTargetSec": 42,
+  "caption": "我也是学生 — «Ман ҳам донишҷӯ ҳастам». 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд: 我们都是学生 — «Мо ҳама донишҷӯ ҳастем».",
+  "hashtags": [
+    "#HSKAI",
+    "#ЗабониЧинӣ",
+    "#HSK1"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "Зарфи 也 (yě, «ҳам») баъд аз мубтадо ва бевосита пеш аз феъл меояд: 我也是学生 — «Ман ҳам донишҷӯ ҳастам».",
+    "也 пеш аз мубтадо ва дар охири ҷумла намеояд: 我也是学生, на 也我是学生 ва на 我是学生也.",
+    "都 (dōu, «ҳама») низ ҳамон ҷойро мегирад — баъд аз мубтадо, пеш аз феъл: 我们都是学生 — «Мо ҳама донишҷӯ ҳастем»."
+  ],
+  "examples": [
+    "也 yě — ҳам",
+    "都 dōu — ҳама",
+    "是 shì — будан, ҳастан",
+    "我是学生。 Wǒ shì xuésheng. — Ман донишҷӯ ҳастам.",
+    "我也是学生。 Wǒ yě shì xuésheng. — Ман ҳам донишҷӯ ҳастам.",
+    "我们都是学生。 Wǒmen dōu shì xuésheng. — Мо ҳама донишҷӯ ҳастем."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 6,
+      "headline": "Ман ҳам донишҷӯ: 也 куҷо?",
+      "narration": "«Ман ҳам донишҷӯ ҳастам». 也 куҷо меистад: пеш аз 我 ё баъд аз 我?",
+      "screenCaption": "也 — пеш аз 我 ё баъд?",
+      "editPlan": "Дарҳол синф: дӯст ва панда. Баъд дар тахта ду тартиб — 也 我 ва 我 也 — бе ҷавоб. Логотип ва муқаддима нест; ҳама навиштаҳо дар минтақаи бехатар.",
+      "cards": [
+        {
+          "hanzi": "也",
+          "pinyin": "yě",
+          "meaning": "ҳам"
+        },
+        {
+          "hanzi": "我也是学生。",
+          "pinyin": "Wǒ yě shì xuésheng.",
+          "meaning": "Ман ҳам донишҷӯ ҳастам."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "Ман ҳам донишҷӯ",
+          "visual": {
+            "title": "Масъала",
+            "hanzi": "也",
+            "pinyin": "yě",
+            "meaning": "ҳам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ]
+            }
+          },
+          "explains": "hook: Синф: дӯст ва панда, яке «ҳам» ҷавоб медиҳад. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "пеш аз 我",
+          "visual": {
+            "title": "Варианти якум",
+            "hanzi": "也 · 我",
+            "pinyin": "yě · wǒ",
+            "meaning": "ҳам · ман",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "q-mark",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 320,
+                    "r": 16,
+                    "fill": "muted"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "q-mark",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "也",
+                "我"
+              ]
+            }
+          },
+          "explains": "hook: Дар тахта 也 пеш аз 我 — ҳоло бе ҷавоб. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "hook-action-3",
+          "kind": "graphic",
+          "cueText": "баъд аз 我",
+          "visual": {
+            "title": "Ё дуюм?",
+            "hanzi": "我 · 也",
+            "pinyin": "wǒ · yě",
+            "meaning": "ман · ҳам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "q-mark",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 320,
+                    "r": 16,
+                    "fill": "gold"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "q-mark",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我",
+                "也"
+              ]
+            }
+          },
+          "explains": "hook: Дар тахта 我 пеш аз 也 — варианти дуюм. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        }
+      ]
+    },
+    {
+      "id": "answer",
+      "kind": "example",
+      "durationSec": 10,
+      "headline": "Дуруст: 我也是学生",
+      "narration": "Дӯстат мегӯяд: 我是学生。 Ҷавоб деҳ: 我也是学生。 Ман ҳам донишҷӯ ҳастам. 也 баъд аз 我, пеш аз феъли 是 меистад.",
+      "screenCaption": "我 + 也 + 是",
+      "editPlan": "Гуфтугӯи кӯтоҳ дар синф: дӯст 我是学生 мегӯяд, панда 我也是学生 ҷавоб медиҳад; хати 也 онҳоро мепайвандад. Баъд дар тахта қадам ба қадам 我 → 也 → 是.",
+      "cards": [
+        {
+          "hanzi": "我是学生。",
+          "pinyin": "Wǒ shì xuésheng.",
+          "meaning": "Ман донишҷӯ ҳастам."
+        },
+        {
+          "hanzi": "我也是学生。",
+          "pinyin": "Wǒ yě shì xuésheng.",
+          "meaning": "Ман ҳам донишҷӯ ҳастам."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "answer-action-1",
+          "kind": "graphic",
+          "cueText": "Дӯстат мегӯяд",
+          "visual": {
+            "title": "Ҷумлаи аввал",
+            "hanzi": "我是学生。",
+            "pinyin": "Wǒ shì xuésheng.",
+            "meaning": "Ман донишҷӯ ҳастам.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 122,
+                    "y": 108,
+                    "width": 96,
+                    "height": 236,
+                    "rx": 20,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "friend-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ],
+              "focus": "a",
+              "focusLabel": "дӯст"
+            }
+          },
+          "explains": "answer: Дӯст ҷудо карда шуд: ӯ 我是学生 мегӯяд. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "answer-action-2",
+          "kind": "graphic",
+          "cueText": "我也是学生",
+          "visual": {
+            "title": "Ҷавоби дуруст",
+            "hanzi": "我也是学生。",
+            "pinyin": "Wǒ yě shì xuésheng.",
+            "meaning": "Ман ҳам донишҷӯ ҳастам.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "ye-link",
+                  "type": "path",
+                  "attrs": {
+                    "d": "M200 140 Q300 70 400 140",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "ye-link",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "proud",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ],
+              "overlay": "link",
+              "label": "也"
+            }
+          },
+          "explains": "answer: Хати 也 дӯст ва пандаро мепайвандад: «ман ҳам». Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "answer-action-3",
+          "kind": "graphic",
+          "cueText": "Ман ҳам донишҷӯ",
+          "visual": {
+            "title": "Маънои ҷумла",
+            "hanzi": "也",
+            "pinyin": "yě",
+            "meaning": "ҳам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 382,
+                    "y": 108,
+                    "width": 96,
+                    "height": 236,
+                    "rx": 20,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "me-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "idle",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ],
+              "focus": "b",
+              "focusLabel": "ман"
+            }
+          },
+          "explains": "answer: Панда, ки «ҳам» ҷавоб дод, ҷудо карда шуд. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "answer-action-4",
+          "kind": "graphic",
+          "cueText": "баъд аз 我",
+          "visual": {
+            "title": "Қадами 1 — кӣ",
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "meaning": "ман",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "slot-arrow",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "339,110 361,146 383,110",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "slot-arrow",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我",
+                "也"
+              ]
+            }
+          },
+          "explains": "answer: Дар тахта 我, баъд аз он 也. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "answer-action-5",
+          "kind": "graphic",
+          "cueText": "пеш аз феъли 是",
+          "visual": {
+            "title": "Қадами 2 — амал",
+            "hanzi": "是",
+            "pinyin": "shì",
+            "meaning": "будан, ҳастан",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 126,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 370,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "slot-arrow",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "400,110 422,146 444,110",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "slot-arrow",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我",
+                "也",
+                "是"
+              ]
+            }
+          },
+          "explains": "answer: Ба 我 也 калимаи 是 илова мешавад: 也 пеш аз он. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        }
+      ]
+    },
+    {
+      "id": "mistake",
+      "kind": "context",
+      "durationSec": 8,
+      "headline": "На дар аввал, на дар охир",
+      "narration": "Хатои маъмул: 也 дар аввал, пеш аз 我 намеояд. Дар охири ҷумла ҳам намеояд. Танҳо ҳамин тавр: 我也是学生。",
+      "screenCaption": "也 — танҳо пеш аз феъл",
+      "editPlan": "Тартибҳои нодуруст 也我是 ва 我是学生也 дар тахта танҳо бо мӯҳри сурх; корт ҳамеша ҷумлаи дурустро нишон медиҳад. Дар охир схемаи дуруст бе мӯҳр.",
+      "cards": [
+        {
+          "hanzi": "也",
+          "pinyin": "yě",
+          "meaning": "ҳам"
+        },
+        {
+          "hanzi": "我也是学生。",
+          "pinyin": "Wǒ yě shì xuésheng.",
+          "meaning": "Ман ҳам донишҷӯ ҳастам."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "mistake-action-1",
+          "kind": "graphic",
+          "cueText": "Хатои маъмул",
+          "visual": {
+            "title": "Диққат",
+            "hanzi": "也",
+            "pinyin": "yě",
+            "meaning": "ҳам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-a",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 270,
+                    "y1": 60,
+                    "x2": 330,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-b",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 330,
+                    "y1": 60,
+                    "x2": 270,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-a",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-b",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "wrong",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ],
+              "overlay": "stamp"
+            }
+          },
+          "explains": "mistake: Дӯст хато мекунад: мӯҳри сурх дар синф. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "mistake-action-2",
+          "kind": "graphic",
+          "cueText": "дар аввал, пеш аз 我",
+          "visual": {
+            "title": "Тартиби нодуруст",
+            "hanzi": "我也是学生。",
+            "pinyin": "Wǒ yě shì xuésheng.",
+            "meaning": "Ман ҳам донишҷӯ ҳастам.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 126,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 370,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-a",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 470,
+                    "y1": 70,
+                    "x2": 530,
+                    "y2": 130,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-b",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 530,
+                    "y1": 70,
+                    "x2": 470,
+                    "y2": 130,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-a",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-b",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "也",
+                "我",
+                "是"
+              ],
+              "overlay": "stamp"
+            }
+          },
+          "explains": "mistake: Дар тахта 也 我 是 бо мӯҳр; дар корт — ҷумлаи дуруст. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "mistake-action-3",
+          "kind": "graphic",
+          "cueText": "Дар охири ҷумла",
+          "visual": {
+            "title": "Ин ҳам хато",
+            "hanzi": "我也是学生。",
+            "pinyin": "Wǒ yě shì xuésheng.",
+            "meaning": "Ман ҳам донишҷӯ ҳастам.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 65,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-o",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-3-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 431,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-a",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 500,
+                    "y1": 60,
+                    "x2": 560,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-b",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 560,
+                    "y1": 60,
+                    "x2": 500,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-a",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-b",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我",
+                "是",
+                "学生",
+                "也"
+              ],
+              "overlay": "stamp"
+            }
+          },
+          "explains": "mistake: Дар тахта 我 是 学生 也 бо мӯҳр. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "mistake-action-4",
+          "kind": "graphic",
+          "cueText": "我也是学生",
+          "visual": {
+            "title": "Схемаи дуруст",
+            "hanzi": "我也是学生。",
+            "pinyin": "Wǒ yě shì xuésheng.",
+            "meaning": "Ман ҳам донишҷӯ ҳастам.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 65,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-3-o",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 431,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我",
+                "也",
+                "是",
+                "学生"
+              ]
+            }
+          },
+          "explains": "mistake: Дар тахта тартиби дуруст 我 也 是 学生 бе мӯҳр. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        }
+      ]
+    },
+    {
+      "id": "dou",
+      "kind": "example",
+      "durationSec": 9,
+      "headline": "Бо 都 ҳам ҳамин тавр",
+      "narration": "Калимаи 都 — «ҳама» — ҳам ҳамин тавр: 我们都是学生。 Мо ҳама донишҷӯ ҳастем. Аввал 我们, баъд 都, сипас 是.",
+      "screenCaption": "我们 + 都 + 是",
+      "editPlan": "Ду корт: як парта бо панда ва қатори партаҳо бо тамоми гурӯҳ; дар 我们都是学生 гурӯҳ ва чипи 都 ҷудо мешаванд. Баъд дар тахта қадам ба қадам 我们 → 都 → 是.",
+      "cards": [
+        {
+          "hanzi": "都",
+          "pinyin": "dōu",
+          "meaning": "ҳама"
+        },
+        {
+          "hanzi": "我们都是学生。",
+          "pinyin": "Wǒmen dōu shì xuésheng.",
+          "meaning": "Мо ҳама донишҷӯ ҳастем."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "dou-action-1",
+          "kind": "graphic",
+          "cueText": "Калимаи 都",
+          "visual": {
+            "title": "Боз як қоида",
+            "hanzi": "都",
+            "pinyin": "dōu",
+            "meaning": "ҳама",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "p1-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 130,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 99,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 84,
+                    "y1": 336,
+                    "x2": 176,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 269,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 254,
+                    "y1": 336,
+                    "x2": 346,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 470,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 439,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 424,
+                    "y1": 336,
+                    "x2": 516,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "desk-alone",
+                "desks-together"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.5,
+                  "card": 0
+                },
+                {
+                  "id": "monkey",
+                  "mood": "idle",
+                  "x": 0.2,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "idle",
+                  "x": 0.8,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
+            }
+          },
+          "explains": "dou: Ду корт: як парта ва тамоми гурӯҳ дар паси партаҳо. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "dou-action-2",
+          "kind": "graphic",
+          "cueText": "我们都是学生",
+          "visual": {
+            "title": "Тамоми гурӯҳ",
+            "hanzi": "我们都是学生。",
+            "pinyin": "Wǒmen dōu shì xuésheng.",
+            "meaning": "Мо ҳама донишҷӯ ҳастем.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "p1-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 130,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 99,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 84,
+                    "y1": 336,
+                    "x2": 176,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 269,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 254,
+                    "y1": 336,
+                    "x2": 346,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 470,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 439,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 424,
+                    "y1": 336,
+                    "x2": 516,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "dou-bracket",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "90,120 90,96 510,96 510,120",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "dou-bracket",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "desk-alone",
+                "desks-together"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.5,
+                  "card": 0
+                },
+                {
+                  "id": "monkey",
+                  "mood": "celebrate",
+                  "x": 0.2,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "celebrate",
+                  "x": 0.8,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "label": "都",
+              "focusLabel": "мо"
+            }
+          },
+          "explains": "dou: Гурӯҳ ҷудо шуд, чипи 都 байни кортҳо. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "dou-action-3",
+          "kind": "graphic",
+          "cueText": "Аввал 我们",
+          "visual": {
+            "title": "Қадами 1 — кӣ",
+            "hanzi": "我们",
+            "pinyin": "wǒmen",
+            "meaning": "мо",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我们"
+              ]
+            }
+          },
+          "explains": "dou: Дар тахта танҳо 我们. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "dou-action-4",
+          "kind": "graphic",
+          "cueText": "баъд 都",
+          "visual": {
+            "title": "Қадами 2 — зарф",
+            "hanzi": "都",
+            "pinyin": "dōu",
+            "meaning": "ҳама",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "slot-arrow",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "339,110 361,146 383,110",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "slot-arrow",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我们",
+                "都"
+              ]
+            }
+          },
+          "explains": "dou: Баъд аз 我们 калимаи 都 пайдо мешавад. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "dou-action-5",
+          "kind": "graphic",
+          "cueText": "сипас 是",
+          "visual": {
+            "title": "Қадами 3 — амал",
+            "hanzi": "是",
+            "pinyin": "shì",
+            "meaning": "будан, ҳастан",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 126,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 370,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "我们",
+                "都",
+                "是"
+              ]
+            }
+          },
+          "explains": "dou: Баъд аз 都 калимаи 是 пайдо мешавад. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        }
+      ]
+    },
+    {
+      "id": "recall",
+      "kind": "example",
+      "durationSec": 9,
+      "headline": "Як тартиб — ду калима",
+      "narration": "Худатро бисанҷ. Ман ҳам донишҷӯ — 我也是学生。 Мо ҳама донишҷӯ — 我们都是学生。 Тартиб як аст: кӣ, баъд 也 ё 都, баъд феъл.",
+      "screenCaption": "кӣ + 也 / 都 + феъл",
+      "editPlan": "Аввал синф ва ҷумлаи якум, баъд гурӯҳ ва ҷумлаи дуюм. Дар охир танҳо схемаи «кӣ + 也/都 + феъл». CTA, обуна ё дархости шарҳ нест.",
+      "cards": [
+        {
+          "hanzi": "我也是学生。",
+          "pinyin": "Wǒ yě shì xuésheng.",
+          "meaning": "Ман ҳам донишҷӯ ҳастам."
+        },
+        {
+          "hanzi": "我们都是学生。",
+          "pinyin": "Wǒmen dōu shì xuésheng.",
+          "meaning": "Мо ҳама донишҷӯ ҳастем."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recall-action-1",
+          "kind": "graphic",
+          "cueText": "Худатро бисанҷ",
+          "visual": {
+            "title": "Санҷиши хурд",
+            "hanzi": "也 · 都",
+            "pinyin": "yě · dōu",
+            "meaning": "ҳам · ҳама",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ]
+            }
+          },
+          "explains": "recall: Такрор: боз синф бо дӯст ва панда. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "recall-action-2",
+          "kind": "graphic",
+          "cueText": "Ман ҳам донишҷӯ",
+          "visual": {
+            "title": "Чӣ тавр мегӯӣ?",
+            "hanzi": "也",
+            "pinyin": "yě",
+            "meaning": "ҳам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 382,
+                    "y": 108,
+                    "width": 96,
+                    "height": 236,
+                    "rx": 20,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "me-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "idle",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ],
+              "focus": "b",
+              "focusLabel": "ман"
+            }
+          },
+          "explains": "recall: Панда ҷудо шуд: «ман ҳам» чӣ тавр. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "recall-action-3",
+          "kind": "graphic",
+          "cueText": "我也是学生",
+          "visual": {
+            "title": "Ҷавоб",
+            "hanzi": "我也是学生。",
+            "pinyin": "Wǒ yě shì xuésheng.",
+            "meaning": "Ман ҳам донишҷӯ ҳастам.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "friend-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 170,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 139,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "friend-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 124,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 150,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 399,
+                    "y": 182,
+                    "width": 62,
+                    "height": 145,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "me-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 384,
+                    "y1": 336,
+                    "x2": 476,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "ye-link",
+                  "type": "path",
+                  "attrs": {
+                    "d": "M200 140 Q300 70 400 140",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "ye-link",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.13,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                },
+                "b": {
+                  "x": 0.57,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.25
+                }
+              },
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "proud",
+                  "x": 0.28,
+                  "y": 0.93,
+                  "h": 0.25
+                },
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.72,
+                  "y": 0.93,
+                  "h": 0.25
+                }
+              ],
+              "overlay": "link",
+              "label": "也"
+            }
+          },
+          "explains": "recall: Хати 也 ҷавобро тасдиқ мекунад. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "recall-action-4",
+          "kind": "graphic",
+          "cueText": "Мо ҳама донишҷӯ",
+          "visual": {
+            "title": "Ин чӣ?",
+            "hanzi": "都",
+            "pinyin": "dōu",
+            "meaning": "ҳама",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "p1-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 130,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 99,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 84,
+                    "y1": 336,
+                    "x2": 176,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 269,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 254,
+                    "y1": 336,
+                    "x2": 346,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 470,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 439,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 424,
+                    "y1": 336,
+                    "x2": 516,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "desk-alone",
+                "desks-together"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.5,
+                  "card": 0
+                },
+                {
+                  "id": "monkey",
+                  "mood": "idle",
+                  "x": 0.2,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "idle",
+                  "x": 0.8,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
+            }
+          },
+          "explains": "recall: Савол: тамоми гурӯҳи донишҷӯён. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "recall-action-5",
+          "kind": "graphic",
+          "cueText": "我们都是学生",
+          "visual": {
+            "title": "Ҷавоби дуюм",
+            "hanzi": "我们都是学生。",
+            "pinyin": "Wǒmen dōu shì xuésheng.",
+            "meaning": "Мо ҳама донишҷӯ ҳастем.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "p1-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 130,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 99,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p1-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 84,
+                    "y1": 336,
+                    "x2": 176,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 269,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p2-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 254,
+                    "y1": 336,
+                    "x2": 346,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-head",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 470,
+                    "cy": 170,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-torso",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 439,
+                    "y": 202,
+                    "width": 62,
+                    "height": 125,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "p3-ground",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 424,
+                    "y1": 336,
+                    "x2": 516,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "dou-bracket",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "90,120 90,96 510,96 510,120",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "dou-bracket",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "desk-alone",
+                "desks-together"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.5,
+                  "card": 0
+                },
+                {
+                  "id": "monkey",
+                  "mood": "celebrate",
+                  "x": 0.2,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "celebrate",
+                  "x": 0.8,
+                  "y": 0.94,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "label": "都",
+              "focusLabel": "мо"
+            }
+          },
+          "explains": "recall: Гурӯҳ ҷудо шуд, чипи 都 — ҷавоб. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
+          "id": "recall-action-6",
+          "kind": "graphic",
+          "cueText": "Тартиб як аст",
+          "visual": {
+            "title": "Схема",
+            "hanzi": "也 · 都",
+            "pinyin": "yě · dōu",
+            "meaning": "ҳам · ҳама",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 126,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 370,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "order-arrow",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "130,310 470,310 446,292",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "order-arrow",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "classroom-whiteboard"
+              ],
+              "parts": [
+                "кӣ",
+                "也 / 都",
+                "феъл"
+              ]
+            }
+          },
+          "explains": "recall: Схемаи умумӣ: кӣ, 也 ё 都, феъл. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "tg-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "Adverbs 也 (yě) and 都 (dōu) — HSK Lord",
+      "url": "https://hsklord.com/grammar/adverb-ye-dou",
+      "checkedAt": "2026-11-09",
+      "supports": "Verifies that 也 and 都 go after the subject and before the verb, with 我也是学生 and 他们都是中国人 as examples, and that the combined order is 也都."
+    },
+    {
+      "title": "都 (dōu) — all — Hanpanda Grammar",
+      "url": "https://grammar-hanpanda.pages.dev/dou-all",
+      "checkedAt": "2026-11-09",
+      "supports": "Independently verifies that 都 must come after the subject and before the verb: 我们都是学生 is correct and 都我们是学生 is marked incorrect."
+    },
+    {
+      "title": "也/都 placement mistakes — Elon.io",
+      "url": "https://elon.io/grammar/chinese-mandarin/mistakes/ye-dou-placement",
+      "checkedAt": "2026-11-09",
+      "supports": "Confirms the learner mistake corrected here: 也 and 都 sit after the subject and before the verb, never before the subject or at the end of the clause (我也去, not 我去也)."
+    }
+  ],
+  "hookExperiment": {
+    "id": "ye-dou-placement-20261109-tg-hook-v1",
+    "formatId": "question",
+    "hypothesis": "Саволи «Ман ҳам донишҷӯ: 也 куҷо?» бо ду тартиб дар тахта метавонад навомӯзро то ҷавоби 我也是学生 нигоҳ дорад; ин ҳанӯз санҷида нашудааст.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-09"
+  },
+  "audienceProblem": "Навомӯз тартиби озоди «ҳам»-и тоҷикиро ба чинӣ мегузаронад ва 也 ё 都-ро пеш аз мубтадо ё дар охири ҷумла мегузорад.",
+  "learningOutcome": "也 ва 都-ро баъд аз мубтадо ва пеш аз феъл гузорад: 我也是学生, 我们都是学生.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Синф: дӯст мегӯяд, ки донишҷӯ аст, ту «ман ҳам» ҷавоб медиҳӣ, баъд тамоми гурӯҳ",
+      "learnerGoal": "«Ман ҳам донишҷӯ ҳастам» ва «Мо ҳама донишҷӯ ҳастем»-ро бо ҷойи дурусти 也 ва 都 гуфтан",
+      "obstacle": "Дар тоҷикӣ «ҳам» дар ҷойҳои гуногун меояд, аммо дар чинӣ 也 ва 都 танҳо баъд аз мубтадо, пеш аз феъл меистанд"
+    },
+    "selectionReason": "Гуфтугӯи кӯтоҳ дар синф ҷойи 也-ро мустақим нишон медиҳад, гурӯҳи донишҷӯён — ҷойи 都-ро",
+    "firstPayoff": {
+      "sceneId": "answer",
+      "cueText": "我也是学生"
+    },
+    "reHooks": []
+  },
+  "localization": {
+    "language": "tg",
+    "sourceEpisodeId": "ye-dou-placement-20261109",
+    "sourceHash": "4d0fc5ea47129ed76b766669a83e2d7587241f4a0471a0a0c546db08925ab157",
+    "authoredOn": "2026-11-09",
+    "status": "draft-awaiting-audio-review"
+  }
+}

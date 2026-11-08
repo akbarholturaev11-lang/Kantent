@@ -7,7 +7,7 @@ export const ACTION_OBJECTS = ["tea-cup", "book", "apple"];
 // Illustrated-glass lesson beats (owner decision 2026-11-09): generated art
 // from public/lesson-art/<episode>/ plus the overlay that explains the cue.
 export const ILLUSTRATION_LAYOUTS = ["scene", "pair", "board"];
-export const ILLUSTRATION_OVERLAYS = ["rise", "marks", "link", "cross", "drop", "compare", "adjective"];
+export const ILLUSTRATION_OVERLAYS = ["rise", "marks", "link", "cross", "drop", "compare", "adjective", "stamp"];
 // The HSK AI cast (content/characters/hsk-ai-characters.json; a test keeps
 // this list equal to the registry). No other character may appear.
 export const HSK_CHARACTER_IDS = ["panda", "dragon", "crane", "monkey", "rabbit"];
@@ -30,6 +30,9 @@ export function validateIllustration(id, ill) {
     if (!ok) fail("focus must name an anchor (scene) or left/right (pair)");
   }
   if (["link", "marks", "rise", "cross"].includes(ill.overlay) && !(ill.anchors?.a && ill.anchors?.b)) fail("needs anchors a and b for this overlay");
+  // label: the link/compare chip text (default 比); focusLabel: the focus tag (default A/B).
+  for (const key of ["label", "focusLabel"])
+    if (ill[key] !== undefined && (typeof ill[key] !== "string" || !ill[key].trim() || [...ill[key]].length > 6)) fail(key + " is 1–6 characters");
   for (const member of ill.cast ?? []) {
     if (!HSK_CHARACTER_IDS.includes(member?.id)) fail("cast may only use HSK AI characters (content/characters/hsk-ai-characters.json)");
     if (member.mood !== undefined && !HSK_CHARACTER_MOODS.includes(member.mood)) fail("cast mood is not an HSK AI mood");
