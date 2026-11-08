@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import {
   atomicWriteFile, atomicWriteJson, findReusableVoiceCheckpoint,
-  isValidWavBuffer, matchesRecordedWavChunk, sha256,
+  isValidWavBuffer, matchesRecordedAudioHash, matchesRecordedWavChunk, sha256,
 } from "./voice-checkpoint.mjs";
 
 function wav(pcm = Buffer.from([0, 0, 1, 0])) {
@@ -161,4 +161,16 @@ test("explicit resume refuses a structurally valid unverified or altered WAV, wi
   assert.equal(matchesRecordedWavChunk("voice.wav", original, { file: "other.wav", sha256: sha256(original) }), false);
   assert.equal(matchesRecordedWavChunk("voice.wav", Buffer.from("not a wav"), record), false);
   assert.equal(matchesRecordedWavChunk("voice.wav", original, { file: "voice.wav", sha256: "bad" }), false);
+});
+
+test("saved MP3 can be reused only when its exact original bytes match a recorded SHA", () => {
+  const mp3 = Buffer.from("encoded audio stream for test only");
+  const hash = sha256(mp3);
+  assert.equal(matchesRecordedAudioHash(mp3, hash), true);
+  assert.equal(matchesRecordedAudioHash(Buffer.from("other encoded audio"), hash), false);
+  assert.equal(matchesRecordedAudioHash(mp3, undefined), false);
+  assert.equal(matchesRecordedAudioHash(mp3, null), false);
+  assert.equal(matchesRecordedAudioHash(mp3, ""), false);
+  assert.equal(matchesRecordedAudioHash(mp3, "bad"), false);
+  assert.equal(matchesRecordedAudioHash(undefined, hash), false);
 });
