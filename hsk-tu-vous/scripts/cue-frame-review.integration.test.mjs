@@ -77,6 +77,23 @@ test("real ffmpeg contact sheet uses exact encoded frame index and never approve
   assert.deepEqual(await readPngSize(path.join(output,"cta-before-phone.png")),[270,480]);
   assert.deepEqual(await readPngSize(path.join(output,"cta-start-full.png")),[1080,1920]);
   assert.deepEqual(await readPngSize(path.join(output,"cta-end-phone.png")),[270,480]);
+
+  // A forged "approved" hash cannot make a silent, video-only MP4 valid.
+  const silentVideo=path.join(folder,"silent.mp4");
+  run("ffmpeg",["-hide_banner","-loglevel","error","-y","-i",video,
+    "-map","0:v:0","-c","copy",silentVideo]);
+  const silentSha=createHash("sha256").update(await fs.readFile(silentVideo)).digest("hex");
+  const silentStatus=structuredClone(status);
+  silentStatus.platformPackages.instagram.videoSha256=silentSha;
+  const silentStatusFile=path.join(folder,"silent-status.json");
+  await fs.writeFile(silentStatusFile,JSON.stringify(silentStatus));
+  await assert.rejects(reviewExistingVideo({
+    episodeFile:path.join(folder,"episode.json"),
+    timelineFile:path.join(folder,"cue-timeline.json"),
+    statusFile:silentStatusFile,videoFile:silentVideo,
+    outputDir:path.join(folder,"invalid-silent-proof"),
+  }),/Encoded platform video failed/);
+
   assert.deepEqual(evidence.ctaBoundaryFrames,{beforeCta:59,firstCta:60,finalCta:89});
   const html=await fs.readFile(path.join(output,"index.html"),"utf8");
   assert.match(html,/Frame evidence ONLY/);
