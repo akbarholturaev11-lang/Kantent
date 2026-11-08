@@ -75,3 +75,16 @@ test("sample fallback re-fingerprints the copied sample, so checkpoint and impor
   const after = between("verifiedSampleFallbackUsed = true;", "break;");
   assert.match(after, /await persistMetadata\(\);\s*await persistCheckpoint\(\);/);
 });
+
+test("V8-01: Mandarin gap recovery repairs a zero-length provider word like the main aligner", () => {
+  const blocks = between("function timedBlocks(annotations, durationMs) {", "async function recoverActualWordClips");
+  assert.match(blocks, /if \(endMs <= startMs\) \{\s*if \(startMs \+ 1 - endMs > 250 \|\| startMs \+ 1 > durationMs \+ 100\)\s*throw new Error\("Invalid Gemini source clip word timing\."\);\s*endMs = startMs \+ 1;/);
+  assert.doesNotMatch(blocks, /endMs <= startMs \|\| endMs > durationMs \+ 100\)\s*throw/, "no blanket rejection of a zero-length word");
+  const main = between("function flattenRecognized(", "function alignWords(");
+  assert.match(main, /if \(correctionMs > 250\)/, "same 250 ms bound as the main aligner");
+});
+
+test("requestJson retries only a never-connected Google request, with bounded backoff", () => {
+  const request = between("async function requestJson(", "function getAudioData(");
+  assert.match(request, /catch \(error\) \{\s*\/\/[^\n]*\n[^\n]*\n\s*if \(!isPreConnectFailure\(error\) \|\| attempt >= maxAttempts\) throw error;/);
+});

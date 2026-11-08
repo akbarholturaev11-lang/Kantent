@@ -17,7 +17,7 @@ import {
   transcribeOpenRouter, transcribeUntilAligned,
   OPENROUTER_TTS_MAX_ATTEMPTS, STT_ATTEMPTS_PER_RUN,
 } from "./openrouter-voice.mjs";
-import { openRouterBackupKey, withOpenRouterBackup } from "./voice-transport-backup.mjs";
+import { isPreConnectFailure, openRouterBackupKey, withOpenRouterBackup } from "./voice-transport-backup.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { languageEnvironment, languageSettings } from "./language-context.mjs";
@@ -123,10 +123,21 @@ async function loadVoiceEnvironment(profile) {
 async function requestJson(url, options, label, { maxAttempts = 4, onAttempt } = {}) {
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     onAttempt?.();
-    const response = await fetch(url, {
-      ...options,
-      signal: options.signal ?? AbortSignal.timeout(120_000),
-    });
+    let response;
+    try {
+      response = await fetch(url, {
+        ...options,
+        signal: options.signal ?? AbortSignal.timeout(120_000),
+      });
+    } catch (error) {
+      // Only a failure BEFORE the connection exists is retried here: the
+      // request never reached Google. Anything later is not repeated blindly.
+      if (!isPreConnectFailure(error) || attempt >= maxAttempts) throw error;
+      const delayMs = 2000 * 2 ** (attempt - 1);
+      console.warn(`${label} could not connect to Google; retrying in ${delayMs / 1000}s (${attempt}/${maxAttempts - 1}).`);
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+      continue;
+    }
     const text = await response.text();
     let data = {};
     if (text) {
@@ -717,11 +728,21 @@ async function deleteGeminiFile(apiKey, name) {
  * The same approved Gemini Transcribe model is used for every recovery clip.
  */
 function timedBlocks(annotations, durationMs) {
+  // V8-01 (real 2026-11-03 zhuozi and 2026-11-08 bi-comparison RU takes): use
+  // the SAME provider-timing policy as flattenRecognized(). A zero-length word
+  // (e.g. "и" 7.100s→7.100s) gets a 1 ms end when the inversion is ≤250 ms,
+  // instead of aborting the whole Mandarin gap recovery. Larger inversions and
+  // times outside the audio still fail closed; no timestamp is invented.
   return annotations.map((word, annotationIndex) => {
     const startMs = parseOffsetMs(word.startOffset ?? word.start_offset);
-    const endMs = parseOffsetMs(word.endOffset ?? word.end_offset);
-    if (startMs < 0 || endMs <= startMs || endMs > durationMs + 100)
+    let endMs = parseOffsetMs(word.endOffset ?? word.end_offset);
+    if (startMs < 0 || startMs > durationMs + 100 || endMs > durationMs + 100)
       throw new Error("Invalid Gemini source clip word timing.");
+    if (endMs <= startMs) {
+      if (startMs + 1 - endMs > 250 || startMs + 1 > durationMs + 100)
+        throw new Error("Invalid Gemini source clip word timing.");
+      endMs = startMs + 1;
+    }
     return {
       tokens: tokenParts(word.text).flatMap(spokenParts),
       text: word.text,

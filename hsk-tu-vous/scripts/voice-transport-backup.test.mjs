@@ -77,3 +77,28 @@ test("no retry after failed backup, no credential bypass and no hidden transport
   }),/HTTP 429/);
   assert.equal(invoked,0);
 });
+
+test("never-connected failures are retried/backed up; failures after sending are not", async () => {
+  const { isPreConnectFailure } = await import("./voice-transport-backup.mjs");
+  // Real 2026-11-08 TG run: fetch failed, cause UND_ERR_CONNECT_TIMEOUT to Google.
+  const connectTimeout = Object.assign(new TypeError("fetch failed"),
+    { cause: Object.assign(new Error("Connect Timeout Error"), { code: "UND_ERR_CONNECT_TIMEOUT" }) });
+  const dns = Object.assign(new TypeError("fetch failed"), { cause: Object.assign(new Error("getaddrinfo"), { code: "ENOTFOUND" }) });
+  const happyEyeballs = Object.assign(new TypeError("fetch failed"), { cause: Object.assign(new AggregateError([
+    Object.assign(new Error("a"), { code: "ECONNREFUSED" }), Object.assign(new Error("b"), { code: "ENETUNREACH" }),
+  ]), {}) });
+  for (const error of [connectTimeout, dns, happyEyeballs]) {
+    assert.equal(isPreConnectFailure(error), true);
+    assert.equal(isOpenRouterBackupEligible(error), true);
+  }
+  const reset = Object.assign(new TypeError("fetch failed"), { cause: Object.assign(new Error("other side closed"), { code: "UND_ERR_SOCKET" }) });
+  const bodyTimeout = Object.assign(new Error("The operation was aborted due to timeout"), { name: "TimeoutError" });
+  for (const error of [reset, bodyTimeout, new Error("bad word timestamps")]) {
+    assert.equal(isPreConnectFailure(error), false);
+    assert.equal(isOpenRouterBackupEligible(error), false);
+  }
+  const events = [];
+  await withOpenRouterBackup({ stage: "tts", enabled: true, primary: async () => { throw connectTimeout; },
+    backup: async () => Buffer.from("RIFF"), onFallback: (event) => events.push(event) });
+  assert.equal(events[0].reason, "provider-unreachable");
+});

@@ -238,3 +238,20 @@ test("STT budget is per run: a resumed take with 3 spent attempts still gets 3 f
   assert.equal(result.attempts, 5, "attempt numbering continues for saved files");
   assert.ok(result.alignment.captions);
 });
+
+test("OpenRouter TTS retries once when it never connected, never after a sent request", async () => {
+  const connect = Object.assign(new TypeError("fetch failed"),
+    { cause: Object.assign(new Error("connect"), { code: "UND_ERR_CONNECT_TIMEOUT" }) });
+  let attempts = 0;
+  const wav = await synthesizeOpenRouterWav(ttsOptions(async () => {
+    attempts += 1;
+    if (attempts === 1) throw connect;
+    return pcmResponse(Buffer.alloc(2));
+  }, { sleep: async () => {} }));
+  assert.equal(attempts, 2);
+  assert.equal(wav.toString("ascii", 0, 4), "RIFF");
+  attempts = 0;
+  await assert.rejects(synthesizeOpenRouterWav(ttsOptions(async () => { attempts += 1; throw connect; },
+    { sleep: async () => {} })), /fetch failed/);
+  assert.equal(attempts, 2, "bounded");
+});

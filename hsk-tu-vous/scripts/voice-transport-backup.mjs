@@ -10,8 +10,22 @@ export function fallbackHttpStatus(error) {
   return match ? Number(match[1]) : 0;
 }
 
+// Failures before a TCP/TLS connection exists: the request never reached the
+// provider, so it was neither generated nor billed. Real 2026-11-08 TG run:
+// "fetch failed" caused by UND_ERR_CONNECT_TIMEOUT to Google aborted the take.
+// Errors after the request was sent (socket reset, body timeout) are excluded.
+const PRE_CONNECT_CODES = new Set([
+  "UND_ERR_CONNECT_TIMEOUT", "ECONNREFUSED", "ENOTFOUND", "EAI_AGAIN",
+  "ENETUNREACH", "EHOSTUNREACH", "ENETDOWN",
+]);
+
+export function isPreConnectFailure(error) {
+  const causes = [error, error?.cause, ...(error?.cause?.errors ?? [])].filter(Boolean);
+  return causes.some((cause) => PRE_CONNECT_CODES.has(cause.code));
+}
+
 export function isOpenRouterBackupEligible(error) {
-  return [429, 500, 502, 503, 504].includes(fallbackHttpStatus(error));
+  return [429, 500, 502, 503, 504].includes(fallbackHttpStatus(error)) || isPreConnectFailure(error);
 }
 
 export function openRouterBackupKey(env = process.env, activeProvider) {
@@ -26,7 +40,8 @@ export function openRouterBackupKey(env = process.env, activeProvider) {
 
 export function fallbackEvent(stage, error) {
   return { stage, from: "gemini-direct", to: "openrouter",
-    httpStatus: fallbackHttpStatus(error) };
+    httpStatus: fallbackHttpStatus(error),
+    ...(isPreConnectFailure(error) ? { reason: "provider-unreachable" } : {}) };
 }
 
 export async function withOpenRouterBackup({

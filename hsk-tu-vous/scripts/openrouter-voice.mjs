@@ -6,6 +6,7 @@
  */
 import fs from "node:fs/promises";
 import path from "node:path";
+import { isPreConnectFailure } from "./voice-transport-backup.mjs";
 
 const ROOT = "https://openrouter.ai/api/v1";
 const MODELS = new Set([
@@ -168,9 +169,10 @@ function pcmToWav(bytes, sampleRate, channels, declared = { sampleRate, channels
   return out;
 }
 
-// V-15: an HTTP error RESPONSE (429/5xx) carries no audio, so one bounded
-// retry cannot buy a second take. A timeout/network abort may have produced
-// billed audio we never received, so it is never retried automatically.
+// V-15: an HTTP error RESPONSE (429/5xx) or a failure to connect at all carries
+// no audio, so one bounded retry cannot buy a second take. A timeout or abort
+// after the request was sent may have produced billed audio we never
+// received, so it is never retried automatically.
 export const OPENROUTER_TTS_MAX_ATTEMPTS = 2;
 const TTS_RETRY_STATUSES = new Set([429, 500, 502, 503, 504]);
 const MAX_TTS_RETRY_WAIT_MS = 30000;
@@ -195,14 +197,21 @@ export async function synthesizeOpenRouterWav({
   let response;
   for (let attempt = 1; ; attempt += 1) {
     onAttempt();
-    response = await fetchImpl(ROOT + "/audio/speech", {
-      method: "POST",
-      headers: authHeaders(apiKey),
-      body: JSON.stringify({
-        model: slug, input: text, voice, response_format: "pcm",
-      }),
-      signal: AbortSignal.timeout(120000),
-    });
+    try {
+      response = await fetchImpl(ROOT + "/audio/speech", {
+        method: "POST",
+        headers: authHeaders(apiKey),
+        body: JSON.stringify({
+          model: slug, input: text, voice, response_format: "pcm",
+        }),
+        signal: AbortSignal.timeout(120000),
+      });
+    } catch (error) {
+      // Never connected: nothing was generated or billed, so retry is safe.
+      if (!isPreConnectFailure(error) || attempt >= maxAttempts) throw error;
+      await sleep(2000 * attempt);
+      continue;
+    }
     if (response.ok) break;
     const waitMs = TTS_RETRY_STATUSES.has(response.status) && attempt < maxAttempts
       ? ttsRetryWaitMs(response, attempt) : null;
