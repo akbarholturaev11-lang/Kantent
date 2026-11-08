@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {planCueFrameReview} from "./cue-frame-review.mjs";
 import {cueTimelineSource} from "./cue-timeline.mjs";
+import {compileSemanticVisualTimeline} from "./semantic-visual-plan.mjs";
 
 function fixture() {
   const episode={
@@ -127,4 +128,51 @@ test("scene-start drift against accumulated render duration is rejected before f
   episode.scenes[1].startMs=1900;
   timeline.cueSource=cueTimelineSource(episode);
   assert.throws(()=>planCueFrameReview(episode,timeline),/scene frames do not match audio-derived/);
+});
+
+function semanticFixture({withAction=true}={}) {
+  const {episode,timeline}=fixture();
+  episode.semanticVisual={schemaVersion:1,mode:"review-only"};
+  episode.scenes[0].motionBeats=undefined;
+  episode.scenes[0].semanticShot={
+    environmentId:"street",shotType:"medium",cameraStyle:"static",
+    actorIds:["walker"],objectIds:[],
+  };
+  episode.scenes[0].visualBeats=withAction
+    ?[{hero:"书",pinyin:"shū",meaning:"китоб",syncCueText:"Китоб",
+      semanticAction:{type:"approach-camera",subjectId:"walker",durationMs:400}}]
+    :[];
+  timeline.cueSource=cueTimelineSource(episode);
+  timeline.scenes[0].motionBeats=[];
+  timeline.semanticTimeline=compileSemanticVisualTimeline(episode);
+  return {episode,timeline};
+}
+
+test("semantic action cue produces before/on/finished frames only at real speech onset",()=>{
+  const {episode,timeline}=semanticFixture();
+  const plan=planCueFrameReview(episode,timeline);
+  assert.equal(plan.samples.length,1);
+  assert.equal(plan.staticShots.length,0);
+  assert.equal(plan.samples[0].beatId,"semantic-action-0");
+  assert.deepEqual([
+    plan.samples[0].beforeFrame,plan.samples[0].cueFrame,
+    plan.samples[0].settledFrame,
+  ],[11,12,24]);
+});
+
+test("stale semantic action cue is rejected rather than showing fake frame evidence",()=>{
+  const {episode,timeline}=semanticFixture();
+  timeline.semanticTimeline.scenes[0].actions[0].startFrame++;
+  assert.throws(()=>planCueFrameReview(episode,timeline),/Stale or modified semantic timeline/);
+});
+
+test("static semantic shot produces explicitly unanchored proof, never a fake word cue",()=>{
+  const {episode,timeline}=semanticFixture({withAction:false});
+  const plan=planCueFrameReview(episode,timeline);
+  assert.equal(plan.samples.length,0);
+  assert.deepEqual(plan.staticShots,[{
+    sceneId:"hook",firstFrame:0,middleFrame:29,lastFrame:59,
+    hasVerifiedSpokenAction:false,
+  }]);
+  assert.equal(plan.realVoiceAndTeachingMeaningReviewed,false);
 });
