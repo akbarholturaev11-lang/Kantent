@@ -52,7 +52,169 @@
           "kind": "graphic",
           "cueText": "қадбаландтар",
           "visual": {
-            "title": "муқоиса",
+            "title": "Ӯ аз ман қадбаландтар",
+            "hanzi": "高",
+            "pinyin": "gāo",
+            "meaning": "баланд",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "rise",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "302,224 302,129 279,153",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "rise-side",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 302,
+                    "y1": 129,
+                    "x2": 325,
+                    "y2": 153,
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "height-diff",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 338,
+                    "y1": 118,
+                    "x2": 338,
+                    "y2": 190,
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "hook: Шахси баланд ва паст: кӣ баландтар аст. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "бо 比",
+          "visual": {
+            "title": "比?",
             "hanzi": "比",
             "pinyin": "bǐ",
             "meaning": "муқоиса",
@@ -146,6 +308,20 @@
                     "strokeWidth": 4,
                     "strokeLinecap": "round"
                   }
+                },
+                {
+                  "id": "bi-link",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 215,
+                    "y1": 160,
+                    "x2": 365,
+                    "y2": 215,
+                    "stroke": "foreground",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
                 }
               ],
               "tracks": [
@@ -162,21 +338,35 @@
                       "value": 0
                     }
                   ]
+                },
+                {
+                  "nodeId": "bi-link",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
                 }
               ]
             }
           },
-          "explains": "Муҳити дарс: Ду шахси қадҳои гуногун ва ду рӯзи ҳарораташон фарқкунанда. Ҳолати аввал ва ҳадаф: Сохти A 比 B + сифатро дуруст бигӯяд."
+          "explains": "hook: Хати 比 ду нафарро мепайвандад. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
         },
         {
-          "id": "hook-action-2",
+          "id": "hook-action-3",
           "kind": "graphic",
-          "cueText": "比 ё бо 很",
+          "cueText": "бо 很",
           "visual": {
-            "title": "Ӯ аз ман баландтар аст.",
-            "hanzi": "他比我高。",
-            "pinyin": "Tā bǐ wǒ gāo.",
-            "meaning": "Ӯ аз ман баландтар аст.",
+            "title": "很?",
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "meaning": "хеле",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -267,34 +457,6 @@
                     "strokeWidth": 4,
                     "strokeLinecap": "round"
                   }
-                },
-                {
-                  "type": "line",
-                  "id": "upper-mark",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 207,
-                    "y1": 118,
-                    "x2": 410,
-                    "y2": 118,
-                    "stroke": "gold",
-                    "strokeWidth": 6,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "lower-mark",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 207,
-                    "y1": 190,
-                    "x2": 410,
-                    "y2": 190,
-                    "stroke": "muted",
-                    "strokeWidth": 6,
-                    "strokeLinecap": "round"
-                  }
                 }
               ],
               "tracks": [
@@ -315,7 +477,7 @@
               ]
             }
           },
-          "explains": "Тағйири намоён барои маънои нав: Дар ибораи одии сифатӣ 很 омӯхтааст, аммо дар ин муқоиса истифода намешавад."
+          "explains": "hook: Варианти дуюм — 很, бе хати муқоиса. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
         }
       ]
     },
@@ -340,176 +502,14 @@
       "captionStyleId": "highlight",
       "motionBeats": [
         {
-          "id": "answer-action-0",
-          "kind": "graphic",
-          "cueText": "Ду одам",
-          "visual": {
-            "title": "муқоиса",
-            "hanzi": "比",
-            "pinyin": "bǐ",
-            "meaning": "муқоиса",
-            "graphic": {
-              "width": 600,
-              "height": 400,
-              "nodes": [
-                {
-                  "id": "stage",
-                  "type": "g",
-                  "attrs": {}
-                },
-                {
-                  "type": "circle",
-                  "id": "a-head",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 169,
-                    "cy": 101,
-                    "r": 28,
-                    "fill": "teal",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
-                  "type": "rect",
-                  "id": "a-torso",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x": 138,
-                    "y": 133,
-                    "width": 62,
-                    "height": 194,
-                    "rx": 12,
-                    "fill": "teal",
-                    "stroke": "none"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "a-ground",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 123,
-                    "y1": 336,
-                    "x2": 216,
-                    "y2": 336,
-                    "stroke": "muted",
-                    "strokeWidth": 4,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "circle",
-                  "id": "b-head",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 413,
-                    "cy": 175,
-                    "r": 28,
-                    "fill": "gold",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
-                  "type": "rect",
-                  "id": "b-torso",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x": 382,
-                    "y": 207,
-                    "width": 62,
-                    "height": 120,
-                    "rx": 12,
-                    "fill": "gold",
-                    "stroke": "none"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "b-ground",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 367,
-                    "y1": 336,
-                    "x2": 460,
-                    "y2": 336,
-                    "stroke": "muted",
-                    "strokeWidth": 4,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "polyline",
-                  "id": "rise",
-                  "parentId": "stage",
-                  "attrs": {
-                    "points": "302,224 302,129 279,153",
-                    "fill": "none",
-                    "stroke": "teal",
-                    "strokeWidth": 9,
-                    "strokeLinecap": "round",
-                    "strokeLinejoin": "round"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "rise-side",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 302,
-                    "y1": 129,
-                    "x2": 325,
-                    "y2": 153,
-                    "stroke": "teal",
-                    "strokeWidth": 9,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "height-diff",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 338,
-                    "y1": 118,
-                    "x2": 338,
-                    "y2": 190,
-                    "stroke": "gold",
-                    "strokeWidth": 8,
-                    "strokeLinecap": "round"
-                  }
-                }
-              ],
-              "tracks": [
-                {
-                  "nodeId": "stage",
-                  "property": "y",
-                  "keyframes": [
-                    {
-                      "atMs": 0,
-                      "value": 8
-                    },
-                    {
-                      "atMs": 480,
-                      "value": 0
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Сохти A 比 B + сифатро дуруст бигӯяд."
-        },
-        {
           "id": "answer-action-1",
           "kind": "graphic",
-          "cueText": "他比我高",
+          "cueText": "Ду одамро",
           "visual": {
-            "title": "муқоиса",
-            "hanzi": "比",
-            "pinyin": "bǐ",
-            "meaning": "муқоиса",
+            "title": "Ду одам",
+            "hanzi": "他 · 我",
+            "pinyin": "tā · wǒ",
+            "meaning": "ӯ · ман",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -620,17 +620,17 @@
               ]
             }
           },
-          "explains": "Муҳити дарс: Ду шахси қадҳои гуногун ва ду рӯзи ҳарораташон фарқкунанда. Ҳолати аввал ва ҳадаф: Сохти A 比 B + сифатро дуруст бигӯяд."
+          "explains": "answer: Ду нафареро, ки муқоиса мекунем, нишон медиҳем. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
         },
         {
           "id": "answer-action-2",
           "kind": "graphic",
-          "cueText": "баъд 比",
+          "cueText": "муқоиса кун",
           "visual": {
-            "title": "Ӯ аз ман баландтар аст.",
-            "hanzi": "他比我高。",
-            "pinyin": "Tā bǐ wǒ gāo.",
-            "meaning": "Ӯ аз ман баландтар аст.",
+            "title": "Муқоиса кун",
+            "hanzi": "比 · 很",
+            "pinyin": "bǐ · hěn",
+            "meaning": "интихоб",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -769,17 +769,17 @@
               ]
             }
           },
-          "explains": "Тағйири намоён барои маънои нав: Дар ибораи одии сифатӣ 很 омӯхтааст, аммо дар ин муқоиса истифода намешавад."
+          "explains": "answer: Аломатҳои қад: калимаи муқоисаро интихоб кун. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
         },
         {
           "id": "answer-action-3",
           "kind": "graphic",
-          "cueText": "сифати 高",
+          "cueText": "他比我高",
           "visual": {
-            "title": "муқоиса",
-            "hanzi": "比",
-            "pinyin": "bǐ",
-            "meaning": "муқоиса",
+            "title": "Дуруст",
+            "hanzi": "他比我高。",
+            "pinyin": "Tā bǐ wǒ gāo.",
+            "meaning": "Ӯ аз ман баландтар аст.",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -931,7 +931,618 @@
               ]
             }
           },
-          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Сохти A 比 B + сифатро дуруст бигӯяд."
+          "explains": "answer: Тир ба боло: ӯ баландтар. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "answer-action-4",
+          "kind": "graphic",
+          "cueText": "Аввал 他",
+          "visual": {
+            "title": "A = 他",
+            "hanzi": "他",
+            "pinyin": "tā",
+            "meaning": "ӯ",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "a-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 126,
+                    "y": 62,
+                    "width": 86,
+                    "height": 270,
+                    "rx": 20,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "a-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "answer: Нафари аввал — A — ҷудо карда шуд. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "answer-action-5",
+          "kind": "graphic",
+          "cueText": "баъд 比",
+          "visual": {
+            "title": "比",
+            "hanzi": "比",
+            "pinyin": "bǐ",
+            "meaning": "муқоиса",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "bi-link",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 215,
+                    "y1": 160,
+                    "x2": 365,
+                    "y2": 215,
+                    "stroke": "foreground",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "bi-link",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "answer: Хати 比 аз A ба B. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "answer-action-6",
+          "kind": "graphic",
+          "cueText": "сипас 我",
+          "visual": {
+            "title": "B = 我",
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "meaning": "ман",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "b-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 370,
+                    "y": 136,
+                    "width": 86,
+                    "height": 196,
+                    "rx": 20,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "b-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "answer: Нафари дуюм — B — ҷудо карда шуд. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "answer-action-7",
+          "kind": "graphic",
+          "cueText": "сифати 高",
+          "visual": {
+            "title": "Сифат",
+            "hanzi": "高",
+            "pinyin": "gāo",
+            "meaning": "баланд",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "rise",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "302,224 302,129 279,153",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "rise-side",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 302,
+                    "y1": 129,
+                    "x2": 325,
+                    "y2": 153,
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "height-diff",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 338,
+                    "y1": 118,
+                    "x2": 338,
+                    "y2": 190,
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "answer: Тири қад — сифати 高. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
         }
       ]
     },
@@ -958,9 +1569,9 @@
         {
           "id": "without-hen-action-1",
           "kind": "graphic",
-          "cueText": "бо 比",
+          "cueText": "муқоисаи одӣ",
           "visual": {
-            "title": "муқоиса",
+            "title": "Муқоисаи одӣ",
             "hanzi": "比",
             "pinyin": "bǐ",
             "meaning": "муқоиса",
@@ -1054,6 +1665,183 @@
                     "strokeWidth": 4,
                     "strokeLinecap": "round"
                   }
+                },
+                {
+                  "id": "bi-link",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 215,
+                    "y1": 160,
+                    "x2": 365,
+                    "y2": 215,
+                    "stroke": "foreground",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "bi-link",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "without-hen: Хати 比 байни A ва B. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "without-hen-action-2",
+          "kind": "graphic",
+          "cueText": "пеш аз сифат",
+          "visual": {
+            "title": "Сифат",
+            "hanzi": "高",
+            "pinyin": "gāo",
+            "meaning": "баланд",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "upper-mark",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 207,
+                    "y1": 118,
+                    "x2": 410,
+                    "y2": 118,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "lower-mark",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 207,
+                    "y1": 190,
+                    "x2": 410,
+                    "y2": 190,
+                    "stroke": "muted",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
                 }
               ],
               "tracks": [
@@ -1074,14 +1862,232 @@
               ]
             }
           },
-          "explains": "Муҳити дарс: Ду шахси қадҳои гуногун ва ду рӯзи ҳарораташон фарқкунанда. Ҳолати аввал ва ҳадаф: Сохти A 比 B + сифатро дуруст бигӯяд."
+          "explains": "without-hen: Аломатҳои қад: сифати 高 баъд аз B. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
         },
         {
-          "id": "without-hen-action-2",
+          "id": "without-hen-action-3",
           "kind": "graphic",
           "cueText": "很 намегузорем",
           "visual": {
-            "title": "Ӯ аз ман баландтар аст.",
+            "title": "Бе 很",
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "meaning": "лозим нест",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "rise",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "302,224 302,129 279,153",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "rise-side",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 302,
+                    "y1": 129,
+                    "x2": 325,
+                    "y2": 153,
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "height-diff",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 338,
+                    "y1": 118,
+                    "x2": 338,
+                    "y2": 190,
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "no-hen-a",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 480,
+                    "y1": 60,
+                    "x2": 540,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "no-hen-b",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 540,
+                    "y1": 60,
+                    "x2": 480,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "no-hen-a",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "no-hen-b",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "without-hen: Салиби сурх: 很 намегузорем. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "without-hen-action-4",
+          "kind": "graphic",
+          "cueText": "他比我高",
+          "visual": {
+            "title": "Ҳамин кофист",
             "hanzi": "他比我高。",
             "pinyin": "Tā bǐ wǒ gāo.",
             "meaning": "Ӯ аз ман баландтар аст.",
@@ -1236,156 +2242,7 @@
               ]
             }
           },
-          "explains": "Тағйири намоён барои маънои нав: Дар ибораи одии сифатӣ 很 омӯхтааст, аммо дар ин муқоиса истифода намешавад."
-        },
-        {
-          "id": "without-hen-action-3",
-          "kind": "graphic",
-          "cueText": "他比我高",
-          "visual": {
-            "title": "муқоиса",
-            "hanzi": "比",
-            "pinyin": "bǐ",
-            "meaning": "муқоиса",
-            "graphic": {
-              "width": 600,
-              "height": 400,
-              "nodes": [
-                {
-                  "id": "stage",
-                  "type": "g",
-                  "attrs": {}
-                },
-                {
-                  "type": "circle",
-                  "id": "a-head",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 169,
-                    "cy": 101,
-                    "r": 28,
-                    "fill": "teal",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
-                  "type": "rect",
-                  "id": "a-torso",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x": 138,
-                    "y": 133,
-                    "width": 62,
-                    "height": 194,
-                    "rx": 12,
-                    "fill": "teal",
-                    "stroke": "none"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "a-ground",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 123,
-                    "y1": 336,
-                    "x2": 216,
-                    "y2": 336,
-                    "stroke": "muted",
-                    "strokeWidth": 4,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "circle",
-                  "id": "b-head",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 413,
-                    "cy": 175,
-                    "r": 28,
-                    "fill": "gold",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
-                  "type": "rect",
-                  "id": "b-torso",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x": 382,
-                    "y": 207,
-                    "width": 62,
-                    "height": 120,
-                    "rx": 12,
-                    "fill": "gold",
-                    "stroke": "none"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "b-ground",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 367,
-                    "y1": 336,
-                    "x2": 460,
-                    "y2": 336,
-                    "stroke": "muted",
-                    "strokeWidth": 4,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "upper-mark",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 207,
-                    "y1": 118,
-                    "x2": 410,
-                    "y2": 118,
-                    "stroke": "gold",
-                    "strokeWidth": 6,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "lower-mark",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 207,
-                    "y1": 190,
-                    "x2": 410,
-                    "y2": 190,
-                    "stroke": "muted",
-                    "strokeWidth": 6,
-                    "strokeLinecap": "round"
-                  }
-                }
-              ],
-              "tracks": [
-                {
-                  "nodeId": "stage",
-                  "property": "y",
-                  "keyframes": [
-                    {
-                      "atMs": 0,
-                      "value": 8
-                    },
-                    {
-                      "atMs": 480,
-                      "value": 0
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Сохти A 比 B + сифатро дуруст бигӯяд."
+          "explains": "without-hen: Ибораи тайёр бе 很. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
         }
       ]
     },
@@ -1414,10 +2271,10 @@
           "kind": "graphic",
           "cueText": "обу ҳаво",
           "visual": {
-            "title": "муқоисаи ду рӯз",
-            "hanzi": "比",
-            "pinyin": "bǐ",
-            "meaning": "муқоисаи ду рӯз",
+            "title": "Обу ҳаво",
+            "hanzi": "今天 · 昨天",
+            "pinyin": "jīntiān · zuótiān",
+            "meaning": "имрӯз · дирӯз",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -1528,14 +2385,14 @@
               ]
             }
           },
-          "explains": "Муҳити дарс: Ду шахси қадҳои гуногун ва ду рӯзи ҳарораташон фарқкунанда. Ҳолати аввал ва ҳадаф: Сохти A 比 B + сифатро дуруст бигӯяд."
+          "explains": "weather: Ду рӯз, ҳарорат ҳоло баробар. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
         },
         {
           "id": "weather-action-2",
           "kind": "graphic",
           "cueText": "今天比昨天冷",
           "visual": {
-            "title": "Имрӯз аз дирӯз хунуктар аст.",
+            "title": "Имрӯз хунуктар",
             "hanzi": "今天比昨天冷。",
             "pinyin": "Jīntiān bǐ zuótiān lěng.",
             "meaning": "Имрӯз аз дирӯз хунуктар аст.",
@@ -1676,17 +2533,17 @@
               ]
             }
           },
-          "explains": "Тағйири намоён барои маънои нав: Дар ибораи одии сифатӣ 很 омӯхтааст, аммо дар ин муқоиса истифода намешавад."
+          "explains": "weather: Ҷадвали имрӯз поён меравад: хунуктар. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
         },
         {
           "id": "weather-action-3",
           "kind": "graphic",
-          "cueText": "сифати 冷",
+          "cueText": "хунуктар аст",
           "visual": {
-            "title": "муқоисаи ду рӯз",
-            "hanzi": "比",
-            "pinyin": "bǐ",
-            "meaning": "муқоисаи ду рӯз",
+            "title": "Имрӯз хунуктар",
+            "hanzi": "今天比昨天冷。",
+            "pinyin": "Jīntiān bǐ zuótiān lěng.",
+            "meaning": "Имрӯз аз дирӯз хунуктар аст.",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -1824,7 +2681,509 @@
               ]
             }
           },
-          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Сохти A 比 B + сифатро дуруст бигӯяд."
+          "explains": "weather: Хати муқоисаи ду рӯз. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "weather-action-4",
+          "kind": "graphic",
+          "cueText": "Аввал имрӯз",
+          "visual": {
+            "title": "A = 今天",
+            "hanzi": "今天",
+            "pinyin": "jīntiān",
+            "meaning": "имрӯз",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "yesterday-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 150,
+                    "y": 186,
+                    "width": 80,
+                    "height": 138,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "yesterday-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 163,
+                    "r": 18,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "yesterday-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 115,
+                    "y1": 330,
+                    "x2": 250,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "today-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 385,
+                    "y": 252,
+                    "width": 80,
+                    "height": 72,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "today-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 425,
+                    "cy": 229,
+                    "r": 18,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "today-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 350,
+                    "y1": 330,
+                    "x2": 485,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "cold-drop",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "311,148 311,245 288,222",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "cold-down",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 311,
+                    "y1": 245,
+                    "x2": 334,
+                    "y2": 222,
+                    "stroke": "teal",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "today-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 370,
+                    "y": 200,
+                    "width": 110,
+                    "height": 138,
+                    "rx": 18,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "today-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "weather: Рӯзи аввал — A — ҷудо карда шуд. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "weather-action-5",
+          "kind": "graphic",
+          "cueText": "дирӯз ва",
+          "visual": {
+            "title": "B = 昨天",
+            "hanzi": "昨天",
+            "pinyin": "zuótiān",
+            "meaning": "дирӯз",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "yesterday-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 150,
+                    "y": 186,
+                    "width": 80,
+                    "height": 138,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "yesterday-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 163,
+                    "r": 18,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "yesterday-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 115,
+                    "y1": 330,
+                    "x2": 250,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "today-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 385,
+                    "y": 252,
+                    "width": 80,
+                    "height": 72,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "today-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 425,
+                    "cy": 229,
+                    "r": 18,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "today-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 350,
+                    "y1": 330,
+                    "x2": 485,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "cold-drop",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "311,148 311,245 288,222",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "cold-down",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 311,
+                    "y1": 245,
+                    "x2": 334,
+                    "y2": 222,
+                    "stroke": "teal",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "yesterday-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 135,
+                    "y": 134,
+                    "width": 110,
+                    "height": 204,
+                    "rx": 18,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "yesterday-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "weather: Рӯзи дуюм — B — ҷудо карда шуд. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "weather-action-6",
+          "kind": "graphic",
+          "cueText": "сифати 冷",
+          "visual": {
+            "title": "Сифат",
+            "hanzi": "冷",
+            "pinyin": "lěng",
+            "meaning": "хунук",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "yesterday-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 150,
+                    "y": 186,
+                    "width": 80,
+                    "height": 138,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "yesterday-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 163,
+                    "r": 18,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "yesterday-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 115,
+                    "y1": 330,
+                    "x2": 250,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "today-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 385,
+                    "y": 252,
+                    "width": 80,
+                    "height": 72,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "today-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 425,
+                    "cy": 229,
+                    "r": 18,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "today-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 350,
+                    "y1": 330,
+                    "x2": 485,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "cold-drop",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "311,148 311,245 288,222",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "cold-down",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 311,
+                    "y1": 245,
+                    "x2": 334,
+                    "y2": 222,
+                    "stroke": "teal",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "weather: Тир ба поён — сифати 冷. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
         }
       ]
     },
@@ -1851,9 +3210,279 @@
         {
           "id": "recall-action-1",
           "kind": "graphic",
-          "cueText": "Ӯ аз ман",
+          "cueText": "Худатро бисанҷ",
           "visual": {
-            "title": "Ӯ аз ман баландтар аст.",
+            "title": "Худатро бисанҷ",
+            "hanzi": "比",
+            "pinyin": "bǐ",
+            "meaning": "муқоиса",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "upper-mark",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 207,
+                    "y1": 118,
+                    "x2": 410,
+                    "y2": 118,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "lower-mark",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 207,
+                    "y1": 190,
+                    "x2": 410,
+                    "y2": 190,
+                    "stroke": "muted",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: Такрор: ду нафари қадашон гуногун. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "recall-action-2",
+          "kind": "graphic",
+          "cueText": "Ӯ аз ман баландтар",
+          "visual": {
+            "title": "Ӯ аз ман баландтар",
+            "hanzi": "高",
+            "pinyin": "gāo",
+            "meaning": "баландтар",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: Савол: ба чинӣ чӣ тавр. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "recall-action-3",
+          "kind": "graphic",
+          "cueText": "他比我高",
+          "visual": {
+            "title": "Ҷавоб",
             "hanzi": "他比我高。",
             "pinyin": "Tā bǐ wǒ gāo.",
             "meaning": "Ӯ аз ман баландтар аст.",
@@ -2008,14 +3637,135 @@
               ]
             }
           },
-          "explains": "Муҳити дарс: Ду шахси қадҳои гуногун ва ду рӯзи ҳарораташон фарқкунанда. Ҳолати аввал ва ҳадаф: Сохти A 比 B + сифатро дуруст бигӯяд."
+          "explains": "recall: Тир ба боло ҷавобро тасдиқ мекунад. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
         },
         {
-          "id": "recall-action-2",
+          "id": "recall-action-4",
           "kind": "graphic",
-          "cueText": "他比我高",
+          "cueText": "Имрӯз аз дирӯз хунуктар",
           "visual": {
-            "title": "Имрӯз аз дирӯз хунуктар аст.",
+            "title": "Имрӯз хунуктар",
+            "hanzi": "冷",
+            "pinyin": "lěng",
+            "meaning": "хунуктар",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "yesterday-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 150,
+                    "y": 186,
+                    "width": 80,
+                    "height": 138,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "yesterday-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 163,
+                    "r": 18,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "yesterday-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 115,
+                    "y1": 330,
+                    "x2": 250,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "today-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 385,
+                    "y": 186,
+                    "width": 80,
+                    "height": 138,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "today-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 425,
+                    "cy": 163,
+                    "r": 18,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "today-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 350,
+                    "y1": 330,
+                    "x2": 485,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: Савол: ду рӯз. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "recall-action-5",
+          "kind": "graphic",
+          "cueText": "今天比昨天冷",
+          "visual": {
+            "title": "Ҷавоб",
             "hanzi": "今天比昨天冷。",
             "pinyin": "Jīntiān bǐ zuótiān lěng.",
             "meaning": "Имрӯз аз дирӯз хунуктар аст.",
@@ -2156,17 +3906,17 @@
               ]
             }
           },
-          "explains": "Тағйири намоён барои маънои нав: Дар ибораи одии сифатӣ 很 омӯхтааст, аммо дар ин муқоиса истифода намешавад."
+          "explains": "recall: Ҷадвал поён меравад — ҷавоб. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
         },
         {
-          "id": "recall-action-3",
+          "id": "recall-action-6",
           "kind": "graphic",
-          "cueText": "今天比昨天冷",
+          "cueText": "Формула яктост",
           "visual": {
-            "title": "Ӯ аз ман баландтар аст.",
-            "hanzi": "他比我高。",
-            "pinyin": "Tā bǐ wǒ gāo.",
-            "meaning": "Ӯ аз ман баландтар аст.",
+            "title": "Формула",
+            "hanzi": "比",
+            "pinyin": "bǐ",
+            "meaning": "A 比 B",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -2178,111 +3928,58 @@
                 },
                 {
                   "type": "rect",
-                  "id": "yesterday-meter",
+                  "id": "f-a",
                   "parentId": "stage",
                   "attrs": {
                     "x": 150,
-                    "y": 186,
-                    "width": 80,
-                    "height": 138,
+                    "y": 140,
+                    "width": 90,
+                    "height": 190,
                     "rx": 12,
-                    "fill": "gold",
+                    "fill": "teal",
                     "stroke": "none"
-                  }
-                },
-                {
-                  "type": "circle",
-                  "id": "yesterday-dot",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 190,
-                    "cy": 163,
-                    "r": 18,
-                    "fill": "gold",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "yesterday-ground",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 115,
-                    "y1": 330,
-                    "x2": 250,
-                    "y2": 330,
-                    "stroke": "muted",
-                    "strokeWidth": 3,
-                    "strokeLinecap": "round"
                   }
                 },
                 {
                   "type": "rect",
-                  "id": "today-meter",
+                  "id": "f-b",
                   "parentId": "stage",
                   "attrs": {
-                    "x": 385,
-                    "y": 252,
-                    "width": 80,
-                    "height": 72,
+                    "x": 360,
+                    "y": 230,
+                    "width": 90,
+                    "height": 100,
                     "rx": 12,
-                    "fill": "teal",
+                    "fill": "gold",
                     "stroke": "none"
                   }
                 },
                 {
-                  "type": "circle",
-                  "id": "today-dot",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 425,
-                    "cy": 229,
-                    "r": 18,
-                    "fill": "teal",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
                   "type": "line",
-                  "id": "today-ground",
+                  "id": "f-ground",
                   "parentId": "stage",
                   "attrs": {
-                    "x1": 350,
-                    "y1": 330,
-                    "x2": 485,
-                    "y2": 330,
+                    "x1": 120,
+                    "y1": 336,
+                    "x2": 480,
+                    "y2": 336,
                     "stroke": "muted",
-                    "strokeWidth": 3,
+                    "strokeWidth": 4,
                     "strokeLinecap": "round"
                   }
                 },
                 {
                   "type": "line",
-                  "id": "weather-compare",
+                  "id": "f-link",
                   "parentId": "stage",
                   "attrs": {
-                    "x1": 220,
-                    "y1": 200,
-                    "x2": 382,
-                    "y2": 200,
+                    "x1": 248,
+                    "y1": 185,
+                    "x2": 352,
+                    "y2": 245,
                     "stroke": "foreground",
                     "strokeWidth": 6,
                     "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "circle",
-                  "id": "colder",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 425,
-                    "cy": 255,
-                    "r": 23,
-                    "fill": "teal",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
                   }
                 }
               ],
@@ -2304,7 +4001,157 @@
               ]
             }
           },
-          "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Сохти A 比 B + сифатро дуруст бигӯяд."
+          "explains": "recall: Схемаи умумӣ: A, хати 比, B. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
+        },
+        {
+          "id": "recall-action-7",
+          "kind": "graphic",
+          "cueText": "ва сифат",
+          "visual": {
+            "title": "A 比 B + сифат",
+            "hanzi": "高 · 冷",
+            "pinyin": "gāo · lěng",
+            "meaning": "сифат",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "f-a",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 150,
+                    "y": 140,
+                    "width": 90,
+                    "height": 190,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "f-b",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 360,
+                    "y": 230,
+                    "width": 90,
+                    "height": 100,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "f-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 120,
+                    "y1": 336,
+                    "x2": 480,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "f-link",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 248,
+                    "y1": 185,
+                    "x2": 352,
+                    "y2": 245,
+                    "stroke": "foreground",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "f-rise",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "300,232 300,120 277,144",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "f-rise-side",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 120,
+                    "x2": 323,
+                    "y2": 144,
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "f-rise",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "f-rise-side",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: Тири сифат формуларо пурра мекунад. Маънои дарс: A 比 B + сифат — «ӯ аз ман баландтар аст», «имрӯз аз дирӯз хунуктар аст»."
         }
       ]
     }
@@ -2363,7 +4210,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "bi-comparison-height-20261104",
-    "sourceHash": "5d5323c39553635078a079b465fa3e572dc705ed702195d607300de704cbd97e",
+    "sourceHash": "c8288ea2bb951d58eecc9269fcf9bec422edf8f96206365282333ab5a2cbc30f",
     "authoredOn": "2026-10-28",
     "status": "draft-awaiting-audio-review"
   }

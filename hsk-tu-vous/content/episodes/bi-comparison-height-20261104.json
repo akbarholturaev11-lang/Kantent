@@ -55,7 +55,169 @@
           "kind": "graphic",
           "cueText": "Он выше меня",
           "visual": {
-            "title": "сравнение",
+            "title": "Он выше меня",
+            "hanzi": "高",
+            "pinyin": "gāo",
+            "meaning": "высокий",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "rise",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "302,224 302,129 279,153",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "rise-side",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 302,
+                    "y1": 129,
+                    "x2": 325,
+                    "y2": 153,
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "height-diff",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 338,
+                    "y1": 118,
+                    "x2": 338,
+                    "y2": 190,
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "hook: Высокий и низкий человек: видно, кто выше. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "с 比",
+          "visual": {
+            "title": "比?",
             "hanzi": "比",
             "pinyin": "bǐ",
             "meaning": "сравнение",
@@ -149,6 +311,20 @@
                     "strokeWidth": 4,
                     "strokeLinecap": "round"
                   }
+                },
+                {
+                  "id": "bi-link",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 215,
+                    "y1": 160,
+                    "x2": 365,
+                    "y2": 215,
+                    "stroke": "foreground",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
                 }
               ],
               "tracks": [
@@ -165,21 +341,35 @@
                       "value": 0
                     }
                   ]
+                },
+                {
+                  "nodeId": "bi-link",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
                 }
               ]
             }
           },
-          "explains": "hook: Два человека разного роста, затем сравнение погоды двух дней. Показать исходную учебную ситуацию. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
+          "explains": "hook: Линия 比 соединяет двух людей. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
         },
         {
-          "id": "hook-action-2",
+          "id": "hook-action-3",
           "kind": "graphic",
-          "cueText": "比 или с 很",
+          "cueText": "с 很",
           "visual": {
-            "title": "Он выше меня.",
-            "hanzi": "他比我高。",
-            "pinyin": "Tā bǐ wǒ gāo.",
-            "meaning": "Он выше меня.",
+            "title": "很?",
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "meaning": "очень",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -270,34 +460,6 @@
                     "strokeWidth": 4,
                     "strokeLinecap": "round"
                   }
-                },
-                {
-                  "type": "line",
-                  "id": "upper-mark",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 207,
-                    "y1": 118,
-                    "x2": 410,
-                    "y2": 118,
-                    "stroke": "gold",
-                    "strokeWidth": 6,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "lower-mark",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 207,
-                    "y1": 190,
-                    "x2": 410,
-                    "y2": 190,
-                    "stroke": "muted",
-                    "strokeWidth": 6,
-                    "strokeLinecap": "round"
-                  }
                 }
               ],
               "tracks": [
@@ -318,7 +480,7 @@
               ]
             }
           },
-          "explains": "hook: Два человека разного роста, затем сравнение погоды двух дней. Изменить видимое состояние в момент объяснения. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
+          "explains": "hook: Второй вариант вопроса — 很, без линии сравнения. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
         }
       ]
     },
@@ -345,176 +507,14 @@
       "captionStyleId": "highlight",
       "motionBeats": [
         {
-          "id": "answer-action-0",
+          "id": "answer-action-1",
           "kind": "graphic",
           "cueText": "двух людей",
           "visual": {
-            "title": "сравнение",
-            "hanzi": "比",
-            "pinyin": "bǐ",
-            "meaning": "сравнение",
-            "graphic": {
-              "width": 600,
-              "height": 400,
-              "nodes": [
-                {
-                  "id": "stage",
-                  "type": "g",
-                  "attrs": {}
-                },
-                {
-                  "type": "circle",
-                  "id": "a-head",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 169,
-                    "cy": 101,
-                    "r": 28,
-                    "fill": "teal",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
-                  "type": "rect",
-                  "id": "a-torso",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x": 138,
-                    "y": 133,
-                    "width": 62,
-                    "height": 194,
-                    "rx": 12,
-                    "fill": "teal",
-                    "stroke": "none"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "a-ground",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 123,
-                    "y1": 336,
-                    "x2": 216,
-                    "y2": 336,
-                    "stroke": "muted",
-                    "strokeWidth": 4,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "circle",
-                  "id": "b-head",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 413,
-                    "cy": 175,
-                    "r": 28,
-                    "fill": "gold",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
-                  "type": "rect",
-                  "id": "b-torso",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x": 382,
-                    "y": 207,
-                    "width": 62,
-                    "height": 120,
-                    "rx": 12,
-                    "fill": "gold",
-                    "stroke": "none"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "b-ground",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 367,
-                    "y1": 336,
-                    "x2": 460,
-                    "y2": 336,
-                    "stroke": "muted",
-                    "strokeWidth": 4,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "polyline",
-                  "id": "rise",
-                  "parentId": "stage",
-                  "attrs": {
-                    "points": "302,224 302,129 279,153",
-                    "fill": "none",
-                    "stroke": "teal",
-                    "strokeWidth": 9,
-                    "strokeLinecap": "round",
-                    "strokeLinejoin": "round"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "rise-side",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 302,
-                    "y1": 129,
-                    "x2": 325,
-                    "y2": 153,
-                    "stroke": "teal",
-                    "strokeWidth": 9,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "height-diff",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 338,
-                    "y1": 118,
-                    "x2": 338,
-                    "y2": 190,
-                    "stroke": "gold",
-                    "strokeWidth": 8,
-                    "strokeLinecap": "round"
-                  }
-                }
-              ],
-              "tracks": [
-                {
-                  "nodeId": "stage",
-                  "property": "y",
-                  "keyframes": [
-                    {
-                      "atMs": 0,
-                      "value": 8
-                    },
-                    {
-                      "atMs": 480,
-                      "value": 0
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          "explains": "hook: Два человека разного роста, затем сравнение погоды двух дней. Сопоставить результат с правильным примером. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
-        },
-        {
-          "id": "answer-action-1",
-          "kind": "graphic",
-          "cueText": "他比我高",
-          "visual": {
-            "title": "сравнение",
-            "hanzi": "比",
-            "pinyin": "bǐ",
-            "meaning": "сравнение",
+            "title": "Два человека",
+            "hanzi": "他 · 我",
+            "pinyin": "tā · wǒ",
+            "meaning": "он · я",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -625,17 +625,17 @@
               ]
             }
           },
-          "explains": "answer: Два человека разного роста, затем сравнение погоды двух дней. Показать исходную учебную ситуацию. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
+          "explains": "answer: Показать двух людей, которых сравниваем. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
         },
         {
           "id": "answer-action-2",
           "kind": "graphic",
-          "cueText": "Сначала он",
+          "cueText": "выберите",
           "visual": {
-            "title": "Он выше меня.",
-            "hanzi": "他比我高。",
-            "pinyin": "Tā bǐ wǒ gāo.",
-            "meaning": "Он выше меня.",
+            "title": "Выберите",
+            "hanzi": "比 · 很",
+            "pinyin": "bǐ · hěn",
+            "meaning": "выбор",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -774,17 +774,17 @@
               ]
             }
           },
-          "explains": "answer: Два человека разного роста, затем сравнение погоды двух дней. Изменить видимое состояние в момент объяснения. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
+          "explains": "answer: Отметки роста: выбрать слово для сравнения. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
         },
         {
           "id": "answer-action-3",
           "kind": "graphic",
-          "cueText": "признак 高",
+          "cueText": "他比我高",
           "visual": {
-            "title": "сравнение",
-            "hanzi": "比",
-            "pinyin": "bǐ",
-            "meaning": "сравнение",
+            "title": "Правильно",
+            "hanzi": "他比我高。",
+            "pinyin": "Tā bǐ wǒ gāo.",
+            "meaning": "Он выше меня.",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -936,7 +936,618 @@
               ]
             }
           },
-          "explains": "answer: Два человека разного роста, затем сравнение погоды двух дней. Сопоставить результат с правильным примером. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
+          "explains": "answer: Стрелка вверх: он выше меня. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "answer-action-4",
+          "kind": "graphic",
+          "cueText": "Сначала он",
+          "visual": {
+            "title": "A = 他",
+            "hanzi": "他",
+            "pinyin": "tā",
+            "meaning": "он",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "a-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 126,
+                    "y": 62,
+                    "width": 86,
+                    "height": 270,
+                    "rx": 20,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "a-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "answer: Выделен первый человек — A. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "answer-action-5",
+          "kind": "graphic",
+          "cueText": "потом 比",
+          "visual": {
+            "title": "比",
+            "hanzi": "比",
+            "pinyin": "bǐ",
+            "meaning": "сравнение",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "bi-link",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 215,
+                    "y1": 160,
+                    "x2": 365,
+                    "y2": 215,
+                    "stroke": "foreground",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "bi-link",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "answer: Линия 比 от A к B. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "answer-action-6",
+          "kind": "graphic",
+          "cueText": "затем я",
+          "visual": {
+            "title": "B = 我",
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "meaning": "я",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "b-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 370,
+                    "y": 136,
+                    "width": 86,
+                    "height": 196,
+                    "rx": 20,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "b-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "answer: Выделен второй человек — B. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "answer-action-7",
+          "kind": "graphic",
+          "cueText": "признак 高",
+          "visual": {
+            "title": "Признак",
+            "hanzi": "高",
+            "pinyin": "gāo",
+            "meaning": "высокий",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "rise",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "302,224 302,129 279,153",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "rise-side",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 302,
+                    "y1": 129,
+                    "x2": 325,
+                    "y2": 153,
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "height-diff",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 338,
+                    "y1": 118,
+                    "x2": 338,
+                    "y2": 190,
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "answer: Стрелка роста — признак 高. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
         }
       ]
     },
@@ -965,12 +1576,12 @@
         {
           "id": "without-hen-action-1",
           "kind": "graphic",
-          "cueText": "не добавляйте 很",
+          "cueText": "простом сравнении",
           "visual": {
-            "title": "показатель сравнения",
+            "title": "Простое сравнение",
             "hanzi": "比",
             "pinyin": "bǐ",
-            "meaning": "показатель сравнения",
+            "meaning": "сравнение",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -1061,6 +1672,401 @@
                     "strokeWidth": 4,
                     "strokeLinecap": "round"
                   }
+                },
+                {
+                  "id": "bi-link",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 215,
+                    "y1": 160,
+                    "x2": 365,
+                    "y2": 215,
+                    "stroke": "foreground",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "bi-link",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "without-hen: Линия 比 между A и B. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "without-hen-action-2",
+          "kind": "graphic",
+          "cueText": "не добавляйте 很",
+          "visual": {
+            "title": "Без 很",
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "meaning": "не нужно",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "rise",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "302,224 302,129 279,153",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "rise-side",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 302,
+                    "y1": 129,
+                    "x2": 325,
+                    "y2": 153,
+                    "stroke": "teal",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "height-diff",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 338,
+                    "y1": 118,
+                    "x2": 338,
+                    "y2": 190,
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "no-hen-a",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 480,
+                    "y1": 60,
+                    "x2": 540,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "no-hen-b",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 540,
+                    "y1": 60,
+                    "x2": 480,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "no-hen-a",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "no-hen-b",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "without-hen: Красный крест: 很 здесь не ставим. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "without-hen-action-3",
+          "kind": "graphic",
+          "cueText": "перед прилагательным",
+          "visual": {
+            "title": "Прилагательное",
+            "hanzi": "高",
+            "pinyin": "gāo",
+            "meaning": "высокий",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "upper-mark",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 207,
+                    "y1": 118,
+                    "x2": 410,
+                    "y2": 118,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "lower-mark",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 207,
+                    "y1": 190,
+                    "x2": 410,
+                    "y2": 190,
+                    "stroke": "muted",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
                 }
               ],
               "tracks": [
@@ -1081,14 +2087,14 @@
               ]
             }
           },
-          "explains": "without-hen: Два человека разного роста, затем сравнение погоды двух дней. Показать исходную учебную ситуацию. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
+          "explains": "without-hen: Отметки роста: признак 高 стоит сразу после B. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
         },
         {
-          "id": "without-hen-action-2",
+          "id": "without-hen-action-4",
           "kind": "graphic",
-          "cueText": "достаточно",
+          "cueText": "他比我高",
           "visual": {
-            "title": "Он выше меня.",
+            "title": "Достаточно",
             "hanzi": "他比我高。",
             "pinyin": "Tā bǐ wǒ gāo.",
             "meaning": "Он выше меня.",
@@ -1243,156 +2249,7 @@
               ]
             }
           },
-          "explains": "without-hen: Два человека разного роста, затем сравнение погоды двух дней. Изменить видимое состояние в момент объяснения. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
-        },
-        {
-          "id": "without-hen-action-3",
-          "kind": "graphic",
-          "cueText": "他比我高",
-          "visual": {
-            "title": "показатель сравнения",
-            "hanzi": "比",
-            "pinyin": "bǐ",
-            "meaning": "показатель сравнения",
-            "graphic": {
-              "width": 600,
-              "height": 400,
-              "nodes": [
-                {
-                  "id": "stage",
-                  "type": "g",
-                  "attrs": {}
-                },
-                {
-                  "type": "circle",
-                  "id": "a-head",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 169,
-                    "cy": 101,
-                    "r": 28,
-                    "fill": "teal",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
-                  "type": "rect",
-                  "id": "a-torso",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x": 138,
-                    "y": 133,
-                    "width": 62,
-                    "height": 194,
-                    "rx": 12,
-                    "fill": "teal",
-                    "stroke": "none"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "a-ground",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 123,
-                    "y1": 336,
-                    "x2": 216,
-                    "y2": 336,
-                    "stroke": "muted",
-                    "strokeWidth": 4,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "circle",
-                  "id": "b-head",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 413,
-                    "cy": 175,
-                    "r": 28,
-                    "fill": "gold",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
-                  "type": "rect",
-                  "id": "b-torso",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x": 382,
-                    "y": 207,
-                    "width": 62,
-                    "height": 120,
-                    "rx": 12,
-                    "fill": "gold",
-                    "stroke": "none"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "b-ground",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 367,
-                    "y1": 336,
-                    "x2": 460,
-                    "y2": 336,
-                    "stroke": "muted",
-                    "strokeWidth": 4,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "upper-mark",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 207,
-                    "y1": 118,
-                    "x2": 410,
-                    "y2": 118,
-                    "stroke": "gold",
-                    "strokeWidth": 6,
-                    "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "lower-mark",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 207,
-                    "y1": 190,
-                    "x2": 410,
-                    "y2": 190,
-                    "stroke": "muted",
-                    "strokeWidth": 6,
-                    "strokeLinecap": "round"
-                  }
-                }
-              ],
-              "tracks": [
-                {
-                  "nodeId": "stage",
-                  "property": "y",
-                  "keyframes": [
-                    {
-                      "atMs": 0,
-                      "value": 8
-                    },
-                    {
-                      "atMs": 480,
-                      "value": 0
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          "explains": "without-hen: Два человека разного роста, затем сравнение погоды двух дней. Сопоставить результат с правильным примером. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
+          "explains": "without-hen: Готовая фраза без 很. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
         }
       ]
     },
@@ -1423,10 +2280,10 @@
           "kind": "graphic",
           "cueText": "погодой",
           "visual": {
-            "title": "сравнение",
-            "hanzi": "比",
-            "pinyin": "bǐ",
-            "meaning": "сравнение",
+            "title": "Погода",
+            "hanzi": "今天 · 昨天",
+            "pinyin": "jīntiān · zuótiān",
+            "meaning": "сегодня · вчера",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -1537,14 +2394,14 @@
               ]
             }
           },
-          "explains": "weather: Два человека разного роста, затем сравнение погоды двух дней. Показать исходную учебную ситуацию. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
+          "explains": "weather: Два дня, температура пока одинаковая. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
         },
         {
           "id": "weather-action-2",
           "kind": "graphic",
           "cueText": "今天比昨天冷",
           "visual": {
-            "title": "Сегодня холоднее, чем вчера.",
+            "title": "Сегодня холоднее",
             "hanzi": "今天比昨天冷。",
             "pinyin": "Jīntiān bǐ zuótiān lěng.",
             "meaning": "Сегодня холоднее, чем вчера.",
@@ -1685,17 +2542,17 @@
               ]
             }
           },
-          "explains": "weather: Два человека разного роста, затем сравнение погоды двух дней. Изменить видимое состояние в момент объяснения. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
+          "explains": "weather: Сегодняшняя шкала опускается: холоднее. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
         },
         {
           "id": "weather-action-3",
           "kind": "graphic",
-          "cueText": "признак 冷",
+          "cueText": "Сегодня холоднее",
           "visual": {
-            "title": "сравнение",
-            "hanzi": "比",
-            "pinyin": "bǐ",
-            "meaning": "сравнение",
+            "title": "Сегодня холоднее",
+            "hanzi": "今天比昨天冷。",
+            "pinyin": "Jīntiān bǐ zuótiān lěng.",
+            "meaning": "Сегодня холоднее, чем вчера.",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -1833,7 +2690,509 @@
               ]
             }
           },
-          "explains": "weather: Два человека разного роста, затем сравнение погоды двух дней. Сопоставить результат с правильным примером. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
+          "explains": "weather: Линия сравнения двух дней. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "weather-action-4",
+          "kind": "graphic",
+          "cueText": "первый день",
+          "visual": {
+            "title": "A = 今天",
+            "hanzi": "今天",
+            "pinyin": "jīntiān",
+            "meaning": "сегодня",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "yesterday-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 150,
+                    "y": 186,
+                    "width": 80,
+                    "height": 138,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "yesterday-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 163,
+                    "r": 18,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "yesterday-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 115,
+                    "y1": 330,
+                    "x2": 250,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "today-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 385,
+                    "y": 252,
+                    "width": 80,
+                    "height": 72,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "today-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 425,
+                    "cy": 229,
+                    "r": 18,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "today-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 350,
+                    "y1": 330,
+                    "x2": 485,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "cold-drop",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "311,148 311,245 288,222",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "cold-down",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 311,
+                    "y1": 245,
+                    "x2": 334,
+                    "y2": 222,
+                    "stroke": "teal",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "today-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 370,
+                    "y": 200,
+                    "width": 110,
+                    "height": 138,
+                    "rx": 18,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "today-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "weather: Выделен первый день — A. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "weather-action-5",
+          "kind": "graphic",
+          "cueText": "второй день",
+          "visual": {
+            "title": "B = 昨天",
+            "hanzi": "昨天",
+            "pinyin": "zuótiān",
+            "meaning": "вчера",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "yesterday-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 150,
+                    "y": 186,
+                    "width": 80,
+                    "height": 138,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "yesterday-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 163,
+                    "r": 18,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "yesterday-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 115,
+                    "y1": 330,
+                    "x2": 250,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "today-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 385,
+                    "y": 252,
+                    "width": 80,
+                    "height": 72,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "today-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 425,
+                    "cy": 229,
+                    "r": 18,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "today-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 350,
+                    "y1": 330,
+                    "x2": 485,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "cold-drop",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "311,148 311,245 288,222",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "cold-down",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 311,
+                    "y1": 245,
+                    "x2": 334,
+                    "y2": 222,
+                    "stroke": "teal",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "yesterday-focus",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 135,
+                    "y": 134,
+                    "width": 110,
+                    "height": 204,
+                    "rx": 18,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "yesterday-focus",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "weather: Выделен второй день — B. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "weather-action-6",
+          "kind": "graphic",
+          "cueText": "признак 冷",
+          "visual": {
+            "title": "Признак",
+            "hanzi": "冷",
+            "pinyin": "lěng",
+            "meaning": "холодный",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "yesterday-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 150,
+                    "y": 186,
+                    "width": 80,
+                    "height": 138,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "yesterday-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 163,
+                    "r": 18,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "yesterday-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 115,
+                    "y1": 330,
+                    "x2": 250,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "today-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 385,
+                    "y": 252,
+                    "width": 80,
+                    "height": 72,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "today-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 425,
+                    "cy": 229,
+                    "r": 18,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "today-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 350,
+                    "y1": 330,
+                    "x2": 485,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "cold-drop",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "311,148 311,245 288,222",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "cold-down",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 311,
+                    "y1": 245,
+                    "x2": 334,
+                    "y2": 222,
+                    "stroke": "teal",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "weather: Стрелка вниз — признак 冷. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
         }
       ]
     },
@@ -1862,9 +3221,279 @@
         {
           "id": "recall-action-1",
           "kind": "graphic",
+          "cueText": "Проверьте себя",
+          "visual": {
+            "title": "Проверьте себя",
+            "hanzi": "比",
+            "pinyin": "bǐ",
+            "meaning": "сравнение",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "upper-mark",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 207,
+                    "y1": 118,
+                    "x2": 410,
+                    "y2": 118,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "lower-mark",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 207,
+                    "y1": 190,
+                    "x2": 410,
+                    "y2": 190,
+                    "stroke": "muted",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: Повторение: два человека разного роста. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "recall-action-2",
+          "kind": "graphic",
           "cueText": "Он выше меня",
           "visual": {
-            "title": "Он выше меня.",
+            "title": "Он выше меня",
+            "hanzi": "高",
+            "pinyin": "gāo",
+            "meaning": "выше",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: Вопрос: как сказать по-китайски. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "recall-action-3",
+          "kind": "graphic",
+          "cueText": "他比我高",
+          "visual": {
+            "title": "Ответ",
             "hanzi": "他比我高。",
             "pinyin": "Tā bǐ wǒ gāo.",
             "meaning": "Он выше меня.",
@@ -2019,14 +3648,135 @@
               ]
             }
           },
-          "explains": "recall: Два человека разного роста, затем сравнение погоды двух дней. Показать исходную учебную ситуацию. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
+          "explains": "recall: Стрелка вверх подтверждает ответ. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
         },
         {
-          "id": "recall-action-2",
+          "id": "recall-action-4",
           "kind": "graphic",
-          "cueText": "他比我高",
+          "cueText": "Сегодня холоднее",
           "visual": {
-            "title": "Сегодня холоднее, чем вчера.",
+            "title": "Сегодня холоднее",
+            "hanzi": "冷",
+            "pinyin": "lěng",
+            "meaning": "холоднее",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "yesterday-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 150,
+                    "y": 186,
+                    "width": 80,
+                    "height": 138,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "yesterday-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 163,
+                    "r": 18,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "yesterday-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 115,
+                    "y1": 330,
+                    "x2": 250,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "today-meter",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 385,
+                    "y": 186,
+                    "width": 80,
+                    "height": 138,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "today-dot",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 425,
+                    "cy": 163,
+                    "r": 18,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "today-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 350,
+                    "y1": 330,
+                    "x2": 485,
+                    "y2": 330,
+                    "stroke": "muted",
+                    "strokeWidth": 3,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: Вопрос: два дня. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "recall-action-5",
+          "kind": "graphic",
+          "cueText": "今天比昨天冷",
+          "visual": {
+            "title": "Ответ",
             "hanzi": "今天比昨天冷。",
             "pinyin": "Jīntiān bǐ zuótiān lěng.",
             "meaning": "Сегодня холоднее, чем вчера.",
@@ -2167,17 +3917,17 @@
               ]
             }
           },
-          "explains": "recall: Два человека разного роста, затем сравнение погоды двух дней. Изменить видимое состояние в момент объяснения. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
+          "explains": "recall: Шкала опускается — ответ. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
         },
         {
-          "id": "recall-action-3",
+          "id": "recall-action-6",
           "kind": "graphic",
-          "cueText": "Сегодня холоднее",
+          "cueText": "Формула одна",
           "visual": {
-            "title": "Он выше меня.",
-            "hanzi": "他比我高。",
-            "pinyin": "Tā bǐ wǒ gāo.",
-            "meaning": "Он выше меня.",
+            "title": "Формула",
+            "hanzi": "比",
+            "pinyin": "bǐ",
+            "meaning": "A 比 B",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -2189,111 +3939,58 @@
                 },
                 {
                   "type": "rect",
-                  "id": "yesterday-meter",
+                  "id": "f-a",
                   "parentId": "stage",
                   "attrs": {
                     "x": 150,
-                    "y": 186,
-                    "width": 80,
-                    "height": 138,
+                    "y": 140,
+                    "width": 90,
+                    "height": 190,
                     "rx": 12,
-                    "fill": "gold",
+                    "fill": "teal",
                     "stroke": "none"
-                  }
-                },
-                {
-                  "type": "circle",
-                  "id": "yesterday-dot",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 190,
-                    "cy": 163,
-                    "r": 18,
-                    "fill": "gold",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
-                  "type": "line",
-                  "id": "yesterday-ground",
-                  "parentId": "stage",
-                  "attrs": {
-                    "x1": 115,
-                    "y1": 330,
-                    "x2": 250,
-                    "y2": 330,
-                    "stroke": "muted",
-                    "strokeWidth": 3,
-                    "strokeLinecap": "round"
                   }
                 },
                 {
                   "type": "rect",
-                  "id": "today-meter",
+                  "id": "f-b",
                   "parentId": "stage",
                   "attrs": {
-                    "x": 385,
-                    "y": 252,
-                    "width": 80,
-                    "height": 72,
+                    "x": 360,
+                    "y": 230,
+                    "width": 90,
+                    "height": 100,
                     "rx": 12,
-                    "fill": "teal",
+                    "fill": "gold",
                     "stroke": "none"
                   }
                 },
                 {
-                  "type": "circle",
-                  "id": "today-dot",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 425,
-                    "cy": 229,
-                    "r": 18,
-                    "fill": "teal",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
                   "type": "line",
-                  "id": "today-ground",
+                  "id": "f-ground",
                   "parentId": "stage",
                   "attrs": {
-                    "x1": 350,
-                    "y1": 330,
-                    "x2": 485,
-                    "y2": 330,
+                    "x1": 120,
+                    "y1": 336,
+                    "x2": 480,
+                    "y2": 336,
                     "stroke": "muted",
-                    "strokeWidth": 3,
+                    "strokeWidth": 4,
                     "strokeLinecap": "round"
                   }
                 },
                 {
                   "type": "line",
-                  "id": "weather-compare",
+                  "id": "f-link",
                   "parentId": "stage",
                   "attrs": {
-                    "x1": 220,
-                    "y1": 200,
-                    "x2": 382,
-                    "y2": 200,
+                    "x1": 248,
+                    "y1": 185,
+                    "x2": 352,
+                    "y2": 245,
                     "stroke": "foreground",
                     "strokeWidth": 6,
                     "strokeLinecap": "round"
-                  }
-                },
-                {
-                  "type": "circle",
-                  "id": "colder",
-                  "parentId": "stage",
-                  "attrs": {
-                    "cx": 425,
-                    "cy": 255,
-                    "r": 23,
-                    "fill": "teal",
-                    "stroke": "foreground",
-                    "strokeWidth": 5
                   }
                 }
               ],
@@ -2315,7 +4012,157 @@
               ]
             }
           },
-          "explains": "recall: Два человека разного роста, затем сравнение погоды двух дней. Сопоставить результат с правильным примером. Учебный смысл: Сказать «он выше меня» и «сегодня холоднее, чем вчера» по конструкции A 比 B + признак."
+          "explains": "recall: Общая схема: A, линия 比, B. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
+        },
+        {
+          "id": "recall-action-7",
+          "kind": "graphic",
+          "cueText": "плюс признак",
+          "visual": {
+            "title": "A 比 B + признак",
+            "hanzi": "高 · 冷",
+            "pinyin": "gāo · lěng",
+            "meaning": "признак",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "rect",
+                  "id": "f-a",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 150,
+                    "y": 140,
+                    "width": 90,
+                    "height": 190,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "f-b",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 360,
+                    "y": 230,
+                    "width": 90,
+                    "height": 100,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "f-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 120,
+                    "y1": 336,
+                    "x2": 480,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "f-link",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 248,
+                    "y1": 185,
+                    "x2": 352,
+                    "y2": 245,
+                    "stroke": "foreground",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "f-rise",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "300,232 300,120 277,144",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "f-rise-side",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 120,
+                    "x2": 323,
+                    "y2": 144,
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "f-rise",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "f-rise-side",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "explains": "recall: Стрелка признака завершает формулу. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
         }
       ]
     }
