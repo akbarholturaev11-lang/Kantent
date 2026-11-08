@@ -14,6 +14,7 @@ import {spawnSync} from "node:child_process";
 import {fileURLToPath} from "node:url";
 import {assertCueTimelineMatches} from "./cue-timeline.mjs";
 import {assertSharedLesson, sharedRenderRanges, platformPackagePaths} from "./platform-exports.mjs";
+import {verifyPlatformVideo} from "./render-platform-videos.mjs";
 import {episodeContentHash, reviewDir, safeId} from "./lib.mjs";
 
 const scriptPath=fileURLToPath(import.meta.url);
@@ -177,13 +178,10 @@ export async function reviewExistingVideo({
   if(!/^[a-f0-9]{64}$/.test(packageRecord.videoSha256??"")||
       packageRecord.videoSha256!==digest)
     throw Error(`${platform} real MP4 SHA-256 does not match the recorded platform package.`);
-  const meta=JSON.parse(run("ffprobe",["-v","error","-select_streams","v:0",
-    "-show_entries","stream=width,height,nb_frames,r_frame_rate",
-    "-of","json",videoFile]));
-  const stream=meta.streams?.[0];
-  if(stream?.width!==1080||stream?.height!==1920||stream?.r_frame_rate!=="30/1"||
-      Number(stream.nb_frames)!==plan.totalFrames)
-    throw Error("The actual encoded MP4 dimensions, FPS or frame count differ from the cue plan.");
+  // Reuse the production verifier: require encoded H264 picture AND AAC audio,
+  // exact frames, BT.709 and matching durations. A silent forged MP4 is NOT
+  // evidence of narration-synchronized teaching visuals.
+  await verifyPlatformVideo(videoFile,plan.totalFrames);
   // Existing work is never overwritten: each run needs a fresh path.
   await fs.mkdir(outputDir,{recursive:false});
   for(const sample of plan.samples){
