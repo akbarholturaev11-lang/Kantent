@@ -70,6 +70,9 @@ test("real ffmpeg contact sheet uses exact encoded frame index and never approve
     statusFile:path.join(folder,"status.json"),videoFile:video,outputDir:output,
   });
   assert.equal(evidence.samples.length,1);
+  assert.equal(evidence.extraction.ffmpegPasses,2);
+  assert.equal(evidence.extraction.files,12);
+  assert.ok(evidence.extraction.uniqueFrames>=4);
   assert.equal(evidence.verdict,"FRAME_SAMPLES_GENERATED_NOT_VISUALLY_APPROVED");
   assert.equal(evidence.ownerPreviewApproved,false);
   assert.deepEqual(await readPngSize(path.join(output,"hook-book-cue-full.png")),[1080,1920]);
