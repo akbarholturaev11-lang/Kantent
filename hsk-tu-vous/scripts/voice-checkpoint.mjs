@@ -116,7 +116,10 @@ export async function findReusableVoiceCheckpoint({
         throw error;
       }
       const recorded = chunks.find((chunk) => chunk.file === fileName);
-      if (!validateWav(bytes) || (recorded?.sha256 && sha256(bytes) !== recorded.sha256))
+      // A WAV header is only structural validation. Never auto-resume speech
+      // without a matching persisted SHA-256 binding to its checkpoint.
+      if (!recorded || !/^[a-f0-9]{64}$/.test(recorded.sha256 ?? "") ||
+          !validateWav(bytes) || sha256(bytes) !== recorded.sha256)
         continue;
       validChunkCount += 1;
     }
