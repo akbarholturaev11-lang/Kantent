@@ -111,3 +111,20 @@ test("promo cue is included without lesson motion design",()=>{
   assert.equal(planned.samples.length,1);
   assert.equal(planned.samples[0].beatId,"promo-action");
 });
+
+test("audio tail extends final encoded MP4 beyond summed scene frames",()=>{
+  const {episode,timeline}=fixture();
+  episode.audioDurationMs=3260;
+  timeline.cueSource=cueTimelineSource(episode);
+  const plan=planCueFrameReview(episode,timeline);
+  assert.equal(plan.sceneFrames,90);
+  assert.equal(plan.totalFrames,98);
+  assert.deepEqual(plan.ctaBoundaryFrames,{beforeCta:59,firstCta:60,finalCta:97});
+});
+
+test("scene-start drift against accumulated render duration is rejected before fake cue proof",()=>{
+  const {episode,timeline}=fixture();
+  episode.scenes[1].startMs=1900;
+  timeline.cueSource=cueTimelineSource(episode);
+  assert.throws(()=>planCueFrameReview(episode,timeline),/scene frames do not match audio-derived/);
+});
