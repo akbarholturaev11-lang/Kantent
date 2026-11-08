@@ -134,6 +134,21 @@ Every caller of the voice pipeline was re-checked (only `generate-voice-gemini.m
 11. **Missing media tools found only after payment:** the generator can fall back to Remotion's bundled FFmpeg, but import (TikTok composition, duration probe) and every renderer spawn system `ffmpeg`/`ffprobe`. On a machine without them the take was bought and STT spent before import/render failed. `requireSystemMediaTools()` now proves both are on PATH before any take is chosen or bought. Renderer binaries were deliberately not switched to the bundled build (different ffprobe output could change MP4 verification).
 - Checked and **not** a defect: a `--new-take` barrier folder without audio is not packaged into the GitHub recovery artifact, but restore only happens within reruns of the same workflow run and CI never passes `--new-take`.
 
+## 2026-11-08 — first REAL local RU+TG voice run (owner-authorized)
+
+Episode `bi-comparison-height-20261104` (unapproved, unpublished), run locally from this worktree on `main`-equivalent code with Gemini Direct primary + OpenRouter backup (`.env.local` symlinked, never copied). Four runs; the safeguards held and every defect found was fixed with a regression test and pushed to `main` after green CI:
+
+| Run | Result | Fix |
+|---|---|---|
+| 1 | Blocked before any paid request: TG draft had no scene headlines; RU/TG CTAs unregistered | TG headlines added (`d79d985d`); baseline CTAs registered via MCP `register_cta_experiment`, copy identical to the last approved registration except placement (`7ef4dab9`) |
+| 2 | RU: 6 TTS chunks saved (one per-minute 429 retried), STT dropped "с 比 или с 很", recovery aborted on a zero-length provider word. TG: `fetch failed` / `UND_ERR_CONNECT_TIMEOUT` killed the take | V8-01 timing policy shared with the main aligner; never-connected requests retried and backup-eligible (`762c7d8d`) |
+| 3 | RU resumed with **0 TTS**; recovery refused the interleaved RU+Mandarin gap. TG: 6 chunks saved; correct speech rejected for ASR spellings (У/Ӯ, чи/чӣ, split compounds, 比/很 as "би"/"ҳен") | Position-aligned verified-spelling matcher, mixed-gap recovery with both hints, free re-check of saved STT responses (`50abac88`) |
+| 4 | TG chunk 1 now passes; TG chunk 2 STT kept only the Mandarin and the clip returned no words. RU mixed clip heard "с би или с **хан**" for 很 (hěn) — correctly rejected | none: fail-closed as designed |
+
+**Cost so far:** RU 7 and TG 7 TTS HTTP requests (13 audio chunks, all on the free Gemini tier, 0 OpenRouter); RU chunk 1 has used 9 STT attempts. All 12 saved chunks pass signal QA.
+
+**Open (needs the owner, not code):** listen to RU 3.4–5.9 s (`…/2026-11-08T07-09-39-507Z/recovery-diagnostic/chunk-001/span-01.wav`): if 很 sounds like "hěn", the remaining blocker is Gemini STT on mixed speech (X-10/X-19), not TTS; if it sounds like "hàn", a new RU take is justified (`--new-take`). Mixed-language STT still needs a strategy (e.g. per-sentence clips with known script boundaries) before mixed lessons import without manual help.
+
 ## Next tasks / blockers — BUGS ONLY
 
 1. Check latest full CI on PR #59 (including consistency and semantic-foundation). Investigate any failures in the exact changed SHA before proposing a merge.
