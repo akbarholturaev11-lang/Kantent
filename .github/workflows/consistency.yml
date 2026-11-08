@@ -38,6 +38,10 @@ jobs:
           node --check scripts/graphic-scene.mjs
           node --check scripts/graphic-voice-proof.mjs
           node --test scripts/graphic-scene.test.mjs scripts/graphic-voice-proof.test.mjs scripts/action-design-plan.test.mjs scripts/action-text-layout.test.mjs scripts/motion-design-plan.test.mjs scripts/lesson-presentation-policy.test.mjs
+      - name: Test hash-bound exact cue-frame contact sheet planning (no API, no publish)
+        run: |
+          node --check scripts/cue-frame-review.mjs
+          node --test scripts/cue-frame-review.test.mjs
       - name: Test read-only adaptive storytelling and legacy plan compatibility
         run: |
           node --check scripts/storytelling-plan.mjs
