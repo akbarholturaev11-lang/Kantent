@@ -31,13 +31,25 @@ Owner decisions P01–P12 in the complete audit are approved. Do **not** alter p
 | P1 current PWA promo screenshots | Not yet connected as authorized browser-capture pipeline | Genuine signed-in current UI capture, locale, crop, source/asset hash, phone preview |
 | P1 exact-preview gate | Existing guard code; no autonomous video posting permitted | Real final owner approval for each approved target |
 
-## Work on 2026-11-08
+## Work on 2026-11-08 — implementation and evidence
 
-1. Inspected `main`, open PRs, Codex PR #58; confirmed that Codex actually advanced the large P0/P1 patch set and must **not** be reimplemented from scratch.
-2. Started this **separate branch from PR #58** to preserve its review state and keep further changes inspectable.
-3. Next concrete task: implement read-only **cue-specific before/on/settled phone-frame proof** against *existing* real review MP4 and compiled `cue-timeline.json`, with no TTS/API calls and no posting. Before adding code, check current renderer/ffmpeg paths and regression tests; avoid duplicating a working command. Guard against source/audio/video identity mismatch.
-4. After code, run CI via PR and record result here, not merely `npm run lint` claims.
-5. Remaining follow-ups: first-take A/B RU/TG audio QA (requires authorized real sample), PWA browser capture, agent root-cause recovery orchestration, publication gate reconciliation and PR #56 voice-fallback integration.
+1. Inspected latest `main`, all open PRs and Codex PR #58; confirmed 404 tests and successful synthetic CI there, while actual Gemini generation was skipped. No real RU/TJ final voice/MP4 semantics are established by that work.
+2. Created this branch **directly from PR #58** to preserve Claude and Codex fixes. Opened [dependent draft PR #59](https://github.com/akbarholturaev11-lang/Kantent/pull/59) targeting `codex/p0-p1-media-reliability-20261106`, **not main**.
+3. Added `scripts/cue-frame-review.mjs` and `npm run content:review-frames -- <episode-id> [ru|tg]`. When an existing genuine local review package is available, it verifies matching `episode.json` vs canonical compiled cue timeline, status `contentHash`, exact MP4 SHA-256, real 1080x1920 / 30fps / encoded frame count, and then extracts before/on/settled MP4 frames in both 1080×1920 and phone-size 270×480. Emits a local `index.html` contact sheet and `manifest.json` with `FRAME_SAMPLES_GENERATED_NOT_VISUALLY_APPROVED`. It **does not** generate speech, edit source media, publish, or claim semantic approval. Existing contact-sheet paths are not overwritten. Extracted exact frame index uses ffmpeg filter `select=eq(n,N)`, not approximate timestamp seeks.
+4. New unit tests: `scripts/cue-frame-review.test.mjs` for frame boundaries, late/early cues, source/audio/locale mismatch, missing cues, graphic settle caps, promo cue and safe cap. First CI run [42445279484](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42445279484) **failed** because a later cue was validated only after computing the preceding deadline. Fixed by prevalidating all beat timestamps and exact audio-derived local/global frames. Next run [42445378989](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42445378989) **failed** because the old test fixtures expected different exceptions and had no promo `startFrame`; regression tests corrected. Following [42445397739](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42445397739) **SUCCEEDED** (full Canonical source consistency, including pure frame-plan tests). All failures and their root causes are preserved in GitHub Actions.
+5. Added `scripts/cue-frame-review.integration.test.mjs`: generates a **synthetic, no-Gemini 1080×1920 30fps video** via ffmpeg and confirms the real decoder extracts exact full/phone PNG dimensions, keeps owner approval false, refuses an existing proof directory, and rejects mismatched MP4 SHA-256. CI runs it only **after FFmpeg installation**. Final run outcome pending as of this context entry: [workflow 42445519317](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42445519317). Check the latest PR #59 CI before declaring success.
+6. Linked this one work context from the project `AGENTS.md`, making it findable by a new agent. Do not create competing context files.
+
+**Status:** software source and synthetic unit checks only, NOT production QA; separate external real RU/TG media review requires authorized existing MP4/WAV and human inspection. No approved audio/video was mutated, no credential used, no paid request, no Zernio post, no main merge.
+
+## Next tasks / blockers
+
+- Verify PR #59's latest CI `semantic-foundation` and `consistency`. If the synthetic ffmpeg integration fails, inspect **job logs**, diagnose root cause and patch the real issue, then update this exact file.
+- When a real, **unapproved** existing review package is available locally: `cd hsk-tu-vous && npm run content:review-frames -- <episode-id> ru`, then repeat for `tg`. Compare the before/on/settled frame at phone size with spoken words, Mandarin accuracy, Chinese characters and pinyin, focal-object appearance, and real audio. The proof directory is under `review/<id>/cue-frame-review-<timestamp>` (TG: `review/<id>/tg/...`). The user/owner must still approve the exact final VIDEO package; this is not an autopublish pass.
+- Integrate owner-approved direct Gemini→OpenRouter fallback only after properly reconciling [separate draft PR #56](https://github.com/akbarholturaev11-lang/Kantent/pull/56) with the newer voice-checkpoint changes in PR #58; avoid free-quota key cycling.
+- Genuine current PWA screenshots require authorized browser capture and real source/locale/crop hash. Do not fake captures.
+- Root-cause-based agent repair orchestration, cross-platform review identity, and remaining P1 semantic QA are open.
+- IMPORTANT: recent `main` has unrelated Telegram news changes and currently failing consistency CI (observed runs 42351734221 etc). Do not rebase/merge from `main` until those changes and their CI failures are understood.
 
 ## Operating rules
 
