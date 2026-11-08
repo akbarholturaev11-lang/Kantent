@@ -3,8 +3,8 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
-  atomicWriteFile, atomicWriteJson, findReusableVoiceCheckpoint,
-  isValidWavBuffer, matchesRecordedAudioHash, matchesRecordedWavChunk, sha256,
+  atomicWriteFile, atomicWriteJson, findReusableVoiceCheckpoint, findUnresumableSavedTakes,
+  isValidWavBuffer, matchesRecordedAudioHash, matchesRecordedWavChunk, measureWavQuality, sha256,
 } from "./voice-checkpoint.mjs";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
@@ -49,21 +49,27 @@ const EPISODE_ID = process.argv[2];
 const CLI_OPTIONS = process.argv.slice(3);
 let PLATFORM;
 let RESUME_FOLDER_NAME;
+// Explicit owner decision after listening: buy a new paid take even though a
+// saved take of the same narration exists. Never chosen automatically.
+let NEW_TAKE = false;
 for (let index = 0; index < CLI_OPTIONS.length; index += 1) {
   const option = CLI_OPTIONS[index];
   if (option === "--platform" && !PLATFORM) {
     PLATFORM = CLI_OPTIONS[++index];
   } else if (option === "--resume" && !RESUME_FOLDER_NAME) {
     RESUME_FOLDER_NAME = CLI_OPTIONS[++index];
+  } else if (option === "--new-take" && !NEW_TAKE) {
+    NEW_TAKE = true;
   } else {
-    throw new Error("Use [--platform tiktok] [--resume <generation-folder>].");
+    throw new Error("Use [--platform tiktok] [--resume <generation-folder> | --new-take].");
   }
 }
+if (NEW_TAKE && RESUME_FOLDER_NAME) throw new Error("--new-take and --resume are mutually exclusive.");
 
 function requireEpisodeId(value) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value ?? "")) {
     throw new Error(
-      "Foydalanish: npm run content:voice -- <episode-ID> [--resume <generation-folder>]",
+      "Foydalanish: npm run content:voice -- <episode-ID> [--resume <generation-folder> | --new-take]",
     );
   }
   return value;
@@ -1053,7 +1059,7 @@ const ttsChunks = ONE_TAKE_PILOT
   ? createContinuousTtsChunks(ttsSource, { expectedNarration: narration })
   : createTtsChunks(ttsSource);
 if (!ttsChunks.length) throw new Error("No narration chunks were created.");
-if (!RESUME_FOLDER_NAME) {
+if (!RESUME_FOLDER_NAME && !NEW_TAKE) {
   const checkpoint = await findReusableVoiceCheckpoint({
     productionRoot,
     profile: voiceProfile,
@@ -1069,6 +1075,33 @@ if (!RESUME_FOLDER_NAME) {
   if (checkpoint) {
     RESUME_FOLDER_NAME = checkpoint.folderName;
     console.log(`Resuming verified TTS checkpoint ${checkpoint.folderName}; saved audio will not be regenerated.`);
+  } else {
+    // X-05/X-08: never silently buy another paid take of identical narration
+    // while a saved take exists that automatic resume cannot use.
+    const savedTakes = await findUnresumableSavedTakes({
+      productionRoot,
+      profile: voiceProfile,
+      expected: {
+        episodeId: EPISODE_ID,
+        platform: PLATFORM ?? null,
+        apiTransport: config.apiProvider,
+        narrationTextHash: textHash,
+        ttsGenerationMode: ttsMode,
+        ttsChunkCount: ttsChunks.length,
+      },
+    });
+    if (savedTakes.length) {
+      const list = savedTakes.map((take) => `${take.folderName} (${take.status ?? "unknown"}: ${take.reason})`).join("; ");
+      const reason = `A saved paid take of this exact narration already exists and was not resumed automatically: ${list}. ` +
+        "No new TTS was requested. Listen to it first: re-import an imported take with content:import-voice, " +
+        "resume a SHA-verified one with --resume <folder>, or buy a new take explicitly with --new-take.";
+      await writeTargetStatus({
+        stage: "gemini-voice-blocked", sourceRevision, updatedAt: new Date().toISOString(),
+        voiceProfileId: voiceProfile.profileId, voiceTextHash: currentNarrationHash,
+        reason, savedTakes,
+      });
+      throw new Error(reason);
+    }
   }
 }
 const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
@@ -1138,6 +1171,7 @@ if (RESUME_FOLDER_NAME) {
     narrationTextHash: textHash,
     sourceRevision,
     createdAt: new Date().toISOString(),
+    ...(NEW_TAKE ? { newTakeRequested: true } : {}),
     provider: "gemini-api",
     apiTransport: config.apiProvider,
     ttsTransport: config.ttsTransport,
@@ -1203,6 +1237,7 @@ const persistCheckpoint = () => atomicWriteJson(checkpointPath, {
   ttsChunkCount: ttsChunks.length,
   ttsRequestCount: config.ttsRequestCount,
   createdAt: metadata.createdAt,
+  ...(metadata.newTakeRequested === true ? { newTakeRequested: true } : {}),
   sampleOnly: metadata.sampleOnly === true,
   chunks: metadata.ttsChunks.filter(Boolean),
   transcriptionAttemptsByChunk: metadata.transcriptionAttempts ?? [],
@@ -1252,9 +1287,22 @@ try {
       chunkBytes = generated;
       chunkTransport = config.ttsTransport;
     }
+    // V-12: objective signal QA before any paid STT. A chunk that cannot be
+    // speech is kept as evidence and blocks; it is never silently re-voiced.
+    const audioQa = measureWavQuality(chunkBytes);
     metadata.ttsChunks[index] = {
       file: chunkFile, bytes: chunkBytes.length, sha256: sha256(chunkBytes), transport: chunkTransport,
+      audioQa,
     };
+    if (audioQa.unusable) {
+      metadata.status = "audio-qa-failed";
+      await persistMetadata();
+      await persistCheckpoint();
+      throw new Error(
+        `TTS chunk ${index + 1} failed audio QA (${audioQa.problems.join(", ")}); original WAV preserved, ` +
+        "no STT was spent. Listen to it, then request --new-take explicitly if it is really unusable.",
+      );
+    }
     completedTtsChunks += 1;
     metadata.ttsTransport = config.ttsTransport;
     metadata.transcriptionTransport = config.transcriptionTransport;

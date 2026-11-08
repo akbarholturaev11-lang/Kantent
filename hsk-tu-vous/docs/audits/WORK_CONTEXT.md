@@ -109,6 +109,12 @@ The owner explicitly clarified: **fix the existing bugs, do not add extra produc
 
 **Evidence (local, synthetic — NOT real media QA):** 438/438 Node tests, `npm run lint` (ESLint + tsc) and `npm run check:consistency` pass. No paid API call, no real RU/TG generation, no push, no main merge.
 
+**Follow-up the same day (pushed to PR #59):** merged latest `origin/main` (@hskaiapp rename) and finished that rename in `video-credentials.mjs` (its route guard still pinned `@aibotsakbar`, so `video-credentials.test.mjs` failed on clean main), then:
+
+6. **Silent second paid take (X-05/X-08, real):** PR #59 bought a new take whenever automatic resume could not use a saved one — legacy takes without per-chunk SHA-256, another transport/chunk plan, or an imported take the working copy lost. Read-only replay on 2026-11-08: re-running zhuozi today would have bought 5 RU + 5 TG TTS chunks again; xiang-vs-yao already shows 3 paid takes of one narration. `findUnresumableSavedTakes` now stops before any TTS with the folders and reasons; `--new-take` (MCP `forceNewTake`) is the explicit owner override and retires older takes for both resume and the guard.
+7. **V-12 audio QA:** each TTS chunk's peak/RMS/longest pause/clipping/near-silence is recorded in `ttsChunks[].audioQa` before STT; only digital silence or ≥98% near-silent audio blocks (WAV preserved, no STT spent). Calibrated on 180 real saved chunks: 10–45% near-silent, 0 false rejections.
+8. MCP `generate_voice` description no longer claims audio is "sent to Google" regardless of transport.
+
 **Still open for this objective:** set an OpenRouter credit limit (the configured key reported no per-key limit on 2026-11-08) and run one real RU and one TG episode with fallback enabled, then listen. This branch is 6 commits behind `main`, so `requireFreshGitMain` blocks real production runs from it until it is brought up to date.
 
 ## Next tasks / blockers — BUGS ONLY

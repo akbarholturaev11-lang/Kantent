@@ -771,10 +771,10 @@ export const createServer = () => {
     {
       title: "Generate Gemini voice and word-timed captions",
       description:
-        "Automatically generates MP3 and word-timed VTT with the approved Gemini TTS and Transcribe settings in content/voice-profile.json. A normalized exact-token match is required before media is imported. The script and generated audio are sent to Google.",
-      inputSchema: z.object({ date: dateSchema }),
+        "Generates MP3 and word-timed VTT with the approved Gemini TTS/Transcribe models in the selected language's voice-profile.json through the configured transport (OpenRouter by default; Gemini Direct with the opt-in OpenRouter backup when enabled). A normalized exact-token match is required before import. A matching imported take is reused, and a SHA-verified saved take resumes without new TTS. If an older paid take of the same narration cannot be resumed, the tool stops instead of buying another; set forceNewTake only on an explicit owner request after listening.",
+      inputSchema: z.object({ date: dateSchema, forceNewTake: z.boolean().optional() }),
     },
-    async ({ date }) =>
+    async ({ date, forceNewTake = false }) =>
       withToolErrors(async () => {
         const { item, episode } = await ensureRunCopy(date);
         const voiceProfile = await requireApprovedVoiceProfile(item.id);
@@ -782,10 +782,11 @@ export const createServer = () => {
           throw new Error(
             "Episode voice provider does not match the approved Gemini profile.",
           );
-        const reusedImportedVoice = await hasCurrentImportedVoice(episode, voiceProfile, { projectRoot: PROJECT_ROOT });
+        const reusedImportedVoice = !forceNewTake &&
+          await hasCurrentImportedVoice(episode, voiceProfile, { projectRoot: PROJECT_ROOT });
         const result = reusedImportedVoice
           ? { log: "Reused matching imported voice and word-timed captions; no TTS or STT request was made." }
-          : await runScript("generate-voice-gemini.mjs", item.id);
+          : await runScript("generate-voice-gemini.mjs", item.id, ...(forceNewTake ? ["--new-take"] : []));
         const refreshed = await ensureRunCopy(date);
         return {
           date,
