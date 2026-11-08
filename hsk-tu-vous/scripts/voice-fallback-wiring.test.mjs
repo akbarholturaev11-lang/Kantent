@@ -98,7 +98,7 @@ test("V-10/V-11 wiring: main alignment and recovery share one verified spoken ma
   assert.match(source, /const pairs = collectHanziPinyinPairs\(episode\);/);
   assert.match(source, /buildRecoveryPlan\(expected, original, durationMs, \{ match: spokenMatch\(\) \}\)/);
   assert.match(source, /selectRecoveredBlocks\(gap\.tokens,blocks,\{ match: spokenMatch\(\) \}\)/);
-  assert.match(source, /language_codes: languageCode \? \[languageCode\] : transcriptionLanguages,/);
+  assert.match(source, /transcribeDirectAudio\(clipPath, languageCode \? \[languageCode\] : transcriptionLanguages,/);
 });
 
 test("a resumed take re-checks its saved STT responses before spending a new attempt", () => {
@@ -107,4 +107,15 @@ test("a resumed take re-checks its saved STT responses before spending a new att
   assert.ok(recheck > 0, "saved attempt files are read");
   assert.match(stt, /const reused = alignWords\(ttsChunks\[index\]\.text, previous\.wordAnnotations,/);
   assert.match(stt, /metadata\.reusedSavedTranscriptions\.push\(\{ chunk: index \+ 1, attempt: saved \}\)/);
+});
+
+test("X-10 wiring: single-hint language passes run before gap clips, Direct transport only", () => {
+  const recovery = between("async function recoverActualWordClips({", "function safeErrorMessage");
+  const passes = recovery.indexOf("for (const code of transcriptionLanguages) {");
+  const plan = recovery.indexOf("const plan = buildRecoveryPlan(expected, original, durationMs, { match: spokenMatch() });");
+  assert.ok(passes > 0 && plan > passes, "language passes feed the plan");
+  assert.match(recovery, /if \(config\.transcriptionTransport !== "openrouter" && transcriptionLanguages\.length > 1\)/);
+  assert.match(recovery, /transcribeDirectAudio\(audioPath, \[code\],/);
+  assert.match(recovery, /language-passes\.json/);
+  assert.match(recovery, /if \(!plan\.gaps\.length && languagePasses\.length\) \{[\s\S]*const verified = alignWords\(chunkText, joinedAnnotations, durationMs\);/);
 });

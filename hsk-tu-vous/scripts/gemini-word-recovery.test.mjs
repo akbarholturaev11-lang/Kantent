@@ -71,3 +71,29 @@ test("discard extra unverified words, never use them to fill missing tokens",()=
   assert.equal(p.matches.length,1);
   assert.deepEqual(p.gaps[0].tokens,["这","贵"]);
 });
+test("split recognizer words cover one written word, as one merged annotation",()=>{
+  const words=expected(["ман","locale"],["қадбаландтар","locale"],["аст","locale"]);
+  const original=[block("ман",["ман"],0,500),block("қад",["қад"],500,700),block("баландтар",["баландтар"],700,1300),block("аст",["аст"],1300,1600)];
+  const plan=buildRecoveryPlan(words,original,2000);
+  assert.equal(plan.gaps.length,0);
+  assert.deepEqual(plan.matches.map(m=>[m.from,m.to,m.blockCount]),[[0,1,1],[1,2,2],[2,3,1]]);
+  const merged=mergeRecoveredBlocks(words,original,plan,[]);
+  assert.deepEqual(merged.map(b=>[b.text,b.startMs,b.endMs]),[["ман",0,500],["қадбаландтар",500,1300],["аст",1300,1600]]);
+  // Concatenation must be exact: a different second half is not accepted.
+  const wrong=[block("ман",["ман"],0,500),block("қад",["қад"],500,700),block("баланд",["баланд"],700,1300),block("аст",["аст"],1300,1600)];
+  assert.equal(buildRecoveryPlan(words,wrong,2000).gaps.length,1);
+});
+test("X-10: single-hint language passes over the same audio fill what the mixed pass dropped",()=>{
+  // Real TG chunk 2 shape: the mixed-hint pass returned only the Mandarin.
+  const words=expected(["дуруст","locale"],["他","zh"],["比","zh"],["我","zh"],["高","zh"],["ӯ","locale"],["аз","locale"],["ман","locale"]);
+  const mixedPass=[block("他",["他"],900,1100),block("比",["比"],1100,1300),block("我",["我"],1300,1500),block("高",["高"],1500,1800)];
+  const localePass=[block("Дуруст",["дуруст"],200,800),block("би",["би"],1100,1300),block("Ӯ",["ӯ"],2000,2200),block("аз",["аз"],2200,2400),block("ман",["ман"],2400,2800)];
+  const zhPass=[block("他",["他"],900,1100),block("比",["比"],1100,1300),block("我",["我"],1300,1500),block("高",["高"],1500,1800)];
+  assert.ok(buildRecoveryPlan(words,mixedPass,3000).gaps.length>0,"the mixed pass alone has gaps");
+  const combined=[...mixedPass,...localePass,...zhPass].sort((a,b)=>a.startMs-b.startMs||a.endMs-b.endMs);
+  const plan=buildRecoveryPlan(words,combined,3000);
+  assert.equal(plan.gaps.length,0);
+  const merged=mergeRecoveredBlocks(words,combined,plan,[]);
+  assert.deepEqual(merged.map(b=>b.text),["Дуруст","他","比","我","高","Ӯ","аз","ман"]);
+  assert.ok(merged.every((b,i)=>i===0||b.startMs>=merged[i-1].startMs),"time ordered");
+});

@@ -24,7 +24,15 @@ export function selectExactBlocks(expected, blocks, match = (wanted, heard) => w
         const tokens=block.tokens ?? [];
         if (tokens.length && j+tokens.length<=n &&
             tokens.every((x,k)=>match(expected[j+k].text,x))) {
-          set(i+1,j+tokens.length,score+tokens.length,{i,j,matched:true});
+          set(i+1,j+tokens.length,score+tokens.length,{i,j,matched:true,count:1});
+        }
+        // A recognizer may split one written word into 2–3 timed words
+        // ("қад"+"баландтар"); their exact concatenation can cover it.
+        for (let count=2; count<=3 && j<n && i+count<=m; count++) {
+          const span=blocks.slice(i,i+count);
+          if (!span.every(b=>(b.tokens??[]).length===1)) break;
+          if (match(expected[j].text,span.map(b=>b.tokens[0]).join("")))
+            set(i+count,j+1,score+1,{i,j,matched:true,count});
         }
         set(i+1,j,score,{i,j,matched:false});
       }
@@ -36,7 +44,7 @@ export function selectExactBlocks(expected, blocks, match = (wanted, heard) => w
   while(i||j) {
     const prev=back[i][j];
     if (!prev) throw Error("Word selection could not be reconstructed.");
-    if(prev.matched)matches.push({blockIndex:prev.i,from:prev.j,to:j});
+    if(prev.matched)matches.push({blockIndex:prev.i,blockCount:prev.count,from:prev.j,to:j});
     i=prev.i;j=prev.j;
   }
   matches.reverse();
@@ -71,7 +79,7 @@ export function buildRecoveryPlan(expected, blocks, durationMs, { match } = {}) 
       gaps.push({from:cursor,to:match.from,startMs,endMs,language,
         tokens:tokens.map(x=>x.text)});
     }
-    if(match.blockIndex!==null)previous=blocks[match.blockIndex];
+    if(match.blockIndex!==null)previous=blocks[match.blockIndex+(match.blockCount??1)-1];
     cursor=match.to;
   }
   return {matches:matched,gaps,matchedTokenCount:matched.reduce((s,x)=>s+x.to-x.from,0)};
@@ -91,12 +99,21 @@ export function selectRecoveredBlocks(tokens,blocks,{ match } = {}) {
     lastStart=b.startMs;
     cursor=m.to;
   }
-  return matches.map(m=>blocks[m.blockIndex]);
+  return matches.map(m=>spanBlock(blocks,m));
+}
+
+/** One annotation for a matched span (several split words → one word). */
+export function spanBlock(blocks,m) {
+  const count=m.blockCount??1;
+  if(count===1)return blocks[m.blockIndex];
+  const span=blocks.slice(m.blockIndex,m.blockIndex+count);
+  return {...span[0],text:span.map(b=>b.text).join(""),tokens:[span.map(b=>b.tokens[0]).join("")],
+    endMs:Math.max(...span.map(b=>b.endMs)),mergedBlocks:count};
 }
 
 export function mergeRecoveredBlocks(expected,original,plan,recovered) {
   const combined=[];
-  for(const m of plan.matches)combined.push({from:m.from,to:m.to,block:original[m.blockIndex]});
+  for(const m of plan.matches)combined.push({from:m.from,to:m.to,block:spanBlock(original,m)});
   for(let i=0;i<plan.gaps.length;i++){
     const gap=plan.gaps[i], blocks=recovered[i];
     if(!Array.isArray(blocks))throw Error("Missing recovered clip blocks.");

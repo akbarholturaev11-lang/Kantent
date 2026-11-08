@@ -785,6 +785,34 @@ function timedBlocks(annotations, durationMs) {
   });
 }
 
+/** Direct Gemini word transcription of one saved audio file with explicit hints. */
+async function transcribeDirectAudio(filePath, languageCodes, displayName, config) {
+  const uploaded = await withGeminiKeyFailover(config.credentialState, (apiKey) =>
+    uploadForTranscription(apiKey, filePath, displayName));
+  config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
+  let response;
+  try {
+    response = await requestJson(
+      API_ROOT + "/v1beta/interactions",
+      { method: "POST", headers: {
+        "x-goog-api-key": config.apiKey, "Content-Type": "application/json",
+        "Api-Revision": API_REVISION,
+      }, body: JSON.stringify({
+        model: config.transcribeModel,
+        input: [{ type: "audio", uri: uploaded.uri, mime_type: audioMimeType(filePath) }],
+        generation_config: { transcription_config: {
+          language_codes: languageCodes,
+          mode: { type: "verbatim", timestamp_granularities: ["word"] },
+        } },
+      }) }, "Gemini word transcription");
+  } finally {
+    await deleteGeminiFile(config.apiKey, uploaded.name);
+  }
+  return getWordAnnotations(response.data).map((w) => ({
+    text: w.text, startOffset: w.start_offset, endOffset: w.end_offset,
+  }));
+}
+
 async function recoverActualWordClips({
   chunkText, originalAnnotations, audioPath, durationMs, outputDir,
   chunkNumber, config, ffmpegRuntime, transcriptionLanguages
@@ -794,12 +822,46 @@ async function recoverActualWordClips({
     text: entry.text,
     language: /\p{Script=Han}/u.test(words[entry.wordIndex].display) ? "zh" : "locale",
   }));
-  const original = timedBlocks(originalAnnotations, durationMs);
-  const plan = buildRecoveryPlan(expected, original, durationMs, { match: spokenMatch() });
-  if (!plan.gaps.length || plan.gaps.length > 8)
-    throw new Error("Recovery requires 1–8 independently bounded missing speech spans.");
   const directory = path.join(outputDir, "recovery-diagnostic", "chunk-" + chunkNumber);
   await fs.mkdir(directory, { recursive: true });
+  let original = timedBlocks(originalAnnotations, durationMs);
+  // X-10 (real 2026-11-08 run): a mixed-hint pass drops one language — RU lost
+  // "с 比 или с 很", TG chunk 2 kept only the Mandarin. One pass per single
+  // hint over the SAME saved audio keeps each language; the strict DP then
+  // selects one time-ordered exact cover. Direct transport only (hints).
+  const languagePasses = [];
+  if (config.transcriptionTransport !== "openrouter" && transcriptionLanguages.length > 1) {
+    for (const code of transcriptionLanguages) {
+      try {
+        const annotations = await transcribeDirectAudio(audioPath, [code],
+          `hsk-language-pass-${EPISODE_ID}-${chunkNumber}-${code}`, config);
+        languagePasses.push({ languageCode: code, annotations });
+      } catch (error) {
+        languagePasses.push({ languageCode: code, error: safeErrorMessage(error) });
+      }
+    }
+    await fs.writeFile(path.join(directory, "language-passes.json"),
+      JSON.stringify({ sourceAudio: path.basename(audioPath), languagePasses }, null, 2) + "\n");
+    const passBlocks = languagePasses.filter((pass) => pass.annotations?.length)
+      .flatMap((pass) => timedBlocks(pass.annotations, durationMs));
+    original = [...original, ...passBlocks].sort((a, b) => a.startMs - b.startMs || a.endMs - b.endMs);
+  }
+  const plan = buildRecoveryPlan(expected, original, durationMs, { match: spokenMatch() });
+  if (!plan.gaps.length && languagePasses.length) {
+    const joined = mergeRecoveredBlocks(expected, original, plan, []);
+    const joinedAnnotations = joined.map((b) => ({
+      text: b.text, startOffset: (b.startMs / 1000).toFixed(3) + "s", endOffset: (b.endMs / 1000).toFixed(3) + "s",
+    }));
+    const verified = alignWords(chunkText, joinedAnnotations, durationMs);
+    if (verified.mismatches.length) throw Error("Language passes still failed exact whole-narration word alignment.");
+    await fs.writeFile(path.join(directory, "verified-merge.json"), JSON.stringify({
+      provider: config.transcriptionTransport, model: config.transcribeModel, languagePasses: languagePasses.map((p) => p.languageCode),
+      wordAnnotations: joinedAnnotations, exactAlignment: true,
+    }, null, 2) + "\n");
+    return { wordAnnotations: joinedAnnotations, alignment: verified, transcript: chunkText, recoverySpans: 0 };
+  }
+  if (!plan.gaps.length || plan.gaps.length > 8)
+    throw new Error("Recovery requires 1–8 independently bounded missing speech spans.");
   await fs.writeFile(path.join(directory,"plan.json"),JSON.stringify({
     sourceAudio: path.basename(audioPath), originalAnnotations,
     missingGaps: plan.gaps, matchedTokenCount: plan.matchedTokenCount,
@@ -840,34 +902,9 @@ async function recoverActualWordClips({
           config.fallbackEvents.push({ ...event, chunk: Number(chunkNumber) });
           console.warn("VOICE_TRANSPORT_FALLBACK " + JSON.stringify(event));
         },
-        primary: async () => {
-          const uploaded = await withGeminiKeyFailover(config.credentialState,(apiKey)=>
-            uploadForTranscription(apiKey,clipPath,
-              "hsk-recovery-"+EPISODE_ID+"-"+chunkNumber+"-"+clipName));
-          config.apiKey = config.credentialState.slots[config.credentialState.index].secret;
-          let response;
-          try {
-            response = await requestJson(
-              API_ROOT + "/v1beta/interactions",
-              {method:"POST",headers:{
-                "x-goog-api-key":config.apiKey,"Content-Type":"application/json",
-                "Api-Revision":API_REVISION,
-              },body:JSON.stringify({
-                model:config.transcribeModel,
-                input:[{type:"audio",uri:uploaded.uri,mime_type:audioMimeType(clipPath)}],
-                generation_config:{transcription_config:{
-                  // A mixed RU/TG+Mandarin gap gets both hints (strict gate decides).
-                  language_codes: languageCode ? [languageCode] : transcriptionLanguages,
-                  mode:{type:"verbatim",timestamp_granularities:["word"]},
-                }},
-              })},"Gemini recovery word transcription");
-          } finally {
-            await deleteGeminiFile(config.apiKey,uploaded.name);
-          }
-          return getWordAnnotations(response.data).map(w=>({
-            text:w.text,startOffset:w.start_offset,endOffset:w.end_offset,
-          }));
-        },
+        // A mixed RU/TG+Mandarin gap gets both hints (strict gate decides).
+        primary: () => transcribeDirectAudio(clipPath, languageCode ? [languageCode] : transcriptionLanguages,
+          "hsk-recovery-"+EPISODE_ID+"-"+chunkNumber+"-"+clipName, config),
       });
     }
     // Save the exact provider response/provenance before attempting alignment.
