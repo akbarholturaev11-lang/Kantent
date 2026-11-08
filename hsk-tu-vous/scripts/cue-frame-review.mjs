@@ -47,10 +47,24 @@ export function planCueFrameReview(episode,timeline,{maxBeats=72}={}) {
     const beats=resolved.motionBeats?.length
       ? resolved.motionBeats
       : resolved.promoCue?[resolved.promoCue]:[];
+    // Validate every cue on its own BEFORE checking neighboring intervals:
+    // an invalid later cue must not masquerade as the preceding beat's error.
+    ensureId(scene.id);
+    if(!finiteNonnegative(scene.startMs))
+      throw Error(`${scene.id}: real scene.startMs required for frame-accurate review.`);
+    for(const beat of beats) {
+      ensureId(beat.id);
+      if(!finiteNonnegative(beat.startMs)||
+          !finiteNonnegative(beat.endMs)||beat.endMs<=beat.startMs||
+          !boundedInteger(beat.startFrame,0,Number.MAX_SAFE_INTEGER)||
+          !boundedInteger(beat.localFrame,0,scene.durationFrames-1))
+        throw Error(`${scene.id}/${beat.id}: real cue localFrame/startMs/endMs missing or outside scene.`);
+      const exactFrame=Math.ceil(beat.startMs*FPS/1000);
+      const exactLocal=exactFrame-Math.round(scene.startMs*FPS/1000);
+      if(beat.startFrame!==exactFrame||beat.localFrame!==exactLocal)
+        throw Error(`${scene.id}/${beat.id}: compiled word cue frame differs from real audio timing.`);
+    }
     for(const [beatIndex,beat] of beats.entries()){
-      ensureId(scene.id); ensureId(beat.id);
-      if(!finiteNonnegative(beat.startMs)||!boundedInteger(beat.localFrame,0,scene.durationFrames-1))
-        throw Error(`${scene.id}/${beat.id}: real cue localFrame/startMs missing or outside scene.`);
       // Same frame numbering as Remotion's local Sequence; not a guessed duration slice.
       const cueFrame=start+beat.localFrame;
       const next=beats[beatIndex+1];
