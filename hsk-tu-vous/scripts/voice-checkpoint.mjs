@@ -35,13 +35,19 @@ export function isValidWavBuffer(bytes) {
   return hasFormat && hasAudio;
 }
 
+/** Never treat a hashless or altered encoded audio take as verified. */
+export function matchesRecordedAudioHash(bytes, recordedSha) {
+  return Buffer.isBuffer(bytes) &&
+    /^[a-f0-9]{64}$/.test(recordedSha ?? "") &&
+    sha256(bytes) === recordedSha;
+}
+
 /** Verify a saved speech chunk against the exact checkpoint record.
  * This is deliberately stricter than WAV structural validation alone. */
 export function matchesRecordedWavChunk(fileName, bytes, recorded, validateWav = isValidWavBuffer) {
   return recorded?.file === fileName &&
-    /^[a-f0-9]{64}$/.test(recorded?.sha256 ?? "") &&
     validateWav(bytes) &&
-    sha256(bytes) === recorded.sha256;
+    matchesRecordedAudioHash(bytes, recorded.sha256);
 }
 
 export async function atomicWriteFile(filePath, contents) {
