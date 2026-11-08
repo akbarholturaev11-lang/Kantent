@@ -10,12 +10,12 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import {createHash} from "node:crypto";
-import {spawnSync} from "node:child_process";
 import {fileURLToPath} from "node:url";
 import {assertCueTimelineMatches} from "./cue-timeline.mjs";
 import {assertSharedLesson, sharedRenderRanges, platformPackagePaths} from "./platform-exports.mjs";
 import {verifyPlatformVideo} from "./render-platform-videos.mjs";
 import {compileSemanticVisualTimeline} from "./semantic-visual-plan.mjs";
+import {extractCueFrameBatch} from "./cue-frame-batch.mjs";
 import {episodeContentHash, reviewDir, safeId} from "./lib.mjs";
 
 const scriptPath=fileURLToPath(import.meta.url);
@@ -140,19 +140,25 @@ export function planCueFrameReview(episode,timeline,{maxBeats=72}={}) {
     samples,staticShots,realVoiceAndTeachingMeaningReviewed:false,ownerPreviewApproved:false};
 }
 
-function run(command,args) {
-  const processResult=spawnSync(command,args,{encoding:"utf8",stdio:["ignore","pipe","pipe"]});
-  if(processResult.error)throw processResult.error;
-  if(processResult.status!==0)throw Error(`${command} failed: ${(processResult.stderr||processResult.stdout||"").slice(-1400)}`);
-  return processResult.stdout;
+/** A single sorted frame index serves multiple labeled output files. */
+export function frameReviewRequests(plan) {
+  const requests=[];
+  for(const sample of plan.samples) {
+    for(const [name,frame] of [["before",sample.beforeFrame],["cue",sample.cueFrame],
+      ["settled",sample.settledFrame]]) {
+      if(frame!==null)
+        requests.push({frame,stem:`${sample.sceneId}-${sample.beatId}-${name}`});
+    }
+  }
+  for(const shot of plan.staticShots??[]) {
+    for(const [name,key] of [["first","firstFrame"],["middle","middleFrame"],["last","lastFrame"]])
+      requests.push({frame:shot[key],stem:`${shot.sceneId}-shot-${name}`});
+  }
+  for(const [key,name] of [["beforeCta","before"],["firstCta","start"],["finalCta","end"]])
+    requests.push({frame:plan.ctaBoundaryFrames[key],stem:"cta-"+name});
+  return requests;
 }
-function extractFrame(video,frame,destination,width,height) {
-  // select=eq(n,FRAME) decodes the exact encoded video frame, not an
-  // approximate -ss seek that can silently pick the wrong word cue.
-  run("ffmpeg",["-hide_banner","-loglevel","error","-nostdin","-i",video,
-    "-vf",`select=eq(n\\,${frame}),scale=${width}:${height}:flags=lanczos`,
-    "-fps_mode","vfr","-frames:v","1","-update","1",destination]);
-}
+
 async function readJson(file) {
   return JSON.parse(await fs.readFile(file,"utf8"));
 }
@@ -215,45 +221,12 @@ export async function reviewExistingVideo({
   // exact frames, BT.709 and matching durations. A silent forged MP4 is NOT
   // evidence of narration-synchronized teaching visuals.
   await verifyPlatformVideo(videoFile,plan.totalFrames);
-  // Existing work is never overwritten: each run needs a fresh path.
+  // Existing work is never overwritten. The batch decoder consumes all
+  // exact encoded cue, semantic and per-platform CTA frame indices in just
+  // TWO sequential FFmpeg passes, irrespective of episode cue count.
   await fs.mkdir(outputDir,{recursive:false});
-  for(const sample of plan.samples){
-    for(const [kind,index] of [["before",sample.beforeFrame],["cue",sample.cueFrame],["settled",sample.settledFrame]]){
-      if(index===null)continue;
-      const prefix=`${sample.sceneId}-${sample.beatId}-${kind}`;
-      const full=path.join(outputDir,`${prefix}-full.png`);
-      const phone=path.join(outputDir,`${prefix}-phone.png`);
-      extractFrame(videoFile,index,full,1080,1920);
-      extractFrame(videoFile,index,phone,270,480);
-      // Some ffmpeg builds can return success but emit no frame when -select
-      // has no match. Never accept an incomplete contact sheet as evidence.
-      for(const file of [full,phone]){
-        if((await fs.stat(file)).size===0)throw Error("Empty decoded proof frame: "+file);
-      }
-    }
-  }
-  for(const shot of plan.staticShots) {
-    for(const [name,key] of [["first","firstFrame"],["middle","middleFrame"],["last","lastFrame"]]) {
-      for(const [label,width,height] of [["full",1080,1920],["phone",270,480]]) {
-        const output=path.join(outputDir,`${shot.sceneId}-shot-${name}-${label}.png`);
-        extractFrame(videoFile,shot[key],output,width,height);
-        if((await fs.stat(output)).size===0)
-          throw Error("Empty static-shot proof frame: "+output);
-      }
-    }
-  }
-  // Every platform's final CTA may render different visuals. Review its own
-  // before/first/last encoded CTA frames in addition to shared lesson cues.
-  for(const [key,name] of [["beforeCta","before"],["firstCta","start"],["finalCta","end"]]){
-    const frame=plan.ctaBoundaryFrames[key];
-    for(const [label,width,height] of [["full",1080,1920],["phone",270,480]]){
-      const output=path.join(outputDir,`cta-${name}-${label}.png`);
-      extractFrame(videoFile,frame,output,width,height);
-      if((await fs.stat(output)).size===0)
-        throw Error("Empty CTA proof frame: "+output);
-    }
-  }
-  const evidence={...plan,platform,videoSha256:digest,
+  const extraction=await extractCueFrameBatch(videoFile,outputDir,frameReviewRequests(plan));
+  const evidence={...plan,platform,extraction,videoSha256:digest,
     sourceEpisodeHash:baseHash,platformEpisodeHash:variantHash,
     generatedAt:new Date().toISOString(),videoFile:path.basename(videoFile),
     verdict:"FRAME_SAMPLES_GENERATED_NOT_VISUALLY_APPROVED"};
