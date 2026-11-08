@@ -26,8 +26,7 @@ export function cameraFor(ill) {
 
 /**
  * Screen-space boxes text must not cover for this beat: each subject's head
- * (a square as tall as the subject is wide, so a big-headed panda and a
- * slim man are both protected), the pair cards or the formula.
+ * (the upper part of its anchor box), the pair cards or the formula.
  */
 export function blockedBoxes(ill) {
   const L = ILLUSTRATED_LAYOUT;
@@ -41,7 +40,10 @@ export function blockedBoxes(ill) {
   return Object.values(ill.anchors ?? {}).map((box) => {
     const top = sy(box.y);
     return { x0: sx(box.x) - 20, x1: sx(box.x + box.w) + 20, y0: top - 20,
-      y1: Math.min(sy(box.y + box.h), top + box.w * w * camera.scale) + 10 };
+      // The head is the upper part of the subject: at most a square as tall
+      // as the subject is wide and never more than 35% of its height (a wide
+      // crane box must not block the whole lower frame).
+      y1: Math.min(sy(box.y + box.h * 0.35), top + box.w * w * camera.scale) + 10 };
   });
 }
 
