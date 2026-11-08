@@ -7,7 +7,8 @@
       "name": "panda-and-friend",
       "aspectRatio": "9:16",
       "character": "aobao-panda",
-      "prompt": "A calm Beijing hutong street at golden hour. On the LEFT stands a tall, slim young man (full body, head to shoes), short black hair, teal jacket, dark trousers, friendly smile, facing the viewer. On the RIGHT stands Aobao the panda exactly as in the first reference image, full body, clearly shorter: the top of Aobao's head reaches only the man's chest. Both face the viewer. Leave generous empty sky and wall space in the upper third. Both figures stand in the lower two thirds with a small gap between them. Aobao stays a flat vector mascot with thick black outlines inside the illustrated street."
+      "prompt": "A calm Beijing hutong street at golden hour. On the LEFT stands a tall, slim young man (full body, head to shoes), short black hair, teal jacket, dark trousers, facing the viewer, his face strongly privacy-blurred and featureless. On the RIGHT stands Aobao the panda exactly as in the first reference image, full body, clearly shorter: the top of Aobao's head reaches only the man's chest. Both face the viewer. Leave generous empty sky and wall space in the upper third. Both figures stand in the lower two thirds with a small gap between them. Aobao stays a flat vector mascot with thick black outlines inside the illustrated street.",
+      "humans": true
     },
     {
       "name": "panda-summer",

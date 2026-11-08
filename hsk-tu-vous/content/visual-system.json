@@ -337,7 +337,6 @@
     "subtitleWeight": 650,
     "wordStaggerFrames": 2,
     "wordEntryFrames": 6,
-    "beatEntryFrames": 9,
-    "illustratedSubtitleTopPx": 392
+    "beatEntryFrames": 9
   }
 }

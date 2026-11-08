@@ -18,6 +18,10 @@ import { PROJECT_ROOT } from "./lib.mjs";
 import { redactCredentials } from "./video-credentials.mjs";
 
 const ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
+// Owner rule 2026-11-09: a drawn human never shows a recognizable face. It is
+// appended to EVERY prompt here so no manifest can forget it. Aobao the panda
+// is the only character with a visible face.
+export const HUMAN_FACE_RULE = "PEOPLE RULE (mandatory): any human figure in the image must NOT show a recognizable face — the whole face area is strongly blurred like a privacy blur (soft, featureless, no eyes, nose or mouth visible), or the person is seen from behind. Hair, body, clothes and pose stay clear. This rule never applies to Aobao the panda.";
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 
 export function validateArtManifest(manifest) {
@@ -87,7 +91,7 @@ async function main() {
     // The HSK AI panda is the only character: its canonical file is always
     // the first reference image and its identity text is part of the prompt.
     const character = asset.character ? JSON.parse(await fs.readFile(path.join(PROJECT_ROOT, "content", "characters", asset.character + ".json"), "utf8")) : null;
-    const prompt = `${manifest.style}\n\n${character ? `CHARACTER (first reference image, keep exactly): ${character.identity}\n\n` : ""}${asset.prompt}`;
+    const prompt = `${manifest.style}\n\n${HUMAN_FACE_RULE}\n\n${character ? `CHARACTER (first reference image, keep exactly): ${character.identity}\n\n` : ""}${asset.prompt}`;
     const exists = await fs.access(file).then(() => true, () => false);
     if (exists && !regenerate.has(asset.name)) {
       console.log(`kept ${asset.name}.png (saved image is never regenerated without --regenerate)`);

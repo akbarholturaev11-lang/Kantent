@@ -2,6 +2,7 @@ import {AbsoluteFill, Easing, Img, interpolate, staticFile} from "remotion";
 import type {ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
 import visual from "../content/visual-system.json";
 import {activeNarratedBeat} from "../scripts/narrated-beat-state.mjs";
+import {ILLUSTRATED_LAYOUT as LAY, cameraFor} from "../scripts/illustrated-layout.mjs";
 
 /**
  * Illustrated-glass lesson frame (owner decision 2026-11-09, modelled on the
@@ -49,11 +50,6 @@ export const LiquidGlass:React.FC<{children:React.ReactNode;style?:React.CSSProp
 
 const art=(episodeId:string,name:string)=>staticFile(`lesson-art/${episodeId}/${name}.png`);
 type Camera={scale:number;cx:number;cy:number};
-const cameraFor=(ill:Illustration|undefined):Camera=>{
-  const box=ill?.focus&&ill.anchors?.[ill.focus];
-  if(ill?.layout==="scene"&&box) return {scale:1.28,cx:box.x+box.w/2,cy:box.y+box.h*.42};
-  return {scale:1,cx:.5,cy:.6};
-};
 const pct=(value:number)=>`${value*100}%`;
 
 const Marks:React.FC<{a:Box;b:Box;local:number;rise:boolean}>=({a,b,local,rise})=>{
@@ -112,7 +108,7 @@ const SceneLayer:React.FC<{episodeId:string;ill:Illustration;beat:ResolvedMotion
   // image's camera transform, so anchors stay on the drawn subjects.
   return <>
   <Img src={art(episodeId,ill.images[0])} style={{position:"absolute",inset:-60,width:W+120,height:H+120,objectFit:"cover",filter:"blur(30px) brightness(.6)"}}/>
-  <div style={{position:"absolute",left:16,top:130,width:1048,height:1877,transformOrigin:`${camera.cx*100}% ${camera.cy*100}%`,scale:camera.scale}}>
+  <div style={{position:"absolute",left:0,top:LAY.sceneImageTopPx,width:W,height:LAY.sceneImageHeightPx,transformOrigin:`${camera.cx*100}% ${camera.cy*100}%`,scale:camera.scale}}>
     <Img src={art(episodeId,ill.images[0])} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",borderRadius:0}}/>
     {a&&b&&(ill.overlay==="marks"||ill.overlay==="rise"||ill.overlay==="cross")&&<Marks a={a} b={b} local={local} rise={ill.overlay!=="marks"}/>}
     {a&&b&&ill.overlay==="link"&&<Link from={a} to={b} local={local} label="比"/>}
@@ -127,7 +123,7 @@ const PairLayer:React.FC<{episodeId:string;ill:Illustration;local:number}>=({epi
   const focusIndex=ill.focus==="left"?0:ill.focus==="right"?1:-1;
   return <>
     <Img src={art(episodeId,ill.images[1]??ill.images[0])} style={{position:"absolute",inset:-60,width:W+120,height:H+120,objectFit:"cover",filter:"blur(34px) brightness(.55) saturate(1.2)"}}/>
-    <div style={{position:"absolute",left:60,right:60,top:700,height:640,display:"flex",gap:40,justifyContent:"center"}}>
+    <div style={{position:"absolute",left:60,right:60,top:LAY.pairTopPx,height:LAY.pairHeightPx,display:"flex",gap:40,justifyContent:"center"}}>
       {ill.images.slice(0,2).map((name,index)=>{
         const focused=index===focusIndex, dimmed=focusIndex>=0&&!focused;
         const icon=ill.icons?.[index];
@@ -149,12 +145,12 @@ const PairLayer:React.FC<{episodeId:string;ill:Illustration;local:number}>=({epi
         </div>;
       })}
     </div>
-    {ill.overlay==="compare"&&<div style={{position:"absolute",left:"50%",top:1020,translate:"-50% -50%",scale:.6+.4*pop(local,6,10),opacity:pop(local,6,8)}}>
+    {ill.overlay==="compare"&&<div style={{position:"absolute",left:"50%",top:LAY.pairTopPx+LAY.pairHeightPx/2,translate:"-50% -50%",scale:.6+.4*pop(local,6,10),opacity:pop(local,6,8)}}>
       <LiquidGlass radius={999} tint="rgba(233,169,22,.4)" style={{padding:"12px 30px"}}><span style={{fontFamily:G.hanziFontFamily,fontSize:60,fontWeight:800,color:"#FFFFFF"}}>比</span></LiquidGlass>
     </div>}
     {ill.overlay==="drop"&&<svg width={W} height={H} style={{position:"absolute",inset:0}}>
-      <path d={`M 800 640 L 800 ${640+90*pop(local,6,12)}`} stroke="#9FD4FF" strokeWidth="12" strokeLinecap="round"/>
-      <path d={`M 772 ${700+30*pop(local,6,12)} L 800 ${730+30*pop(local,6,12)} L 828 ${700+30*pop(local,6,12)}`} fill="none" stroke="#9FD4FF" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" opacity={pop(local,10,6)}/>
+      <path d={`M 940 ${LAY.pairTopPx+40} L 940 ${LAY.pairTopPx+40+120*pop(local,6,12)}`} stroke="#9FD4FF" strokeWidth="12" strokeLinecap="round"/>
+      <path d={`M 912 ${LAY.pairTopPx+130*pop(local,6,12)} L 940 ${LAY.pairTopPx+30+130*pop(local,6,12)} L 968 ${LAY.pairTopPx+130*pop(local,6,12)}`} fill="none" stroke="#9FD4FF" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" opacity={pop(local,10,6)}/>
     </svg>}
   </>;
 };
@@ -162,7 +158,7 @@ const PairLayer:React.FC<{episodeId:string;ill:Illustration;local:number}>=({epi
 const BoardLayer:React.FC<{episodeId:string;ill:Illustration;local:number}>=({episodeId,ill,local})=><>
   <Img src={art(episodeId,ill.images[0])} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",scale:1.05+.02*pop(local,0,60)}}/>
   <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.05) 38%, rgba(0,0,0,.05) 70%, rgba(0,0,0,.45) 100%)"}}/>
-  <div style={{position:"absolute",left:110,right:110,top:880,display:"flex",flexWrap:"wrap",gap:22,justifyContent:"center",alignItems:"center"}}>
+  <div style={{position:"absolute",left:110,right:110,top:LAY.boardTopPx,display:"flex",flexWrap:"wrap",gap:22,justifyContent:"center",alignItems:"center"}}>
     {(ill.parts??[]).map((part,index)=>{
       const p=pop(local,index*4,10);
       const hanzi=/\p{Script=Han}/u.test(part);
@@ -200,16 +196,16 @@ export const IllustratedLessonScene:React.FC<{episodeId:string;frame:number;beat
       {ill.layout==="pair"&&<PairLayer episodeId={episodeId} ill={ill} local={local}/>}
       {ill.layout==="board"&&<BoardLayer episodeId={episodeId} ill={ill} local={local}/>}
     </div>
-    <div style={{position:"absolute",left:0,right:0,top:0,height:760,background:"linear-gradient(180deg, rgba(6,8,12,.78) 0%, rgba(6,8,12,.45) 55%, transparent 100%)"}}/>
+    <div style={{position:"absolute",left:0,right:0,top:0,height:900,background:"linear-gradient(180deg, rgba(6,8,12,.55) 0%, rgba(6,8,12,.5) 45%, transparent 100%)"}}/>
     <div style={{position:"absolute",left:0,right:0,bottom:0,height:620,background:"linear-gradient(0deg, rgba(6,8,12,.82) 0%, rgba(6,8,12,.5) 45%, transparent 100%)"}}/>
-    <div style={{position:"absolute",top:110,left:0,right:0,display:"flex",justifyContent:"center"}}>
+    <div style={{position:"absolute",top:LAY.brandTopPx-62,left:0,right:0,display:"flex",justifyContent:"center"}}>
       <LiquidGlass radius={999} style={{padding:"10px 24px 10px 12px"}}>
         <div style={{display:"flex",alignItems:"center",gap:12,fontSize:28,fontWeight:700}}>
           <Img src={staticFile("branding/hsk-ai-logo-1024.png")} style={{width:40,height:40,borderRadius:12}}/>HSK <span style={{color:C.brandGold}}>AI</span>
         </div>
       </LiquidGlass>
     </div>
-    <div data-reference-headline style={{position:"absolute",top:215,left:80,right:80,textAlign:"center",fontSize:72,fontWeight:800,
+    <div data-reference-headline style={{position:"absolute",top:LAY.headlineTopPx,left:80,right:80,textAlign:"center",fontSize:72,fontWeight:800,
       lineHeight:1.06,letterSpacing:-.8,textShadow:"0 6px 30px rgba(0,0,0,.45)"}}>
       {words.map((word,i)=>{
         const p=interpolate(local,[i*G.wordStaggerFrames,i*G.wordStaggerFrames+G.wordEntryFrames],[0,1],ease);
@@ -217,7 +213,7 @@ export const IllustratedLessonScene:React.FC<{episodeId:string;frame:number;beat
           fontFamily:/\p{Script=Han}/u.test(word)?G.hanziFontFamily:undefined,color:/\p{Script=Han}/u.test(word)?C.brandGold:undefined}}>{word}</span>;
       })}
     </div>
-    <div style={{position:"absolute",top:470,left:0,right:0,display:"flex",justifyContent:"center",
+    <div style={{position:"absolute",top:LAY.chipTopPx,left:0,right:0,display:"flex",justifyContent:"center",
       opacity:pop(local,3,8),scale:.88+.12*pop(local,3,12)}}>
       <LiquidGlass radius={44} style={{padding:"14px 34px"}}>
         <div data-reference-chip style={{display:"flex",alignItems:"baseline",justifyContent:"center",flexWrap:"wrap",columnGap:20,maxWidth:900}}>

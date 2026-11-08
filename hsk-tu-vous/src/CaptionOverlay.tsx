@@ -10,6 +10,7 @@ import {
   type TimedCaption,
 } from "../scripts/caption-utils.mjs";
 import visualSystem from "../content/visual-system.json";
+import { subtitleTopFor } from "../scripts/illustrated-layout.mjs";
 import { actionTextAtFrame, actionSubtitlePresentation, type ActionCaptionScene } from "../scripts/action-text-layout.mjs";
 
 export type { TimedCaption } from "../scripts/caption-utils.mjs";
@@ -88,7 +89,9 @@ export const CaptionOverlay: React.FC<{
     return (
       <AbsoluteFill style={{ pointerEvents: "none", zIndex: 20 }}>
         <div data-subtitle-block style={{ position: "absolute", left: 80, right: 80,
-          top: (actionText.model as {illustration?: unknown} | undefined)?.illustration ? G.illustratedSubtitleTopPx : G.subtitleTopPx,
+          // Illustrated beats: the first safe-zone slot that covers no head/card.
+          top: (actionText.model as {illustration?: unknown} | undefined)?.illustration
+            ? subtitleTopFor((actionText.model as {illustration?: unknown}).illustration) : G.subtitleTopPx,
           display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "baseline", columnGap: 16,
           fontFamily: G.fontFamily, fontSize: G.subtitleFontPx, fontWeight: G.subtitleWeight, lineHeight: 1.15,
           color: "#FFFFFF", textShadow: "0 4px 24px rgba(0,0,0,.45)", textAlign: "center" }}>
