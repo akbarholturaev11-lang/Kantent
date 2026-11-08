@@ -855,7 +855,7 @@ function measureSilences(sourcePath, ffmpegRuntime) {
  * OpenRouter transport with the first code as its single ISO hint. Same saved audio
  * either way; speech is never regenerated here.
  */
-async function transcribeSavedAudio(filePath, languageCodes, displayName, { stage, chunk }) {
+async function transcribeSavedAudio(filePath, languageCodes, displayName, { stage, chunk, allowBackup = true }) {
   const openRouterHint = openRouterLanguage(languageCodes[0]);
   const openRouter = async () => (await transcribeOpenRouter({
     apiKey: openRouterKeyFor(config), model: config.transcribeModel, audioPath: filePath,
@@ -866,7 +866,7 @@ async function transcribeSavedAudio(filePath, languageCodes, displayName, { stag
   let provider = "gemini-direct";
   const annotations = await withOpenRouterBackup({
     stage,
-    enabled: Boolean(config.openRouterBackupKey),
+    enabled: allowBackup && Boolean(config.openRouterBackupKey),
     backup: async () => { provider = "openrouter"; return openRouter(); },
     onFallback: (event) => {
       config.transcriptionTransport = "openrouter";
@@ -887,19 +887,42 @@ async function transcribeSavedAudio(filePath, languageCodes, displayName, { stag
  * A provider response for one exact clip is paid for once: it is saved and
  * reused by later attempts and resumed runs (key = exact bounds + hints).
  * Empty responses are not cached, so they may be requested again.
+ * A backup (OpenRouter) answer is reused while STT runs on the backup; once
+ * Gemini Direct is available again the same clip is asked once on Direct
+ * WITHOUT a second backup call, and the backup answer is kept beside it as
+ * extra evidence (`alternates`) for the strict recovery selection.
  */
 async function cachedClipTranscription(cachePath, key, request) {
+  const alternatePath = cachePath.replace(/\.json$/, ".openrouter.json");
+  const readRecord = async (file) => {
+    try {
+      const saved = await readJson(file);
+      return saved?.key === key && Array.isArray(saved.annotations) && saved.annotations.length ? saved : null;
+    } catch (error) {
+      if (error?.code !== "ENOENT" && !(error instanceof SyntaxError)) throw error;
+      return null;
+    }
+  };
+  const withAlternates = async (record) => {
+    const alternate = record.provider === "openrouter" ? null : await readRecord(alternatePath);
+    return alternate ? { ...record, alternates: [alternate.annotations] } : record;
+  };
+  const saved = await readRecord(cachePath);
+  if (saved && (saved.provider !== "openrouter" || config.transcriptionTransport === "openrouter"))
+    return withAlternates(saved);
+  let result;
   try {
-    const saved = await readJson(cachePath);
-    if (saved?.key === key && Array.isArray(saved.annotations) && saved.annotations.length) return saved;
+    result = await request({ allowBackup: !saved });
   } catch (error) {
-    if (error?.code !== "ENOENT" && !(error instanceof SyntaxError)) throw error;
+    if (saved) return saved;
+    throw error;
   }
-  const result = await request();
   const record = { key, ...result, model: config.transcribeModel, savedAt: new Date().toISOString() };
-  if (record.annotations?.length)
-    await fs.writeFile(cachePath, JSON.stringify(record, null, 2) + "\n");
-  return record;
+  if (!record.annotations?.length) return saved ?? record;
+  if (saved && record.provider !== saved.provider)
+    await fs.writeFile(alternatePath, JSON.stringify(saved, null, 2) + "\n");
+  await fs.writeFile(cachePath, JSON.stringify(record, null, 2) + "\n");
+  return withAlternates(record);
 }
 
 async function recoverActualWordClips({
@@ -936,14 +959,15 @@ async function recoverActualWordClips({
         const name = `window-${pad2(windowIndex + 1)}-${code}`;
         try {
           const record = await cachedClipTranscription(path.join(directory, name + ".json"),
-            `${window.startMs}-${window.endMs}-${code}`, async () => {
+            `${window.startMs}-${window.endMs}-${code}`, async ({ allowBackup }) => {
               const clipPath = path.join(directory, `window-${pad2(windowIndex + 1)}.wav`);
               cutWavClip(audioPath, window.startMs, window.endMs, clipPath, ffmpegRuntime);
               return transcribeSavedAudio(clipPath, [code],
                 `hsk-language-pass-${EPISODE_ID}-${chunkNumber}-${windowIndex + 1}-${code}`,
-                { stage: "stt-language-pass", chunk });
+                { stage: "stt-language-pass", chunk, allowBackup });
             });
-          blocks.push(...timedBlocks(offsetAnnotations(record.annotations, window.startMs), durationMs));
+          for (const annotations of [record.annotations, ...(record.alternates ?? [])])
+            blocks.push(...timedBlocks(offsetAnnotations(annotations, window.startMs), durationMs));
           languagePasses.push({ window: windowIndex + 1, languageCode: code, provider: record.provider, words: record.annotations.length });
         } catch (error) {
           languagePasses.push({ window: windowIndex + 1, languageCode: code, error: safeErrorMessage(error) });
@@ -984,15 +1008,16 @@ async function recoverActualWordClips({
       for (const hints of hintSets) {
         const label = hints.length ? hints.join("+") : "nohint";
         const record = await cachedClipTranscription(path.join(directory, `${clipName}-${label}.json`),
-          `${gap.startMs}-${gap.endMs}-${label}`, async () => {
+          `${gap.startMs}-${gap.endMs}-${label}`, async ({ allowBackup }) => {
             const actualMs = cutWavClip(audioPath, gap.startMs, gap.endMs, clipPath, ffmpegRuntime);
             return { ...(await transcribeSavedAudio(clipPath, hints.length ? hints : transcriptionLanguages,
-              `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${clipName}-${label}`, { stage: "stt-recovery", chunk })),
+              `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${clipName}-${label}`, { stage: "stt-recovery", chunk, allowBackup })),
             clipStartMs: gap.startMs, clipEndMs: gap.endMs, actualClipDurationMs: actualMs };
           });
         const clipMs = record.actualClipDurationMs ?? (gap.endMs - gap.startMs);
-        gapBlocks.push(...timedBlocks(record.annotations, clipMs)
-          .map((b) => ({ ...b, startMs: b.startMs + gap.startMs, endMs: b.endMs + gap.startMs })));
+        for (const annotations of [record.annotations, ...(record.alternates ?? [])])
+          gapBlocks.push(...timedBlocks(annotations, clipMs)
+            .map((b) => ({ ...b, startMs: b.startMs + gap.startMs, endMs: b.endMs + gap.startMs })));
       }
       gapBlocks.sort(byTime);
       let selected;
@@ -1009,13 +1034,14 @@ async function recoverActualWordClips({
         const contextName = `context-${contextStart}-${contextEnd}`;
         const contextPath = path.join(directory, contextName + ".wav");
         const record = await cachedClipTranscription(path.join(directory, `${contextName}-${hintSets[0].join("+") || "nohint"}.json`),
-          `${contextStart}-${contextEnd}-${hintSets[0].join("+") || "nohint"}`, async () => {
+          `${contextStart}-${contextEnd}-${hintSets[0].join("+") || "nohint"}`, async ({ allowBackup }) => {
             const actualMs = cutWavClip(audioPath, contextStart, contextEnd, contextPath, ffmpegRuntime);
             return { ...(await transcribeSavedAudio(contextPath, hintSets[0].length ? hintSets[0] : transcriptionLanguages,
-              `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${contextName}`, { stage: "stt-recovery", chunk })),
+              `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${contextName}`, { stage: "stt-recovery", chunk, allowBackup })),
             clipStartMs: contextStart, clipEndMs: contextEnd, actualClipDurationMs: actualMs };
           });
-        const inside = timedBlocks(record.annotations, record.actualClipDurationMs ?? (contextEnd - contextStart))
+        const inside = [record.annotations, ...(record.alternates ?? [])]
+          .flatMap((annotations) => timedBlocks(annotations, record.actualClipDurationMs ?? (contextEnd - contextStart)))
           .map((b) => ({ ...b, startMs: b.startMs + contextStart, endMs: b.endMs + contextStart }))
           // Provider times are kept as returned; only words lying inside the
           // span (±120 ms tolerance) may fill it.
@@ -1371,10 +1397,14 @@ if (RESUME_FOLDER_NAME) {
   // A take that already moved to the opt-in backup continues on it; its saved
   // chunks are never regenerated and never mixed with new Direct speech.
   config.ttsTransport = metadata.ttsTransport ?? config.apiProvider;
-  config.transcriptionTransport = metadata.transcriptionTransport ?? config.apiProvider;
+  // STT only reads the saved audio, so a resumed run asks the requested
+  // transport first again (a spent Direct daily quota resets); it may fall
+  // back again on its own 429/5xx. Real TG one-take 2026-11-08: Tajik STT on
+  // the backup was far noisier than Direct with tg-TJ + Mandarin hints.
+  config.transcriptionTransport = config.apiProvider;
   config.fallbackEvents = Array.isArray(metadata.fallbackEvents) ? metadata.fallbackEvents : [];
   if (config.apiProvider === "gemini-direct" && !config.openRouterBackupKey &&
-      (config.ttsTransport === "openrouter" || config.transcriptionTransport === "openrouter")) {
+      config.ttsTransport === "openrouter") {
     throw new Error("Resuming an OpenRouter-backed take requires HSK_AI_OPENROUTER_FALLBACK_ENABLED=true and OPENROUTER_API_KEY.");
   }
   delete metadata.error;
@@ -1706,12 +1736,12 @@ try {
       for (const [windowIndex, window] of sttWindows.entries()) {
         const name = `part-${chunkNumber}-window-${pad2(windowIndex + 1)}`;
         const record = await cachedClipTranscription(path.join(windowDir, name + ".json"),
-          `${window.startMs}-${window.endMs}-${transcriptionLanguages.join("+")}`, async () => {
+          `${window.startMs}-${window.endMs}-${transcriptionLanguages.join("+")}`, async ({ allowBackup }) => {
             const clipPath = path.join(windowDir, name + ".wav");
             cutWavClip(chunkWavPath, window.startMs, window.endMs, clipPath, ffmpegRuntime);
             return transcribeSavedAudio(clipPath, transcriptionLanguages,
               `hsk-production-${EPISODE_ID}-${index + 1}-w${windowIndex + 1}-attempt-${attempt}`,
-              { stage: "stt", chunk: index + 1 });
+              { stage: "stt", chunk: index + 1, allowBackup });
           });
         annotations.push(...offsetAnnotations(record.annotations, window.startMs));
       }
@@ -2079,7 +2109,7 @@ try {
   metadata.transcriptionTransport = config.transcriptionTransport;
   metadata.fallbackEvents = config.fallbackEvents;
   if (config.transcriptionTransport === "openrouter" && config.apiProvider === "gemini-direct")
-    metadata.wordAlignment = "OpenRouter backup word timestamps + exact token alignment; Direct Gemini language-hint parity not verified";
+    metadata.wordAlignment = "OpenRouter backup word timestamps (one ISO-639-1 hint per request) + exact token alignment";
   metadata.captionWordCount = alignment.captions.length;
   await persistMetadata();
   await persistCheckpoint();

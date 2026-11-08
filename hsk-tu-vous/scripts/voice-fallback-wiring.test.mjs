@@ -43,7 +43,12 @@ test("STT and clip recovery fall back on the SAME saved audio; per-run budget", 
 test("resume and checkpoints carry the actual transports; no OpenRouter key -> no silent resume", () => {
   const resume = between("if (RESUME_FOLDER_NAME) {\n  try {", "} else {\n  metadata = {");
   assert.match(resume, /config\.ttsTransport = metadata\.ttsTransport \?\? config\.apiProvider;/);
-  assert.match(resume, /config\.transcriptionTransport = metadata\.transcriptionTransport \?\? config\.apiProvider;/);
+  assert.match(resume, /config\.transcriptionTransport = config\.apiProvider;/,
+    "STT on saved audio asks the requested transport first again on resume");
+  const cache = between("async function cachedClipTranscription(", "async function recoverActualWordClips(");
+  assert.match(cache, /if \(saved && \(saved\.provider !== "openrouter" \|\| config\.transcriptionTransport === "openrouter"\)\)/);
+  assert.match(cache, /result = await request\(\{ allowBackup: !saved \}\);/, "no second paid backup call for a clip already answered");
+  assert.match(cache, /await fs\.writeFile\(alternatePath, JSON\.stringify\(saved/, "the backup answer is kept as evidence");
   assert.match(resume, /requires HSK_AI_OPENROUTER_FALLBACK_ENABLED=true and OPENROUTER_API_KEY/);
   const checkpoint = between("const persistCheckpoint = () => atomicWriteJson(checkpointPath, {", "});");
   for (const field of ["ttsTransport", "transcriptionTransport", "fallbackEvents"])
@@ -139,7 +144,7 @@ test("one-take is the default; long takes are transcribed in saved silence-bound
   assert.match(loop, /annotations\.push\(\.\.\.offsetAnnotations\(record\.annotations, window\.startMs\)\);/);
   assert.match(loop, /metadata\.sttWindows\[index\] = sttWindows;\s*await persistMetadata\(\);/, "windows are fixed per take");
   const cache = between("async function cachedClipTranscription(", "async function recoverActualWordClips(");
-  assert.match(cache, /if \(saved\?\.key === key && Array\.isArray\(saved\.annotations\) && saved\.annotations\.length\) return saved;/);
+  assert.match(cache, /return saved\?\.key === key && Array\.isArray\(saved\.annotations\) && saved\.annotations\.length \? saved : null;/);
 });
 
 test("an alignment failure on the last STT attempt reaches recovery instead of aborting", () => {
