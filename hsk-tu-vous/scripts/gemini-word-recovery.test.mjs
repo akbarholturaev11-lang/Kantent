@@ -47,9 +47,22 @@ test("do not accept a recovered clip out of time sequence",()=>{
     block("a",["a"],900,1100),block("b",["b"],200,500),
   ]),/moves backwards/);
 });
-test("cannot transcribe across a language boundary without verified anchor",()=>{
-  const words=expected(["дар","locale"],["有","zh"]);
-  assert.throws(()=>buildRecoveryPlan(words,[],2000),/mixes languages/);
+test("an interleaved locale+Mandarin gap is one mixed clip; unknown language mixes still fail",()=>{
+  // Real 2026-11-08 RU take: "с 比 или с 很" dropped between verified words.
+  const words=expected(["по","locale"],["с","locale"],["比","zh"],["или","locale"],["с","locale"],["很","zh"],["посмотрите","locale"]);
+  const original=[block("по",["по"],2500,3400),block("посмотрите",["посмотрите"],5900,6500)];
+  const plan=buildRecoveryPlan(words,original,8000);
+  assert.deepEqual(plan.gaps.map(g=>[g.language,g.startMs,g.endMs,g.tokens]),[["mixed",3400,5900,["с","比","или","с","很"]]]);
+  assert.throws(()=>buildRecoveryPlan([{text:"x",language:"en"},{text:"有",language:"zh"}],[],2000),/mixes languages/);
+});
+test("a provided matcher accepts verified spellings in original and recovered blocks",()=>{
+  const words=expected(["бо","locale"],["比","zh"]);
+  const match=(wanted,heard)=>wanted===heard||(wanted==="比"&&heard==="би");
+  const plan=buildRecoveryPlan(words,[block("бо",["бо"],0,300),block("би",["би"],300,600)],1000,{match});
+  assert.equal(plan.gaps.length,0);
+  assert.equal(buildRecoveryPlan(words,[block("бо",["бо"],0,300),block("би",["би"],300,600)],1000).gaps.length,1,
+    "without a matcher the default stays strict");
+  assert.deepEqual(selectRecoveredBlocks(["比"],[block("би",["би"],10,200)],{match}).map(b=>b.text),["би"]);
 });
 test("discard extra unverified words, never use them to fill missing tokens",()=>{
   const words=expected(["а","locale"],["这","zh"],["贵","zh"]);

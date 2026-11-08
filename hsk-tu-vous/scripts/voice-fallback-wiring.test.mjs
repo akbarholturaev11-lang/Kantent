@@ -88,3 +88,23 @@ test("requestJson retries only a never-connected Google request, with bounded ba
   const request = between("async function requestJson(", "function getAudioData(");
   assert.match(request, /catch \(error\) \{\s*\/\/[^\n]*\n[^\n]*\n\s*if \(!isPreConnectFailure\(error\) \|\| attempt >= maxAttempts\) throw error;/);
 });
+
+test("V-10/V-11 wiring: main alignment and recovery share one verified spoken matcher", () => {
+  const align = between("function alignWords(", "let cachedSpokenMatch;");
+  assert.match(align, /const spoken = alignSpokenTokens\(expected, recognized, spokenMatch\(\)\);/);
+  assert.match(align, /if \(spoken\.aligned\) return captionsFromAligned\(words, expected, spoken\.aligned,/);
+  const captions = between("function captionsFromAligned(", "async function uploadForTranscription");
+  assert.match(captions, /text: word\.display,/, "captions always show the source narration, never the ASR spelling");
+  assert.match(source, /const pairs = collectHanziPinyinPairs\(episode\);/);
+  assert.match(source, /buildRecoveryPlan\(expected, original, durationMs, \{ match: spokenMatch\(\) \}\)/);
+  assert.match(source, /selectRecoveredBlocks\(gap\.tokens,blocks,\{ match: spokenMatch\(\) \}\)/);
+  assert.match(source, /language_codes: languageCode \? \[languageCode\] : transcriptionLanguages,/);
+});
+
+test("a resumed take re-checks its saved STT responses before spending a new attempt", () => {
+  const stt = between("let attempts = metadata.transcriptionAttempts?.[index]", "const result = await transcribeUntilAligned({");
+  const recheck = stt.indexOf("transcription-part-${chunkNumber}-attempt-${saved}.json");
+  assert.ok(recheck > 0, "saved attempt files are read");
+  assert.match(stt, /const reused = alignWords\(ttsChunks\[index\]\.text, previous\.wordAnnotations,/);
+  assert.match(stt, /metadata\.reusedSavedTranscriptions\.push\(\{ chunk: index \+ 1, attempt: saved \}\)/);
+});

@@ -3,7 +3,7 @@
  * a timestamp: every accepted word keeps its provider-reported time.
  * The source narration is only used as an exact-token validation gate.
  */
-export function selectExactBlocks(expected, blocks) {
+export function selectExactBlocks(expected, blocks, match = (wanted, heard) => wanted === heard) {
   if (!Array.isArray(expected) || !Array.isArray(blocks)) throw Error("Expected tokens and timed annotation blocks are required.");
   const n = expected.length, m = blocks.length;
   const scores = Array.from({length:m + 1}, () => Array(n + 1).fill(-Infinity));
@@ -23,7 +23,7 @@ export function selectExactBlocks(expected, blocks) {
         const block=blocks[i];
         const tokens=block.tokens ?? [];
         if (tokens.length && j+tokens.length<=n &&
-            tokens.every((x,k)=>x===expected[j+k].text)) {
+            tokens.every((x,k)=>match(expected[j+k].text,x))) {
           set(i+1,j+tokens.length,score+tokens.length,{i,j,matched:true});
         }
         set(i+1,j,score,{i,j,matched:false});
@@ -43,14 +43,14 @@ export function selectExactBlocks(expected, blocks) {
   return matches;
 }
 
-export function buildRecoveryPlan(expected, blocks, durationMs) {
+export function buildRecoveryPlan(expected, blocks, durationMs, { match } = {}) {
   if (!Number.isFinite(durationMs) || durationMs <= 0) throw Error("Exact source audio duration required.");
   for (const b of blocks) {
     if (!Number.isFinite(b.startMs)||!Number.isFinite(b.endMs)||
         b.startMs<0||b.endMs<=b.startMs||b.endMs>durationMs+100)
       throw Error("Invalid provider timing in original transcription.");
   }
-  const matched=selectExactBlocks(expected,blocks);
+  const matched=selectExactBlocks(expected,blocks,match);
   const gaps=[];
   let cursor=0, previous=null;
   for(const match of [...matched,{from:expected.length,to:expected.length,blockIndex:null}]) {
@@ -60,10 +60,15 @@ export function buildRecoveryPlan(expected, blocks, durationMs) {
       const endMs=next?next.startMs:durationMs;
       if(endMs<=startMs)throw Error("No audible clip between verified word boundaries.");
       const tokens=expected.slice(cursor,match.from);
-      const languages=[...new Set(tokens.map(x=>x.language))];
-      if(languages.length!==1||!["zh","locale"].includes(languages[0]))
+      const languages=[...new Set(tokens.map(x=>x.language))].sort();
+      // Real 2026-11-08 RU take: STT dropped the interleaved "с 比 или с 很".
+      // A RU/TG+Mandarin gap with no verified inner boundary is transcribed
+      // once with both language hints; the exact-token gate still decides.
+      const language=languages.length===1&&["zh","locale"].includes(languages[0])?languages[0]:
+        languages.join("+")==="locale+zh"?"mixed":null;
+      if(!language)
         throw Error("Missing passage mixes languages without a verified word boundary.");
-      gaps.push({from:cursor,to:match.from,startMs,endMs,language:languages[0],
+      gaps.push({from:cursor,to:match.from,startMs,endMs,language,
         tokens:tokens.map(x=>x.text)});
     }
     if(match.blockIndex!==null)previous=blocks[match.blockIndex];
@@ -72,9 +77,9 @@ export function buildRecoveryPlan(expected, blocks, durationMs) {
   return {matches:matched,gaps,matchedTokenCount:matched.reduce((s,x)=>s+x.to-x.from,0)};
 }
 
-export function selectRecoveredBlocks(tokens,blocks) {
+export function selectRecoveredBlocks(tokens,blocks,{ match } = {}) {
   const expected=tokens.map(text=>({text}));
-  const matches=selectExactBlocks(expected,blocks);
+  const matches=selectExactBlocks(expected,blocks,match);
   if(matches.reduce((s,m)=>s+m.to-m.from,0)!==tokens.length)
     throw Error("Gemini recovery clip did not exactly transcribe every missing word.");
   if(!matches.length)throw Error("Recovery has no verified provider word annotations.");

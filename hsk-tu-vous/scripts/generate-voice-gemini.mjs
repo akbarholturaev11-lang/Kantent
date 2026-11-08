@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -18,6 +19,9 @@ import {
   OPENROUTER_TTS_MAX_ATTEMPTS, STT_ATTEMPTS_PER_RUN,
 } from "./openrouter-voice.mjs";
 import { isPreConnectFailure, openRouterBackupKey, withOpenRouterBackup } from "./voice-transport-backup.mjs";
+import {
+  alignSpokenTokens, buildHanziReadings, collectHanziPinyinPairs, createSpokenMatcher,
+} from "./spoken-token-match.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { languageEnvironment, languageSettings } from "./language-context.mjs";
@@ -368,6 +372,10 @@ function alignWords(text, annotations, audioDurationMs) {
   const expected = flattenExpected(words);
   const timingRepairs = [];
   const recognized = flattenRecognized(annotations, audioDurationMs, timingRepairs);
+  // V-10/V-11: accept only position-aligned spellings of the SAME spoken word
+  // (Tajik long-vowel marks, split compounds, verified Hanzi readings).
+  const spoken = alignSpokenTokens(expected, recognized, spokenMatch());
+  if (spoken.aligned) return captionsFromAligned(words, expected, spoken.aligned, audioDurationMs, timingRepairs);
   const mismatches = [];
   if (expected.length !== recognized.length) {
     mismatches.push({
@@ -388,7 +396,33 @@ function alignWords(text, annotations, audioDurationMs) {
     }
   }
   if (mismatches.length) return { mismatches, timingRepairs };
+  return captionsFromAligned(words, expected, recognized, audioDurationMs, timingRepairs);
+}
 
+// Hanzi readings come only from author-verified {hanzi, pinyin} pairs: this
+// episode first, then every lesson source in the repository. Built once.
+let cachedSpokenMatch;
+function spokenMatch() {
+  if (cachedSpokenMatch) return cachedSpokenMatch;
+  const pairs = collectHanziPinyinPairs(episode);
+  const dirs = [path.join(PROJECT_ROOT, "content", "episodes")];
+  try {
+    for (const locale of readdirSync(path.join(PROJECT_ROOT, "content", "locales")))
+      dirs.push(path.join(PROJECT_ROOT, "content", "locales", locale, "episodes"));
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
+  }
+  for (const dir of dirs) {
+    let files = [];
+    try { files = readdirSync(dir).filter((name) => name.endsWith(".json")); }
+    catch (error) { if (error?.code !== "ENOENT") throw error; }
+    for (const file of files) collectHanziPinyinPairs(JSON.parse(readFileSync(path.join(dir, file), "utf8")), pairs);
+  }
+  cachedSpokenMatch = createSpokenMatcher({ locale: voiceProfile.locale, readings: buildHanziReadings(pairs) });
+  return cachedSpokenMatch;
+}
+
+function captionsFromAligned(words, expected, recognized, audioDurationMs, timingRepairs) {
   const captions = words.map((word, wordIndex) => {
     const parts = recognized.filter(
       (part, index) => expected[index].wordIndex === wordIndex,
@@ -761,7 +795,7 @@ async function recoverActualWordClips({
     language: /\p{Script=Han}/u.test(words[entry.wordIndex].display) ? "zh" : "locale",
   }));
   const original = timedBlocks(originalAnnotations, durationMs);
-  const plan = buildRecoveryPlan(expected, original, durationMs);
+  const plan = buildRecoveryPlan(expected, original, durationMs, { match: spokenMatch() });
   if (!plan.gaps.length || plan.gaps.length > 8)
     throw new Error("Recovery requires 1–8 independently bounded missing speech spans.");
   const directory = path.join(outputDir, "recovery-diagnostic", "chunk-" + chunkNumber);
@@ -786,8 +820,8 @@ async function recoverActualWordClips({
     ],{env:ffmpegRuntime.env,stdio:["ignore","pipe","pipe"]});
     const actualMs = mediaDurationMs(clipPath,ffmpegRuntime);
     if (actualMs <= 0) throw Error("Gemini recovery clip was empty.");
-    const languageCode = gap.language === "zh"
-      ? transcriptionLanguages.at(-1) : transcriptionLanguages[0];
+    const languageCode = gap.language === "zh" ? transcriptionLanguages.at(-1)
+      : gap.language === "mixed" ? null : transcriptionLanguages[0];
     let annotations;
     const openRouterClip = async () => (await transcribeOpenRouter({
       apiKey: openRouterKeyFor(config), model: config.transcribeModel, audioPath: clipPath,
@@ -822,7 +856,8 @@ async function recoverActualWordClips({
                 model:config.transcribeModel,
                 input:[{type:"audio",uri:uploaded.uri,mime_type:audioMimeType(clipPath)}],
                 generation_config:{transcription_config:{
-                  language_codes:[languageCode],
+                  // A mixed RU/TG+Mandarin gap gets both hints (strict gate decides).
+                  language_codes: languageCode ? [languageCode] : transcriptionLanguages,
                   mode:{type:"verbatim",timestamp_granularities:["word"]},
                 }},
               })},"Gemini recovery word transcription");
@@ -837,11 +872,11 @@ async function recoverActualWordClips({
     }
     // Save the exact provider response/provenance before attempting alignment.
     await fs.writeFile(path.join(directory,clipName+".json"),
-      JSON.stringify({languageCode,clipStartMs:gap.startMs,clipEndMs:gap.endMs,
+      JSON.stringify({languageCode:languageCode ?? transcriptionLanguages.join("+"),clipStartMs:gap.startMs,clipEndMs:gap.endMs,
         actualClipDurationMs:actualMs,annotations,provider:config.transcriptionTransport,
         model:config.transcribeModel},null,2)+"\n");
     const blocks = timedBlocks(annotations,actualMs);
-    const selected = selectRecoveredBlocks(gap.tokens,blocks);
+    const selected = selectRecoveredBlocks(gap.tokens,blocks,{ match: spokenMatch() });
     recovered.push(selected.map(b=>({
       ...b,startMs:b.startMs+gap.startMs,endMs:b.endMs+gap.startMs,
     })));
@@ -1454,6 +1489,32 @@ try {
     // zero new STT attempts forever (real 2026-11-03 zhuozi RU take: 3/3
     // used, chunk 3 never retried), which pushes operators to buy a new TTS.
     let attempts = metadata.transcriptionAttempts?.[index] ?? (transcription ? 1 : 0);
+    // Free first: a response an earlier run already paid for may pass the
+    // current gate (e.g. after a matcher fix). Newest saved attempt first.
+    for (let saved = attempts; saved >= 1 && !chunkAlignment?.captions; saved -= 1) {
+      let previous;
+      try {
+        previous = await readJson(path.join(outputDir, `transcription-part-${chunkNumber}-attempt-${saved}.json`));
+      } catch (error) {
+        if (error?.code !== "ENOENT" && !(error instanceof SyntaxError)) throw error;
+        continue;
+      }
+      if (!previous?.wordAnnotations?.length) continue;
+      try {
+        const reused = alignWords(ttsChunks[index].text, previous.wordAnnotations, metadata.chunkDurationsMs[index]);
+        if (reused.captions) {
+          transcription = previous;
+          chunkAlignment = reused;
+          await fs.writeFile(transcriptPath, `${JSON.stringify(previous, null, 2)}\n`);
+          metadata.reusedSavedTranscriptions ??= [];
+          metadata.reusedSavedTranscriptions.push({ chunk: index + 1, attempt: saved });
+          delete metadata.lastTranscriptionError;
+          delete metadata.lastTranscriptionMismatch;
+        }
+      } catch {
+        // Still fails the gate: not reused, a fresh bounded attempt follows.
+      }
+    }
     if (!chunkAlignment?.captions) {
       // Direct Gemini STT on the saved audio (upload, transcribe, always delete).
       async function transcribeDirect(attempt) {
