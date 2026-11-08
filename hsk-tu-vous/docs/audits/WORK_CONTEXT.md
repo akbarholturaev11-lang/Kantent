@@ -1,6 +1,6 @@
 # WORK_CONTEXT.md — Kantent engineering continuation
 
-**Updated:** 2026-11-08 (UTC), after cross-platform/semantic/batched decoding and SFX failure-status review. **Maintainer:** ChatGPT acting on owner's request to continue after Codex limit. **Working branch:** `agent/continue-p0-p1-20261108`. **Parent commit:** `2794d8002f736c6f6b8d475f648234c235ca9726` (`codex/p0-p1-media-reliability-20261106`, PR #58). **Current main observed:** `7b0f8f8da81839a40945a4bbbbbfaccefd8258f6`. Refresh all refs on resume, and never assume main has merged this branch.
+**Updated:** 2026-11-08 (UTC), after SHA-bound imported voice/checkpoint/MP3 bugfix and isolated CI success. **Working branch:** `agent/continue-p0-p1-20261108` (dependent PR #59, unmerged).
 
 This is the **one persistent task/handoff context file**. Update this file as part of each meaningful agent work session. It records progress and evidence, *not* a second source of production policy. Canonical sources: [root AGENTS](../../../AGENTS.md), [project AGENTS](../../AGENTS.md), [AI_RULES](../../AI_RULES.md), [WORKFLOW](../../content/WORKFLOW.md), [CURRENT_TASKS](CURRENT_TASKS.md), [full V1–V7 audit](KANTENT_FULL_TECHNICAL_AUDIT_V5_2026-11-05.md).
 
@@ -73,14 +73,29 @@ The owner explicitly clarified: **fix the existing bugs, do not add extra produc
 - No real Gemini/OpenRouter TTS generated, no RU/TG listening test, no actual semantic/phone readability verdict, no owner-preview approval, no PWA capture and no video publication.
 - The separately failing `main` feedback analyzer 0-vs-2 cohort test is OUT OF SCOPE for this branch and must not be hidden by these P0/P1 CI results.
 
-## Next tasks / blockers
+## 2026-11-08 — verified bugfix-only continuation: saved audio SHA integrity
 
-- Recheck latest PR #59 CI after documentation-only commits (code+integration passed on workflow 42445519317). Do not treat the green *synthetic* MP4 test as real RU/TG voice/visual approval.
-- When a real, **unapproved** existing review package is available locally: `cd hsk-tu-vous && npm run content:review-frames -- <episode-id> ru`, then repeat for `tg`. Compare the before/on/settled frame at phone size with spoken words, Mandarin accuracy, Chinese characters and pinyin, focal-object appearance, and real audio. The proof directory is under `review/<id>/cue-frame-review-<timestamp>` (TG: `review/<id>/tg/...`). The user/owner must still approve the exact final VIDEO package; this is not an autopublish pass.
-- Integrate owner-approved direct Gemini→OpenRouter fallback only after properly reconciling [separate draft PR #56](https://github.com/akbarholturaev11-lang/Kantent/pull/56) with the newer voice-checkpoint changes in PR #58; avoid free-quota key cycling.
-- Genuine current PWA screenshots require authorized browser capture and real source/locale/crop hash. Do not fake captures.
-- Root-cause-based agent repair orchestration, cross-platform review identity, and remaining P1 semantic QA are open.
-- IMPORTANT: recent `main` has unrelated Telegram news changes and currently failing consistency CI (observed runs 42351734221 etc). Do not rebase/merge from `main` until those changes and their CI failures are understood.
+**Root cause (code-confirmed):** `hasCurrentImportedVoice` accepted an imported file lacking `audioSha256` because the shared `assertImportedAudioHash` treats legacy hashless media as allowed. `findReusableVoiceCheckpoint` accepted a structurally valid WAV with no persisted per-chunk SHA. An explicit `--resume` likewise accepted hashless WAVs (`!recordedChunk?.sha256`) and accepted saved MP3s by decodable duration alone. Corrupt WAVs were deleted and regenerated, risking unnecessary new paid TTS and loss of original evidence.
+
+**Minimal bug fixes, NO product feature added:**
+
+- `voice-import-state.mjs`: automatic reuse requires a valid SHA-256 digest, not just a decodable file and matching narration/profile.
+- `voice-checkpoint.mjs`: automatic checkpoint detection and the shared local saved-WAV validator require exact file name, full RIFF/WAV validation and matching recorded SHA. Internal `matchesRecordedAudioHash` also verifies exact encoded MP3 bytes.
+- `generate-voice-gemini.mjs`: explicit resume refuses existing WAV chunks that have missing/mismatched recorded SHA (preserves original, makes **zero** TTS calls on that branch). Resumed master WAV and existing MP3 are checked against stored hashes. Existing MP3 is **not deleted/reencoded on mismatch**; it remains for inspection.
+- `voice-import-state.test.mjs` and `voice-checkpoint.test.mjs`: regression tests for absent/invalid hash, wrong filename, mutated WAV/MP3 and preservation of existing WAV contents.
+- `.github/workflows/isolated-one-take-core.yml`: isolated no-Gemini CI now runs these narrow unit regressions when the integrity code changes.
+
+**Verified CI:** [42449569954](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42449569954) isolated one-take TTS core safety **completed SUCCESS** on code+test commit `4c2939afccc230f96d8673d21308cab0b4c05903` including the new saved-audio SHA regression step. Earlier full canonical consistency [42449450063](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42449450063) **completed SUCCESS** on preceding workflow commit; most recent full canonical consistency [42449569985](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42449569985) was still running at time of this entry. Recheck before declaring final full CI green.
+
+**Risk/compatibility note:** legacy imported files with no SHA are not silently deleted or mutated; automatic *reuse* now returns false until provenance is verified. If a resume finds an MP3 present but no stored SHA (e.g. interrupted metadata write), it fails closed and preserves the file for manual investigation. This favors correct voice identity over silent recovery and may require explicit intervention for old incomplete metadata. No paid API request was made, no video was published, no main merge occurred.
+
+## Next tasks / blockers — BUGS ONLY
+
+1. Check latest full CI on PR #59 (including consistency and semantic-foundation). Investigate any failures in the exact changed SHA before proposing a merge.
+2. Verify one **real existing** unapproved RU/TG audio import and final MP4 against real caption/voice timestamps and phone-size meaning-linked frames; no synthetic test or missing recording may be called a pass. Do not spend on new voice without explicit authorization.
+3. Review only remaining **code-confirmed defects** from V1–V7 (bad frame onset, subtitle/pinyin drift, wrong scene state, accidental voice regeneration, corrupt review hashes). Fix one minimal root cause at a time with a regression test.
+4. PR #59 is draft and dependent on PR #58. Keep new PWA capture, TikTok functionality, autonomous agent workflows and generalized UX improvements **out of scope**. PR #56's previously requested OpenRouter backup remains separate, not part of this bugfix scope. Do not merge into main before QA and integration/conflict checks.
+5. The separate `main` feedback-analyzer failing test belongs to its own scope; do not amend unrelated product data here.
 
 ## Operating rules
 
