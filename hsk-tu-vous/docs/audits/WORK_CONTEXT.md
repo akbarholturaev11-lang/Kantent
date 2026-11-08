@@ -117,6 +117,14 @@ The owner explicitly clarified: **fix the existing bugs, do not add extra produc
 
 **Still open for this objective:** set an OpenRouter credit limit (the configured key reported no per-key limit on 2026-11-08) and run one real RU and one TG episode with fallback enabled, then listen. This branch is 6 commits behind `main`, so `requireFreshGitMain` blocks real production runs from it until it is brought up to date.
 
+## 2026-11-08 — owner instruction: pushed to `main`
+
+On the owner's explicit instruction ("push to main"), `main` was fast-forwarded `7b0f8f8d..4c8cdb0f` (72 commits: Codex PR #58, PR #59, merged PR #56 backup, the voice fixes above and the @hskaiapp follow-up) only after all four GitHub workflows passed on `4c8cdb0f`: Isolated one-take TTS core [42455530451](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42455530451), Canonical source consistency [42455530452](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42455530452), Zernio routing/video package [42455530472](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42455530472), video review automation [42455530404](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42455530404) — all synthetic, real Gemini generation skipped. Later commits on this branch reach `main` the same way: only after their own CI is green.
+
+- **CI gap fixed:** `video-review.yml` never passed `HSK_AI_OPENROUTER_FALLBACK_ENABLED`, so the backup could not be enabled in GitHub. It now reads the Actions variable (default `false`) and fails before any paid request if the backup is on without `OPENROUTER_API_KEY`.
+- **Static sweep:** ESLint correctness rules over `scripts/*.mjs` (beyond `no-undef`) found no further defects.
+- **Local main checkout warning:** `/Users/…/HSK AI Kantent` is on `codex/p0-p1-media-reliability-20261106@2794d800` with 18 uncommitted files from 2026-11-06 (e.g. a `HSK_AI_LOCAL_REVIEW_ONLY` freshness bypass, OpenRouter and generator edits, `ji-vs-duoshao` lesson/CTA content). It was deliberately left untouched; whoever owns that work must reconcile it with the new `main` before production runs from that folder.
+
 ## Next tasks / blockers — BUGS ONLY
 
 1. Check latest full CI on PR #59 (including consistency and semantic-foundation). Investigate any failures in the exact changed SHA before proposing a merge.
