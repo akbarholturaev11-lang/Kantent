@@ -6,6 +6,10 @@ on:
       - 'hsk-tu-vous/scripts/continuous-tts-plan.mjs'
       - 'hsk-tu-vous/scripts/continuous-tts-plan.test.mjs'
       - 'hsk-tu-vous/scripts/generate-voice-gemini.mjs'
+      - 'hsk-tu-vous/scripts/voice-checkpoint.mjs'
+      - 'hsk-tu-vous/scripts/voice-checkpoint.test.mjs'
+      - 'hsk-tu-vous/scripts/voice-import-state.mjs'
+      - 'hsk-tu-vous/scripts/voice-import-state.test.mjs'
       - 'hsk-tu-vous/scripts/openrouter-voice.mjs'
       - 'hsk-tu-vous/scripts/openrouter-voice.test.mjs'
       - '.github/workflows/isolated-one-take-core.yml'
@@ -33,6 +37,11 @@ jobs:
           node --check scripts/openrouter-voice.mjs
           node --check scripts/openrouter-voice.test.mjs
           node --test scripts/continuous-tts-plan.test.mjs scripts/gemini-word-recovery.test.mjs scripts/openrouter-voice.test.mjs
+      - name: Verify saved WAV and imported take SHA-256 reuse
+        run: |
+          node --check scripts/voice-checkpoint.mjs
+          node --check scripts/voice-import-state.mjs
+          node --test scripts/voice-checkpoint.test.mjs scripts/voice-import-state.test.mjs
       - name: Project source consistency
         run: |
           npm ci --no-audit --no-fund
