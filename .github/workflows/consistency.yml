@@ -41,7 +41,8 @@ jobs:
       - name: Test hash-bound exact cue-frame contact sheet planning (no API, no publish)
         run: |
           node --check scripts/cue-frame-review.mjs
-          node --test scripts/cue-frame-review.test.mjs
+          node --check scripts/cue-frame-batch.mjs
+          node --test scripts/cue-frame-review.test.mjs scripts/cue-frame-batch.test.mjs
       - name: Ensure SFX subprocess failures persist a non-stuck render status
         run: |
           node --check scripts/render-episode.mjs
