@@ -1,0 +1,208 @@
+{
+  "episodeId": "bi-comparison-height-20261104",
+  "assets": {
+    "two-people": {
+      "file": "two-people.png",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "a7dc45d39e3445e518ab7880adeeee21ef008b5ae46fce0a6000575b06d824ac",
+      "references": [],
+      "sha256": "509f4c60f5c9e2e44ffdeaaf83be6c82e05f63c3b7567b84919d96ae4a99ad40",
+      "generationId": "gen-1794156217-65sABoCojKRyVNPSFVSS",
+      "usage": {
+        "prompt_tokens": 184,
+        "completion_tokens": 1120,
+        "total_tokens": 1304,
+        "cost": 0.067292,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.067292,
+          "upstream_inference_prompt_cost": 0.000092,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T16:43:48.831Z"
+    },
+    "yesterday-warm": {
+      "file": "yesterday-warm.png",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "a14d84bba9bfc64fd6c0eea8b5db367c8efe68315ac81229fc7b27a53e01b0ba",
+      "references": [
+        "two-people"
+      ],
+      "sha256": "0ff051a8cf2e2bba257aa4a0d58a378a241467df0a93df2f301cb85a02944cfd",
+      "generationId": "gen-1794156231-B8USa4WtlUOvng6vU4bo",
+      "usage": {
+        "prompt_tokens": 1262,
+        "completion_tokens": 1120,
+        "total_tokens": 2382,
+        "cost": 0.067831,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.067831,
+          "upstream_inference_prompt_cost": 0.000631,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T16:44:03.362Z"
+    },
+    "today-cold": {
+      "file": "today-cold.png",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "6bd4597be1a144cb081d1170153852ed0c9e8923733a42a96ea2d50b72c7660a",
+      "references": [
+        "two-people",
+        "yesterday-warm"
+      ],
+      "sha256": "0786d5e66ae0effbea5c608dca5c4456d766a56484130e0d3e0fe65b991e9053",
+      "generationId": "gen-1794156244-EMQkBTzov4ljRmrG2IW6",
+      "usage": {
+        "prompt_tokens": 2379,
+        "completion_tokens": 1120,
+        "total_tokens": 3499,
+        "cost": 0.0683895,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0683895,
+          "upstream_inference_prompt_cost": 0.0011895,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T16:44:15.421Z"
+    },
+    "notebook-desk": {
+      "file": "notebook-desk.png",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "fdadb0e5808018aef89ea77063036c0839dca5d53b448687e847930d511fd532",
+      "references": [],
+      "sha256": "c8a2f83ce2add44196b9fe08eb6016c977832c6e7b536604d7d0ff35f5b765cf",
+      "generationId": "gen-1794156256-VgbHKXfX1fzRcY5Ynb7d",
+      "usage": {
+        "prompt_tokens": 116,
+        "completion_tokens": 1120,
+        "total_tokens": 1236,
+        "cost": 0.067258,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.067258,
+          "upstream_inference_prompt_cost": 0.000058,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T16:44:25.156Z"
+    },
+    "icon-cold": {
+      "file": "icon-cold.png",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "294c1057e8ab298102d283fb3c00b367bf680fed8df9db6fc0776d90fa94f808",
+      "references": [],
+      "sha256": "b5e79b15db5e6c9af1ba46a5ae0a622cb6d3bc89986889e49c3be9461c561a02",
+      "generationId": "gen-1794156265-BOWic5Dt7RQWUUiq01hm",
+      "usage": {
+        "prompt_tokens": 109,
+        "completion_tokens": 1120,
+        "total_tokens": 1229,
+        "cost": 0.0672545,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0672545,
+          "upstream_inference_prompt_cost": 0.0000545,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T16:44:34.458Z"
+    },
+    "icon-warm": {
+      "file": "icon-warm.png",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "aa02b1ee79806fab7ac8a23313327457f01a3e6e8047a7472e849da62968ba9b",
+      "references": [],
+      "sha256": "396a4b06e3e62b34b98bb83ed20932a8ff986e55166b76635606b61e5e31db25",
+      "generationId": "gen-1794156324-QmnTGBHadhy57VSb30x6",
+      "usage": {
+        "prompt_tokens": 132,
+        "completion_tokens": 1120,
+        "total_tokens": 1252,
+        "cost": 0.067266,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.067266,
+          "upstream_inference_prompt_cost": 0.000066,
+          "upstream_inference_completions_cost": 0.0672
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T16:45:34.018Z"
+    }
+  }
+}

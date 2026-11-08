@@ -87,7 +87,8 @@ export const CaptionOverlay: React.FC<{
     const words = displayText.split(/\s+/).filter(Boolean);
     return (
       <AbsoluteFill style={{ pointerEvents: "none", zIndex: 20 }}>
-        <div data-subtitle-block style={{ position: "absolute", left: 80, right: 80, top: G.subtitleTopPx,
+        <div data-subtitle-block style={{ position: "absolute", left: 80, right: 80,
+          top: (actionText.model as {illustration?: unknown} | undefined)?.illustration ? G.illustratedSubtitleTopPx : G.subtitleTopPx,
           display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "baseline", columnGap: 16,
           fontFamily: G.fontFamily, fontSize: G.subtitleFontPx, fontWeight: G.subtitleWeight, lineHeight: 1.15,
           color: "#FFFFFF", textShadow: "0 4px 24px rgba(0,0,0,.45)", textAlign: "center" }}>

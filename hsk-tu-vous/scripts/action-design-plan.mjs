@@ -4,6 +4,32 @@ import {validateGraphicScene,graphicFingerprint} from "./graphic-scene.mjs";
 export const ACTION_KINDS = ["quantity", "phrase", "numeral", "ordinal", "comparison", "choice", "graphic"];
 export const ACTION_OBJECTS = ["tea-cup", "book", "apple"];
 
+// Illustrated-glass lesson beats (owner decision 2026-11-09): generated art
+// from public/lesson-art/<episode>/ plus the overlay that explains the cue.
+export const ILLUSTRATION_LAYOUTS = ["scene", "pair", "board"];
+export const ILLUSTRATION_OVERLAYS = ["rise", "marks", "link", "cross", "drop", "compare", "adjective"];
+export function validateIllustration(id, ill) {
+  const fail = (message) => { throw Error(id + ": illustration " + message); };
+  if (!ill || typeof ill !== "object") fail("must be an object");
+  if (!ILLUSTRATION_LAYOUTS.includes(ill.layout)) fail("layout must be scene, pair or board");
+  const name = /^[a-z][a-z0-9-]{1,40}$/;
+  const wanted = ill.layout === "pair" ? 2 : 1;
+  if (!Array.isArray(ill.images) || ill.images.length !== wanted || ill.images.some((x) => !name.test(x)))
+    fail(`needs ${wanted} lesson-art image name(s)`);
+  if (ill.icons !== undefined && (!Array.isArray(ill.icons) || ill.icons.length !== wanted || ill.icons.some((x) => x !== null && !name.test(x))))
+    fail("icons must match the images");
+  if (ill.overlay !== undefined && !ILLUSTRATION_OVERLAYS.includes(ill.overlay)) fail("has an unsupported overlay");
+  for (const [key, box] of Object.entries(ill.anchors ?? {}))
+    if (!/^[a-z]+$/.test(key) || !["x", "y", "w", "h"].every((k) => Number.isFinite(box?.[k]) && box[k] >= 0 && box[k] <= 1)) fail("anchors are normalized boxes");
+  if (ill.focus !== undefined) {
+    const ok = ill.layout === "pair" ? ["left", "right"].includes(ill.focus) : Boolean(ill.anchors?.[ill.focus]);
+    if (!ok) fail("focus must name an anchor (scene) or left/right (pair)");
+  }
+  if (["link", "marks", "rise", "cross"].includes(ill.overlay) && !(ill.anchors?.a && ill.anchors?.b)) fail("needs anchors a and b for this overlay");
+  if (ill.layout === "board" && (!Array.isArray(ill.parts) || !ill.parts.length || ill.parts.length > 6 || ill.parts.some((x) => typeof x !== "string" || !x.trim() || x.length > 24)))
+    fail("board needs 1–6 short parts");
+}
+
 export function validateActionVisual(beat) {
   const v = beat.visual;
   if (!ACTION_KINDS.includes(beat.kind) || !v || !beat.explains?.trim())
@@ -11,6 +37,7 @@ export function validateActionVisual(beat) {
   for (const key of ["title", "hanzi", "pinyin", "meaning"])
     if (typeof v[key] !== "string" || v[key].length > 180)
       throw Error(beat.id + ": invalid visual " + key);
+  if (v.illustration !== undefined) validateIllustration(beat.id, v.illustration);
   if (beat.kind === "graphic") {
     validateGraphicScene(v.graphic);
     if (["object","count","models","choices","value"].some(key => v[key] !== undefined))

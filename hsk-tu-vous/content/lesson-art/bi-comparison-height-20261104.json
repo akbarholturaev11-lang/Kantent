@@ -1,0 +1,44 @@
+{
+  "episodeId": "bi-comparison-height-20261104",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Polished semi-realistic digital illustration for a premium vertical explainer reel: warm cinematic lighting, soft cel shading, clean confident linework, rich but natural colours, detailed believable background, gentle depth of field. Absolutely no text, letters, numbers, signs with writing, logos or watermarks anywhere in the image.",
+  "assets": [
+    {
+      "name": "two-people",
+      "aspectRatio": "9:16",
+      "prompt": "Two young adult men stand side by side on a calm Beijing hutong street at golden hour, full bodies visible from head to shoes, both facing the viewer with friendly smiles. The man on the LEFT is clearly much taller, a full head taller, slim, short black hair, wearing a teal jacket and dark trousers. The man on the RIGHT is clearly shorter, short brown hair, wearing a mustard-yellow sweater and jeans. Leave generous empty sky and wall space above their heads in the upper third. The two men stand in the lower two thirds, centred, with a small gap between them."
+    },
+    {
+      "name": "yesterday-warm",
+      "aspectRatio": "4:5",
+      "references": [
+        "two-people"
+      ],
+      "prompt": "The same hutong street as in the reference image on a hot sunny summer day: bright blue sky, warm sunlight, green leaves. Only the shorter man from the reference (same face, same brown hair) stands in the centre, full body, relaxed and squinting in the sun, wearing a light t-shirt, shorts and sunglasses pushed up on his head. Warm golden colours."
+    },
+    {
+      "name": "today-cold",
+      "aspectRatio": "4:5",
+      "references": [
+        "two-people",
+        "yesterday-warm"
+      ],
+      "prompt": "The same hutong street and the same shorter man as in the reference images, but now in winter: heavy snowfall, snow on roofs and the street, cold blue light, grey sky. He stands in the same spot and pose, full body, shivering, wearing a thick puffer winter coat, a scarf and a knitted hat, breath visible as mist. Cold blue colours."
+    },
+    {
+      "name": "notebook-desk",
+      "aspectRatio": "9:16",
+      "prompt": "Top-down view of an open notebook lying on a warm wooden desk, the notebook pages completely blank and clean, a cup of green tea and a pen beside it, soft morning window light with gentle shadows. The blank notebook fills the centre of the frame."
+    },
+    {
+      "name": "icon-cold",
+      "aspectRatio": "1:1",
+      "prompt": "A single glossy 3D clay-style icon of a thermometer with a low blue level and a small snowflake beside it, centred on a plain pure white background, soft studio lighting, subtle soft shadow, cute rounded proportions."
+    },
+    {
+      "name": "icon-warm",
+      "aspectRatio": "1:1",
+      "prompt": "A single glossy 3D clay-style icon of a thermometer with a high red level and a small sun beside it, isolated and centred on a plain pure white background that fills the whole square image edge to edge (no room, no card, no frame, no scenery), soft studio lighting, subtle soft shadow, cute rounded proportions."
+    }
+  ]
+}

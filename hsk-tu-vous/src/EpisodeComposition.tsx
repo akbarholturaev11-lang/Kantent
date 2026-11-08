@@ -20,6 +20,7 @@ import { CaptionOverlay, type TimedCaption } from "./CaptionOverlay";
 import { BoldMotionScene } from "./BoldMotionScene";
 import { NarratedMotionScene } from "./NarratedMotionScene";
 import { NarratedActionScene, referenceTone } from "./NarratedActionScene";
+import { IllustratedLessonScene } from "./IllustratedLessonScene";
 import {validateActionLesson} from "../scripts/action-design-plan.mjs";
 import type {MotionBeat, ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
 import { assertCueTimelineMatches } from "../scripts/cue-timeline.mjs";
@@ -1192,7 +1193,9 @@ const LessonSlide: React.FC<{
       }}
     >
       {motionDesign && motionDesignStyle==="explain-actions-v1" && narratedBeats.length ? (
-        <NarratedActionScene frame={frame} beats={narratedBeats} tone={referenceTone(index)}/>
+        narratedBeats.some((beat) => (beat.visual as {illustration?: unknown} | undefined)?.illustration)
+          ? <IllustratedLessonScene episodeId={episodeId} frame={frame} beats={narratedBeats}/>
+          : <NarratedActionScene frame={frame} beats={narratedBeats} tone={referenceTone(index)}/>
       ) : motionDesign && narratedBeats.length ? (
         <NarratedMotionScene sceneId={scene.id} frame={frame} beats={narratedBeats}/>
       ) : motionDesign ? (
