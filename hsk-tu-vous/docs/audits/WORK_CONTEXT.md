@@ -149,6 +149,22 @@ Episode `bi-comparison-height-20261104` (unapproved, unpublished), run locally f
 
 **Open (needs the owner, not code):** listen to RU 3.4–5.9 s (`…/2026-11-08T07-09-39-507Z/recovery-diagnostic/chunk-001/span-01.wav`): if 很 sounds like "hěn", the remaining blocker is Gemini STT on mixed speech (X-10/X-19), not TTS; if it sounds like "hàn", a new RU take is justified (`--new-take`). Mixed-language STT still needs a strategy (e.g. per-sentence clips with known script boundaries) before mixed lessons import without manual help.
 
+## 2026-11-08 (later) — one-take default and local RU voice end to end
+
+Owner listened to the RU/TG one-take vs scene A/B and chose **one take per language as the default** (`HSK_AI_TTS_MODE=scene` opts out; stored mode id `continuous-pilot` unchanged so saved takes resume).
+
+| Finding (real run) | Fix |
+|---|---|
+| Gemini Transcribe free tier: ~3 requests/min, **25/day**; whole-file STT of a 57–60 s take failed (RU timings backwards; TG OpenRouter 10/131 words) | Silence-bounded ≤22 s STT windows (`stt-windows.mjs`); every paid window/pass/clip response cached by exact bounds+hints; passes only for the missing language in windows with a gap |
+| OpenRouter: zero-length words, empty entries, Tajik without hint = 6 words with inverted times | Shared ≤250 ms repair; empty entries skipped; one ISO-639-1 hint (`tg`/`ru`/`zh`) per request |
+| 冷 had no verified reading (author pinyin per word) | Unique valid pinyin syllable split only |
+| "B" for 比, "А/би" for A/B, "тоже" for "то же", bare-clip "HSGKAI" | Letter-name/joined-word matching; one ±0.7 s context retry per unconfirmed span |
+| A resumed take stayed on the STT backup forever | Resume asks Direct first again; backup answers kept as evidence |
+| 8.1 s RU / 8.4 s TG hook vs 6 s / 8 s limit (old code silently cut speech at 6 s) | Cap never cuts hook speech; content: closing instruction + its beat moved to the answer scene (TTS text byte-identical); CTA v2 registered (supersedes v1) |
+| **Guard bug:** a `--new-take` take hid itself → a second RU TTS take was bought (1 Direct request, `2026-11-08T13-48-23-577Z`, kept, not used) | `findUnresumableSavedTakes` lists the barrier take itself |
+
+**State:** RU one-take `review/…/gemini-production/2026-11-08T07-51-00-414Z` (the take the owner listened to) has all 125 tokens verified and is imported (57.0 s). RU render is blocked by the visual-hold rule: `weather` 7.50 s and `recall` 7.41 s without a visual change (max 6 s) — needs meaning-linked motion beats (content authoring, then CTA v3). TG one-take: Direct daily STT quota spent; OpenRouter evidence cached; resume after the quota reset.
+
 ## Next tasks / blockers — BUGS ONLY
 
 1. Check latest full CI on PR #59 (including consistency and semantic-foundation). Investigate any failures in the exact changed SHA before proposing a merge.
