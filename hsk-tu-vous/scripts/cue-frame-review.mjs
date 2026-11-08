@@ -2,7 +2,7 @@
  * EXISTING owner-review MP4. This never generates TTS, rewrites a video, or posts.
  *
  * Usage (from hsk-tu-vous):
- *   node scripts/cue-frame-review.mjs <episode-id> [ru|tg]
+ *   node scripts/cue-frame-review.mjs <episode-id> [ru|tg] [instagram|youtube|facebook]
  * It requires the committed cue contract to match the current review snapshot,
  * verifies the actual video hash against the recorded platform package, and
  * creates NEW, immutable-by-default review/<id>[/tg]/cue-frame-review-* files.
@@ -13,6 +13,7 @@ import {createHash} from "node:crypto";
 import {spawnSync} from "node:child_process";
 import {fileURLToPath} from "node:url";
 import {assertCueTimelineMatches} from "./cue-timeline.mjs";
+import {assertSharedLesson, sharedRenderRanges, platformPackagePaths} from "./platform-exports.mjs";
 import {episodeContentHash, reviewDir, safeId} from "./lib.mjs";
 
 const scriptPath=fileURLToPath(import.meta.url);
@@ -52,6 +53,10 @@ export function planCueFrameReview(episode,timeline,{maxBeats=72}={}) {
     ensureId(scene.id);
     if(!finiteNonnegative(scene.startMs))
       throw Error(`${scene.id}: real scene.startMs required for frame-accurate review.`);
+    // Remotion sequences use accumulated durationFrames. Detect source drift:
+    // scene.startMs and the visual sequence offset must identify the SAME frame.
+    if(Math.round(scene.startMs*FPS/1000)!==start)
+      throw Error(`${scene.id}: accumulated scene frames do not match audio-derived scene.startMs.`);
     for(const beat of beats) {
       ensureId(beat.id);
       if(!finiteNonnegative(beat.startMs)||
@@ -92,8 +97,16 @@ export function planCueFrameReview(episode,timeline,{maxBeats=72}={}) {
   }
   if(samples.length===0)
     throw Error("No compiled action/promo cue frames exist. Do not label semantic QA as passed.");
+  // Production extends the final CTA when the actual audio is longer than the
+  // sum of scene durations. Checking only the scene sum rejects a valid MP4.
+  const ranges=sharedRenderRanges(episode);
+  if(ranges.ctaStart!==offset-episode.scenes.at(-1).durationFrames)
+    throw Error("CTA boundary mismatch against production render ranges.");
   return {schemaVersion:1,episodeId:episode.id,languageCode:episode.languageCode,
-    fps:FPS,totalFrames:offset,voiceTextHash:episode.voiceTextHash,
+    fps:FPS,totalFrames:ranges.totalFrames,sceneFrames:offset,
+    ctaBoundaryFrames:{
+      beforeCta:ranges.ctaStart-1,firstCta:ranges.ctaStart,finalCta:ranges.totalFrames-1,
+    },voiceTextHash:episode.voiceTextHash,
     audioSha256:episode.audioSha256??null,
     samples,realVoiceAndTeachingMeaningReviewed:false,ownerPreviewApproved:false};
 }
@@ -123,6 +136,10 @@ function contactSheet(plan) {
         ?`<figure><div class="none">No earlier frame in this scene</div><figcaption>${label}</figcaption></figure>`
         :`<figure><img src="${s.sceneId}-${s.beatId}-${label}-phone.png" alt="${label} frame ${n}"><figcaption>${label}: frame ${n} · <a href="${s.sceneId}-${s.beatId}-${label}-full.png">full resolution</a></figcaption></figure>`).join("")}</div></section>`;
   }).join("\n");
+  const cta=[["beforeCta","before"],["firstCta","start"],["finalCta","end"]]
+    .map(([key,name])=>`<figure><img src="cta-${name}-phone.png" alt="${key} frame ${plan.ctaBoundaryFrames[key]}">
+      <figcaption>${key}: frame ${plan.ctaBoundaryFrames[key]} · <a href="cta-${name}-full.png">full resolution</a></figcaption></figure>`)
+    .join("");
   return `<!doctype html><html lang="en"><meta charset="utf-8">
   <title>UNAPPROVED cue-frame review — ${escapeHtml(plan.episodeId)}</title>
   <style>body{font:16px system-ui;background:#171717;color:#f7f7f7;max-width:1180px;margin:2rem auto;padding:0 1rem}
@@ -132,21 +149,34 @@ function contactSheet(plan) {
   a{color:#93c5fd}p{color:#ccc}</style><body><h1>Frame evidence ONLY — NOT QA approval</h1>
   <p>${escapeHtml(plan.episodeId)} · ${escapeHtml(plan.languageCode)} · ${plan.samples.length} cues · actual MP4 decoded frames</p>
   <p>Human reviewer must verify meaning, object state, phone legibility, spoken Mandarin, subtitle placement and actual audio. This is NOT owner approval or publication authorization.</p>
-  ${cards}</body></html>`;
+  ${cards}<section><h2>Platform-specific CTA transition and last encoded frame</h2><div class="frames">${cta}</div></section></body></html>`;
 }
 
-export async function reviewExistingVideo({episodeFile,timelineFile,videoFile,statusFile,outputDir}){
+export async function reviewExistingVideo({
+  episodeFile,baseEpisodeFile=episodeFile,timelineFile,videoFile,statusFile,outputDir,
+  platform="instagram",
+}){
+  if(!["instagram","youtube","facebook"].includes(platform))
+    throw Error("Only shared-voice Instagram/YouTube/Facebook proof is supported; TikTok requires its own voice timeline.");
   const [episode,timeline,status]=await Promise.all([
     readJson(episodeFile),readJson(timelineFile),readJson(statusFile)]);
+  const base=baseEpisodeFile===episodeFile?episode:await readJson(baseEpisodeFile);
+  assertSharedLesson(base,episode);
   const plan=planCueFrameReview(episode,timeline);
-  if(!["rendered-pending-owner-approval","approved","published"].includes(status.stage))
+  if(!["rendered-pending-owner-approval","owner-approved-for-zernio-publishing",
+        "approved","published"].includes(status.stage))
     throw Error("No completed review package; do not present frames as production video.");
-  if(status.contentHash!==episodeContentHash(episode))
-    throw Error("Review episode has changed after the recorded render; stale video/episode pairing.");
+  const baseHash=episodeContentHash(base);
+  const variantHash=episodeContentHash(episode);
+  const packageRecord=status.platformPackages?.[platform];
+  if(status.contentHash!==baseHash||
+      !packageRecord||packageRecord.baseContentHash!==baseHash||
+      packageRecord.contentHash!==variantHash)
+    throw Error(`${platform} review episode/CTA does not match its recorded render package.`);
   const digest=createHash("sha256").update(await fs.readFile(videoFile)).digest("hex");
-  if(!/^[a-f0-9]{64}$/.test(status.platformPackages?.instagram?.videoSha256??"")||
-      status.platformPackages.instagram.videoSha256!==digest)
-    throw Error("Real MP4 SHA-256 does not match the review platform package.");
+  if(!/^[a-f0-9]{64}$/.test(packageRecord.videoSha256??"")||
+      packageRecord.videoSha256!==digest)
+    throw Error(`${platform} real MP4 SHA-256 does not match the recorded platform package.`);
   const meta=JSON.parse(run("ffprobe",["-v","error","-select_streams","v:0",
     "-show_entries","stream=width,height,nb_frames,r_frame_rate",
     "-of","json",videoFile]));
@@ -171,7 +201,19 @@ export async function reviewExistingVideo({episodeFile,timelineFile,videoFile,st
       }
     }
   }
-  const evidence={...plan,videoSha256:digest,sourceEpisodeHash:status.contentHash,
+  // Every platform's final CTA may render different visuals. Review its own
+  // before/first/last encoded CTA frames in addition to shared lesson cues.
+  for(const [key,name] of [["beforeCta","before"],["firstCta","start"],["finalCta","end"]]){
+    const frame=plan.ctaBoundaryFrames[key];
+    for(const [label,width,height] of [["full",1080,1920],["phone",270,480]]){
+      const output=path.join(outputDir,`cta-${name}-${label}.png`);
+      extractFrame(videoFile,frame,output,width,height);
+      if((await fs.stat(output)).size===0)
+        throw Error("Empty CTA proof frame: "+output);
+    }
+  }
+  const evidence={...plan,platform,videoSha256:digest,
+    sourceEpisodeHash:baseHash,platformEpisodeHash:variantHash,
     generatedAt:new Date().toISOString(),videoFile:path.basename(videoFile),
     verdict:"FRAME_SAMPLES_GENERATED_NOT_VISUALLY_APPROVED"};
   await fs.writeFile(path.join(outputDir,"manifest.json"),JSON.stringify(evidence,null,2)+"\n");
@@ -182,16 +224,21 @@ export async function reviewExistingVideo({episodeFile,timelineFile,videoFile,st
 if(process.argv[1] && path.resolve(process.argv[1])===scriptPath){
   const id=safeId(process.argv[2]);
   const lang=process.argv[3]??"ru";
-  if(!["ru","tg"].includes(lang))throw Error("Usage: node scripts/cue-frame-review.mjs <episode-id> [ru|tg]");
+  const platform=process.argv[4]??"instagram";
+  if(!["ru","tg"].includes(lang)||
+      !["instagram","youtube","facebook"].includes(platform))
+    throw Error("Usage: node scripts/cue-frame-review.mjs <episode-id> [ru|tg] [instagram|youtube|facebook]");
   process.env.HSK_CONTENT_LANGUAGE=lang;
   const folder=reviewDir(id);
-  const out=path.join(folder,`cue-frame-review-${Date.now()}`);
+  const videoPackage=platformPackagePaths(id,platform);
+  const out=path.join(videoPackage.folder,`cue-frame-review-${Date.now()}`);
   const data=await reviewExistingVideo({
-    episodeFile:path.join(folder,"episode.json"),
+    baseEpisodeFile:path.join(folder,"episode.json"),
+    episodeFile:videoPackage.episode,
     timelineFile:path.join(folder,"cue-timeline.json"),
-    videoFile:path.join(folder,"video.mp4"),
+    videoFile:videoPackage.video,
     statusFile:path.join(folder,"status.json"),
-    outputDir:out,
+    outputDir:out,platform,
   });
   console.log(JSON.stringify({output:out,reviewIndex:path.join(out,"index.html"),
     cues:data.samples.length,verdict:data.verdict},null,2));
