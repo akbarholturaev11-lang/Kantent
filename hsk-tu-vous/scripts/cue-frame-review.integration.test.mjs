@@ -56,7 +56,7 @@ test("real ffmpeg contact sheet uses exact encoded frame index and never approve
   const status={
     stage:"rendered-pending-owner-approval",
     contentHash:episodeContentHash(episode),
-    platformPackages:{instagram:{videoSha256:sha}},
+    platformPackages:{instagram:{videoSha256:sha,baseContentHash:episodeContentHash(episode),contentHash:episodeContentHash(episode)}},
   };
   for(const [file,value] of [["episode.json",episode],["cue-timeline.json",timeline],["status.json",status]])
     await fs.writeFile(path.join(folder,file),JSON.stringify(value));
@@ -70,9 +70,63 @@ test("real ffmpeg contact sheet uses exact encoded frame index and never approve
   assert.equal(evidence.ownerPreviewApproved,false);
   assert.deepEqual(await readPngSize(path.join(output,"hook-book-cue-full.png")),[1080,1920]);
   assert.deepEqual(await readPngSize(path.join(output,"hook-book-cue-phone.png")),[270,480]);
+  assert.deepEqual(await readPngSize(path.join(output,"cta-before-phone.png")),[270,480]);
+  assert.deepEqual(await readPngSize(path.join(output,"cta-start-full.png")),[1080,1920]);
+  assert.deepEqual(await readPngSize(path.join(output,"cta-end-phone.png")),[270,480]);
+  assert.deepEqual(evidence.ctaBoundaryFrames,{beforeCta:59,firstCta:60,finalCta:89});
   const html=await fs.readFile(path.join(output,"index.html"),"utf8");
   assert.match(html,/Frame evidence ONLY/);
   assert.match(html,/NOT QA approval/);
+  assert.match(html,/Platform-specific CTA transition/);
+  // YouTube shares the exact spoken lesson but has a separate CTA art package.
+  const youtube=structuredClone(episode);
+  youtube.scenes[1].headline="Only the YouTube CTA art differs";
+  const youtubePath=path.join(folder,"youtube-episode.json");
+  await fs.writeFile(youtubePath,JSON.stringify(youtube));
+  const youtubeVideo=path.join(folder,"youtube.mp4");
+  await fs.copyFile(video,youtubeVideo);
+  status.platformPackages.youtube={
+    videoSha256:sha,baseContentHash:episodeContentHash(episode),
+    contentHash:episodeContentHash(youtube),
+  };
+  await fs.writeFile(path.join(folder,"status.json"),JSON.stringify(status));
+  const otherProof=await reviewExistingVideo({
+    episodeFile:youtubePath,baseEpisodeFile:path.join(folder,"episode.json"),
+    timelineFile:path.join(folder,"cue-timeline.json"),
+    statusFile:path.join(folder,"status.json"),videoFile:youtubeVideo,
+    outputDir:path.join(folder,"youtube-review"),platform:"youtube",
+  });
+  assert.equal(otherProof.platform,"youtube");
+  assert.equal(otherProof.platformEpisodeHash,episodeContentHash(youtube));
+  assert.notEqual(otherProof.platformEpisodeHash,otherProof.sourceEpisodeHash);
+  assert.deepEqual(await readPngSize(path.join(folder,"youtube-review","cta-end-phone.png")),[270,480]);
+  // A YouTube file must never be validated using Instagram's correct hash.
+  status.platformPackages.youtube.videoSha256="b".repeat(64);
+  await fs.writeFile(path.join(folder,"status.json"),JSON.stringify(status));
+  await assert.rejects(reviewExistingVideo({
+    episodeFile:youtubePath,baseEpisodeFile:path.join(folder,"episode.json"),
+    timelineFile:path.join(folder,"cue-timeline.json"),
+    statusFile:path.join(folder,"status.json"),videoFile:youtubeVideo,
+    outputDir:path.join(folder,"stale-youtube"),platform:"youtube",
+  }),/youtube real MP4 SHA-256/);
+  await assert.rejects(reviewExistingVideo({
+    episodeFile:youtubePath,baseEpisodeFile:path.join(folder,"episode.json"),
+    timelineFile:path.join(folder,"cue-timeline.json"),
+    statusFile:path.join(folder,"status.json"),videoFile:youtubeVideo,
+    outputDir:path.join(folder,"tiktok"),platform:"tiktok",
+  }),/TikTok requires its own voice timeline/);
+  // The already approved package can still be inspected read-only, but NEVER
+  // silently grants a new owner approval or overwrites video/approval files.
+  status.stage="owner-approved-for-zernio-publishing";
+  status.platformPackages.youtube.videoSha256=sha;
+  await fs.writeFile(path.join(folder,"status.json"),JSON.stringify(status));
+  const approvedProof=await reviewExistingVideo({
+    episodeFile:youtubePath,baseEpisodeFile:path.join(folder,"episode.json"),
+    timelineFile:path.join(folder,"cue-timeline.json"),
+    statusFile:path.join(folder,"status.json"),videoFile:youtubeVideo,
+    outputDir:path.join(folder,"approved-youtube-readonly"),platform:"youtube",
+  });
+  assert.equal(approvedProof.ownerPreviewApproved,false);
   // Identical review output paths are immutable by default.
   await assert.rejects(reviewExistingVideo({
     episodeFile:path.join(folder,"episode.json"),timelineFile:path.join(folder,"cue-timeline.json"),
