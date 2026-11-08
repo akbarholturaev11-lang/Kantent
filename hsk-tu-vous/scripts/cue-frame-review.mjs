@@ -165,6 +165,11 @@ function contactSheet(plan) {
         ?`<figure><div class="none">No earlier frame in this scene</div><figcaption>${label}</figcaption></figure>`
         :`<figure><img src="${s.sceneId}-${s.beatId}-${label}-phone.png" alt="${label} frame ${n}"><figcaption>${label}: frame ${n} · <a href="${s.sceneId}-${s.beatId}-${label}-full.png">full resolution</a></figcaption></figure>`).join("")}</div></section>`;
   }).join("\n");
+  const shotCards=(plan.staticShots??[]).map((shot)=>`<section><h2>${escapeHtml(shot.sceneId)} — STATIC SHOT: NO SPOKEN ACTION ANCHOR</h2>
+    <p>Source shot frames only; they do not establish narrated-motion alignment.</p>
+    <div class="frames">${[["first","firstFrame"],["middle","middleFrame"],["last","lastFrame"]]
+      .map(([label,key])=>`<figure><img src="${shot.sceneId}-shot-${label}-phone.png" alt="${label} ${shot[key]}">
+      <figcaption>${label}: frame ${shot[key]} · <a href="${shot.sceneId}-shot-${label}-full.png">full resolution</a></figcaption></figure>`).join("")}</div></section>`).join("");
   const cta=[["beforeCta","before"],["firstCta","start"],["finalCta","end"]]
     .map(([key,name])=>`<figure><img src="cta-${name}-phone.png" alt="${key} frame ${plan.ctaBoundaryFrames[key]}">
       <figcaption>${key}: frame ${plan.ctaBoundaryFrames[key]} · <a href="cta-${name}-full.png">full resolution</a></figcaption></figure>`)
@@ -178,7 +183,7 @@ function contactSheet(plan) {
   a{color:#93c5fd}p{color:#ccc}</style><body><h1>Frame evidence ONLY — NOT QA approval</h1>
   <p>${escapeHtml(plan.episodeId)} · ${escapeHtml(plan.languageCode)} · ${plan.samples.length} cues · actual MP4 decoded frames</p>
   <p>Human reviewer must verify meaning, object state, phone legibility, spoken Mandarin, subtitle placement and actual audio. This is NOT owner approval or publication authorization.</p>
-  ${cards}<section><h2>Platform-specific CTA transition and last encoded frame</h2><div class="frames">${cta}</div></section></body></html>`;
+  ${cards}${shotCards}<section><h2>Platform-specific CTA transition and last encoded frame</h2><div class="frames">${cta}</div></section></body></html>`;
 }
 
 export async function reviewExistingVideo({
@@ -224,6 +229,16 @@ export async function reviewExistingVideo({
       // has no match. Never accept an incomplete contact sheet as evidence.
       for(const file of [full,phone]){
         if((await fs.stat(file)).size===0)throw Error("Empty decoded proof frame: "+file);
+      }
+    }
+  }
+  for(const shot of plan.staticShots) {
+    for(const [name,key] of [["first","firstFrame"],["middle","middleFrame"],["last","lastFrame"]]) {
+      for(const [label,width,height] of [["full",1080,1920],["phone",270,480]]) {
+        const output=path.join(outputDir,`${shot.sceneId}-shot-${name}-${label}.png`);
+        extractFrame(videoFile,shot[key],output,width,height);
+        if((await fs.stat(output)).size===0)
+          throw Error("Empty static-shot proof frame: "+output);
       }
     }
   }
