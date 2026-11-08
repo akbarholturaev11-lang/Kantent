@@ -6,6 +6,19 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 
 **Active continuation handoff:** Read [`docs/audits/WORK_CONTEXT.md`](docs/audits/WORK_CONTEXT.md) for the current P0/P1 coding branch, tested changes, PR dependency, blockers and next action. It is a progress log, never an override of these canonical rules.
 
+## Agent roles (who does what)
+
+| Agent | Started by | Owns | Never |
+|---|---|---|---|
+| **Codex — local video producer** | the owner's chat command, e.g. «Бугунги видеони тайёрла» | the runbook at the top of `content/WORKFLOW.md`: authors today's slot when the calendar has none, completes action plans, **generates the lesson frames** (below), voice, render, QA and the grouped preview; after the owner's exact approval, the approved publications | publishing unapproved video; the paid image API unasked; regenerating a saved voice take or frame; inventing characters; editing approved/published history |
+| **Claude Code — engineering and audits** | the owner's request | code, tests, CI, rule migrations and audits on a branch, merged to `main` only with green checks; may run production on request under the same rules | pushing red checks to `main`; changing voice/CTA policy without the owner |
+| **Calendar Reserve — ChatGPT scheduled, daily** | its schedule | complete CTA-free future sources for the next `calendar.json#planningBuffer.targetFutureEpisodes` dates in every default language, including `visual.illustration` beats and `content/lesson-art/<id>.json` from `content:variety` (`content/WORKFLOW.md` reserve steps) | voice, frames, render, publication |
+| **Feedback — ChatGPT scheduled, Mon/Wed/Fri** | its schedule | Zernio observations, reports, hypotheses and Hook/CTA/visual-variety A/B readouts (`content/feedback/AGENT_PLAYBOOK.md`) | writing scripts or calendar rows, changing policy, publishing |
+| **HSK AI News — ChatGPT scheduled, every 3 days** | its schedule | source-verified static photo news to the four authorized feeds (`content/telegram-agent.json`) | video, Reels, Stories, RU Facebook |
+| **GitHub Actions** | push/PR, or an owner dispatch | consistency and test CI; `video-review.yml` review renders; the Zernio publish workflows only on an owner dispatch with exact hashes | publishing on their own |
+
+Handoffs: Calendar Reserve → Codex (complete sources); Codex → owner (one preview bundle); owner → Codex or Actions (exact approval); Feedback → Calendar Reserve (hypotheses and test IDs); any agent → `docs/audits/CURRENT_TASKS.md` (open defects). Every agent first reads the latest `main`.
+
 ## Source ownership (do not duplicate values)
 
 | Information | Canonical source |
@@ -46,7 +59,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 
 ## Codex: lesson frames
 
-Frames are a **Codex task** (owner decision 2026-11-09). When Codex prepares an illustrated-glass lesson it runs `node scripts/generate-lesson-art.mjs <episode-id>`, reads `review/<episode-id>/lesson-art-codex-brief.md`, generates every missing **background** frame with its own image generation exactly as briefed (text-free, no people, no characters, ≥1500 px JPEG at the given path, references for continuity), records each with `--record-codex <name>`, then runs `node scripts/review-lesson-art.mjs <episode-id>`, fixes failures, looks at each frame and confirms it with `--confirm-visual`. Characters are never generated (they are the HSK AI cast drawn from `content/characters/hsk-ai-characters.json`). Codex never invents a character, never calls the paid `--paid` fallback unless the owner asks, and never regenerates a saved frame unasked. Full procedure: `content/WORKFLOW.md` step 2.6.
+Frames are a **Codex task** (owner decision 2026-11-09). When Codex prepares an illustrated-glass lesson it runs `node scripts/generate-lesson-art.mjs <episode-id>`, reads `review/<episode-id>/lesson-art-codex-brief.md`, generates every missing **background** frame with its own image generation exactly as briefed (text-free, no people, no characters, ≥1500 px JPEG at the given path, references for continuity), records each with `--record-codex <name>`, then runs `node scripts/review-lesson-art.mjs <episode-id>`, fixes failures, looks at each frame and confirms it with `--confirm-visual` (stored, hash-bound, in the committed `public/lesson-art/<id>/provenance.json`). `prepare_today_video`/`content:make` return `lesson-art-required` with this brief **before paid voice** until the review passes; commit the frames and provenance with the lesson. Characters are never generated (they are the HSK AI cast drawn from `content/characters/hsk-ai-characters.json`). Codex never invents a character, never calls the paid `--paid` fallback unless the owner asks, and never regenerates a saved frame unasked. Full procedure: `content/WORKFLOW.md` step 2.6.
 
 ## Automatic rule categorization
 

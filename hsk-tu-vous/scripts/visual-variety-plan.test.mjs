@@ -38,3 +38,20 @@ test("A/B arms are stable, settings follow the arm, and results need the minimum
   const full = readVarietyResults({ history, observations: [obs("e1", .4), obs("e2", .4), obs("e3", .4), obs("e4", .6), obs("e5", .6), obs("e6", .6)], policy })[0];
   assert.match(full.decision, /^leader B/);
 });
+
+test("reserve readiness rejects an illustrated draft whose variety record is missing or hand-picked", async () => {
+  const fsMod = await import("node:fs");
+  const os = await import("node:os");
+  const pathMod = await import("node:path");
+  const { inspectDraftReadiness } = await import("./self-improvement-check.mjs");
+  const root = fsMod.mkdtempSync(pathMod.join(os.tmpdir(), "vv-"));
+  const real = (await import("node:url")).fileURLToPath(new URL("..", import.meta.url));
+  for (const rel of ["content/languages.json", "content/visual-system.json", "content/visual-variety.json"]) {
+    fsMod.mkdirSync(pathMod.dirname(pathMod.join(root, rel)), { recursive: true });
+    fsMod.copyFileSync(pathMod.join(real, rel), pathMod.join(root, rel));
+  }
+  // A dated lesson without its lesson-art manifest is not reserve-ready.
+  const report = inspectDraftReadiness(root, { id: "x-20261120", date: "2026-11-20", episodeFile: "episodes/x-20261120.json" });
+  assert.equal(report.ready, false);
+  fsMod.rmSync(root, { recursive: true, force: true });
+});

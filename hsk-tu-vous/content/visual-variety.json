@@ -29,7 +29,7 @@
     {
       "id": "vv-setting-group-v1",
       "status": "active",
-      "startDate": "2026-11-10",
+      "startDate": "2026-11-07",
       "variable": "setting group",
       "arms": { "A": "outdoor-china", "B": "indoor-daily" },
       "hypothesis": "Everyday indoor settings keep viewers watching longer than outdoor China street settings for HSK 1–2 grammar lessons.",

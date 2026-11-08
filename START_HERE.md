@@ -8,7 +8,7 @@
 
 Calendar/content JSON → verified bilingual narrative → scene-by-scene *frame intent* (what must be seen at which spoken cue) → first-quality approved voice → exact word timestamps/captions → Remotion frame transitions and MP4 → actual phone-size semantic/audio QA → language/platform review package → explicit video owner approval → verified separate publication.
 
-This is the **target workflow**. Several frame-QA, agent-recovery, capture, and timeline controls are **not yet fully implemented**. Do not present this target as completed code. For current defects and evidence, consult [CURRENT_TASKS](hsk-tu-vous/docs/audits/CURRENT_TASKS.md).
+Lessons use the owner-approved **illustrated-glass format** (text-free frames made by Codex, the HSK AI cast drawn from the app's vectors, liquid-glass chips, bottom-first subtitles). For the daily command «Бугунги видеони тайёрла» follow the **runbook at the top of [WORKFLOW.md](hsk-tu-vous/content/WORKFLOW.md)**; who does what is in [project AGENTS.md → Agent roles](hsk-tu-vous/AGENTS.md#agent-roles-who-does-what). Not everything is proven end to end (for example the Tajik one-take import and promo screenshot capture); consult [CURRENT_TASKS](hsk-tu-vous/docs/audits/CURRENT_TASKS.md) before claiming a capability.
 
 ## Read files in this order
 

@@ -87,8 +87,12 @@ test("sample fallback re-fingerprints the copied sample, so checkpoint and impor
 
 test("V8-01: Mandarin gap recovery repairs a zero-length provider word like the main aligner", () => {
   const blocks = between("function timedBlocks(annotations, durationMs) {", "async function recoverActualWordClips");
-  assert.match(blocks, /if \(endMs <= startMs\) \{\s*if \(startMs \+ 1 - endMs > 250 \|\| startMs \+ 1 > durationMs \+ 100\)\s*throw new Error\("Invalid Gemini source clip word timing\."\);\s*endMs = startMs \+ 1;/);
+  assert.match(blocks, /const inverted = endMs <= startMs && \(startMs \+ 1 - endMs > 250 \|\| startMs \+ 1 > durationMs \+ 100\);/);
+  assert.match(blocks, /if \(endMs <= startMs\) endMs = startMs \+ 1;/, "a small inversion is repaired by 1 ms");
   assert.doesNotMatch(blocks, /endMs <= startMs \|\| endMs > durationMs \+ 100\)\s*throw/, "no blanket rejection of a zero-length word");
+  // V9-01: an impossible word is dropped as untimed (its span is re-recognized), never thrown for the whole take.
+  assert.match(blocks, /if \(outside \|\| inverted\) \{\s*console\.warn\("GEMINI_UNTIMED_WORD_DROPPED "[\s\S]*?return;\s*\}/);
+  assert.doesNotMatch(blocks.slice(0, blocks.indexOf("\n}\n")), /throw new Error/);
   const main = between("function flattenRecognized(", "function alignWords(");
   assert.match(main, /if \(correctionMs > 250\)/, "same 250 ms bound as the main aligner");
 });

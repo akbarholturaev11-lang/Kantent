@@ -142,7 +142,12 @@
         }
       },
       "generatedAt": "2026-11-08T18:57:48.897Z",
-      "rawSha256": "8c3be269108d7b086353148c3fa6407be16ec9bcec876661bbad7138a0d30524"
+      "rawSha256": "8c3be269108d7b086353148c3fa6407be16ec9bcec876661bbad7138a0d30524",
+      "visual": {
+        "by": "Claude looked at the frame 2026-11-09: text-free, no people, no baked character, matches prompt, continuous with references, sharp and clean",
+        "sha256": "f8b9be9ae6081a6b69841d45beb4fb831469c9e23bb7214bf24630f57cde261a",
+        "at": "2026-11-08T18:58:47.046Z"
+      }
     },
     "icon-cold": {
       "file": "icon-cold.jpg",
@@ -178,7 +183,12 @@
         }
       },
       "generatedAt": "2026-11-08T18:58:01.325Z",
-      "rawSha256": "268ed47004e1a9f50c6c33c3273d90fb8baae8007895ead906342b8cb835d84d"
+      "rawSha256": "268ed47004e1a9f50c6c33c3273d90fb8baae8007895ead906342b8cb835d84d",
+      "visual": {
+        "by": "Claude looked at the frame 2026-11-09: text-free, no people, no baked character, matches prompt, continuous with references, sharp and clean",
+        "sha256": "114f69be01e86276b6c93c51682263b2fea03761e853397c72082460492afce5",
+        "at": "2026-11-08T18:58:47.103Z"
+      }
     },
     "icon-warm": {
       "file": "icon-warm.jpg",
@@ -214,7 +224,12 @@
         }
       },
       "generatedAt": "2026-11-08T18:58:13.920Z",
-      "rawSha256": "b8712abf5e7f3e0c62d966b50533f47512bc74c60adf17e1aeb7da77ee1a7189"
+      "rawSha256": "b8712abf5e7f3e0c62d966b50533f47512bc74c60adf17e1aeb7da77ee1a7189",
+      "visual": {
+        "by": "Claude looked at the frame 2026-11-09: text-free, no people, no baked character, matches prompt, continuous with references, sharp and clean",
+        "sha256": "a14f8bf5c2c517adf847577014fc90746b2adc2103b8e7ed19b412c2d9fa9759",
+        "at": "2026-11-08T18:58:47.160Z"
+      }
     },
     "panda-and-friend": {
       "file": "panda-and-friend.png",
@@ -406,7 +421,12 @@
       },
       "generatedAt": "2026-11-08T18:19:44.699Z",
       "convertedFromSha256": "72eb24f27847e1a177d413e08919bc3146fa8038e0971383ed41a9b644ee5e24",
-      "conversion": "PNG -> JPEG q2 (ffmpeg), 2026-11-09"
+      "conversion": "PNG -> JPEG q2 (ffmpeg), 2026-11-09",
+      "visual": {
+        "by": "Claude looked at the frame 2026-11-09: text-free, no people, no baked character, matches prompt, continuous with references, sharp and clean",
+        "sha256": "e76bbe7aa3ab66706e54f2e788da8db8e03d6a10eeb9e306d52d0e4f595dda9f",
+        "at": "2026-11-08T18:58:46.847Z"
+      }
     },
     "hutong-summer": {
       "file": "hutong-summer.jpg",
@@ -445,7 +465,12 @@
       },
       "generatedAt": "2026-11-08T18:20:08.521Z",
       "convertedFromSha256": "bf7f84955775d57d02755f2ba1d0bd544756cf4da00170b07eee53dd60d99196",
-      "conversion": "PNG -> JPEG q2 (ffmpeg), 2026-11-09"
+      "conversion": "PNG -> JPEG q2 (ffmpeg), 2026-11-09",
+      "visual": {
+        "by": "Claude looked at the frame 2026-11-09: text-free, no people, no baked character, matches prompt, continuous with references, sharp and clean",
+        "sha256": "cc8b8d44784c34fcda080f2713eee072235106df477caf1cbc63e62f659a63b1",
+        "at": "2026-11-08T18:58:46.916Z"
+      }
     },
     "hutong-winter": {
       "file": "hutong-winter.jpg",
@@ -485,7 +510,12 @@
       },
       "generatedAt": "2026-11-08T18:20:42.368Z",
       "convertedFromSha256": "d48282b2d9356b879fe6369493289e6866c6f16e49be65cc7f0e25cee0a8c98e",
-      "conversion": "PNG -> JPEG q2 (ffmpeg), 2026-11-09"
+      "conversion": "PNG -> JPEG q2 (ffmpeg), 2026-11-09",
+      "visual": {
+        "by": "Claude looked at the frame 2026-11-09: text-free, no people, no baked character, matches prompt, continuous with references, sharp and clean",
+        "sha256": "231488ba4ce3db5c9cfae1bb5af8b74c83dfa14333c68afb4ecb72e20699e264",
+        "at": "2026-11-08T18:58:46.984Z"
+      }
     }
   }
 }

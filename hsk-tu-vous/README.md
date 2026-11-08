@@ -36,7 +36,7 @@ npm run check:consistency
 npm run dev
 ```
 
-Open this `hsk-tu-vous/` directory in your coding agent. The local MCP server is declared in `.mcp.json` and can also be launched with:
+Open this `hsk-tu-vous/` directory in your coding agent on an up-to-date `main`. The local MCP server is declared in `.mcp.json` (Claude Code) and `.codex/config.toml` (Codex) and can also be launched with:
 
 ```bash
 npm run mcp
@@ -49,6 +49,15 @@ npm run content:make -- today
 npm run content:make -- YYYY-MM-DD
 npm run content:make -- YYYY-MM-DD --language ru
 npm run content:make -- YYYY-MM-DD --language tg
+```
+
+The step-by-step path, including the stages the command returns (`authoring-required`, `action-plan-required`, `lesson-art-required`, `partial`, `ready-for-review`), is the runbook at the top of [`content/WORKFLOW.md`](content/WORKFLOW.md). Illustrated-glass lessons add the frame tools:
+
+```bash
+npm run content:variety -- <episode-id>          # setting, supporting HSK AI character, layout, A/B arm
+npm run content:art -- <episode-id>              # Codex frame brief (no paid API); --record-codex <name> after saving a frame
+npm run content:art:review -- <episode-id>       # frame review service; --confirm-visual <name> "<what you checked>"
+npm run content:characters                       # re-render the HSK AI cast reference PNGs
 ```
 
 Production MCP tools accept `language: "all"` by default, or a specific language. The batch ad planner `get_promo_plan` also defaults to `language: "all"`. Other per-language MCP read/edit/status/registration/approval tools accept `language: "ru"` or `"tg"`, defaulting to the legacy series. Individual voice/render CLIs use `HSK_CONTENT_LANGUAGE=tg`; this setting is inherited by child processes. Never reuse audio, word cues, CTA registration or approval from another language. A new locale profile may need an explicit model decision before generating its designated voice sample; read the selected profile and use `approve_voice_model_for_sample` only after the owner's exact decision.

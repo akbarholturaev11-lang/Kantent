@@ -6,6 +6,7 @@ import { resolveTodayVideo } from "./resolve-production-date.mjs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
+import { lessonArtPreflight } from "./review-lesson-art.mjs";
 import {
   PROJECT_ROOT,
   CALENDAR_PATH,
@@ -39,7 +40,13 @@ console.log('GitHub source verified:', sourceRevision.remoteMainSha);
 
 let resolved;
 if (input === "today") {
-  resolved = resolveTodayVideo(await readJson(CALENDAR_PATH), new Date(), { confirmedPublishedEpisodeIds: confirmedPublishedInAllLanguages(languages) });
+  try {
+    resolved = resolveTodayVideo(await readJson(CALENDAR_PATH), new Date(), { confirmedPublishedEpisodeIds: confirmedPublishedInAllLanguages(languages) });
+  } catch (error) {
+    if (error?.code !== "AUTHORING_REQUIRED") throw error;
+    console.log(JSON.stringify({ stage: "authoring-required", ...error.authoring, nextAgentAction: error.message }, null, 2));
+    process.exit(2);
+  }
   console.log(`Calendar ${resolved.timezone}: ${resolved.requestedDate} -> ${resolved.selectedDate} (${resolved.selection})`);
 }
 const item = resolved ? await getCalendarItemByDate(resolved.selectedDate) : /^\d{4}-\d{2}-\d{2}$/.test(input)
@@ -65,6 +72,13 @@ const result = await prepareLanguagePackages(languages, async (language) => {
     if (result.status !== 0) throw new Error(script + " завершился с ошибкой.");
   };
 
+  // Frames come before paid voice (illustrated-glass lessons, WORKFLOW §2.6).
+  const art = await lessonArtPreflight(episode);
+  if (!art.ready) {
+    const error = new Error(`lesson-art-required: ${art.reason ?? art.failures.join("; ")}. ${art.nextAgentAction}`);
+    error.stage = "lesson-art-required";
+    throw error;
+  }
   if (!hasImportedVoice) runStage("generate-voice-gemini.mjs");
   runStage("render-episode.mjs");
   runStage("prepare-tiktok-review.mjs");

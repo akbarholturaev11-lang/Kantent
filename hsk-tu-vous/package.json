@@ -48,7 +48,11 @@
     "content:import-voice": "node scripts/import-voice.mjs",
     "content:storytelling-plan": "node scripts/storytelling-plan.mjs",
     "content:promo-plan": "node scripts/promo-plan.mjs",
-    "content:review-frames": "node scripts/cue-frame-review.mjs"
+    "content:review-frames": "node scripts/cue-frame-review.mjs",
+    "content:variety": "node scripts/visual-variety-plan.mjs",
+    "content:art": "node scripts/generate-lesson-art.mjs",
+    "content:art:review": "node scripts/review-lesson-art.mjs",
+    "content:characters": "node scripts/build-character-references.mjs"
   },
   "sideEffects": [
     "*.css"

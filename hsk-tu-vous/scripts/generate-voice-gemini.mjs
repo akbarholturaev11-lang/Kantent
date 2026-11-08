@@ -775,23 +775,29 @@ function timedBlocks(annotations, durationMs) {
   // the SAME provider-timing policy as flattenRecognized(). A zero-length word
   // (e.g. "и" 7.100s→7.100s) gets a 1 ms end when the inversion is ≤250 ms,
   // instead of aborting the whole Mandarin gap recovery. Larger inversions and
-  // times outside the audio still fail closed; no timestamp is invented.
-  return annotations.map((word, annotationIndex) => {
+  // times outside the audio are never used; no timestamp is invented.
+  // V9-01 (real TG one-take 2026-11-09: 他 10.30 s → 0.40 s in one window
+  // pass): ONE impossible provider word used to abort the whole recovery. It is
+  // now dropped as untimed, so its span becomes a gap that is re-recognized
+  // from a clip or stays unconfirmed (fail closed at the exact-token gate).
+  const blocks = [];
+  annotations.forEach((word, annotationIndex) => {
     const startMs = parseOffsetMs(word.startOffset ?? word.start_offset);
     let endMs = parseOffsetMs(word.endOffset ?? word.end_offset);
-    if (startMs < 0 || startMs > durationMs + 100 || endMs > durationMs + 100)
-      throw new Error("Invalid Gemini source clip word timing.");
-    if (endMs <= startMs) {
-      if (startMs + 1 - endMs > 250 || startMs + 1 > durationMs + 100)
-        throw new Error("Invalid Gemini source clip word timing.");
-      endMs = startMs + 1;
+    const outside = startMs < 0 || startMs > durationMs + 100 || endMs > durationMs + 100;
+    const inverted = endMs <= startMs && (startMs + 1 - endMs > 250 || startMs + 1 > durationMs + 100);
+    if (outside || inverted) {
+      console.warn("GEMINI_UNTIMED_WORD_DROPPED " + JSON.stringify({ text: word.text, startMs, endMs, reason: outside ? "outside-audio" : "inverted" }));
+      return;
     }
-    return {
+    if (endMs <= startMs) endMs = startMs + 1;
+    blocks.push({
       tokens: tokenParts(word.text).flatMap(spokenParts),
       text: word.text,
       startMs, endMs, annotationIndex,
-    };
+    });
   });
+  return blocks;
 }
 
 /** Direct Gemini word transcription of one saved audio file with explicit hints. */

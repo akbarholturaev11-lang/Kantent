@@ -163,23 +163,37 @@ Owner listened to the RU/TG one-take vs scene A/B and chose **one take per langu
 | 8.1 s RU / 8.4 s TG hook vs 6 s / 8 s limit (old code silently cut speech at 6 s) | Cap never cuts hook speech; content: closing instruction + its beat moved to the answer scene (TTS text byte-identical); CTA v2 registered (supersedes v1) |
 | **Guard bug:** a `--new-take` take hid itself → a second RU TTS take was bought (1 Direct request, `2026-11-08T13-48-23-577Z`, kept, not used) | `findUnresumableSavedTakes` lists the barrier take itself |
 
-**State:** RU one-take `review/…/gemini-production/2026-11-08T07-51-00-414Z` (the take the owner listened to) has all 125 tokens verified and is imported (57.0 s). RU render is blocked by the visual-hold rule: `weather` 7.50 s and `recall` 7.41 s without a visual change (max 6 s) — needs meaning-linked motion beats (content authoring, then CTA v3). TG one-take: Direct daily STT quota spent; OpenRouter evidence cached; resume after the quota reset.
+**State (2026-11-08, superseded below):** RU one-take `review/…/gemini-production/2026-11-08T07-51-00-414Z` (the take the owner listened to) has all 125 tokens verified and is imported (57.0 s). Its render was then blocked by the visual-hold rule, resolved on 2026-11-09 by the illustrated-format beats. TG one-take: Direct daily STT quota spent; OpenRouter evidence cached; resume after the quota reset.
 
 ## 2026-11-09 — illustrated-glass lesson format (owner-approved)
 
-After several owner-reviewed test renders of `bi-comparison-height-20261104` (RU), the owner approved the format modelled on their reference reels: generated text-free background art, only the HSK AI cast (panda, dragon, crane, monkey, rabbit from the app's character pack) drawn from exact vectors, no people, camera and overlays on exact cues, three non-repeating text roles, safe-zone text with bottom-first adaptive subtitles. Rules: `content/EDITING_SPEC.md#illustrated-glass-lesson-format`; mandatory from `lessonPresentation.illustratedFormatFromDate` (2026-11-10). Lesson art cost so far: $0.75 (OpenRouter); Codex is the intended free generator but its local config currently points to an Ollama catalog the installed CLI cannot parse. TG render waits for its one-take STT (Gemini daily quota).
+After several owner-reviewed test renders of `bi-comparison-height-20261104` (RU), the owner approved the format modelled on their reference reels: generated text-free background art, only the HSK AI cast (panda, dragon, crane, monkey, rabbit from the app's character pack) drawn from exact vectors, no people, camera and overlays on exact cues, three non-repeating text roles, safe-zone text with bottom-first adaptive subtitles. Rules: `content/EDITING_SPEC.md#illustrated-glass-lesson-format`; mandatory from `lessonPresentation.illustratedFormatFromDate`. The owner then asked for variety (no single background/pair/layout), frames as a Codex task, a frame review service and every rule in docs — all merged to `main` (7e0e14c3, 9f25bac6). The RU render resolved the earlier visual-hold block with re-authored beats (CTA re-registered up to v8). Lesson art cost: about $1.05 (OpenRouter, before frames became a Codex task).
 
-## Next tasks / blockers — BUGS ONLY
+## 2026-11-09 — full project audit (owner request: "loyihani tuliq avdit qil … mukammal")
 
-1. Check latest full CI on PR #59 (including consistency and semantic-foundation). Investigate any failures in the exact changed SHA before proposing a merge.
-2. Verify one **real existing** unapproved RU/TG audio import and final MP4 against real caption/voice timestamps and phone-size meaning-linked frames; no synthetic test or missing recording may be called a pass. Do not spend on new voice without explicit authorization.
-3. Review only remaining **code-confirmed defects** from V1–V7 (bad frame onset, subtitle/pinyin drift, wrong scene state, accidental voice regeneration, corrupt review hashes). Fix one minimal root cause at a time with a regression test.
-4. PR #59 is draft and dependent on PR #58. Keep new PWA capture, TikTok functionality, autonomous agent workflows and generalized UX improvements **out of scope**. PR #56's OpenRouter backup is merged here by owner instruction (2026-11-08); activating it still needs an OpenRouter spend cap and a real RU/TG listening check. Do not merge into main before QA and integration/conflict checks.
-5. The separate `main` feedback-analyzer failing test belongs to its own scope; do not amend unrelated product data here.
+Findings and fixes (branch `agent/continue-p0-p1-20261108`):
+
+| Finding | Fix |
+|---|---|
+| Calendar has no item after 2026-11-06, so «Бугунги видеони тайёрла» threw "nothing to prepare" | Owner rule recorded: the today command authorizes authoring exactly today's `weeklySchedule` slot; resolver throws `AUTHORING_REQUIRED`, MCP returns stage `authoring-required`, `content:make -- today` exits 2 with the instructions (WORKFLOW §1.3). The empty reserve itself means the external Calendar Reserve task produced nothing after 11-06 — owner to check it |
+| New format started 2026-11-10, so a lesson authored for today (11-09) would silently use the old look | `illustratedFormatFromDate` and the variety A/B start moved to 2026-11-07 (after the last existing draft) |
+| Frames were checked only at render, after paid voice | `lessonArtPreflight` runs before voice in MCP and CLI: stage `lesson-art-required` + refreshed Codex brief |
+| Visual frame confirmations lived only in ignored `review/`, so a GitHub render could never pass | Confirmations persist, hash-bound, in committed `public/lesson-art/<id>/provenance.json` |
+| Manifests could ask for characters inside frames, contradicting "no baked-in character" | `validateArtManifest` rejects `characters` on frame assets |
+| Reserve readiness did not check illustrated drafts | `inspectDraftReadiness` requires the lesson-art manifest, its variety record and every referenced frame name |
+| Contradictions: AI_RULES "Codex first, then paid fallback"; EDITING_SPEC "no headline / one stage" vs the illustrated chip/pair; stale generator header | Reworded at the owning sources; EDITING_SPEC got an explicit precedence rule |
+| No single procedure for the daily command; agent duties scattered | Runbook at the top of `content/WORKFLOW.md`; "Agent roles" table in `AGENTS.md`; Feedback playbook reads the variety A/B |
+| No npm aliases for the frame tools | `content:variety`, `content:art`, `content:art:review`, `content:characters` |
+| **V9-01 (real TG one-take):** one window pass returned 他 with an impossible time (10.30 s → 0.40 s); that single word made `timedBlocks` throw and aborted all gap recovery for the take | The impossible word is dropped as untimed (`GEMINI_UNTIMED_WORD_DROPPED`), so its span is re-recognized from a clip or stays unconfirmed; nothing is guessed |
+| Owner's main checkout is 116 commits behind `main` with 18 uncommitted Codex files (2026-11-06), so production there is blocked as stale | Snapshot preserved untouched as local branch `wip/owner-checkout-20261106` (5ac4e942); switching the checkout is the owner's call |
+
+## Next tasks / blockers
+
+See `CURRENT_TASKS.md` (owner actions first). Engineering-wise the next real proof is a Codex-made frame set for a new lesson and the TJ one-take import/render.
 
 ## Operating rules
 
-- Work on `agent/continue-p0-p1-20261108`; do not push these changes to main, Codex PR #58 branch, Claude branch, or the original PR #56 branch (its history is merged here).
+- Pushes to `main` only with green CI and on owner instruction (owner instructed merging the approved format and its follow-ups to `main` on 2026-11-09).
 - On each session update: base/head SHAs, verified changes, tests with exact run IDs/status, unresolved blockers and next **single** task. Do not label a test `passed` without observable CI evidence.
-- Use no real API key, no `OPENROUTER_API_KEY` or `GEMINI_API_KEY` in commits, logs or test fixtures. Do not run a paid voice or social publish operation.
+- Use no real API key, no `OPENROUTER_API_KEY` or `GEMINI_API_KEY` in commits, logs or test fixtures. Do not run a paid voice or social publish operation without the owner's request.
 - When a bug cannot be reproduced without original audio/visual artifacts, distinguish **code fix / synthetic CI / real-media QA needed**.

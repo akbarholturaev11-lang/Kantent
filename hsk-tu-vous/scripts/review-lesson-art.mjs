@@ -22,7 +22,7 @@ import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 import { PROJECT_ROOT } from "./lib.mjs";
-import { framePrompt, validateArtManifest } from "./generate-lesson-art.mjs";
+import { framePrompt, validateArtManifest, writeCodexBrief } from "./generate-lesson-art.mjs";
 import { validateIllustration } from "./action-design-plan.mjs";
 import { blockedBoxes, subtitleSlotFor } from "./illustrated-layout.mjs";
 
@@ -55,6 +55,7 @@ export async function reviewLessonArt(episodeId, { episode = null, confirmVisual
   let previous = null;
   try { previous = JSON.parse(await fs.readFile(reviewPath, "utf8")); } catch { /* first review */ }
   const frames = [];
+  let provenanceChanged = false;
   for (const asset of manifest.assets) {
     const file = path.join(dir, asset.name + ".jpg");
     const failures = [];
@@ -78,9 +79,12 @@ export async function reviewLessonArt(episodeId, { episode = null, confirmVisual
         if (record.promptSha256 && record.promptSha256 !== sha256(Buffer.from(prompt))) failures.push("prompt changed since this frame was made (stale frame)");
         frame.provider = record.provider ?? "unknown";
       }
-      const visual = confirmVisual?.has(asset.name) ? { by: confirmVisual.get(asset.name), sha256: frame.sha256, at: new Date().toISOString() }
-        : previous?.frames?.find((f) => f.name === asset.name && f.visual?.sha256 === frame.sha256)?.visual;
+      // The confirmation is bound to the frame hash and stored in the committed
+      // provenance.json, so a GitHub-rendered review sees the same decision.
+      const stored = [record?.visual, previous?.frames?.find((f) => f.name === asset.name)?.visual].find((v) => v?.sha256 === frame.sha256);
+      const visual = confirmVisual?.has(asset.name) ? { by: confirmVisual.get(asset.name), sha256: frame.sha256, at: new Date().toISOString() } : stored;
       if (visual) frame.visual = visual;
+      if (record && visual && confirmVisual?.has(asset.name)) { record.visual = visual; provenanceChanged = true; }
     }
     frames.push(frame);
   }
@@ -100,6 +104,7 @@ export async function reviewLessonArt(episodeId, { episode = null, confirmVisual
       beats.push({ id: beat.id, failures });
     }
   }
+  if (provenanceChanged) await fs.writeFile(path.join(dir, "provenance.json"), JSON.stringify(provenance, null, 2) + "\n");
   const automatedPass = frames.every((f) => !f.failures.length) && beats.every((b) => !b.failures.length);
   const visualPass = frames.every((f) => f.visual);
   const result = { episodeId, reviewedAt: new Date().toISOString(), automatedPass, visualPass, pass: automatedPass && visualPass,
@@ -109,10 +114,36 @@ export async function reviewLessonArt(episodeId, { episode = null, confirmVisual
   return result;
 }
 
+const usesIllustration = (episode) => (episode?.scenes ?? []).some((s) => (s.motionBeats ?? []).some((b) => b.visual?.illustration));
+
+/**
+ * Production preflight, run BEFORE paid voice: an illustrated lesson needs its
+ * manifest and a passing frame review. When frames are missing it refreshes
+ * the Codex brief so the agent knows exactly what to generate next.
+ */
+export async function lessonArtPreflight(episode) {
+  if (!usesIllustration(episode)) return { required: false, ready: true };
+  const id = episode.id;
+  const manifestPath = path.join(PROJECT_ROOT, "content", "lesson-art", id + ".json");
+  let manifest;
+  try { manifest = validateArtManifest(JSON.parse(await fs.readFile(manifestPath, "utf8"))); } catch (error) {
+    return { required: true, ready: false, stage: "lesson-art-required", reason: error?.code === "ENOENT" ? "content/lesson-art/" + id + ".json is missing" : error.message,
+      nextAgentAction: `Run node scripts/visual-variety-plan.mjs ${id}, then write content/lesson-art/${id}.json (text-free backgrounds, planner output as "variety") per content/EDITING_SPEC.md#illustrated-glass-lesson-format and content/WORKFLOW.md §2.6, then rerun.` };
+  }
+  const brief = await writeCodexBrief({ episodeId: id, manifest, outDir: path.join(PROJECT_ROOT, "public", "lesson-art", id) });
+  const result = await reviewLessonArt(id, { episode });
+  if (result.pass) return { required: true, ready: true };
+  return { required: true, ready: false, stage: "lesson-art-required",
+    briefPath: path.relative(PROJECT_ROOT, brief.file), missingFrames: brief.missing.map((m) => m.asset.name),
+    failures: [...result.frames.flatMap((f) => f.failures.map((x) => `${f.name}: ${x}`)),
+      ...result.beats.flatMap((b) => b.failures.map((x) => `${b.id}: ${x}`)),
+      ...result.frames.filter((f) => !f.failures.length && !f.visual).map((f) => `${f.name}: visual check not confirmed`)],
+    nextAgentAction: `Codex task: generate every missing frame listed in ${path.relative(PROJECT_ROOT, brief.file)} with your own image generation, record each with node scripts/generate-lesson-art.mjs ${id} --record-codex <name>, run node scripts/review-lesson-art.mjs ${id}, fix failures, LOOK at each frame and confirm it with --confirm-visual <name> "<what you checked>", then rerun preparation. Never use --paid without the owner's request.` };
+}
+
 /** Render gate: the illustrated lesson's current frames have a passing review. */
 export async function assertLessonArtReviewed(episode) {
-  const uses = (episode.scenes ?? []).some((s) => (s.motionBeats ?? []).some((b) => b.visual?.illustration));
-  if (!uses) return null;
+  if (!usesIllustration(episode)) return null;
   const result = await reviewLessonArt(episode.id, { episode });
   if (!result.pass) {
     const problems = [...result.frames.flatMap((f) => f.failures.map((x) => `${f.name}: ${x}`)),

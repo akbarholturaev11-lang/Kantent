@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 /**
- * Lesson illustrations for the illustrated-glass lesson format (owner
- * decision 2026-11-09, references: illustrated explainer reels).
- *
- * Reads content/lesson-art/<episode-id>.json, generates each missing image
- * once through OpenRouter (image-output model named in the manifest), and
- * writes public/lesson-art/<episode-id>/<name>.png plus provenance.json
- * (model, prompt hash, sha256, cost). Existing images are never regenerated
- * unless --regenerate <name> is passed explicitly. Images contain no text, so
- * every language reuses them. The API key is never printed or stored.
+ * Lesson frames (backgrounds) for the illustrated-glass lesson format (owner
+ * decisions 2026-11-09). Frames are a CODEX task:
+ *   node scripts/generate-lesson-art.mjs <id>                    write the Codex brief for missing frames
+ *   node scripts/generate-lesson-art.mjs <id> --record-codex <n> record a frame Codex saved
+ *   node scripts/generate-lesson-art.mjs <id> --paid             paid OpenRouter fallback (owner request only)
+ * Reads content/lesson-art/<episode-id>.json; frames are text-free JPEG
+ * backgrounds at public/lesson-art/<episode-id>/<name>.jpg with provenance.json
+ * (provider, prompt hash, sha256). Characters are never baked into a frame: the
+ * renderer draws the HSK AI cast from content/characters/hsk-ai-characters.json.
+ * A saved frame is never regenerated without --regenerate <name>. Frames have
+ * no text, so every language reuses them. The API key is never printed.
  */
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -49,9 +51,8 @@ export function validateArtManifest(manifest) {
     names.add(asset.name);
     if (typeof asset.prompt !== "string" || asset.prompt.length < 30) throw new Error(asset.name + ": prompt is too short.");
     if (!["9:16", "1:1", "4:5", "16:9"].includes(asset.aspectRatio)) throw new Error(asset.name + ": unsupported aspect ratio.");
-    if (asset.characters !== undefined && (!Array.isArray(asset.characters) || asset.characters.some((id) => !/^[a-z]+(:[a-z-]+)?$/.test(id))))
-      throw new Error(asset.name + ": characters are registry ids like \"panda\" or \"crane:celebrate\" (content/characters/hsk-ai-characters.json).");
-    if (asset.character !== undefined) throw new Error(asset.name + ": use \"characters\": [ids] from the HSK AI registry.");
+    if (asset.characters !== undefined || asset.character !== undefined)
+      throw new Error(asset.name + ": frames are text-free backgrounds; the HSK AI cast is placed per beat in visual.illustration.cast and drawn by the renderer (content/EDITING_SPEC.md#illustrated-glass-lesson-format).");
     for (const reference of asset.references ?? [])
       if (!names.has(reference)) throw new Error(asset.name + ": a reference must be an earlier asset.");
     for (const [id, box] of Object.entries(asset.anchors ?? {})) {
