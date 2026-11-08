@@ -114,14 +114,16 @@ test("a resumed take re-checks its saved STT responses before spending a new att
   assert.match(stt, /metadata\.reusedSavedTranscriptions\.push\(\{ chunk: index \+ 1, attempt: saved \}\)/);
 });
 
-test("X-10 wiring: single-hint passes only for missing languages, only in windows with a gap, Direct only", () => {
+test("X-10 wiring: single-hint passes only for missing languages, only in windows with a gap", () => {
   const recovery = between("async function recoverActualWordClips({", "function safeErrorMessage");
   const first = recovery.indexOf("let plan = buildRecoveryPlan(expected, blocks, durationMs, { match });");
   const passes = recovery.indexOf("for (const windowIndex of windowsTouching(windows, plan.gaps)) {");
   const replan = recovery.indexOf("plan = buildRecoveryPlan(expected, blocks, durationMs, { match });", passes);
   const clips = recovery.indexOf("for (const gap of plan.gaps) {");
   assert.ok(first > 0 && passes > first && replan > passes && clips > replan, "plan -> passes on gap windows -> re-plan -> gap clips");
-  assert.match(recovery, /if \(plan\.gaps\.length && config\.transcriptionTransport !== "openrouter" && transcriptionLanguages\.length > 1\)/);
+  assert.match(recovery, /if \(plan\.gaps\.length && transcriptionLanguages\.length > 1\)/);
+  const saved = between("async function transcribeSavedAudio(", "async function cachedClipTranscription(");
+  assert.match(saved, /language: openRouterHint,/, "OpenRouter passes get their single ISO hint");
   assert.match(recovery, /transcribeSavedAudio\(clipPath, \[code\],/);
   assert.match(recovery, /language-passes\.json/);
   assert.match(recovery, /cachedClipTranscription\(path\.join\(directory, name \+ "\.json"\)/, "a paid pass is saved and reused");

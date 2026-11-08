@@ -230,8 +230,16 @@ export async function synthesizeOpenRouterWav({
   return pcmToWav(bytes, sampleRateHz, channels, declared);
 }
 
+/** ISO-639-1 hint OpenRouter accepts for a profile/Mandarin language code. */
+export function openRouterLanguage(code) {
+  const value = String(code ?? "").toLowerCase();
+  if (value.startsWith("cmn") || value.startsWith("zh")) return "zh";
+  const iso = value.split("-")[0];
+  return /^[a-z]{2}$/.test(iso) ? iso : undefined;
+}
+
 export async function transcribeOpenRouter({
-  apiKey, model, audioPath, fetchImpl = fetch, readFile = fs.readFile,
+  apiKey, model, audioPath, language, fetchImpl = fetch, readFile = fs.readFile,
 }) {
   const slug = openRouterModel(model);
   if (!slug.endsWith("-transcribe")) throw new Error("The requested model is not transcription.");
@@ -249,7 +257,11 @@ export async function transcribeOpenRouter({
       input_audio: { data: bytes.toString("base64"), format },
       response_format: "verbose_json",
       timestamp_granularities: ["word"],
-      // Intentionally no single-language hint: narration mixes Russian/Tajik and Mandarin.
+      // One ISO-639-1 hint when given. Verified 2026-11-08 on the saved TG
+      // one-take window: without it 6 words with inverted times came back,
+      // with "tg" real Tajik words with valid times. Mixed audio still needs
+      // the windowed/per-language recovery; the exact gate decides.
+      ...(language ? { language } : {}),
     }),
     signal: AbortSignal.timeout(120000),
   });
@@ -263,11 +275,14 @@ export async function transcribeOpenRouter({
   if (!Array.isArray(result?.words) || result.words.length === 0) {
     throw new TranscriptionResponseError("OpenRouter transcription returned no provider word timestamps; retry STT before captions.", { retryable: true });
   }
-  const wordAnnotations = result.words.map((item, index) => {
+  const wordAnnotations = result.words.flatMap((item, index) => {
     const text = item?.word ?? item?.text;
     const start = item?.start;
     const end = item?.end;
-    if (typeof text !== "string" || !text.trim() ||
+    // An entry with no written word carries no speech token to align; it is
+    // skipped rather than discarding the whole paid response.
+    if (typeof text === "string" && !text.trim()) return [];
+    if (typeof text !== "string" ||
         typeof start !== "number" || !Number.isFinite(start) ||
         typeof end !== "number" || !Number.isFinite(end) ||
         // V8-01 policy, as on Gemini Direct: a zero-length or slightly
@@ -275,14 +290,17 @@ export async function transcribeOpenRouter({
         // through unchanged; the shared aligner repairs it with a 1 ms end
         // and still rejects anything larger. Nothing is invented here.
         start < 0 || end < 0 || end < start - 0.25) {
-      throw new TranscriptionResponseError("Invalid OpenRouter provider word timestamp at index " + index, { retryable: true });
+      throw new TranscriptionResponseError("Invalid OpenRouter provider word timestamp at index " + index +
+        ` (start ${JSON.stringify(start)}, end ${JSON.stringify(end)}, text ${typeof text})`, { retryable: true });
     }
-    return {
+    return [{
       text,
       startOffset: start.toFixed(3) + "s",
       endOffset: end.toFixed(3) + "s",
-    };
+    }];
   });
+  if (!wordAnnotations.length)
+    throw new TranscriptionResponseError("OpenRouter transcription returned no written words; retry STT before captions.", { retryable: true });
   return {
     transcript: typeof result.text === "string" ? result.text : wordAnnotations.map(x => x.text).join(" "),
     wordAnnotations,

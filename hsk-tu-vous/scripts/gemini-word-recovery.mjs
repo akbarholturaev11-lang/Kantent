@@ -78,7 +78,6 @@ export function buildRecoveryPlan(expected, blocks, durationMs, { match } = {}) 
       const next=match.blockIndex===null?null:blocks[match.blockIndex];
       const startMs=previous?previous.endMs:0;
       const endMs=next?next.startMs:durationMs;
-      if(endMs<=startMs)throw Error("No audible clip between verified word boundaries.");
       const tokens=expected.slice(cursor,match.from);
       const languages=[...new Set(tokens.map(x=>x.language))].sort();
       // Real 2026-11-08 RU take: STT dropped the interleaved "с 比 или с 很".
@@ -88,8 +87,11 @@ export function buildRecoveryPlan(expected, blocks, durationMs, { match } = {}) 
         languages.join("+")==="locale+zh"?"mixed":null;
       if(!language)
         throw Error("Missing passage mixes languages without a verified word boundary.");
+      // Verified neighbours that touch or overlap leave no audio to cut: the
+      // gap is kept (a language pass may still fill it) but marked, and no
+      // clip is ever cut for it. Real TG one-take 2026-11-08.
       gaps.push({from:cursor,to:match.from,startMs,endMs,language,
-        tokens:tokens.map(x=>x.text)});
+        tokens:tokens.map(x=>x.text),...(endMs<=startMs?{noAudio:true}:{})});
     }
     if(match.blockIndex!==null)previous=blocks[match.blockIndex+(match.blockCount??1)-1];
     cursor=match.to;

@@ -16,7 +16,7 @@ import { offsetAnnotations, parseSilences, planSttWindows, windowsTouching } fro
 import { redactCredentials, requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
 import {
   resolveVoiceApi, requireOpenRouterKey, synthesizeOpenRouterWav,
-  transcribeOpenRouter, transcribeUntilAligned, TranscriptionResponseError,
+  transcribeOpenRouter, transcribeUntilAligned, TranscriptionResponseError, openRouterLanguage,
   OPENROUTER_TTS_MAX_ATTEMPTS, STT_ATTEMPTS_PER_RUN,
 } from "./openrouter-voice.mjs";
 import { isPreConnectFailure, openRouterBackupKey, withOpenRouterBackup } from "./voice-transport-backup.mjs";
@@ -852,15 +852,17 @@ function measureSilences(sourcePath, ffmpegRuntime) {
 /**
  * One saved audio file -> provider word annotations. Gemini Direct with the
  * given hints (opt-in OpenRouter backup on quota/5xx/unreachable), or the
- * OpenRouter transport, which accepts no language hint. Same saved audio
+ * OpenRouter transport with the first code as its single ISO hint. Same saved audio
  * either way; speech is never regenerated here.
  */
 async function transcribeSavedAudio(filePath, languageCodes, displayName, { stage, chunk }) {
+  const openRouterHint = openRouterLanguage(languageCodes[0]);
   const openRouter = async () => (await transcribeOpenRouter({
     apiKey: openRouterKeyFor(config), model: config.transcribeModel, audioPath: filePath,
+    language: openRouterHint,
   })).wordAnnotations;
   if (config.transcriptionTransport === "openrouter")
-    return { annotations: await openRouter(), provider: "openrouter", languageCodes: [] };
+    return { annotations: await openRouter(), provider: "openrouter", languageCodes: openRouterHint ? [openRouterHint] : [] };
   let provider = "gemini-direct";
   const annotations = await withOpenRouterBackup({
     stage,
@@ -877,7 +879,8 @@ async function transcribeSavedAudio(filePath, languageCodes, displayName, { stag
     },
     primary: () => transcribeDirectAudio(filePath, languageCodes, displayName, config),
   });
-  return { annotations, provider, languageCodes: provider === "openrouter" ? [] : languageCodes };
+  return { annotations, provider,
+    languageCodes: provider === "openrouter" ? (openRouterHint ? [openRouterHint] : []) : languageCodes };
 }
 
 /**
@@ -921,16 +924,15 @@ async function recoverActualWordClips({
   // single-hint pass per language that is still MISSING, only over the
   // silence-bounded windows that contain a gap, over the SAME saved audio.
   // The strict DP then selects one time-ordered exact cover. Direct only:
-  // the OpenRouter transport takes no language hint.
+  // On OpenRouter each pass sends its single ISO hint.
   const languagePasses = [];
-  if (plan.gaps.length && config.transcriptionTransport !== "openrouter" && transcriptionLanguages.length > 1) {
+  if (plan.gaps.length && transcriptionLanguages.length > 1) {
     const codesFor = (gap) => gap.language === "zh" ? [transcriptionLanguages.at(-1)]
       : gap.language === "locale" ? [transcriptionLanguages[0]] : transcriptionLanguages;
     for (const windowIndex of windowsTouching(windows, plan.gaps)) {
       const window = windows[windowIndex];
       const gapsHere = plan.gaps.filter((gap) => gap.startMs < window.endMs && gap.endMs > window.startMs);
       for (const code of [...new Set(gapsHere.flatMap(codesFor))]) {
-        if (config.transcriptionTransport === "openrouter") break;
         const name = `window-${pad2(windowIndex + 1)}-${code}`;
         try {
           const record = await cachedClipTranscription(path.join(directory, name + ".json"),
@@ -964,12 +966,16 @@ async function recoverActualWordClips({
     expectedTokens: expected.length,
   }, null, 2) + "\n");
   for (const gap of plan.gaps) {
-    if (gap.endMs - gap.startMs < 80) throw new Error("Recoverable speech clip is too short.");
+    if (gap.noAudio || gap.endMs - gap.startMs < 80) {
+      unconfirmed.push({ startMs: gap.startMs, endMs: gap.endMs, expected: gap.tokens.join(" "), heard: "",
+        reason: gap.noAudio ? "No audible clip between verified word boundaries." : "Recoverable speech clip is too short." });
+      recovered.push(null);
+      continue;
+    }
     const clipName = `span-${gap.startMs}-${gap.endMs}`;
-    // A mixed RU/TG+Mandarin gap gets one single-hint pass per language on
-    // Direct (a mixed hint drops one of them); OpenRouter takes no hint.
-    const hintSets = config.transcriptionTransport === "openrouter" ? [[]]
-      : gap.language === "zh" ? [[transcriptionLanguages.at(-1)]]
+    // A mixed RU/TG+Mandarin gap gets one single-hint pass per language
+    // (a mixed hint drops one of them), on either transport.
+    const hintSets = gap.language === "zh" ? [[transcriptionLanguages.at(-1)]]
         : gap.language === "locale" ? [[transcriptionLanguages[0]]]
           : transcriptionLanguages.map((code) => [code]);
     const clipPath = path.join(directory, clipName + ".wav");
@@ -1824,6 +1830,7 @@ try {
             apiKey: openRouterKeyFor(config),
             model: config.transcribeModel,
             audioPath: transcriptionAudioPath,
+            language: openRouterLanguage(transcriptionLanguages[0]),
           });
           if (config.transcriptionTransport === "openrouter") return openRouterStt();
           // Direct quota/5xx: same saved audio via the opt-in backup; speech is

@@ -112,6 +112,10 @@ test("missing/invalid provider word timing blocks transcription", async () => {
     text:"и 他",words:[{word:"и",start:7.1,end:7.1},{word:"他",start:7.1,end:7.3}],
   }),{status:200}) });
   assert.deepEqual(zero.wordAnnotations.map((w)=>[w.startOffset,w.endOffset]),[["7.100s","7.100s"],["7.100s","7.300s"]]);
+  const blank = await transcribeOpenRouter({ ...opts, fetchImpl:async()=>new Response(JSON.stringify({
+    text:"ман",words:[{word:" ",start:0,end:0},{word:"ман",start:0.2,end:0.5}],
+  }),{status:200}) });
+  assert.deepEqual(blank.wordAnnotations.map((w)=>w.text),["ман"], "an empty entry is skipped, not fatal");
 });
 
 test("200 with empty words retries STT only and keeps the original audio bytes", async () => {
@@ -260,4 +264,17 @@ test("OpenRouter TTS retries once when it never connected, never after a sent re
   await assert.rejects(synthesizeOpenRouterWav(ttsOptions(async () => { attempts += 1; throw connect; },
     { sleep: async () => {} })), /fetch failed/);
   assert.equal(attempts, 2, "bounded");
+});
+
+test("OpenRouter STT sends one ISO-639-1 hint only when asked", async () => {
+  const { openRouterLanguage } = await import("./openrouter-voice.mjs");
+  assert.deepEqual(["tg-TJ", "ru-RU", "cmn-Hans-CN", "zh-CN", undefined].map(openRouterLanguage), ["tg", "ru", "zh", "zh", undefined]);
+  const bodies = [];
+  const fetchImpl = async (_url, init) => { bodies.push(JSON.parse(init.body));
+    return new Response(JSON.stringify({ text: "ман", words: [{ word: "ман", start: 0, end: 0.3 }] }), { status: 200 }); };
+  const opts = { apiKey: "key", model: "gemini-3.5-transcribe", audioPath: "/tmp/test.wav", readFile: async () => Buffer.from("audio"), fetchImpl };
+  await transcribeOpenRouter({ ...opts, language: "tg" });
+  await transcribeOpenRouter(opts);
+  assert.equal(bodies[0].language, "tg");
+  assert.equal("language" in bodies[1], false);
 });

@@ -107,3 +107,9 @@ test("one recognized word covering two written words keeps one measured span", (
   const got = selectRecoveredBlocks(gapPlan.gaps[0].tokens, [block("Тоже",["тоже"],100,400)]);
   assert.deepEqual(mergeRecoveredBlocks(words, [block("правило",["правило"],500,900)], gapPlan, [got.map((b) => ({ ...b }))]).map((b) => b.text), ["Тоже","правило"]);
 });
+test("a missing word between touching verified neighbours is marked, not fatal for other gaps", () => {
+  const words = expected(["a","locale"],["b","locale"],["c","locale"],["d","locale"],["e","locale"]);
+  const plan = buildRecoveryPlan(words, [block("a",["a"],0,300), block("c",["c"],300,600), block("e",["e"],900,1200)], 1500);
+  assert.deepEqual(plan.gaps.map((g) => [g.tokens.join(" "), g.startMs, g.endMs, Boolean(g.noAudio)]),
+    [["b",300,300,true],["d",600,900,false]]);
+});
