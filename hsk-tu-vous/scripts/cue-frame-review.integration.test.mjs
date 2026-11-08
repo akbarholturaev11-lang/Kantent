@@ -23,10 +23,14 @@ test("real ffmpeg contact sheet uses exact encoded frame index and never approve
   const folder=await fs.mkdtemp(path.join(os.tmpdir(),"hsk-cue-frame-proof-"));
   t.after(async()=>fs.rm(folder,{recursive:true,force:true}));
   const video=path.join(folder,"synthetic.mp4");
-  run("ffmpeg",["-hide_banner","-loglevel","error","-y","-f","lavfi","-i",
-    "testsrc2=size=1080x1920:rate=30:duration=3",
+  run("ffmpeg",["-hide_banner","-loglevel","error","-y",
+    "-f","lavfi","-i","testsrc2=size=1080x1920:rate=30:duration=3",
+    "-f","lavfi","-i","sine=frequency=480:sample_rate=24000:duration=3",
+    "-map","0:v:0","-map","1:a:0",
     "-frames:v","90","-c:v","libx264","-preset","ultrafast",
-    "-pix_fmt","yuv420p",video]);
+    "-pix_fmt","yuv420p","-colorspace","bt709",
+    "-color_primaries","bt709","-color_trc","bt709",
+    "-c:a","aac","-ar","24000","-ac","1","-t","3",video]);
   const episode={
     id:"test-only-synthetic",languageCode:"ru-RU",voiceTextHash:"FAKE-NO-API",
     audioSha256:"a".repeat(64),captionSource:"gemini-word-timestamps",
