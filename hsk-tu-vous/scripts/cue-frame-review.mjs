@@ -15,6 +15,7 @@ import {fileURLToPath} from "node:url";
 import {assertCueTimelineMatches} from "./cue-timeline.mjs";
 import {assertSharedLesson, sharedRenderRanges, platformPackagePaths} from "./platform-exports.mjs";
 import {verifyPlatformVideo} from "./render-platform-videos.mjs";
+import {compileSemanticVisualTimeline} from "./semantic-visual-plan.mjs";
 import {episodeContentHash, reviewDir, safeId} from "./lib.mjs";
 
 const scriptPath=fileURLToPath(import.meta.url);
@@ -39,16 +40,42 @@ export function planCueFrameReview(episode,timeline,{maxBeats=72}={}) {
   if(!Number.isSafeInteger(maxBeats)||maxBeats<1||maxBeats>500)
     throw Error("Review maximum must be an integer between 1 and 500.");
   assertCueTimelineMatches(episode,timeline,FPS);
+  if(timeline.semanticTimeline){
+    const current=compileSemanticVisualTimeline(episode);
+    if(JSON.stringify(current)!==JSON.stringify(timeline.semanticTimeline))
+      throw Error("Stale or modified semantic timeline: actions must bind to exact current speech and shot source.");
+  }
   const samples=[];
+  const staticShots=[];
   let offset=0;
   for(const [sceneIndex,scene] of episode.scenes.entries()){
     if(!boundedInteger(scene.durationFrames,1,100000))
       throw Error(`Scene ${scene.id} lacks real, positive durationFrames.`);
     const start=offset,end=offset+scene.durationFrames;
     const resolved=timeline.scenes[sceneIndex];
+    const semantic=timeline.semanticTimeline?.scenes?.find(s=>s.sceneId===scene.id);
+    if((resolved.motionBeats?.length||resolved.promoCue)&&semantic?.actions?.length)
+      throw Error(`${scene.id}: mixed semantic and action timelines require separate, explicit review.`);
     const beats=resolved.motionBeats?.length
       ? resolved.motionBeats
-      : resolved.promoCue?[resolved.promoCue]:[];
+      : resolved.promoCue?[resolved.promoCue]
+      : (semantic?.actions??[]).map(action=>({
+          id:`semantic-action-${action.beatIndex}`,
+          kind:"semantic-action",cueText:action.cueText,
+          startMs:action.startMs,endMs:action.endMs,
+          startFrame:action.startFrame,
+          localFrame:action.startFrame-Math.round(scene.startMs*FPS/1000),
+          semanticSettleMs:action.endMs-action.startMs,
+        }));
+    if(semantic?.shot&&!beats.length) {
+      // A static semantic shot has no spoken-action cue: review its actual
+      // frames, but never mislabel these as narration-synced proof.
+      staticShots.push({
+        sceneId:scene.id,firstFrame:start,
+        middleFrame:start+Math.floor((scene.durationFrames-1)/2),
+        lastFrame:end-1,hasVerifiedSpokenAction:false,
+      });
+    }
     // Validate every cue on its own BEFORE checking neighboring intervals:
     // an invalid later cue must not masquerade as the preceding beat's error.
     ensureId(scene.id);
@@ -81,7 +108,8 @@ export function planCueFrameReview(episode,timeline,{maxBeats=72}={}) {
       const ends=tracks.filter(t=>!t.loop&&Array.isArray(t.keyframes))
         .map(t=>t.keyframes.at(-1)?.atMs)
         .filter(finiteNonnegative);
-      const settleMs=ends.length?Math.max(...ends):300;
+      const settleMs=finiteNonnegative(beat.semanticSettleMs)?beat.semanticSettleMs
+        :ends.length?Math.max(...ends):300;
       const settleFrames=Math.max(1,Math.ceil(settleMs*FPS/1000));
       const settledFrame=Math.min(deadline-1,cueFrame+settleFrames);
       samples.push({
@@ -96,8 +124,8 @@ export function planCueFrameReview(episode,timeline,{maxBeats=72}={}) {
     }
     offset=end;
   }
-  if(samples.length===0)
-    throw Error("No compiled action/promo cue frames exist. Do not label semantic QA as passed.");
+  if(samples.length===0&&staticShots.length===0)
+    throw Error("No compiled action/promo/semantic cue frames exist. Do not label semantic QA as passed.");
   // Production extends the final CTA when the actual audio is longer than the
   // sum of scene durations. Checking only the scene sum rejects a valid MP4.
   const ranges=sharedRenderRanges(episode);
@@ -109,7 +137,7 @@ export function planCueFrameReview(episode,timeline,{maxBeats=72}={}) {
       beforeCta:ranges.ctaStart-1,firstCta:ranges.ctaStart,finalCta:ranges.totalFrames-1,
     },voiceTextHash:episode.voiceTextHash,
     audioSha256:episode.audioSha256??null,
-    samples,realVoiceAndTeachingMeaningReviewed:false,ownerPreviewApproved:false};
+    samples,staticShots,realVoiceAndTeachingMeaningReviewed:false,ownerPreviewApproved:false};
 }
 
 function run(command,args) {
