@@ -31,8 +31,8 @@ export async function extractCueFrameBatch(video,outputDir,requests,{execute=exe
     const temporary=path.join(outputDir,".frame-batch-"+label);
     await fs.mkdir(temporary,{recursive:false});
     try {
-      const selector=frames.map(frame=>\`eq(n\\\\,\${frame})\`).join("+");
-      const filter=\`select=\${selector},scale=\${width}:\${height}:flags=lanczos\`;
+      const selector=frames.map(frame=>"eq(n\\\\,"+frame+")").join("+");
+      const filter="select="+selector+",scale="+width+":"+height+":flags=lanczos";
       await execute(["-hide_banner","-loglevel","error","-nostdin","-y",
         "-i",video,"-vf",filter,"-fps_mode","passthrough",
         "-start_number","0",path.join(temporary,"%06d.png")]);
@@ -45,7 +45,7 @@ export async function extractCueFrameBatch(video,outputDir,requests,{execute=exe
         throw Error("Frame decoder produced unexpected number of frames.");
       for(const request of requests) {
         const source=path.join(temporary,String(index.get(request.frame)).padStart(6,"0")+".png");
-        const destination=path.join(outputDir,\`\${request.stem}-\${label}.png\`);
+        const destination=path.join(outputDir,request.stem+"-"+label+".png");
         await fs.copyFile(source,destination);
       }
     } finally {
