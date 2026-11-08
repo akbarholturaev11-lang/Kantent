@@ -77,6 +77,18 @@ test("real ffmpeg contact sheet uses exact encoded frame index and never approve
   assert.equal(evidence.ownerPreviewApproved,false);
   assert.deepEqual(await readPngSize(path.join(output,"hook-book-cue-full.png")),[1080,1920]);
   assert.deepEqual(await readPngSize(path.join(output,"hook-book-cue-phone.png")),[270,480]);
+
+  // Independent single-frame decoding must match the optimized batch exactly:
+  // output count alone cannot detect a wrong frame index.
+  const reference=path.join(folder,"independent-frame-12.png");
+  const filter="select=eq(n"+String.fromCharCode(92)+",12),scale=270:480:flags=lanczos";
+  run("ffmpeg",["-hide_banner","-loglevel","error","-y","-i",video,
+    "-vf",filter,"-fps_mode","vfr","-frames:v","1","-update","1",reference]);
+  assert.deepEqual(
+    await fs.readFile(path.join(output,"hook-book-cue-phone.png")),
+    await fs.readFile(reference),
+  );
+
   assert.deepEqual(await readPngSize(path.join(output,"cta-before-phone.png")),[270,480]);
   assert.deepEqual(await readPngSize(path.join(output,"cta-start-full.png")),[1080,1920]);
   assert.deepEqual(await readPngSize(path.join(output,"cta-end-phone.png")),[270,480]);
