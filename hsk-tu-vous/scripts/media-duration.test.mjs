@@ -25,3 +25,17 @@ test("fails closed for missing or invalid duration instead of using caption timi
     run: () => ({ status: 1, stdout: "", stderr: "invalid input" }),
   }), /ffprobe could not read/);
 });
+
+test("system FFmpeg/FFprobe are proven before any paid voice request", async () => {
+  const { requireSystemMediaTools } = await import("./media-duration.mjs");
+  const seen = [];
+  requireSystemMediaTools({ run: (command) => { seen.push(command); return { status: 0 }; } });
+  assert.deepEqual(seen, ["ffmpeg", "ffprobe"]);
+  assert.throws(() => requireSystemMediaTools({ run: (command) =>
+    command === "ffprobe" ? { error: Object.assign(new Error("spawn ffprobe ENOENT"), { code: "ENOENT" }) } : { status: 0 } }),
+  /system ffprobe on PATH[\s\S]*No paid TTS\/STT request was made/);
+  const generator = (await import("node:fs")).readFileSync(new URL("./generate-voice-gemini.mjs", import.meta.url), "utf8");
+  const check = generator.indexOf("requireSystemMediaTools();");
+  assert.ok(check > 0 && check < generator.indexOf("await findReusableVoiceCheckpoint("), "checked before any take is chosen or bought");
+});
+

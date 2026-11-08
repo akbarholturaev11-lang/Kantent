@@ -8,6 +8,7 @@ import {
 } from "./voice-checkpoint.mjs";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
+import { requireSystemMediaTools } from "./media-duration.mjs";
 import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
 import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
 import { redactCredentials, requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
@@ -1034,6 +1035,8 @@ if (!RESUME_FOLDER_NAME && !CLI_OPTIONS.includes("--resume") &&
   process.exit(0);
 }
 const config = await loadVoiceEnvironment(voiceProfile);
+// Downstream import/render use system FFmpeg/FFprobe: prove they exist first.
+requireSystemMediaTools();
 episode.voiceTextHash = currentNarrationHash;
 await writeJson(episodePath, episode);
 await fs.writeFile(path.join(targetReviewDir, "tts-input.txt"), `${narration}\n`, "utf8");
