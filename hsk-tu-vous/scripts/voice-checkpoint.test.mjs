@@ -118,3 +118,35 @@ test("never resumes an approved sample or a checkpoint from another locale", asy
     await fs.rm(root, { recursive: true, force: true });
   }
 });
+
+test("does not silently reuse structurally valid WAV without a recorded SHA-256", async () => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "hsk-unverified-wav-"));
+  try {
+    const folder = path.join(root, "2026-11-06T04-00-00-000Z");
+    await fs.mkdir(folder, { recursive: true });
+    const bytes = wav();
+    await fs.writeFile(path.join(folder, "voice.wav"), bytes);
+    for (const chunks of [
+      [],
+      [{ file: "voice.wav" }],
+      [{ file: "voice.wav", sha256: "0".repeat(63) }],
+      [{ file: "voice.wav", sha256: sha256(Buffer.from("wrong source")) }],
+    ]) {
+      await atomicWriteJson(path.join(folder, "checkpoint.json"), checkpoint({ chunks }));
+      const found = await findReusableVoiceCheckpoint({
+        productionRoot: root, expected, profile,
+      });
+      assert.equal(found, null, "Only hash-bound audio is reusable automatically");
+      assert.deepEqual(await fs.readFile(path.join(folder, "voice.wav")), bytes,
+        "Refused unverified WAV must not be destroyed");
+    }
+    await atomicWriteJson(path.join(folder, "checkpoint.json"), checkpoint({
+      chunks: [{ file: "voice.wav", sha256: sha256(bytes) }],
+    }));
+    const verified = await findReusableVoiceCheckpoint({ productionRoot: root, expected, profile });
+    assert.equal(verified.folderName, path.basename(folder));
+    assert.equal(verified.validChunkCount, 1);
+  } finally {
+    await fs.rm(root, { recursive: true, force: true });
+  }
+});
