@@ -10,6 +10,16 @@ Continue fixing the most important, independently verified code bugs first: voic
 
 Owner decisions P01–P12 in the complete audit are approved. Do **not** alter published/approved videos or voice, generate paid API speech without authorization, fake screenshots or cue times, auto-publish video, or merge unverified code to main. Video publication needs exact final owner preview approval. Static photo-news has independent authorization, outside this work.
 
+## Owner scope correction — 2026-11-08: BUG FIXES ONLY
+
+The owner explicitly clarified: **fix the existing bugs, do not add extra product functions**. This supersedes any previous backlog wording that treated nice-to-have capabilities as necessary for completion of this bugfix branch.
+
+**In scope (P0/P1):** reproduce and repair concrete existing failures; TTS audio checkpoint/resume and STT reuse; exact RU/TG voice/caption/frame synchronization; misleading/early/missing visual states; SVG, pinyin and caption-boundary bugs; CTA/source/video hash mismatches; rendering error/status consistency and existing approval/publishing safeguards. Add only the smallest narrowly targeted regression tests needed to prove each fix. Real RU/TG end-to-end QA is verification, not a new feature.
+
+**Out of scope / explicitly deferred:** new PWA screenshot automation, new TikTok video functionality or platform routing, new autonomous AI agent/orchestrator, broad UI/UX redesign, new workflows, new voice modes, generalized monitoring, and gratuitous helper APIs. Gemini→OpenRouter fallback is already separately owner-requested in PR #56, but **do not merge it into this bugfix branch unless required to repair a reproduced defect and explicitly reviewed for the existing audio checkpoint behavior**. Preserve that PR separately; do not delete or silently enable it.
+
+**PR #59 scope caution:** It already contains internal QA-only frame extraction/contact-sheet tooling created before this clarification. Treat it as testing infrastructure, **not** a required new user-facing feature. Before merging, review each of these files for necessity and remove unnecessary runtime/CLI exposure. No additional feature expansion of that tool is authorized. Do not invalidate previously fixed bugs, alter approved media, or claim synthetic tests are real media QA. Prioritize bug reproduction, minimal code patches and regression proof, then CI and careful integration.
+
 ## Existing work preserved
 
 - [Claude branch](https://github.com/akbarholturaev11-lang/Kantent/tree/claude/local-fixes-20261106) at `6c1fe0eb33f70851907cd77edc5cacc9fa186426` changed 6 lesson/CTA JSON files. Codex branch is **3 commits ahead of it**, not a competing reset.
