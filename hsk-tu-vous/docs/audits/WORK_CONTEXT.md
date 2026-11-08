@@ -125,6 +125,14 @@ On the owner's explicit instruction ("push to main"), `main` was fast-forwarded 
 - **Static sweep:** ESLint correctness rules over `scripts/*.mjs` (beyond `no-undef`) found no further defects.
 - **Local main checkout warning:** `/Users/…/HSK AI Kantent` is on `codex/p0-p1-media-reliability-20261106@2794d800` with 18 uncommitted files from 2026-11-06 (e.g. a `HSK_AI_LOCAL_REVIEW_ONLY` freshness bypass, OpenRouter and generator edits, `ji-vs-duoshao` lesson/CTA content). It was deliberately left untouched; whoever owns that work must reconcile it with the new `main` before production runs from that folder.
 
+### Related-path review after the main push (2026-11-08)
+
+Every caller of the voice pipeline was re-checked (only `generate-voice-gemini.mjs` calls TTS/STT; content:make, MCP and GitHub reach it; promos use the same path).
+
+9. **Sample fallback provenance (code-confirmed):** after copying the verified sample over the rejected take, `wavSha256`/`mp3Sha256` and the single-chunk record still described the rejected audio, so checkpoint and imported episode disagreed and an explicit resume refused the folder. Hashes are now recomputed after the copy and the checkpoint is persisted.
+10. **X-14 provenance (P2):** `requireFreshGitMain` now discloses uncommitted tracked/untracked project files (`sourceTreeClean`, `dirtyPaths`, content `dirtySourceSha256`, scoped to `hsk-tu-vous/`, ignored files excluded) and `approve-package.mjs` copies it into `approval.json` as `renderSourceRevision` with a warning. Deliberately not a block: local runs legitimately update tracked ledgers (`cta-lab.json`). Verified against real `git` in this worktree.
+- Checked and **not** a defect: a `--new-take` barrier folder without audio is not packaged into the GitHub recovery artifact, but restore only happens within reruns of the same workflow run and CI never passes `--new-take`.
+
 ## Next tasks / blockers — BUGS ONLY
 
 1. Check latest full CI on PR #59 (including consistency and semantic-foundation). Investigate any failures in the exact changed SHA before proposing a merge.

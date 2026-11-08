@@ -438,12 +438,24 @@ test("approval CLI rejects a missing YouTube export and archives each selected p
       code: "ENOENT",
     });
     status.platformPackages.youtube = youtube;
+    // X-14: media rendered from uncommitted files is disclosed, not blocked.
+    status.sourceRevision = {
+      localHeadSha: "a".repeat(40), sourceTreeClean: false, dirtyPathCount: 2,
+      dirtyPaths: ["hsk-tu-vous/content/cta-lab.json", "hsk-tu-vous/scripts/x.mjs"],
+      dirtySourceSha256: "b".repeat(64),
+    };
     await writeJson(path.join(review, "status.json"), status);
     const result = approve();
     assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stderr, /rendered from 2 uncommitted project file/);
     const approval = JSON.parse(
       await fs.readFile(path.join(review, "approval.json")),
     );
+    assert.deepEqual(approval.renderSourceRevision, {
+      localHeadSha: "a".repeat(40), sourceTreeClean: false, dirtyPathCount: 2,
+      dirtyPaths: ["hsk-tu-vous/content/cta-lab.json", "hsk-tu-vous/scripts/x.mjs"],
+      dirtySourceSha256: "b".repeat(64),
+    });
     assert.notEqual(
       approval.platformPackages.youtube.video,
       approval.platformPackages.instagram.video,

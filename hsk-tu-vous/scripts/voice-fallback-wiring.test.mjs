@@ -64,3 +64,14 @@ test("GitHub render job can enable the owner's backup; it is off unless the Acti
   assert.match(workflow, /HSK_AI_OPENROUTER_FALLBACK_ENABLED" == "true" && -z "\$OPENROUTER_API_KEY"/,
     "an enabled backup without its key fails before any paid request");
 });
+
+test("sample fallback re-fingerprints the copied sample, so checkpoint and import agree", () => {
+  const fallback = between("const rejectedMp3 = await archiveRejectedFile(mp3Path);", "verifiedSampleFallbackUsed = true;");
+  const copy = fallback.indexOf("fs.copyFile(fallback.wavPath, wavPath)");
+  const rehash = fallback.indexOf("metadata.wavSha256 = sha256(sampleWavBytes);");
+  assert.ok(copy > 0 && rehash > copy, "hashes are recomputed AFTER the sample replaces the rejected audio");
+  assert.match(fallback, /metadata\.mp3Sha256 = sha256\(await fs\.readFile\(mp3Path\)\);/);
+  assert.match(fallback, /if \(ttsChunks\.length === 1\)\s*metadata\.ttsChunks\[0\] = \{[\s\S]*transport: "verified-sample-copy"/);
+  const after = between("verifiedSampleFallbackUsed = true;", "break;");
+  assert.match(after, /await persistMetadata\(\);\s*await persistCheckpoint\(\);/);
+});

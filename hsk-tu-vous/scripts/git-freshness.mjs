@@ -1,11 +1,60 @@
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SHA = /^[0-9a-f]{40}$/i;
 
-export function verifyFetchedMain({ run, cwd = projectRoot }) {
+const MAX_LISTED_DIRTY_PATHS = 100;
+
+/**
+ * X-14: HEAD alone does not describe media rendered from uncommitted tracked
+ * or untracked (non-ignored) project files. Disclose them with a content
+ * hash instead of blocking: the pipeline itself legitimately updates tracked
+ * ledgers such as cta-lab.json during a local run. Files are hashed directly
+ * (no `git diff` output), so a large binary change cannot overflow a buffer.
+ */
+export function describeSourceTree({ run, cwd = projectRoot, readFile = fs.readFileSync }) {
+  const git = (args) => {
+    const r = run('git', args, { cwd, encoding: 'utf8', timeout: 30000, windowsHide: true });
+    if (r.error || r.status !== 0)
+      throw new Error('GitHub freshness check blocked: git ' + args.join(' ') + ' failed. ' +
+        String(r.stderr || r.error?.message || 'unknown git error').slice(0, 260));
+    return String(r.stdout || '');
+  };
+  const entries = git(['status', '--porcelain=v1', '-z', '--untracked-files=normal', '--', '.'])
+    .split('\0').filter(Boolean);
+  const dirtyPaths = [];
+  for (let index = 0; index < entries.length; index += 1) {
+    const code = entries[index].slice(0, 2);
+    dirtyPaths.push(entries[index].slice(3));
+    if (code[0] === 'R' || code[0] === 'C') index += 1; // skip the rename source
+  }
+  dirtyPaths.sort();
+  if (!dirtyPaths.length) return { sourceTreeClean: true };
+  const repoRoot = git(['rev-parse', '--show-toplevel']).trim();
+  const digest = createHash('sha256');
+  for (const relative of dirtyPaths) {
+    let fileHash = 'deleted';
+    try {
+      fileHash = createHash('sha256').update(readFile(path.join(repoRoot, relative))).digest('hex');
+    } catch (error) {
+      if (error?.code !== 'ENOENT' && error?.code !== 'EISDIR') throw error;
+      if (error.code === 'EISDIR') fileHash = 'directory';
+    }
+    digest.update(relative + '\0' + fileHash + '\n');
+  }
+  return {
+    sourceTreeClean: false,
+    dirtyPathCount: dirtyPaths.length,
+    dirtyPaths: dirtyPaths.slice(0, MAX_LISTED_DIRTY_PATHS),
+    dirtySourceSha256: digest.digest('hex'),
+  };
+}
+
+export function verifyFetchedMain({ run, cwd = projectRoot, readFile = fs.readFileSync }) {
   const exec = (...args) => {
     const r = run('git', args, { cwd, encoding: 'utf8', timeout: 30000, windowsHide: true });
     if (r.error || r.status !== 0) {
@@ -37,10 +86,15 @@ export function verifyFetchedMain({ run, cwd = projectRoot }) {
         ' (' + remoteSha.slice(0,12) + '). Update the checkout before generating media.');
     }
   }
+  const sourceTree = describeSourceTree({ run, cwd, readFile });
+  if (!sourceTree.sourceTreeClean)
+    console.warn('SOURCE_TREE_DIRTY ' + JSON.stringify({ count: sourceTree.dirtyPathCount,
+      paths: sourceTree.dirtyPaths.slice(0, 10), sha256: sourceTree.dirtySourceSha256 }) +
+      ' — media from this run is NOT reproducible from ' + localHeadSha.slice(0, 12) + ' alone.');
   return {localHeadSha,remoteMainSha,remoteBranchSha,currentBranch,verifiedAt:new Date().toISOString(),
-    branchSafety:'remote-main-and-current-branch-are-ancestors'};
+    branchSafety:'remote-main-and-current-branch-are-ancestors', ...sourceTree};
 }
 
-export function requireFreshGitMain({ run = spawnSync, cwd = projectRoot } = {}) {
-  return verifyFetchedMain({run,cwd});
+export function requireFreshGitMain({ run = spawnSync, cwd = projectRoot, readFile = fs.readFileSync } = {}) {
+  return verifyFetchedMain({run,cwd,readFile});
 }

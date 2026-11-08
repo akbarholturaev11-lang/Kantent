@@ -1681,6 +1681,17 @@ try {
       metadata.audioDurationMs = fallback.metadata.audioDurationMs;
       metadata.wavBytes = (await fs.stat(wavPath)).size;
       metadata.mp3Bytes = (await fs.stat(mp3Path)).size;
+      // The folder now holds the verified sample copy, not the rejected take:
+      // its hashes must describe the imported bytes, or the checkpoint and the
+      // imported episode disagree and an explicit resume refuses the folder.
+      const sampleWavBytes = await fs.readFile(wavPath);
+      metadata.wavSha256 = sha256(sampleWavBytes);
+      metadata.mp3Sha256 = sha256(await fs.readFile(mp3Path));
+      if (ttsChunks.length === 1)
+        metadata.ttsChunks[0] = {
+          file: "voice.wav", bytes: sampleWavBytes.length, sha256: metadata.wavSha256,
+          transport: "verified-sample-copy",
+        };
       metadata.sampleFallbackUsed = {
         reason: "Fresh Gemini transcription failed exact narration alignment after three attempts.",
         sourceAudio: path.relative(PROJECT_ROOT, fallback.audioPath),
@@ -1704,6 +1715,7 @@ try {
       metadata.status = "audio-ready";
       verifiedSampleFallbackUsed = true;
       await persistMetadata();
+      await persistCheckpoint();
       console.warn(
         "Gemini transcription failed exact alignment; using the existing fully verified sample audio for this designated sample episode.",
       );
