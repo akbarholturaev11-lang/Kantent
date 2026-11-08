@@ -81,32 +81,96 @@ async function generate({ apiKey, model, prompt, aspectRatio, referencePngs, ima
   return { bytes: Buffer.from(match[2], "base64"), format: match[1], usage: data.usage ?? null, id: data.id ?? null };
 }
 
+/** The full prompt a frame is generated from (same for Codex and the paid fallback). */
+export async function framePrompt(manifest, asset) {
+  const characters = await loadCharacters(asset.characters ?? []);
+  const cast = characters.map((c, index) => `CHARACTER ${index + 1} (reference image ${index + 1}, keep exactly): ${c.identity}`).join("\n");
+  return { prompt: `${manifest.style}\n\n${HUMAN_FACE_RULE}\n\n${cast ? cast + "\n\n" : ""}${asset.prompt}`, characters };
+}
+
+/** Exact, self-contained instructions for Codex to generate the missing frames. */
+export async function writeCodexBrief({ episodeId, manifest, outDir }) {
+  const missing = [];
+  for (const asset of manifest.assets) {
+    const file = path.join(outDir, asset.name + ".jpg");
+    if (await fs.access(file).then(() => true, () => false)) continue;
+    const { prompt, characters } = await framePrompt(manifest, asset);
+    missing.push({ asset, file, prompt, references: [...characters.map((c) => c.file),
+      ...(asset.references ?? []).map((name) => path.relative(PROJECT_ROOT, path.join(outDir, name + ".jpg")))] });
+  }
+  const lines = [`# Codex frame brief — ${episodeId}`, "",
+    "Generate each frame below with Codex's own image generation (no paid API). Rules: content/EDITING_SPEC.md#illustrated-glass-lesson-format.",
+    "- Text-free backgrounds: no letters, no people, no characters (characters are drawn later from content/characters/hsk-ai-characters.json).",
+    "- Highest available resolution, at least 1500 px on the long side, exact aspect ratio; save as JPEG (quality ≥ 90) at the given path.",
+    "- Use each listed reference image for continuity. Generate in the listed order (later frames reference earlier ones).",
+    `- After saving each frame run: node scripts/generate-lesson-art.mjs ${episodeId} --record-codex <name>`,
+    `- Then run: node scripts/review-lesson-art.mjs ${episodeId} and fix every failure before rendering.`, ""];
+  for (const item of missing) lines.push(`## ${item.asset.name}`, "", `- Save to: \`${path.relative(PROJECT_ROOT, item.file)}\``,
+    `- Aspect ratio: ${item.asset.aspectRatio}`, `- References: ${item.references.length ? item.references.map((r) => "`" + r + "`").join(", ") : "none"}`,
+    "", "```text", item.prompt, "```", "");
+  if (!missing.length) lines.push("All frames exist.");
+  const file = path.join(PROJECT_ROOT, "review", episodeId, "lesson-art-codex-brief.md");
+  await fs.mkdir(path.dirname(file), { recursive: true });
+  await fs.writeFile(file, lines.join("\n") + "\n");
+  return { file, missing };
+}
+
+async function recordCodexFrames({ episodeId, manifest, outDir, names }) {
+  const provenancePath = path.join(outDir, "provenance.json");
+  let provenance = { episodeId, assets: {} };
+  try { provenance = JSON.parse(await fs.readFile(provenancePath, "utf8")); } catch (error) { if (error?.code !== "ENOENT") throw error; }
+  for (const name of names) {
+    const asset = manifest.assets.find((entry) => entry.name === name);
+    if (!asset) throw new Error(`${name} is not in content/lesson-art/${episodeId}.json`);
+    const bytes = await fs.readFile(path.join(outDir, name + ".jpg"));
+    const { prompt } = await framePrompt(manifest, asset);
+    provenance.assets[name] = { file: name + ".jpg", provider: "codex", promptSha256: sha256(prompt),
+      characters: asset.characters ?? [], references: asset.references ?? [], sha256: sha256(bytes), recordedAt: new Date().toISOString() };
+    console.log(`recorded ${name}.jpg as a Codex frame`);
+  }
+  await fs.writeFile(provenancePath, JSON.stringify(provenance, null, 2) + "\n");
+}
+
 async function main() {
   const [episodeId, ...options] = process.argv.slice(2);
-  if (!episodeId) throw new Error("Use: node scripts/generate-lesson-art.mjs <episode-id> [--regenerate <name>]");
+  if (!episodeId) throw new Error("Use: node scripts/generate-lesson-art.mjs <episode-id> [--paid] [--regenerate <name>] [--record-codex <name>]");
   const regenerate = new Set();
+  const recordCodex = new Set();
+  let paid = false;
   for (let i = 0; i < options.length; i += 1) {
     if (options[i] === "--regenerate" && options[i + 1]) regenerate.add(options[++i]);
+    else if (options[i] === "--record-codex" && options[i + 1]) recordCodex.add(options[++i]);
+    else if (options[i] === "--paid") paid = true;
     else throw new Error("Unknown option " + options[i]);
   }
   const manifest = validateArtManifest(JSON.parse(await fs.readFile(path.join(PROJECT_ROOT, "content", "lesson-art", episodeId + ".json"), "utf8")));
+  const outDir = path.join(PROJECT_ROOT, "public", "lesson-art", episodeId);
+  // Owner decision 2026-11-09: frames are a CODEX task. Without --paid this
+  // script never calls an image API; it writes the exact Codex brief for the
+  // missing frames, or records frames Codex has saved (--record-codex).
+  if (!paid) {
+    await fs.mkdir(outDir, { recursive: true });
+    if (recordCodex.size) return recordCodexFrames({ episodeId, manifest, outDir, names: recordCodex });
+    const brief = await writeCodexBrief({ episodeId, manifest, outDir });
+    console.log(brief.missing.length
+      ? `${brief.missing.length} frame(s) missing — Codex must generate them: ${path.relative(PROJECT_ROOT, brief.file)}`
+      : "All frames exist. Run node scripts/review-lesson-art.mjs " + episodeId);
+    if (brief.missing.length) process.exitCode = 3;
+    return;
+  }
   if (typeof process.loadEnvFile === "function" && !process.env.OPENROUTER_API_KEY) {
     try { process.loadEnvFile(path.join(PROJECT_ROOT, ".env.local")); } catch (error) { if (error?.code !== "ENOENT") throw error; }
   }
   const apiKey = process.env.OPENROUTER_API_KEY?.trim();
-  if (!apiKey) throw new Error("OPENROUTER_API_KEY is required for lesson art.");
-  const outDir = path.join(PROJECT_ROOT, "public", "lesson-art", episodeId);
+  if (!apiKey) throw new Error("OPENROUTER_API_KEY is required for the paid --paid fallback.");
   await fs.mkdir(outDir, { recursive: true });
   const provenancePath = path.join(outDir, "provenance.json");
   let provenance = { episodeId, assets: {} };
   try { provenance = JSON.parse(await fs.readFile(provenancePath, "utf8")); } catch (error) { if (error?.code !== "ENOENT") throw error; }
   for (const asset of manifest.assets) {
     const file = path.join(outDir, asset.name + ".jpg");
-    // HSK AI characters only: each shown character's registry PNG is a
-    // reference image (in order) and its identity text is part of the prompt.
-    const characters = await loadCharacters(asset.characters ?? []);
-    const cast = characters.map((c, index) => `CHARACTER ${index + 1} (reference image ${index + 1}, keep exactly): ${c.identity}`).join("\n");
-    const prompt = `${manifest.style}\n\n${HUMAN_FACE_RULE}\n\n${cast ? cast + "\n\n" : ""}${asset.prompt}`;
+    // Same prompt as the Codex brief; character references first, in order.
+    const { prompt, characters } = await framePrompt(manifest, asset);
     const exists = await fs.access(file).then(() => true, () => false);
     if (exists && !regenerate.has(asset.name)) {
       console.log(`kept ${asset.name}.jpg (saved image is never regenerated without --regenerate)`);
@@ -124,10 +188,10 @@ async function main() {
       execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-nostdin", "-y", "-i", rawFile, "-q:v", "2", file]);
       await fs.rm(rawFile, { force: true });
       provenance.assets[asset.name] = { file: asset.name + ".jpg", provider: "openrouter", model: manifest.model, format: result.format,
-        promptSha256: sha256(prompt), characters: asset.characters ?? [], references: asset.references ?? [], sha256: sha256(result.bytes),
+        promptSha256: sha256(prompt), characters: asset.characters ?? [], references: asset.references ?? [], sha256: sha256(await fs.readFile(file)), rawSha256: sha256(result.bytes),
         generationId: result.id, usage: result.usage, generatedAt: new Date().toISOString() };
       await fs.writeFile(provenancePath, JSON.stringify(provenance, null, 2) + "\n");
-      console.log(`generated ${asset.name}.jpg (${result.bytes.length} bytes, cost ${result.usage?.cost ?? "unknown"})`);
+      console.log(`generated ${asset.name}.jpg (${(await fs.stat(file)).size} bytes, cost ${result.usage?.cost ?? "unknown"})`);
     } catch (error) {
       console.error(`FAILED ${asset.name}: ${redactCredentials(error?.message ?? String(error))}`);
       process.exitCode = 1;

@@ -37,6 +37,8 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Illustrated-glass lesson format, text roles, safe zone and subtitle placement | `content/EDITING_SPEC.md#illustrated-glass-lesson-format` |
 | The only characters allowed in video frames (HSK AI cast: panda, dragon, crane, monkey, rabbit), their identity rules and exact app vectors | `content/characters/hsk-ai-characters.json` (+ rendered `content/characters/<id>-<mood>.png`) |
 | Per-lesson frame (lesson art) manifests; generated images and provenance | `content/lesson-art/<episode-id>.json`; `public/lesson-art/<episode-id>/` |
+| Visual variety (settings library, character roles, layout patterns, A/B experiments) | `content/visual-variety.json`, applied by `scripts/visual-variety-plan.mjs` |
+| Frame review requirements and render gate | `scripts/review-lesson-art.mjs` (rules in `content/EDITING_SPEC.md#illustrated-glass-lesson-format`) |
 | Runtime architecture, limitations and known technical gotchas | `PROJECT_MEMORY.md` |
 | Developer startup commands | `README.md` |
 | Installed skill inventory, functional categories and per-branch owners | `content/skill-catalog.json` |
@@ -44,7 +46,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 
 ## Codex: lesson frames
 
-When Codex works on a lesson dated in the illustrated-glass format and has image-generation capacity, it generates the missing **background** frames itself from `content/lesson-art/<episode-id>.json`, exactly as `content/WORKFLOW.md` step 2 describes (text-free, no people, no characters baked in, provenance recorded). Characters are never generated: they are the HSK AI cast drawn from `content/characters/hsk-ai-characters.json`. Codex never invents a character and never regenerates a saved image unasked.
+Frames are a **Codex task** (owner decision 2026-11-09). When Codex prepares an illustrated-glass lesson it runs `node scripts/generate-lesson-art.mjs <episode-id>`, reads `review/<episode-id>/lesson-art-codex-brief.md`, generates every missing **background** frame with its own image generation exactly as briefed (text-free, no people, no characters, ≥1500 px JPEG at the given path, references for continuity), records each with `--record-codex <name>`, then runs `node scripts/review-lesson-art.mjs <episode-id>`, fixes failures, looks at each frame and confirms it with `--confirm-visual`. Characters are never generated (they are the HSK AI cast drawn from `content/characters/hsk-ai-characters.json`). Codex never invents a character, never calls the paid `--paid` fallback unless the owner asks, and never regenerates a saved frame unasked. Full procedure: `content/WORKFLOW.md` step 2.6.
 
 ## Automatic rule categorization
 

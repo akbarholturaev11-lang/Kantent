@@ -32,7 +32,8 @@
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T16:43:48.831Z"
+      "generatedAt": "2026-11-08T16:43:48.831Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
     },
     "yesterday-warm": {
       "file": "yesterday-warm.png",
@@ -67,7 +68,8 @@
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T16:44:03.362Z"
+      "generatedAt": "2026-11-08T16:44:03.362Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
     },
     "today-cold": {
       "file": "today-cold.png",
@@ -103,21 +105,24 @@
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T16:44:15.421Z"
+      "generatedAt": "2026-11-08T16:44:15.421Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
     },
     "notebook-desk": {
-      "file": "notebook-desk.png",
+      "file": "notebook-desk.jpg",
+      "provider": "openrouter",
       "model": "google/gemini-3.1-flash-image",
       "format": "png",
-      "promptSha256": "fdadb0e5808018aef89ea77063036c0839dca5d53b448687e847930d511fd532",
+      "promptSha256": "e32777926696aec56e235fa4abed3cc9767c231b1189f3d86779bf796043ade4",
+      "characters": [],
       "references": [],
-      "sha256": "c8a2f83ce2add44196b9fe08eb6016c977832c6e7b536604d7d0ff35f5b765cf",
-      "generationId": "gen-1794156256-VgbHKXfX1fzRcY5Ynb7d",
+      "sha256": "f8b9be9ae6081a6b69841d45beb4fb831469c9e23bb7214bf24630f57cde261a",
+      "generationId": "gen-1794164250-4pvfkDuMoKmCgI7DGsKQ",
       "usage": {
-        "prompt_tokens": 116,
-        "completion_tokens": 1120,
-        "total_tokens": 1236,
-        "cost": 0.067258,
+        "prompt_tokens": 217,
+        "completion_tokens": 1680,
+        "total_tokens": 1897,
+        "cost": 0.1009085,
         "is_byok": false,
         "prompt_tokens_details": {
           "cached_tokens": 0,
@@ -126,31 +131,34 @@
           "video_tokens": 0
         },
         "cost_details": {
-          "upstream_inference_cost": 0.067258,
-          "upstream_inference_prompt_cost": 0.000058,
-          "upstream_inference_completions_cost": 0.0672
+          "upstream_inference_cost": 0.1009085,
+          "upstream_inference_prompt_cost": 0.0001085,
+          "upstream_inference_completions_cost": 0.1008
         },
         "completion_tokens_details": {
           "reasoning_tokens": 0,
-          "image_tokens": 1120,
+          "image_tokens": 1680,
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T16:44:25.156Z"
+      "generatedAt": "2026-11-08T18:57:48.897Z",
+      "rawSha256": "8c3be269108d7b086353148c3fa6407be16ec9bcec876661bbad7138a0d30524"
     },
     "icon-cold": {
-      "file": "icon-cold.png",
+      "file": "icon-cold.jpg",
+      "provider": "openrouter",
       "model": "google/gemini-3.1-flash-image",
       "format": "png",
-      "promptSha256": "294c1057e8ab298102d283fb3c00b367bf680fed8df9db6fc0776d90fa94f808",
+      "promptSha256": "970cd6a93d3c05d422bb803c418a0573a163da258dd8141f0c94bb282a79bb4c",
+      "characters": [],
       "references": [],
-      "sha256": "b5e79b15db5e6c9af1ba46a5ae0a622cb6d3bc89986889e49c3be9461c561a02",
-      "generationId": "gen-1794156265-BOWic5Dt7RQWUUiq01hm",
+      "sha256": "114f69be01e86276b6c93c51682263b2fea03761e853397c72082460492afce5",
+      "generationId": "gen-1794164269-TLUhUw8AtqPOpS8OP4yl",
       "usage": {
-        "prompt_tokens": 109,
-        "completion_tokens": 1120,
-        "total_tokens": 1229,
-        "cost": 0.0672545,
+        "prompt_tokens": 204,
+        "completion_tokens": 1680,
+        "total_tokens": 1884,
+        "cost": 0.100902,
         "is_byok": false,
         "prompt_tokens_details": {
           "cached_tokens": 0,
@@ -159,31 +167,34 @@
           "video_tokens": 0
         },
         "cost_details": {
-          "upstream_inference_cost": 0.0672545,
-          "upstream_inference_prompt_cost": 0.0000545,
-          "upstream_inference_completions_cost": 0.0672
+          "upstream_inference_cost": 0.100902,
+          "upstream_inference_prompt_cost": 0.000102,
+          "upstream_inference_completions_cost": 0.1008
         },
         "completion_tokens_details": {
           "reasoning_tokens": 0,
-          "image_tokens": 1120,
+          "image_tokens": 1680,
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T16:44:34.458Z"
+      "generatedAt": "2026-11-08T18:58:01.325Z",
+      "rawSha256": "268ed47004e1a9f50c6c33c3273d90fb8baae8007895ead906342b8cb835d84d"
     },
     "icon-warm": {
-      "file": "icon-warm.png",
+      "file": "icon-warm.jpg",
+      "provider": "openrouter",
       "model": "google/gemini-3.1-flash-image",
       "format": "png",
-      "promptSha256": "aa02b1ee79806fab7ac8a23313327457f01a3e6e8047a7472e849da62968ba9b",
+      "promptSha256": "80219455e4c7494414cb68938199e052781f5d12c372d7758da4b2c25bb371fa",
+      "characters": [],
       "references": [],
-      "sha256": "396a4b06e3e62b34b98bb83ed20932a8ff986e55166b76635606b61e5e31db25",
-      "generationId": "gen-1794156324-QmnTGBHadhy57VSb30x6",
+      "sha256": "a14f8bf5c2c517adf847577014fc90746b2adc2103b8e7ed19b412c2d9fa9759",
+      "generationId": "gen-1794164281-FDtxExHcTuOadVY7hbar",
       "usage": {
-        "prompt_tokens": 132,
-        "completion_tokens": 1120,
-        "total_tokens": 1252,
-        "cost": 0.067266,
+        "prompt_tokens": 227,
+        "completion_tokens": 1680,
+        "total_tokens": 1907,
+        "cost": 0.1009135,
         "is_byok": false,
         "prompt_tokens_details": {
           "cached_tokens": 0,
@@ -192,17 +203,18 @@
           "video_tokens": 0
         },
         "cost_details": {
-          "upstream_inference_cost": 0.067266,
-          "upstream_inference_prompt_cost": 0.000066,
-          "upstream_inference_completions_cost": 0.0672
+          "upstream_inference_cost": 0.1009135,
+          "upstream_inference_prompt_cost": 0.0001135,
+          "upstream_inference_completions_cost": 0.1008
         },
         "completion_tokens_details": {
           "reasoning_tokens": 0,
-          "image_tokens": 1120,
+          "image_tokens": 1680,
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T16:45:34.018Z"
+      "generatedAt": "2026-11-08T18:58:13.920Z",
+      "rawSha256": "b8712abf5e7f3e0c62d966b50533f47512bc74c60adf17e1aeb7da77ee1a7189"
     },
     "panda-and-friend": {
       "file": "panda-and-friend.png",
@@ -236,7 +248,8 @@
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T17:34:01.160Z"
+      "generatedAt": "2026-11-08T17:34:01.160Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
     },
     "panda-summer": {
       "file": "panda-summer.png",
@@ -275,7 +288,8 @@
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T18:18:15.224Z"
+      "generatedAt": "2026-11-08T18:18:15.224Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
     },
     "panda-winter": {
       "file": "panda-winter.png",
@@ -315,7 +329,8 @@
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T18:18:43.832Z"
+      "generatedAt": "2026-11-08T18:18:43.832Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
     },
     "crane-and-panda": {
       "file": "crane-and-panda.png",
@@ -353,17 +368,18 @@
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T18:18:04.498Z"
+      "generatedAt": "2026-11-08T18:18:04.498Z",
+      "removed": "no longer used (format switched to the HSK AI cast drawn from vectors)"
     },
     "hutong-street": {
-      "file": "hutong-street.png",
+      "file": "hutong-street.jpg",
       "provider": "openrouter",
       "model": "google/gemini-3.1-flash-image",
       "format": "png",
       "promptSha256": "ffb355a27053eb9891dd361d9d4a1d3332af4f49c1683992f82459636ecf586b",
       "characters": [],
       "references": [],
-      "sha256": "72eb24f27847e1a177d413e08919bc3146fa8038e0971383ed41a9b644ee5e24",
+      "sha256": "e76bbe7aa3ab66706e54f2e788da8db8e03d6a10eeb9e306d52d0e4f595dda9f",
       "generationId": "gen-1794161966-YlOHOhIfnRtfJQ2HfL44",
       "usage": {
         "prompt_tokens": 242,
@@ -388,10 +404,12 @@
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T18:19:44.699Z"
+      "generatedAt": "2026-11-08T18:19:44.699Z",
+      "convertedFromSha256": "72eb24f27847e1a177d413e08919bc3146fa8038e0971383ed41a9b644ee5e24",
+      "conversion": "PNG -> JPEG q2 (ffmpeg), 2026-11-09"
     },
     "hutong-summer": {
-      "file": "hutong-summer.png",
+      "file": "hutong-summer.jpg",
       "provider": "openrouter",
       "model": "google/gemini-3.1-flash-image",
       "format": "png",
@@ -400,7 +418,7 @@
       "references": [
         "hutong-street"
       ],
-      "sha256": "bf7f84955775d57d02755f2ba1d0bd544756cf4da00170b07eee53dd60d99196",
+      "sha256": "cc8b8d44784c34fcda080f2713eee072235106df477caf1cbc63e62f659a63b1",
       "generationId": "gen-1794161988-EQkNjhFuD4IYSxiRFDvc",
       "usage": {
         "prompt_tokens": 1339,
@@ -425,10 +443,12 @@
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T18:20:08.521Z"
+      "generatedAt": "2026-11-08T18:20:08.521Z",
+      "convertedFromSha256": "bf7f84955775d57d02755f2ba1d0bd544756cf4da00170b07eee53dd60d99196",
+      "conversion": "PNG -> JPEG q2 (ffmpeg), 2026-11-09"
     },
     "hutong-winter": {
-      "file": "hutong-winter.png",
+      "file": "hutong-winter.jpg",
       "provider": "openrouter",
       "model": "google/gemini-3.1-flash-image",
       "format": "png",
@@ -438,7 +458,7 @@
         "hutong-street",
         "hutong-summer"
       ],
-      "sha256": "d48282b2d9356b879fe6369493289e6866c6f16e49be65cc7f0e25cee0a8c98e",
+      "sha256": "231488ba4ce3db5c9cfae1bb5af8b74c83dfa14333c68afb4ecb72e20699e264",
       "generationId": "gen-1794162014-h45WDWJP2dyFRnwewBlM",
       "usage": {
         "prompt_tokens": 2460,
@@ -463,7 +483,9 @@
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T18:20:42.368Z"
+      "generatedAt": "2026-11-08T18:20:42.368Z",
+      "convertedFromSha256": "d48282b2d9356b879fe6369493289e6866c6f16e49be65cc7f0e25cee0a8c98e",
+      "conversion": "PNG -> JPEG q2 (ffmpeg), 2026-11-09"
     }
   }
 }

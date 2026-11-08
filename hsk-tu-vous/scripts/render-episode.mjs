@@ -21,6 +21,7 @@ import { assertImportedAudioHash } from "./voice-import-state.mjs";
 import { sha256 } from "./voice-checkpoint.mjs";
 import { runSfxPreparation } from "./render-sfx-step.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
+import { assertLessonArtReviewed } from "./review-lesson-art.mjs";
 import {
   getEpisode,
   episodeContentHash,
@@ -47,6 +48,8 @@ const visualSystem = await readJson(
 );
 validateEpisode(episode);
 validateLessonPresentation(episode, visualSystem.lessonPresentation);
+// Lesson-art review service: current frames must pass before any render.
+await assertLessonArtReviewed(episode);
 const ctaValidation = await requireCurrentCta(episode);
 const voiceProfile = await requireApprovedVoiceProfile(id);
 if (episode.voiceProvider !== voiceProfile.provider)

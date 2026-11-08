@@ -171,7 +171,7 @@ const PairLayer:React.FC<{episodeId:string;ill:Illustration;local:number;frameAb
           {icon&&(ill.overlay==="drop"||ill.overlay==="compare"||focusIndex>=0)&&<div style={{position:"absolute",right:-16,top:-30,width:150,height:150,
             borderRadius:40,overflow:"hidden",background:"#FFFFFF",border:"3px solid rgba(255,255,255,.9)",
             boxShadow:"0 18px 40px rgba(0,0,0,.35)",scale:.6+.4*pop(local,4+index*3,10),opacity:pop(local,4+index*3,8)}}>
-            <Img src={art(episodeId,icon)} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+            <Img src={art(episodeId,icon)} style={{width:"100%",height:"100%",objectFit:"cover",scale:1.7}}/>
           </div>}
           {focused&&<div style={{position:"absolute",left:"50%",bottom:-36,translate:"-50% 0",opacity:pop(local,4,8)}}>
             <LiquidGlass radius={999} style={{padding:"8px 30px"}}><span style={{fontSize:52,fontWeight:800,color:"#FFFFFF"}}>{index?"A":"B"}</span></LiquidGlass>

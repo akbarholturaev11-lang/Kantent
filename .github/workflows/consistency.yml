@@ -149,7 +149,7 @@ jobs:
           node --check scripts/generate-voice-gemini.mjs
           node --check scripts/voice-transport-backup.mjs
           node --check scripts/voice-fallback-wiring.test.mjs
-          node --test scripts/voice-transport-backup.test.mjs scripts/voice-fallback-wiring.test.mjs scripts/voice-take-guard.test.mjs scripts/openrouter-voice.test.mjs scripts/video-credentials.test.mjs scripts/spoken-token-match.test.mjs scripts/stt-windows.test.mjs scripts/gemini-word-recovery.test.mjs scripts/import-hook-cap.test.mjs
+          node --test scripts/voice-transport-backup.test.mjs scripts/voice-fallback-wiring.test.mjs scripts/voice-take-guard.test.mjs scripts/openrouter-voice.test.mjs scripts/video-credentials.test.mjs scripts/spoken-token-match.test.mjs scripts/stt-windows.test.mjs scripts/gemini-word-recovery.test.mjs scripts/import-hook-cap.test.mjs scripts/illustrated-layout.test.mjs scripts/illustration-validation.test.mjs scripts/review-lesson-art.test.mjs scripts/visual-variety-plan.test.mjs scripts/lesson-presentation-policy.test.mjs
       - name: Every production script only uses defined identifiers (catches missing imports before a paid run)
         run: node --test scripts/no-undefined-identifiers.test.mjs
       - name: Test independent language production, exact Tajik cues and scoped MCP tools

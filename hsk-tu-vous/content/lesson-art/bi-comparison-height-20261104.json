@@ -28,7 +28,7 @@
     {
       "name": "notebook-desk",
       "aspectRatio": "9:16",
-      "prompt": "Top-down view of an open notebook lying on a warm wooden desk, the notebook pages completely blank and clean, a cup of green tea and a pen beside it, soft morning window light with gentle shadows. The blank notebook fills the centre of the frame."
+      "prompt": "Top-down view of an open notebook lying on a warm wooden desk, the notebook pages completely blank and clean, a cup of green tea and a pen beside it, soft morning window light with gentle shadows. The blank notebook fills the centre of the frame. Crisp detail, high resolution."
     },
     {
       "name": "icon-cold",
@@ -40,5 +40,14 @@
       "aspectRatio": "1:1",
       "prompt": "A single glossy 3D clay-style icon of a thermometer with a high red level and a small sun beside it, isolated and centred on a plain pure white background that fills the whole square image edge to edge (no room, no card, no frame, no scenery), soft studio lighting, subtle soft shadow, cute rounded proportions."
     }
-  ]
+  ],
+  "variety": {
+    "date": "2026-11-04",
+    "setting": "hutong-street",
+    "coach": "panda",
+    "supportingCharacter": "crane",
+    "pattern": "two-subject",
+    "experiment": null,
+    "source": "scripts/visual-variety-plan.mjs (test lesson; before the first experiment start date)"
+  }
 }
