@@ -57,3 +57,10 @@ test("errors that reach logs, metadata or artifacts never carry a credential", a
   assert.equal(redactCredentials("HTTP 429 daily quota; retry in 23h"), "HTTP 429 daily quota; retry in 23h");
   assert.match(source, /function safeErrorMessage\(error\) \{\s*return redactCredentials\(/);
 });
+
+test("GitHub render job can enable the owner's backup; it is off unless the Actions variable says true", () => {
+  const workflow = readFileSync(new URL("../../.github/workflows/video-review.yml", import.meta.url), "utf8");
+  assert.match(workflow, /HSK_AI_OPENROUTER_FALLBACK_ENABLED: \$\{\{ vars\.HSK_AI_OPENROUTER_FALLBACK_ENABLED \|\| 'false' \}\}/);
+  assert.match(workflow, /HSK_AI_OPENROUTER_FALLBACK_ENABLED" == "true" && -z "\$OPENROUTER_API_KEY"/,
+    "an enabled backup without its key fails before any paid request");
+});

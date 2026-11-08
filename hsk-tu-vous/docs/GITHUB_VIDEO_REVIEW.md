@@ -10,7 +10,7 @@ This opt-in pipeline uses the existing Gemini + Remotion lesson renderer. It doe
 
 ## Required configuration
 
-1. GitHub repository Settings → Secrets and variables → Actions: for the **default voice transport**, set encrypted `OPENROUTER_API_KEY` with an approved spending cap. Only if `HSK_AI_VOICE_API_PROVIDER=gemini-direct` is explicitly selected, use `GEMINI_API_KEY` (and permitted backups) and its opt-in flag. The actual workflow defaults to OpenRouter; never put secrets in code, PRs or logs.
+1. GitHub repository Settings → Secrets and variables → Actions: for the **default voice transport**, set encrypted `OPENROUTER_API_KEY` with an approved spending cap. Only if the Actions variable `HSK_AI_VOICE_API_PROVIDER=gemini-direct` is explicitly selected, use `GEMINI_API_KEY` (and permitted backups); to let Direct HTTP 429/5xx fall back to OpenRouter also set the Actions variable `HSK_AI_OPENROUTER_FALLBACK_ENABLED=true` and keep `OPENROUTER_API_KEY` (the job fails before any paid request if the key is missing). The actual workflow defaults to OpenRouter; never put secrets in code, PRs or logs.
 2. Confirm GitHub Actions minutes, artifact storage, Node.js 22, FFmpeg and FFprobe.
 3. Keep both existing approved language voice profiles unchanged.
 4. After this feature is merged to default branch, open Actions → HSK AI video review automation → Run workflow. Enter episode ID er-vs-liang-cafe-20261026 and choose language ru for an initial independent test. Later use all after the protected Tajik audio issue is resolved; other input forms are today or exact YYYY-MM-DD.
