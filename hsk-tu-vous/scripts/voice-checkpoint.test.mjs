@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import {
   atomicWriteFile, atomicWriteJson, findReusableVoiceCheckpoint,
-  isValidWavBuffer, sha256,
+  isValidWavBuffer, matchesRecordedWavChunk, sha256,
 } from "./voice-checkpoint.mjs";
 
 function wav(pcm = Buffer.from([0, 0, 1, 0])) {
@@ -149,4 +149,16 @@ test("does not silently reuse structurally valid WAV without a recorded SHA-256"
   } finally {
     await fs.rm(root, { recursive: true, force: true });
   }
+});
+
+test("explicit resume refuses a structurally valid unverified or altered WAV, without deleting it", () => {
+  const original = wav();
+  const alternate = wav(Buffer.from([3, 0, 4, 0]));
+  const record = { file: "voice.wav", sha256: sha256(original) };
+  assert.equal(matchesRecordedWavChunk("voice.wav", original, record), true);
+  assert.equal(matchesRecordedWavChunk("voice.wav", alternate, record), false);
+  assert.equal(matchesRecordedWavChunk("voice.wav", original, { file: "voice.wav" }), false);
+  assert.equal(matchesRecordedWavChunk("voice.wav", original, { file: "other.wav", sha256: sha256(original) }), false);
+  assert.equal(matchesRecordedWavChunk("voice.wav", Buffer.from("not a wav"), record), false);
+  assert.equal(matchesRecordedWavChunk("voice.wav", original, { file: "voice.wav", sha256: "bad" }), false);
 });
