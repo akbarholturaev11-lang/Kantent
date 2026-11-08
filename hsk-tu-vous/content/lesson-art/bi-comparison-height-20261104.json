@@ -4,30 +4,26 @@
   "style": "Polished semi-realistic digital illustration for a premium vertical explainer reel: warm cinematic lighting, soft cel shading, clean confident linework, rich but natural colours, detailed believable background, gentle depth of field. Absolutely no text, letters, numbers, signs with writing, logos or watermarks anywhere in the image.",
   "assets": [
     {
-      "name": "panda-and-friend",
+      "name": "hutong-street",
       "aspectRatio": "9:16",
-      "character": "aobao-panda",
-      "prompt": "A calm Beijing hutong street at golden hour. On the LEFT stands a tall, slim young man (full body, head to shoes), short black hair, teal jacket, dark trousers, facing the viewer, his face strongly privacy-blurred and featureless. On the RIGHT stands Aobao the panda exactly as in the first reference image, full body, clearly shorter: the top of Aobao's head reaches only the man's chest. Both face the viewer. Leave generous empty sky and wall space in the upper third. Both figures stand in the lower two thirds with a small gap between them. Aobao stays a flat vector mascot with thick black outlines inside the illustrated street.",
-      "humans": true
+      "prompt": "An empty, calm Beijing hutong street at golden hour with red lanterns, grey brick walls, wooden doors, potted plants and a soft glowing sky. Nobody is in the scene: no people, no animals, no characters. The paved street in the lower half is open and uncluttered so characters can be placed on it later; generous sky in the upper third. Rich detail, crisp linework, high resolution."
     },
     {
-      "name": "panda-summer",
+      "name": "hutong-summer",
       "aspectRatio": "4:5",
-      "character": "aobao-panda",
       "references": [
-        "panda-and-friend"
+        "hutong-street"
       ],
-      "prompt": "The same hutong street as in the second reference image on a hot sunny summer day: bright blue sky, warm sunlight, green leaves. Only Aobao the panda (exactly as the first reference, flat vector, thick outline, red neckerchief) stands in the centre, full body, happy in the heat, wearing small dark sunglasses pushed up on the head. Warm golden colours."
+      "prompt": "The same hutong street as the reference on a hot sunny summer day: bright blue sky, strong warm sunlight, green leaves, heat shimmer. Nobody is in the scene: no people, no animals, no characters. The street centre stays open. Warm golden colours, crisp detail, high resolution."
     },
     {
-      "name": "panda-winter",
+      "name": "hutong-winter",
       "aspectRatio": "4:5",
-      "character": "aobao-panda",
       "references": [
-        "panda-and-friend",
-        "panda-summer"
+        "hutong-street",
+        "hutong-summer"
       ],
-      "prompt": "The same hutong street as in the second reference image in winter: heavy snowfall, snow on roofs and the street, cold blue light, grey sky. Only Aobao the panda (exactly as the first reference: same face, closed smiling eyes, thick outline, red neckerchief) stands in the same spot, full body, shivering, wearing a knitted blue winter hat and a small puffer coat open at the neck so the red neckerchief stays visible. Cold blue colours."
+      "prompt": "The same hutong street as the references in winter: heavy snowfall, snow on roofs, lanterns and the street, cold blue light, grey sky. Nobody is in the scene: no people, no animals, no characters. The street centre stays open. Cold blue colours, crisp detail, high resolution."
     },
     {
       "name": "notebook-desk",

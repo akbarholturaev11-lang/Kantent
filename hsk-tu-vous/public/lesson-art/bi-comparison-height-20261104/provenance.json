@@ -240,20 +240,23 @@
     },
     "panda-summer": {
       "file": "panda-summer.png",
+      "provider": "openrouter",
       "model": "google/gemini-3.1-flash-image",
       "format": "png",
-      "promptSha256": "2be48e983fc79a8ff544474db3dc84e03ffb662398bcfaad010f09b62f51bf19",
-      "character": "aobao-panda",
-      "references": [
-        "panda-and-friend"
+      "promptSha256": "5cc41414bd861c624799ff19a60d60c7dcb5b7bd0b49f944706e0c20011489eb",
+      "characters": [
+        "panda:celebrate"
       ],
-      "sha256": "bd3927ffade1ada46cfba67489114e83d0ad565b38604406202fcc061858ef34",
-      "generationId": "gen-1794157190-2k7cnx6rlTXjVyZB5Pwc",
+      "references": [
+        "crane-and-panda"
+      ],
+      "sha256": "b76abaf3440c4b88c53e5d6418ba0f4506b9db0781db1451911f526f61449e39",
+      "generationId": "gen-1794161886-tuIa7Hjti7LGOTM3OcbP",
       "usage": {
-        "prompt_tokens": 2493,
+        "prompt_tokens": 2555,
         "completion_tokens": 1120,
-        "total_tokens": 3613,
-        "cost": 0.0684465,
+        "total_tokens": 3675,
+        "cost": 0.0684775,
         "is_byok": false,
         "prompt_tokens_details": {
           "cached_tokens": 0,
@@ -262,8 +265,8 @@
           "video_tokens": 0
         },
         "cost_details": {
-          "upstream_inference_cost": 0.0684465,
-          "upstream_inference_prompt_cost": 0.0012465,
+          "upstream_inference_cost": 0.0684775,
+          "upstream_inference_prompt_cost": 0.0012775,
           "upstream_inference_completions_cost": 0.0672
         },
         "completion_tokens_details": {
@@ -272,25 +275,28 @@
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T17:00:04.212Z"
+      "generatedAt": "2026-11-08T18:18:15.224Z"
     },
     "panda-winter": {
       "file": "panda-winter.png",
+      "provider": "openrouter",
       "model": "google/gemini-3.1-flash-image",
-      "format": "png",
-      "promptSha256": "056336aad2f61776ff4e8da704d325da412f72cdd68b6cd4f63e1ede8fc04c3e",
-      "character": "aobao-panda",
+      "format": "jpeg",
+      "promptSha256": "c24661cef6277dee2f39b4b57fa90bd8be6e1d75b87298236b5fc3bb8a2c4528",
+      "characters": [
+        "panda:wrong"
+      ],
       "references": [
-        "panda-and-friend",
+        "crane-and-panda",
         "panda-summer"
       ],
-      "sha256": "5e5f81dedfe6569a39b5d9971d19c5c27022b5794e92c0542ed65f6122f2fd29",
-      "generationId": "gen-1794157205-i24naiI4yHtDzm2Ir595",
+      "sha256": "1d24e22ef0611c0852ba719282cc01730ad02197f07873fd603ded7c68176d5b",
+      "generationId": "gen-1794161896-y1QmWo2SGMcWV8NZ8pQ4",
       "usage": {
-        "prompt_tokens": 3632,
-        "completion_tokens": 1120,
-        "total_tokens": 4752,
-        "cost": 0.069016,
+        "prompt_tokens": 1095,
+        "completion_tokens": 1386,
+        "total_tokens": 2481,
+        "cost": 0.0685455,
         "is_byok": false,
         "prompt_tokens_details": {
           "cached_tokens": 0,
@@ -299,8 +305,46 @@
           "video_tokens": 0
         },
         "cost_details": {
-          "upstream_inference_cost": 0.069016,
-          "upstream_inference_prompt_cost": 0.001816,
+          "upstream_inference_cost": 0.0685455,
+          "upstream_inference_prompt_cost": 0.0005475,
+          "upstream_inference_completions_cost": 0.067998
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1120,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T18:18:43.832Z"
+    },
+    "crane-and-panda": {
+      "file": "crane-and-panda.png",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "c08de6cde3d78d492a64684b7891120bc56a9e74462fa1a4b9135a52a2e2f9f5",
+      "characters": [
+        "crane",
+        "panda"
+      ],
+      "references": [],
+      "sha256": "b39caa7203f39d63180edd21482ca81cc2a1fb6a7e5fee346b88ac2fc055d78d",
+      "generationId": "gen-1794161873-XdjNL55SNXIyGF5p9iVi",
+      "usage": {
+        "prompt_tokens": 2693,
+        "completion_tokens": 1120,
+        "total_tokens": 3813,
+        "cost": 0.0685465,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0685465,
+          "upstream_inference_prompt_cost": 0.0013465,
           "upstream_inference_completions_cost": 0.0672
         },
         "completion_tokens_details": {
@@ -309,7 +353,117 @@
           "audio_tokens": 0
         }
       },
-      "generatedAt": "2026-11-08T17:00:17.763Z"
+      "generatedAt": "2026-11-08T18:18:04.498Z"
+    },
+    "hutong-street": {
+      "file": "hutong-street.png",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "ffb355a27053eb9891dd361d9d4a1d3332af4f49c1683992f82459636ecf586b",
+      "characters": [],
+      "references": [],
+      "sha256": "72eb24f27847e1a177d413e08919bc3146fa8038e0971383ed41a9b644ee5e24",
+      "generationId": "gen-1794161966-YlOHOhIfnRtfJQ2HfL44",
+      "usage": {
+        "prompt_tokens": 242,
+        "completion_tokens": 1680,
+        "total_tokens": 1922,
+        "cost": 0.100921,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.100921,
+          "upstream_inference_prompt_cost": 0.000121,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T18:19:44.699Z"
+    },
+    "hutong-summer": {
+      "file": "hutong-summer.png",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "64cde01ab9f41a0619aa0b6e60a677c64a0dd1676790e1b0050b4a5247d04802",
+      "characters": [],
+      "references": [
+        "hutong-street"
+      ],
+      "sha256": "bf7f84955775d57d02755f2ba1d0bd544756cf4da00170b07eee53dd60d99196",
+      "generationId": "gen-1794161988-EQkNjhFuD4IYSxiRFDvc",
+      "usage": {
+        "prompt_tokens": 1339,
+        "completion_tokens": 1680,
+        "total_tokens": 3019,
+        "cost": 0.1014695,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1014695,
+          "upstream_inference_prompt_cost": 0.0006695,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T18:20:08.521Z"
+    },
+    "hutong-winter": {
+      "file": "hutong-winter.png",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "6eb2cbbe8d77677b33a26faff9cd26f624210b63701cbb27e1f9054c5b495c0e",
+      "characters": [],
+      "references": [
+        "hutong-street",
+        "hutong-summer"
+      ],
+      "sha256": "d48282b2d9356b879fe6369493289e6866c6f16e49be65cc7f0e25cee0a8c98e",
+      "generationId": "gen-1794162014-h45WDWJP2dyFRnwewBlM",
+      "usage": {
+        "prompt_tokens": 2460,
+        "completion_tokens": 1680,
+        "total_tokens": 4140,
+        "cost": 0.10203,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.10203,
+          "upstream_inference_prompt_cost": 0.00123,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-08T18:20:42.368Z"
     }
   }
 }

@@ -167,7 +167,7 @@ Owner listened to the RU/TG one-take vs scene A/B and chose **one take per langu
 
 ## 2026-11-09 — illustrated-glass lesson format (owner-approved)
 
-After several owner-reviewed test renders of `bi-comparison-height-20261104` (RU), the owner approved the format modelled on their reference reels: generated text-free lesson art, Aobao the HSK AI panda as the only character, no visible human faces, camera and overlays on exact cues, three non-repeating text roles, safe-zone text with bottom-first adaptive subtitles. Rules: `content/EDITING_SPEC.md#illustrated-glass-lesson-format`; mandatory from `lessonPresentation.illustratedFormatFromDate` (2026-11-10). Lesson art cost so far: $0.75 (OpenRouter); Codex is the intended free generator but its local config currently points to an Ollama catalog the installed CLI cannot parse. TG render waits for its one-take STT (Gemini daily quota).
+After several owner-reviewed test renders of `bi-comparison-height-20261104` (RU), the owner approved the format modelled on their reference reels: generated text-free background art, only the HSK AI cast (panda, dragon, crane, monkey, rabbit from the app's character pack) drawn from exact vectors, no people, camera and overlays on exact cues, three non-repeating text roles, safe-zone text with bottom-first adaptive subtitles. Rules: `content/EDITING_SPEC.md#illustrated-glass-lesson-format`; mandatory from `lessonPresentation.illustratedFormatFromDate` (2026-11-10). Lesson art cost so far: $0.75 (OpenRouter); Codex is the intended free generator but its local config currently points to an Ollama catalog the installed CLI cannot parse. TG render waits for its one-take STT (Gemini daily quota).
 
 ## Next tasks / blockers — BUGS ONLY
 

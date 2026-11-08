@@ -8,6 +8,10 @@ export const ACTION_OBJECTS = ["tea-cup", "book", "apple"];
 // from public/lesson-art/<episode>/ plus the overlay that explains the cue.
 export const ILLUSTRATION_LAYOUTS = ["scene", "pair", "board"];
 export const ILLUSTRATION_OVERLAYS = ["rise", "marks", "link", "cross", "drop", "compare", "adjective"];
+// The HSK AI cast (content/characters/hsk-ai-characters.json; a test keeps
+// this list equal to the registry). No other character may appear.
+export const HSK_CHARACTER_IDS = ["panda", "dragon", "crane", "monkey", "rabbit"];
+export const HSK_CHARACTER_MOODS = ["idle", "talk", "correct", "wrong", "celebrate", "proud", "dismissive", "one-heart", "loading"];
 export function validateIllustration(id, ill) {
   const fail = (message) => { throw Error(id + ": illustration " + message); };
   if (!ill || typeof ill !== "object") fail("must be an object");
@@ -26,6 +30,12 @@ export function validateIllustration(id, ill) {
     if (!ok) fail("focus must name an anchor (scene) or left/right (pair)");
   }
   if (["link", "marks", "rise", "cross"].includes(ill.overlay) && !(ill.anchors?.a && ill.anchors?.b)) fail("needs anchors a and b for this overlay");
+  for (const member of ill.cast ?? []) {
+    if (!HSK_CHARACTER_IDS.includes(member?.id)) fail("cast may only use HSK AI characters (content/characters/hsk-ai-characters.json)");
+    if (member.mood !== undefined && !HSK_CHARACTER_MOODS.includes(member.mood)) fail("cast mood is not an HSK AI mood");
+    if (!["x", "y", "h"].every((k) => Number.isFinite(member[k]) && member[k] > 0 && member[k] <= 1)) fail("cast x, y and h are normalized");
+    if (ill.layout === "pair" ? ![0, 1].includes(member.card) : member.card !== undefined) fail("cast card is 0/1 only in a pair");
+  }
   if (ill.layout === "board" && (!Array.isArray(ill.parts) || !ill.parts.length || ill.parts.length > 6 || ill.parts.some((x) => typeof x !== "string" || !x.trim() || x.length > 24)))
     fail("board needs 1–6 short parts");
 }

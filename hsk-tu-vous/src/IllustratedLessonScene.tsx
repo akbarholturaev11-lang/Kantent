@@ -3,6 +3,7 @@ import type {ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
 import visual from "../content/visual-system.json";
 import {activeNarratedBeat} from "../scripts/narrated-beat-state.mjs";
 import {ILLUSTRATED_LAYOUT as LAY, cameraFor} from "../scripts/illustrated-layout.mjs";
+import characters from "../content/characters/hsk-ai-characters.json";
 
 /**
  * Illustrated-glass lesson frame (owner decision 2026-11-09, modelled on the
@@ -20,7 +21,10 @@ export type Illustration={
   focus?:string;
   overlay?:"rise"|"marks"|"link"|"cross"|"drop"|"compare"|"adjective";
   parts?:string[];
+  cast?:CastMember[];
 };
+/** An HSK AI character placed on the art: centre x, feet y and height, all normalized to the image (pair: to its card). */
+export type CastMember={id:string;mood?:string;x:number;y:number;h:number;card?:number};
 
 const G=visual.referenceGlass;
 const C=visual.colors;
@@ -48,7 +52,35 @@ export const LiquidGlass:React.FC<{children:React.ReactNode;style?:React.CSSProp
     <div style={{position:"relative"}}>{children}</div>
   </div>;
 
-const art=(episodeId:string,name:string)=>staticFile(`lesson-art/${episodeId}/${name}.png`);
+const art=(episodeId:string,name:string)=>staticFile(`lesson-art/${episodeId}/${name}.jpg`);
+
+// HSK AI characters are drawn from the app's exact vector source
+// (content/characters/hsk-ai-characters.json): crisp at any size, never
+// redrawn by an image model. Mood changes on the beat; a gentle breathing
+// bob and an entry hop make them alive.
+const svgUri=(id:string,mood:string)=>{
+  const entry=characters.characters.find(c=>c.id===id);
+  if(!entry) throw Error(`Unknown HSK AI character "${id}"`);
+  const svg=(entry.svg as Record<string,string>)[mood]??entry.svg.idle;
+  return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
+};
+const aspect=(id:string)=>{
+  const entry=characters.characters.find(c=>c.id===id);
+  const box=(entry?.svg.idle.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/)??[])as string[];
+  return box.length?Number(box[1])/Number(box[2]):1;
+};
+const Cast:React.FC<{cast:CastMember[];frame:number;local:number;width:number;height:number;card?:number}>=({cast,frame,local,width,height,card})=><>
+  {cast.filter(m=>(m.card??undefined)===card).map((m,i)=>{
+    const h=m.h*height, w=h*aspect(m.id);
+    const hop=interpolate(local,[0,5,11],[0,-.06,0],{extrapolateLeft:"clamp",extrapolateRight:"clamp"});
+    const breathe=Math.sin((frame+i*17)/14)*.012;
+    return <div key={m.id+i} style={{position:"absolute",left:m.x*width-w/2,top:m.y*height-h,width:w,height:h,transformOrigin:"50% 100%",
+      scale:`${1+breathe*.6} ${1-breathe+hop*.4}`,translate:`0 ${hop*h}px`}}>
+      <div style={{position:"absolute",left:"10%",right:"10%",bottom:-h*.02,height:h*.07,borderRadius:"50%",background:"rgba(0,0,0,.28)",filter:"blur(8px)"}}/>
+      <Img src={svgUri(m.id,m.mood??"idle")} style={{position:"relative",width:"100%",height:"100%",filter:"drop-shadow(0 10px 18px rgba(0,0,0,.35))"}}/>
+    </div>;
+  })}
+</>;
 type Camera={scale:number;cx:number;cy:number};
 const pct=(value:number)=>`${value*100}%`;
 
@@ -101,7 +133,7 @@ const Stamp:React.FC<{local:number}>=({local})=><div style={{position:"absolute"
   </div>
 </div>;
 
-const SceneLayer:React.FC<{episodeId:string;ill:Illustration;beat:ResolvedMotionBeat;local:number;camera:Camera}>=({episodeId,ill,beat,local,camera})=>{
+const SceneLayer:React.FC<{episodeId:string;ill:Illustration;beat:ResolvedMotionBeat;local:number;camera:Camera;frameAbs:number}>=({episodeId,ill,beat,local,camera,frameAbs})=>{
   const a=ill.anchors?.a, b=ill.anchors?.b;
   // The 9:16 illustration sits just below the headline/chip stack so faces
   // are never covered; a blurred copy fills the frame. Overlays share the
@@ -110,6 +142,7 @@ const SceneLayer:React.FC<{episodeId:string;ill:Illustration;beat:ResolvedMotion
   <Img src={art(episodeId,ill.images[0])} style={{position:"absolute",inset:-60,width:W+120,height:H+120,objectFit:"cover",filter:"blur(30px) brightness(.6)"}}/>
   <div style={{position:"absolute",left:0,top:LAY.sceneImageTopPx,width:W,height:LAY.sceneImageHeightPx,transformOrigin:`${camera.cx*100}% ${camera.cy*100}%`,scale:camera.scale}}>
     <Img src={art(episodeId,ill.images[0])} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",borderRadius:0}}/>
+    {ill.cast&&<Cast cast={ill.cast} frame={frameAbs} local={local} width={W} height={LAY.sceneImageHeightPx}/>}
     {a&&b&&(ill.overlay==="marks"||ill.overlay==="rise"||ill.overlay==="cross")&&<Marks a={a} b={b} local={local} rise={ill.overlay!=="marks"}/>}
     {a&&b&&ill.overlay==="link"&&<Link from={a} to={b} local={local} label="比"/>}
     {ill.focus&&ill.anchors?.[ill.focus]&&<FocusTag box={ill.anchors[ill.focus]} local={local} label={ill.focus==="a"?"A":"B"}/>}
@@ -119,7 +152,7 @@ const SceneLayer:React.FC<{episodeId:string;ill:Illustration;beat:ResolvedMotion
   </>;
 };
 
-const PairLayer:React.FC<{episodeId:string;ill:Illustration;local:number}>=({episodeId,ill,local})=>{
+const PairLayer:React.FC<{episodeId:string;ill:Illustration;local:number;frameAbs:number}>=({episodeId,ill,local,frameAbs})=>{
   const focusIndex=ill.focus==="left"?0:ill.focus==="right"?1:-1;
   return <>
     <Img src={art(episodeId,ill.images[1]??ill.images[0])} style={{position:"absolute",inset:-60,width:W+120,height:H+120,objectFit:"cover",filter:"blur(34px) brightness(.55) saturate(1.2)"}}/>
@@ -133,6 +166,7 @@ const PairLayer:React.FC<{episodeId:string;ill:Illustration;local:number}>=({epi
             border:`${focused?6:2}px solid ${focused?C.brandGold:"rgba(255,255,255,.5)"}`,
             boxShadow:focused?`0 0 60px ${C.brandGold}77, 0 30px 70px rgba(0,0,0,.45)`:"0 30px 70px rgba(0,0,0,.45)"}}>
             <Img src={art(episodeId,name)} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+            {ill.cast&&<Cast cast={ill.cast} frame={frameAbs} local={local} width={460} height={LAY.pairHeightPx} card={index}/>}
           </div>
           {icon&&(ill.overlay==="drop"||ill.overlay==="compare"||focusIndex>=0)&&<div style={{position:"absolute",right:-16,top:-30,width:150,height:150,
             borderRadius:40,overflow:"hidden",background:"#FFFFFF",border:"3px solid rgba(255,255,255,.9)",
@@ -192,8 +226,8 @@ export const IllustratedLessonScene:React.FC<{episodeId:string;frame:number;beat
   return <AbsoluteFill style={{background:"#08090B",color:"#FFFFFF",fontFamily:G.fontFamily,overflow:"hidden"}}>
     <LiquidGlassDefs/>
     <div style={{position:"absolute",inset:0,opacity:enter,filter:`blur(${(1-enter)*14}px)`}}>
-      {ill.layout==="scene"&&<SceneLayer episodeId={episodeId} ill={ill} beat={active} local={local} camera={camera}/>}
-      {ill.layout==="pair"&&<PairLayer episodeId={episodeId} ill={ill} local={local}/>}
+      {ill.layout==="scene"&&<SceneLayer episodeId={episodeId} ill={ill} beat={active} local={local} camera={camera} frameAbs={frame}/>}
+      {ill.layout==="pair"&&<PairLayer episodeId={episodeId} ill={ill} local={local} frameAbs={frame}/>}
       {ill.layout==="board"&&<BoardLayer episodeId={episodeId} ill={ill} local={local}/>}
     </div>
     <div style={{position:"absolute",left:0,right:0,top:0,height:900,background:"linear-gradient(180deg, rgba(6,8,12,.55) 0%, rgba(6,8,12,.5) 45%, transparent 100%)"}}/>

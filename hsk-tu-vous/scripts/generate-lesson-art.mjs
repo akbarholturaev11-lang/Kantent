@@ -14,14 +14,27 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { pathToFileURL } from "node:url";
+import { execFileSync } from "node:child_process";
 import { PROJECT_ROOT } from "./lib.mjs";
 import { redactCredentials } from "./video-credentials.mjs";
 
 const ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
-// Owner rule 2026-11-09: a drawn human never shows a recognizable face. It is
-// appended to EVERY prompt here so no manifest can forget it. Aobao the panda
-// is the only character with a visible face.
-export const HUMAN_FACE_RULE = "PEOPLE RULE (mandatory): any human figure in the image must NOT show a recognizable face — the whole face area is strongly blurred like a privacy blur (soft, featureless, no eyes, nose or mouth visible), or the person is seen from behind. Hair, body, clothes and pose stay clear. This rule never applies to Aobao the panda.";
+// Owner rules 2026-11-09, appended to EVERY prompt so no manifest can forget
+// them: characters come only from the HSK AI registry; no human is drawn as a
+// character, and any unavoidable distant figure shows no recognizable face.
+export const HUMAN_FACE_RULE = "CHARACTER RULE (mandatory): the only characters allowed are the HSK AI characters given as reference images (panda, dragon Longlong, crane Hehe, monkey Wuwu, rabbit Yueyue), drawn exactly as their references. Do not draw any human as a character and do not invent any other creature or mascot. If a distant human figure is unavoidable in the background, it must not show a recognizable face (privacy-blurred, featureless, or seen from behind).";
+const CHARACTER_REGISTRY = path.join(PROJECT_ROOT, "content", "characters", "hsk-ai-characters.json");
+export async function loadCharacters(ids) {
+  if (!ids.length) return [];
+  const registry = JSON.parse(await fs.readFile(CHARACTER_REGISTRY, "utf8"));
+  return ids.map((id) => {
+    const [characterId, mood = "idle"] = String(id).split(":");
+    const character = registry.characters.find((entry) => entry.id === characterId);
+    if (!character) throw new Error(`Unknown character "${characterId}"; use only content/characters/hsk-ai-characters.json.`);
+    if (!registry.moods.includes(mood)) throw new Error(`Unknown mood "${mood}" for ${characterId}.`);
+    return { ...character, mood, file: path.join("content", "characters", `${characterId}-${mood}.png`) };
+  });
+}
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 
 export function validateArtManifest(manifest) {
@@ -36,8 +49,9 @@ export function validateArtManifest(manifest) {
     names.add(asset.name);
     if (typeof asset.prompt !== "string" || asset.prompt.length < 30) throw new Error(asset.name + ": prompt is too short.");
     if (!["9:16", "1:1", "4:5", "16:9"].includes(asset.aspectRatio)) throw new Error(asset.name + ": unsupported aspect ratio.");
-    if (asset.character !== undefined && asset.character !== "aobao-panda")
-      throw new Error(asset.name + ": the only lesson character is aobao-panda (content/characters).");
+    if (asset.characters !== undefined && (!Array.isArray(asset.characters) || asset.characters.some((id) => !/^[a-z]+(:[a-z-]+)?$/.test(id))))
+      throw new Error(asset.name + ": characters are registry ids like \"panda\" or \"crane:celebrate\" (content/characters/hsk-ai-characters.json).");
+    if (asset.character !== undefined) throw new Error(asset.name + ": use \"characters\": [ids] from the HSK AI registry.");
     for (const reference of asset.references ?? [])
       if (!names.has(reference)) throw new Error(asset.name + ": a reference must be an earlier asset.");
     for (const [id, box] of Object.entries(asset.anchors ?? {})) {
@@ -49,14 +63,14 @@ export function validateArtManifest(manifest) {
   return manifest;
 }
 
-async function generate({ apiKey, model, prompt, aspectRatio, referencePngs }) {
+async function generate({ apiKey, model, prompt, aspectRatio, referencePngs, imageSize = "2K" }) {
   const content = [{ type: "text", text: prompt },
     ...referencePngs.map((png) => ({ type: "image_url", image_url: { url: "data:image/png;base64," + png.toString("base64") } }))];
   const response = await fetch(ENDPOINT, {
     method: "POST",
     headers: { Authorization: "Bearer " + apiKey, "Content-Type": "application/json" },
     body: JSON.stringify({ model, messages: [{ role: "user", content }], modalities: ["image", "text"],
-      image_config: { aspect_ratio: aspectRatio } }),
+      image_config: { aspect_ratio: aspectRatio, image_size: imageSize } }),
     signal: AbortSignal.timeout(180_000),
   });
   const data = await response.json().catch(() => ({}));
@@ -87,28 +101,33 @@ async function main() {
   let provenance = { episodeId, assets: {} };
   try { provenance = JSON.parse(await fs.readFile(provenancePath, "utf8")); } catch (error) { if (error?.code !== "ENOENT") throw error; }
   for (const asset of manifest.assets) {
-    const file = path.join(outDir, asset.name + ".png");
-    // The HSK AI panda is the only character: its canonical file is always
-    // the first reference image and its identity text is part of the prompt.
-    const character = asset.character ? JSON.parse(await fs.readFile(path.join(PROJECT_ROOT, "content", "characters", asset.character + ".json"), "utf8")) : null;
-    const prompt = `${manifest.style}\n\n${HUMAN_FACE_RULE}\n\n${character ? `CHARACTER (first reference image, keep exactly): ${character.identity}\n\n` : ""}${asset.prompt}`;
+    const file = path.join(outDir, asset.name + ".jpg");
+    // HSK AI characters only: each shown character's registry PNG is a
+    // reference image (in order) and its identity text is part of the prompt.
+    const characters = await loadCharacters(asset.characters ?? []);
+    const cast = characters.map((c, index) => `CHARACTER ${index + 1} (reference image ${index + 1}, keep exactly): ${c.identity}`).join("\n");
+    const prompt = `${manifest.style}\n\n${HUMAN_FACE_RULE}\n\n${cast ? cast + "\n\n" : ""}${asset.prompt}`;
     const exists = await fs.access(file).then(() => true, () => false);
     if (exists && !regenerate.has(asset.name)) {
-      console.log(`kept ${asset.name}.png (saved image is never regenerated without --regenerate)`);
+      console.log(`kept ${asset.name}.jpg (saved image is never regenerated without --regenerate)`);
       continue;
     }
     const referencePngs = [
-      ...(character ? [await fs.readFile(path.join(PROJECT_ROOT, character.reference))] : []),
-      ...await Promise.all((asset.references ?? []).map((name) => fs.readFile(path.join(outDir, name + ".png")))),
+      ...await Promise.all(characters.map((c) => fs.readFile(path.join(PROJECT_ROOT, c.file)))),
+      ...await Promise.all((asset.references ?? []).map((name) => fs.readFile(path.join(outDir, name + ".jpg")))),
     ];
     try {
       const result = await generate({ apiKey, model: manifest.model, prompt, aspectRatio: asset.aspectRatio, referencePngs });
-      await fs.writeFile(file, result.bytes);
-      provenance.assets[asset.name] = { file: asset.name + ".png", provider: "openrouter", model: manifest.model, format: result.format,
-        promptSha256: sha256(prompt), character: asset.character ?? null, references: asset.references ?? [], sha256: sha256(result.bytes),
+      // Stored as high-quality JPEG (2K art would be ~6 MB as PNG in git).
+      const rawFile = path.join(outDir, asset.name + ".raw." + (result.format === "jpeg" ? "jpg" : result.format));
+      await fs.writeFile(rawFile, result.bytes);
+      execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-nostdin", "-y", "-i", rawFile, "-q:v", "2", file]);
+      await fs.rm(rawFile, { force: true });
+      provenance.assets[asset.name] = { file: asset.name + ".jpg", provider: "openrouter", model: manifest.model, format: result.format,
+        promptSha256: sha256(prompt), characters: asset.characters ?? [], references: asset.references ?? [], sha256: sha256(result.bytes),
         generationId: result.id, usage: result.usage, generatedAt: new Date().toISOString() };
       await fs.writeFile(provenancePath, JSON.stringify(provenance, null, 2) + "\n");
-      console.log(`generated ${asset.name}.png (${result.bytes.length} bytes, cost ${result.usage?.cost ?? "unknown"})`);
+      console.log(`generated ${asset.name}.jpg (${result.bytes.length} bytes, cost ${result.usage?.cost ?? "unknown"})`);
     } catch (error) {
       console.error(`FAILED ${asset.name}: ${redactCredentials(error?.message ?? String(error))}`);
       process.exitCode = 1;

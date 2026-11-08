@@ -35,7 +35,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | Episode schema and invalidation | `content/EPISODE_SCHEMA.md` |
 | Declarative teaching-drawing payload and authoring procedure | `content/GRAPHIC_SCENES.md` |
 | Illustrated-glass lesson format, text roles, safe zone and subtitle placement | `content/EDITING_SPEC.md#illustrated-glass-lesson-format` |
-| The only lesson character (Aobao, the HSK AI panda) and its identity rules | `content/characters/aobao-panda.json` (+ `.png`) |
+| The only characters allowed in video frames (HSK AI cast: panda, dragon, crane, monkey, rabbit), their identity rules and exact app vectors | `content/characters/hsk-ai-characters.json` (+ rendered `content/characters/<id>-<mood>.png`) |
 | Per-lesson frame (lesson art) manifests; generated images and provenance | `content/lesson-art/<episode-id>.json`; `public/lesson-art/<episode-id>/` |
 | Runtime architecture, limitations and known technical gotchas | `PROJECT_MEMORY.md` |
 | Developer startup commands | `README.md` |
@@ -44,7 +44,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 
 ## Codex: lesson frames
 
-When Codex works on a lesson dated in the illustrated-glass format and has image-generation capacity, it generates the missing frames itself from `content/lesson-art/<episode-id>.json`, exactly as `content/WORKFLOW.md` step 2 describes (Aobao panda reference first, no visible human faces, text-free images, provenance recorded). It never redesigns the panda and never regenerates a saved image unasked.
+When Codex works on a lesson dated in the illustrated-glass format and has image-generation capacity, it generates the missing **background** frames itself from `content/lesson-art/<episode-id>.json`, exactly as `content/WORKFLOW.md` step 2 describes (text-free, no people, no characters baked in, provenance recorded). Characters are never generated: they are the HSK AI cast drawn from `content/characters/hsk-ai-characters.json`. Codex never invents a character and never regenerates a saved image unasked.
 
 ## Automatic rule categorization
 

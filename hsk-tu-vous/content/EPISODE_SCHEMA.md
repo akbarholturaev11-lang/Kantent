@@ -81,6 +81,7 @@ Required on every lesson beat from `lessonPresentation.illustratedFormatFromDate
 - `images`: lesson-art names from `content/lesson-art/<episode-id>.json` (files under `public/lesson-art/<episode-id>/`).
 - `anchors`: normalized `{x,y,w,h}` subject boxes measured on the image (`a`, `b`, …); `focus` names the subject the camera pushes to.
 - `overlay`: `rise`, `marks`, `link`, `cross`, `drop`, `compare` or `adjective`.
+- `cast`: HSK AI characters drawn from the registry on top of the art: `{id, mood, x, y, h, card?}` — `id` from `content/characters/hsk-ai-characters.json`, `mood` from its moods, `x` centre, `y` feet and `h` height normalized to the image (`card` 0/1 in a pair).
 - `visual.title` is the headline (teaching step, no Hanzi, not the meaning, no word spoken at the cue); `visual.hanzi`/`pinyin`/`meaning` fill the glass chip.
 
 ## Platform CTA variants

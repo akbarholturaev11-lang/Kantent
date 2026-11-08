@@ -212,22 +212,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "proud",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "overlay": "rise"
             }
           },
@@ -382,22 +398,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "idle",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "overlay": "link"
             }
           },
@@ -524,22 +556,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
-              }
+              },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "idle",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ]
             }
           },
           "explains": "hook: Второй вариант вопроса — 很, без линии сравнения. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
@@ -689,22 +737,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
-              }
+              },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "idle",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ]
             }
           },
           "explains": "answer: Показать двух людей, которых сравниваем. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
@@ -858,22 +922,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "idle",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "overlay": "marks"
             }
           },
@@ -1041,22 +1121,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "proud",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "overlay": "rise"
             }
           },
@@ -1212,22 +1308,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "focus": "a"
             }
           },
@@ -1382,22 +1494,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "idle",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "overlay": "link"
             }
           },
@@ -1553,22 +1681,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "idle",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "focus": "b"
             }
           },
@@ -1736,22 +1880,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "proud",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "overlay": "rise"
             }
           },
@@ -1930,22 +2090,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "idle",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "overlay": "link"
             }
           },
@@ -2169,22 +2345,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "idle",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "dismissive",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "overlay": "cross"
             }
           },
@@ -2339,22 +2531,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "idle",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "overlay": "marks"
             }
           },
@@ -2522,22 +2730,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "proud",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "overlay": "rise"
             }
           },
@@ -2688,12 +2912,30 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "panda-summer",
-                "panda-winter"
+                "hutong-summer",
+                "hutong-winter"
               ],
               "icons": [
                 "icon-warm",
                 "icon-cold"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 0
+                },
+                {
+                  "id": "panda",
+                  "mood": "wrong",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 1
+                }
               ]
             }
           },
@@ -2847,12 +3089,30 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "panda-summer",
-                "panda-winter"
+                "hutong-summer",
+                "hutong-winter"
               ],
               "icons": [
                 "icon-warm",
                 "icon-cold"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 0
+                },
+                {
+                  "id": "panda",
+                  "mood": "wrong",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 1
+                }
               ],
               "overlay": "drop"
             }
@@ -3007,12 +3267,30 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "panda-summer",
-                "panda-winter"
+                "hutong-summer",
+                "hutong-winter"
               ],
               "icons": [
                 "icon-warm",
                 "icon-cold"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 0
+                },
+                {
+                  "id": "panda",
+                  "mood": "wrong",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 1
+                }
               ],
               "overlay": "compare"
             }
@@ -3196,12 +3474,30 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "panda-summer",
-                "panda-winter"
+                "hutong-summer",
+                "hutong-winter"
               ],
               "icons": [
                 "icon-warm",
                 "icon-cold"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 0
+                },
+                {
+                  "id": "panda",
+                  "mood": "wrong",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 1
+                }
               ],
               "focus": "right"
             }
@@ -3385,12 +3681,30 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "panda-summer",
-                "panda-winter"
+                "hutong-summer",
+                "hutong-winter"
               ],
               "icons": [
                 "icon-warm",
                 "icon-cold"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 0
+                },
+                {
+                  "id": "panda",
+                  "mood": "wrong",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 1
+                }
               ],
               "focus": "left"
             }
@@ -3545,12 +3859,30 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "panda-summer",
-                "panda-winter"
+                "hutong-summer",
+                "hutong-winter"
               ],
               "icons": [
                 "icon-warm",
                 "icon-cold"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 0
+                },
+                {
+                  "id": "panda",
+                  "mood": "wrong",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 1
+                }
               ],
               "overlay": "drop"
             }
@@ -3730,22 +4062,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "idle",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "overlay": "marks"
             }
           },
@@ -3872,22 +4220,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
-              }
+              },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "idle",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ]
             }
           },
           "explains": "recall: Вопрос: как сказать по-китайски. Учебный смысл: A 比 B + признак — «он выше меня», «сегодня холоднее, чем вчера»."
@@ -4054,22 +4418,38 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "panda-and-friend"
+                "hutong-street"
               ],
               "anchors": {
                 "a": {
                   "x": 0.11,
-                  "y": 0.385,
-                  "w": 0.36,
-                  "h": 0.6
+                  "y": 0.47,
+                  "w": 0.5,
+                  "h": 0.46
                 },
                 "b": {
-                  "x": 0.55,
-                  "y": 0.645,
-                  "w": 0.36,
-                  "h": 0.295
+                  "x": 0.59,
+                  "y": 0.69,
+                  "w": 0.3,
+                  "h": 0.24
                 }
               },
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "proud",
+                  "x": 0.36,
+                  "y": 0.93,
+                  "h": 0.46
+                },
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.74,
+                  "y": 0.93,
+                  "h": 0.24
+                }
+              ],
               "overlay": "rise"
             }
           },
@@ -4196,12 +4576,30 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "panda-summer",
-                "panda-winter"
+                "hutong-summer",
+                "hutong-winter"
               ],
               "icons": [
                 "icon-warm",
                 "icon-cold"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 0
+                },
+                {
+                  "id": "panda",
+                  "mood": "wrong",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 1
+                }
               ]
             }
           },
@@ -4355,12 +4753,30 @@
             "illustration": {
               "layout": "pair",
               "images": [
-                "panda-summer",
-                "panda-winter"
+                "hutong-summer",
+                "hutong-winter"
               ],
               "icons": [
                 "icon-warm",
                 "icon-cold"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 0
+                },
+                {
+                  "id": "panda",
+                  "mood": "wrong",
+                  "x": 0.5,
+                  "y": 0.94,
+                  "h": 0.56,
+                  "card": 1
+                }
               ],
               "overlay": "drop"
             }
