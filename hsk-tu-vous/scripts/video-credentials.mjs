@@ -167,7 +167,7 @@ export function telegramNewsRoute(env = process.env) {
   const telegram = PUBLICATION_DESTINATIONS.otherDestinations?.telegram;
   if (telegram?.language !== "tg" || telegram?.videoPublishingAuthorized !== false ||
       telegram?.cadenceDays !== 3 || !/^[a-f0-9]{24}$/.test(telegram?.verifiedAccountId ?? "") ||
-      telegram?.credentialGroup !== "tiktok-telegram" || telegram?.account !== "@aibotsakbar")
+      telegram?.credentialGroup !== "tiktok-telegram" || telegram?.account !== "@hskaiapp")
     throw Error("Telegram TJ text-news route differs from owner's canonical rules.");
   const variable = "ZERNIO_TG_TELEGRAM_ACCOUNT_ID";
   const configured = typeof env[variable] === "string" ? env[variable].trim() : "";
@@ -175,7 +175,7 @@ export function telegramNewsRoute(env = process.env) {
     throw Error("Telegram account ID conflicts with verified route.");
   const secretName = ZERNIO_SECRET_NAMES["tiktok-telegram"].find(name => env[name]?.trim());
   if (!secretName) throw Error("Missing TikTok/Telegram Zernio connection key.");
-  return {accountId:telegram.verifiedAccountId,expectedUsername:"aibotsakbar",
+  return {accountId:telegram.verifiedAccountId,expectedUsername:telegram.account.slice(1),
     platform:"telegram",language:"tg",group:"tiktok-telegram",secretName,secret:env[secretName].trim()};
 }
 
