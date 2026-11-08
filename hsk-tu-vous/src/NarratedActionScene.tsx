@@ -104,7 +104,73 @@ const ModelStage:React.FC<{model:ActionModel;kind:string;frame:number;compact?:b
   {kind==="ordinal"&&<OrdinalStage model={model} frame={frame} compact={compact}/>}
 </>;
 
-export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat[]}>=({frame,beats})=>{
+const G=visual.referenceGlass;
+type Tone={glow:string;mid:string;base:string;accent:string};
+export const referenceTone=(sceneIndex:number):Tone=>{
+  const order=G.toneOrder;
+  const tones=G.tones as Record<string,Tone>;
+  return tones[order[sceneIndex%order.length]];
+};
+
+// Film grain like the reference reel; deterministic per frame.
+const Grain:React.FC<{frame:number}>=({frame})=><svg width="100%" height="100%" style={{position:"absolute",inset:0,opacity:G.grainOpacity,mixBlendMode:"overlay"}}>
+  <filter id="reference-grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed={Math.floor(frame/2)%97}/><feColorMatrix type="saturate" values="0"/></filter>
+  <rect width="100%" height="100%" filter="url(#reference-grain)"/>
+</svg>;
+
+const glassChip:React.CSSProperties={background:"rgba(255,255,255,.13)",border:"1.5px solid rgba(255,255,255,.24)",
+  boxShadow:"0 18px 50px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.25)",backdropFilter:"blur(18px)",borderRadius:999};
+
+const BrandChip:React.FC=()=><div style={{position:"absolute",top:visual.motion.brandTopInsetPx-40,left:0,right:0,display:"flex",justifyContent:"center"}}>
+  <div style={{...glassChip,display:"flex",alignItems:"center",gap:12,padding:"10px 22px 10px 12px",fontFamily:G.fontFamily,fontSize:28,fontWeight:700,color:"#FFFFFF"}}>
+    <Img src={staticFile("branding/hsk-ai-logo-1024.png")} style={{width:40,height:40,borderRadius:12}}/>HSK <span style={{color:C.brandGold}}>AI</span>
+  </div>
+</div>;
+
+/**
+ * Reference-glass lesson frame (owner decision 2026-11-09): saturated
+ * full-bleed brand gradient per scene, film grain, a short bold headline,
+ * the soft-3D drawing and one glass chip with the Hanzi, pinyin and meaning.
+ */
+const ReferenceGlassScene:React.FC<{frame:number;beats:ResolvedMotionBeat[];tone:Tone}>=({frame,beats,tone})=>{
+  const active=activeNarratedBeat(beats,frame);
+  const background=`radial-gradient(130% 75% at 50% -5%, ${tone.glow} 0%, ${tone.mid} 42%, ${tone.base} 80%)`;
+  const local=active?Math.max(0,frame-active.localFrame):0;
+  const entry=interpolate(local,[0,G.beatEntryFrames],[0,1],easing);
+  const model=active?.visual;
+  const words=(model?.title??"").split(/\s+/).filter(Boolean);
+  return <AbsoluteFill style={{background,color:"#FFFFFF",fontFamily:G.fontFamily}}>
+    <Grain frame={frame}/>
+    <BrandChip/>
+    {active&&model&&<>
+      <div data-reference-headline style={{position:"absolute",top:G.headlineTopPx,left:90,right:90,textAlign:"center",
+        fontSize:G.headlineFontPx,fontWeight:750,lineHeight:1.08,letterSpacing:-.5,textShadow:"0 6px 30px rgba(0,0,0,.35)"}}>
+        {words.map((word,index)=>{
+          const p=interpolate(local,[index*G.wordStaggerFrames,index*G.wordStaggerFrames+G.wordEntryFrames],[0,1],easing);
+          return <span key={index} style={{display:"inline-block",marginRight:16,opacity:p,filter:`blur(${(1-p)*10}px)`,translate:`0 ${(1-p)*14}px`}}>{word}</span>;
+        })}
+      </div>
+      <div data-action-id={active.id} data-action-kind={active.kind} style={{position:"absolute",top:G.graphicTopPx,left:70,right:70,height:G.graphicHeightPx,
+        display:"flex",alignItems:"center",justifyContent:"center",opacity:entry,scale:.94+.06*entry,filter:`blur(${(1-entry)*12}px)`}}>
+        {active.kind==="graphic"&&model.graphic
+          ?<GraphicScene plan={model.graphic} frame={local} height={G.graphicHeightPx} look="glass"/>
+          :<ModelStage model={model} kind={active.kind} frame={local}/>}
+      </div>
+      <div style={{position:"absolute",top:G.chipTopPx,left:0,right:0,display:"flex",justifyContent:"center"}}>
+        <div data-reference-chip style={{...glassChip,display:"flex",alignItems:"baseline",justifyContent:"center",flexWrap:"wrap",columnGap:20,rowGap:4,
+          maxWidth:960,padding:"16px 34px",borderRadius:48,
+          opacity:interpolate(local,[3,3+G.wordEntryFrames],[0,1],easing),scale:.9+.1*interpolate(local,[3,3+G.wordEntryFrames+3],[0,1],easing)}}>
+          <span style={{fontFamily:G.hanziFontFamily,fontSize:G.chipHanziFontPx,fontWeight:700}}>{model.hanzi}</span>
+          <span style={{fontSize:G.chipPinyinFontPx,fontWeight:650,color:C.brandGold}}>{model.pinyin}</span>
+          <span style={{fontSize:G.chipMeaningFontPx,fontWeight:500,color:"rgba(255,255,255,.78)"}}>{model.meaning}</span>
+        </div>
+      </div>
+    </>}
+  </AbsoluteFill>;
+};
+
+export const NarratedActionScene:React.FC<{frame:number;beats:ResolvedMotionBeat[];tone?:Tone}>=({frame,beats,tone})=>{
+  if(tone)return <ReferenceGlassScene frame={frame} beats={beats} tone={tone}/>;
   const active=activeNarratedBeat(beats,frame);
   if(!active)return <AbsoluteFill style={{background:`radial-gradient(ellipse at 50% 49%, ${C.brandTeal}22, transparent 65%), ${P.background}`}}>
     <div style={{position:"absolute",top:visual.motion.brandTopInsetPx,left:0,right:0,display:"flex",alignItems:"center",justifyContent:"center",gap:14,fontSize:30,fontWeight:900}}><Img src={staticFile("branding/hsk-ai-logo-1024.png")} style={{width:42,height:42,borderRadius:12}}/>HSK <span style={{color:C.brandGold}}>AI</span></div>

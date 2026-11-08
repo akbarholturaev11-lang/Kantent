@@ -283,5 +283,60 @@
     "motion": "Preserve object continuity between beats. Move, reveal, crop or reframe only to explain the spoken action; transitions follow the actual voice cues. No decorative motion loops, busy collages, flashing backgrounds or title-only slides.",
     "text": "One narration-synced text layer. No parallel headline, duplicate sentence or extra teaching stack. Text intrinsic to a genuine captured product UI is source evidence, not another authored headline.",
     "background": "Choose a quiet light or dark brand background only after checking the hero against it at phone size. Put pale objects on a dark background and dark objects on a light background; a pale cup/face/object on ivory or white is a failed pairing. Use an existing dark token for pale heroes, and retain a clearly visible red, teal or gold accent when it supports the story. Avoid pale-on-pale or mostly empty washed-out frames. Do not rotate colors on a timer or copy a reference palette."
+  },
+  "referenceGlass": {
+    "styleId": "reference-glass-v1",
+    "ownerDecision": "2026-11-09: the owner disliked the flat lesson look (fonts, frames, effects, colours) and asked to follow the visual language of the reference reel they supplied, in HSK AI brand colours. Voice and CTA are unchanged. The style is copied (palette logic, glass chips, kinetic type, grain, depth), never the reference's people, logos or assets.",
+    "scope": "Lesson scenes with motionDesignStyle explain-actions-v1 (not CTA).",
+    "fontFamily": "\"SF Pro Display\", system-ui, -apple-system, \"Segoe UI\", Inter, \"Noto Sans\", Arial, sans-serif",
+    "hanziFontFamily": "\"PingFang SC\", \"Hiragino Sans GB\", \"Noto Sans CJK SC\", sans-serif",
+    "toneOrder": [
+      "ink",
+      "teal",
+      "red",
+      "gold",
+      "ink"
+    ],
+    "tones": {
+      "ink": {
+        "glow": "#3A3A3A",
+        "mid": "#151515",
+        "base": "#050505",
+        "accent": "#E9A916"
+      },
+      "teal": {
+        "glow": "#26E07F",
+        "mid": "#118A4B",
+        "base": "#03150B",
+        "accent": "#FFFFFF"
+      },
+      "red": {
+        "glow": "#FF3B2F",
+        "mid": "#B3170F",
+        "base": "#1C0303",
+        "accent": "#FFD36A"
+      },
+      "gold": {
+        "glow": "#F08A12",
+        "mid": "#7A3A06",
+        "base": "#070402",
+        "accent": "#FFFFFF"
+      }
+    },
+    "grainOpacity": 0.09,
+    "headlineTopPx": 470,
+    "headlineFontPx": 66,
+    "graphicTopPx": 620,
+    "graphicHeightPx": 560,
+    "chipTopPx": 1215,
+    "chipHanziFontPx": 64,
+    "chipPinyinFontPx": 34,
+    "chipMeaningFontPx": 32,
+    "subtitleTopPx": 1400,
+    "subtitleFontPx": 52,
+    "subtitleWeight": 650,
+    "wordStaggerFrames": 2,
+    "wordEntryFrames": 6,
+    "beatEntryFrames": 9
   }
 }
