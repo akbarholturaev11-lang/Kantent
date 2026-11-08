@@ -32,7 +32,7 @@
       "kind": "hook",
       "headline": "Ӯ аз ман қадбаландтар: 比 ё 很?",
       "durationSec": 5,
-      "narration": "Ӯ аз ман қадбаландтар аст. Ба чинӣ чӣ мегӯӣ: бо 比 ё бо 很? Ду одамро муқоиса кун.",
+      "narration": "Ӯ аз ман қадбаландтар аст. Ба чинӣ чӣ мегӯӣ: бо 比 ё бо 很?",
       "cards": [
         {
           "hanzi": "比",
@@ -316,9 +316,31 @@
             }
           },
           "explains": "Тағйири намоён барои маънои нав: Дар ибораи одии сифатӣ 很 омӯхтааст, аммо дар ин муқоиса истифода намешавад."
+        }
+      ]
+    },
+    {
+      "id": "answer",
+      "kind": "example",
+      "headline": "Дуруст: 他比我高",
+      "durationSec": 7,
+      "narration": "Ду одамро муқоиса кун. Дуруст: 他比我高。 Ӯ аз ман қадбаландтар аст. Аввал 他, баъд 比, сипас 我 ва сифати 高.",
+      "cards": [
+        {
+          "hanzi": "比",
+          "pinyin": "bǐ",
+          "meaning": "муқоиса"
         },
         {
-          "id": "hook-action-3",
+          "hanzi": "他比我高。",
+          "pinyin": "Tā bǐ wǒ gāo.",
+          "meaning": "Ӯ аз ман баландтар аст."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "answer-action-0",
           "kind": "graphic",
           "cueText": "Ду одам",
           "visual": {
@@ -478,29 +500,7 @@
             }
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Сохти A 比 B + сифатро дуруст бигӯяд."
-        }
-      ]
-    },
-    {
-      "id": "answer",
-      "kind": "example",
-      "headline": "Дуруст: 他比我高",
-      "durationSec": 7,
-      "narration": "Дуруст: 他比我高。 Ӯ аз ман қадбаландтар аст. Аввал 他, баъд 比, сипас 我 ва сифати 高.",
-      "cards": [
-        {
-          "hanzi": "比",
-          "pinyin": "bǐ",
-          "meaning": "муқоиса"
         },
-        {
-          "hanzi": "他比我高。",
-          "pinyin": "Tā bǐ wǒ gāo.",
-          "meaning": "Ӯ аз ман баландтар аст."
-        }
-      ],
-      "captionStyleId": "highlight",
-      "motionBeats": [
         {
           "id": "answer-action-1",
           "kind": "graphic",
@@ -2363,7 +2363,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "bi-comparison-height-20261104",
-    "sourceHash": "54ad9d695000b3c25f5982d2db01c0036169be6e09c2f33cc911b217f34bb7fe",
+    "sourceHash": "5d5323c39553635078a079b465fa3e572dc705ed702195d607300de704cbd97e",
     "authoredOn": "2026-10-28",
     "status": "draft-awaiting-audio-review"
   }
