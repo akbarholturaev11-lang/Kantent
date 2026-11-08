@@ -17,11 +17,6 @@ import {episodeContentHash, reviewDir, safeId} from "./lib.mjs";
 
 const scriptPath=fileURLToPath(import.meta.url);
 const FPS=30;
-const allowedKinds=new Set(["graphic","question","two-meanings","compare-preview","example",
-  "purchase","particle","verb-focus","completed","intention","stop","reconsider",
-  "end-position","changed-state","completed-reminder","changed-reminder",
-  "not-past","recall","end-answer","takeaway","positions","meaning","quantity",
-  "numeral","ordinal","phrase","comparison","choice","grouping"]);
 
 function finiteNonnegative(value) {
   return typeof value==="number" && Number.isFinite(value) && value>=0;
@@ -105,7 +100,7 @@ function extractFrame(video,frame,destination,width,height) {
 async function readJson(file) {
   return JSON.parse(await fs.readFile(file,"utf8"));
 }
-function contactSheet(plan,output) {
+function contactSheet(plan) {
   const cards=plan.samples.map((s,index)=>{
     const frames=[["before",s.beforeFrame],["cue",s.cueFrame],["settled",s.settledFrame]];
     return `<section><h2>${index+1}. ${escapeHtml(s.sceneId)} / ${escapeHtml(s.beatId)}</h2>
@@ -151,15 +146,22 @@ export async function reviewExistingVideo({episodeFile,timelineFile,videoFile,st
     for(const [kind,index] of [["before",sample.beforeFrame],["cue",sample.cueFrame],["settled",sample.settledFrame]]){
       if(index===null)continue;
       const prefix=`${sample.sceneId}-${sample.beatId}-${kind}`;
-      extractFrame(videoFile,index,path.join(outputDir,`${prefix}-full.png`),1080,1920);
-      extractFrame(videoFile,index,path.join(outputDir,`${prefix}-phone.png`),270,480);
+      const full=path.join(outputDir,`${prefix}-full.png`);
+      const phone=path.join(outputDir,`${prefix}-phone.png`);
+      extractFrame(videoFile,index,full,1080,1920);
+      extractFrame(videoFile,index,phone,270,480);
+      // Some ffmpeg builds can return success but emit no frame when -select
+      // has no match. Never accept an incomplete contact sheet as evidence.
+      for(const file of [full,phone]){
+        if((await fs.stat(file)).size===0)throw Error("Empty decoded proof frame: "+file);
+      }
     }
   }
   const evidence={...plan,videoSha256:digest,sourceEpisodeHash:status.contentHash,
     generatedAt:new Date().toISOString(),videoFile:path.basename(videoFile),
     verdict:"FRAME_SAMPLES_GENERATED_NOT_VISUALLY_APPROVED"};
   await fs.writeFile(path.join(outputDir,"manifest.json"),JSON.stringify(evidence,null,2)+"\n");
-  await fs.writeFile(path.join(outputDir,"index.html"),contactSheet(plan,outputDir));
+  await fs.writeFile(path.join(outputDir,"index.html"),contactSheet(plan));
   return evidence;
 }
 
