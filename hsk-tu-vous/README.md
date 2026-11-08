@@ -12,6 +12,20 @@ New standalone advertisements follow [PROMO_WORKFLOW.md](content/PROMO_WORKFLOW.
 
 To explicitly use the independent secondary direct-Gemini route, set `HSK_AI_VOICE_API_PROVIDER=gemini-direct`, `HSK_AI_ALLOW_GEMINI_API=true`, and a valid `GEMINI_API_KEY`. There is **no automatic fallback** or unapproved provider/voice change after an audio attempt. For GitHub Actions, store `OPENROUTER_API_KEY` in repository Actions Secrets and optionally set Actions Variable `HSK_AI_VOICE_API_PROVIDER` to `gemini-direct` only when switching manually.
 
+## Read-only exact MP4/voice-cue frame review
+
+After an **existing** RU/TG episode has a genuine local imported-audio review package, run:
+
+```bash
+npm run content:review-frames -- <episode-id> ru instagram
+npm run content:review-frames -- <episode-id> tg youtube
+npm run content:review-frames -- <episode-id> tg facebook
+```
+
+The command does **not** generate TTS or publish. It validates the exact platform's stored MP4 SHA-256 and its CTA-specific episode/content hashes, the shared compiled voice timeline, H264/AAC codec, video/audio duration and encoded frame count. It extracts spoken-cue **before / onset / settled** frames, unanchored semantic static shots, plus each platform's CTA boundary and last encoded frame at 1080×1920 and phone-size 270×480. An immutable-by-default local `index.html` and `manifest.json` are written under the platform's `review/` package. Exact images are decoded in two FFmpeg passes.
+
+**This is evidence for manual visual/voice review, never automated semantic or owner approval.** TikTok uses a separate spoken CTA and is intentionally excluded until its own independently verified timeline and per-platform proof are implemented. New media, approval and publication remain subject to the rules in `AI_RULES.md` and `content/WORKFLOW.md`. Engineering progress, dependencies and blockers are in [WORK_CONTEXT.md](docs/audits/WORK_CONTEXT.md).
+
 ## Start locally
 
 Requires Node.js 20+.
