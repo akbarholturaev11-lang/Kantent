@@ -35,6 +35,15 @@ export function isValidWavBuffer(bytes) {
   return hasFormat && hasAudio;
 }
 
+/** Verify a saved speech chunk against the exact checkpoint record.
+ * This is deliberately stricter than WAV structural validation alone. */
+export function matchesRecordedWavChunk(fileName, bytes, recorded, validateWav = isValidWavBuffer) {
+  return recorded?.file === fileName &&
+    /^[a-f0-9]{64}$/.test(recorded?.sha256 ?? "") &&
+    validateWav(bytes) &&
+    sha256(bytes) === recorded.sha256;
+}
+
 export async function atomicWriteFile(filePath, contents) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
   const tempPath = filePath + ".tmp-" + randomUUID();
@@ -116,10 +125,8 @@ export async function findReusableVoiceCheckpoint({
         throw error;
       }
       const recorded = chunks.find((chunk) => chunk.file === fileName);
-      // A WAV header is only structural validation. Never auto-resume speech
-      // without a matching persisted SHA-256 binding to its checkpoint.
-      if (!recorded || !/^[a-f0-9]{64}$/.test(recorded.sha256 ?? "") ||
-          !validateWav(bytes) || sha256(bytes) !== recorded.sha256)
+      // A WAV header alone does not prove the original voice identity.
+      if (!matchesRecordedWavChunk(fileName, bytes, recorded, validateWav))
         continue;
       validChunkCount += 1;
     }
