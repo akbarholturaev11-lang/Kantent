@@ -92,6 +92,17 @@ test("an explicit --new-take rejects every older take, for both resume and the g
   assert.deepEqual(await findUnresumableSavedTakes({ productionRoot: dir, expected, profile }), []);
 });
 
+test("the --new-take take itself is a saved paid take; only older takes are behind its barrier", async () => {
+  // Real 2026-11-08: the imported RU one-take had newTakeRequested (A/B);
+  // after the working copy was regenerated the guard skipped it and a
+  // second TTS take was bought.
+  const dir = await root();
+  await saveTake(dir, "2026-11-02T00-00-00-000Z", take({ status: "imported" }));
+  await saveTake(dir, "2026-11-03T00-00-00-000Z", take({ status: "imported", newTakeRequested: true }));
+  assert.deepEqual(await findUnresumableSavedTakes({ productionRoot: dir, expected, profile }),
+    [{ folderName: "2026-11-03T00-00-00-000Z", status: "imported", reason: "imported take; working copy no longer references it" }]);
+});
+
 test("V-12: real-like speech passes with recorded metrics; silent or near-silent audio is rejected", () => {
   const ok = measureWavQuality(wav(speechLike(1)));
   assert.equal(ok.unusable, false);

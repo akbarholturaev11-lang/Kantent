@@ -182,21 +182,31 @@ export async function findUnresumableSavedTakes({ productionRoot, expected, prof
       (saved.platform ?? null) === (expected.platform ?? null) &&
       saved.narrationTextHash === expected.narrationTextHash;
     if (!sameNarration) continue;
-    if (saved.newTakeRequested === true) break;
-    if (saved.sampleOnly === true || saved.status === "ready-for-owner-audition") continue;
+    // The take bought with an explicit --new-take is itself a saved paid
+    // take (it is listed); only OLDER takes behind it are rejected. Real
+    // 2026-11-08: the imported RU one-take was a --new-take take, the guard
+    // skipped it as its own barrier and a second TTS take was bought.
+    const barrier = saved.newTakeRequested === true;
+    if (saved.sampleOnly === true || saved.status === "ready-for-owner-audition") {
+      if (barrier) break;
+      continue;
+    }
+    let sameVoice = true;
     try {
       assertReusableVoiceMetadata(saved, profile);
     } catch {
-      continue; // another voice/model/locale: not the same paid take
+      sameVoice = false; // another voice/model/locale: not the same paid take
     }
-    const files = await fs.readdir(folder);
-    if (!files.some((name) => /^voice(?:-part-\d{3})?\.wav$/.test(name))) continue;
-    const reason = saved.status === "imported" ? "imported take; working copy no longer references it"
-      : (saved.apiTransport ?? "gemini-direct") !== expected.apiTransport ? "saved with another transport"
-      : (saved.ttsGenerationMode ?? "scene") !== expected.ttsGenerationMode ||
-        saved.ttsChunkCount !== expected.ttsChunkCount ? "saved with another chunk plan"
-      : "no verifiable per-chunk SHA-256";
-    found.push({ folderName, status: saved.status ?? null, reason });
+    const files = sameVoice ? await fs.readdir(folder) : [];
+    if (files.some((name) => /^voice(?:-part-\d{3})?\.wav$/.test(name))) {
+      const reason = saved.status === "imported" ? "imported take; working copy no longer references it"
+        : (saved.apiTransport ?? "gemini-direct") !== expected.apiTransport ? "saved with another transport"
+        : (saved.ttsGenerationMode ?? "scene") !== expected.ttsGenerationMode ||
+          saved.ttsChunkCount !== expected.ttsChunkCount ? "saved with another chunk plan"
+        : "no verifiable per-chunk SHA-256";
+      found.push({ folderName, status: saved.status ?? null, reason });
+    }
+    if (barrier) break;
   }
   return found;
 }
