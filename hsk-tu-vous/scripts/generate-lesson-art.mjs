@@ -104,7 +104,7 @@ async function main() {
     try {
       const result = await generate({ apiKey, model: manifest.model, prompt, aspectRatio: asset.aspectRatio, referencePngs });
       await fs.writeFile(file, result.bytes);
-      provenance.assets[asset.name] = { file: asset.name + ".png", model: manifest.model, format: result.format,
+      provenance.assets[asset.name] = { file: asset.name + ".png", provider: "openrouter", model: manifest.model, format: result.format,
         promptSha256: sha256(prompt), character: asset.character ?? null, references: asset.references ?? [], sha256: sha256(result.bytes),
         generationId: result.id, usage: result.usage, generatedAt: new Date().toISOString() };
       await fs.writeFile(provenancePath, JSON.stringify(provenance, null, 2) + "\n");

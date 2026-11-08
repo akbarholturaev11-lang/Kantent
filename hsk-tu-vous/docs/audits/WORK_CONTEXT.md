@@ -165,6 +165,10 @@ Owner listened to the RU/TG one-take vs scene A/B and chose **one take per langu
 
 **State:** RU one-take `review/…/gemini-production/2026-11-08T07-51-00-414Z` (the take the owner listened to) has all 125 tokens verified and is imported (57.0 s). RU render is blocked by the visual-hold rule: `weather` 7.50 s and `recall` 7.41 s without a visual change (max 6 s) — needs meaning-linked motion beats (content authoring, then CTA v3). TG one-take: Direct daily STT quota spent; OpenRouter evidence cached; resume after the quota reset.
 
+## 2026-11-09 — illustrated-glass lesson format (owner-approved)
+
+After several owner-reviewed test renders of `bi-comparison-height-20261104` (RU), the owner approved the format modelled on their reference reels: generated text-free lesson art, Aobao the HSK AI panda as the only character, no visible human faces, camera and overlays on exact cues, three non-repeating text roles, safe-zone text with bottom-first adaptive subtitles. Rules: `content/EDITING_SPEC.md#illustrated-glass-lesson-format`; mandatory from `lessonPresentation.illustratedFormatFromDate` (2026-11-10). Lesson art cost so far: $0.75 (OpenRouter); Codex is the intended free generator but its local config currently points to an Ollama catalog the installed CLI cannot parse. TG render waits for its one-take STT (Gemini daily quota).
+
 ## Next tasks / blockers — BUGS ONLY
 
 1. Check latest full CI on PR #59 (including consistency and semantic-foundation). Investigate any failures in the exact changed SHA before proposing a merge.

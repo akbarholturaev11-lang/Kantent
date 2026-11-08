@@ -53,3 +53,13 @@ test("normal dated loader selects the default and preserves an existing authored
   saved.audioSrc = "generated/already-reviewed.mp3";
   assert.equal(synchronizeAutoStoryboard(saved, planned, {stage: "rendered-pending-owner-approval"}), saved);
 });
+
+test("from its date the illustrated-glass format is required for every lesson beat", () => {
+  // The pilot plan predates the visible-state gate; isolate the new rule.
+  const rule = {...policy, visibleStateValidationFromDate: "2099-12-31"};
+  const draft = applyLessonPresentationDefault({...source, date: policy.illustratedFormatFromDate}, rule);
+  assert.throws(() => validateLessonPresentation(draft, rule), /illustrated-glass lesson format needs visual\.illustration/);
+  const before = applyLessonPresentationDefault({...source, date: "2026-11-09"}, rule);
+  assert.equal(validateLessonPresentation(before, rule).actionCount, 23, "earlier lessons are unchanged");
+  assert.throws(() => validateLessonPresentation(draft, {...rule, illustratedFormat: "other"}), /illustrated format/);
+});
