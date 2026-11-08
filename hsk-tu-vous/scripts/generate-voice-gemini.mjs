@@ -4,7 +4,7 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
   atomicWriteFile, atomicWriteJson, findReusableVoiceCheckpoint,
-  isValidWavBuffer, sha256,
+  isValidWavBuffer, matchesRecordedWavChunk, sha256,
 } from "./voice-checkpoint.mjs";
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
@@ -1168,10 +1168,14 @@ try {
     } catch (error) {
       if (error?.code !== "ENOENT") throw error;
     }
-    const recordedHashMatches = !recordedChunk?.sha256 ||
-      (chunkBytes && sha256(chunkBytes) === recordedChunk.sha256);
-    if (!chunkBytes || !isValidWavBuffer(chunkBytes) || !recordedHashMatches) {
-      await fs.rm(chunkPath, { force: true });
+    if (chunkBytes && !matchesRecordedWavChunk(chunkFile, chunkBytes, recordedChunk)) {
+      // A stale, altered or hashless WAV must never be passed off as a
+      // verified first take. Preserve it for diagnosis; no paid TTS retry.
+      throw new Error(
+        `Saved TTS WAV chunk ${chunkFile} failed SHA-256 or format verification; original file preserved. Manual review required.`,
+      );
+    }
+    if (!chunkBytes) {
       const generated = await generateTtsWav(config, chunk.text);
       if (!isValidWavBuffer(generated))
         throw new Error(`TTS chunk ${index + 1} is not a complete RIFF/WAVE audio file.`);
