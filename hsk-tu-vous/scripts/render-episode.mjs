@@ -19,6 +19,7 @@ import { groupTimedCaptions } from "./caption-utils.mjs";
 import { buildActionCaptionScenes, validateActionSubtitlePages } from "./action-text-layout.mjs";
 import { assertImportedAudioHash } from "./voice-import-state.mjs";
 import { sha256 } from "./voice-checkpoint.mjs";
+import { runSfxPreparation } from "./render-sfx-step.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import {
   getEpisode,
@@ -121,16 +122,17 @@ await writeStatus(id, {
   updatedAt: new Date().toISOString(),
 });
 
-const sfxResult = spawnSync(
-  process.execPath,
-  [path.join(PROJECT_ROOT, "scripts", "generate-sfx.mjs")],
-  { cwd: PROJECT_ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
-);
-if (sfxResult.error) throw sfxResult.error;
-if (sfxResult.status !== 0)
-  throw new Error(
-    `Не удалось подготовить звуковые эффекты: ${sfxResult.stderr || sfxResult.stdout}`,
-  );
+await runSfxPreparation({
+  execute: () => spawnSync(
+    process.execPath,
+    [path.join(PROJECT_ROOT, "scripts", "generate-sfx.mjs")],
+    {cwd:PROJECT_ROOT,encoding:"utf8",stdio:["ignore","pipe","pipe"]},
+  ),
+  onFailure: async (error) => writeStatus(id,{
+    stage:"render-failed",sourceRevision,
+    updatedAt:new Date().toISOString(),error:error.message,
+  }),
+});
 
 const paths = Object.fromEntries(
   Object.keys(episodes).map((platform) => [
