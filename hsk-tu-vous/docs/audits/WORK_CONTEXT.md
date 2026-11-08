@@ -1,6 +1,6 @@
 # WORK_CONTEXT.md — Kantent engineering continuation
 
-**Updated:** 2026-11-08 (UTC), after successful decoded-MP4 integration CI. **Maintainer:** ChatGPT acting on owner's request to continue after Codex limit. **Working branch:** `agent/continue-p0-p1-20261108`. **Parent commit:** `2794d8002f736c6f6b8d475f648234c235ca9726` (`codex/p0-p1-media-reliability-20261106`, PR #58). **Current main observed:** `7b0f8f8da81839a40945a4bbbbbfaccefd8258f6`. Refresh all refs on resume, and never assume main has merged this branch.
+**Updated:** 2026-11-08 (UTC), after cross-platform/semantic/batched decoding and SFX failure-status review. **Maintainer:** ChatGPT acting on owner's request to continue after Codex limit. **Working branch:** `agent/continue-p0-p1-20261108`. **Parent commit:** `2794d8002f736c6f6b8d475f648234c235ca9726` (`codex/p0-p1-media-reliability-20261106`, PR #58). **Current main observed:** `7b0f8f8da81839a40945a4bbbbbfaccefd8258f6`. Refresh all refs on resume, and never assume main has merged this branch.
 
 This is the **one persistent task/handoff context file**. Update this file as part of each meaningful agent work session. It records progress and evidence, *not* a second source of production policy. Canonical sources: [root AGENTS](../../../AGENTS.md), [project AGENTS](../../AGENTS.md), [AI_RULES](../../AI_RULES.md), [WORKFLOW](../../content/WORKFLOW.md), [CURRENT_TASKS](CURRENT_TASKS.md), [full V1–V7 audit](KANTENT_FULL_TECHNICAL_AUDIT_V5_2026-11-05.md).
 
@@ -41,6 +41,27 @@ Owner decisions P01–P12 in the complete audit are approved. Do **not** alter p
 6. Linked this one work context from the project `AGENTS.md`, making it findable by a new agent. Do not create competing context files.
 
 **Status:** software source and synthetic unit checks only, NOT production QA; separate external real RU/TG media review requires authorized existing MP4/WAV and human inspection. No approved audio/video was mutated, no credential used, no paid request, no Zernio post, no main merge.
+
+## 2026-11-08 continuation — second verified engineering slice
+
+**Current work chain:** Claude 6-file fixes → Codex PR #58 → dependent ChatGPT [draft PR #59](https://github.com/akbarholturaev11-lang/Kantent/pull/59). The branch remains based on Codex, NOT rebased onto main and not merged.
+
+### New defects confirmed and changes implemented
+
+1. **Real encoded length mismatch:** initial contact-sheet code used only `sum(scene.durationFrames)`. Production uses `sharedRenderRanges()`, which extends the final CTA when audio runs longer. Fixed frame evidence to use actual production totalFrames. Added source startMs↔accumulated frame-offset drift guard, CTA before/first/last frame proof and unit tests.
+2. **Wrong platform attribution:** early review checked only Instagram hash even though YouTube/Facebook have separate CTA video bytes and variant episodes. Now supports `instagram|youtube|facebook` and validates each exact `videoSha256`, `baseContentHash`, `contentHash`, shared lesson/timeline and real H264+AAC video/audio. TikTok explicitly fails closed due different narrated CTA. Approved completed packages remain **read-only**; no approval is granted.
+3. **Silent media masquerading as review:** reused production `verifyPlatformVideo`, rejecting a silent video-only MP4 even if its hash appears in status. Synthetic ffmpeg integration now generates 30fps 1080x1920 H264+AAC and tests a silent MP4 is rejected.
+4. **Voice-linked semantic scenes omitted:** extended frame-proof planner to compiled `semanticTimeline` *only after recompiling and comparing exact current source and word cues*. Semantic word action has before/on/settled samples; static `semanticShot` without a spoken action receives first/middle/last frames explicitly labeled **NOT voice-cue evidence**. New regression tests.
+5. **SFX failure left render permanently `rendering`:** `render-episode.mjs` invoked SFX outside its error-status catch. Added `render-sfx-step.mjs` so subprocess/spawn errors write `render-failed` before rethrow; tests cover success, error code, missing status, and missing tool. No blind retry.
+6. **Very expensive frame extraction:** prior script launched roughly six FFmpeg processes per cue, each decoding a whole video prefix. Added `cue-frame-batch.mjs`, decoding all exact requested unique frame indices in **two sequential FFmpeg passes**, one 1080×1920 and one 270×480, then copying mapped PNGs to semantic/CTA labels. Rejects duplicate labels/traversal and missing frames. The integration test cross-checks batch pixels against independent single-frame FFmpeg decoding.
+
+### Evidence and quality gates
+
+- [GitHub Actions 42446953282](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42446953282): **success** at `d6a7f054bf3` (semantic foundation + consistency, including new SFX and batch safety tests and real synthetic MP4 extraction).
+- [GitHub Actions 42446984738](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42446984738): video-review workflow **success** at `44d65cf20c` (synthetic video; Gemini voice generation step may be skipped). [42446984586](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/42446984586) was still running at last check, but its `Verify exact decoded phone-size cue frames`, SFX, lint and consistency stages had already passed. Recheck completion before declaring the full workflow green.
+- Latest README documentation commit `85c08aeaf6386872d98e106cadbd31e39fa14112`; associated CI queued at last check. Do NOT conflate documentation-only CI pending with previous passing code commit.
+- No real Gemini/OpenRouter TTS generated, no RU/TG listening test, no actual semantic/phone readability verdict, no owner-preview approval, no PWA capture and no video publication.
+- The separately failing `main` feedback analyzer 0-vs-2 cohort test is OUT OF SCOPE for this branch and must not be hidden by these P0/P1 CI results.
 
 ## Next tasks / blockers
 
