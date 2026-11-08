@@ -73,6 +73,8 @@ jobs:
           sudo apt-get install -y -qq ffmpeg
           ffmpeg -version | head -n 1
           ffprobe -version | head -n 1
+      - name: Verify exact decoded phone-size cue frames and hash-bound review without Gemini
+        run: node --test scripts/cue-frame-review.integration.test.mjs
       - name: Real semantic Instagram/YouTube MP4 smoke with synthetic test tone
         run: node scripts/semantic-mp4-smoke.mjs /tmp/semantic-mp4-smoke
       - name: Render semantic come/go frames and confirm visual difference
