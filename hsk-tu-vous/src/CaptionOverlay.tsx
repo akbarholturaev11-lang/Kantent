@@ -100,7 +100,7 @@ export const CaptionOverlay: React.FC<{
           top: slot ? slot.top : G.subtitleTopPx,
           display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "baseline", columnGap: 16,
           fontFamily: G.fontFamily, fontSize: G.subtitleFontPx, fontWeight: G.subtitleWeight, lineHeight: 1.15,
-          color: "#FFFFFF", textShadow: "0 4px 24px rgba(0,0,0,.45)", textAlign: "center" }}>
+          color: "#FFFFFF", textShadow: "0 2px 3px rgba(0,0,0,.95), 0 0 2px rgba(0,0,0,.9), 0 0 22px rgba(0,0,0,.75)", textAlign: "center" }}>
           <span data-subtitle-text style={{ display: "contents" }}>{words.map((word, index) => {
             const p = interpolate(entryFrame, [index * G.wordStaggerFrames, index * G.wordStaggerFrames + G.wordEntryFrames], [0, 1], ease);
             const han = /\p{Script=Han}/u.test(word);
