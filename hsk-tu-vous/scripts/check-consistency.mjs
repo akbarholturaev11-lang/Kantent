@@ -300,7 +300,32 @@ export function validateConsistency(root = projectRoot) {
   } catch (e) {
     errors.push("package.json: missing consistency script");
   }
+  errors.push(...validateContentGoals(root));
 
+  return errors;
+}
+
+/**
+ * Owner rule 2026-11-09: every weekly content type has exactly one, distinct
+ * goal (creative-formats.json#contentGoals) that agents author and judge by.
+ */
+export function validateContentGoals(root = projectRoot) {
+  const errors = [];
+  const formats = readJson(root, "content/creative-formats.json", errors);
+  const calendar = readJson(root, "content/calendar.json", errors);
+  if (!formats || !calendar) return errors;
+  const goals = formats.contentGoals?.byContentType ?? {};
+  const types = new Set((calendar.weeklySchedule?.days ?? []).map((day) => day.contentType));
+  for (const type of types) {
+    const goal = goals[type];
+    if (!goal) { errors.push(`content/creative-formats.json#contentGoals: missing goal for weekly content type ${type}`); continue; }
+    for (const key of ["goal", "summary", "viewerAction", "authoring", "closing", "primaryMetric"])
+      if (typeof goal[key] !== "string" || !goal[key].trim()) errors.push(`contentGoals.${type}: missing ${key}`);
+  }
+  for (const type of Object.keys(goals))
+    if (!types.has(type)) errors.push(`contentGoals.${type} is not a calendar.json#weeklySchedule content type`);
+  const names = Object.values(goals).map((goal) => goal.goal);
+  if (new Set(names).size !== names.length) errors.push("contentGoals: each content type needs its own distinct goal");
   return errors;
 }
 

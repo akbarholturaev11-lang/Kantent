@@ -1,6 +1,6 @@
 # Standalone HSK AI advertisements
 
-The owner selected situation-led advertising and a minimalist visual treatment from an uploaded reference. The canonical story policy and reference audit live in `creative-formats.json#promoPolicy`; visual limits, backgrounds and direction live in `visual-system.json#promoPresentation`. This procedure applies to newly authored, unapproved commercials. Preserve existing approved promo briefs, media and publication history.
+The owner selected situation-led advertising and a minimalist visual treatment from an uploaded reference. The canonical story policy and reference audit live in `creative-formats.json#promoPolicy`; visual limits, backgrounds and direction live in `visual-system.json#promoPresentation`. An advertisement's goal is brand recall, not a direct download push: the goal, brand cues and closing live in `creative-formats.json#contentGoals.advertisement`. This procedure applies to newly authored, unapproved commercials. Preserve existing approved promo briefs, media and publication history.
 
 ## Author the story and frame plan
 

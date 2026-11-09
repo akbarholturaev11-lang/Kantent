@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { findDuplicatedValues, validateFutureContentReadiness } from "./check-consistency.mjs";
+import { findDuplicatedValues, validateContentGoals, validateFutureContentReadiness } from "./check-consistency.mjs";
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -55,4 +55,19 @@ test('strict future readiness reports missing or unbound translations by episode
   assert.match(result.errors[0],/untranslated-future/);
   assert.match(result.errors[0],/source\/configuration/);
  } finally {fs.rmSync(tmp,{recursive:true,force:true});}
+});
+
+test("every weekly content type has its own goal (owner rule 2026-11-09)", () => {
+  assert.deepEqual(validateContentGoals(), []);
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "goals-"));
+  fs.mkdirSync(path.join(dir, "content"));
+  const formats = JSON.parse(fs.readFileSync(new URL("../content/creative-formats.json", import.meta.url), "utf8"));
+  const calendar = { weeklySchedule: { days: [{ contentType: "lesson" }, { contentType: "advertisement" }, { contentType: "series-part" }] } };
+  fs.writeFileSync(path.join(dir, "content/calendar.json"), JSON.stringify(calendar));
+  delete formats.contentGoals.byContentType["series-part"];
+  formats.contentGoals.byContentType.advertisement.goal = "direct-acquisition";
+  fs.writeFileSync(path.join(dir, "content/creative-formats.json"), JSON.stringify(formats));
+  const errors = validateContentGoals(dir);
+  assert.ok(errors.some((e) => /missing goal for weekly content type series-part/.test(e)));
+  assert.ok(errors.some((e) => /distinct goal/.test(e)));
 });

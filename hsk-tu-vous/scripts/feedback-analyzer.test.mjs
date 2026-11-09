@@ -172,3 +172,14 @@ test('different verified creative formats never share a comparison group',()=>{
  assert.equal(r.comparableGroups.length,2);
  assert.equal(r.comparableGroups.every(group=>group.readiness==='insufficient-sample'),true);
 });
+
+test('each post carries its content-type goal and goal metrics (owner rule 2026-11-09)',()=>{
+ const lesson=source();lesson.content={id:'x',type:'lesson',language:'ru',sourceHash:'a'.repeat(64)};
+ const m=deriveMetrics(lesson);assert.equal(m.goal,'direct-acquisition');assert.equal(m.goalPrimaryMetric,'commentsPer1000Views');
+ assert.equal(m.commentsPer1000Views,lesson.metrics.views?+(1000*lesson.metrics.comments/lesson.metrics.views).toFixed(2):null);
+ assert.equal(m.followsPer1000Views,null);
+ const serial=structuredClone(lesson);serial.content.type='series-part';serial.metrics.follows=3;
+ const s=deriveMetrics(serial);assert.equal(s.goal,'audience-growth');assert.ok(s.followsPer1000Views>0);
+ assert.equal(deriveMetrics({...source(),content:undefined}).goal,null);
+ const bad=structuredClone(serial);bad.metrics.follows=-1;assert.ok(validateObservation(bad).includes('invalid metric follows'));
+});

@@ -63,6 +63,8 @@ export function validateObservation(o) {
     if(!absent && ['views','reach','likes','comments','saves','shares'].includes(name) && v!==null && !Number.isInteger(v)) errors.push('count not integer: '+name);
   }
   if(o.metrics?.skipRatePercent!=null && o.metrics.skipRatePercent>100) errors.push('skipRatePercent out of bounds');
+  // Optional, only when the provider reports follows from this post.
+  if(o.metrics?.follows!==undefined && o.metrics.follows!==null && !(Number.isInteger(o.metrics.follows)&&o.metrics.follows>=0)) errors.push('invalid metric follows');
   if(o.metrics?.durationSeconds===0) errors.push('durationSeconds cannot be zero');
   return errors;
 }
@@ -83,11 +85,25 @@ export function validateDataset(data) {
 export function durationBand(sec) {
   return sec==null?'unknown':sec<25?'under-25s':sec<30?'25-29s':sec<=35?'30-35s':'over-35s';
 }
+// Owner rule 2026-11-09: each content type is judged by its own goal
+// (content/creative-formats.json#contentGoals); the goal travels with each post.
+let contentGoals=null;
+function goalFor(type){
+  if(contentGoals===null){
+    try{contentGoals=JSON.parse(fs.readFileSync(path.join(root,'content','creative-formats.json'),'utf8')).contentGoals?.byContentType??{};}
+    catch{contentGoals={};}
+  }
+  return contentGoals[type]??null;
+}
+const per1000=(count,views)=>count==null||!views?null:+(1000*count/views).toFixed(2);
 export function deriveMetrics(o){
   const {views,saves,shares,avgWatchMs,skipRatePercent,durationSeconds}=o.metrics;
+  const contentType=o.content?.type??'legacy-unverified';
+  const goal=goalFor(contentType);
   return {
     platform:o.platform,accountUsername:o.accountUsername,postId:o.platformPostId,episodeId:o.episodeId,
-    contentId:o.content?.id??o.episodeId??null,contentType:o.content?.type??'legacy-unverified',
+    contentId:o.content?.id??o.episodeId??null,contentType,
+    goal:goal?.goal??null,goalPrimaryMetric:goal?.primaryMetric??null,
     language:o.content?.language??'ru',series:o.content?.series??null,sourceHash:o.content?.sourceHash??null,
     hookFormat:o.hookFormat,hskLevel:o.hskLevel,creativeFormatId:o.creativeFormatId??null,
     storytellingPattern:o.storytellingPattern??null,window:o.window,
@@ -96,7 +112,11 @@ export function deriveMetrics(o){
     averageWatchSeconds:avgWatchMs==null?null:+(avgWatchMs/1000).toFixed(3),
     averageWatchRatio:avgWatchMs==null||!durationSeconds?null:+(avgWatchMs/1000/durationSeconds).toFixed(4),
     savesPer1000Views:saves==null||!views?null:+(1000*saves/views).toFixed(2),
-    sharesPer1000Views:shares==null||!views?null:+(1000*shares/views).toFixed(2)
+    sharesPer1000Views:shares==null||!views?null:+(1000*shares/views).toFixed(2),
+    reach:o.metrics.reach??null,
+    commentsPer1000Views:per1000(o.metrics.comments,views),
+    // Optional provider-reported follows from the post (serial-part goal); never inferred.
+    followsPer1000Views:per1000(o.metrics.follows,views)
   };
 }
 export function analyzeObservations(observations,policy={}, {asOf = new Date()} = {}){
