@@ -1,5 +1,6 @@
 import { ctaExperimentMetadata, validateCtaEpisode } from "./cta-lab.mjs";
 import { getPlatformCtaStatus } from "./platform-cta.mjs";
+import { ctaEndingFor } from "./cta-endings.mjs";
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
@@ -26,7 +27,7 @@ export function assertCanonicalLessonSource(episode, lab) {
  * beats, lesson context, corrections and rule version all still validate.
  * Otherwise explicit re-registration remains mandatory before TTS/render.
  */
-export function composeLessonCta(baseEpisode, lab, { platform = "instagram" } = {}) {
+export function composeLessonCta(baseEpisode, lab, { platform = "instagram", contentType, series } = {}) {
   if (!baseEpisode || !Array.isArray(baseEpisode.scenes))
     throw new Error("CTA assembly needs a lesson with scenes.");
   const existing = baseEpisode.scenes.filter((scene) => scene.kind === "cta");
@@ -43,8 +44,13 @@ export function composeLessonCta(baseEpisode, lab, { platform = "instagram" } = 
   const status = getPlatformCtaStatus(lab, platform);
   if (!status.readyForDraft)
     throw new Error(platform + " CTA is not approved: " + status.missing.join(", "));
-  const variant = lab.platformVariants[platform];
-  const template = variant.sceneTemplate;
+  // Owner rule 2026-11-09: advertisements and serial parts end with their own
+  // goal's ending (brand recall / follow); lessons keep the platform CTA.
+  const type = contentType ?? baseEpisode.contentIdentity?.type ??
+    (baseEpisode.kind === "advertisement" ? "advertisement" : "lesson");
+  const ending = ctaEndingFor(lab, { contentType: type, series: series ?? baseEpisode.contentIdentity?.series, date: baseEpisode.date });
+  const template = ending ? ending.sceneTemplate : lab.platformVariants[platform].sceneTemplate;
+  const copy = ending ? ending.copy : status.copy;
   if (!template || template.kind !== "cta" || template.id !== "cta" ||
       !Array.isArray(template.visualBeats) || template.visualBeats.length === 0) {
     throw new Error(platform + " does not have a canonical CTA sceneTemplate.");
@@ -52,9 +58,10 @@ export function composeLessonCta(baseEpisode, lab, { platform = "instagram" } = 
   if ("narration" in template || "cta" in template || "ctaExperiment" in template)
     throw new Error("CTA template must not duplicate narration or immutable registration.");
   const episode = clone(baseEpisode);
-  episode.cta = status.copy;
-  episode.scenes.push({ ...clone(template), narration: status.copy });
+  episode.cta = copy;
+  episode.scenes.push({ ...clone(template), narration: copy });
   episode.ctaPlatform = platform;
+  if (ending) episode.ctaEnding = ending.kind;
   // CTA metadata is a concrete-version snapshot, not an editable CTA source.
   // Rebind to an identical existing preregistration when safe, without
   // changing any historical ledger entries.

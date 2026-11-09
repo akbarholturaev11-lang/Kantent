@@ -24,6 +24,16 @@
 
 **Хавфсизлик:** `get_platform_cta_status` орқали ҳар вариант тайёрлигини текширинг. YouTube’нинг Instagram offer’ини ишлатиши ва икки CTA кадрини алмаштириши эгасининг аниқ кўрсатмаси билан тасдиқланган; янги платформа матнини жимгина кўчирманг. Сохта авто-DM ёки ҳавола имкониятини тасвирламанг. YouTube’да ҳар бир видео учун title, visibility, audience ва synthetic-media disclosure аниқ preview’да кўрсатилади. Ҳар бир аниқ final preview учун нашрдан олдин эгасининг тасдиғи талаб қилинади.
 
+## Video turi bo‘yicha yakun (egasi qarori 2026-11-09)
+
+Har video turining o‘z maqsadi bor (`creative-formats.json#contentGoals`), shuning uchun yakuni ham alohida:
+
+- **Dars** — yuqoridagi platforma CTA’si (`offer` / `platformVariants`), o‘zgarmaydi.
+- **Reklama** — brend yakuni: `contentTypeEndings.endings.advertisement` (RU «HSK AI — китайский, когда он нужен.», TJ «HSK AI — забони чинӣ, вақте ки лозим аст.»). Yuklab olish, havola yoki obuna so‘ralmaydi.
+- **Qismli video** — obuna taklifi: oxirgi qismdan oldin `series-next-part` (keyingi qismni nomlaydi), oxirgi qismda `series-final-part` (har hafta oxiri yangi hikoya).
+
+`effectiveFromDate` (2026-11-09) dan oldingi sanadagi videolar o‘zi tayyorlangan va ro‘yxatdan o‘tgan CTA bilan qoladi. Yakun matni har tilda bitta va barcha platformalarda bir xil (ovoz va cue qayta ishlatiladi); har platforma baribir o‘z registratsiyasi (`formatId` — yakunning `formatId`i) va aniq preview tasdig‘ini oladi. `scripts/cta-endings.mjs` yakunni kalendar turidan tanlaydi va mos kelmasa (masalan, 3 qismli seriya) to‘xtaydi — yangi matnni egasi tasdiqlaydi. Yuqoridagi `corrections` dars CTA’siga tegishli; yakun formatlari shu bo‘limdagi tasdiqlangan matn bilan tekshiriladi.
+
 ## Har yangi chat va CTA tahriridan oldin
 
 1. Ushbu fayl va `content/cta-lab.json`ni o‘qing. `get_cta_learning_status` orqali amaldagi qoidalar versiyasi va tuzatishlarni oling.

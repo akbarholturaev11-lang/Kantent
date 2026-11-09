@@ -241,10 +241,13 @@ export async function getPlannedEpisode(date) {
   const lesson = decorateCanonicalLesson(sourceLesson);
   // CTA-free future plans get the current central CTA only when materialized.
   // Legacy completed/registered plans keep their original version snapshots.
+  // The content type chooses the ending (owner rule 2026-11-09): lesson CTA,
+  // advertisement brand ending or serial follow invitation.
+  const identity=contentIdentity(item,{language:activeLanguage(),source});
   const episode = lesson.scenes.some((scene) => scene.kind === "cta")
     ? lesson
-    : composeLessonCta(lesson, ctaLab);
-  episode.contentIdentity=contentIdentity(item,{language:activeLanguage(),source});
+    : composeLessonCta(lesson, ctaLab, {contentType:identity.type,series:identity.series});
+  episode.contentIdentity=identity;
   validateEpisode(episode);
   if (episode.id !== item.id || episode.date !== item.date) {
     throw new Error(

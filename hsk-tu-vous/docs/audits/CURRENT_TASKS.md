@@ -12,7 +12,6 @@
 | A2 | Repair `~/.codex/config.toml` (it points to an Ollama model catalog the installed Codex CLI cannot parse). | Codex cannot start, so it cannot make frames or videos. |
 | A3 | Confirm the Codex build in use has image generation. | Frames are a Codex task; without it the only path is the paid `--paid` fallback, which needs the owner's request each time. |
 | A4 | Check the ChatGPT "Calendar Reserve" scheduled task. | No calendar item exists after 2026-11-06 although the reserve target is 4 future dates. The today command now asks the agent to author today's slot instead of failing, but the daily reserve is the intended source. |
-| A6 | Approve, per language, the closing wording for advertisements (brand ending: HSK AI name + logo + one benefit line) and for serial parts (follow/subscribe for the next part), then register them in each `cta-lab.json`. | Owner rule 2026-11-09 (`creative-formats.json#contentGoals`): ads serve brand recall and serial parts serve follower growth, but both still end with the lesson download/DM CTA until their own CTA versions are approved. |
 | A5 | Decide on the six past, unpublished `planned` items (2026-11-01 … 11-06) and the RU test package of `bi-comparison-height-20261104` (rendered, pending approval). | The today command never selects a past date, so they stay unused until the owner decides. |
 
 ## Prioritized unresolved work

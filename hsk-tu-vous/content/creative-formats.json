@@ -214,7 +214,7 @@
     "storyRule": "Start with a recognisable life task and a person trying to do it. Develop only tension relevant to one supported product benefit, show the actual useful action and resolve that task. Choose the number of scenes from the story; no fixed eight-block template or forced re-hooks.",
     "truthRule": "Illustrative stories are introduced as imagined situations. First-person experiences and testimonials require documented owner-provided evidence. Product capabilities need checked source receipts and genuine captures; never invent UI, conversations, outcomes, metrics or guarantees.",
     "author": "The invoking AI writes manual ads; Calendar Reserve authors complete future bilingual ad source drafts for calendar.weeklySchedule under WORKFLOW.md. Gemini handles approved voice/transcription only. No additional scheduler.",
-    "closingSource": "contentGoals.advertisement.closing (brand ending). Until its owner-approved CTA version is registered, the selected language and platform CTA Lab ending; no copied CTA text or automatic publication.",
+    "closingSource": "contentGoals.advertisement.closing: the brand ending in the selected language's cta-lab.json#contentTypeEndings; no copied CTA text or automatic publication.",
     "reference": {
       "fileName": "-6684566936130931710.mp4",
       "sha256": "5a40051426eff57db066b301046e17235b50ed8986388dc98656a2ce239ac912",
@@ -236,7 +236,7 @@
         "summary": "Bring the viewer straight into HSK AI and make them a user.",
         "viewerAction": "Act now: request the link with the comment keyword / open HSK AI.",
         "authoring": "Solve one real HSK problem early and completely so the viewer feels how HSK AI helps; the teaching body stays CTA-free and hands off to the central lesson CTA.",
-        "closing": "The language and platform lesson CTA from cta-lab.json (HSK AI benefit, comment keyword, DM link).",
+        "closing": "The language and platform lesson CTA from cta-lab.json offer / platformVariants (HSK AI benefit, profile link, download; TikTok manual DM).",
         "primaryMetric": "commentsPer1000Views",
         "primaryMetricNote": "Comments are the CTA link requests. Sourced link clicks, DMs or sign-ups replace it when the provider or the app reports them; never inferred from views.",
         "supportingMetrics": [
@@ -253,7 +253,7 @@
         "summary": "Make HSK AI remembered, and recalled when the viewer later needs Chinese.",
         "viewerAction": "Remember the name HSK AI, its look and the one situation where it helps.",
         "authoring": "One recognisable life situation tied to one real product benefit (content/PROMO_WORKFLOW.md). The same brand cues every time: the spoken name HSK AI, the logo, the brand colours and the HSK AI panda; the brand appears early and again at the end. No hard sell, fake urgency or invented claims.",
-        "closing": "Brand ending: HSK AI name and logo with the one benefit line. Needs an owner-approved brand-ending CTA version per language in cta-lab.json; until it is registered, ads keep the current CTA Lab ending.",
+        "closing": "Brand ending from each language's cta-lab.json#contentTypeEndings.endings.advertisement (owner-approved 2026-11-09): HSK AI name and logo with the one benefit line, on every platform.",
         "primaryMetric": "reach",
         "primaryMetricNote": "Recall itself is not measured: reach (unique people who saw the brand) and averageWatchRatio (did they reach the brand ending) are proxies. Never claim a recall uplift.",
         "supportingMetrics": [
@@ -271,7 +271,7 @@
         "summary": "Grow followers/subscribers on each social account.",
         "viewerAction": "Follow/subscribe so the next part is not missed.",
         "authoring": "Each part solves its own problem; part 1 ends with an honest bridge to the next part's real task only when that part is drafted and registered; the last part pays off the series. Never withhold the current answer to force a follow (content/WORKFLOW.md series rules).",
-        "closing": "Follow/subscribe invitation naming the next part. Needs an owner-approved follow CTA version per language in cta-lab.json; until it is registered, serial parts keep the current CTA Lab ending.",
+        "closing": "Follow invitation from each language's cta-lab.json#contentTypeEndings (owner-approved 2026-11-09): series-next-part before the last part (names the next part), series-final-part on the last part (new story every weekend).",
         "primaryMetric": "followsPer1000Views",
         "primaryMetricNote": "Uses the provider-reported follows from the post (observation metrics.follows) when available; otherwise partContinuationRatio = next-part views / previous-part views on the same account, language and fixed window, reported as descriptive only.",
         "supportingMetrics": [

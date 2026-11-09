@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 141,
+  "revision": 142,
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
     "id": "hsk-ai-profile-link-download-v1",
@@ -18310,5 +18310,124 @@
   "sourcePolicy": {
     "ctaFreeFromDate": "2026-10-09",
     "description": "Canonical lessons on or after this date must exclude CTA and registration. Assemble from platformVariants at working-copy creation. Legacy source snapshots before this date are preserved."
+  },
+  "contentTypeEndings": {
+    "decidedOn": "2026-11-09",
+    "effectiveFromDate": "2026-11-09",
+    "goalSource": "content/creative-formats.json#contentGoals",
+    "rule": "Owner rule 2026-11-09: lessons keep the platform CTA (offer / platformVariants). Advertisements end with the brand ending; serial parts end with a follow invitation — the next-part copy before the last part, the weekend copy on the last part. One ending copy is shared by every platform of the language; each platform still has its own registration and exact-preview approval. Items dated before effectiveFromDate keep the CTA they were prepared and registered with.",
+    "endings": {
+      "advertisement": {
+        "contentType": "advertisement",
+        "formatId": "brand-recall-ending",
+        "status": "approved",
+        "ownerApprovedWording": true,
+        "ownerWording": "HSK AI — китайский, когда он нужен",
+        "copy": "HSK AI — китайский, когда он нужен.",
+        "sceneTemplate": {
+          "id": "cta",
+          "kind": "cta",
+          "captionStyleId": "pill",
+          "durationSec": 4,
+          "headline": "HSK AI",
+          "screenCaption": "HSK AI — китайский, когда он нужен",
+          "editPlan": "Brand ending for brand recall: one central stage, one HSK AI wordmark at a time. On «HSK» reveal the HSK AI logo; on «китайский» keep the logo and add the single line «китайский, когда он нужен». No download card, profile, link, follow request, screenshot or claim; the spoken line stays in one synced subtitle.",
+          "visualBeats": [
+            {
+              "hero": "HSK AI",
+              "brandLogo": true,
+              "motion": "reveal",
+              "syncCueText": "HSK",
+              "transitionStyle": "type-reveal"
+            },
+            {
+              "hero": "HSK AI",
+              "meaning": "КИТАЙСКИЙ, КОГДА ОН НУЖЕН",
+              "brandLogo": true,
+              "motion": "reveal",
+              "syncCueText": "китайский",
+              "transitionStyle": "slide-match"
+            }
+          ],
+          "cards": []
+        }
+      },
+      "series-next-part": {
+        "contentType": "series-part",
+        "forNextPart": 2,
+        "formatId": "series-follow-next-part",
+        "status": "approved",
+        "ownerApprovedWording": true,
+        "ownerWording": "Подпишитесь, чтобы не пропустить вторую часть",
+        "copy": "Подпишитесь, чтобы не пропустить вторую часть.",
+        "sceneTemplate": {
+          "id": "cta",
+          "kind": "cta",
+          "captionStyleId": "pill",
+          "durationSec": 4,
+          "headline": "ПОДПИШИТЕСЬ",
+          "screenCaption": "Подпишитесь — вторая часть впереди",
+          "editPlan": "Follow ending for a serial part before the last: on «Подпишитесь» show the HSK AI logo with ПОДПИШИТЕСЬ; on «вторую» show ВТОРАЯ ЧАСТЬ and hold it to the end. Mention only the existing, registered next part; no date promise, download, link, fake follow button or simulated tap.",
+          "visualBeats": [
+            {
+              "hero": "HSK AI",
+              "meaning": "ПОДПИШИТЕСЬ",
+              "brandLogo": true,
+              "motion": "pop",
+              "syncCueText": "Подпишитесь",
+              "transitionStyle": "type-reveal"
+            },
+            {
+              "hero": "ВТОРАЯ ЧАСТЬ",
+              "motion": "slide",
+              "syncCueText": "вторую",
+              "transitionStyle": "slide-match"
+            }
+          ],
+          "cards": []
+        }
+      },
+      "series-final-part": {
+        "contentType": "series-part",
+        "formatId": "series-follow-weekend",
+        "status": "approved",
+        "ownerApprovedWording": true,
+        "ownerWording": "Подпишитесь — каждые выходные новая история на китайском",
+        "copy": "Подпишитесь — каждые выходные новая история на китайском.",
+        "sceneTemplate": {
+          "id": "cta",
+          "kind": "cta",
+          "captionStyleId": "pill",
+          "durationSec": 5,
+          "headline": "ПОДПИШИТЕСЬ",
+          "screenCaption": "Каждые выходные — новая история",
+          "editPlan": "Follow ending for the last serial part: on «Подпишитесь» show the HSK AI logo with ПОДПИШИТЕСЬ; on «выходные» show КАЖДЫЕ ВЫХОДНЫЕ; on «история» show НОВАЯ ИСТОРИЯ with НА КИТАЙСКОМ. No download, link, fake follow button or simulated tap.",
+          "visualBeats": [
+            {
+              "hero": "HSK AI",
+              "meaning": "ПОДПИШИТЕСЬ",
+              "brandLogo": true,
+              "motion": "pop",
+              "syncCueText": "Подпишитесь",
+              "transitionStyle": "type-reveal"
+            },
+            {
+              "hero": "КАЖДЫЕ ВЫХОДНЫЕ",
+              "motion": "slide",
+              "syncCueText": "выходные",
+              "transitionStyle": "slide-match"
+            },
+            {
+              "hero": "НОВАЯ ИСТОРИЯ",
+              "meaning": "НА КИТАЙСКОМ",
+              "motion": "reveal",
+              "syncCueText": "история",
+              "transitionStyle": "type-reveal"
+            }
+          ],
+          "cards": []
+        }
+      }
+    }
   }
 }

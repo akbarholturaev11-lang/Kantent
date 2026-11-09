@@ -1,3 +1,4 @@
+import { ctaEndingByKind } from "./cta-endings.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
@@ -333,7 +334,21 @@ export function validateCtaEpisode(
   const tajik = episode.languageCode === "tg-TJ";
   if (lab.languageCode && episode.languageCode !== lab.languageCode)
     errors.push("CTA lab language must match the episode language.");
-  for (const [field, text] of [
+  const ending = episode.ctaEnding === undefined ? null : ctaEndingByKind(lab, episode.ctaEnding);
+  if (episode.ctaEnding !== undefined) {
+    // Owner rule 2026-11-09: advertisement / serial-part endings are checked
+    // against their approved copy and cue visuals, not the download CTA.
+    if (!ending) errors.push(`Unknown CTA ending "${episode.ctaEnding}"; use cta-lab.json#contentTypeEndings.`);
+    else {
+      if (snapshot.cta !== clean(ending.copy) || clean(spoken) !== clean(ending.copy))
+        errors.push(`${ending.kind} CTA must be exactly the approved ending copy.`);
+      if (stable(snapshot.scenes[0]?.visualBeats ?? []) !== stable(ending.sceneTemplate.visualBeats))
+        errors.push(`${ending.kind} CTA visuals must match the approved ending template.`);
+      if (experiment && experiment.formatId !== ending.formatId)
+        errors.push(`${ending.kind} CTA must be registered with formatId ${ending.formatId}.`);
+    }
+  }
+  if (!ending) for (const [field, text] of [
     ["cta", snapshot.cta],
     ["CTA narration", spoken],
   ]) {
@@ -366,7 +381,7 @@ export function validateCtaEpisode(
   if (!approvedTikTokManualDm &&
       (tajik ? /шарҳ\s+навис|директ|паём[иӣ]?\s+шахс|пайванд.*мефирист/iu : /(коммент|директ|личн.*сообщ|пришл.*ссылк|отправл.*ссылк)/iu).test(spoken))
     errors.push("CTA narration: remove the superseded comment/DM route.");
-  if (active.some((item) => item.id === "cta-correction-0008")) {
+  if (!ending && active.some((item) => item.id === "cta-correction-0008")) {
     const screenshots = snapshot.scenes[0]?.visualBeats
       .filter((beat) => beat.screenImage)
       .map((beat) => ({ image: beat.screenImage, cue: beat.syncCueText }));

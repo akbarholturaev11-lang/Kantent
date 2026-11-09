@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 47,
+  "revision": 48,
   "languageCode": "tg-TJ",
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
@@ -5431,6 +5431,125 @@
             "brandLogo": true
           }
         ]
+      }
+    }
+  },
+  "contentTypeEndings": {
+    "decidedOn": "2026-11-09",
+    "effectiveFromDate": "2026-11-09",
+    "goalSource": "content/creative-formats.json#contentGoals",
+    "rule": "Owner rule 2026-11-09: lessons keep the platform CTA (offer / platformVariants). Advertisements end with the brand ending; serial parts end with a follow invitation — the next-part copy before the last part, the weekend copy on the last part. One ending copy is shared by every platform of the language; each platform still has its own registration and exact-preview approval. Items dated before effectiveFromDate keep the CTA they were prepared and registered with.",
+    "endings": {
+      "advertisement": {
+        "contentType": "advertisement",
+        "formatId": "brand-recall-ending",
+        "status": "approved",
+        "ownerApprovedWording": true,
+        "ownerWording": "HSK AI — забони чинӣ, вақте ки лозим аст",
+        "copy": "HSK AI — забони чинӣ, вақте ки лозим аст.",
+        "sceneTemplate": {
+          "id": "cta",
+          "kind": "cta",
+          "captionStyleId": "pill",
+          "durationSec": 4,
+          "headline": "HSK AI",
+          "screenCaption": "HSK AI — забони чинӣ, вақте ки лозим аст",
+          "editPlan": "Brand ending for brand recall: one central stage, one HSK AI wordmark at a time. On «HSK» reveal the HSK AI logo; on «чинӣ» keep the logo and add the single line «забони чинӣ, вақте ки лозим аст». No download card, profile, link, follow request, screenshot or claim; the spoken line stays in one synced subtitle.",
+          "visualBeats": [
+            {
+              "hero": "HSK AI",
+              "brandLogo": true,
+              "motion": "reveal",
+              "syncCueText": "HSK",
+              "transitionStyle": "type-reveal"
+            },
+            {
+              "hero": "HSK AI",
+              "meaning": "ЗАБОНИ ЧИНӢ, ВАҚТЕ КИ ЛОЗИМ АСТ",
+              "brandLogo": true,
+              "motion": "reveal",
+              "syncCueText": "чинӣ",
+              "transitionStyle": "slide-match"
+            }
+          ],
+          "cards": []
+        }
+      },
+      "series-next-part": {
+        "contentType": "series-part",
+        "forNextPart": 2,
+        "formatId": "series-follow-next-part",
+        "status": "approved",
+        "ownerApprovedWording": true,
+        "ownerWording": "Обуна шавед, то қисми дуюмро аз даст надиҳед",
+        "copy": "Обуна шавед, то қисми дуюмро аз даст надиҳед.",
+        "sceneTemplate": {
+          "id": "cta",
+          "kind": "cta",
+          "captionStyleId": "pill",
+          "durationSec": 4,
+          "headline": "ОБУНА ШАВЕД",
+          "screenCaption": "Обуна шавед — қисми дуюм дар пеш аст",
+          "editPlan": "Follow ending for a serial part before the last: on «Обуна» show the HSK AI logo with ОБУНА ШАВЕД; on «дуюмро» show ҚИСМИ ДУЮМ and hold it to the end. Mention only the existing, registered next part; no date promise, download, link, fake follow button or simulated tap.",
+          "visualBeats": [
+            {
+              "hero": "HSK AI",
+              "meaning": "ОБУНА ШАВЕД",
+              "brandLogo": true,
+              "motion": "pop",
+              "syncCueText": "Обуна",
+              "transitionStyle": "type-reveal"
+            },
+            {
+              "hero": "ҚИСМИ ДУЮМ",
+              "motion": "slide",
+              "syncCueText": "дуюмро",
+              "transitionStyle": "slide-match"
+            }
+          ],
+          "cards": []
+        }
+      },
+      "series-final-part": {
+        "contentType": "series-part",
+        "formatId": "series-follow-weekend",
+        "status": "approved",
+        "ownerApprovedWording": true,
+        "ownerWording": "Обуна шавед — ҳар охири ҳафта қиссаи нав бо забони чинӣ",
+        "copy": "Обуна шавед — ҳар охири ҳафта қиссаи нав бо забони чинӣ.",
+        "sceneTemplate": {
+          "id": "cta",
+          "kind": "cta",
+          "captionStyleId": "pill",
+          "durationSec": 5,
+          "headline": "ОБУНА ШАВЕД",
+          "screenCaption": "Ҳар охири ҳафта — қиссаи нав",
+          "editPlan": "Follow ending for the last serial part: on «Обуна» show the HSK AI logo with ОБУНА ШАВЕД; on «ҳафта» show ҲАР ОХИРИ ҲАФТА; on «қиссаи» show ҚИССАИ НАВ with БО ЗАБОНИ ЧИНӢ. No download, link, fake follow button or simulated tap.",
+          "visualBeats": [
+            {
+              "hero": "HSK AI",
+              "meaning": "ОБУНА ШАВЕД",
+              "brandLogo": true,
+              "motion": "pop",
+              "syncCueText": "Обуна",
+              "transitionStyle": "type-reveal"
+            },
+            {
+              "hero": "ҲАР ОХИРИ ҲАФТА",
+              "motion": "slide",
+              "syncCueText": "ҳафта",
+              "transitionStyle": "slide-match"
+            },
+            {
+              "hero": "ҚИССАИ НАВ",
+              "meaning": "БО ЗАБОНИ ЧИНӢ",
+              "motion": "reveal",
+              "syncCueText": "қиссаи",
+              "transitionStyle": "type-reveal"
+            }
+          ],
+          "cards": []
+        }
       }
     }
   }
