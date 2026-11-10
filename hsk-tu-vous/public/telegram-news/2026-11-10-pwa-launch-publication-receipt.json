@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "newsFingerprint": "2026-11-10:pwa-iphone-safari-launch:675f624400aba60eadfb753657fbe8f2aa4d0d7b",
+  "event": "HSK AI iPhone PWA launch on production hskai.app/iphone-pwa",
+  "evidence": {
+    "productRepository": "akbarholturaev11-lang/HSK-AI-Bot",
+    "productMainSha": "675f624400aba60eadfb753657fbe8f2aa4d0d7b",
+    "railwayService": "HSK AI 🇨🇳",
+    "railwayDeploymentId": "666915fa-255e-4466-91cf-8fc7fcdda347",
+    "railwayDeploymentStatus": "SUCCESS",
+    "railwayDeploymentCreatedAt": "2026-11-09T21:04:11.127Z",
+    "productionDomain": "hskai.app",
+    "domainVerified": true,
+    "certificateStatus": "CERTIFICATE_STATUS_TYPE_VALID"
+  },
+  "media": {
+    "sourceMainSha": "18f294dd83a9e48f4fb7757e08b36cf2d56289d8",
+    "branch": "media/telegram-news-20261110-pwa-launch-675f624",
+    "imageCommitSha": "4d2be08d840fece6c0a0bb7ae8f43a84fcc7ffec",
+    "imageBlobSha": "b6dd0d22008ed68733194b3da5c0b9f627bba5a1",
+    "imageUrl": "https://raw.githubusercontent.com/akbarholturaev11-lang/Kantent/4d2be08d840fece6c0a0bb7ae8f43a84fcc7ffec/hsk-tu-vous/public/telegram-news/2026-11-10-pwa-launch-675f624.jpg",
+    "mime": "image/jpeg",
+    "width": 1448,
+    "height": 1086,
+    "validatedBy": "Zernio_RU validate_media valid true, decoded image/jpeg, 64229 bytes"
+  },
+  "posts": [
+    {
+      "platform": "telegram",
+      "language": "tg",
+      "expectedUsername": "hskaiapp",
+      "liveConnectedUsername": "aibotsakbar",
+      "accountId": "6ae1661bf80a20df8f31158e",
+      "status": "skipped",
+      "reason": "canonical username and Zernio-connected username disagree; do not post to wrong channel"
+    },
+    {
+      "platform": "instagram",
+      "language": "ru",
+      "username": "hskai.app",
+      "accountId": "6a411e989d9472faae10a430",
+      "postId": "6af282068795679a710861f4",
+      "status": "published",
+      "url": null,
+      "readback": "Zernio_RU posts_get published, per-post URL unavailable"
+    },
+    {
+      "platform": "instagram",
+      "language": "tg",
+      "username": "hskai.apptj",
+      "accountId": "6ae0f16205fd6f5357f8503d",
+      "postId": "6af2821e8795679a710862af",
+      "status": "published",
+      "url": "https://www.instagram.com/p/Dfi1xv5CNyw/"
+    },
+    {
+      "platform": "facebook",
+      "language": "tg",
+      "username": "Akbarholturaev",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "postId": "6af2822ac0a37cdb7ee01960",
+      "status": "published",
+      "url": "https://www.facebook.com/1159152280609531_122122236657319062"
+    }
+  ]
+}
