@@ -21,7 +21,8 @@ import {
 } from "./openrouter-voice.mjs";
 import { isPreConnectFailure, openRouterBackupKey, withOpenRouterBackup } from "./voice-transport-backup.mjs";
 import {
-  alignSpokenTokens, buildHanziReadings, collectHanziPinyinPairs, createSpokenMatcher,
+  alignSpokenTokens, buildErhuaBigrams, buildHanziReadings, collectHanziPinyinPairs, createSpokenMatcher,
+  dropErhua, simplifiedHan,
 } from "./spoken-token-match.mjs";
 import { requireFreshGitMain } from "./git-freshness.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
@@ -226,6 +227,24 @@ function parseOffsetMs(offset) {
 const wordTokenPattern = /[\p{L}\p{N}]+(?:[-‐‑‒–—][\p{L}\p{N}]+)*/gu;
 
 function tokenParts(value) {
+  return tokenPartsDetailed(value).map((part) => part.text);
+}
+
+/**
+ * Normalized spoken tokens of one written/recognized word, each marked with
+ * whether it came from a Hanzi (Mandarin) or the locale script. A mixed word
+ * such as the Tajik "一点儿ро" (Hanzi + object suffix, real 2026-11-11 TG
+ * take) is split at the script boundary instead of being one opaque token.
+ */
+function tokenPartsDetailed(value) {
+  return (value.match(wordTokenPattern) ?? []).flatMap((token) => {
+    const runs = token.match(/\p{Script=Han}+|[^\p{Script=Han}]+/gu) ?? [];
+    if (runs.length < 2) return singleScriptParts(token);
+    return runs.flatMap((run) => singleScriptParts(run.replace(/^[-‐‑‒–—]+|[-‐‑‒–—]+$/gu, "")));
+  });
+}
+
+function singleScriptParts(value) {
   const transcriptionAliases = {
     цай: "цзай",
     тя: "цзя",
@@ -261,27 +280,29 @@ function tokenParts(value) {
   };
   return (value.match(wordTokenPattern) ?? []).flatMap((token) => {
     const normalized = normalizeVoiceToken(token, voiceProfile.locale);
+    const locale = (text) => ({ text, han: false });
     if (
       voiceProfile.locale === "tg-TJ" &&
       /^hsk[-‐‑‒–—]?ai[-‐‑‒–—]?ро$/u.test(normalized)
     ) {
-      return ["hsk", "ai", "ро"];
+      return ["hsk", "ai", "ро"].map(locale);
     }
     if (
       voiceProfile.locale === "tg-TJ" &&
       /^ai[-‐‑‒–—]?ро$/u.test(normalized)
     ) {
-      return ["ai", "ро"];
+      return ["ai", "ро"].map(locale);
     }
     // Mandarin transcripts may time each Hanzi syllable separately even when
     // the written narration has no spaces. Keep the source phrase as one
     // caption word while aligning its characters against those timed units.
+    // Traditional forms fold to the lesson's simplified Hanzi, and an
+    // author-verified erhua 儿 (有点儿 yǒudiǎnr) is not a separate syllable.
     if (/^\p{Script=Han}+$/u.test(normalized)) {
-      return Array.from(normalized, (character) =>
-        transcriptionAliases[character] ?? character,
-      );
+      return dropErhua(Array.from(normalized, simplifiedHan), erhuaBigrams()).map((character) =>
+        ({ text: transcriptionAliases[character] ?? character, han: true }));
     }
-    return [transcriptionAliases[normalized] ?? normalized];
+    return [locale(transcriptionAliases[normalized] ?? normalized)];
   });
 }
 
@@ -301,17 +322,19 @@ function sourceWords(text) {
       index + 1 < matches.length ? matches[index + 1].index : text.length;
     const gap = text.slice(match.index + match[0].length, end);
     const punctuation = gap.match(/^[»”"']*([,.!?;:…])/u)?.[1] ?? "";
+    const parts = tokenPartsDetailed(match[0]);
     return {
       display: `${match[0]}${punctuation}`,
-      normalized: tokenParts(match[0]),
+      normalized: parts.map((part) => part.text),
+      han: parts.map((part) => part.han),
     };
   });
 }
 
 function flattenExpected(words) {
   return words.flatMap((word, wordIndex) =>
-    word.normalized.flatMap((token) =>
-      spokenParts(token).map((text) => ({ text, wordIndex })),
+    word.normalized.flatMap((token, partIndex) =>
+      spokenParts(token).map((text) => ({ text, wordIndex, han: word.han[partIndex] })),
     ),
   );
 }
@@ -319,6 +342,7 @@ function flattenExpected(words) {
 function flattenRecognized(annotations, audioDurationMs, timingRepairs) {
   let previousStartMs = -1;
   let previousEndMs = -1;
+  let lastHan = null;
   return annotations.flatMap((annotation, index) => {
     const rawStartMs = parseOffsetMs(
       annotation.start_offset ?? annotation.startOffset,
@@ -366,7 +390,15 @@ function flattenRecognized(annotations, audioDurationMs, timingRepairs) {
       throw new Error("Gemini word timing ends after the generated audio.");
     previousStartMs = startMs;
     previousEndMs = endMs;
-    return tokenParts(annotation.text).flatMap((token) =>
+    // A recognizer may time an erhua 儿 as its own word right after 点/这:
+    // it belongs to the previous syllable, so it is not a spoken token.
+    const parts = tokenPartsDetailed(annotation.text);
+    const erhuaAlone = parts.length === 1 && parts[0].text === "儿" && lastHan !== null &&
+      erhuaBigrams().has(lastHan + "儿");
+    const finalHan = String(annotation.text).match(/(\p{Script=Han})[^\p{L}\p{N}]*$/u)?.[1];
+    lastHan = finalHan ? simplifiedHan(finalHan) : null;
+    if (erhuaAlone) return [];
+    return parts.map((part) => part.text).flatMap((token) =>
       spokenParts(token).map((text) => ({
         text,
         startMs,
@@ -408,11 +440,23 @@ function alignWords(text, annotations, audioDurationMs) {
   return captionsFromAligned(words, expected, recognized, audioDurationMs, timingRepairs);
 }
 
-// Hanzi readings come only from author-verified {hanzi, pinyin} pairs: this
-// episode first, then every lesson source in the repository. Built once.
+// Hanzi readings and erhua come only from author-verified {hanzi, pinyin}
+// pairs: this episode first, then every lesson source in the repository.
 let cachedSpokenMatch;
+let cachedErhuaBigrams;
+function erhuaBigrams() {
+  return (cachedErhuaBigrams ??= buildErhuaBigrams(verifiedHanziPairs()));
+}
+
 function spokenMatch() {
   if (cachedSpokenMatch) return cachedSpokenMatch;
+  cachedSpokenMatch = createSpokenMatcher({ locale: voiceProfile.locale, readings: buildHanziReadings(verifiedHanziPairs()) });
+  return cachedSpokenMatch;
+}
+
+let cachedPairs;
+function verifiedHanziPairs() {
+  if (cachedPairs) return cachedPairs;
   const pairs = collectHanziPinyinPairs(episode);
   const dirs = [path.join(PROJECT_ROOT, "content", "episodes")];
   try {
@@ -427,8 +471,8 @@ function spokenMatch() {
     catch (error) { if (error?.code !== "ENOENT") throw error; }
     for (const file of files) collectHanziPinyinPairs(JSON.parse(readFileSync(path.join(dir, file), "utf8")), pairs);
   }
-  cachedSpokenMatch = createSpokenMatcher({ locale: voiceProfile.locale, readings: buildHanziReadings(pairs) });
-  return cachedSpokenMatch;
+  cachedPairs = pairs;
+  return cachedPairs;
 }
 
 function captionsFromAligned(words, expected, recognized, audioDurationMs, timingRepairs) {
@@ -939,7 +983,7 @@ async function recoverActualWordClips({
   const words = sourceWords(chunkText);
   const expected = flattenExpected(words).map((entry) => ({
     text: entry.text,
-    language: /\p{Script=Han}/u.test(words[entry.wordIndex].display) ? "zh" : "locale",
+    language: entry.han ? "zh" : "locale",
   }));
   const match = spokenMatch();
   const chunk = Number(chunkNumber);

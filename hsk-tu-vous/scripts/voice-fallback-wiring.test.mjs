@@ -155,3 +155,14 @@ test("an alignment failure on the last STT attempt reaches recovery instead of a
   assert.match(source, /if \(!result\.transcription\) \{\s*await persistMetadata\(\);\s*await persistCheckpoint\(\);\s*throw result\.error;\s*\}/,
     "a spent budget with no response is a transport failure, never written as a null attempt");
 });
+
+test("tokenization folds traditional Hanzi, drops verified erhua 儿 and splits mixed-script words", () => {
+  const parts = between("function tokenPartsDetailed(value) {", "function spokenParts(token) {");
+  assert.match(parts, /\\p\{Script=Han\}\+\|\[\^\\p\{Script=Han\}\]\+/, "一点儿ро splits into Hanzi and the locale suffix");
+  assert.match(parts, /dropErhua\(Array\.from\(normalized, simplifiedHan\), erhuaBigrams\(\)\)/);
+  assert.match(source, /function erhuaBigrams\(\) \{\s*return \(cachedErhuaBigrams \?\?= buildErhuaBigrams\(verifiedHanziPairs\(\)\)\);/);
+  const recognized = between("function flattenRecognized(", "function alignWords(");
+  assert.match(recognized, /erhuaBigrams\(\)\.has\(lastHan \+ "儿"\)/, "a separately timed erhua 儿 is not a spoken token");
+  const recovery = between("async function recoverActualWordClips", "function safeErrorMessage");
+  assert.match(recovery, /language: entry\.han \? "zh" : "locale"/, "each token keeps its own language");
+});

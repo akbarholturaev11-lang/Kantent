@@ -109,3 +109,38 @@ test("real RU one-take probe: letter names, B for 比 and a joined word, still s
   assert.deepEqual(joined.aligned.map((w) => [w.text, w.startMs, w.endMs]), [["тоже", 0, 300], ["тоже", 0, 300], ["правило", 300, 700]]);
   assert.deepEqual(alignSpokenTokens([{ text: "то" }, { text: "же" }], [{ text: "тожи", startMs: 0, endMs: 300 }], match), { failedAt: 0 });
 });
+
+test("erhua 儿 comes only from verified pinyin without a syllable for it (real 2026-11-11 有点儿 takes)", async () => {
+  const { buildErhuaBigrams, dropErhua, simplifiedHan } = await import("./spoken-token-match.mjs");
+  const bigrams = buildErhuaBigrams([
+    { hanzi: "有点儿", pinyin: "yǒudiǎnr" },
+    { hanzi: "便宜一点儿，可以吗？", pinyin: "piányi yìdiǎnr, kěyǐ ma?" },
+    { hanzi: "这儿", pinyin: "zhèr" },
+    { hanzi: "女儿", pinyin: "nǚ’ér" },
+    { hanzi: "女儿", pinyin: "nǚér" },
+    { hanzi: "儿子", pinyin: "érzi" },
+    { hanzi: "哪儿", pinyin: "nǎ" },
+  ]);
+  assert.deepEqual([...bigrams].sort(), ["点儿", "这儿"]);
+  assert.deepEqual(dropErhua([..."这个有点儿贵"], bigrams), [..."这个有点贵"]);
+  assert.deepEqual(dropErhua([..."女儿"], bigrams), [..."女儿"], "儿 read as a syllable stays");
+  assert.deepEqual(dropErhua([..."儿子"], bigrams), [..."儿子"]);
+  assert.equal([..."這個有點貴"].map(simplifiedHan).join(""), "这个有点贵");
+  assert.equal(simplifiedHan("贵"), "贵");
+  assert.equal(simplifiedHan("龘"), "龘", "an unknown character is compared as written");
+});
+
+test("real RU recovery clip: 便宜一点儿 heard as 便宜一点(一点) is confirmed without inventing words", async () => {
+  const { buildErhuaBigrams, dropErhua, createSpokenMatcher } = await import("./spoken-token-match.mjs");
+  const { selectRecoveredBlocks } = await import("./gemini-word-recovery.mjs");
+  const bigrams = buildErhuaBigrams([{ hanzi: "一点儿", pinyin: "yìdiǎnr" }]);
+  const tokens = dropErhua([..."便宜一点儿可以吗"], bigrams);
+  const heard = ["便", "宜", "一", "点", "一", "点", "可", "以", "吗"]
+    .map((text, index) => ({ tokens: [text], text, startMs: 18700 + index * 200, endMs: 18800 + index * 200 }));
+  const match = createSpokenMatcher({ locale: "ru-RU" });
+  assert.equal(selectRecoveredBlocks(tokens, heard, { match }).length, tokens.length);
+  assert.throws(() => selectRecoveredBlocks([..."便宜一点儿可以吗"], heard, { match }), /did not exactly transcribe/,
+    "without the verified erhua rule the same good audio is rejected");
+  assert.throws(() => selectRecoveredBlocks(tokens, heard.filter((b) => b.text !== "宜"), { match }), /did not exactly transcribe/,
+    "a missing syllable still fails closed");
+});

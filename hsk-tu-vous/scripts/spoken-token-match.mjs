@@ -220,3 +220,50 @@ export function alignSpokenTokens(expected, recognized, match, { maxMergeParts =
   }
   return cursor === recognized.length ? { aligned } : { failedAt: expected.length };
 }
+
+/**
+ * Erhua (real 2026-11-11 有点儿/一点儿 RU and TG takes): the 儿 of 有点儿
+ * yǒudiǎnr is not a syllable. It colours the previous one, so Gemini
+ * Transcribe writes 有点/一点 in every pass and the strict gate used to
+ * reject a good take. Returns "X儿" bigrams in which 儿 is erhua. They come
+ * ONLY from author-verified pairs whose pinyin has no syllable for that 儿
+ * (yǒudiǎnr, zhèr). A pair whose pinyin reads 儿 as a syllable (nǚ'ér, érzi)
+ * is never erhua.
+ */
+export function buildErhuaBigrams(pairs) {
+  const bigrams = new Set();
+  for (const { hanzi, pinyin } of pairs) {
+    if (typeof hanzi !== "string" || typeof pinyin !== "string" || !hanzi.includes("儿")) continue;
+    const characters = hanzi.match(/\p{Script=Han}/gu) ?? [];
+    const erhua = characters.filter((character, index) => character === "儿" && index > 0).length;
+    if (!erhua || pinyinSyllables(pinyin, characters.length)) continue;
+    const words = String(pinyin).split(/[\s·'’\-–—/≠≈+…,.!?;:，。！？、]+/u).filter(Boolean);
+    // Each erhua 儿 must be written as its final -r (yǒudiǎnr); pinyin that
+    // omits it ("nǎ" for 哪儿) proves nothing and is not used.
+    const rhotic = words.filter((word) => /.r$/u.test(tonelessPinyin(word))).length;
+    const stripped = words.map((word) => /.r$/u.test(tonelessPinyin(word)) ? word.replace(/r$/iu, "") : word).join(" ");
+    if (rhotic !== erhua || !pinyinSyllables(stripped, characters.length - erhua)) continue;
+    characters.forEach((character, index) => {
+      if (character === "儿" && index > 0) bigrams.add(characters[index - 1] + "儿");
+    });
+  }
+  return bigrams;
+}
+
+/** Han characters with no erhua 儿 (only verified bigrams drop one). */
+export function dropErhua(characters, bigrams) {
+  return characters.filter((character, index) =>
+    !(character === "儿" && index > 0 && bigrams.has(characters[index - 1] + "儿")));
+}
+
+// Traditional → Simplified for characters the lessons use. Real 2026-11-11 TG
+// pass: the audio was 这个有点儿贵 but the transcript came back as 這個有點貴.
+// A character missing here is still compared as written (fail closed).
+const TRADITIONAL = "這这個个點点貴贵們们來来說说對对時时會会嗎吗為为麼么裡里過过還还書书學学車车東东買买賣卖錢钱開开關关門门問问間间見见覺觉現现電电話话語语謝谢請请讓让認认識识讀读寫写聽听號号歲岁幾几兩两塊块歡欢飯饭麵面魚鱼雞鸡醫医師师樂乐習习處处氣气愛爱動动員员機机場场從从後后長长張张進进遠远運运邊边雙双頭头題题顏颜紅红綠绿藍蓝黃黄鐘钟週周準准備备換换筆笔紙纸樓楼貓猫馬马鳥鸟飛飞寶宝貝贝給给經经結结總总線线練练錯错難难雖虽離离隻只種种體体務务該该試试誰谁課课帶带幫帮應应當当歷历舊旧腳脚臉脸藥药視视兒儿麗丽陽阳風风雲云熱热涼凉別别剛刚錶表戲戏頁页預预領领願愿響响參参與与隊队華华漢汉國国圖图園园圓圆團团夠够夢梦嘗尝壞坏聲声費费貨货價价倆俩傳传優优偉伟僅仅喫吃樣样變变";
+const TRADITIONAL_MAP = new Map();
+for (let index = 0; index + 1 < TRADITIONAL.length; index += 2)
+  TRADITIONAL_MAP.set(TRADITIONAL[index], TRADITIONAL[index + 1]);
+
+export function simplifiedHan(character) {
+  return TRADITIONAL_MAP.get(character) ?? character;
+}
