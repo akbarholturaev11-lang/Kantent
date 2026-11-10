@@ -29,10 +29,13 @@
       "platform": "telegram",
       "language": "tg",
       "expectedUsername": "hskaiapp",
-      "liveConnectedUsername": "aibotsakbar",
+      "liveConnectedUsername": "hskaiapp",
       "accountId": "6ae1661bf80a20df8f31158e",
-      "status": "skipped",
-      "reason": "canonical username and Zernio-connected username disagree; do not post to wrong channel"
+      "status": "published",
+      "username": "hskaiapp",
+      "postId": "6af28470b0fd576df8a2492e",
+      "url": "https://t.me/hskaiapp/37",
+      "publishedAt": "2026-11-10T02:41:53.530Z"
     },
     {
       "platform": "instagram",
