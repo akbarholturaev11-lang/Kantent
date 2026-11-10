@@ -415,9 +415,9 @@
       "status": "planned"
     },
     {
-      "id": "youdianr-vs-yidianr-price-20261030",
-      "date": "2026-10-30",
-      "week": 5,
+      "id": "youdianr-vs-yidianr-price-20261111",
+      "date": "2026-11-11",
+      "week": 7,
       "level": "HSK 2",
       "pillar": "Сравниваем слова",
       "topic": "有点儿 и 一点儿: дороговато или чуть дешевле",
@@ -435,37 +435,23 @@
         "В просьбе сделать дешевле 一点儿 (yìdiǎnr) ставят после 便宜: 便宜一点儿，可以吗？ — «Можно немного дешевле?»",
         "Здесь это две функции и две позиции: 有点儿 + прилагательное описывает степень; прилагательное + 一点儿 просит небольшое изменение. Это не исчерпывает все употребления 一点儿, которое также может обозначать небольшое количество."
       ],
-      "episodeFile": "episodes/youdianr-vs-yidianr-price-20261030.json",
-      "status": "planned"
-    },
-    {
-      "date": "2026-10-31",
-      "id": "zhuozi-you-book-20261031",
+      "episodeFile": "episodes/youdianr-vs-yidianr-price-20261111.json",
       "status": "planned",
-      "contentType": "series-part",
-      "episodeFile": "episodes/zhuozi-you-book-20261031.json",
-      "series": {
-        "id": "book-on-table-20261031",
-        "part": 1,
-        "totalParts": 2
-      }
+      "planningNote": "Moved from 2026-10-30 after the upload pause; updated to the active 2026-11-09 content rules."
     },
     {
-      "date": "2026-11-01",
-      "id": "known-book-zai-20261101",
+      "id": "campus-voice-rehearsal-20261112",
+      "date": "2026-11-12",
+      "contentType": "advertisement",
+      "topic": "Перед разговором: короткая голосовая репетиция с AI Voice",
+      "promoFile": "promos/campus-voice-rehearsal-20261112.json",
       "status": "planned",
-      "contentType": "series-part",
-      "episodeFile": "episodes/known-book-zai-20261101.json",
-      "series": {
-        "id": "book-on-table-20261031",
-        "part": 2,
-        "totalParts": 2
-      }
+      "planningNote": "Moved from 2026-11-03 after the upload pause; updated under the current brand-recall ending rule."
     },
     {
-      "id": "haishi-vs-huozhe-tea-20261102",
-      "date": "2026-11-02",
-      "week": 6,
+      "id": "haishi-vs-huozhe-tea-20261113",
+      "date": "2026-11-13",
+      "week": 7,
       "level": "HSK 2",
       "pillar": "Сравниваем слова",
       "topic": "还是 и 或者: вопрос с выбором или утверждение",
@@ -483,21 +469,40 @@
         "В утверждении, которое перечисляет допустимые варианты, обычно используют 或者 (huòzhě): 茶或者咖啡都行。",
         "В таком вопросе с 还是 не нужно добавлять 吗; правило относится к этому типу вопроса, поскольку 还是 имеет и другие значения и встречается во вложенных вопросах."
       ],
-      "episodeFile": "episodes/haishi-vs-huozhe-tea-20261102.json",
-      "status": "planned"
+      "episodeFile": "episodes/haishi-vs-huozhe-tea-20261113.json",
+      "status": "planned",
+      "planningNote": "Moved from 2026-11-02 after the upload pause; updated to the active 2026-11-09 content rules."
     },
     {
-      "id": "campus-voice-rehearsal-20261103",
-      "date": "2026-11-03",
-      "contentType": "advertisement",
-      "topic": "Перед разговором: короткая голосовая репетиция с AI Voice",
-      "promoFile": "promos/campus-voice-rehearsal-20261103.json",
-      "status": "planned"
+      "date": "2026-11-14",
+      "id": "zhuozi-you-book-20261114",
+      "status": "planned",
+      "contentType": "series-part",
+      "episodeFile": "episodes/zhuozi-you-book-20261114.json",
+      "series": {
+        "id": "book-on-table-20261114",
+        "part": 1,
+        "totalParts": 2
+      },
+      "planningNote": "Moved from 2026-10-31 after the upload pause; updated to the active 2026-11-09 content rules."
     },
     {
-      "id": "bi-comparison-height-20261104",
-      "date": "2026-11-04",
-      "week": 6,
+      "date": "2026-11-15",
+      "id": "known-book-zai-20261115",
+      "status": "planned",
+      "contentType": "series-part",
+      "episodeFile": "episodes/known-book-zai-20261115.json",
+      "series": {
+        "id": "book-on-table-20261114",
+        "part": 2,
+        "totalParts": 2
+      },
+      "planningNote": "Moved from 2026-11-01 after the upload pause; updated to the active 2026-11-09 content rules."
+    },
+    {
+      "id": "bi-comparison-height-20261116",
+      "date": "2026-11-16",
+      "week": 8,
       "level": "HSK 2",
       "pillar": "Простая грамматика",
       "topic": "比: простое сравнение A 比 B + прилагательное",
@@ -514,21 +519,23 @@
         "В простой конструкции с 比 перед прилагательным не ставят 很: 他比我高, не 他比我很高.",
         "Тот же порядок работает с днями: 今天比昨天冷 — «Сегодня холоднее, чем вчера»."
       ],
-      "episodeFile": "episodes/bi-comparison-height-20261104.json",
-      "status": "planned"
+      "episodeFile": "episodes/bi-comparison-height-20261116.json",
+      "status": "planned",
+      "planningNote": "Moved from 2026-11-04 after the upload pause; updated to the active 2026-11-09 content rules."
     },
     {
-      "id": "shop-shirt-size-20261105",
-      "date": "2026-11-05",
+      "id": "shop-shirt-size-20261117",
+      "date": "2026-11-17",
       "contentType": "advertisement",
       "topic": "В магазине одежды: репетиция вопроса о размере через AI Voice",
-      "promoFile": "promos/shop-shirt-size-20261105.json",
-      "status": "planned"
+      "promoFile": "promos/shop-shirt-size-20261117.json",
+      "status": "planned",
+      "planningNote": "Moved from 2026-11-05 after the upload pause; updated under the current brand-recall ending rule."
     },
     {
-      "id": "ji-vs-duoshao-books-price-20261106",
-      "date": "2026-11-06",
-      "week": 6,
+      "id": "ji-vs-duoshao-books-price-20261118",
+      "date": "2026-11-18",
+      "week": 8,
       "level": "HSK 1",
       "pillar": "Сравниваем слова",
       "topic": "几 и 多少: количество книг или неизвестная цена",
@@ -545,17 +552,27 @@
         "多少 не подразумевает небольшого количества; 多少钱 обычно спрашивает неизвестную стоимость: 这个多少钱？",
         "В прямых вопросах с 几 или 多少 не требуется частица 吗; структура зависит от контекста."
       ],
-      "episodeFile": "episodes/ji-vs-duoshao-books-price-20261106.json",
-      "status": "planned"
+      "episodeFile": "episodes/ji-vs-duoshao-books-price-20261118.json",
+      "status": "planned",
+      "planningNote": "Moved from 2026-11-06 after the upload pause; updated to the active 2026-11-09 content rules."
     },
     {
-      "id": "ye-dou-placement-20261109",
-      "date": "2026-11-09",
-      "week": 7,
+      "id": "library-pronunciation-20261119",
+      "date": "2026-11-19",
+      "contentType": "advertisement",
+      "topic": "Китобхонада савол беришдан олдин AI Voice билан овозли машқ",
+      "promoFile": "promos/library-pronunciation-20261119.json",
+      "status": "planned",
+      "planningNote": "Moved from 2026-11-10 after the upload pause; updated under the current brand-recall ending rule."
+    },
+    {
+      "id": "ye-dou-placement-20261120",
+      "date": "2026-11-20",
+      "week": 8,
       "level": "HSK 1",
       "pillar": "Простая грамматика",
-      "topic": "也 и 都: после подлежащего, перед глаголом",
-      "format": "Класс: друг говорит 我是学生, ответить «я тоже», затем вся группа с 都",
+      "topic": "也 и 都: после подлежащего, перед глаголом, в диалоге на платформе метро",
+      "format": "Короткий обмен репликами: «я тоже студент», затем обобщение для группы",
       "targetItems": [
         "也 yě",
         "都 dōu",
@@ -568,16 +585,9 @@
         "也 не ставят перед подлежащим и в конец фразы: не 也我是学生 и не 我是学生也.",
         "都 (dōu, «все») стоит там же — после подлежащего, перед глаголом: 我们都是学生 — «Мы все студенты»."
       ],
-      "episodeFile": "episodes/ye-dou-placement-20261109.json",
-      "status": "planned"
-    },
-    {
-      "id": "library-pronunciation-20261110",
-      "date": "2026-11-10",
-      "contentType": "advertisement",
-      "topic": "Китобхонада савол беришдан олдин AI Voice билан овозли машқ",
-      "promoFile": "promos/library-pronunciation-20261110.json",
-      "status": "planned"
+      "episodeFile": "episodes/ye-dou-placement-20261120.json",
+      "status": "planned",
+      "planningNote": "Moved from 2026-11-09 after the upload pause; updated to the active 2026-11-09 content rules."
     }
   ],
   "planningBuffer": {

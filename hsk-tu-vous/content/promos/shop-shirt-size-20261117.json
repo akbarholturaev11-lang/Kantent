@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "shop-shirt-size-20261105",
+  "id": "shop-shirt-size-20261117",
   "kind": "advertisement",
   "status": "draft",
   "title": "Перед вопросом о размере: короткая репетиция",
@@ -45,7 +45,7 @@
     {
       "id": "shirt-rack",
       "role": "situation",
-      "narration": "Представь: ты стоишь у стойки с футболками и хочешь спросить, есть ли размер побольше.",
+      "narration": "Представь: ты у стойки с футболками и хочешь спросить про размер побольше. Перед разговором можно попробовать вопрос в HSK AI.",
       "visual": {
         "type": "illustration",
         "focalSubject": "Футболка на вешалке и рука покупателя",
@@ -477,6 +477,37 @@
       }
     },
     {
+      "id": "real-ai-voice",
+      "role": "product-demo",
+      "narration": "В HSK AI есть AI Voice для разговорной практики. На настоящем экране показана панда.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Настоящий экран AI Voice",
+        "action": "Reframe the verified existing product capture at the spoken feature; no simulated response or UI",
+        "continuityKey": "same-shopper-shirt-size",
+        "cueText": "AI Voice",
+        "backgroundToken": "foreground",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "zxx",
+        "sourceUiLanguage": "tg-TJ",
+        "languageNeutralCrop": true,
+        "screenImage": "promo-captures/ai-voice-original.png",
+        "crop": {
+          "x": 285,
+          "y": 580,
+          "width": 600,
+          "height": 540,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        },
+        "limitations": "Before voice/render, recheck the current genuine capture and exact crop against the current HSK AI screen; verify the visible panda or microphone and that the language-neutral crop contains no unrelated labels or private fields."
+      },
+      "claimIds": [
+        "ai-voice-practice"
+      ]
+    },
+    {
       "id": "phone-before-talk",
       "role": "attempt",
       "narration": "До разговора с продавцом достаёшь телефон, чтобы спокойно попробовать вопрос вслух.",
@@ -624,36 +655,6 @@
       }
     },
     {
-      "id": "real-ai-voice",
-      "role": "product-demo",
-      "narration": "В HSK AI есть AI Voice для разговорной практики. На настоящем экране показана панда.",
-      "visual": {
-        "type": "product-capture",
-        "focalSubject": "Настоящий экран AI Voice",
-        "action": "Reframe the verified existing product capture at the spoken feature; no simulated response or UI",
-        "continuityKey": "same-shopper-shirt-size",
-        "cueText": "AI Voice",
-        "backgroundToken": "foreground",
-        "assetPath": "public/promo-captures/ai-voice-original.png",
-        "provenance": "genuine-product-capture",
-        "uiLanguage": "zxx",
-        "sourceUiLanguage": "tg-TJ",
-        "languageNeutralCrop": true,
-        "screenImage": "promo-captures/ai-voice-original.png",
-        "crop": {
-          "x": 285,
-          "y": 580,
-          "width": 600,
-          "height": 540,
-          "sourceWidth": 1179,
-          "sourceHeight": 2556
-        }
-      },
-      "claimIds": [
-        "ai-voice-practice"
-      ]
-    },
-    {
       "id": "real-microphone",
       "role": "product-demo",
       "narration": "В этом режиме есть кнопка микрофона. Можно попробовать сказать свой вопрос голосом.",
@@ -677,7 +678,8 @@
           "height": 245,
           "sourceWidth": 1179,
           "sourceHeight": 2556
-        }
+        },
+        "limitations": "Before voice/render, recheck the current genuine capture and exact crop against the current HSK AI screen; verify the visible panda or microphone and that the language-neutral crop contains no unrelated labels or private fields."
       },
       "claimIds": [
         "microphone-button"
@@ -933,5 +935,5 @@
     "#китайскийязык",
     "#HSK"
   ],
-  "durationTargetSec": 40
+  "durationTargetSec": 50
 }

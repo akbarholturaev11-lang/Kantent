@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "campus-voice-rehearsal-20261103",
+  "id": "campus-voice-rehearsal-20261112",
   "kind": "advertisement",
   "status": "draft",
   "title": "Пеш аз суҳбат: машқ бо AI Voice",
@@ -45,13 +45,13 @@
     {
       "id": "dorm-exit",
       "role": "situation",
-      "narration": "Тасаввур кун: аз хобгоҳ мебароӣ, шиносе мепурсад, ба куҷо меравӣ.",
+      "narration": "Тасаввур кун: назди хобгоҳ шиносе мепурсад, ки ба куҷо меравӣ. Барои машқи кӯтоҳ метавонӣ HSK AI-ро кушоӣ.",
       "visual": {
         "type": "illustration",
         "focalSubject": "Донишҷӯ бо ҷузвдон назди дари хобгоҳ",
         "action": "Донишҷӯ аз дар берун меояд; ҳаракат оғози суҳбатро нишон медиҳад.",
         "continuityKey": "same-student-dorm-voice-rehearsal",
-        "cueText": "аз хобгоҳ мебароӣ",
+        "cueText": "назди хобгоҳ",
         "backgroundToken": "foreground",
         "drawingBrief": "Тасвири аслии дари хобгоҳ ва донишҷӯ бо ҷузвдон, бе навишта.",
         "graphic": {
@@ -377,6 +377,37 @@
       }
     },
     {
+      "id": "ai-voice",
+      "role": "product-demo",
+      "narration": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст. Дар экрани ҳақиқӣ персонажи панда дида мешавад.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Пандаи ҳақиқии экрани AI Voice",
+        "action": "Аз телефони холӣ ба буридаи аслии экран бо панда мегузарад; ягон матни нав илова намешавад.",
+        "continuityKey": "same-student-dorm-voice-rehearsal",
+        "cueText": "AI Voice",
+        "backgroundToken": "foreground",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "zxx",
+        "sourceUiLanguage": "tg-TJ",
+        "languageNeutralCrop": true,
+        "screenImage": "promo-captures/ai-voice-original.png",
+        "crop": {
+          "x": 285,
+          "y": 580,
+          "width": 600,
+          "height": 540,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        },
+        "limitations": "Пеш аз овоз ва рендер, акси аслии экран ва crop-и дақиқро бо интерфейси ҷории HSK AI аз нав бисанҷ; панда ё микрофон бояд намоён бошад ва crop-и бе маҳдудияти забонӣ набояд навиштаҷоти бегона ё маълумоти хусусӣ дошта бошад."
+      },
+      "claimIds": [
+        "voice-mode"
+      ]
+    },
+    {
       "id": "open-phone",
       "role": "attempt",
       "narration": "Метавонӣ аввал телефонро кушода, ҷавоби кӯтоҳатро оромона машқ кунӣ.",
@@ -507,36 +538,6 @@
       }
     },
     {
-      "id": "ai-voice",
-      "role": "product-demo",
-      "narration": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст. Дар экрани ҳақиқӣ персонажи панда дида мешавад.",
-      "visual": {
-        "type": "product-capture",
-        "focalSubject": "Пандаи ҳақиқии экрани AI Voice",
-        "action": "Аз телефони холӣ ба буридаи аслии экран бо панда мегузарад; ягон матни нав илова намешавад.",
-        "continuityKey": "same-student-dorm-voice-rehearsal",
-        "cueText": "AI Voice",
-        "backgroundToken": "foreground",
-        "assetPath": "public/promo-captures/ai-voice-original.png",
-        "provenance": "genuine-product-capture",
-        "uiLanguage": "zxx",
-        "sourceUiLanguage": "tg-TJ",
-        "languageNeutralCrop": true,
-        "screenImage": "promo-captures/ai-voice-original.png",
-        "crop": {
-          "x": 285,
-          "y": 580,
-          "width": 600,
-          "height": 540,
-          "sourceWidth": 1179,
-          "sourceHeight": 2556
-        }
-      },
-      "claimIds": [
-        "voice-mode"
-      ]
-    },
-    {
       "id": "mic",
       "role": "product-demo",
       "narration": "Дар ин режим тугмаи микрофон ҳаст. Метавонӣ кӯшиш кунӣ, ки як ҷумлаи кӯтоҳро бо овоз бигӯӣ.",
@@ -560,7 +561,8 @@
           "height": 245,
           "sourceWidth": 1179,
           "sourceHeight": 2556
-        }
+        },
+        "limitations": "Пеш аз овоз ва рендер, акси аслии экран ва crop-и дақиқро бо интерфейси ҷории HSK AI аз нав бисанҷ; панда ё микрофон бояд намоён бошад ва crop-и бе маҳдудияти забонӣ набояд навиштаҷоти бегона ё маълумоти хусусӣ дошта бошад."
       },
       "claimIds": [
         "microphone"
@@ -761,12 +763,12 @@
     "#ЗабониЧинӣ",
     "#HSK"
   ],
-  "durationTargetSec": 40,
+  "durationTargetSec": 50,
   "localization": {
     "language": "tg",
-    "sourcePromoId": "campus-voice-rehearsal-20261103",
-    "sourceHash": "69b9f55955c8b3b2d69fe67c952d00434857cd22afd330850372322e54458781",
-    "authoredOn": "2026-10-31",
+    "sourcePromoId": "campus-voice-rehearsal-20261112",
+    "sourceHash": "803ccf011de8e88a6a157328316adf80bb2c455748b8915145f46673228fedb3",
+    "authoredOn": "2026-11-10",
     "status": "draft"
   }
 }

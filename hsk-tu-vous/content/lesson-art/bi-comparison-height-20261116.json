@@ -1,0 +1,51 @@
+{
+  "episodeId": "bi-comparison-height-20261116",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Polished semi-realistic digital illustration for a premium vertical explainer reel: warm cinematic lighting, soft cel shading, clean confident linework, rich but natural colours, detailed believable background, gentle depth of field. Absolutely no text, letters, numbers, signs with writing, logos or watermarks anywhere in the image. Setting: a quiet bookstore with tall shelves of books with blank spines and reading chairs.",
+  "assets": [
+    {
+      "name": "bookstore",
+      "aspectRatio": "9:16",
+      "prompt": "A quiet Chinese bookstore with tall bookshelves with blank spines, two reading chairs and a large side window; open floor in front for character placement. No people or characters; no readable text, numbers, logos or watermark."
+    },
+    {
+      "name": "sunny-window",
+      "aspectRatio": "4:5",
+      "references": [
+        "bookstore"
+      ],
+      "prompt": "View from the same bookstore window on a mild sunny day, blank-spined bookshelves at edge and warm light. No people or characters; no text, numbers, logos or watermark."
+    },
+    {
+      "name": "cold-window",
+      "aspectRatio": "4:5",
+      "references": [
+        "bookstore",
+        "sunny-window"
+      ],
+      "prompt": "The same bookstore window on a cold grey day, cool winter light and blank-spined shelves at the edge. No people or characters; no text, numbers, logos or watermark."
+    },
+    {
+      "name": "blank-notebook",
+      "aspectRatio": "4:5",
+      "references": [
+        "bookstore"
+      ],
+      "prompt": "Open completely blank notebook on a wooden reading table in the same quiet bookstore; shelves soft behind. No people or characters; no writing, letters, numbers, logos or watermark."
+    }
+  ],
+  "variety": {
+    "date": "2026-11-16",
+    "setting": "bookstore",
+    "coach": "panda",
+    "supportingCharacter": "crane",
+    "pattern": "two-subject",
+    "experiment": {
+      "id": "vv-setting-group-v1",
+      "arm": "B",
+      "variable": "setting group",
+      "value": "indoor-daily"
+    },
+    "source": "scripts/visual-variety-plan.mjs (2026-11-10): assigned bookstore, crane and two-subject; A/B B = indoor-daily."
+  }
+}

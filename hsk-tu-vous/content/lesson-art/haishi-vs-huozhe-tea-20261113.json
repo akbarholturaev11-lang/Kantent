@@ -1,0 +1,43 @@
+{
+  "episodeId": "haishi-vs-huozhe-tea-20261113",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Polished semi-realistic digital illustration for a premium vertical explainer reel: warm cinematic lighting, soft cel shading, clean confident linework, rich but natural colours, detailed believable background, gentle depth of field. Absolutely no text, letters, numbers, signs with writing, logos or watermarks anywhere in the image. Setting: a cosy tea house with wooden tables, teapots and soft window light.",
+  "assets": [
+    {
+      "name": "tea-house",
+      "aspectRatio": "9:16",
+      "prompt": "A cosy Chinese tea house with wooden tables, a teapot and soft window light; clear central table. No people or characters. No signage, text, letters, numbers, logos or watermark."
+    },
+    {
+      "name": "tea-choice",
+      "aspectRatio": "4:5",
+      "references": [
+        "tea-house"
+      ],
+      "prompt": "A simple green tea cup and small teapot on a wooden table in the same cosy tea house, soft window light. No people or characters; no text, letters, numbers, logos or watermark."
+    },
+    {
+      "name": "coffee-choice",
+      "aspectRatio": "4:5",
+      "references": [
+        "tea-house",
+        "tea-choice"
+      ],
+      "prompt": "One plain coffee cup on a wooden table in the same cosy tea house, soft window light. No people or characters; no text, letters, numbers, logos or watermark."
+    }
+  ],
+  "variety": {
+    "date": "2026-11-13",
+    "setting": "cafe",
+    "coach": "panda",
+    "supportingCharacter": "crane",
+    "pattern": "before-after-cards",
+    "experiment": {
+      "id": "vv-setting-group-v1",
+      "arm": "B",
+      "variable": "setting group",
+      "value": "indoor-daily"
+    },
+    "source": "scripts/visual-variety-plan.mjs (2026-11-10): assigned cafe, crane and before-after-cards; A/B B = indoor-daily."
+  }
+}

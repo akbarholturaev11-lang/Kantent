@@ -1,0 +1,51 @@
+{
+  "episodeId": "ye-dou-placement-20261120",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Polished semi-realistic digital illustration for a premium vertical explainer reel: warm cinematic lighting, soft cel shading, clean confident linework, rich but natural colours, detailed believable background, gentle depth of field. Absolutely no text, letters, numbers, signs with writing, logos or watermarks anywhere in the image. Setting: a clean modern Chinese metro platform with a train arriving (no readable signs).",
+  "assets": [
+    {
+      "name": "metro-platform",
+      "aspectRatio": "9:16",
+      "prompt": "A clean modern Chinese metro platform with an arriving train in the background, warm lighting and a clear waiting area. All signs blank. No people, animals or characters; no text, letters, numbers, logos or watermark."
+    },
+    {
+      "name": "metro-one-speaker",
+      "aspectRatio": "4:5",
+      "references": [
+        "metro-platform"
+      ],
+      "prompt": "The same metro platform with an open place beside a bench for one HSK AI character to be placed later; train soft in distance. No people or characters; no readable signs, text, numbers, logos or watermark."
+    },
+    {
+      "name": "metro-small-group",
+      "aspectRatio": "4:5",
+      "references": [
+        "metro-platform",
+        "metro-one-speaker"
+      ],
+      "prompt": "The same platform with open floor space beside the bench for a small group of HSK AI characters to be placed later; train soft in distance. No people or characters; no readable signs, text, numbers, logos or watermark."
+    },
+    {
+      "name": "metro-board",
+      "aspectRatio": "9:16",
+      "references": [
+        "metro-platform"
+      ],
+      "prompt": "A close view of a large completely blank wayfinding board inside the same modern station, clean wall and soft train light at the edge. No people or characters; no writing, lines, letters, numbers, logos or watermark."
+    }
+  ],
+  "variety": {
+    "date": "2026-11-20",
+    "setting": "metro-station",
+    "coach": "panda",
+    "supportingCharacter": "monkey",
+    "pattern": "before-after-cards",
+    "experiment": {
+      "id": "vv-setting-group-v1",
+      "arm": "A",
+      "variable": "setting group",
+      "value": "outdoor-china"
+    },
+    "source": "scripts/visual-variety-plan.mjs (2026-11-10): assigned metro-station, monkey and before-after-cards; A/B A = outdoor-china."
+  }
+}

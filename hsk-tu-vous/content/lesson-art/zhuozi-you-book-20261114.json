@@ -1,0 +1,43 @@
+{
+  "episodeId": "zhuozi-you-book-20261114",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Polished semi-realistic digital illustration for a premium vertical explainer reel: warm cinematic lighting, soft cel shading, clean confident linework, rich but natural colours, detailed believable background, gentle depth of field. Absolutely no text, letters, numbers, signs with writing, logos or watermarks anywhere in the image. Setting: a lively Chinese night market street with food stalls and warm lights (no readable signs).",
+  "assets": [
+    {
+      "name": "night-market-bookstall",
+      "aspectRatio": "9:16",
+      "prompt": "A lively Chinese night market at dusk with warm food-stall lanterns and a small quiet book stall at the edge; clean wooden table in the foreground, book spines blank. No people, animals or characters; no writing, letters, numbers, logos or watermark."
+    },
+    {
+      "name": "empty-book-table",
+      "aspectRatio": "4:5",
+      "references": [
+        "night-market-bookstall"
+      ],
+      "prompt": "The same wooden table at the small night-market book stall, empty tabletop under warm lantern light, blank book spines softly in the background. No people or characters; no text, letters, numbers, logos or watermark."
+    },
+    {
+      "name": "single-book-table",
+      "aspectRatio": "4:5",
+      "references": [
+        "night-market-bookstall",
+        "empty-book-table"
+      ],
+      "prompt": "The same night-market table now with one plain closed book on it, blank cover and pages, warm lantern light. No people or characters; no text, letters, numbers, logos or watermark."
+    }
+  ],
+  "variety": {
+    "date": "2026-11-14",
+    "setting": "night-market",
+    "coach": "panda",
+    "supportingCharacter": "monkey",
+    "pattern": "single-coach",
+    "experiment": {
+      "id": "vv-setting-group-v1",
+      "arm": "A",
+      "variable": "setting group",
+      "value": "outdoor-china"
+    },
+    "source": "scripts/visual-variety-plan.mjs (2026-11-10): assigned night-market, monkey and single-coach; A/B A = outdoor-china."
+  }
+}

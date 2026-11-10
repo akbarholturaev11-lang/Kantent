@@ -1,13 +1,13 @@
 {
-  "id": "youdianr-vs-yidianr-price-20261030",
-  "date": "2026-10-30",
+  "id": "youdianr-vs-yidianr-price-20261111",
+  "date": "2026-11-11",
   "timezone": "Asia/Shanghai",
   "languageCode": "tg-TJ",
-  "title": "有点儿 ё 一点儿: каме гарон аст ё каме арзонтар?",
+  "title": "有点儿 ва 一点儿: гаронӣ ва нархи камтар",
   "level": "HSK 2",
   "topic": "有点儿 пеш аз сифат ва 一点儿 баъд аз сифат ҳангоми харид",
-  "durationTargetSec": 32,
-  "caption": "这个有点儿贵 — «Ин каме гарон аст». 便宜一点儿，可以吗？ — «Каме арзонтар мешавад?»",
+  "durationTargetSec": 50,
+  "caption": "有点儿 + сифат — арзёбии нарм. Сифат + 一点儿 — хоҳиши тағйири каме.",
   "hashtags": [
     "#HSKAI",
     "#ЗабониЧинӣ",
@@ -32,7 +32,7 @@
       "id": "hook",
       "kind": "hook",
       "durationSec": 5,
-      "narration": "Дар бозор нархи мол каме баланд аст. Бо чинӣ чӣ мегӯӣ? 这个有点儿贵。",
+      "narration": "Дар боғи шаҳр, назди дӯкони кӯл нархи мол каме баланд аст. Бо чинӣ чӣ мегӯӣ? 这个有点儿贵。",
       "cards": [
         {
           "hanzi": "这个有点儿贵。",
@@ -47,7 +47,7 @@
           "kind": "graphic",
           "cueText": "нархи мол",
           "visual": {
-            "title": "Ин каме гарон аст.",
+            "title": "Назди дӯкон",
             "hanzi": "这个有点儿贵。",
             "pinyin": "Zhège yǒudiǎnr guì.",
             "meaning": "Ин каме гарон аст.",
@@ -160,6 +160,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "park-evaluation",
+                "park-request"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "Муҳити дарс: Харидор дар бозор ба нархи маҳсулот менигарад. Ҳолати аввал ва ҳадаф: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
@@ -169,7 +196,7 @@
           "kind": "graphic",
           "cueText": "чӣ мегӯӣ",
           "visual": {
-            "title": "Ин каме гарон аст.",
+            "title": "Арзёбии нарм",
             "hanzi": "这个有点儿贵。",
             "pinyin": "Zhège yǒudiǎnr guì.",
             "meaning": "Ин каме гарон аст.",
@@ -296,6 +323,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "park-evaluation",
+                "park-request"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "Тағйири намоён барои маънои нав: Ҳар ду шакл ба «каме» тарҷума мешавад, аммо ҷойи онҳо дигар аст."
@@ -305,7 +359,7 @@
           "kind": "graphic",
           "cueText": "这个有点儿贵",
           "visual": {
-            "title": "Ин каме гарон аст.",
+            "title": "Ифодаи чинӣ",
             "hanzi": "这个有点儿贵。",
             "pinyin": "Zhège yǒudiǎnr guì.",
             "meaning": "Ин каме гарон аст.",
@@ -484,6 +538,33 @@
                       "value": 0
                     }
                   ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "park-evaluation",
+                "park-request"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
                 }
               ]
             }
@@ -518,7 +599,7 @@
           "kind": "graphic",
           "cueText": "有点儿",
           "visual": {
-            "title": "каме гарон",
+            "title": "Ифодаи мулоим",
             "hanzi": "有点儿贵",
             "pinyin": "yǒudiǎnr guì",
             "meaning": "каме гарон",
@@ -631,6 +712,38 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "park-kiosk"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.18,
+                  "y": 0.38,
+                  "w": 0.64,
+                  "h": 0.45
+                }
+              },
+              "focus": "a",
+              "overlay": "adjective",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "talk",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
             }
           },
           "explains": "Муҳити дарс: Харидор дар бозор ба нархи маҳсулот менигарад. Ҳолати аввал ва ҳадаф: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
@@ -640,7 +753,7 @@
           "kind": "graphic",
           "cueText": "пеш аз сифати",
           "visual": {
-            "title": "Ин каме гарон аст.",
+            "title": "Ҷойи калима",
             "hanzi": "这个有点儿贵。",
             "pinyin": "Zhège yǒudiǎnr guì.",
             "meaning": "Ин каме гарон аст.",
@@ -821,6 +934,38 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "park-kiosk"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.18,
+                  "y": 0.38,
+                  "w": 0.64,
+                  "h": 0.45
+                }
+              },
+              "focus": "a",
+              "overlay": "adjective",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "talk",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
             }
           },
           "explains": "Тағйири намоён барои маънои нав: Ҳар ду шакл ба «каме» тарҷума мешавад, аммо ҷойи онҳо дигар аст."
@@ -830,7 +975,7 @@
           "kind": "graphic",
           "cueText": "Ин баҳо",
           "visual": {
-            "title": "каме гарон",
+            "title": "Таассурот аз нарх",
             "hanzi": "有点儿贵",
             "pinyin": "yǒudiǎnr guì",
             "meaning": "каме гарон",
@@ -957,6 +1102,38 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "park-kiosk"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.18,
+                  "y": 0.38,
+                  "w": 0.64,
+                  "h": 0.45
+                }
+              },
+              "focus": "a",
+              "overlay": "adjective",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "talk",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
             }
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
@@ -989,7 +1166,7 @@
           "kind": "graphic",
           "cueText": "ба фурӯшанда",
           "visual": {
-            "title": "каме арзонтар",
+            "title": "Муроҷиати хушмуомила",
             "hanzi": "便宜一点儿",
             "pinyin": "piányi yìdiǎnr",
             "meaning": "каме арзонтар",
@@ -1102,6 +1279,38 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "park-kiosk"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.18,
+                  "y": 0.38,
+                  "w": 0.64,
+                  "h": 0.45
+                }
+              },
+              "focus": "a",
+              "overlay": "drop",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "talk",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
             }
           },
           "explains": "Муҳити дарс: Харидор дар бозор ба нархи маҳсулот менигарад. Ҳолати аввал ва ҳадаф: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
@@ -1111,7 +1320,7 @@
           "kind": "graphic",
           "cueText": "便宜一点儿",
           "visual": {
-            "title": "Каме арзонтар мешавад?",
+            "title": "Сохти хоҳиш",
             "hanzi": "便宜一点儿，可以吗？",
             "pinyin": "Piányi yìdiǎnr, kěyǐ ma?",
             "meaning": "Каме арзонтар мешавад?",
@@ -1223,6 +1432,38 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "park-kiosk"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.18,
+                  "y": 0.38,
+                  "w": 0.64,
+                  "h": 0.45
+                }
+              },
+              "focus": "a",
+              "overlay": "drop",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "talk",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
             }
           },
           "explains": "Тағйири намоён барои маънои нав: Ҳар ду шакл ба «каме» тарҷума мешавад, аммо ҷойи онҳо дигар аст."
@@ -1232,7 +1473,7 @@
           "kind": "graphic",
           "cueText": "Каме арзонтар",
           "visual": {
-            "title": "каме арзонтар",
+            "title": "Тағйири арзиш",
             "hanzi": "便宜一点儿",
             "pinyin": "piányi yìdiǎnr",
             "meaning": "каме арзонтар",
@@ -1411,6 +1652,38 @@
                       "value": 0
                     }
                   ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "park-kiosk"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.18,
+                  "y": 0.38,
+                  "w": 0.64,
+                  "h": 0.45
+                }
+              },
+              "focus": "a",
+              "overlay": "drop",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "talk",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
                 }
               ]
             }
@@ -1445,7 +1718,7 @@
           "kind": "graphic",
           "cueText": "有点儿贵",
           "visual": {
-            "title": "каме гарон",
+            "title": "Маънои якум",
             "hanzi": "有点儿贵",
             "pinyin": "yǒudiǎnr guì",
             "meaning": "каме гарон",
@@ -1558,6 +1831,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "park-evaluation",
+                "park-request"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "Муҳити дарс: Харидор дар бозор ба нархи маҳсулот менигарад. Ҳолати аввал ва ҳадаф: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
@@ -1567,7 +1867,7 @@
           "kind": "graphic",
           "cueText": "便宜一点儿",
           "visual": {
-            "title": "каме арзонтар",
+            "title": "Маънои дуюм",
             "hanzi": "便宜一点儿",
             "pinyin": "piányi yìdiǎnr",
             "meaning": "каме арзонтар",
@@ -1679,6 +1979,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "park-evaluation",
+                "park-request"
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "Тағйири намоён барои маънои нав: Ҳар ду шакл ба «каме» тарҷума мешавад, аммо ҷойи онҳо дигар аст."
@@ -1688,7 +2015,7 @@
           "kind": "graphic",
           "cueText": "Ҷойи 一点儿ро",
           "visual": {
-            "title": "каме гарон",
+            "title": "Ҷой дар қолаб",
             "hanzi": "有点儿贵",
             "pinyin": "yǒudiǎnr guì",
             "meaning": "каме гарон",
@@ -1869,6 +2196,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "park-evaluation",
+                "park-request"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
@@ -1901,7 +2255,7 @@
           "kind": "graphic",
           "cueText": "Каме гарон",
           "visual": {
-            "title": "каме гарон",
+            "title": "Арзёбии арзиш",
             "hanzi": "有点儿贵",
             "pinyin": "yǒudiǎnr guì",
             "meaning": "каме гарон",
@@ -2014,6 +2368,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "park-kiosk"
+              ],
+              "parts": [
+                "有点儿 + 贵",
+                "便宜 + 一点儿"
+              ],
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "proud",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "celebrate",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
             }
           },
           "explains": "Муҳити дарс: Харидор дар бозор ба нархи маҳсулот менигарад. Ҳолати аввал ва ҳадаф: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
@@ -2023,7 +2404,7 @@
           "kind": "graphic",
           "cueText": "便宜一点儿",
           "visual": {
-            "title": "Каме арзонтар мешавад?",
+            "title": "Саволи хушмуомила",
             "hanzi": "便宜一点儿，可以吗？",
             "pinyin": "Piányi yìdiǎnr, kěyǐ ma?",
             "meaning": "Каме арзонтар мешавад?",
@@ -2135,6 +2516,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "park-kiosk"
+              ],
+              "parts": [
+                "有点儿 + 贵",
+                "便宜 + 一点儿"
+              ],
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "proud",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "celebrate",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
             }
           },
           "explains": "Тағйири намоён барои маънои нав: Ҳар ду шакл ба «каме» тарҷума мешавад, аммо ҷойи онҳо дигар аст."
@@ -2144,7 +2552,7 @@
           "kind": "graphic",
           "cueText": "Ду ҷойи",
           "visual": {
-            "title": "каме гарон",
+            "title": "Тартиби калима",
             "hanzi": "有点儿贵",
             "pinyin": "yǒudiǎnr guì",
             "meaning": "каме гарон",
@@ -2325,6 +2733,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "park-kiosk"
+              ],
+              "parts": [
+                "有点儿 + 贵",
+                "便宜 + 一点儿"
+              ],
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "proud",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "rabbit",
+                  "mood": "celebrate",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
             }
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
@@ -2342,29 +2777,29 @@
     {
       "title": "有点儿 vs 一点儿 — ChineseGrammar",
       "url": "https://chinesegrammar.app/grammar/youdianr-yidianr",
-      "checkedAt": "2026-10-24",
+      "checkedAt": "2026-11-10",
       "supports": "Documents 有点儿 + adjective with 这个有点儿贵 and adjective + 一点儿 with 请便宜一点儿, tone-marked examples and nonabsolute pragmatic nuance."
     },
     {
       "title": "有点儿 vs 一点儿 — GoEast Mandarin",
       "url": "https://goeastmandarin.com/youdianr-versus-yidianr/",
-      "checkedAt": "2026-10-24",
+      "checkedAt": "2026-11-10",
       "supports": "Independent language-school explanation of 有点儿 before an adjective as degree/evaluation and 一点儿 after adjective as small adjustment; market-price scenario and pinyin."
     },
     {
       "title": "一点儿 vs 有点儿 — The Pure Language",
       "url": "https://www.thepurelanguage.com/chinese-grammar/yidianr-vs-youdianr",
-      "checkedAt": "2026-10-24",
+      "checkedAt": "2026-11-10",
       "supports": "Confirms 有点儿贵 as mildly expensive and 便宜一点儿，可以吗？ as a request for a small reduction."
     }
   ],
   "hookExperiment": {
-    "id": "youdianr-vs-yidianr-price-20261030-tg-hook-v1",
+    "id": "youdianr-vs-yidianr-price-20261111-tg-hook-v1",
     "formatId": "scenario",
     "hypothesis": "Намоиши ҳолати воқеӣ ва мисоли равшани грамматика метавонад барои тоҷикзабонон фаҳмотар бошад; ин ҳанӯз натиҷаи санҷидашуда нест.",
     "primaryMetric": "three-second-hold-rate",
     "fallbackMetric": "average-watch-ratio",
-    "registeredAt": "2026-10-28"
+    "registeredAt": "2026-11-10"
   },
   "audienceProblem": "Дар баҳои нарх ва дархости арзонтар кардан ҷойи ду калимаи «каме»-ро омехта мекунад.",
   "learningOutcome": "Бо 这个有点儿贵 баҳои нарх диҳад ва бо 便宜一点儿，可以吗？ арзонтар карданро пурсад.",
@@ -2374,11 +2809,11 @@
     "schemaVersion": 1,
     "pattern": "direct",
     "situation": {
-      "setting": "Харидор дар бозор ба нархи маҳсулот менигарад",
+      "setting": "Назди дӯкони назди кӯли боғ",
       "learnerGoal": "Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад",
       "obstacle": "Ҳар ду шакл ба «каме» тарҷума мешавад, аммо ҷойи онҳо дигар аст"
     },
-    "selectionReason": "Ду амали воқеии харид барои дарси мустақими фарқи ҷойи 有点儿 ва 一点儿 кофӣ аст",
+    "selectionReason": "Дар дӯкон ду вазифаи гуфторӣ басанда аст: нархро нарм арзёбӣ кардан ва каме тағйир пурсидан. Ҷавоб дар саҳнаи аввал дода мешавад.",
     "firstPayoff": {
       "sceneId": "hook",
       "cueText": "这个有点儿贵"
@@ -2387,9 +2822,9 @@
   },
   "localization": {
     "language": "tg",
-    "sourceEpisodeId": "youdianr-vs-yidianr-price-20261030",
-    "sourceHash": "51006f71adbf7a79d65f53d8749dbe3ff65daa9860cd024a2be7c0eea70d537f",
-    "authoredOn": "2026-10-28",
+    "sourceEpisodeId": "youdianr-vs-yidianr-price-20261111",
+    "sourceHash": "da778c3d3d6991b194dcd0671c59b2a73e80c3cd13ffb9c43a30fd202c1559c4",
+    "authoredOn": "2026-11-10",
     "status": "draft-awaiting-audio-review"
   }
 }

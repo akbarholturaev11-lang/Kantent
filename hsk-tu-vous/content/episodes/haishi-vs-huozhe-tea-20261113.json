@@ -1,12 +1,12 @@
 {
-  "id": "haishi-vs-huozhe-tea-20261102",
-  "date": "2026-11-02",
+  "id": "haishi-vs-huozhe-tea-20261113",
+  "date": "2026-11-13",
   "timezone": "Asia/Shanghai",
   "languageCode": "ru-RU",
-  "title": "还是 и 或者: спросить «чай или кофе?» и перечислить варианты",
+  "title": "还是 и 或者: вопрос с выбором и варианты в ответе",
   "level": "HSK 2",
   "topic": "还是 в прямом вопросе с выбором и 或者 в утверждении с вариантами",
-  "durationTargetSec": 31,
+  "durationTargetSec": 50,
   "caption": "«Чай или кофе?» — 你喝茶还是喝咖啡？ «Чай или кофе — оба подойдут» — 茶或者咖啡都行。 Вопрос с выбором и утверждение используют разные «или».",
   "hashtags": [
     "#HSKAI",
@@ -56,7 +56,7 @@
           "kind": "graphic",
           "cueText": "Чай или кофе",
           "visual": {
-            "title": "или (вопрос с выбором)",
+            "title": "Напитки",
             "hanzi": "还是",
             "pinyin": "háishi",
             "meaning": "или (вопрос с выбором)",
@@ -204,6 +204,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "tea-choice",
+                "coffee-choice"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "hook: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Показать исходную учебную ситуацию. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
@@ -213,7 +240,7 @@
           "kind": "graphic",
           "cueText": "还是",
           "visual": {
-            "title": "чай / кофе",
+            "title": "Два варианта",
             "hanzi": "茶 / 咖啡",
             "pinyin": "chá / kāfēi",
             "meaning": "чай / кофе",
@@ -387,6 +414,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "tea-choice",
+                "coffee-choice"
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "hook: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Изменить видимое состояние в момент объяснения. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
@@ -396,7 +450,7 @@
           "kind": "graphic",
           "cueText": "Почему",
           "visual": {
-            "title": "или (вопрос с выбором)",
+            "title": "Тип реплики",
             "hanzi": "还是",
             "pinyin": "háishi",
             "meaning": "или (вопрос с выбором)",
@@ -556,6 +610,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "tea-choice",
+                "coffee-choice"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "hook: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Сопоставить результат с правильным примером. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
@@ -584,7 +665,7 @@
           "kind": "graphic",
           "cueText": "你喝茶还是喝咖啡",
           "visual": {
-            "title": "Ты пьёшь чай или кофе?",
+            "title": "Вопрос о напитке",
             "hanzi": "你喝茶还是喝咖啡？",
             "pinyin": "Nǐ hē chá háishi hē kāfēi?",
             "meaning": "Ты пьёшь чай или кофе?",
@@ -732,6 +813,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "tea-choice",
+                "coffee-choice"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "choice: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Показать исходную учебную ситуацию. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
@@ -741,7 +849,7 @@
           "kind": "graphic",
           "cueText": "Ты пьёшь",
           "visual": {
-            "title": "Ты пьёшь чай или кофе?",
+            "title": "Готовая конструкция",
             "hanzi": "你喝茶还是喝咖啡？",
             "pinyin": "Nǐ hē chá háishi hē kāfēi?",
             "meaning": "Ты пьёшь чай или кофе?",
@@ -915,6 +1023,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "tea-choice",
+                "coffee-choice"
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "choice: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Изменить видимое состояние в момент объяснения. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
@@ -924,7 +1059,7 @@
           "kind": "graphic",
           "cueText": "выбрать",
           "visual": {
-            "title": "Ты пьёшь чай или кофе?",
+            "title": "Задача выбора",
             "hanzi": "你喝茶还是喝咖啡？",
             "pinyin": "Nǐ hē chá háishi hē kāfēi?",
             "meaning": "Ты пьёшь чай или кофе?",
@@ -1070,6 +1205,33 @@
                       "value": 0
                     }
                   ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "tea-choice",
+                "coffee-choice"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
                 }
               ]
             }
@@ -1100,7 +1262,7 @@
           "kind": "graphic",
           "cueText": "ответ",
           "visual": {
-            "title": "Чай или кофе — любой вариант подойдёт.",
+            "title": "Готовая реплика",
             "hanzi": "茶或者咖啡都行。",
             "pinyin": "Chá huòzhě kāfēi dōu xíng.",
             "meaning": "Чай или кофе — любой вариант подойдёт.",
@@ -1248,6 +1410,32 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "tea-choice",
+                "coffee-choice"
+              ],
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "options: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Показать исходную учебную ситуацию. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
@@ -1257,7 +1445,7 @@
           "kind": "graphic",
           "cueText": "茶或者咖啡都行",
           "visual": {
-            "title": "Чай или кофе — любой вариант подойдёт.",
+            "title": "Две возможности",
             "hanzi": "茶或者咖啡都行。",
             "pinyin": "Chá huòzhě kāfēi dōu xíng.",
             "meaning": "Чай или кофе — любой вариант подойдёт.",
@@ -1417,6 +1605,32 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "tea-choice",
+                "coffee-choice"
+              ],
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "options: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Изменить видимое состояние в момент объяснения. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе.",
@@ -1433,7 +1647,7 @@
           "kind": "graphic",
           "cueText": "或者",
           "visual": {
-            "title": "Чай или кофе — любой вариант подойдёт.",
+            "title": "Союз в утверждении",
             "hanzi": "茶或者咖啡都行。",
             "pinyin": "Chá huòzhě kāfēi dōu xíng.",
             "meaning": "Чай или кофе — любой вариант подойдёт.",
@@ -1618,6 +1832,32 @@
                       "value": 0
                     }
                   ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "tea-choice",
+                "coffee-choice"
+              ],
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
                 }
               ]
             }
@@ -1660,7 +1900,7 @@
           "kind": "graphic",
           "cueText": "还是",
           "visual": {
-            "title": "или — выбор в вопросе",
+            "title": "Выбор собеседника",
             "hanzi": "还是",
             "pinyin": "háishi",
             "meaning": "или — выбор в вопросе",
@@ -1834,6 +2074,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "tea-house"
+              ],
+              "parts": [
+                "还是",
+                "或者"
+              ],
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
             }
           },
           "explains": "contrast: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Показать исходную учебную ситуацию. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
@@ -1843,7 +2110,7 @@
           "kind": "graphic",
           "cueText": "或者",
           "visual": {
-            "title": "или — варианты в утверждении",
+            "title": "Перечень напитков",
             "hanzi": "或者",
             "pinyin": "huòzhě",
             "meaning": "или — варианты в утверждении",
@@ -2003,6 +2270,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "tea-house"
+              ],
+              "parts": [
+                "还是",
+                "或者"
+              ],
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
             }
           },
           "explains": "contrast: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Изменить видимое состояние в момент объяснения. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
@@ -2012,7 +2306,7 @@
           "kind": "graphic",
           "cueText": "吗 не нужна",
           "visual": {
-            "title": "или — выбор в вопросе",
+            "title": "Без финальной частицы",
             "hanzi": "还是",
             "pinyin": "háishi",
             "meaning": "или — выбор в вопросе",
@@ -2160,6 +2454,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "tea-house"
+              ],
+              "parts": [
+                "还是",
+                "或者"
+              ],
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
             }
           },
           "explains": "contrast: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Сопоставить результат с правильным примером. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
@@ -2193,7 +2514,7 @@
           "kind": "graphic",
           "cueText": "Чай или кофе",
           "visual": {
-            "title": "Ты пьёшь чай или кофе?",
+            "title": "Ситуация заказа",
             "hanzi": "你喝茶还是喝咖啡？",
             "pinyin": "Nǐ hē chá háishi hē kāfēi?",
             "meaning": "Ты пьёшь чай или кофе?",
@@ -2341,6 +2662,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "tea-choice",
+                "coffee-choice"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "proud",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "crane",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "recall: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Показать исходную учебную ситуацию. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
@@ -2350,7 +2698,7 @@
           "kind": "graphic",
           "cueText": "你喝茶还是喝咖啡",
           "visual": {
-            "title": "Чай или кофе — любой вариант подойдёт.",
+            "title": "Вопросительный порядок",
             "hanzi": "茶或者咖啡都行。",
             "pinyin": "Chá huòzhě kāfēi dōu xíng.",
             "meaning": "Чай или кофе — любой вариант подойдёт.",
@@ -2524,6 +2872,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "tea-choice",
+                "coffee-choice"
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "proud",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "crane",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "recall: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Изменить видимое состояние в момент объяснения. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
@@ -2533,7 +2908,7 @@
           "kind": "graphic",
           "cueText": "茶或者咖啡都行",
           "visual": {
-            "title": "Ты пьёшь чай или кофе?",
+            "title": "Перечень вариантов",
             "hanzi": "你喝茶还是喝咖啡？",
             "pinyin": "Nǐ hē chá háishi hē kāfēi?",
             "meaning": "Ты пьёшь чай или кофе?",
@@ -2693,6 +3068,33 @@
                   ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "tea-choice",
+                "coffee-choice"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "proud",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "crane",
+                  "mood": "celebrate",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
             }
           },
           "explains": "recall: В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят. Сопоставить результат с правильным примером. Учебный смысл: Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе."
@@ -2708,23 +3110,23 @@
     {
       "title": "还是 vs 或者 — ChineseGrammar",
       "url": "https://chinesegrammar.app/grammar/haishi-huozhe",
-      "checkedAt": "2026-10-24",
+      "checkedAt": "2026-11-10",
       "supports": "Explains 还是 for questions requesting a choice, 或者 for declarative alternatives; provides 你喝茶还是咖啡 and 茶或者咖啡都行 as patterns."
     },
     {
       "title": "Choice Questions with 还是 — Elon.io",
       "url": "https://elon.io/grammar/chinese-mandarin/questions/haishi-choice",
-      "checkedAt": "2026-10-24",
+      "checkedAt": "2026-11-10",
       "supports": "Independent grammar guide gives 你喝茶还是喝咖啡？ and 茶或者咖啡都行。 with tone-marked pinyin; notes no 吗 and the limitation that 还是 can occur in embedded questions."
     }
   ],
   "hookExperiment": {
-    "id": "haishi-vs-huozhe-tea-20261102-hook-v1",
+    "id": "haishi-vs-huozhe-tea-20261113-ru-hook-v1",
     "formatId": "contrast",
     "hypothesis": "Немедленный контраст вопроса о напитке и утверждения с двумя допустимыми вариантами может прояснить функцию 还是/或者 быстрее, чем объяснение терминов; это не обещание метрик.",
     "primaryMetric": "three-second-hold-rate",
     "fallbackMetric": "average-watch-ratio",
-    "registeredAt": "2026-10-24"
+    "registeredAt": "2026-11-10"
   },
   "audienceProblem": "Новичок переносит одно русское «или» в любой китайский вопрос и утверждение.",
   "learningOutcome": "Сформулировать прямой вопрос с выбором через 还是 и перечислить допустимые варианты через 或者.",
@@ -2734,7 +3136,7 @@
     "schemaVersion": 1,
     "pattern": "direct",
     "situation": {
-      "setting": "В кафе посетителю предлагают два напитка, а затем объясняют, что оба подходят",
+      "setting": "У столика в китайской чайной",
       "learnerGoal": "Задать прямой вопрос с 还是 и перечислить варианты с 或者 в ответе",
       "obstacle": "Русское «или» одинаково переводится в вопросе и утверждении, но китайские конструкции различаются"
     },

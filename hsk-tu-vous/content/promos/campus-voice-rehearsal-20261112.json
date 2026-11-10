@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "campus-voice-rehearsal-20261103",
+  "id": "campus-voice-rehearsal-20261112",
   "kind": "advertisement",
   "status": "draft",
   "title": "Перед разговором: репетиция с AI Voice",
@@ -45,13 +45,13 @@
     {
       "id": "dorm-exit",
       "role": "situation",
-      "narration": "Представь: ты вышел из общежития, и знакомый спрашивает, куда ты идёшь.",
+      "narration": "Представь: перед разговором у общежития знакомый спрашивает, куда ты идёшь. Для короткой репетиции можно открыть HSK AI.",
       "visual": {
         "type": "illustration",
         "focalSubject": "Студент с рюкзаком у двери общежития",
         "action": "Студент выходит из двери к знакомому; перемещение силуэта показывает начало встречи.",
         "continuityKey": "same-student-dorm-voice-rehearsal",
-        "cueText": "вышел из общежития",
+        "cueText": "у общежития",
         "backgroundToken": "foreground",
         "drawingBrief": "Оригинальные ворота общежития, один студент с рюкзаком и движение от двери; без текста.",
         "graphic": {
@@ -377,6 +377,37 @@
       }
     },
     {
+      "id": "ai-voice",
+      "role": "product-demo",
+      "narration": "В HSK AI есть AI Voice для разговорной практики. На настоящем экране виден персонаж-панда.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Настоящий персонаж-панда из AI Voice",
+        "action": "Переход с пустого телефона на проверенный неизменённый фрагмент настоящего экрана с пандой.",
+        "continuityKey": "same-student-dorm-voice-rehearsal",
+        "cueText": "AI Voice",
+        "backgroundToken": "foreground",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "zxx",
+        "sourceUiLanguage": "tg-TJ",
+        "languageNeutralCrop": true,
+        "screenImage": "promo-captures/ai-voice-original.png",
+        "crop": {
+          "x": 285,
+          "y": 580,
+          "width": 600,
+          "height": 540,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        },
+        "limitations": "Before voice/render, recheck the current genuine capture and exact crop against the current HSK AI screen; verify the visible panda or microphone and that the language-neutral crop contains no unrelated labels or private fields."
+      },
+      "claimIds": [
+        "voice-mode"
+      ]
+    },
+    {
       "id": "open-phone",
       "role": "attempt",
       "narration": "Можно сначала открыть телефон и спокойно потренировать короткий ответ.",
@@ -507,36 +538,6 @@
       }
     },
     {
-      "id": "ai-voice",
-      "role": "product-demo",
-      "narration": "В HSK AI есть AI Voice для разговорной практики. На настоящем экране виден персонаж-панда.",
-      "visual": {
-        "type": "product-capture",
-        "focalSubject": "Настоящий персонаж-панда из AI Voice",
-        "action": "Переход с пустого телефона на проверенный неизменённый фрагмент настоящего экрана с пандой.",
-        "continuityKey": "same-student-dorm-voice-rehearsal",
-        "cueText": "AI Voice",
-        "backgroundToken": "foreground",
-        "assetPath": "public/promo-captures/ai-voice-original.png",
-        "provenance": "genuine-product-capture",
-        "uiLanguage": "zxx",
-        "sourceUiLanguage": "tg-TJ",
-        "languageNeutralCrop": true,
-        "screenImage": "promo-captures/ai-voice-original.png",
-        "crop": {
-          "x": 285,
-          "y": 580,
-          "width": 600,
-          "height": 540,
-          "sourceWidth": 1179,
-          "sourceHeight": 2556
-        }
-      },
-      "claimIds": [
-        "voice-mode"
-      ]
-    },
-    {
       "id": "mic",
       "role": "product-demo",
       "narration": "В этом режиме есть кнопка микрофона. Можно попробовать сказать свою короткую фразу.",
@@ -560,7 +561,8 @@
           "height": 245,
           "sourceWidth": 1179,
           "sourceHeight": 2556
-        }
+        },
+        "limitations": "Before voice/render, recheck the current genuine capture and exact crop against the current HSK AI screen; verify the visible panda or microphone and that the language-neutral crop contains no unrelated labels or private fields."
       },
       "claimIds": [
         "microphone"
@@ -761,5 +763,5 @@
     "#китайскийязык",
     "#HSK"
   ],
-  "durationTargetSec": 40
+  "durationTargetSec": 50
 }

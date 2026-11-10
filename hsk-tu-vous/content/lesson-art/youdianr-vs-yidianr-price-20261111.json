@@ -1,0 +1,43 @@
+{
+  "episodeId": "youdianr-vs-yidianr-price-20261111",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Polished semi-realistic digital illustration for a premium vertical explainer reel: warm cinematic lighting, soft cel shading, clean confident linework, rich but natural colours, detailed believable background, gentle depth of field. Absolutely no text, letters, numbers, signs with writing, logos or watermarks anywhere in the image. Setting: a Chinese park by a lake with willow trees, a stone bridge and a pavilion.",
+  "assets": [
+    {
+      "name": "park-kiosk",
+      "aspectRatio": "9:16",
+      "prompt": "A calm Chinese park by a lake with willow trees, a stone bridge and a small wooden kiosk counter beside the path. Leave open central space. No people, animals or characters; no signs, writing, letters, numbers, logos or watermarks."
+    },
+    {
+      "name": "park-evaluation",
+      "aspectRatio": "4:5",
+      "references": [
+        "park-kiosk"
+      ],
+      "prompt": "At the same lakeside park kiosk, one simple ceramic cup on a wooden counter beside a blank unmarked price tag, warm light. No people or characters; no writing, numbers, logos or watermark."
+    },
+    {
+      "name": "park-request",
+      "aspectRatio": "4:5",
+      "references": [
+        "park-kiosk",
+        "park-evaluation"
+      ],
+      "prompt": "The same lakeside kiosk counter and plain cup, framed with generous clear space and a blank tag; calm, inviting light. No people or characters; no writing, numbers, logos or watermark."
+    }
+  ],
+  "variety": {
+    "date": "2026-11-11",
+    "setting": "park-lake",
+    "coach": "panda",
+    "supportingCharacter": "rabbit",
+    "pattern": "before-after-cards",
+    "experiment": {
+      "id": "vv-setting-group-v1",
+      "arm": "A",
+      "variable": "setting group",
+      "value": "outdoor-china"
+    },
+    "source": "scripts/visual-variety-plan.mjs (2026-11-10): assigned park-lake, rabbit and before-after-cards; A/B A = outdoor-china."
+  }
+}

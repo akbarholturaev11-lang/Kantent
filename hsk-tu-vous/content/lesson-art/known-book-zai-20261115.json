@@ -1,0 +1,43 @@
+{
+  "episodeId": "known-book-zai-20261115",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Polished semi-realistic digital illustration for a premium vertical explainer reel: warm cinematic lighting, soft cel shading, clean confident linework, rich but natural colours, detailed believable background, gentle depth of field. Absolutely no text, letters, numbers, signs with writing, logos or watermarks anywhere in the image. Setting: a warm home kitchen with a dining table, bowls and steaming dumplings.",
+  "assets": [
+    {
+      "name": "home-kitchen",
+      "aspectRatio": "9:16",
+      "prompt": "A warm Chinese home kitchen with wooden dining table, bowls, a window and gentle steam from dumplings; open central table. No people or characters; no labels, text, letters, numbers, logos or watermark."
+    },
+    {
+      "name": "new-book-table",
+      "aspectRatio": "4:5",
+      "references": [
+        "home-kitchen"
+      ],
+      "prompt": "The same home kitchen table with one plain closed book newly placed on it, blank cover, bowls soft at the edge. No people or characters; no writing, numbers, logos or watermark."
+    },
+    {
+      "name": "known-book-table",
+      "aspectRatio": "4:5",
+      "references": [
+        "home-kitchen",
+        "new-book-table"
+      ],
+      "prompt": "The same kitchen table and same blank-cover book, now clearly the already-discussed book; preserve its appearance and position. No people or characters; no writing, numbers, logos or watermark."
+    }
+  ],
+  "variety": {
+    "date": "2026-11-15",
+    "setting": "home-kitchen",
+    "coach": "panda",
+    "supportingCharacter": "dragon",
+    "pattern": "single-coach",
+    "experiment": {
+      "id": "vv-setting-group-v1",
+      "arm": "B",
+      "variable": "setting group",
+      "value": "indoor-daily"
+    },
+    "source": "scripts/visual-variety-plan.mjs (2026-11-10): assigned home-kitchen, dragon and single-coach; A/B B = indoor-daily."
+  }
+}

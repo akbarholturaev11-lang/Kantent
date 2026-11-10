@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "shop-shirt-size-20261105",
+  "id": "shop-shirt-size-20261117",
   "kind": "advertisement",
   "status": "draft",
   "title": "Пеш аз пурсидани андоза: машқи кӯтоҳ",
@@ -45,13 +45,13 @@
     {
       "id": "shirt-rack",
       "role": "situation",
-      "narration": "Тасаввур кун: дар мағозаи либос футболкаро мебинӣ ва мехоҳӣ андозаи калонтарашро пурсӣ.",
+      "narration": "Тасаввур кун: дар мағозаи либос футболкаро мебинӣ ва мехоҳӣ пурсӣ, ки андозаи калонтараш ҳаст ё не.",
       "visual": {
         "type": "illustration",
         "focalSubject": "Футболка дар овезак ва дасти харидор",
         "action": "Даст ба футболка наздик мешавад, то интихоби андозаро нишон диҳад",
         "continuityKey": "same-shopper-shirt-size",
-        "cueText": "андозаи калонтарашро",
+        "cueText": "андозаи калонтараш",
         "backgroundToken": "foreground",
         "drawingBrief": "Футболкаи калони аслӣ дар овезак, раф ва як даст; тамға бе матн",
         "graphic": {
@@ -477,6 +477,37 @@
       }
     },
     {
+      "id": "real-ai-voice",
+      "role": "product-demo",
+      "narration": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст. Дар экрани воқеӣ панда дида мешавад.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Экрани воқеии AI Voice",
+        "action": "Намои воқеии маҳсулотро дар лаҳзаи зикри AI Voice нишон диҳед",
+        "continuityKey": "same-shopper-shirt-size",
+        "cueText": "AI Voice",
+        "backgroundToken": "foreground",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "zxx",
+        "sourceUiLanguage": "tg-TJ",
+        "languageNeutralCrop": true,
+        "screenImage": "promo-captures/ai-voice-original.png",
+        "crop": {
+          "x": 285,
+          "y": 580,
+          "width": 600,
+          "height": 540,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        },
+        "limitations": "Пеш аз овоз ва рендер, акси аслии экран ва crop-и дақиқро бо интерфейси ҷории HSK AI аз нав бисанҷ; панда ё микрофон бояд намоён бошад ва crop-и бе маҳдудияти забонӣ набояд навиштаҷоти бегона ё маълумоти хусусӣ дошта бошад."
+      },
+      "claimIds": [
+        "ai-voice-practice"
+      ]
+    },
+    {
       "id": "phone-before-talk",
       "role": "attempt",
       "narration": "Пеш аз суҳбат бо фурӯшанда телефонро мебарорӣ, то саволатро оромона машқ кунӣ.",
@@ -624,36 +655,6 @@
       }
     },
     {
-      "id": "real-ai-voice",
-      "role": "product-demo",
-      "narration": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст. Дар экрани воқеӣ панда дида мешавад.",
-      "visual": {
-        "type": "product-capture",
-        "focalSubject": "Экрани воқеии AI Voice",
-        "action": "Намои воқеии маҳсулотро дар лаҳзаи зикри AI Voice нишон диҳед",
-        "continuityKey": "same-shopper-shirt-size",
-        "cueText": "AI Voice",
-        "backgroundToken": "foreground",
-        "assetPath": "public/promo-captures/ai-voice-original.png",
-        "provenance": "genuine-product-capture",
-        "uiLanguage": "zxx",
-        "sourceUiLanguage": "tg-TJ",
-        "languageNeutralCrop": true,
-        "screenImage": "promo-captures/ai-voice-original.png",
-        "crop": {
-          "x": 285,
-          "y": 580,
-          "width": 600,
-          "height": 540,
-          "sourceWidth": 1179,
-          "sourceHeight": 2556
-        }
-      },
-      "claimIds": [
-        "ai-voice-practice"
-      ]
-    },
-    {
       "id": "real-microphone",
       "role": "product-demo",
       "narration": "Дар ин режим тугмаи микрофон ҳаст. Метавонӣ саволи худро бо овоз гуфта бинӣ.",
@@ -677,7 +678,8 @@
           "height": 245,
           "sourceWidth": 1179,
           "sourceHeight": 2556
-        }
+        },
+        "limitations": "Пеш аз овоз ва рендер, акси аслии экран ва crop-и дақиқро бо интерфейси ҷории HSK AI аз нав бисанҷ; панда ё микрофон бояд намоён бошад ва crop-и бе маҳдудияти забонӣ набояд навиштаҷоти бегона ё маълумоти хусусӣ дошта бошад."
       },
       "claimIds": [
         "microphone-button"
@@ -933,12 +935,12 @@
     "#забоничинӣ",
     "#HSK"
   ],
-  "durationTargetSec": 40,
+  "durationTargetSec": 50,
   "localization": {
     "language": "tg",
-    "sourcePromoId": "shop-shirt-size-20261105",
-    "sourceHash": "a0803beb2c11cfe4edf9f29c0406dae00102ec08a11b9178aed86722e057ca02",
-    "authoredOn": "2026-11-01",
+    "sourcePromoId": "shop-shirt-size-20261117",
+    "sourceHash": "2f05379cb4dce8667ea64d7561ac2d6e0a66d3d49176c3959ddfc6756a0f2a52",
+    "authoredOn": "2026-11-10",
     "status": "draft"
   }
 }

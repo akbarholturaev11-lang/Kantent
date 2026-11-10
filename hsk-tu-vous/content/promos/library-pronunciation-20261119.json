@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
-  "id": "library-pronunciation-20261110",
+  "id": "library-pronunciation-20261119",
   "kind": "advertisement",
   "status": "draft",
-  "title": "Пеш аз суҳбат дар китобхона: машқи кӯтоҳи овозӣ",
-  "language": "tg",
-  "languageCode": "tg-TJ",
+  "title": "Перед разговором в библиотеке: короткая голосовая практика",
+  "language": "ru",
+  "languageCode": "ru-RU",
   "styleId": "minimal-story-v1",
   "formatId": "life-friction-demo",
-  "benefit": "AI Voice дар HSK AI барои машқи гуфтугӯ ба забони чинӣ пеш аз суҳбати воқеӣ аст; натиҷа кафолат дода намешавад.",
+  "benefit": "AI Voice в HSK AI позволяет практиковать устную китайскую речь перед реальным разговором, не обещая результата.",
   "situation": {
-    "setting": "Назди мизи додани китоб дар китобхона",
-    "learnerGoal": "Ба забони чинӣ пурсидан, ки китоби зарурӣ дар куҷост",
-    "friction": "Номи китобро медонӣ, вале саволро бо овоз гуфтан душвор аст"
+    "setting": "У стойки выдачи книг в библиотеке",
+    "learnerGoal": "Спросить по-китайски, где нужная книга",
+    "friction": "Знаешь название, но не решаешься задать вопрос вслух"
   },
   "storyType": "illustrative",
-  "storyDisclosure": "Тасаввур кун",
+  "storyDisclosure": "Представь",
   "evidence": [
     {
       "id": "verified-ai-voice-20261110",
@@ -28,14 +28,14 @@
   "claims": [
     {
       "id": "ai-voice",
-      "text": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст.",
+      "text": "В HSK AI есть AI Voice для разговорной практики.",
       "evidenceIds": [
         "verified-ai-voice-20261110"
       ]
     },
     {
       "id": "microphone",
-      "text": "Дар режими AI Voice тугмаи микрофон ҳаст.",
+      "text": "В режиме AI Voice есть кнопка микрофона.",
       "evidenceIds": [
         "verified-ai-voice-20261110"
       ]
@@ -45,15 +45,15 @@
     {
       "id": "library-counter",
       "role": "situation",
-      "narration": "Тасаввур кун: ту дар китобхона ҳастӣ ва мехоҳӣ пурсӣ, ки китоби лозима дар куҷост.",
+      "narration": "Представь: ты в библиотеке и ищешь нужную книгу. Перед вопросом библиотекарю можно попробовать короткую фразу в HSK AI.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Китоб ва мизи китобхона",
-        "action": "Китоб ба миз наздик мешавад",
+        "focalSubject": "Книга и стойка выдачи",
+        "action": "Книга перемещается к стойке",
         "continuityKey": "library-speaking-practice",
-        "cueText": "дар китобхона",
+        "cueText": "в библиотеке",
         "backgroundToken": "foreground",
-        "drawingBrief": "Рафҳои китоб ва як китоби бе навиштаҷот, мизи китобхона",
+        "drawingBrief": "Оригинальная книжная полка, стойка и одна книга с чистой обложкой без текста",
         "graphic": {
           "width": 800,
           "height": 560,
@@ -107,77 +107,15 @@
     {
       "id": "pause",
       "role": "complication",
-      "narration": "Номи китобро медонӣ, аммо дар назди китобдор саволро ба чинӣ гуфтан ҷуръат намекунӣ.",
+      "narration": "Название книги помнишь, но перед библиотекарем не решаешься произнести вопрос по-китайски.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Китоб ва лаҳзаи таваққуф",
-        "action": "Китоб дар назди миз меистад",
+        "focalSubject": "Закрытая книга и пауза",
+        "action": "Книга останавливается перед стойкой",
         "continuityKey": "library-speaking-practice",
-        "cueText": "ҷуръат намекунӣ",
+        "cueText": "не решаешься",
         "backgroundToken": "foreground",
-        "drawingBrief": "Як китоб ва ҳубобчаи холии гуфтор",
-        "graphic": {
-          "width": 800,
-          "height": 560,
-          "nodes": [
-            {
-              "id": "surface",
-              "type": "rect",
-              "attrs": {
-                "x": 120,
-                "y": 120,
-                "width": 560,
-                "height": 320,
-                "rx": 30,
-                "fill": "teal",
-                "stroke": "gold",
-                "strokeWidth": 8
-              }
-            },
-            {
-              "id": "focus",
-              "type": "circle",
-              "attrs": {
-                "cx": 400,
-                "cy": 280,
-                "r": 100,
-                "fill": "gold",
-                "stroke": "foreground",
-                "strokeWidth": 5
-              }
-            }
-          ],
-          "tracks": [
-            {
-              "nodeId": "focus",
-              "property": "x",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": -30
-                },
-                {
-                  "atMs": 800,
-                  "value": 0
-                }
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "phone",
-      "role": "attempt",
-      "narration": "Як қадам дуртар меравӣ ва телефонро мебарорӣ, то аввал саволро бо овоз машқ кунӣ.",
-      "visual": {
-        "type": "illustration",
-        "focalSubject": "Телефон ва китоб",
-        "action": "Телефон назди китоб боло меояд",
-        "continuityKey": "library-speaking-practice",
-        "cueText": "телефонро мебарорӣ",
-        "backgroundToken": "foreground",
-        "drawingBrief": "Телефони дорои экрани холӣ ва як китоб",
+        "drawingBrief": "Одна книга и пустой речевой пузырь без текста; без человека и выдуманного интерфейса",
         "graphic": {
           "width": 800,
           "height": 560,
@@ -231,7 +169,7 @@
     {
       "id": "voice-screen",
       "role": "product-demo",
-      "narration": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст.",
+      "narration": "В HSK AI есть AI Voice для разговорной практики.",
       "visual": {
         "type": "product-capture",
         "assetPath": "public/promo-captures/ai-voice-original.png",
@@ -240,16 +178,91 @@
         "action": "Плавно приблизить настоящий интерфейс без перерисовки элементов",
         "continuityKey": "library-speaking-practice",
         "cueText": "AI Voice",
-        "backgroundToken": "foreground"
+        "backgroundToken": "foreground",
+        "limitations": "Before voice/render, recheck the current genuine capture and exact crop against the current HSK AI screen; verify the visible panda or microphone and that the language-neutral crop contains no unrelated labels or private fields.",
+        "uiLanguage": "zxx",
+        "sourceUiLanguage": "tg-TJ",
+        "languageNeutralCrop": true,
+        "screenImage": "promo-captures/ai-voice-original.png",
+        "crop": {
+          "x": 285,
+          "y": 580,
+          "width": 600,
+          "height": 540,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        }
       },
       "claimIds": [
         "ai-voice"
       ]
     },
     {
+      "id": "phone",
+      "role": "attempt",
+      "narration": "Отходишь на шаг и достаёшь телефон, чтобы сначала попробовать сказать вопрос вслух.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Телефон и книга",
+        "action": "Телефон поднимается рядом с книгой",
+        "continuityKey": "library-speaking-practice",
+        "cueText": "достаёшь телефон",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Простой телефон с пустым тёмным экраном, рядом одна книга; без имитации UI",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "surface",
+              "type": "rect",
+              "attrs": {
+                "x": 120,
+                "y": 120,
+                "width": 560,
+                "height": 320,
+                "rx": 30,
+                "fill": "teal",
+                "stroke": "gold",
+                "strokeWidth": 8
+              }
+            },
+            {
+              "id": "focus",
+              "type": "circle",
+              "attrs": {
+                "cx": 400,
+                "cy": 280,
+                "r": 100,
+                "fill": "gold",
+                "stroke": "foreground",
+                "strokeWidth": 5
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "focus",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": -30
+                },
+                {
+                  "atMs": 800,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
       "id": "microphone-screen",
       "role": "product-demo",
-      "narration": "Дар режими AI Voice тугмаи микрофон ҳаст. Пеш аз назди китобдор рафтан метавонӣ саволатро бо овоз машқ кунӣ.",
+      "narration": "В режиме AI Voice есть кнопка микрофона. Можно попробовать произнести вопрос до встречи с библиотекарем.",
       "visual": {
         "type": "product-capture",
         "assetPath": "public/promo-captures/ai-voice-original.png",
@@ -257,8 +270,21 @@
         "focalSubject": "Подлинная кнопка микрофона",
         "action": "Приблизить область микрофона на оригинальном скриншоте, не добавляя искусственных элементов",
         "continuityKey": "library-speaking-practice",
-        "cueText": "тугмаи микрофон",
-        "backgroundToken": "foreground"
+        "cueText": "кнопка микрофона",
+        "backgroundToken": "foreground",
+        "limitations": "Before voice/render, recheck the current genuine capture and exact crop against the current HSK AI screen; verify the visible panda or microphone and that the language-neutral crop contains no unrelated labels or private fields.",
+        "uiLanguage": "zxx",
+        "sourceUiLanguage": "tg-TJ",
+        "languageNeutralCrop": true,
+        "screenImage": "promo-captures/ai-voice-original.png",
+        "crop": {
+          "x": 440,
+          "y": 2180,
+          "width": 290,
+          "height": 245,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        }
       },
       "claimIds": [
         "microphone"
@@ -267,15 +293,15 @@
     {
       "id": "return",
       "role": "resolution",
-      "narration": "Баъд ба назди мизи китоб бармегардӣ ва саволатро худат медиҳӣ. HSK AI — машқ пеш аз суҳбати воқеӣ.",
+      "narration": "Потом возвращаешься к стойке и сам задаёшь вопрос. HSK AI — практика перед настоящим разговором.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Китоб ва мизи китобхона",
-        "action": "Китоб ба сӯи миз ҳаракат мекунад",
+        "focalSubject": "Книга и стойка",
+        "action": "Книга движется к стойке, телефон опускается",
         "continuityKey": "library-speaking-practice",
-        "cueText": "бармегардӣ",
+        "cueText": "возвращаешься к стойке",
         "backgroundToken": "foreground",
-        "drawingBrief": "Ҳамон мизи китобхона ва китоб",
+        "drawingBrief": "Та же библиотечная стойка и книга; спокойная финальная сцена, без выдуманного ответа библиотекаря",
         "graphic": {
           "width": 800,
           "height": 560,
@@ -327,18 +353,11 @@
       }
     }
   ],
-  "caption": "Вазъияти тасаввурӣ дар китобхона: пеш аз суҳбат саволро бо овоз дар AI Voice-и HSK AI машқ кардан мумкин аст. Экрани аслии барнома.",
+  "caption": "Воображаемая ситуация в библиотеке: перед разговором можно попробовать вопрос голосом в AI Voice HSK AI. Реальный экран приложения — без подмены интерфейса.",
   "hashtags": [
     "#HSKAI",
-    "#забоничинӣ",
+    "#китайскийязык",
     "#HSK"
   ],
-  "durationTargetSec": 36,
-  "localization": {
-    "language": "tg",
-    "sourcePromoId": "library-pronunciation-20261110",
-    "sourceHash": "aa91c60747bc6ab41aa23ca905f624d40f1b3ab9a59d5219abdcaf998557d6d7",
-    "authoredOn": "2026-11-10",
-    "status": "draft"
-  }
+  "durationTargetSec": 50
 }
