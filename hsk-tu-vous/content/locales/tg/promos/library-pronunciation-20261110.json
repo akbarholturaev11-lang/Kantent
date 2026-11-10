@@ -1,0 +1,344 @@
+{
+  "schemaVersion": 1,
+  "id": "library-pronunciation-20261110",
+  "kind": "advertisement",
+  "status": "draft",
+  "title": "Пеш аз суҳбат дар китобхона: машқи кӯтоҳи овозӣ",
+  "language": "tg",
+  "languageCode": "tg-TJ",
+  "styleId": "minimal-story-v1",
+  "formatId": "life-friction-demo",
+  "benefit": "AI Voice дар HSK AI барои машқи гуфтугӯ ба забони чинӣ пеш аз суҳбати воқеӣ аст; натиҷа кафолат дода намешавад.",
+  "situation": {
+    "setting": "Назди мизи додани китоб дар китобхона",
+    "learnerGoal": "Ба забони чинӣ пурсидан, ки китоби зарурӣ дар куҷост",
+    "friction": "Номи китобро медонӣ, вале саволро бо овоз гуфтан душвор аст"
+  },
+  "storyType": "illustrative",
+  "storyDisclosure": "Тасаввур кун",
+  "evidence": [
+    {
+      "id": "verified-ai-voice-20261110",
+      "kind": "product-source",
+      "sourcePath": "public/promo-captures/ai-voice-original.png",
+      "checkedAt": "2026-11-10",
+      "supports": "Existing genuine AI Voice screenshot stored in this project; earlier source receipt in promos/shop-shirt-size-20261105.json cites verified asset blob 81f7be1cbadeca7a820cc5877c893fc91e65f267 and real HSK-AI-Bot course-v3.html VOICE_HTML/vc-mic. HSK-AI-Bot main HEAD 675f624400aba60eadfb753657fbe8f2aa4d0d7b checked 2026-11-10. Supports AI Voice microphone interface, not speech assessment or guaranteed results. https://github.com/akbarholturaev11-lang/HSK-AI-Bot/blob/main/app/static/course-v3.html"
+    }
+  ],
+  "claims": [
+    {
+      "id": "ai-voice",
+      "text": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст.",
+      "evidenceIds": [
+        "verified-ai-voice-20261110"
+      ]
+    },
+    {
+      "id": "microphone",
+      "text": "Дар режими AI Voice тугмаи микрофон ҳаст.",
+      "evidenceIds": [
+        "verified-ai-voice-20261110"
+      ]
+    }
+  ],
+  "beats": [
+    {
+      "id": "library-counter",
+      "role": "situation",
+      "narration": "Тасаввур кун: ту дар китобхона ҳастӣ ва мехоҳӣ пурсӣ, ки китоби лозима дар куҷост.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Китоб ва мизи китобхона",
+        "action": "Китоб ба миз наздик мешавад",
+        "continuityKey": "library-speaking-practice",
+        "cueText": "дар китобхона",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Рафҳои китоб ва як китоби бе навиштаҷот, мизи китобхона",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "surface",
+              "type": "rect",
+              "attrs": {
+                "x": 120,
+                "y": 120,
+                "width": 560,
+                "height": 320,
+                "rx": 30,
+                "fill": "teal",
+                "stroke": "gold",
+                "strokeWidth": 8
+              }
+            },
+            {
+              "id": "focus",
+              "type": "circle",
+              "attrs": {
+                "cx": 400,
+                "cy": 280,
+                "r": 100,
+                "fill": "gold",
+                "stroke": "foreground",
+                "strokeWidth": 5
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "focus",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": -30
+                },
+                {
+                  "atMs": 800,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "pause",
+      "role": "complication",
+      "narration": "Номи китобро медонӣ, аммо дар назди китобдор саволро ба чинӣ гуфтан ҷуръат намекунӣ.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Китоб ва лаҳзаи таваққуф",
+        "action": "Китоб дар назди миз меистад",
+        "continuityKey": "library-speaking-practice",
+        "cueText": "ҷуръат намекунӣ",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Як китоб ва ҳубобчаи холии гуфтор",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "surface",
+              "type": "rect",
+              "attrs": {
+                "x": 120,
+                "y": 120,
+                "width": 560,
+                "height": 320,
+                "rx": 30,
+                "fill": "teal",
+                "stroke": "gold",
+                "strokeWidth": 8
+              }
+            },
+            {
+              "id": "focus",
+              "type": "circle",
+              "attrs": {
+                "cx": 400,
+                "cy": 280,
+                "r": 100,
+                "fill": "gold",
+                "stroke": "foreground",
+                "strokeWidth": 5
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "focus",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": -30
+                },
+                {
+                  "atMs": 800,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "phone",
+      "role": "attempt",
+      "narration": "Як қадам дуртар меравӣ ва телефонро мебарорӣ, то аввал саволро бо овоз машқ кунӣ.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Телефон ва китоб",
+        "action": "Телефон назди китоб боло меояд",
+        "continuityKey": "library-speaking-practice",
+        "cueText": "телефонро мебарорӣ",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Телефони дорои экрани холӣ ва як китоб",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "surface",
+              "type": "rect",
+              "attrs": {
+                "x": 120,
+                "y": 120,
+                "width": 560,
+                "height": 320,
+                "rx": 30,
+                "fill": "teal",
+                "stroke": "gold",
+                "strokeWidth": 8
+              }
+            },
+            {
+              "id": "focus",
+              "type": "circle",
+              "attrs": {
+                "cx": 400,
+                "cy": 280,
+                "r": 100,
+                "fill": "gold",
+                "stroke": "foreground",
+                "strokeWidth": 5
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "focus",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": -30
+                },
+                {
+                  "atMs": 800,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "voice-screen",
+      "role": "product-demo",
+      "narration": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст.",
+      "visual": {
+        "type": "product-capture",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "focalSubject": "Подлинный экран AI Voice",
+        "action": "Плавно приблизить настоящий интерфейс без перерисовки элементов",
+        "continuityKey": "library-speaking-practice",
+        "cueText": "AI Voice",
+        "backgroundToken": "foreground"
+      },
+      "claimIds": [
+        "ai-voice"
+      ]
+    },
+    {
+      "id": "microphone-screen",
+      "role": "product-demo",
+      "narration": "Дар режими AI Voice тугмаи микрофон ҳаст. Пеш аз назди китобдор рафтан метавонӣ саволатро бо овоз машқ кунӣ.",
+      "visual": {
+        "type": "product-capture",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "focalSubject": "Подлинная кнопка микрофона",
+        "action": "Приблизить область микрофона на оригинальном скриншоте, не добавляя искусственных элементов",
+        "continuityKey": "library-speaking-practice",
+        "cueText": "тугмаи микрофон",
+        "backgroundToken": "foreground"
+      },
+      "claimIds": [
+        "microphone"
+      ]
+    },
+    {
+      "id": "return",
+      "role": "resolution",
+      "narration": "Баъд ба назди мизи китоб бармегардӣ ва саволатро худат медиҳӣ. HSK AI — машқ пеш аз суҳбати воқеӣ.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Китоб ва мизи китобхона",
+        "action": "Китоб ба сӯи миз ҳаракат мекунад",
+        "continuityKey": "library-speaking-practice",
+        "cueText": "бармегардӣ",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Ҳамон мизи китобхона ва китоб",
+        "graphic": {
+          "width": 800,
+          "height": 560,
+          "nodes": [
+            {
+              "id": "surface",
+              "type": "rect",
+              "attrs": {
+                "x": 120,
+                "y": 120,
+                "width": 560,
+                "height": 320,
+                "rx": 30,
+                "fill": "teal",
+                "stroke": "gold",
+                "strokeWidth": 8
+              }
+            },
+            {
+              "id": "focus",
+              "type": "circle",
+              "attrs": {
+                "cx": 400,
+                "cy": 280,
+                "r": 100,
+                "fill": "gold",
+                "stroke": "foreground",
+                "strokeWidth": 5
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "focus",
+              "property": "x",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": -30
+                },
+                {
+                  "atMs": 800,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "caption": "Вазъияти тасаввурӣ дар китобхона: пеш аз суҳбат саволро бо овоз дар AI Voice-и HSK AI машқ кардан мумкин аст. Экрани аслии барнома.",
+  "hashtags": [
+    "#HSKAI",
+    "#забоничинӣ",
+    "#HSK"
+  ],
+  "durationTargetSec": 36,
+  "localization": {
+    "language": "tg",
+    "sourcePromoId": "library-pronunciation-20261110",
+    "sourceHash": "aa91c60747bc6ab41aa23ca905f624d40f1b3ab9a59d5219abdcaf998557d6d7",
+    "authoredOn": "2026-11-10",
+    "status": "draft"
+  }
+}
