@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import { withLanguage } from "./language-context.mjs";
 import { getCalendarItem, getPlannedEpisode, narrationHash, PROJECT_ROOT } from "./lib.mjs";
 import { sha256 } from "./voice-checkpoint.mjs";
+import { createCtaExperiment, ctaExperimentMetadata, getActiveCtaCorrections } from "./cta-lab.mjs";
 
 test("direct voice generation reuses an intact imported take before loading API credentials", { timeout: 30_000 }, async () => {
   const fixture = await fs.mkdtemp(path.join(os.tmpdir(), "hsk-voice-reuse-"));
@@ -21,9 +22,21 @@ test("direct voice generation reuses an intact imported take before loading API 
     await fs.writeFile(path.join(fixture, "scripts/git-freshness.mjs"), "export function requireFreshGitMain(){return {remoteMainSha:'fixture'}};\n");
     await fs.writeFile(path.join(fixture, "scripts/published-evidence.mjs"), "export function assertNotPreviouslyPublished(){return []};\n");
 
-    const item = await getCalendarItem("zhuozi-you-book-20261031");
+    const item = await getCalendarItem("youdianr-vs-yidianr-price-20261111");
     let episode;
     await withLanguage("ru", async () => { episode = (await getPlannedEpisode(item.date)).episode; });
+    // The imported take carries a registered CTA; register it in the fixture
+    // lab only, so the test does not depend on a production registration.
+    const labPath = path.join(fixture, "content/cta-lab.json");
+    const lab = JSON.parse(await fs.readFile(labPath, "utf8"));
+    const record = createCtaExperiment({
+      lab, episode, id: `${episode.id}-voice-reuse-fixture`,
+      hypothesis: "Fixture registration for the voice-reuse integration test.",
+      acknowledgedCorrectionIds: getActiveCtaCorrections(lab, { episodeId: episode.id, formatId: "benefit-profile-link-download" }).map((rule) => rule.id),
+    });
+    lab.experiments.push(record);
+    await fs.writeFile(labPath, `${JSON.stringify(lab, null, 2)}\n`);
+    episode.ctaExperiment = ctaExperimentMetadata(record);
     const profile = JSON.parse(await fs.readFile(path.join(fixture, "content/voice-profile.json"), "utf8"));
     const bytes = Buffer.from("verified first take");
     Object.assign(episode, {

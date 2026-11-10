@@ -35,9 +35,9 @@ test("all existing dated lessons remain valid with no storytelling metadata", ()
   for (const id of [
     "er-vs-liang-cafe-20261026",
     "hui-vs-neng-pool-20261028",
-    "youdianr-vs-yidianr-price-20261030",
-    "haishi-vs-huozhe-tea-20261102",
-    "bi-comparison-height-20261104"
+    "youdianr-vs-yidianr-price-20261111",
+    "haishi-vs-huozhe-tea-20261113",
+    "bi-comparison-height-20261116"
   ]) assert.deepEqual(validateStorytellingEpisode(getEpisode(id)), [], id);
 });
 

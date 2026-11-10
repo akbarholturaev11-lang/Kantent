@@ -103,7 +103,7 @@ test("safe-sync only clean, pre-voice review; never clobber published/owner-edit
   assert.strictEqual(synchronizeAutoStoryboard(desired,desired,{stage:"rendered-pending-owner-approval"}),desired);
 });
 test("opt-in rehook annotates existing storyboard mood without editing narration or cards",()=>{
-  const base=baseline("youdianr-vs-yidianr-price-20261030");
+  const base=baseline("youdianr-vs-yidianr-price-20261111");
   const episode=structuredClone(base);
   episode.storytelling={schemaVersion:1,pattern:"single-rehook",
     firstPayoff:{sceneId:"hook",cueText:"这个有点儿贵。"},

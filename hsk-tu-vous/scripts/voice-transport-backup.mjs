@@ -30,8 +30,20 @@ export function isPreConnectFailure(error) {
     (cause.code === "ECONNRESET" && TLS_HANDSHAKE_RESET.test(String(cause.message ?? ""))));
 }
 
+// Google refuses the whole API for the caller's region before generating
+// anything (real 2026-11-10 run: "HTTP 400 ... User location is not supported
+// for the API use", status FAILED_PRECONDITION). Another Google key cannot fix
+// it and nothing was produced or billed, so it is an availability failure of
+// the Direct transport, not bad input. Any other HTTP 400 stays non-eligible.
+const REGION_UNSUPPORTED = /User location is not supported for the API use/i;
+
+export function isProviderRegionUnsupported(error) {
+  return fallbackHttpStatus(error) === 400 && REGION_UNSUPPORTED.test(String(error?.message ?? ""));
+}
+
 export function isOpenRouterBackupEligible(error) {
-  return [429, 500, 502, 503, 504].includes(fallbackHttpStatus(error)) || isPreConnectFailure(error);
+  return [429, 500, 502, 503, 504].includes(fallbackHttpStatus(error)) ||
+    isPreConnectFailure(error) || isProviderRegionUnsupported(error);
 }
 
 export function openRouterBackupKey(env = process.env, activeProvider) {
@@ -47,7 +59,8 @@ export function openRouterBackupKey(env = process.env, activeProvider) {
 export function fallbackEvent(stage, error) {
   return { stage, from: "gemini-direct", to: "openrouter",
     httpStatus: fallbackHttpStatus(error),
-    ...(isPreConnectFailure(error) ? { reason: "provider-unreachable" } : {}) };
+    ...(isPreConnectFailure(error) ? { reason: "provider-unreachable" } : {}),
+    ...(isProviderRegionUnsupported(error) ? { reason: "provider-region-unsupported" } : {}) };
 }
 
 export async function withOpenRouterBackup({

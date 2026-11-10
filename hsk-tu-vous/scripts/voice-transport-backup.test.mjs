@@ -29,6 +29,23 @@ test("only availability failures qualify; credentials and bad input do not", () 
   assert.equal(isOpenRouterBackupEligible(new Error("bad word timestamps")), false);
 });
 
+test("Google's region refusal (HTTP 400) is a Direct availability failure; other 400s are not", async () => {
+  const region = new Error("Gemini speech generation failed (HTTP 400): User location is not supported for the API use.");
+  assert.equal(isOpenRouterBackupEligible(region), true);
+  assert.equal(isOpenRouterBackupEligible(new Error("Gemini speech generation failed (HTTP 400): Invalid voice name.")), false);
+  assert.equal(isOpenRouterBackupEligible(new Error("failed (HTTP 403): User location is not supported for the API use.")), false);
+  const events = [];
+  const wav = Buffer.from("RIFF_backup");
+  assert.equal(await withOpenRouterBackup({
+    stage: "tts", enabled: true, primary: async () => { throw region; },
+    backup: async () => wav, onFallback: (e) => events.push(e),
+  }), wav);
+  assert.deepEqual(events, [{ stage: "tts", from: "gemini-direct", to: "openrouter", httpStatus: 400, reason: "provider-region-unsupported" }]);
+  await assert.rejects(withOpenRouterBackup({
+    stage: "tts", enabled: false, primary: async () => { throw region; }, backup: async () => wav,
+  }), /User location/, "without the owner's opt-in the error still stops the run");
+});
+
 test("successful direct speech never invokes OpenRouter", async () => {
   let backups = 0;
   const wav = Buffer.from("RIFF_test");

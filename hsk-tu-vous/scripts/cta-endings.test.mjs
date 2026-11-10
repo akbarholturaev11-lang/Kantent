@@ -8,7 +8,7 @@ import { validateCtaEpisode } from "./cta-lab.mjs";
 
 const read = (rel) => JSON.parse(readFileSync(new URL("../" + rel, import.meta.url), "utf8"));
 const labs = { ru: read("content/cta-lab.json"), tg: read("content/locales/tg/cta-lab.json") };
-const lessons = { ru: read("content/episodes/ye-dou-placement-20261109.json"), tg: read("content/locales/tg/episodes/ye-dou-placement-20261109.json") };
+const lessons = { ru: read("content/episodes/ye-dou-placement-20261120.json"), tg: read("content/locales/tg/episodes/ye-dou-placement-20261120.json") };
 
 test("both languages carry the owner-approved ad and serial endings (2026-11-09)", () => {
   for (const lab of Object.values(labs)) {

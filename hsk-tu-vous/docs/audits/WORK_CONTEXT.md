@@ -95,7 +95,7 @@ The owner explicitly clarified: **fix the existing bugs, do not add extra produc
 
 **Merged:** `origin/feature/gemini-direct-openrouter-backup-20261106` (PR #56, merge commit on this branch). Its generator wiring targeted the old file, so it was re-applied by hand onto the PR #58/#59 generator:
 
-- TTS: Gemini Direct primary; HTTP 429/5xx switches to OpenRouter **only before any chunk of the take is saved** (one vendor per video). Each saved chunk records its `transport`; `ttsTransport`, `transcriptionTransport` and `fallbackEvents` are persisted in both `metadata.json` and `checkpoint.json`, so an automatic or explicit resume continues on the recorded transport and refuses to resume an OpenRouter-backed take without the opt-in and key.
+- TTS: Gemini Direct primary; HTTP 429/5xx or the HTTP 400 region refusal "User location is not supported" (real 2026-11-10 Codex run, both languages blocked; no audio produced) switches to OpenRouter **only before any chunk of the take is saved** (one vendor per video). Each saved chunk records its `transport`; `ttsTransport`, `transcriptionTransport` and `fallbackEvents` are persisted in both `metadata.json` and `checkpoint.json`, so an automatic or explicit resume continues on the recorded transport and refuses to resume an OpenRouter-backed take without the opt-in and key.
 - STT and Mandarin clip recovery: a Direct 429/5xx retries the **same saved WAV/MP3/clip** via OpenRouter; the exact-token gate is unchanged. Real trigger: the 2026-11-03 zhuozi RU take's clip recovery was blocked by Gemini's 25-requests/day Free Tier (HTTP 429).
 - Google key rotation on 429 stays disabled (`googleQuotaKeyRotationEnabled: false`).
 

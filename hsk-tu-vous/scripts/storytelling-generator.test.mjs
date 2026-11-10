@@ -7,7 +7,7 @@ import { makeAdaptiveBrief, evaluateAdaptiveCandidate } from "./storytelling-gen
 import { validateStorytellingEpisode } from "./storytelling-plan.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const load = () => JSON.parse(fs.readFileSync(path.join(root, "content/episodes/youdianr-vs-yidianr-price-20261030.json"),"utf8"));
+const load = () => JSON.parse(fs.readFileSync(path.join(root, "content/episodes/youdianr-vs-yidianr-price-20261111.json"),"utf8"));
 const proposal = () => {
   const e = load();
   const b = makeAdaptiveBrief(e);

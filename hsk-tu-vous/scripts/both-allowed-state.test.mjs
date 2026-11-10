@@ -6,8 +6,8 @@ import { PROJECT_ROOT } from "./lib.mjs";
 import { validateVisualStateIntent } from "./action-design-plan.mjs";
 
 const files = [
-  "./content/episodes/haishi-vs-huozhe-tea-20261102.json",
-  "./content/locales/tg/episodes/haishi-vs-huozhe-tea-20261102.json",
+  "./content/episodes/haishi-vs-huozhe-tea-20261113.json",
+  "./content/locales/tg/episodes/haishi-vs-huozhe-tea-20261113.json",
 ];
 
 for (const file of files) {
