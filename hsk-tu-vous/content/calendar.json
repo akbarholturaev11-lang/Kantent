@@ -570,6 +570,14 @@
       ],
       "episodeFile": "episodes/ye-dou-placement-20261109.json",
       "status": "planned"
+    },
+    {
+      "id": "library-pronunciation-20261110",
+      "date": "2026-11-10",
+      "contentType": "advertisement",
+      "topic": "Китобхонада савол беришдан олдин AI Voice билан овозли машқ",
+      "promoFile": "promos/library-pronunciation-20261110.json",
+      "status": "planned"
     }
   ],
   "planningBuffer": {
