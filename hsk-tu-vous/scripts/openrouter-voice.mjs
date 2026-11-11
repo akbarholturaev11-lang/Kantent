@@ -282,6 +282,15 @@ export async function transcribeOpenRouter({
     // An entry with no written word carries no speech token to align; it is
     // skipped rather than discarding the whole paid response.
     if (typeof text === "string" && !text.trim()) return [];
+    // V9-01 policy, as on Gemini Direct (timedBlocks): ONE impossible word
+    // (real TG window 2026-11-11: start 10.3 s, end 0.4 s) is dropped as
+    // untimed instead of discarding the whole paid response. Its span then
+    // fails the exact-token gate or is re-recognized; no time is invented.
+    if (typeof text === "string" && Number.isFinite(start) && Number.isFinite(end) &&
+        start >= 0 && end >= 0 && end < start - 0.25) {
+      console.warn("OPENROUTER_UNTIMED_WORD_DROPPED " + JSON.stringify({ index, start, end }));
+      return [];
+    }
     if (typeof text !== "string" ||
         typeof start !== "number" || !Number.isFinite(start) ||
         typeof end !== "number" || !Number.isFinite(end) ||

@@ -105,7 +105,17 @@ test("missing/invalid provider word timing blocks transcription", async () => {
     transcribeOpenRouter({ ...opts, fetchImpl:async()=>new Response(JSON.stringify({
       text:"hello",words:[{word:"hello",start:2,end:1}],
     }),{status:200}) }),
+    /no written words/, "a response whose only word is untimed still blocks");
+  await assert.rejects(
+    transcribeOpenRouter({ ...opts, fetchImpl:async()=>new Response(JSON.stringify({
+      text:"hello",words:[{word:"hello",start:-1,end:1}],
+    }),{status:200}) }),
     /Invalid OpenRouter provider word timestamp/);
+  // Real 2026-11-11 TG window: one impossible word no longer aborts the run.
+  const dropped = await transcribeOpenRouter({ ...opts, fetchImpl:async()=>new Response(JSON.stringify({
+    text:"пеш аз",words:[{word:"пеш",start:10.3,end:0.4},{word:"аз",start:0.5,end:0.7}],
+  }),{status:200}) });
+  assert.deepEqual(dropped.wordAnnotations.map((w)=>w.text), ["аз"]);
   // Real 2026-11-08 RU one-take window: a zero-length word is passed through
   // for the shared ≤250 ms repair instead of failing the whole paid response.
   const zero = await transcribeOpenRouter({ ...opts, fetchImpl:async()=>new Response(JSON.stringify({
