@@ -108,7 +108,7 @@ test("owner-authorized social destinations stay mapped to the correct language a
   assert.equal(zernioTargetAccount("tg", "instagram", env).accountId, env.ZERNIO_TG_INSTAGRAM_ACCOUNT_ID);
   assert.equal(zernioTargetAccount("tg", "instagram", env).expectedUsername, "@hskai.apptj");
   const mapped = zernioTargetAccount("tg", "youtube", env);
-  assert.equal(mapped.expectedUsername, "@hskaiapp-tj");
+  assert.equal(mapped.expectedUsername, "@hskai.app-tj");
   assert.equal(zernioTargetAccount("ru", "facebook", env).expectedUsername, "Akbarholturaev");
   assert.throws(() => assertZernioPublishingAuthorized("ru", "facebook"), /publishing is disabled/);
   assert.doesNotThrow(() => assertZernioPublishingAuthorized("tg", "facebook"));

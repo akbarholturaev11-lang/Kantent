@@ -35,7 +35,7 @@ The GitHub UI lists only secret names, not validity; branch/PR CI uses synthetic
 
 The live Zernio connector currently returns eight connected accounts. Video routing is language-scoped in `content/publication-destinations.json`:
 - RU: Instagram `@hskai.app`, YouTube `@hskai_app`, TikTok `@hskai.app`, Facebook `Akbarholturaev`.
-- TJ: Instagram `@hskai.apptj`, YouTube `@hskaiapp-tj`, TikTok `@hskai.ru`, Facebook `Akbarholturaev`.
+- TJ: Instagram `@hskai.apptj`, YouTube `@hskai.app-tj`, TikTok `@hskai.ru`, Facebook `Akbarholturaev`.
 - Telegram `@hskaiapp` is a separate TJ news channel: short factual text plus a 4:3 original image every three days, with no per-post approval; it never receives video.
 
 Facebook is one shared page and receives separate Russian and Tajik videos. For the manual GitHub REST workflow, configure the corresponding `ZERNIO_RU_*_ACCOUNT_ID` and `ZERNIO_TG_*_ACCOUNT_ID` Actions variables; Facebook's live account ID is the same destination for both languages. Never store API keys or tokens in these variables. `VIDEO_PLATFORM_TARGETS` is derived from the canonical destination file, while `zernioTargetAccount` uses the verified IDs there; optional Actions account-ID Variables must match them exactly. The actual posting flow independently verifies the live username via the account-specific **Zernio connection group**, not simply RU/TJ language. GitHub Secrets presence and connector readback do not prove the REST key is valid until a future live authenticated GET succeeds.
@@ -138,7 +138,7 @@ This narrowly approved static image+caption workflow is NOT an Instagram Reel, v
 
 ## Verified account groups and separate Telegram news agent (owner policy 2026-10-28)
 
-RU-language videos: Instagram `@hskai.app` ID `6a411e989d9472faae10a430`, YouTube `@hskai_app` ID `6ac96e053f8f4ffc10b0655f`, TikTok `@hskai.app` ID `6ae16327a2845fbdb07e5ccb`. TJ-language videos: Instagram `@hskai.apptj` ID `6ae0f16205fd6f5357f8503d`, YouTube `@hskaiapp-tj` ID `6ae160123787e4c71b522d64`, TikTok **`@hskai.ru`** ID `6ae16064ecf91092adba7d68`. Facebook `Akbarholturaev` ID `6ae161de384955d3b3ff194b` is a **shared bilingual RU/TJ page**, with separate videos and owner review for each language. The username `.ru` does not make TikTok `@hskai.ru` Russian.
+RU-language videos: Instagram `@hskai.app` ID `6a411e989d9472faae10a430`, YouTube `@hskai_app` ID `6ac96e053f8f4ffc10b0655f`, TikTok `@hskai.app` ID `6ae16327a2845fbdb07e5ccb`. TJ-language videos: Instagram `@hskai.apptj` ID `6ae0f16205fd6f5357f8503d`, YouTube `@hskai.app-tj` ID `6ae160123787e4c71b522d64`, TikTok **`@hskai.ru`** ID `6ae16064ecf91092adba7d68`. Facebook `Akbarholturaev` ID `6ae161de384955d3b3ff194b` is a **shared bilingual RU/TJ page**, with separate videos and owner review for each language. The username `.ru` does not make TikTok `@hskai.ru` Russian.
 
 Account credentials are **four separate Zernio connections**, not language-based: `ZERNIO_API_KEY` for RU Instagram/YouTube, `ZERNIO_TG_API_KEY` for TJ Instagram/YouTube, `ZERNIO_TIKTOK_TELEGRAM_API_KEY` for RU TikTok + TJ Telegram, `ZERNIO_TIKTOK_FACEBOOK_API_KEY` for TJ TikTok + shared Facebook. Keys are encrypted GitHub Actions Secrets, never code or Variables. If account-ID Variables are used they must match the verified ID in `content/publication-destinations.json`. User confirmation of Secret creation does not by itself prove live REST access. Every video requires exact preview, owner approval and live account readback before upload.
 
