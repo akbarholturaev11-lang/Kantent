@@ -16,7 +16,7 @@ The short path for the owner's daily command. Each line names the stage the tool
    - voice runs by itself (one take per language, §3); a blocked STT keeps the paid audio — diagnose and resume, never buy a second take unasked.
    - `partial` — fix the named language/platform and call again.
    - `ready-for-review` — continue with step 2.
-2. **QA the real MP4s** (§4.3, `EDITING_SPEC.md#review-before-delivery`): watch each with sound and check cue frames at 270×480 — the frame matches the spoken word, only the HSK AI cast appears, no face is covered, headline/chip/subtitle never repeat each other, all text stays in the safe band.
+2. **QA the real MP4s** (§4.3, `EDITING_SPEC.md#review-before-delivery`): watch each with sound and check cue frames at 270×480 — the frame matches the spoken word, only the HSK AI cast appears, no face is covered, illustrated-glass lessons keep one stable glass card plus one visible timed subtitle, transitions stay continuous, and text stays in the safe band.
 3. **One grouped preview** of every RU/TJ × Instagram/YouTube/TikTok/Facebook package with a Zernio-based time per account (§5.1–5.3). Wait for the owner's explicit approval; nothing is uploaded or scheduled before it.
 4. **Publish only the approved targets** through the route in §5 and record each receipt.
 

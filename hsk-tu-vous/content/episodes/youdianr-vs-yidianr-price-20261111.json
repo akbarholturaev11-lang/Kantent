@@ -34,7 +34,7 @@
       "kind": "hook",
       "durationSec": 5,
       "headline": "ЦЕНА НЕ УСТРАИВАЕТ?",
-      "narration": "Представьте: у киоска в парке вещь дороговата. Как сказать это мягко по-китайски? 这个有点儿贵。",
+      "narration": "Дороговато? По-китайски: 这个有点儿贵。",
       "screenCaption": "Дороговато → 有点儿贵",
       "editPlan": "0–5 с: крупный условный ценник и реакция покупателя; ценник без реальных брендов. Появляется 有点儿贵 с пиньинем и переводом сразу после вопроса. Не показывать ложную скидку.",
       "cards": [
@@ -49,9 +49,9 @@
         {
           "id": "hook-action-1",
           "kind": "graphic",
-          "cueText": "вещь дороговата",
+          "cueText": "Дороговато",
           "visual": {
-            "title": "Покупка у киоска",
+            "title": "Цена на рынке",
             "hanzi": "这个有点儿贵。",
             "pinyin": "Zhège yǒudiǎnr guì.",
             "meaning": "Это дороговато.",
@@ -166,41 +166,47 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "scene",
               "images": [
-                "park-evaluation",
-                "park-request"
+                "market-stall"
               ],
-              "focus": "left",
-              "overlay": "compare",
               "cast": [
                 {
                   "id": "panda",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
+                  "mood": "dismissive",
+                  "x": 0.82,
+                  "y": 0.96,
+                  "h": 0.16
                 }
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "这个",
+                "pinyin": "Zhège"
+              },
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "贵",
+                "pinyin": "guì"
+              }
+            ]
           },
           "explains": "hook: Покупатель рассматривает ценник на рынке и просит изменить цену. Показать исходную учебную ситуацию. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         },
         {
           "id": "hook-action-2",
           "kind": "graphic",
-          "cueText": "мягко",
+          "cueText": "по-китайски",
           "visual": {
-            "title": "Спокойная оценка",
+            "title": "Цена на рынке",
             "hanzi": "这个有点儿贵。",
             "pinyin": "Zhège yǒudiǎnr guì.",
             "meaning": "Это дороговато.",
@@ -329,32 +335,38 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "scene",
               "images": [
-                "park-evaluation",
-                "park-request"
+                "market-stall"
               ],
-              "focus": "left",
-              "overlay": "compare",
               "cast": [
                 {
                   "id": "panda",
                   "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
+                  "x": 0.82,
+                  "y": 0.96,
+                  "h": 0.16
                 }
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "这个",
+                "pinyin": "Zhège"
+              },
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "贵",
+                "pinyin": "guì"
+              }
+            ]
           },
           "explains": "hook: Покупатель рассматривает ценник на рынке и просит изменить цену. Изменить видимое состояние в момент объяснения. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         },
@@ -363,7 +375,7 @@
           "kind": "graphic",
           "cueText": "这个有点儿贵",
           "visual": {
-            "title": "Китайское выражение",
+            "title": "Цена на рынке",
             "hanzi": "这个有点儿贵。",
             "pinyin": "Zhège yǒudiǎnr guì.",
             "meaning": "Это дороговато.",
@@ -546,32 +558,48 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "scene",
               "images": [
-                "park-evaluation",
-                "park-request"
+                "market-stall"
               ],
-              "focus": "left",
-              "overlay": "compare",
+              "anchors": {
+                "a": {
+                  "x": 0.63,
+                  "y": 0.64,
+                  "w": 0.19,
+                  "h": 0.09
+                }
+              },
+              "focus": "a",
+              "focusLabel": "价",
               "cast": [
                 {
                   "id": "panda",
-                  "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "rabbit",
                   "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
+                  "x": 0.82,
+                  "y": 0.96,
+                  "h": 0.16
                 }
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "这个",
+                "pinyin": "Zhège"
+              },
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "贵",
+                "pinyin": "guì"
+              }
+            ]
           },
           "explains": "hook: Покупатель рассматривает ценник на рынке и просит изменить цену. Сопоставить результат с правильным примером. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         }
@@ -721,35 +749,23 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "park-kiosk"
-              ],
-              "anchors": {
-                "a": {
-                  "x": 0.18,
-                  "y": 0.38,
-                  "w": 0.64,
-                  "h": 0.45
-                }
-              },
-              "focus": "a",
-              "overlay": "adjective",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "talk",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
+                "market-evaluation"
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "贵",
+                "pinyin": "guì"
+              }
+            ]
           },
           "explains": "reaction: Покупатель рассматривает ценник на рынке и просит изменить цену. Показать исходную учебную ситуацию. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         },
@@ -941,44 +957,39 @@
               ]
             },
             "illustration": {
-              "layout": "scene",
+              "layout": "board",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
-              "anchors": {
-                "a": {
-                  "x": 0.18,
-                  "y": 0.38,
-                  "w": 0.64,
-                  "h": 0.45
-                }
-              },
-              "focus": "a",
-              "overlay": "adjective",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
+              "parts": [
+                "有点儿 + 贵"
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "这个",
+                "pinyin": "Zhège"
+              },
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "贵",
+                "pinyin": "guì"
+              }
+            ]
           },
           "explains": "reaction: Покупатель рассматривает ценник на рынке и просит изменить цену. Изменить видимое состояние в момент объяснения. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         },
         {
           "id": "reaction-action-3",
           "kind": "graphic",
-          "cueText": "оценка цены",
+          "cueText": "дорогой",
           "visual": {
             "title": "Впечатление о цене",
             "hanzi": "有点儿贵",
@@ -1111,35 +1122,33 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.18,
-                  "y": 0.38,
-                  "w": 0.64,
-                  "h": 0.45
+                  "x": 0.63,
+                  "y": 0.64,
+                  "w": 0.19,
+                  "h": 0.09
                 }
               },
               "focus": "a",
-              "overlay": "adjective",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
-              ]
-            }
+              "focusLabel": "价"
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "贵",
+                "pinyin": "guì"
+              }
+            ]
           },
           "explains": "reaction: Покупатель рассматривает ценник на рынке и просит изменить цену. Сопоставить результат с правильным примером. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         }
@@ -1289,35 +1298,32 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "park-kiosk"
+                "market-request"
               ],
-              "anchors": {
-                "a": {
-                  "x": 0.18,
-                  "y": 0.38,
-                  "w": 0.64,
-                  "h": 0.45
-                }
-              },
-              "focus": "a",
-              "overlay": "drop",
               "cast": [
                 {
                   "id": "panda",
                   "mood": "talk",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
+                  "x": 0.82,
+                  "y": 0.96,
+                  "h": 0.16
                 }
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "便宜",
+                "pinyin": "Piányi"
+              },
+              {
+                "hanzi": "一",
+                "pinyin": "yì"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              }
+            ]
           },
           "explains": "request: Покупатель рассматривает ценник на рынке и просит изменить цену. Показать исходную учебную ситуацию. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         },
@@ -1442,35 +1448,50 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.18,
-                  "y": 0.38,
-                  "w": 0.64,
-                  "h": 0.45
+                  "x": 0.63,
+                  "y": 0.64,
+                  "w": 0.19,
+                  "h": 0.09
                 }
               },
               "focus": "a",
-              "overlay": "drop",
+              "focusLabel": "价",
               "cast": [
                 {
                   "id": "panda",
-                  "mood": "correct",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
                   "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
+                  "x": 0.82,
+                  "y": 0.96,
+                  "h": 0.16
                 }
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "便宜",
+                "pinyin": "Piányi"
+              },
+              {
+                "hanzi": "一",
+                "pinyin": "yì"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "可以",
+                "pinyin": "kěyǐ"
+              },
+              {
+                "hanzi": "吗",
+                "pinyin": "ma"
+              }
+            ]
           },
           "explains": "request: Покупатель рассматривает ценник на рынке и просит изменить цену. Изменить видимое состояние в момент объяснения. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         },
@@ -1662,37 +1683,28 @@
               ]
             },
             "illustration": {
-              "layout": "scene",
+              "layout": "board",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
-              "anchors": {
-                "a": {
-                  "x": 0.18,
-                  "y": 0.38,
-                  "w": 0.64,
-                  "h": 0.45
-                }
-              },
-              "focus": "a",
-              "overlay": "drop",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
+              "parts": [
+                "便宜 + 一点儿"
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "便宜",
+                "pinyin": "Piányi"
+              },
+              {
+                "hanzi": "一",
+                "pinyin": "yì"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              }
+            ]
           },
           "explains": "request: Покупатель рассматривает ценник на рынке и просит изменить цену. Сопоставить результат с правильным примером. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         }
@@ -1840,32 +1852,28 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "board",
               "images": [
-                "park-evaluation",
-                "park-request"
+                "market-stall"
               ],
-              "focus": "left",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
+              "parts": [
+                "有点儿 + 贵"
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "贵",
+                "pinyin": "guì"
+              }
+            ]
           },
           "explains": "contrast: Покупатель рассматривает ценник на рынке и просит изменить цену. Показать исходную учебную ситуацию. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         },
@@ -1988,32 +1996,28 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "board",
               "images": [
-                "park-evaluation",
-                "park-request"
+                "market-stall"
               ],
-              "focus": "right",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
+              "parts": [
+                "便宜 + 一点儿"
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "便宜",
+                "pinyin": "Piányi"
+              },
+              {
+                "hanzi": "一",
+                "pinyin": "yì"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              }
+            ]
           },
           "explains": "contrast: Покупатель рассматривает ценник на рынке и просит изменить цену. Изменить видимое состояние в момент объяснения. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         },
@@ -2205,32 +2209,29 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "board",
               "images": [
-                "park-evaluation",
-                "park-request"
+                "market-stall"
               ],
-              "focus": "left",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
+              "parts": [
+                "有点儿 + 贵",
+                "便宜 + 一点儿"
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "贵",
+                "pinyin": "guì"
+              }
+            ]
           },
           "explains": "contrast: Покупатель рассматривает ценник на рынке и просит изменить цену. Сопоставить результат с правильным примером. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         }
@@ -2380,30 +2381,26 @@
             "illustration": {
               "layout": "board",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
               "parts": [
-                "有点儿 + 贵",
-                "便宜 + 一点儿"
-              ],
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "proud",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "celebrate",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
+                "有点儿 + 贵"
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "贵",
+                "pinyin": "guì"
+              }
+            ]
           },
           "explains": "recap: Покупатель рассматривает ценник на рынке и просит изменить цену. Показать исходную учебную ситуацию. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         },
@@ -2528,30 +2525,34 @@
             "illustration": {
               "layout": "board",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
               "parts": [
-                "有点儿 + 贵",
                 "便宜 + 一点儿"
-              ],
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "proud",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "celebrate",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "便宜",
+                "pinyin": "Piányi"
+              },
+              {
+                "hanzi": "一",
+                "pinyin": "yì"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "可以",
+                "pinyin": "kěyǐ"
+              },
+              {
+                "hanzi": "吗",
+                "pinyin": "ma"
+              }
+            ]
           },
           "explains": "recap: Покупатель рассматривает ценник на рынке и просит изменить цену. Изменить видимое состояние в момент объяснения. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         },
@@ -2745,30 +2746,27 @@
             "illustration": {
               "layout": "board",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
               "parts": [
                 "有点儿 + 贵",
                 "便宜 + 一点儿"
-              ],
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "proud",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "celebrate",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "贵",
+                "pinyin": "guì"
+              }
+            ]
           },
           "explains": "recap: Покупатель рассматривает ценник на рынке и просит изменить цену. Сопоставить результат с правильным примером. Учебный смысл: Вежливо заметить, что товар дороговат, и попросить сделать чуть дешевле."
         }

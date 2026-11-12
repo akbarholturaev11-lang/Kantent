@@ -1,34 +1,34 @@
 {
   "episodeId": "youdianr-vs-yidianr-price-20261111",
   "model": "google/gemini-3.1-flash-image",
-  "style": "Polished semi-realistic digital illustration for a premium vertical explainer reel: warm cinematic lighting, soft cel shading, clean confident linework, rich but natural colours, detailed believable background, gentle depth of field. Absolutely no text, letters, numbers, signs with writing, logos or watermarks anywhere in the image. Setting: a Chinese park by a lake with willow trees, a stone bridge and a pavilion.",
+  "style": "Premium semi-realistic editorial illustration for a Chinese night-market bargaining lesson: warm red canopy, amber lanterns, painterly shadows and clean confident contours. Keep a consistent orange-and-wood palette across all views. Background only, with no characters, people, hands, animals, marks on the tag, readable signs, letters, numbers, logos or watermarks. Keep the small blank price tag and its mandarin crate clear of the lower quarter reserved for HSK AI character overlays.",
   "assets": [
     {
-      "name": "park-kiosk",
+      "name": "market-stall",
       "aspectRatio": "9:16",
-      "prompt": "A calm Chinese park by a lake with willow trees, a stone bridge and a small wooden kiosk counter beside the path. Leave open central space. No people, animals or characters; no signs, writing, letters, numbers, logos or watermarks."
+      "prompt": "Customer-side establishing view of one Chinese night-market fruit stall at evening. A wooden crate of mandarins and one small blank cream price tag are the clear focal subject in the middle of the frame; warm red canopy and amber hanging lanterns make the night market recognizable, neighboring stalls softly blurred. Leave clean space in the top quarter and lower quarter for the lesson overlays. No readable writing or prices."
     },
     {
-      "name": "park-evaluation",
+      "name": "market-evaluation",
       "aspectRatio": "4:5",
       "references": [
-        "park-kiosk"
+        "market-stall"
       ],
-      "prompt": "At the same lakeside park kiosk, one simple ceramic cup on a wooden counter beside a blank unmarked price tag, warm light. No people or characters; no writing, numbers, logos or watermark."
+      "prompt": "Tighter customer-eye view of the same stall, same exact wooden crate of mandarins and small blank cream tag. Show the fruit and tag together, centered and clearly recognizable, with the tag modest in size at center-right and the lower quarter quiet for small character overlays. Same warm red-and-amber market palette and softly blurred market background."
     },
     {
-      "name": "park-request",
+      "name": "market-request",
       "aspectRatio": "4:5",
       "references": [
-        "park-kiosk",
-        "park-evaluation"
+        "market-stall",
+        "market-evaluation"
       ],
-      "prompt": "The same lakeside kiosk counter and plain cup, framed with generous clear space and a blank tag; calm, inviting light. No people or characters; no writing, numbers, logos or watermark."
+      "prompt": "Slightly wider customer-counter view of the same stall, identical crate of mandarins and unchanged small blank cream tag together in the upper-middle. Keep an uncluttered lower quarter for two small HSK AI character overlays as buyer and seller. Suggest an inviting place to make a polite request through the open counter and warm lights; do not alter the product or imply a price change."
     }
   ],
   "variety": {
     "date": "2026-11-11",
-    "setting": "park-lake",
+    "setting": "night-market",
     "coach": "panda",
     "supportingCharacter": "rabbit",
     "pattern": "before-after-cards",
@@ -38,6 +38,6 @@
       "variable": "setting group",
       "value": "outdoor-china"
     },
-    "source": "scripts/visual-variety-plan.mjs (2026-11-10): assigned park-lake, rabbit and before-after-cards; A/B A = outdoor-china."
+    "source": "Owner visual correction after review: replaced park-lake with the topic-specific night-market fruit stall; remains in outdoor-china A. No performance inference."
   }
 }

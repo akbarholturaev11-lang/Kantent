@@ -9,6 +9,15 @@ const idPattern=/^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const text=value=>typeof value==='string' && value.trim().length>=3;
 const load=file=>JSON.parse(fs.readFileSync(file,'utf8'));
 
+export function promoCaptureLanguageMatches(visual, language, episodeId) {
+  return visual.uiLanguage===language ||
+    (visual.uiLanguage==='zxx' && visual.languageNeutralCrop===true && visual.crop && visual.sourceUiLanguage) ||
+    (visual.sharedUiOwnerApproval?.episodeId===episodeId &&
+      visual.sharedUiOwnerApproval?.sourceUiLanguage===visual.uiLanguage &&
+      /^\d{4}-\d{2}-\d{2}$/.test(visual.sharedUiOwnerApproval?.date??'') &&
+      visual.sharedUiOwnerApproval?.audiences?.includes(language));
+}
+
 export function readPromoRules(root=ROOT) {
   const policy=load(path.join(root,'content/creative-formats.json')).promoPolicy;
   const visual=load(path.join(root,'content/visual-system.json'));
@@ -111,7 +120,7 @@ export function validatePromoPlan(plan,{policy,presentation,languages}=readPromo
         fail(`${beat?.id}: product demonstrations need a genuine capture and supported claim IDs`);
       else if(beat.claimIds.some(id=>typeof beat.narration!=='string' || !beat.narration.includes(claims.get(id).text)))
         fail(`${beat.id}: demo narration must include the referenced product claim`);
-      if(v.uiLanguage!==plan.languageCode && !(v.uiLanguage==='zxx'&&v.languageNeutralCrop===true&&v.crop&&v.sourceUiLanguage) && !text(v.limitations))
+      if(!promoCaptureLanguageMatches(v,plan.languageCode,plan.id) && !text(v.limitations))
         fail(`${beat?.id}: disclose the capture language mismatch as outstanding production work`);
     } else if(v?.type==='illustration') {
       if(!text(v.drawingBrief))fail(`${beat?.id}: describe the actual original object/action to build`);
@@ -150,7 +159,16 @@ export function reviewPromoPlan(id,{root=ROOT,language}={}) {
   if(errors.length)throw Error(errors.join('\n'));
   assertLocalizedPromoPlan(plan,canonical);
   for(const item of plan.evidence)containedFile(root,item.sourcePath);
-  for(const beat of plan.beats)if(beat.visual.assetPath)containedFile(root,beat.visual.assetPath);
+  for(const beat of plan.beats) {
+    for (const asset of [beat.visual.type==='illustration' ? beat.visual.assetPath : undefined, beat.visual.backdropPath, beat.visual.screenMotion?.leadInPath]) {
+      if(asset!==undefined && (typeof asset!=='string' || !/^public\/promo-art\/[a-z0-9/-]+\.(?:jpg|png)$/u.test(asset)))
+        throw Error(beat.id+': original artwork must live under public/promo-art');
+    }
+    if(beat.visual.assetPath)containedFile(root,beat.visual.assetPath);
+    if(beat.visual.backdropPath)containedFile(root,beat.visual.backdropPath);
+    if(beat.visual.screenMotion?.leadInPath)containedFile(root,beat.visual.screenMotion.leadInPath);
+    if(beat.visual.screenMotion?.previous?.screenImage)containedFile(root,'public/'+beat.visual.screenMotion.previous.screenImage);
+  }
   return {mode:'read-only-promo-planning',plan,structurallyValid:true,
     sourcePlan:path.posix.join(rules.languages[selected].contentRoot,'promos',id+'.json'),
     ctaSource:path.posix.join(rules.languages[plan.language].contentRoot,'cta-lab.json'),

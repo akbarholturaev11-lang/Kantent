@@ -142,7 +142,7 @@ test("X-10 wiring: single-hint passes only for missing languages, only in window
 test("one-take is the default; long takes are transcribed in saved silence-bounded windows", () => {
   assert.match(source, /const TTS_MODE_SETTING = \(process\.env\.HSK_AI_TTS_MODE \?\? "one-take"\)/);
   assert.match(source, /const ttsMode = ONE_TAKE \? "continuous-pilot" : "scene";/, "stored id unchanged: saved takes stay resumable");
-  const loop = between("metadata.sttWindows ??= [];", "if (!chunkAlignment?.captions) {\n      // Direct Gemini STT");
+  const loop = between("metadata.sttWindows ??= [];", "if (!chunkAlignment?.captions && !retryRecoveryOnly) {\n      // Direct Gemini STT");
   assert.match(loop, /planSttWindows\(\{/);
   assert.match(loop, /cutWavClip\(chunkWavPath, window\.startMs, window\.endMs, clipPath, ffmpegRuntime\);/);
   assert.match(loop, /annotations\.push\(\.\.\.offsetAnnotations\(record\.annotations, window\.startMs\)\);/);

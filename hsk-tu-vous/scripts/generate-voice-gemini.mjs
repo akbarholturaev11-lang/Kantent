@@ -275,12 +275,27 @@ function singleScriptParts(value) {
                 кон: "кун",
               }
             : {}),
+          // Owner-confirmed TG playback on 2026-11-11: this exact CTA suffix
+          // “-ро” was rendered as Arabic “را” by OpenRouter; keep the alias
+          // scoped to this episode and preserve the provider's actual timing.
+          ...(EPISODE_ID === "youdianr-vs-yidianr-price-20261111" ? { "را": "ро" } : {}),
         }
       : {}),
   };
   return (value.match(wordTokenPattern) ?? []).flatMap((token) => {
     const normalized = normalizeVoiceToken(token, voiceProfile.locale);
     const locale = (text) => ({ text, han: false });
+    // OpenRouter may spell the owner-confirmed Tajik brand phrase “AI-ро” as
+    // one Cyrillic/Latin token (“Айро”/“Airo”). Split only the recognized
+    // token into its authored acronym and suffix; all parts retain the same
+    // provider-measured interval, with no syllable times inferred.
+    if (
+      voiceProfile.locale === "tg-TJ" &&
+      EPISODE_ID === "youdianr-vs-yidianr-price-20261111" &&
+      /^(?:айро|airo)$/u.test(normalized)
+    ) {
+      return ["ai", "ро"].map(locale);
+    }
     if (
       voiceProfile.locale === "tg-TJ" &&
       /^hsk[-‐‑‒–—]?ai[-‐‑‒–—]?ро$/u.test(normalized)
@@ -991,6 +1006,36 @@ async function recoverActualWordClips({
   await fs.mkdir(directory, { recursive: true });
   const byTime = (a, b) => a.startMs - b.startMs || a.endMs - b.endMs;
   const blocks = timedBlocks(originalAnnotations, durationMs).sort(byTime);
+  const focusedTranscriptSources = [];
+  // A focused provider pass can resolve repeated-phrase timing collisions in
+  // the broad window transcripts. Use it only when the saved record explicitly
+  // binds the approved model, provider word times, and SHA of this exact take.
+  for (const name of (await fs.readdir(directory)).filter((item) =>
+    item.startsWith("focus-") && item.endsWith(".json"))) {
+    let record;
+    try { record = await readJson(path.join(directory, name)); }
+    catch (error) { if (error?.code !== "ENOENT" && !(error instanceof SyntaxError)) throw error; continue; }
+    const clipStartMs = record?.clipStartMs;
+    const clipEndMs = record?.clipEndMs;
+    const clipDurationMs = record?.actualClipDurationMs ?? clipEndMs - clipStartMs;
+    if (record?.alignmentEvidence !== true || record.sourceAudioSha256 !== metadata.wavSha256 ||
+        !["gemini-direct", "openrouter"].includes(record.provider) ||
+        record.model !== config.transcribeModel || !Array.isArray(record.annotations) || !record.annotations.length ||
+        !Number.isFinite(clipStartMs) || !Number.isFinite(clipEndMs) || clipStartMs < 0 ||
+        clipEndMs <= clipStartMs || clipEndMs > durationMs + 100 ||
+        !Number.isFinite(clipDurationMs) || clipDurationMs <= 0 || clipDurationMs > clipEndMs - clipStartMs + 100)
+      continue;
+    const focused = timedBlocks(record.annotations, clipDurationMs).map((block) => ({
+      ...block,
+      startMs: block.startMs + clipStartMs,
+      endMs: block.endMs + clipStartMs,
+    }));
+    if (!focused.length) continue;
+    blocks.push(...focused);
+    focusedTranscriptSources.push({ file: name, provider: record.provider,
+      languageCodes: record.languageCodes ?? [], clipStartMs, clipEndMs, wordCount: focused.length });
+  }
+  blocks.sort(byTime);
   let plan = buildRecoveryPlan(expected, blocks, durationMs, { match });
   // X-10 (real 2026-11-08 runs): a mixed-hint pass drops one language — RU
   // lost every Mandarin sentence, TG chunk 2 kept only the Mandarin. One
@@ -1037,7 +1082,7 @@ async function recoverActualWordClips({
   await fs.writeFile(path.join(directory, "plan.json"), JSON.stringify({
     sourceAudio: path.basename(audioPath), windows, originalAnnotations,
     missingGaps: plan.gaps, matchedTokenCount: plan.matchedTokenCount,
-    expectedTokens: expected.length,
+    expectedTokens: expected.length, focusedTranscriptSources,
   }, null, 2) + "\n");
   for (const gap of plan.gaps) {
     if (gap.noAudio || gap.endMs - gap.startMs < 80) {
@@ -1054,6 +1099,38 @@ async function recoverActualWordClips({
           : transcriptionLanguages.map((code) => [code]);
     const clipPath = path.join(directory, clipName + ".wav");
     const gapBlocks = [];
+    const gapBlocksByHint = new Map();
+    const gapBlockGroupsByHint = new Map();
+    const timedClipBlocks = (annotations, clipDurationMs, clipStartMs) =>
+      timedBlocks(annotations, clipDurationMs).map((block) => ({
+        ...block,
+        startMs: block.startMs + clipStartMs,
+        endMs: block.endMs + clipStartMs,
+      }));
+    const savedClipGroups = async () => {
+      const groups = [];
+      const names = (await fs.readdir(directory)).filter((name) => name.endsWith(".json"));
+      for (const name of names) {
+        let record;
+        try { record = await readJson(path.join(directory, name)); }
+        catch (error) { if (error?.code !== "ENOENT" && !(error instanceof SyntaxError)) throw error; continue; }
+        if (!Array.isArray(record?.annotations) || !record.annotations.length ||
+            !["gemini-direct", "openrouter"].includes(record.provider) ||
+            record.model !== config.transcribeModel ||
+            !Number.isFinite(record.clipStartMs) || !Number.isFinite(record.clipEndMs) ||
+            record.clipStartMs < 0 || record.clipEndMs <= record.clipStartMs || record.clipEndMs > durationMs + 100)
+          continue;
+        const rawHint = record.languageCodes?.[0];
+        const code = ["tg", "tg-TJ", "ru", "ru-RU"].includes(rawHint) ? transcriptionLanguages[0]
+          : ["zh", "zh-CN", "cmn-Hans-CN"].includes(rawHint) ? transcriptionLanguages.at(-1) : null;
+        if (!code) continue;
+        const blocks = timedClipBlocks(record.annotations,
+          record.actualClipDurationMs ?? (record.clipEndMs - record.clipStartMs), record.clipStartMs);
+        if (blocks.length) groups.push({ code, blocks, name,
+          clipDurationMs: record.clipEndMs - record.clipStartMs });
+      }
+      return groups.sort((a, b) => a.clipDurationMs - b.clipDurationMs || a.name.localeCompare(b.name));
+    };
     try {
       for (const hints of hintSets) {
         const label = hints.length ? hints.join("+") : "nohint";
@@ -1065,42 +1142,167 @@ async function recoverActualWordClips({
             clipStartMs: gap.startMs, clipEndMs: gap.endMs, actualClipDurationMs: actualMs };
           });
         const clipMs = record.actualClipDurationMs ?? (gap.endMs - gap.startMs);
-        for (const annotations of [record.annotations, ...(record.alternates ?? [])])
-          gapBlocks.push(...timedBlocks(annotations, clipMs)
-            .map((b) => ({ ...b, startMs: b.startMs + gap.startMs, endMs: b.endMs + gap.startMs })));
+        const passGroups = [record.annotations, ...(record.alternates ?? [])]
+          .map((annotations) => timedClipBlocks(annotations, clipMs, gap.startMs));
+        const passBlocks = passGroups.flat();
+        gapBlocks.push(...passBlocks);
+        if (hints.length === 1) {
+          const code = hints[0];
+          gapBlocksByHint.set(code, [...(gapBlocksByHint.get(code) ?? []), ...passBlocks]);
+          gapBlockGroupsByHint.set(code, [...(gapBlockGroupsByHint.get(code) ?? []), ...passGroups]);
+        }
+      }
+      // Reuse earlier provider-timed clips from this immutable voice take.
+      // Their exact offsets, language hints and model are saved in this run
+      // folder; only annotations fully inside the current gap may be selected.
+      for (const group of await savedClipGroups()) {
+        const inside = group.blocks.filter((block) =>
+          block.startMs >= gap.startMs - 120 && block.endMs <= gap.endMs + 120);
+        if (!inside.length) continue;
+        gapBlocks.push(...inside);
+        gapBlocksByHint.set(group.code, [...(gapBlocksByHint.get(group.code) ?? []), ...inside]);
+        const prior = gapBlockGroupsByHint.get(group.code) ?? [];
+        if (!prior.some((candidate) => candidate.length === inside.length &&
+            candidate.every((block, index) => block.startMs === inside[index].startMs && block.endMs === inside[index].endMs && block.text === inside[index].text)))
+          gapBlockGroupsByHint.set(group.code, [...prior, inside]);
       }
       gapBlocks.sort(byTime);
       let selected;
       try {
         selected = selectRecoveredBlocks(gap.tokens, gapBlocks, { match });
       } catch (firstError) {
+        const expectedRunTokens = expected.slice(gap.from, gap.to);
+        const runs = [];
+        for (const entry of expectedRunTokens) {
+          const previous = runs.at(-1);
+          if (!previous || previous.language !== entry.language)
+            runs.push({ language: entry.language, tokens: [entry.text], selected: null });
+          else previous.tokens.push(entry.text);
+        }
+        const languageCode = (language) => language === "zh"
+          ? transcriptionLanguages.at(-1) : transcriptionLanguages[0];
+
+        // A mixed-language gap can contain a complete, verified Hanzi run and
+        // an unverified locale run (or vice versa). Use the provider-timed edge
+        // of the verified neighboring run to isolate only the missing script;
+        // never estimate a cut point or substitute a transcript.
+        if (gap.language === "mixed" && runs.length > 1) {
+          let previousEndMs = gap.startMs;
+          for (const run of runs) {
+            const code = languageCode(run.language);
+            const candidateGroups = gapBlockGroupsByHint.get(code) ?? [];
+            for (const candidates of candidateGroups) {
+              const inOrder = candidates.filter((block) => block.startMs >= previousEndMs - 120 &&
+                block.startMs >= gap.startMs - 120 && block.endMs <= gap.endMs + 120);
+              try {
+                run.selected = selectRecoveredBlocks(run.tokens, inOrder, { match });
+                break;
+              } catch { /* Try another saved clip for this script run. */ }
+            }
+            if (run.selected) previousEndMs = run.selected.at(-1).endMs;
+          }
+          for (let runIndex = 0; runIndex < runs.length; runIndex += 1) {
+            const run = runs[runIndex];
+            if (run.selected) continue;
+            const before = runs.slice(0, runIndex).reverse().find((item) => item.selected);
+            const after = runs.slice(runIndex + 1).find((item) => item.selected);
+            const clipStartMs = before?.selected.at(-1).endMs ?? gap.startMs;
+            const clipEndMs = after?.selected[0].startMs ?? gap.endMs;
+            const code = languageCode(run.language);
+            if (!code || clipEndMs - clipStartMs < 80) continue;
+            const runName = `language-run-${clipStartMs}-${clipEndMs}-${String(runIndex + 1).padStart(2, "0")}-${code}`;
+            const runPath = path.join(directory, runName + ".wav");
+            const record = await cachedClipTranscription(path.join(directory, runName + ".json"),
+              `${clipStartMs}-${clipEndMs}-${code}`, async ({ allowBackup }) => {
+                const actualMs = cutWavClip(audioPath, clipStartMs, clipEndMs, runPath, ffmpegRuntime);
+                return { ...(await transcribeSavedAudio(runPath, [code],
+                  `hsk-language-run-${EPISODE_ID}-${chunkNumber}-${runIndex + 1}-${code}`,
+                  { stage: "stt-language-run", chunk, allowBackup })),
+                clipStartMs, clipEndMs, actualClipDurationMs: actualMs };
+              });
+            const runBlocks = [record.annotations, ...(record.alternates ?? [])]
+              .flatMap((annotations) => timedClipBlocks(annotations,
+                record.actualClipDurationMs ?? (clipEndMs - clipStartMs), clipStartMs));
+            gapBlocks.push(...runBlocks);
+            gapBlocksByHint.set(code, [...(gapBlocksByHint.get(code) ?? []), ...runBlocks]);
+            try { run.selected = selectRecoveredBlocks(run.tokens, runBlocks, { match }); }
+            catch { /* Keep the gate closed if this focused pass is still wrong. */ }
+          }
+          if (runs.every((run) => run.selected))
+            selected = runs.flatMap((run) => run.selected);
+        }
+
+        // A single-script clip may contain an exact prefix followed by dropped
+        // words. Re-transcribe only that unverified tail, starting at the last
+        // provider-timed word; this is especially useful when the recognizer
+        // omits a repeated Hanzi phrase at the end of a mixed narration gap.
+        if (!selected && runs.length === 1) {
+          const run = runs[0];
+          const code = languageCode(run.language);
+          const candidates = gapBlocksByHint.get(code) ?? [];
+          let prefix = null;
+          let prefixLength = 0;
+          for (let length = run.tokens.length - 1; length > 0; length -= 1) {
+            try {
+              prefix = selectRecoveredBlocks(run.tokens.slice(0, length), candidates, { match });
+              prefixLength = length;
+              break;
+            } catch { /* Try a shorter exact prefix. */ }
+          }
+          if (prefix && code) {
+            const tailStartMs = prefix.at(-1).endMs;
+            if (gap.endMs - tailStartMs >= 80) {
+              const tailTokens = run.tokens.slice(prefixLength);
+              const tailName = `verified-tail-${tailStartMs}-${gap.endMs}-${code}`;
+              const tailPath = path.join(directory, tailName + ".wav");
+              const record = await cachedClipTranscription(path.join(directory, tailName + ".json"),
+                `${tailStartMs}-${gap.endMs}-${code}`, async ({ allowBackup }) => {
+                  const actualMs = cutWavClip(audioPath, tailStartMs, gap.endMs, tailPath, ffmpegRuntime);
+                  return { ...(await transcribeSavedAudio(tailPath, [code],
+                    `hsk-verified-tail-${EPISODE_ID}-${chunkNumber}-${code}`,
+                    { stage: "stt-language-tail", chunk, allowBackup })),
+                  clipStartMs: tailStartMs, clipEndMs: gap.endMs, actualClipDurationMs: actualMs };
+                });
+              const tailBlocks = [record.annotations, ...(record.alternates ?? [])]
+                .flatMap((annotations) => timedClipBlocks(annotations,
+                  record.actualClipDurationMs ?? (gap.endMs - tailStartMs), tailStartMs));
+              gapBlocks.push(...tailBlocks);
+              try {
+                selected = [...prefix, ...selectRecoveredBlocks(tailTokens, tailBlocks, { match })];
+              } catch { /* The unverified tail remains a hard blocker. */ }
+            }
+          }
+        }
+
         // One bounded second request per unconfirmed span: the same saved
         // audio with ~0.7 s of neighbouring speech on each side, because a
         // bare 1 s clip loses context (real RU one-take: "HSK AI" → "HSGKAI").
         // Neighbour words are extras the strict selection discards; the
         // missing words must still be heard exactly, inside the span.
-        const contextStart = Math.max(0, gap.startMs - 700);
-        const contextEnd = Math.min(durationMs, gap.endMs + 700);
-        const contextName = `context-${contextStart}-${contextEnd}`;
-        const contextPath = path.join(directory, contextName + ".wav");
-        const record = await cachedClipTranscription(path.join(directory, `${contextName}-${hintSets[0].join("+") || "nohint"}.json`),
-          `${contextStart}-${contextEnd}-${hintSets[0].join("+") || "nohint"}`, async ({ allowBackup }) => {
-            const actualMs = cutWavClip(audioPath, contextStart, contextEnd, contextPath, ffmpegRuntime);
-            return { ...(await transcribeSavedAudio(contextPath, hintSets[0].length ? hintSets[0] : transcriptionLanguages,
-              `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${contextName}`, { stage: "stt-recovery", chunk, allowBackup })),
-            clipStartMs: contextStart, clipEndMs: contextEnd, actualClipDurationMs: actualMs };
-          });
-        const inside = [record.annotations, ...(record.alternates ?? [])]
-          .flatMap((annotations) => timedBlocks(annotations, record.actualClipDurationMs ?? (contextEnd - contextStart)))
-          .map((b) => ({ ...b, startMs: b.startMs + contextStart, endMs: b.endMs + contextStart }))
-          // Provider times are kept as returned; only words lying inside the
-          // span (±120 ms tolerance) may fill it.
-          .filter((b) => b.startMs >= gap.startMs - 120 && b.endMs <= gap.endMs + 120);
-        gapBlocks.push(...inside);
-        try {
-          selected = selectRecoveredBlocks(gap.tokens, inside, { match });
-        } catch {
-          throw firstError;
+        if (!selected) {
+          const contextStart = Math.max(0, gap.startMs - 700);
+          const contextEnd = Math.min(durationMs, gap.endMs + 700);
+          const contextName = `context-${contextStart}-${contextEnd}`;
+          const contextPath = path.join(directory, contextName + ".wav");
+          const record = await cachedClipTranscription(path.join(directory, `${contextName}-${hintSets[0].join("+") || "nohint"}.json`),
+            `${contextStart}-${contextEnd}-${hintSets[0].join("+") || "nohint"}`, async ({ allowBackup }) => {
+              const actualMs = cutWavClip(audioPath, contextStart, contextEnd, contextPath, ffmpegRuntime);
+              return { ...(await transcribeSavedAudio(contextPath, hintSets[0].length ? hintSets[0] : transcriptionLanguages,
+                `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${contextName}`, { stage: "stt-recovery", chunk, allowBackup })),
+              clipStartMs: contextStart, clipEndMs: contextEnd, actualClipDurationMs: actualMs };
+            });
+          const inside = [record.annotations, ...(record.alternates ?? [])]
+            .flatMap((annotations) => timedBlocks(annotations, record.actualClipDurationMs ?? (contextEnd - contextStart)))
+            .map((b) => ({ ...b, startMs: b.startMs + contextStart, endMs: b.endMs + contextStart }))
+            // Provider times are kept as returned; only words lying inside the
+            // span (±120 ms tolerance) may fill it.
+            .filter((b) => b.startMs >= gap.startMs - 120 && b.endMs <= gap.endMs + 120);
+          gapBlocks.push(...inside);
+          try {
+            selected = selectRecoveredBlocks(gap.tokens, inside, { match });
+          } catch {
+            throw firstError;
+          }
         }
       }
       recovered.push(selected);
@@ -1117,6 +1319,7 @@ async function recoverActualWordClips({
     throw new Error(`Recovery could not confirm ${unconfirmed.length} of ${plan.gaps.length} spans: ` +
       unconfirmed.map((u) => `${u.startMs}-${u.endMs} "${u.expected}" heard "${u.heard}"`).join("; "));
   }
+  await fs.rm(path.join(directory, "unconfirmed-gaps.json"), { force: true });
   const joined = mergeRecoveredBlocks(expected, blocks, plan, recovered);
   const joinedAnnotations = joined.map((b) => ({
     text: b.text,
@@ -1124,8 +1327,16 @@ async function recoverActualWordClips({
     endOffset: (b.endMs / 1000).toFixed(3) + "s",
   }));
   const verified = alignWords(chunkText, joinedAnnotations, durationMs);
-  if (verified.mismatches.length)
-    throw new Error("Recovered words still failed exact whole-narration word alignment.");
+  if (verified.mismatches.length) {
+    await fs.writeFile(path.join(directory, "unverified-merge.json"), JSON.stringify({
+      expectedTokenCount: expected.length,
+      mismatches: verified.mismatches,
+      joinedAnnotations,
+    }, null, 2) + "\n");
+    throw new Error("Recovered words still failed exact whole-narration word alignment: " +
+      JSON.stringify(verified.mismatches.slice(0, 12)));
+  }
+  await fs.rm(path.join(directory, "unverified-merge.json"), { force: true });
   await fs.writeFile(path.join(directory, "verified-merge.json"), JSON.stringify({
     provider: config.transcriptionTransport, model: config.transcribeModel,
     windows, languagePasses, actualClipOffsets: plan.gaps,
@@ -1411,6 +1622,7 @@ const transcriptionPath = path.join(outputDir, "transcription.json");
 const metadataPath = path.join(outputDir, "metadata.json");
 const checkpointPath = path.join(outputDir, "checkpoint.json");
 let metadata;
+let retrySavedRecoveryOnly = false;
 if (RESUME_FOLDER_NAME) {
   try {
     metadata = await readJson(metadataPath);
@@ -1456,6 +1668,23 @@ if (RESUME_FOLDER_NAME) {
   if (config.apiProvider === "gemini-direct" && !config.openRouterBackupKey &&
       config.ttsTransport === "openrouter") {
     throw new Error("Resuming an OpenRouter-backed take requires HSK_AI_OPENROUTER_FALLBACK_ENABLED=true and OPENROUTER_API_KEY.");
+  }
+  // If a saved take already has a complete timed transcript and its bounded
+  // clip recovery failed on this same audio, rerunning whole-audio STT cannot
+  // repair those exact gaps. Reuse the immutable transcript and retry measured
+  // recovery clips through the owner's enabled OpenRouter transport.
+  const previousRecoveryBlocked =
+    metadata.lastRecoveryError?.startsWith("Recovered words still failed exact whole-narration word alignment:") ||
+    metadata.lastRecoveryError?.startsWith("Recovery could not confirm ");
+  retrySavedRecoveryOnly = Boolean(
+    previousRecoveryBlocked &&
+    (metadata.transcriptionAttempts?.[0] ?? 0) > 0 &&
+    config.openRouterBackupKey,
+  );
+  if (retrySavedRecoveryOnly) {
+    config.transcriptionTransport = "openrouter";
+    metadata.transcriptionTransport = "openrouter";
+    console.log("RESUME_SAVED_CLIP_RECOVERY_ONLY: using the verified saved take and OpenRouter word timestamps.");
   }
   delete metadata.error;
   metadata.status = "starting";
@@ -1803,7 +2032,10 @@ try {
         sttWindows,
       };
     }
-    if (!chunkAlignment?.captions) {
+    const savedTranscriptAvailable = Array.isArray(transcription?.wordAnnotations) &&
+      transcription.wordAnnotations.length > 0;
+    const retryRecoveryOnly = retrySavedRecoveryOnly && savedTranscriptAvailable;
+    if (!chunkAlignment?.captions && !retryRecoveryOnly) {
       // Direct Gemini STT on the saved audio (upload, transcribe, always delete).
       async function transcribeDirect(attempt) {
           // Keep resumable upload atomic per key; rejected credentials may start a NEW upload.

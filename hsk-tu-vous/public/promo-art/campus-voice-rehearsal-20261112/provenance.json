@@ -1,0 +1,35 @@
+{
+  "method": "Codex built-in ImageGen",
+  "reviewedOn": "2026-11-12",
+  "style": "9:16 cinematic storybook, tactile matte clay, peach-gold and teal Chinese campus residence, no text, people, mascots or simulated UI. The original HSK AI cast is composited in Remotion.",
+  "images": {
+    "arrival": {
+      "path": "public/promo-art/campus-voice-rehearsal-20261112/arrival.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "5b243ec79a7bdf0309262516606574c1da62811412c6647a04b0e8ea3568a299",
+      "brief": "A wide exterior view of the residence with an open blue door and a clear threshold."
+    },
+    "pause": {
+      "path": "public/promo-art/campus-voice-rehearsal-20261112/pause.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "0f7d014c4e2603605fa207dbdafc10c285ffc9d9d1c18baac2338356cd72c30c",
+      "brief": "A closer, quieter angle beside the blue doorway, with open floor space for the mascot."
+    },
+    "phone": {
+      "path": "public/promo-art/campus-voice-rehearsal-20261112/phone.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "1e856dd6c74b6571171c61c6eaaab31e1302fbd3ecbbd18dd1af45282a65e50f",
+      "brief": "A physical phone with its screen off, propped on a book on the stone bench."
+    },
+    "return": {
+      "path": "public/promo-art/campus-voice-rehearsal-20261112/return.png",
+      "width": 941,
+      "height": 1672,
+      "sha256": "731cbb0b5c372ec95de8e41b5e68872a5d49a19061305a649bc5d046addf6510",
+      "brief": "The return angle on the warm open door and path, with room for the mascot."
+    }
+  }
+}

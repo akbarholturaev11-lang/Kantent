@@ -1,6 +1,9 @@
 import {validateGraphicScene} from './graphic-scene.mjs';
 import {resolvePromoCue} from './promo-visual.mjs';
 import {contentIdentity} from './content-attribution.mjs';
+import {promoCaptureLanguageMatches} from './promo-plan.mjs';
+const validCrop = (crop) => Boolean(crop && ['x','y','width','height','sourceWidth','sourceHeight'].every(key=>Number.isFinite(crop[key])) &&
+ crop.width>0 && crop.height>0 && crop.x>=0 && crop.y>=0 && crop.x+crop.width<=crop.sourceWidth && crop.y+crop.height<=crop.sourceHeight);
 /** Convert an authored ad to the existing approved voice/caption/CTA renderer contract. */
 export function materializePromo(item,plan,{voiceProfile,ctaLab,composeCta}) {
  if(item.id!==plan.id||item.contentType!=='advertisement')throw Error('Promo calendar/source mismatch');
@@ -22,12 +25,21 @@ export function validatePromoMedia(episode) {
   const visual=scene.promoVisual;
   if(!visual||!scene.narration.includes(visual.cueText)||visual.limitations?.trim())throw Error(scene.id+': resolve promo artwork/capture limitations before voice/render');
   if(visual.type==='illustration') {
-   validateGraphicScene(visual.graphic);
-   if(!visual.graphic.tracks.length)throw Error(scene.id+': author the meaningful drawing movement');
+   if(visual.assetPath) {
+    if(!/^public\/promo-art\/[a-z0-9/-]+\.(?:jpg|png)$/u.test(visual.assetPath))
+     throw Error(scene.id+': expected original artwork under public/promo-art');
+   } else {
+    validateGraphicScene(visual.graphic);
+    if(!visual.graphic.tracks.length)throw Error(scene.id+': author the meaningful drawing movement');
+   }
   } else if(visual.type==='product-capture') {
-   if(!visual.screenImage||(visual.uiLanguage!==episode.languageCode && !(visual.uiLanguage==='zxx'&&visual.languageNeutralCrop===true&&visual.sourceUiLanguage))||!visual.crop||
-    ['x','y','width','height','sourceWidth','sourceHeight'].some(key=>!Number.isFinite(visual.crop[key]))||visual.crop.width<=0||visual.crop.height<=0||visual.crop.x<0||visual.crop.y<0||visual.crop.x+visual.crop.width>visual.crop.sourceWidth||visual.crop.y+visual.crop.height>visual.crop.sourceHeight)
+   if(!visual.screenImage||!promoCaptureLanguageMatches(visual,episode.languageCode,episode.id)||!validCrop(visual.crop))
     throw Error(scene.id+': genuine language-matched cropped product image required');
+   const motion=visual.screenMotion;
+   if(motion && (motion.kind==='entry' ? !motion.leadInPath : motion.kind!=='swipe-focus' ||
+    !motion.previous?.screenImage || !validCrop(motion.previous.crop) || !validCrop(motion.focusCrop) ||
+    motion.focusCrop.sourceWidth!==visual.crop.sourceWidth || motion.focusCrop.sourceHeight!==visual.crop.sourceHeight))
+    throw Error(scene.id+': incomplete product screen animation');
   } else throw Error('Unsupported promo media type');
  }
  return true;

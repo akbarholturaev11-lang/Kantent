@@ -46,6 +46,25 @@ export function selectExactBlocks(expected, blocks, match = (wanted, heard) => w
           if (match(expected[j].text,span.map(b=>b.tokens[0]).join("")))
             set(i+count,j+1,score+1,{i,j,matched:true,count});
         }
+        // A locale recognizer may shift a boundary between two adjacent words
+        // while preserving their exact spoken sequence (TG example:
+        // expected "чинӣ чӣ"; heard "чи ничи"). Compare only the joined
+        // sequence of 2–3 non-Hanzi words on each side. Keep every provider
+        // timestamp as returned and merge the measured spans; no word time is
+        // subdivided or inferred.
+        for (let expectedCount=2; expectedCount<=3 && j+expectedCount<=n; expectedCount++) {
+          const expectedSpan=expected.slice(j,j+expectedCount).map(x=>x.text);
+          if (expectedSpan.some(x=>/\p{Script=Han}/u.test(x))) break;
+          for (let blockCount=2; blockCount<=3 && i+blockCount<=m; blockCount++) {
+            const span=blocks.slice(i,i+blockCount);
+            if (!span.every(b=>(b.tokens??[]).length===1 && !/\p{Script=Han}/u.test(b.tokens[0]))) break;
+            if (match(expectedSpan.join(""),span.map(b=>b.tokens[0]).join("")))
+              // A tiny penalty: when the same words also match one-to-one, the
+              // clean exact pairing must win over a merged span.
+              set(i+blockCount,j+expectedCount,score+expectedCount-0.001,
+                {i,j,matched:true,count:blockCount,sequenceWidth:expectedCount});
+          }
+        }
         set(i+1,j,score,{i,j,matched:false});
       }
       if (j < n) set(i,j+1,score,{i,j,matched:false});
@@ -124,7 +143,7 @@ export function spanBlock(blocks,m) {
     ?{...blocks[m.blockIndex],covers:covered}:blocks[m.blockIndex];
   const span=blocks.slice(m.blockIndex,m.blockIndex+count);
   return {...span[0],text:span.map(b=>b.text).join(""),tokens:[span.map(b=>b.tokens[0]).join("")],
-    endMs:Math.max(...span.map(b=>b.endMs)),mergedBlocks:count};
+    endMs:Math.max(...span.map(b=>b.endMs)),mergedBlocks:count,...(covered>1?{covers:covered}:{})};
 }
 
 export function mergeRecoveredBlocks(expected,original,plan,recovered) {
@@ -150,5 +169,16 @@ export function mergeRecoveredBlocks(expected,original,plan,recovered) {
     cursor=item.to;
   }
   if(cursor!==expected.length)throw Error("Merged transcript does not exactly cover narration.");
-  return combined.map(x=>x.block);
+  // Every emitted interval has already passed the exact spoken-token matcher.
+  // A provider can join adjacent written words into one recognized token
+  // (e.g. "Ба чинӣ" → "Бачини"). Keep its measured provider interval, while
+  // restoring the validated source token boundaries for whole-narration
+  // alignment and captions.
+  // A block whose recognized tokens already spell exactly the covered source
+  // tokens keeps the provider spelling untouched.
+  return combined.map(({from,to,block})=>{
+    const spoken=expected.slice(from,to).map(token=>token.text);
+    if((block.tokens??[]).join("")===spoken.join(""))return block;
+    return {...block,text:spoken.join(" "),tokens:spoken,covers:to-from};
+  });
 }

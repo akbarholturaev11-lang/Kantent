@@ -32,7 +32,7 @@
       "id": "hook",
       "kind": "hook",
       "durationSec": 5,
-      "narration": "Дар боғи шаҳр, назди дӯкони гул нархи мол каме баланд аст. Бо чинӣ чӣ мегӯӣ? 这个有点儿贵。",
+      "narration": "Нархи мол каме баланд аст. Ба чинӣ: 这个有点儿贵。",
       "cards": [
         {
           "hanzi": "这个有点儿贵。",
@@ -47,7 +47,7 @@
           "kind": "graphic",
           "cueText": "нархи мол",
           "visual": {
-            "title": "Назди дӯкон",
+            "title": "Шоми бозор",
             "hanzi": "这个有点儿贵。",
             "pinyin": "Zhège yǒudiǎnr guì.",
             "meaning": "Ин каме гарон аст.",
@@ -162,29 +162,17 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "scene",
               "images": [
-                "park-evaluation",
-                "park-request"
+                "market-stall"
               ],
-              "focus": "left",
-              "overlay": "compare",
               "cast": [
                 {
                   "id": "panda",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
+                  "mood": "dismissive",
+                  "x": 0.82,
+                  "y": 0.96,
+                  "h": 0.16
                 }
               ]
             }
@@ -194,9 +182,9 @@
         {
           "id": "hook-action-2",
           "kind": "graphic",
-          "cueText": "чӣ мегӯӣ",
+          "cueText": "Ба чинӣ",
           "visual": {
-            "title": "Арзёбии нарм",
+            "title": "Шоми бозор",
             "hanzi": "这个有点儿贵。",
             "pinyin": "Zhège yǒudiǎnr guì.",
             "meaning": "Ин каме гарон аст.",
@@ -325,29 +313,17 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "scene",
               "images": [
-                "park-evaluation",
-                "park-request"
+                "market-stall"
               ],
-              "focus": "left",
-              "overlay": "compare",
               "cast": [
                 {
                   "id": "panda",
                   "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
+                  "x": 0.82,
+                  "y": 0.96,
+                  "h": 0.16
                 }
               ]
             }
@@ -359,7 +335,7 @@
           "kind": "graphic",
           "cueText": "这个有点儿贵",
           "visual": {
-            "title": "Ифодаи чинӣ",
+            "title": "Шоми бозор",
             "hanzi": "这个有点儿贵。",
             "pinyin": "Zhège yǒudiǎnr guì.",
             "meaning": "Ин каме гарон аст.",
@@ -542,29 +518,27 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "scene",
               "images": [
-                "park-evaluation",
-                "park-request"
+                "market-stall"
               ],
-              "focus": "left",
-              "overlay": "compare",
+              "anchors": {
+                "a": {
+                  "x": 0.63,
+                  "y": 0.64,
+                  "w": 0.19,
+                  "h": 0.09
+                }
+              },
+              "focus": "a",
+              "focusLabel": "价",
               "cast": [
                 {
                   "id": "panda",
-                  "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "rabbit",
                   "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
+                  "x": 0.82,
+                  "y": 0.96,
+                  "h": 0.16
                 }
               ]
             }
@@ -716,33 +690,7 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "park-kiosk"
-              ],
-              "anchors": {
-                "a": {
-                  "x": 0.18,
-                  "y": 0.38,
-                  "w": 0.64,
-                  "h": 0.45
-                }
-              },
-              "focus": "a",
-              "overlay": "adjective",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "talk",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
+                "market-evaluation"
               ]
             }
           },
@@ -936,35 +884,12 @@
               ]
             },
             "illustration": {
-              "layout": "scene",
+              "layout": "board",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
-              "anchors": {
-                "a": {
-                  "x": 0.18,
-                  "y": 0.38,
-                  "w": 0.64,
-                  "h": 0.45
-                }
-              },
-              "focus": "a",
-              "overlay": "adjective",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
+              "parts": [
+                "有点儿 + 贵"
               ]
             }
           },
@@ -1106,34 +1031,18 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.18,
-                  "y": 0.38,
-                  "w": 0.64,
-                  "h": 0.45
+                  "x": 0.63,
+                  "y": 0.64,
+                  "w": 0.19,
+                  "h": 0.09
                 }
               },
               "focus": "a",
-              "overlay": "adjective",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
-              ]
+              "focusLabel": "价"
             }
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Нархро шарҳ диҳад ва баъдан каме арзонтар карданро пурсад."
@@ -1283,32 +1192,15 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "park-kiosk"
+                "market-request"
               ],
-              "anchors": {
-                "a": {
-                  "x": 0.18,
-                  "y": 0.38,
-                  "w": 0.64,
-                  "h": 0.45
-                }
-              },
-              "focus": "a",
-              "overlay": "drop",
               "cast": [
                 {
                   "id": "panda",
                   "mood": "talk",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
+                  "x": 0.82,
+                  "y": 0.96,
+                  "h": 0.16
                 }
               ]
             }
@@ -1323,6 +1215,28 @@
             "title": "Сохти хоҳиш",
             "hanzi": "便宜一点儿，可以吗？",
             "pinyin": "Piányi yìdiǎnr, kěyǐ ma?",
+            "pinyinSegments": [
+              {
+                "hanzi": "便宜",
+                "pinyin": "Piányi"
+              },
+              {
+                "hanzi": "一",
+                "pinyin": "yì"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "可以",
+                "pinyin": "kěyǐ"
+              },
+              {
+                "hanzi": "吗",
+                "pinyin": "ma"
+              }
+            ],
             "meaning": "Каме арзонтар мешавад?",
             "graphic": {
               "width": 600,
@@ -1436,32 +1350,25 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.18,
-                  "y": 0.38,
-                  "w": 0.64,
-                  "h": 0.45
+                  "x": 0.63,
+                  "y": 0.64,
+                  "w": 0.19,
+                  "h": 0.09
                 }
               },
               "focus": "a",
-              "overlay": "drop",
+              "focusLabel": "价",
               "cast": [
                 {
                   "id": "panda",
-                  "mood": "correct",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
                   "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
+                  "x": 0.82,
+                  "y": 0.96,
+                  "h": 0.16
                 }
               ]
             }
@@ -1656,35 +1563,12 @@
               ]
             },
             "illustration": {
-              "layout": "scene",
+              "layout": "board",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
-              "anchors": {
-                "a": {
-                  "x": 0.18,
-                  "y": 0.38,
-                  "w": 0.64,
-                  "h": 0.45
-                }
-              },
-              "focus": "a",
-              "overlay": "drop",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
+              "parts": [
+                "便宜 + 一点儿"
               ]
             }
           },
@@ -1833,30 +1717,12 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "board",
               "images": [
-                "park-evaluation",
-                "park-request"
+                "market-stall"
               ],
-              "focus": "left",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
+              "parts": [
+                "有点儿 + 贵"
               ]
             }
           },
@@ -1981,30 +1847,12 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "board",
               "images": [
-                "park-evaluation",
-                "park-request"
+                "market-stall"
               ],
-              "focus": "right",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
+              "parts": [
+                "便宜 + 一点儿"
               ]
             }
           },
@@ -2198,30 +2046,13 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "board",
               "images": [
-                "park-evaluation",
-                "park-request"
+                "market-stall"
               ],
-              "focus": "left",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
+              "parts": [
+                "有点儿 + 贵",
+                "便宜 + 一点儿"
               ]
             }
           },
@@ -2372,28 +2203,10 @@
             "illustration": {
               "layout": "board",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
               "parts": [
-                "有点儿 + 贵",
-                "便宜 + 一点儿"
-              ],
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "proud",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "celebrate",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
+                "有点儿 + 贵"
               ]
             }
           },
@@ -2407,6 +2220,28 @@
             "title": "Саволи хушмуомила",
             "hanzi": "便宜一点儿，可以吗？",
             "pinyin": "Piányi yìdiǎnr, kěyǐ ma?",
+            "pinyinSegments": [
+              {
+                "hanzi": "便宜",
+                "pinyin": "Piányi"
+              },
+              {
+                "hanzi": "一",
+                "pinyin": "yì"
+              },
+              {
+                "hanzi": "点儿",
+                "pinyin": "diǎnr"
+              },
+              {
+                "hanzi": "可以",
+                "pinyin": "kěyǐ"
+              },
+              {
+                "hanzi": "吗",
+                "pinyin": "ma"
+              }
+            ],
             "meaning": "Каме арзонтар мешавад?",
             "graphic": {
               "width": 600,
@@ -2520,28 +2355,10 @@
             "illustration": {
               "layout": "board",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
               "parts": [
-                "有点儿 + 贵",
                 "便宜 + 一点儿"
-              ],
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "proud",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "celebrate",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
               ]
             }
           },
@@ -2737,28 +2554,11 @@
             "illustration": {
               "layout": "board",
               "images": [
-                "park-kiosk"
+                "market-stall"
               ],
               "parts": [
                 "有点儿 + 贵",
                 "便宜 + 一点儿"
-              ],
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "proud",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "rabbit",
-                  "mood": "celebrate",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
               ]
             }
           },
@@ -2823,7 +2623,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "youdianr-vs-yidianr-price-20261111",
-    "sourceHash": "da778c3d3d6991b194dcd0671c59b2a73e80c3cd13ffb9c43a30fd202c1559c4",
+    "sourceHash": "928a1f335122195a83f639593c3a45b17af3dde3806dbb63d2b108fee29e4df5",
     "authoredOn": "2026-11-10",
     "status": "draft-awaiting-audio-review"
   }

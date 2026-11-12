@@ -113,3 +113,22 @@ test("a missing word between touching verified neighbours is marked, not fatal f
   assert.deepEqual(plan.gaps.map((g) => [g.tokens.join(" "), g.startMs, g.endMs, Boolean(g.noAudio)]),
     [["b",300,300,true],["d",600,900,false]]);
 });
+
+test("exact one-to-one pairing wins over a merged span (clean words are never merged)",()=>{
+  const words=expected(["дар","locale"],["бозор","locale"]);
+  const blocks=[block("Дар",["дар"],100,420),block("бозор",["бозор"],450,950)];
+  const picked=selectRecoveredBlocks(["дар","бозор"],blocks);
+  assert.deepEqual(picked.map(x=>x.text),["Дар","бозор"]);
+});
+test("a boundary shifted between two adjacent locale words keeps its measured spans (real TG 2026-11-11 «чинӣ чӣ» heard «чи ничи»)",()=>{
+  const words=expected(["ба","locale"],["чинӣ","locale"],["чӣ","locale"]);
+  const original=[block("Ба",["ба"],100,300)];
+  const plan=buildRecoveryPlan(words,original,2000);
+  const recovered=selectRecoveredBlocks(["чинӣ","чӣ"],[block("чи",["чи"],400,600),block("ничи",["ничи"],650,1100)],
+    {match:(wanted,heard)=>wanted===heard||wanted.replaceAll("ӣ","и")===heard});
+  assert.equal(recovered.length,1,"the two expected words are covered by one merged measured span");
+  const merged=mergeRecoveredBlocks(words,original,plan,[recovered]);
+  assert.deepEqual(merged.map(x=>x.startMs),[100,400]);
+  assert.deepEqual(merged[1].tokens,["чинӣ","чӣ"],"source token boundaries are restored for the whole-narration alignment");
+  assert.equal(merged[1].endMs,1100);
+});

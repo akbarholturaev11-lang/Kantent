@@ -83,7 +83,7 @@ Required on every lesson beat from `lessonPresentation.illustratedFormatFromDate
 - `overlay`: `rise`, `marks`, `link`, `cross` (marks + red stamp), `drop`, `compare`, `adjective` or `stamp` (the red ✕ stamp alone, for a wrong form in any layout).
 - `label` (1–6 characters): text of the `link`/`compare` chip, default `比`; `focusLabel` (1–6 characters): text of the scene focus tag, default `A`/`B`.
 - `cast`: HSK AI characters drawn from the registry on top of the art: `{id, mood, x, y, h, card?}` — `id` from `content/characters/hsk-ai-characters.json`, `mood` from its moods, `x` centre, `y` feet and `h` height normalized to the image (`card` 0/1 in a pair).
-- `visual.title` is the headline (teaching step, no Hanzi, not the meaning, no word spoken at the cue); `visual.hanzi`/`pinyin`/`meaning` fill the glass chip.
+- `visual.title` is planning metadata and does not render as a headline in illustrated-glass lessons; `visual.hanzi`/`pinyin`/`meaning` fill the stable glass teaching card. The timed subtitle remains visible as its own text focus, including when it repeats the card.
 
 ## Platform CTA variants
 

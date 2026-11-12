@@ -1050,7 +1050,11 @@ const LessonSlide: React.FC<{
           ? COLORS.brandGold
           : COLORS.brandRed
     : ACCENTS[index % ACCENTS.length];
-  const beats = getBeats(scene);
+  const beats = getBeats(scene).map((beat) =>
+    motionDesignStyle === "minimalist-promo-v1" && scene.kind === "cta"
+      ? { ...beat, meaning: undefined }
+      : beat,
+  );
   const weights = beats.map(() => 1 / beats.length);
   const beatDurations = weights.map((weight) =>
     Math.floor(durationFrames * weight),
@@ -1478,6 +1482,8 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, captionSect
         sceneSections={captionSections}
         motionDesign={episode.motionDesign === true || episode.id === "zhe-na-ge"}
         plainMotionDesign={episode.scenes.some(scene => Boolean(scene.motionBeats?.length || scene.promoVisual))}
+        alwaysShowActionSubtitle={episode.motionDesignStyle === "explain-actions-v1" && episode.scenes.some(scene =>
+          scene.motionBeats?.some(beat => Boolean((beat.visual as {illustration?: unknown} | undefined)?.illustration)))}
         actionCaptionScenes={actionCaptionScenes}
       />
     </AbsoluteFill>

@@ -492,7 +492,8 @@ export const BoldMotionScene: React.FC<{
                     textShadow: `0 18px 0 rgba(0,0,0,.13), 0 34px 68px rgba(0,0,0,.24), 0 0 42px ${accent}88`,
                   }}
                 >
-                  {character}
+                  {/* A whitespace-only flex item collapses to zero width: keep the gap of "HSK AI" (real 2026-11-12 ad ending showed "HSKAI"). */}
+                  {character === " " ? "\u00A0" : character}
                 </span>
               );
             })}

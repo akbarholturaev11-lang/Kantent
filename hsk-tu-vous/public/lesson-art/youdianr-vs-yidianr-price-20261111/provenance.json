@@ -1,0 +1,99 @@
+{
+  "episodeId": "youdianr-vs-yidianr-price-20261111",
+  "assets": {
+    "park-kiosk": {
+      "file": "park-kiosk.jpg",
+      "provider": "codex",
+      "promptSha256": "b1a0e85be3b4eff7a573ebb0b9557d2e056eb4e71b3c0becd39ef9823926ae15",
+      "characters": [],
+      "references": [],
+      "sha256": "b64906963ecd02a74671bc7f9f343a8047ab043007760076c16fc65fb2b3fec8",
+      "recordedAt": "2026-11-10T15:32:49.944Z",
+      "visual": {
+        "by": "Text-free 9:16 lakeside park establishing view with willow trees, bridge, pavilion and kiosk; no people, animals or baked characters; clear open center for later cast and lesson overlay; clean warm illustration.",
+        "sha256": "b64906963ecd02a74671bc7f9f343a8047ab043007760076c16fc65fb2b3fec8",
+        "at": "2026-11-10T15:33:38.161Z"
+      }
+    },
+    "park-evaluation": {
+      "file": "park-evaluation.jpg",
+      "provider": "codex",
+      "promptSha256": "c0c7bdf1903b19e90484c98bcd0291c8917b1be6c585d441d6f43958b52bb80e",
+      "characters": [],
+      "references": [
+        "park-kiosk"
+      ],
+      "sha256": "657753e1b53f8fad9e903ab39278e85e69eb16bb8c02dcc1db1ed7d9626f9b11",
+      "recordedAt": "2026-11-10T15:32:50.146Z",
+      "visual": {
+        "by": "Text-free 4:5 close view at the same kiosk; the cup and completely blank price tag are clear, with no people or baked characters; warm palette and enough clear counter space for later lesson elements.",
+        "sha256": "657753e1b53f8fad9e903ab39278e85e69eb16bb8c02dcc1db1ed7d9626f9b11",
+        "at": "2026-11-10T15:34:01.357Z"
+      }
+    },
+    "park-request": {
+      "file": "park-request.jpg",
+      "provider": "codex",
+      "promptSha256": "97c8c5d8a3ac08b230dde09efd52d3c6be6c0bcf5881fd2f51d9611476db1ca1",
+      "characters": [],
+      "references": [
+        "park-kiosk",
+        "park-evaluation"
+      ],
+      "sha256": "7494f3c9e3b4757d071d100838aa6507ff931907598ae3a640abbfb1f5fbed99",
+      "recordedAt": "2026-11-10T15:32:50.346Z",
+      "visual": {
+        "by": "Text-free 4:5 same kiosk, cup and blank tag; the tag sits lower in a slightly closer composition to mark the request beat; no people or baked characters; continuity and clean composition checked.",
+        "sha256": "7494f3c9e3b4757d071d100838aa6507ff931907598ae3a640abbfb1f5fbed99",
+        "at": "2026-11-10T15:34:01.786Z"
+      }
+    },
+    "market-stall": {
+      "file": "market-stall.jpg",
+      "provider": "codex",
+      "promptSha256": "a24ef762e9a424ffea58a933a4c52f9b89f088e6305556ca832361910fe0b8c6",
+      "characters": [],
+      "references": [],
+      "sha256": "c52ac450a0cc21b50a2dd459df45b6a03ca2489f8a6264e005ab3576b4c1ca2e",
+      "recordedAt": "2026-11-11T15:15:12.497Z",
+      "visual": {
+        "by": "Inspected: recognizable Chinese night-market fruit stall; tag is small, blank and above the character zone; no people, text or park setting.",
+        "sha256": "c52ac450a0cc21b50a2dd459df45b6a03ca2489f8a6264e005ab3576b4c1ca2e",
+        "at": "2026-11-11T15:16:05.595Z"
+      }
+    },
+    "market-evaluation": {
+      "file": "market-evaluation.jpg",
+      "provider": "codex",
+      "promptSha256": "e4bc1689518e36aecf3443ea8e855451a17e9076dcc04ac2ac365fd6ffac2707",
+      "characters": [],
+      "references": [
+        "market-stall"
+      ],
+      "sha256": "ae90f35b65e49fdd6e9d2bab74bcb7e64c33d470a4a2438690de8aa6229c04c0",
+      "recordedAt": "2026-11-11T15:15:12.502Z",
+      "visual": {
+        "by": "Inspected: same mandarin crate and blank tag in close-up; market context remains clear and lower quarter is open for HSK cast.",
+        "sha256": "ae90f35b65e49fdd6e9d2bab74bcb7e64c33d470a4a2438690de8aa6229c04c0",
+        "at": "2026-11-11T15:16:05.658Z"
+      }
+    },
+    "market-request": {
+      "file": "market-request.jpg",
+      "provider": "codex",
+      "promptSha256": "38c1db4187f482b50d487aa41f9dcbd3be53311d01fb80d39292b139e8544df0",
+      "characters": [],
+      "references": [
+        "market-stall",
+        "market-evaluation"
+      ],
+      "sha256": "6c2fe5df71462aa664052a51d679617e2f1dbfd23123455a0d4477a3c5d30e37",
+      "recordedAt": "2026-11-11T15:15:12.503Z",
+      "visual": {
+        "by": "Inspected: same product and unchanged blank tag in wider counter view; market setting and lower cast space are clear, with no people or writing.",
+        "sha256": "6c2fe5df71462aa664052a51d679617e2f1dbfd23123455a0d4477a3c5d30e37",
+        "at": "2026-11-11T15:16:05.719Z"
+      }
+    }
+  }
+}

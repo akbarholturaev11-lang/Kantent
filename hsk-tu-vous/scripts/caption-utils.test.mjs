@@ -25,9 +25,20 @@ test("keeps a word cue visible through its audio across a scene section boundary
   assert.equal(pages[1].startMs, 6200);
 });
 
-test("rejects overlapping caption pages that would hide an audible word", () => {
+test("words whose provider spans overlap stay on one visible page (one measured span expanded into source words)", () => {
+  const pages = groupTimedCaptions([
+    { text: "first", startMs: 0, endMs: 100 },
+    { text: "second", startMs: 50, endMs: 150 },
+  ], { ...style, sections: [{ startMs: 0, endMs: 1000, styleId: "pill" }] });
+  assert.equal(pages.length, 1);
+  assert.equal(pages[0].text, "first second");
+  assert.equal(pages[0].startMs, 0);
+});
+
+test("rejects overlapping caption pages that would still hide an audible word", () => {
+  // The page character limit forces a split, so the earlier word would be hidden.
   assert.throws(() => groupTimedCaptions([
     { text: "first", startMs: 0, endMs: 100 },
     { text: "second", startMs: 50, endMs: 150 },
-  ], { ...style, sections: [{ startMs: 0, endMs: 1000, styleId: "pill" }] }), /would hide an audible word/);
+  ], { ...style, maxCharactersPerPage: 8, sections: [{ startMs: 0, endMs: 1000, styleId: "pill" }] }), /would hide an audible word/);
 });

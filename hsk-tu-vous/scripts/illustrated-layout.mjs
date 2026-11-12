@@ -11,7 +11,7 @@
 export const ILLUSTRATED_LAYOUT = {
   width: 1080, height: 1920,
   safeTopPx: 250, safeBottomPx: 1520,
-  brandTopPx: 262, headlineTopPx: 348, chipTopPx: 560, chipBottomPx: 690,
+  brandTopPx: 262, headlineTopPx: 348, chipTopPx: 560, chipBottomPx: 780,
   subtitleSlotsPx: [720, 1090, 1200, 1430], subtitleHeightPx: 80,
   pairTopPx: 820, pairHeightPx: 580, boardTopPx: 960, boardHeightPx: 260,
   // A 9:16 illustration cover-fitted to the frame (768x1376 source).

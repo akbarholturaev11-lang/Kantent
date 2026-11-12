@@ -43,8 +43,9 @@ export const CaptionOverlay: React.FC<{
   sceneSections: CaptionSceneSection[];
   motionDesign?: boolean;
   plainMotionDesign?: boolean;
+  alwaysShowActionSubtitle?: boolean;
   actionCaptionScenes?: ActionCaptionScene[];
-}> = ({ captions, sceneSections, motionDesign = false, plainMotionDesign = false, actionCaptionScenes = [] }) => {
+}> = ({ captions, sceneSections, motionDesign = false, plainMotionDesign = false, alwaysShowActionSubtitle = false, actionCaptionScenes = [] }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const pages = useMemo(
@@ -79,17 +80,16 @@ export const CaptionOverlay: React.FC<{
   if (actionText && motionDesign) {
     const G = visualSystem.referenceGlass;
     const ease = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as const };
-    // A spoken Hanzi phrase the glass chip already shows (with pinyin and
-    // meaning) is not repeated as a second text line.
+    // Legacy action looks suppress duplicate copy. Illustrated-glass lessons
+    // deliberately keep their second text focus: the timed spoken subtitle.
     const han = (value: string) => (value.match(/\p{Script=Han}/gu) ?? []).join("");
     const spokenHan = han(displayText);
-    if (spokenHan && !/[^\p{Script=Han}\p{P}\p{Z}]/u.test(displayText) &&
+    if (!alwaysShowActionSubtitle && spokenHan && !/[^\p{Script=Han}\p{P}\p{Z}]/u.test(displayText) &&
         han(String(actionText.model?.hanzi ?? "")).includes(spokenHan)) return null;
-    // Owner rule 2026-11-09: each text layer has its own job. Words the chip's
-    // meaning already shows are not repeated as a subtitle at the same time.
+    // Legacy action looks suppress subtitle words already covered by the card.
     const letters = (value: string) => value.toLocaleLowerCase("und").replace(/[^\p{L}\p{N}]/gu, "");
     const spokenLetters = letters(displayText);
-    if (spokenLetters.length >= 4 && letters(String(actionText.model?.meaning ?? "")).includes(spokenLetters)) return null;
+    if (!alwaysShowActionSubtitle && spokenLetters.length >= 4 && letters(String(actionText.model?.meaning ?? "")).includes(spokenLetters)) return null;
     const words = displayText.split(/\s+/).filter(Boolean);
     const illustration = (actionText.model as {illustration?: unknown} | undefined)?.illustration;
     const slot = illustration ? subtitleSlotFor(illustration) : null;

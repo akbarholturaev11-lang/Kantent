@@ -1,7 +1,7 @@
 import { readStorytellingPolicy } from "./storytelling-plan.mjs";
 
 const tokens = text => String(text ?? "").normalize("NFKC").toLocaleLowerCase("ru-RU")
-  .replace(/ё/gu,"е").match(/[\p{L}\p{M}\p{N}]+/gu) ?? [];
+  .replace(/ё/gu,"е").match(/[\p{L}\p{M}\p{N}]+(?:[-‐‑][\p{L}\p{M}\p{N}]+)*/gu) ?? [];
 
 function timedCue(episode, sceneId, cueText) {
   const scene = episode.scenes.find(s=>s.id===sceneId && s.kind!=="cta");

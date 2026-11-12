@@ -8,7 +8,7 @@
   "languageCode": "ru-RU",
   "styleId": "minimal-story-v1",
   "formatId": "unfinished-task",
-  "benefit": "В HSK AI есть AI Voice для разговорной практики и кнопка микрофона; это возможность попробовать короткую реплику без обещания результата.",
+  "benefit": "Для разговорной практики открой AI Voice.",
   "situation": {
     "setting": "У выхода из студенческого общежития",
     "learnerGoal": "Ответить знакомому вслух, куда идёшь",
@@ -18,26 +18,33 @@
   "storyDisclosure": "Представь",
   "evidence": [
     {
-      "id": "verified-ai-voice-ui",
+      "id": "verified-ai-voice-orb",
       "kind": "product-source",
-      "sourcePath": "public/promo-captures/ai-voice-original.png",
-      "checkedAt": "2026-10-31",
-      "supports": "Genuine HSK AI AI Voice screenshot, inspected 2026-10-31: panda, conversation prompt and microphone. Cross-checked current HSK-AI-Bot main app/static/course-v3.html blob bc60ab8e4ae55c5bb5996a936fc3d97a8a60a76b at https://github.com/akbarholturaev11-lang/HSK-AI-Bot/blob/main/app/static/course-v3.html : VOICE_HTML contains vc-root and vc-mic button; this supports availability of a speaking-practice interface, not user outcomes or a recorded AI response."
+      "sourcePath": "public/promo-captures/campus-voice-rehearsal-20261112/voice-home.jpg",
+      "checkedAt": "2026-11-12",
+      "supports": "Owner-provided current Russian iPhone capture, independently inspected on 2026-11-12. The AI Voice section entry screen with the voice orb and the Start conversation button is shown in full, unedited and with no account data. SHA-256: c937912575c5d5aba52ab011ba109fa00fd5112d8fbc7da1eb140d52d125231c."
+    },
+    {
+      "id": "verified-ai-voice-mic",
+      "kind": "product-source",
+      "sourcePath": "public/promo-captures/campus-voice-rehearsal-20261112/voice-microphone.jpg",
+      "checkedAt": "2026-11-12",
+      "supports": "Owner-provided current Russian iPhone capture, independently inspected on 2026-11-12. The idle voice screen directs the user to tap the microphone; it is shown in full and the camera zooms onto the muted microphone and the adjacent close control, with no account data. SHA-256: 0e2f2daa8d36525883bf673440292c6ccbf7489835f7564d7f948e20b1d08a1d."
     }
   ],
   "claims": [
     {
       "id": "voice-mode",
-      "text": "В HSK AI есть AI Voice для разговорной практики.",
+      "text": "Для разговорной практики открой AI Voice.",
       "evidenceIds": [
-        "verified-ai-voice-ui"
+        "verified-ai-voice-orb"
       ]
     },
     {
       "id": "microphone",
-      "text": "В этом режиме есть кнопка микрофона.",
+      "text": "Нажми кнопку микрофона и скажи короткую фразу.",
       "evidenceIds": [
-        "verified-ai-voice-ui"
+        "verified-ai-voice-mic"
       ]
     }
   ],
@@ -45,524 +52,145 @@
     {
       "id": "dorm-exit",
       "role": "situation",
-      "narration": "Представь: перед разговором у общежития знакомый спрашивает, куда ты идёшь. Для короткой репетиции можно открыть HSK AI.",
+      "narration": "Представь: у общежития тебя спрашивают, куда ты идёшь.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Студент с рюкзаком у двери общежития",
-        "action": "Студент выходит из двери к знакомому; перемещение силуэта показывает начало встречи.",
+        "focalSubject": "Панда HSK AI у входа в общежитие",
+        "action": "На фразе о входе камера приближается к настоящему фирменному персонажу у двери.",
         "continuityKey": "same-student-dorm-voice-rehearsal",
         "cueText": "у общежития",
         "backgroundToken": "foreground",
-        "drawingBrief": "Оригинальные ворота общежития, один студент с рюкзаком и движение от двери; без текста.",
-        "graphic": {
-          "width": 800,
-          "height": 560,
-          "nodes": [
-            {
-              "id": "dorm-wall",
-              "type": "rect",
-              "attrs": {
-                "x": 85,
-                "y": 100,
-                "width": 630,
-                "height": 365,
-                "rx": 20,
-                "fill": "secondary"
-              }
-            },
-            {
-              "id": "dorm-door",
-              "type": "rect",
-              "attrs": {
-                "x": 302,
-                "y": 202,
-                "width": 195,
-                "height": 263,
-                "rx": 16,
-                "fill": "foreground"
-              }
-            },
-            {
-              "id": "dorm-frame",
-              "type": "rect",
-              "attrs": {
-                "x": 290,
-                "y": 191,
-                "width": 219,
-                "height": 18,
-                "rx": 7,
-                "fill": "gold"
-              }
-            },
-            {
-              "id": "door-handle",
-              "type": "rect",
-              "attrs": {
-                "x": 472,
-                "y": 335,
-                "width": 11,
-                "height": 28,
-                "rx": 5,
-                "fill": "gold"
-              }
-            },
-            {
-              "id": "ground",
-              "type": "ellipse",
-              "attrs": {
-                "cx": 400,
-                "cy": 500,
-                "rx": 340,
-                "ry": 23,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "learner",
-              "type": "g",
-              "attrs": {}
-            },
-            {
-              "id": "head",
-              "type": "circle",
-              "parentId": "learner",
-              "attrs": {
-                "cx": 510,
-                "cy": 257,
-                "r": 48,
-                "fill": "poolDeck"
-              }
-            },
-            {
-              "id": "shirt",
-              "type": "path",
-              "parentId": "learner",
-              "attrs": {
-                "d": "M 460 313 Q 510 286 560 313 L 578 420 L 445 420 Z",
-                "fill": "poolDeck"
-              }
-            },
-            {
-              "id": "bag",
-              "type": "rect",
-              "parentId": "learner",
-              "attrs": {
-                "x": 442,
-                "y": 323,
-                "width": 30,
-                "height": 84,
-                "rx": 12,
-                "fill": "red"
-              }
-            },
-            {
-              "id": "leg-left",
-              "type": "rect",
-              "parentId": "learner",
-              "attrs": {
-                "x": 465,
-                "y": 416,
-                "width": 30,
-                "height": 90,
-                "rx": 8,
-                "fill": "muted"
-              }
-            },
-            {
-              "id": "leg-right",
-              "type": "rect",
-              "parentId": "learner",
-              "attrs": {
-                "x": 525,
-                "y": 416,
-                "width": 30,
-                "height": 90,
-                "rx": 8,
-                "fill": "muted"
-              }
-            }
-          ],
-          "tracks": [
-            {
-              "nodeId": "learner",
-              "property": "x",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 125
-                },
-                {
-                  "atMs": 950,
-                  "value": 0
-                }
-              ]
-            }
-          ]
-        }
+        "drawingBrief": "На фразе о входе камера приближается к настоящему фирменному персонажу у двери.",
+        "assetPath": "public/promo-art/campus-voice-rehearsal-20261112/arrival.png",
+        "cast": [
+          {
+            "id": "panda",
+            "mood": "idle",
+            "x": 0.34,
+            "y": 0.68,
+            "h": 0.185
+          }
+        ]
       }
     },
     {
       "id": "hesitation",
       "role": "complication",
-      "narration": "Ответ уже в голове, но произнести его вслух сразу непросто.",
+      "narration": "Ответ знаешь, но сказать его непросто.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Студент и остановившаяся реплика",
-        "action": "Студент замедляется, пустой пузырь с тремя точками появляется над плечом.",
+        "focalSubject": "Панда HSK AI перед ответом",
+        "action": "При словах о трудности ответа панда задумывается; камера остаётся у той же двери.",
         "continuityKey": "same-student-dorm-voice-rehearsal",
-        "cueText": "произнести его вслух",
+        "cueText": "сказать его",
         "backgroundToken": "foreground",
-        "drawingBrief": "Тот же студент и заметная пауза в речи; три точки — не интерфейс и не цитата.",
-        "graphic": {
-          "width": 800,
-          "height": 560,
-          "nodes": [
-            {
-              "id": "ground",
-              "type": "ellipse",
-              "attrs": {
-                "cx": 400,
-                "cy": 504,
-                "rx": 330,
-                "ry": 22,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "learner",
-              "type": "g",
-              "attrs": {}
-            },
-            {
-              "id": "head",
-              "type": "circle",
-              "parentId": "learner",
-              "attrs": {
-                "cx": 510,
-                "cy": 257,
-                "r": 48,
-                "fill": "poolDeck"
-              }
-            },
-            {
-              "id": "shirt",
-              "type": "path",
-              "parentId": "learner",
-              "attrs": {
-                "d": "M 460 313 Q 510 286 560 313 L 578 420 L 445 420 Z",
-                "fill": "poolDeck"
-              }
-            },
-            {
-              "id": "bag",
-              "type": "rect",
-              "parentId": "learner",
-              "attrs": {
-                "x": 442,
-                "y": 323,
-                "width": 30,
-                "height": 84,
-                "rx": 12,
-                "fill": "red"
-              }
-            },
-            {
-              "id": "leg-left",
-              "type": "rect",
-              "parentId": "learner",
-              "attrs": {
-                "x": 465,
-                "y": 416,
-                "width": 30,
-                "height": 90,
-                "rx": 8,
-                "fill": "muted"
-              }
-            },
-            {
-              "id": "leg-right",
-              "type": "rect",
-              "parentId": "learner",
-              "attrs": {
-                "x": 525,
-                "y": 416,
-                "width": 30,
-                "height": 90,
-                "rx": 8,
-                "fill": "muted"
-              }
-            },
-            {
-              "id": "speech-pause",
-              "type": "g",
-              "attrs": {}
-            },
-            {
-              "id": "speech-cloud",
-              "type": "ellipse",
-              "parentId": "speech-pause",
-              "attrs": {
-                "cx": 308,
-                "cy": 164,
-                "rx": 105,
-                "ry": 60,
-                "fill": "poolDeck"
-              }
-            },
-            {
-              "id": "dot-left",
-              "type": "circle",
-              "parentId": "speech-pause",
-              "attrs": {
-                "cx": 269,
-                "cy": 165,
-                "r": 9,
-                "fill": "foreground"
-              }
-            },
-            {
-              "id": "dot-mid",
-              "type": "circle",
-              "parentId": "speech-pause",
-              "attrs": {
-                "cx": 307,
-                "cy": 165,
-                "r": 9,
-                "fill": "foreground"
-              }
-            },
-            {
-              "id": "dot-right",
-              "type": "circle",
-              "parentId": "speech-pause",
-              "attrs": {
-                "cx": 345,
-                "cy": 165,
-                "r": 9,
-                "fill": "foreground"
-              }
-            }
-          ],
-          "tracks": [
-            {
-              "nodeId": "speech-pause",
-              "property": "y",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 65
-                },
-                {
-                  "atMs": 850,
-                  "value": 0
-                }
-              ]
-            },
-            {
-              "nodeId": "learner",
-              "property": "x",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 0
-                },
-                {
-                  "atMs": 750,
-                  "value": -18
-                }
-              ]
-            }
-          ]
-        }
+        "drawingBrief": "При словах о трудности ответа панда задумывается; камера остаётся у той же двери.",
+        "assetPath": "public/promo-art/campus-voice-rehearsal-20261112/pause.png",
+        "cast": [
+          {
+            "id": "panda",
+            "mood": "loading",
+            "x": 0.51,
+            "y": 0.7,
+            "h": 0.225
+          }
+        ]
+      }
+    },
+    {
+      "id": "open-phone",
+      "role": "attempt",
+      "narration": "Возьми телефон и попробуй ответить вслух.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Телефон на скамье",
+        "action": "На фразе о телефоне кадр приближается к выключенному экрану.",
+        "continuityKey": "same-student-dorm-voice-rehearsal",
+        "cueText": "Возьми телефон",
+        "backgroundToken": "foreground",
+        "drawingBrief": "На фразе о телефоне кадр приближается к выключенному экрану.",
+        "assetPath": "public/promo-art/campus-voice-rehearsal-20261112/phone.png"
       }
     },
     {
       "id": "ai-voice",
       "role": "product-demo",
-      "narration": "В HSK AI есть AI Voice для разговорной практики. На настоящем экране виден персонаж-панда.",
+      "narration": "Для разговорной практики открой AI Voice.",
       "visual": {
         "type": "product-capture",
-        "focalSubject": "Настоящий персонаж-панда из AI Voice",
-        "action": "Переход с пустого телефона на проверенный неизменённый фрагмент настоящего экрана с пандой.",
+        "focalSubject": "Настоящий экран раздела AI Voice целиком",
+        "action": "На словах «AI Voice» из кадра с телефоном поднимается настоящий экран раздела AI Voice целиком, без имитации ответа.",
         "continuityKey": "same-student-dorm-voice-rehearsal",
         "cueText": "AI Voice",
         "backgroundToken": "foreground",
-        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "assetPath": "public/promo-captures/campus-voice-rehearsal-20261112/voice-home.jpg",
         "provenance": "genuine-product-capture",
-        "uiLanguage": "zxx",
-        "sourceUiLanguage": "tg-TJ",
-        "languageNeutralCrop": true,
-        "screenImage": "promo-captures/ai-voice-original.png",
+        "uiLanguage": "ru-RU",
+        "screenImage": "promo-captures/campus-voice-rehearsal-20261112/voice-home.jpg",
         "crop": {
-          "x": 285,
-          "y": 580,
-          "width": 600,
-          "height": 540,
-          "sourceWidth": 1179,
-          "sourceHeight": 2556
+          "x": 0,
+          "y": 0,
+          "width": 590,
+          "height": 1280,
+          "sourceWidth": 590,
+          "sourceHeight": 1280
         },
-        "limitations": "Before voice/render, recheck the current genuine capture and exact crop against the current HSK AI screen; verify the visible panda or microphone and that the language-neutral crop contains no unrelated labels or private fields."
+        "backdropPath": "public/promo-art/campus-voice-rehearsal-20261112/pause.png",
+        "screenMotion": {
+          "kind": "entry",
+          "leadInPath": "public/promo-art/campus-voice-rehearsal-20261112/phone.png"
+        }
       },
       "claimIds": [
         "voice-mode"
       ]
     },
     {
-      "id": "open-phone",
-      "role": "attempt",
-      "narration": "Можно сначала открыть телефон и спокойно потренировать короткий ответ.",
-      "visual": {
-        "type": "illustration",
-        "focalSubject": "Телефон в руке студента",
-        "action": "Рука поднимает пустой телефон в крупный план; интерфейс не выдумывается.",
-        "continuityKey": "same-student-dorm-voice-rehearsal",
-        "cueText": "открыть телефон",
-        "backgroundToken": "foreground",
-        "drawingBrief": "Оригинальный телефон с пустым экраном и рукой, без имитации приложения.",
-        "graphic": {
-          "width": 800,
-          "height": 560,
-          "nodes": [
-            {
-              "id": "shadow",
-              "type": "ellipse",
-              "attrs": {
-                "cx": 400,
-                "cy": 512,
-                "rx": 220,
-                "ry": 21,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "hand",
-              "type": "g",
-              "attrs": {}
-            },
-            {
-              "id": "palm",
-              "type": "path",
-              "parentId": "hand",
-              "attrs": {
-                "d": "M 260 460 Q 230 400 290 340 L 350 320 L 400 430 L 375 515 Z",
-                "fill": "gold"
-              }
-            },
-            {
-              "id": "phone",
-              "type": "g",
-              "attrs": {}
-            },
-            {
-              "id": "phone-frame",
-              "type": "rect",
-              "parentId": "phone",
-              "attrs": {
-                "x": 315,
-                "y": 90,
-                "width": 195,
-                "height": 356,
-                "rx": 30,
-                "fill": "poolDeck"
-              }
-            },
-            {
-              "id": "screen",
-              "type": "rect",
-              "parentId": "phone",
-              "attrs": {
-                "x": 331,
-                "y": 120,
-                "width": 163,
-                "height": 286,
-                "rx": 16,
-                "fill": "foreground"
-              }
-            },
-            {
-              "id": "earpiece",
-              "type": "rect",
-              "parentId": "phone",
-              "attrs": {
-                "x": 381,
-                "y": 103,
-                "width": 64,
-                "height": 6,
-                "rx": 3,
-                "fill": "muted"
-              }
-            },
-            {
-              "id": "home-dot",
-              "type": "circle",
-              "parentId": "phone",
-              "attrs": {
-                "cx": 412,
-                "cy": 426,
-                "r": 7,
-                "fill": "muted"
-              }
-            }
-          ],
-          "tracks": [
-            {
-              "nodeId": "phone",
-              "property": "x",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 130
-                },
-                {
-                  "atMs": 850,
-                  "value": 0
-                }
-              ]
-            },
-            {
-              "nodeId": "hand",
-              "property": "y",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 70
-                },
-                {
-                  "atMs": 850,
-                  "value": 0
-                }
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
       "id": "mic",
       "role": "product-demo",
-      "narration": "В этом режиме есть кнопка микрофона. Можно попробовать сказать свою короткую фразу.",
+      "narration": "Нажми кнопку микрофона и скажи короткую фразу.",
       "visual": {
         "type": "product-capture",
-        "focalSubject": "Настоящая кнопка микрофона AI Voice",
-        "action": "При произнесении слова «микрофона» фокус смещается на настоящий нейтральный фрагмент кнопки; нажатие и ответ не симулируются.",
+        "focalSubject": "Настоящий внутренний экран AI Voice и кнопка микрофона",
+        "action": "Экран плавно сдвигается на внутренний экран разговора, а на словах «кнопку микрофона» камера приближается к настоящей кнопке микрофона; нажатие не имитируется.",
         "continuityKey": "same-student-dorm-voice-rehearsal",
-        "cueText": "кнопка микрофона",
+        "cueText": "кнопку микрофона",
         "backgroundToken": "foreground",
-        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "assetPath": "public/promo-captures/campus-voice-rehearsal-20261112/voice-microphone.jpg",
         "provenance": "genuine-product-capture",
-        "uiLanguage": "zxx",
-        "sourceUiLanguage": "tg-TJ",
-        "languageNeutralCrop": true,
-        "screenImage": "promo-captures/ai-voice-original.png",
+        "uiLanguage": "ru-RU",
+        "screenImage": "promo-captures/campus-voice-rehearsal-20261112/voice-microphone.jpg",
         "crop": {
-          "x": 440,
-          "y": 2180,
-          "width": 290,
-          "height": 245,
-          "sourceWidth": 1179,
-          "sourceHeight": 2556
+          "x": 0,
+          "y": 0,
+          "width": 590,
+          "height": 1280,
+          "sourceWidth": 590,
+          "sourceHeight": 1280
         },
-        "limitations": "Before voice/render, recheck the current genuine capture and exact crop against the current HSK AI screen; verify the visible panda or microphone and that the language-neutral crop contains no unrelated labels or private fields."
+        "backdropPath": "public/promo-art/campus-voice-rehearsal-20261112/pause.png",
+        "screenMotion": {
+          "kind": "swipe-focus",
+          "previous": {
+            "screenImage": "promo-captures/campus-voice-rehearsal-20261112/voice-home.jpg",
+            "crop": {
+              "x": 0,
+              "y": 0,
+              "width": 590,
+              "height": 1280,
+              "sourceWidth": 590,
+              "sourceHeight": 1280
+            }
+          },
+          "focusCrop": {
+            "x": 350,
+            "y": 1090,
+            "width": 240,
+            "height": 170,
+            "sourceWidth": 590,
+            "sourceHeight": 1280
+          }
+        }
       },
       "claimIds": [
         "microphone"
@@ -571,189 +199,25 @@
     {
       "id": "back-to-talk",
       "role": "resolution",
-      "narration": "В этой воображаемой ситуации ты репетируешь ответ, а потом возвращаешься к разговору. Что сказать — решаешь сам.",
+      "narration": "Теперь возвращайся к разговору и попробуй ответить.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Тот же студент у общежития",
-        "action": "Студент снова оказывается у двери; две звуковые дуги обозначают попытку произнести ответ, без выдуманного результата.",
+        "focalSubject": "Панда HSK AI снова у входа",
+        "action": "На фразе о возвращении панда начинает говорить у открытой двери.",
         "continuityKey": "same-student-dorm-voice-rehearsal",
-        "cueText": "возвращаешься к разговору",
+        "cueText": "возвращайся к разговору",
         "backgroundToken": "foreground",
-        "drawingBrief": "Тот же студент у той же двери, две исходящие звуковые дуги, никаких чужих реплик.",
-        "graphic": {
-          "width": 800,
-          "height": 560,
-          "nodes": [
-            {
-              "id": "dorm-wall",
-              "type": "rect",
-              "attrs": {
-                "x": 85,
-                "y": 100,
-                "width": 630,
-                "height": 365,
-                "rx": 20,
-                "fill": "secondary"
-              }
-            },
-            {
-              "id": "dorm-door",
-              "type": "rect",
-              "attrs": {
-                "x": 302,
-                "y": 202,
-                "width": 195,
-                "height": 263,
-                "rx": 16,
-                "fill": "foreground"
-              }
-            },
-            {
-              "id": "dorm-frame",
-              "type": "rect",
-              "attrs": {
-                "x": 290,
-                "y": 191,
-                "width": 219,
-                "height": 18,
-                "rx": 7,
-                "fill": "gold"
-              }
-            },
-            {
-              "id": "ground",
-              "type": "ellipse",
-              "attrs": {
-                "cx": 400,
-                "cy": 500,
-                "rx": 340,
-                "ry": 23,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "learner",
-              "type": "g",
-              "attrs": {}
-            },
-            {
-              "id": "head",
-              "type": "circle",
-              "parentId": "learner",
-              "attrs": {
-                "cx": 510,
-                "cy": 257,
-                "r": 48,
-                "fill": "poolDeck"
-              }
-            },
-            {
-              "id": "shirt",
-              "type": "path",
-              "parentId": "learner",
-              "attrs": {
-                "d": "M 460 313 Q 510 286 560 313 L 578 420 L 445 420 Z",
-                "fill": "poolDeck"
-              }
-            },
-            {
-              "id": "bag",
-              "type": "rect",
-              "parentId": "learner",
-              "attrs": {
-                "x": 442,
-                "y": 323,
-                "width": 30,
-                "height": 84,
-                "rx": 12,
-                "fill": "red"
-              }
-            },
-            {
-              "id": "leg-left",
-              "type": "rect",
-              "parentId": "learner",
-              "attrs": {
-                "x": 465,
-                "y": 416,
-                "width": 30,
-                "height": 90,
-                "rx": 8,
-                "fill": "muted"
-              }
-            },
-            {
-              "id": "leg-right",
-              "type": "rect",
-              "parentId": "learner",
-              "attrs": {
-                "x": 525,
-                "y": 416,
-                "width": 30,
-                "height": 90,
-                "rx": 8,
-                "fill": "muted"
-              }
-            },
-            {
-              "id": "voice-waves",
-              "type": "g",
-              "attrs": {}
-            },
-            {
-              "id": "wave-one",
-              "type": "path",
-              "parentId": "voice-waves",
-              "attrs": {
-                "d": "M 586 255 Q 622 275 586 298",
-                "fill": "none",
-                "stroke": "gold",
-                "strokeWidth": 6
-              }
-            },
-            {
-              "id": "wave-two",
-              "type": "path",
-              "parentId": "voice-waves",
-              "attrs": {
-                "d": "M 615 230 Q 672 277 615 324",
-                "fill": "none",
-                "stroke": "teal",
-                "strokeWidth": 6
-              }
-            }
-          ],
-          "tracks": [
-            {
-              "nodeId": "voice-waves",
-              "property": "x",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": -38
-                },
-                {
-                  "atMs": 800,
-                  "value": 0
-                }
-              ]
-            },
-            {
-              "nodeId": "learner",
-              "property": "x",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 30
-                },
-                {
-                  "atMs": 900,
-                  "value": 0
-                }
-              ]
-            }
-          ]
-        }
+        "drawingBrief": "На фразе о возвращении панда начинает говорить у открытой двери.",
+        "assetPath": "public/promo-art/campus-voice-rehearsal-20261112/return.png",
+        "cast": [
+          {
+            "id": "panda",
+            "mood": "talk",
+            "x": 0.33,
+            "y": 0.72,
+            "h": 0.215
+          }
+        ]
       }
     }
   ],

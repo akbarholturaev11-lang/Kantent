@@ -88,12 +88,17 @@ function groupCaptionSection(captions, style, section) {
     const combinedText = [...words.map((word) => word.text), text].join(" ");
     const spanMs = prior ? caption.endMs - words[0].startMs : 0;
     const gapMs = prior ? caption.startMs - prior.endMs : 0;
+    // Provider word timing can legitimately overlap when a phrase is returned
+    // as one measured span and expanded into its source words. Keep those
+    // words on one visible page instead of splitting them into pages that
+    // would hide each other; the provider timestamps remain unchanged.
+    const overlapsPrior = prior !== undefined && caption.startMs < prior.endMs;
     const shouldStartNewPage =
       prior !== undefined &&
       (gapMs > style.maxGapMs ||
-        spanMs > style.maxPageDurationMs ||
+        (spanMs > style.maxPageDurationMs && !overlapsPrior) ||
         combinedText.length > style.maxCharactersPerPage ||
-        words.length >= style.maxWordsPerPage);
+        (words.length >= style.maxWordsPerPage && !overlapsPrior));
 
     if (shouldStartNewPage) flush();
     words.push(caption);
