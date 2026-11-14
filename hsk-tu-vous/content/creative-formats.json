@@ -87,7 +87,7 @@
       "hookFormats": [
         "scenario"
       ],
-      "concept": "A consistent learner character confronts one real-life language task per episode. Each episode resolves its own problem; next instalment is optional.",
+      "concept": "A consistent learner character confronts one real-life language task per episode. Every part resolves its own useful task. For a calendar-registered two-part story, connect both parts using storytellingPolicy.seriesPartPolicy; standalone episodes need no continuation.",
       "beats": [
         {
           "fromSec": 0,
@@ -107,10 +107,10 @@
         {
           "fromSec": 18,
           "toSec": 22,
-          "goal": "Show the immediate outcome, not a forced cliffhanger"
+          "goal": "Show the immediate outcome; for part 1, leave the specific truthful teaser required by storytellingPolicy.seriesPartPolicy, without withholding the lesson answer"
         }
       ],
-      "editorial": "Follow content/calendar.json#seriesPolicy and content/WORKFLOW.md for consecutive parts. Each part resolves its own useful task; only mention a continuation whose complete draft and exact calendar date exist. Do not invent real testimonials."
+      "editorial": "Follow content/calendar.json#seriesPolicy for the registered parts and content/creative-formats.json#storytellingPolicy.seriesPartPolicy for their narrative continuity, teaser and payoff. Do not invent real testimonials."
     },
     {
       "id": "problem-fix",
@@ -168,6 +168,15 @@
     "status": "default-for-new-agent-authored-scripts",
     "selectionBasis": "Choose by the learner's real-life task and distinct teaching questions. Duration and question marks alone never select the pattern; no fixed eight-block structure.",
     "authoringContext": "Record situation {setting, learnerGoal, obstacle} and selectionReason in new storytelling annotations. Every part teaches one complete useful point and links its spoken beats to relevant visual actions.",
+    "seriesPartPolicy": {
+      "effectiveFromDate": "2026-11-14",
+      "appliesTo": "New or deliberately revised, unapproved and unvoiced two-part serial scripts whose two parts are registered in the calendar together. Do not rewrite existing, voice-prepared, approved or published episodes.",
+      "planTogether": "Draft and verify both parts as one story before registration. Carry the same learner, concrete situation and story goal from part 1 into part 2; part 2 opens by picking up the exact event, clue or decision introduced at the end of part 1.",
+      "partOneEnding": "After part 1 fully teaches its Chinese point and resolves its promised task, its final non-CTA narration line gives one short, specific, honest curiosity cue about an actual event, clue or choice in the complete, calendar-registered part 2. Leave the approved central follow CTA separate and unchanged.",
+      "partTwoPayoff": "Part 2 makes the continuity clear, pays off the part 1 cue and fully teaches its own useful Chinese point. Resolve the two-part story before its existing final-part CTA; do not promise another installment in the same story.",
+      "integrity": "Never withhold a part's promised Chinese answer to force a follow. Avoid generic 'wait for tomorrow' lines, false cliffhangers, invented urgency and teaser details absent from the registered part 2. Name a date only when it matches the calendar.",
+      "localization": "Keep the same story facts, continuity, teaser and payoff in every required language, using natural language-specific narration."
+    },
     "allowedPatterns": [
       "direct",
       "single-rehook",
@@ -270,7 +279,7 @@
         "goal": "audience-growth",
         "summary": "Grow followers/subscribers on each social account.",
         "viewerAction": "Follow/subscribe so the next part is not missed.",
-        "authoring": "Each part solves its own problem; part 1 ends with an honest bridge to the next part's real task only when that part is drafted and registered; the last part pays off the series. Never withhold the current answer to force a follow (content/WORKFLOW.md series rules).",
+        "authoring": "Follow storytellingPolicy.seriesPartPolicy for connected two-part stories, the specific part-1 teaser and part-2 payoff. Each part still teaches a complete useful point; never withhold the current answer to force a follow.",
         "closing": "Follow invitation from each language's cta-lab.json#contentTypeEndings (owner-approved 2026-11-09): series-next-part before the last part (names the next part), series-final-part on the last part (new story every weekend).",
         "primaryMetric": "followsPer1000Views",
         "primaryMetricNote": "Uses the provider-reported follows from the post (observation metrics.follows) when available; otherwise partContinuationRatio = next-part views / previous-part views on the same account, language and fixed window, reported as descriptive only.",
