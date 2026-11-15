@@ -41,7 +41,7 @@ function firstNonSilent(brief){
 }
 
 test("registered real RU/TJ lesson and ad generate per-language TEST brief without API",async()=>{
-  for(const key of ["shop-shirt-size-20261117","ji-vs-duoshao-books-price-20261118"]){
+  for(const key of ["known-book-zai-20261115","shop-shirt-size-20261117","ji-vs-duoshao-books-price-20261118","library-pronunciation-20261119"]){
     for(const language of ["ru","tg"]){
       const brief=await buildCodexSoundKitTestBrief(key,{language});
       assert.equal(brief.mode,"TEST_ONLY");
