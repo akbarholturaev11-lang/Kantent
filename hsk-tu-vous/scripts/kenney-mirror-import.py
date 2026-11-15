@@ -152,7 +152,9 @@ def zip_contents(payload, source):
             raise ValueError("source audio differs from locked file set: "
                              + f"missing={missing[:5]}, unlisted={added[:5]}")
         if not expected.keys() <= entries.keys():
-            raise ValueError("archive lacks locked license/audio files")
+            missing=sorted(expected.keys()-entries.keys())
+            raise ValueError("archive lacks locked license/audio files: "
+                             + repr(missing[:8])+"; archive sample: "+repr(sorted(entries.keys())[:8]))
         result = {}
         for rel, pin in expected.items():
             if entries[rel].file_size != pin["size"]:
