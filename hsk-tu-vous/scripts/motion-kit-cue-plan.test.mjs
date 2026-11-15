@@ -90,7 +90,7 @@ test("art-adapters only and no implicit promo mode",()=>{
 test("Codex-supplied choice overrides algorithm suggestion in TEST mode",()=>{
   const {episode,timeline}=fixture();
   const codexDecision={chosenBy:"Codex",mode:"TEST_ONLY",episodeId:episode.id,
-    contentType:"lesson",scenes:[{sceneId:"hook",componentId:"art-drift",
+    contentType:"lesson",languageCode:episode.languageCode,scenes:[{sceneId:"hook",componentId:"art-drift",
       reason:"Slow artwork movement fits spoken picture, avoids extra labels",
       narrationEvidence:"пример"}]};
   const plan=compileMotionKitCuePlan(episode,timeline,{codexDecision});
