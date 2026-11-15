@@ -19,7 +19,9 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 
 Handoffs: Calendar Reserve → Codex (complete sources); Codex → owner (one preview bundle); owner → Codex or Actions (exact approval); Feedback → Calendar Reserve (hypotheses and test IDs); any agent → `docs/audits/CURRENT_TASKS.md` (open defects). Every agent first reads the latest `main`.\n\n**Codex video-start check — MotionKit TEST ONLY:** Read the experimental motion section at the beginning of `content/WORKFLOW.md` before every video job. The **Codex agent itself** makes the semantic component choice; the code only provides deterministic candidate lists. No new AI API/keys are connected. This is a TEST-only pilot introduced by PR #70; even after merging code, the optional effects are off by default pending real-voice visual QA and exact owner approval. Never mistake a TEST brief for default rendering, owner approval or publication.\n
 
-**Codex video-start check — SoundKit P2 TEST ONLY:** At every new RU/TJ video job, read `content/WORKFLOW.md#codex-soundkit-p2--test-only-automatic-localized-source-briefs-no-audio-mix` and the automatic `soundKitTest` result. Codex itself chooses scene-specific licensed sound references **or SILENCE**, with authentic localized narration and visual evidence; run `content:soundkit:test` validation on each language’s decision. P2 does not render, mix, alter Gemini voice, call a new AI API or grant publication approval.\n\n## Source ownership (do not duplicate values)
+**Codex video-start check — SoundKit P2 TEST ONLY:** At every new RU/TJ video job, read `content/WORKFLOW.md#codex-soundkit-p2--test-only-automatic-localized-source-briefs-no-audio-mix` and the automatic `soundKitTest` result. Codex itself chooses scene-specific licensed sound references **or SILENCE**, with authentic localized narration and visual evidence; run `content:soundkit:test` validation on each language’s decision. P2 does not render, mix, alter Gemini voice, call a new AI API or grant publication approval.
+
+## Source ownership (do not duplicate values)
 
 | Information | Canonical source |
 |---|---|
