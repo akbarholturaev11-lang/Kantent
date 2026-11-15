@@ -1,3 +1,4 @@
+import {assertMotionKitCuePlanMatches} from "./motion-kit-cue-plan.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -79,14 +80,18 @@ export async function renderSharedPlatformVideos({
   renderOptions = [],
   semanticTimeline = null,
   cueTimeline = null,
+  motionKitPlan = null,
   execute = run,
   log = console.log,
 }) {
+  if (motionKitPlan && !cueTimeline)
+    throw Error("MotionKit review must use the exact imported cue timeline");
   const base = episodes.instagram;
   const ranges = sharedRenderRanges(base);
   for (const episode of Object.values(episodes)) {
     assertSharedLesson(base, episode);
     if (cueTimeline) assertCueTimelineMatches(episode, cueTimeline, FPS);
+    if (motionKitPlan) assertMotionKitCuePlanMatches(episode, cueTimeline, motionKitPlan);
   }
   await fs.mkdir(workDir, { recursive: true });
   const props = {};
@@ -97,6 +102,7 @@ export async function renderSharedPlatformVideos({
     await writeJson(props[platform], {
       episode,
       ...(cueTimeline ? { cueTimeline } : semanticTimeline ? { semanticTimeline } : {}),
+      ...(motionKitPlan ? {motionKitPlan} : {}),
       ...(cueTimeline ? { captionSections: buildCaptionSections(episode.scenes, FPS) } : {}),
     });
   }
