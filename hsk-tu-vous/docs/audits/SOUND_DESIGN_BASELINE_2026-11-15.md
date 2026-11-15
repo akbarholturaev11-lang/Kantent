@@ -48,6 +48,21 @@ Existing local WAV files have Git blob SHAs `a936be9ea7b0082f3ba75377250a578cec9
 | Bloat / 150 effects per render | Medium | Catalog only once; curate separately and load only selected files when opted in |
 | Double-trigger of old and new cues | Medium | Future design must replace (not stack) existing soft-cut/tap only when opted-in and tested |
 
+## P1 supplemental owner-approved mirror import — 2026-11-15
+
+**Completed on isolated branch; production still disabled.** The owner authorized verification/import from pinned CC0 GitHub mirrors as an alternative to the publisher ZIPs that returned HTML.
+
+- **51 WAVs** imported from `Calinou/kenney-ui-audio` commit `8c3d81b9159d058c444f89d12d518276b0b09345`. Publisher site lists 50; the extra mirrored WAV is retained and explicitly disclosed instead of fabricated equality.
+- **100 WAVs** imported from `Calinou/kenney-interface-sounds` commit `4596a49eaf5a533948d49a47467f606bcdea70ff`.
+- **151 WAVs; 151 unique SHA-256 payloads; 5,766,530 bytes**; two local copies of verified CC0 addon licenses.
+- GitHub mirror archive SHA-256 UI: `2f7e2036e35e983fd9459a805d25f96bb95d169edf07368d70253810abf13207`; Interface: `455fef659eac83c1acc90ec186a04f36fa3235066c8d15745f797801b34b94cc`.
+- Git tree source lock `vendor-catalog/soundkit/kenney-mirror-lock.json` pins every source file path, Git object SHA-1 and size; imported `content/sound-library.json` stores each audio payload's independent SHA-256, codec, timing, sample rate and channels.
+- Both mirrors' `.gitattributes` intentionally excludes root `LICENSE.txt` from archive export; importer requires each verified addon CC0 `LICENSE.txt`. It never relaxes WAV hash verification.
+- CI [run #43689444267](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/43689444267) **SUCCESS**: 18 offline security tests, 151 WAV ffprobe + ffmpeg decode passes, manifest/source hash verification and branch-only asset commit.
+- `assets/sound-library/README.md` documents provenance and limits. Every file has `eligibleForAutomaticUse=false`: **none is wired into the production renderer**, and no video/audio/TTS/CTA/publication policy changed.
+
+P1 is now complete for the **verified mirror catalog**, NOT for byte-identical publisher ZIPs. Later P2 must curate/select meaningful SFX and explicitly support silence; P3–P6 remain unimplemented.
+
 ## P0 outputs and gates
 
 - [x] Registered main SHA, original sound files, current controlling source and reference video workflows.
@@ -55,7 +70,7 @@ Existing local WAV files have Git blob SHAs `a936be9ea7b0082f3ba75377250a578cec9
 - [x] Found lack of per-asset origin/license provenance for existing Pixabay bundle.
 - [x] Verified publisher advertises 50+100 CC0 and identified unsafe 51/50 third-party discrepancy.
 - [x] Execute official URL probe in GitHub Actions; **both URL responses were text/html, not ZIP**. Real archive/license/audio verification therefore remains BLOCKED. See `docs/audits/SOUNDKIT_KENNEY_ARCHIVE_PROBE.json` (automatically captured).
-- [ ] Acquire genuine publisher ZIPs through the official free-download flow or a separately owner-approved pinned CC0 redistribution with exact byte provenance; rerun the audit against those actual archives.
+- [x] Owner authorized a pinned CC0 GitHub mirror alternative, verified all 151 WAVs and embedded addon licenses, and imported the mirror sources on the isolated branch; the publisher-ZIP probe remains a historical failure and is not reclassified as success.
 - [ ] Compute file-level SHA-256/ffprobe metadata once official audio bytes are accessible in runner.
 - [ ] Obtain real imported-voice baseline audio mix metrics and a listening sample (no production regeneration).
 
@@ -67,4 +82,4 @@ Existing local WAV files have Git blob SHAs `a936be9ea7b0082f3ba75377250a578cec9
 - **0/150 actual audio files downloaded**, so 0 files copied into `assets/sound-library/`. No user-approved video or existing `public/sfx/` file changed.
 - Publishing those HTML payloads as ZIP files or silently falling back to the 51/50 third-party WAV mirror is expressly disallowed. An alternate source requires verification/owner acknowledgment under the P1 plan.
 
-**P0 is an engineering baseline, not listening QA. P1 assets must never be called imported before GitHub CI returns verified extracts and committed file hashes.**
+**P0 and P1 mirrors are verified engineering/source milestones, not actual finished-video listening QA.** P1 assets must never be called imported before GitHub CI returns verified extracts and committed file hashes.**
