@@ -7,6 +7,9 @@ on:
     paths:
       - .github/workflows/motion-kit-pilot-ci.yml
       - hsk-tu-vous/scripts/video-component-selector*
+      - hsk-tu-vous/scripts/motion-kit-cue-plan*
+      - hsk-tu-vous/src/EpisodeComposition.tsx
+      - hsk-tu-vous/src/IllustratedLessonScene.tsx
       - hsk-tu-vous/scripts/preview-video-component-plan*
       - hsk-tu-vous/tsconfig.json
       - hsk-tu-vous/content/skill-catalog.json
@@ -40,7 +43,7 @@ jobs:
       - name: TypeScript and ESLint
         run: npm run lint
       - name: Deterministic selector tests
-        run: node --test scripts/video-component-selector.test.mjs scripts/preview-video-component-plan.test.mjs
+        run: node --test scripts/video-component-selector.test.mjs scripts/preview-video-component-plan.test.mjs scripts/motion-kit-cue-plan.test.mjs
       - name: Advisory plan smoke on current real source (no production mutation)
         run: |
           mkdir -p .motion-kit-pilot-output
