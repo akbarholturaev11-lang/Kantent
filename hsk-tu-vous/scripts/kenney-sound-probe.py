@@ -53,9 +53,13 @@ def publisher_zip(url):
         actual = urllib.parse.urlparse(response.geturl())
         if actual.scheme != "https" or actual.hostname not in ALLOWED_SOURCE_HOSTS:
             raise ValueError("cross-domain redirect requires review")
+        mime = response.headers.get("content-type", "(not supplied)").split(";")[0][:80]
         raw = response.read(MAX_ZIP_BYTES + 1)
     if not raw.startswith(b"PK") or len(raw) > MAX_ZIP_BYTES:
-        raise ValueError("invalid/oversized publisher ZIP")
+        raise ValueError(
+            f"publisher did not return a ZIP (MIME={mime}, bytes={len(raw)}, "
+            f"ZIP-magic={raw.startswith(b'PK')}); no assets imported"
+        )
     return raw
 
 def inspect_audio(data, ext):
