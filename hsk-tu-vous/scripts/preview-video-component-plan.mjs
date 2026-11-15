@@ -46,18 +46,22 @@ export async function previewVideoComponentPlan(key){
   const record=await readItem(hits[0],calendar);
   const previous=calendar.items.filter(i=>i.date<record.item.date)
     .sort((a,b)=>b.date.localeCompare(a.date));
-  const histories=[],compared=[];
+  const histories=[],compared=[],historySkipped=[];
   for(const item of previous){
     if(histories.length>=5)break;
     let type;try{type=resolveContentType(item,calendar)}catch{continue}
     if(type!==record.contentType)continue;
-    const prev=await readItem(item,calendar);
-    const p=selectVideoComponents(prev.episode,{contentType:type});
-    histories.push(p.sequence);
-    compared.push({episodeId:prev.item.id,date:prev.item.date});
+    try {
+      const prev=await readItem(item,calendar);
+      const p=selectVideoComponents(prev.episode,{contentType:type});
+      histories.push(p.sequence);
+      compared.push({episodeId:prev.item.id,date:prev.item.date});
+    } catch (error) {
+      historySkipped.push({episodeId:item.id,date:item.date,reason:String(error.message||error)});
+    }
   }
   const plan=selectVideoComponents(record.episode,{contentType:record.contentType,recentSequences:histories});
-  return {date:record.item.date,sourcePath:record.sourcePath,recentCompared:compared,plan};
+  return {date:record.item.date,sourcePath:record.sourcePath,recentCompared:compared,historySkipped,plan};
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   previewVideoComponentPlan(process.argv[2]).then(p=>process.stdout.write(JSON.stringify(p,null,2)+"\n"))
