@@ -17,6 +17,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: motion-kit-planning-20261115
+  cancel-in-progress: true
+
 jobs:
   motion-kit-pilot:
     runs-on: ubuntu-latest
