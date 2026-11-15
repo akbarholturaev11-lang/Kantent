@@ -1,0 +1,77 @@
+name: SoundKit P2 Codex source-bound TEST-only CI
+
+on:
+  push:
+    branches:
+      - feat/sound-design-phase0-kenney-audit-20261115
+    paths:
+      - .github/workflows/soundkit-p2-ci.yml
+      - hsk-tu-vous/scripts/codex-soundkit-*
+      - hsk-tu-vous/scripts/make-episode.mjs
+      - hsk-tu-vous/scripts/mcp-server.mjs
+      - hsk-tu-vous/content/sound-design.json
+      - hsk-tu-vous/content/sound-library.json
+      - hsk-tu-vous/package.json
+  pull_request:
+    paths:
+      - .github/workflows/soundkit-p2-ci.yml
+      - hsk-tu-vous/scripts/codex-soundkit-*
+      - hsk-tu-vous/content/sound-design.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: soundkit-p2-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  soundkit-p2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Ensure all touched JavaScript parses without fetching new dependencies
+        run: |
+          set -euo pipefail
+          node --check scripts/codex-soundkit-selection.mjs
+          node --check scripts/codex-soundkit-test.mjs
+          node --check scripts/codex-soundkit-test.test.mjs
+          node --check scripts/make-episode.mjs
+          node --check scripts/mcp-server.mjs
+      - name: P2 semantic and adversarial tests on current real RU/TJ lessons and promos
+        run: |
+          set -euo pipefail
+          node --test scripts/codex-soundkit-test.test.mjs
+      - name: Auto-generate actual localized TEST briefs without AI API, audio or render
+        run: |
+          set -euo pipefail
+          node scripts/codex-soundkit-test.mjs shop-shirt-size-20261117 --language=ru > /tmp/soundkit-ru.json
+          node scripts/codex-soundkit-test.mjs shop-shirt-size-20261117 --language=tg > /tmp/soundkit-tg.json
+          node scripts/codex-soundkit-test.mjs ji-vs-duoshao-books-price-20261118 --language=ru > /tmp/soundkit-lesson-ru.json
+          node scripts/codex-soundkit-test.mjs ji-vs-duoshao-books-price-20261118 --language=tg > /tmp/soundkit-lesson-tg.json
+          node --input-type=module <<'JS'
+          import fs from "node:fs";
+          for(const key of ["shop-shirt-size-20261117","ji-vs-duoshao-books-price-20261118"]){
+            let sources=[];
+            for(const lang of ["ru","tg"]){
+              const file="review/sound-design-tests/"+key+"/"+lang+"/brief.json";
+              const brief=JSON.parse(fs.readFileSync(file));
+              if(brief.mode!=="TEST_ONLY"||brief.productionEffectsEnabled!==false||
+                 brief.externalSelectionApi!==null||brief.requiresNewApiKey!==false||
+                 brief.scenes.length===0||brief.scenes[0].candidates.length!==1||
+                 brief.scenes[0].candidates[0].id!=="SILENCE")
+                throw Error("SoundKit P2 guard failed for "+file);
+              sources.push(brief.sourceSha256);
+            }
+            if(sources[0]===sources[1])throw Error("Cross-locale sound brief reused a source SHA");
+          }
+          console.log("4 independent TEST-only SoundKit briefs, no API, no render");
+          JS
