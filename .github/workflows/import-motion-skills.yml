@@ -1,0 +1,58 @@
+name: Import free motion skills and MIT visual reference
+
+on:
+  push:
+    branches:
+      - planning/full-ui-motion-library-20261115
+    paths:
+      - .github/workflows/import-motion-skills.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-skills:
+    if: github.ref == 'refs/heads/planning/full-ui-motion-library-20261115'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 1
+      - name: Install pinned free Transitions.dev skills for Kantent agents
+        shell: bash
+        run: |
+          set -euo pipefail
+          SHA="20d70c1262bf721c0300c2946cbe1fc7605a555c"
+          SOURCE="$(mktemp -d)"
+          trap 'rm -rf "$SOURCE"' EXIT
+          git clone --quiet https://github.com/Jakubantalik/transitions.dev.git "$SOURCE"
+          git -C "$SOURCE" checkout --quiet "$SHA"
+          test "$(git -C "$SOURCE" rev-parse HEAD)" = "$SHA"
+          DEST="hsk-tu-vous/.agents/skills"
+          mkdir -p "$DEST"
+          for skill in transitions-dev transitions-polish transitions-ui-generation; do
+            test -f "$SOURCE/skills/$skill/SKILL.md"
+            test ! -e "$DEST/$skill" || { echo "Refusing to overwrite $DEST/$skill"; exit 1; }
+            cp -a "$SOURCE/skills/$skill" "$DEST/$skill"
+          done
+          mkdir -p hsk-tu-vous/vendor-catalog
+          cat > hsk-tu-vous/vendor-catalog/TRANSITIONS_SKILLS_IMPORT.md <<'EOT'
+          # Official Transitions.dev agent skills (free) installed in this project
+
+          Upstream: https://github.com/Jakubantalik/transitions.dev
+          Pinned commit: `20d70c1262bf721c0300c2946cbe1fc7605a555c`
+          Installed to `hsk-tu-vous/.agents/skills/{transitions-dev,transitions-polish,transitions-ui-generation}`.
+          Source license: https://github.com/Jakubantalik/transitions.dev/blob/main/LICENSE
+          These skills may be used in Kantent itself; **do not resell, publish or redistribute as a competing
+          transitions library / UI kit**. Pro components are excluded.
+          These are web/agent instructions, not production Remotion frame-based components.
+          Any selected motion still needs a deterministic Remotion adaptation and per-video QA.
+          EOT
+          git add "$DEST/transitions-dev" "$DEST/transitions-polish" "$DEST/transitions-ui-generation" hsk-tu-vous/vendor-catalog/TRANSITIONS_SKILLS_IMPORT.md
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m "vendor(content): install pinned free Transitions.dev motion agent skills"
+            git push origin HEAD:refs/heads/planning/full-ui-motion-library-20261115
+          fi
