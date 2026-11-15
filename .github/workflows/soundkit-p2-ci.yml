@@ -50,6 +50,32 @@ jobs:
         run: |
           set -euo pipefail
           node --test scripts/codex-soundkit-test.test.mjs
+      - name: Verify runtime is still disconnected from this experimental sound catalog
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'JS'
+          import fs from "node:fs";
+          const soundPolicy=JSON.parse(fs.readFileSync("content/sound-design.json"));
+          const library=JSON.parse(fs.readFileSync("content/sound-library.json"));
+          const pkg=JSON.parse(fs.readFileSync("package.json"));
+          if(soundPolicy.status!=="P2_TEST_ONLY"||
+             soundPolicy.productionEffectsEnabled!==false||
+             soundPolicy.enableVerifiedInteractionSoundsInP2!==false||
+             soundPolicy.audioMixNotImplemented!==true||
+             soundPolicy.newModelApiConnected!==false||
+             library.automaticallyUsedInProduction!==false||
+             library.assets.some(a=>a.eligibleForAutomaticUse!==false))
+            throw Error("P2 sound policy or raw library was unexpectedly enabled");
+          if(pkg.scripts["content:soundkit:test"]!=="node scripts/codex-soundkit-test.mjs")
+            throw Error("Codex SoundKit CLI changed unexpectedly");
+          for(const file of ["src/EpisodeComposition.tsx","scripts/render-episode.mjs",
+              "scripts/render-platform-videos.mjs","scripts/render-tiktok-review.mjs"]){
+            const source=fs.readFileSync(file,"utf8");
+            if(/codex-soundkit|sound-library\.json|sound-design\.json/.test(source))
+              throw Error("P2 experimental sound catalog leaked into renderer: "+file);
+          }
+          console.log("No production audio hooks, no SFX API, no default mix change");
+          JS
       - name: Auto-generate actual localized TEST briefs without AI API, audio or render
         run: |
           set -euo pipefail
