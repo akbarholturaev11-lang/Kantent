@@ -282,7 +282,9 @@
           "gitBlobSha": "4ff46a65b88ae5bb50da827a146365819c4f7a23",
           "size": 479
         }
-      ]
+      ],
+      "rootLicenseExportIgnored": true,
+      "rootLicenseExportIgnoreEvidence": ".gitattributes at pinned source commit: /LICENSE.txt export-ignore"
     },
     "interface-sounds": {
       "sourceType": "pinned third-party CC0 Godot mirror (not original publisher ZIP)",
@@ -809,7 +811,9 @@
           "gitBlobSha": "1fc5acf8243a8ac899403e7297f8c5efdc4258f2",
           "size": 574
         }
-      ]
+      ],
+      "rootLicenseExportIgnored": true,
+      "rootLicenseExportIgnoreEvidence": ".gitattributes at pinned source commit: /LICENSE.txt export-ignore"
     }
   }
 }
