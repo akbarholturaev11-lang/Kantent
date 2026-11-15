@@ -7,6 +7,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
 import { lessonArtPreflight } from "./review-lesson-art.mjs";
+import {prepareCodexMotionKitTestBrief} from "./codex-motionkit-test.mjs";
 import {
   PROJECT_ROOT,
   CALENDAR_PATH,
@@ -52,6 +53,17 @@ if (input === "today") {
 const item = resolved ? await getCalendarItemByDate(resolved.selectedDate) : /^\d{4}-\d{2}-\d{2}$/.test(input)
   ? await getCalendarItemByDate(input)
   : await getCalendarItem(input);
+// Automatically give Codex a test-only motion-selection brief at the very
+// start of each registered video job. This does NOT call an AI API and
+// does NOT activate an effect in the default renderer.
+const motionKitTest=confirmedPublishedFor(item.id).length
+  ? {mode:"TEST_ONLY",status:"skipped-already-published",aiApiConnected:false}
+  : await prepareCodexMotionKitTestBrief(item.id).catch(error=>({
+      mode:"TEST_ONLY",status:"source-not-ready",reason:String(error.message||error),
+      aiApiConnected:false,productionEffectsEnabled:false
+    }));
+console.log("[MOTIONKIT TEST ONLY — Codex chooses, no new AI API]");
+console.log(JSON.stringify(motionKitTest,null,2));
 const result = await prepareLanguagePackages(languages, async (language) => {
   const published = confirmedPublishedFor(item.id);
   if (published.length) return { status: { stage: "externally-verified-published", records: published }, reviewFolder: reviewDir(item.id) };
@@ -98,6 +110,6 @@ const result = await prepareLanguagePackages(languages, async (language) => {
   }
   return { stage: "ready-for-review", reviewFolder: folder, status, sourceRevision };
 });
-await writeJson(path.join(PROJECT_ROOT, "review", item.id, "languages-status.json"), { date: item.date, episodeId: item.id, ...result });
+await writeJson(path.join(PROJECT_ROOT, "review", item.id, "languages-status.json"), { date: item.date, episodeId: item.id, motionKitTest, ...result });
 console.log(JSON.stringify(result, null, 2));
 if (!result.complete) process.exitCode = 1;
