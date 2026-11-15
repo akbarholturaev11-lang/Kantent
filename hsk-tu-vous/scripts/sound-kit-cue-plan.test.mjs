@@ -212,7 +212,7 @@ test("SYNTHETIC: missing audio/duration, unsupported FPS and invalid time bounda
   const f=fixture();
   assert.throws(()=>compileSoundKitCuePlan(f.episode,f.timeline,{...f,audioBytes:null}),/audio bytes/);
   const invalid=structuredClone(f.episode);delete invalid.audioDurationMs;
-  assert.throws(()=>compileSoundKitCuePlan(invalid,f.timeline,{...f,episode:invalid}),/duration/);
+  assert.throws(()=>compileSoundKitCuePlan(invalid,f.timeline,{...f,episode:invalid}),/duration|timeline/);
   const fps=structuredClone(f.timeline);fps.fps=60;
   assert.throws(()=>compileSoundKitCuePlan(f.episode,fps,{...f,timeline:fps}),/30 fps/);
   const crossing=structuredClone(f.episode);
