@@ -27,6 +27,7 @@ jobs:
       - name: Diagnose and record compact build error (no secrets)
         shell: bash
         run: |
+          set +e
           set -u
           cd hsk-tu-vous
           npm ci > /tmp/install-output 2>&1
