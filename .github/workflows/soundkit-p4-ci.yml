@@ -58,6 +58,23 @@ jobs:
           node --check scripts/sound-kit-render-plan.mjs
           node --check scripts/sound-kit-p4-synthetic-fixture.mjs
           node --test scripts/sound-kit-render-plan.test.mjs scripts/sound-kit-cue-plan.test.mjs scripts/codex-soundkit-test.test.mjs
+      - name: Reject SoundKit production activation and new audio inference API
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const p=JSON.parse(fs.readFileSync('content/sound-design.json'));
+          const lib=JSON.parse(fs.readFileSync('content/sound-library.json'));
+          if(p.productionEffectsEnabled!==false ||
+             p.productionAudioMixEnabled!==false ||
+             p.phase4ExperimentalAudioMixImplemented!==true ||
+             p.phase4RequiresExplicitOptIn!=='HSK_AI_SOUND_DESIGN_TEST=1' ||
+             p.newModelApiConnected!==false ||
+             lib.automaticallyUsedInProduction!==false ||
+             lib.assets.some(x=>x.eligibleForAutomaticUse!==false))
+            throw Error('P4 must remain isolated TEST-only and no additional AI/API allowed');
+          console.log('P4 opt-in only, no production audio, no new AI API');
+          JS
       - name: Ensure test path fails closed by default — no voice or API generated
         run: |
           set -euo pipefail
@@ -98,6 +115,11 @@ jobs:
           assert delta>10_000, f'Opt-in SFX produced no audible test change: {delta}'
           print('SYNTHETIC engineering audio A/B differs at cue frame (not real Gemini acceptance)',delta)
           PY
+      - name: Verify synthetic preview staging was removed
+        run: |
+          set -euo pipefail
+          test ! -e public/soundkit-p4-preview-synthetic-ci
+          test ! -e public/generated/soundkit-p4-synthetic-voice.wav
       - name: Project source integrity
         run: npm run check:consistency
       - name: Keep synthetic offline QA logs only, never a publishable video
