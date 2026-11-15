@@ -16,6 +16,29 @@ Beautiful UI, Bencho or Transitions.dev browser/Next.js modules.
   It deliberately limits the current illustrated-glass lesson to artwork-only
   `art-dissolve` / `art-drift` and never edits a central CTA.
 
+## What “AI chooses the components” actually means — TEST ONLY
+
+**Codex is the AI selector.** No separate LLM API, API key, agent backend,
+or recurring inference charge has been added to MotionKit.
+
+For each registered video, the experimental `content:make` and MCP
+preparation workflows automatically create `review/motion-kit-tests/<id>/brief.json`.
+This is a **TEST ONLY** advisory with the full per-scene candidate list and
+actual narration, plus an algorithmic suggestion **explicitly marked non-AI**.
+
+Codex—not the hash selector—uses its existing reasoning to pick the visual
+treatment, writes `codex-decision.json` in that same test directory with
+`mode:"TEST_ONLY"`, `chosenBy:"Codex"`, matching `sourceSha256`, scene
+IDs, `componentId`, meaningful `reason` and exact `narrationEvidence`.
+Run `node scripts/codex-motionkit-test.mjs <id> --validate` before using
+any opted-in effect. If absent, invalid or stale, test rendering refuses to
+fall back silently to the algorithm's suggestion. The normal renderer
+remains unchanged.
+
+The experimental motion catalog and Codex's advisory selections must not
+be misrepresented as video-generation approval. No synthetic product UI,
+voice changes, new API provider, or unauthorized publication is implied.
+
 ## Opt-in real-audio review integration (no auto-publication)
 
 The existing `src/EpisodeComposition.tsx` may receive an optional
@@ -32,7 +55,7 @@ For an unapproved, voice-ready illustrated lesson in a local copy:
 # Default: untouched current output
 npm run content:render -- <existing-episode-id>
 # Explicit opt-in review package only; it does NOT authorize publishing
-HSK_AI_MOTION_KIT_REVIEW=1 npm run content:render -- <existing-episode-id>
+node scripts/codex-motionkit-test.mjs <existing-episode-id>  # automatic test brief also appears in content:make/MCP\n# Codex reviews, saves codex-decision.json, and validates it before enabling effects:\nnode scripts/codex-motionkit-test.mjs <existing-episode-id> --validate\nHSK_AI_MOTION_KIT_REVIEW=1 npm run content:render -- <existing-episode-id>
 ```
 
 The second command writes `review/<id>/motion-kit-cue-plan.json` and supplies the
