@@ -61,10 +61,29 @@ export const ProgressTrace=({frame,steps}:{frame:number;steps:readonly string[]}
     <div style={{...textStyle,fontSize:58}}>{steps[Math.min(steps.length-1,Math.floor(progress*steps.length))]}</div>
   </div>;
 };
+
+/** Artwork-only motion adapters for active illustrated-glass lessons.
+ * They wrap existing approved lesson art; no new text, cards, characters or copy. */
+export const ArtDissolve=({frame,children}:{frame:number;children:ReactNode})=>{
+  const amount=ease(frame,0,12);
+  return <div style={{position:"relative",width:"100%",height:"100%",opacity:amount}}>
+    {children}
+  </div>;
+};
+export const ArtDrift=({frame,children}:{frame:number;children:ReactNode})=>{
+  const position=interpolate(frame,[0,90],[0,1],clamp);
+  return <div style={{position:"relative",width:"100%",height:"100%",overflow:"hidden"}}>
+    <div style={{width:"100%",height:"100%",scale:1.015+.012*position,translate:`${Math.round(-5*position)}px ${Math.round(-7*position)}px`}}>
+      {children}
+    </div>
+  </div>;
+};
 /** Read-only typed registry. It never imports the upstream web packages into Remotion. */
-export type MotionId="type-reveal"|"card-reveal"|"glass-info"|"state-transition"|"progress-trace";
+export type MotionId="art-dissolve"|"art-drift"|"type-reveal"|"card-reveal"|"glass-info"|"state-transition"|"progress-trace";
 export const MotionStage=({id,frame}:{id:MotionId}&Frame)=>{
   switch(id){
+    case "art-dissolve":return <ArtDissolve frame={frame}><div style={{width:700,height:650,background:"linear-gradient(120deg,rgba(224,74,64,.30),rgba(47,160,106,.3))",borderRadius:45}}/></ArtDissolve>;
+    case "art-drift":return <ArtDrift frame={frame}><div style={{width:700,height:650,background:"linear-gradient(120deg,rgba(47,160,106,.3),rgba(224,74,64,.30))",borderRadius:45}}/></ArtDrift>;
     case "type-reveal":return <TypeReveal frame={frame} text="学中文" subtitle="Xué Zhōngwén · Хитой тилини ўрганиш"/>;
     case "card-reveal":return <CardReveal frame={frame} title="HSK AI" detail="UI motion component · technical demo"/>;
     case "glass-info":return <GlassInfo frame={frame} title="你好" detail="nǐ hǎo · салом"/>;
