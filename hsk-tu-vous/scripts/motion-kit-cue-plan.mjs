@@ -69,7 +69,8 @@ export function compileMotionKitCuePlan(episode, cueTimeline, {
   if(codexDecision && (codexDecision.chosenBy!=="Codex" ||
       codexDecision.mode!=="TEST_ONLY" ||
       codexDecision.episodeId!==episode.id ||
-      codexDecision.contentType!==contentType))
+      codexDecision.contentType!==contentType ||
+      codexDecision.languageCode!==episode.languageCode))
     throw Error("MotionKit requires an episode-bound Codex TEST decision");
   const selection = codexDecision
     ? codexDecision.scenes
