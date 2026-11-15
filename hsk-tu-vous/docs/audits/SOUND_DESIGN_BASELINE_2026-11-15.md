@@ -54,8 +54,17 @@ Existing local WAV files have Git blob SHAs `a936be9ea7b0082f3ba75377250a578cec9
 - [x] Counted 19 MP3s, 17 unique blobs, two duplicate pairs; captured byte totals and two original WAV Git SHAs.
 - [x] Found lack of per-asset origin/license provenance for existing Pixabay bundle.
 - [x] Verified publisher advertises 50+100 CC0 and identified unsafe 51/50 third-party discrepancy.
-- [ ] Verify official downloaded ZIP archive bytes, license files and exact file counts using GitHub Actions isolated probe.
+- [x] Execute official URL probe in GitHub Actions; **both URL responses were text/html, not ZIP**. Real archive/license/audio verification therefore remains BLOCKED. See `docs/audits/SOUNDKIT_KENNEY_ARCHIVE_PROBE.json` (automatically captured).
+- [ ] Acquire genuine publisher ZIPs through the official free-download flow or a separately owner-approved pinned CC0 redistribution with exact byte provenance; rerun the audit against those actual archives.
 - [ ] Compute file-level SHA-256/ffprobe metadata once official audio bytes are accessible in runner.
 - [ ] Obtain real imported-voice baseline audio mix metrics and a listening sample (no production regeneration).
+
+## Actual live publisher download evidence (GitHub Actions)
+
+- [Probe run #43686300424](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/43686300424): unit tests passed, license gate intentionally failed closed.
+- `UI Audio` official media URL replied `text/html` (18,499 bytes), not `PK` ZIP archive data.
+- `Interface Sounds` official media URL replied `text/html` (18,690 bytes), not ZIP data.
+- **0/150 actual audio files downloaded**, so 0 files copied into `assets/sound-library/`. No user-approved video or existing `public/sfx/` file changed.
+- Publishing those HTML payloads as ZIP files or silently falling back to the 51/50 third-party WAV mirror is expressly disallowed. An alternate source requires verification/owner acknowledgment under the P1 plan.
 
 **P0 is an engineering baseline, not listening QA. P1 assets must never be called imported before GitHub CI returns verified extracts and committed file hashes.**
