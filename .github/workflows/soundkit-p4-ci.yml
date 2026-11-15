@@ -3,6 +3,7 @@ name: SoundKit P4 isolated source-cue audio mix CI (TEST ONLY)
 on:
   push:
     branches:
+      - main
       - feat/sound-design-phase0-kenney-audit-20261115
     paths:
       - .github/workflows/soundkit-p4-ci.yml
