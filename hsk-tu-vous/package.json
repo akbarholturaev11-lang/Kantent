@@ -53,7 +53,8 @@
     "content:art": "node scripts/generate-lesson-art.mjs",
     "content:art:review": "node scripts/review-lesson-art.mjs",
     "content:characters": "node scripts/build-character-references.mjs",
-    "content:motionkit:test": "node scripts/codex-motionkit-test.mjs"
+    "content:motionkit:test": "node scripts/codex-motionkit-test.mjs",
+    "content:soundkit:test": "node scripts/codex-soundkit-test.mjs"
   },
   "sideEffects": [
     "*.css"
