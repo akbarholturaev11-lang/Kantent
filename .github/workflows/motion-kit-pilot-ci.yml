@@ -1,0 +1,52 @@
+name: MotionKit isolated demo CI
+
+on:
+  push:
+    branches:
+      - planning/full-ui-motion-library-20261115
+    paths:
+      - .github/workflows/motion-kit-pilot-ci.yml
+      - hsk-tu-vous/scripts/video-component-selector*
+      - hsk-tu-vous/src/video-components/**
+      - hsk-tu-vous/src/motion-kit-preview/**
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  motion-kit-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: hsk-tu-vous/package-lock.json
+      - name: Install pinned project dependencies
+        run: npm ci
+      - name: TypeScript and ESLint
+        run: npm run lint
+      - name: Deterministic selector tests
+        run: node --test scripts/video-component-selector.test.mjs
+      - name: Project consistency
+        run: npm run check:consistency
+      - name: Build three exact synthetic frames and silent demo MP4
+        run: |
+          set -euo pipefail
+          mkdir -p .motion-kit-pilot-output
+          npx remotion still src/motion-kit-preview/index.tsx MotionKitPilot .motion-kit-pilot-output/frame-0.png --frame=0 --log=error
+          npx remotion still src/motion-kit-preview/index.tsx MotionKitPilot .motion-kit-pilot-output/frame-79.png --frame=79 --log=error
+          npx remotion still src/motion-kit-preview/index.tsx MotionKitPilot .motion-kit-pilot-output/frame-160.png --frame=160 --log=error
+          npx remotion render src/motion-kit-preview/index.tsx MotionKitPilot .motion-kit-pilot-output/motion-kit-pilot.mp4 --codec=h264 --log=error
+      - name: Upload silent technical pilot for owner visual review
+        uses: actions/upload-artifact@v4
+        with:
+          name: motion-kit-pilot-unapproved
+          path: hsk-tu-vous/.motion-kit-pilot-output/
+          retention-days: 7
