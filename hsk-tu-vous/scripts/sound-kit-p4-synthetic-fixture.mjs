@@ -37,11 +37,9 @@ if(process.argv.includes("--clean")){
     {id:"hook",kind:"hook",headline:"Synthetic test",narration:"Это",
       startMs:0,endMs:1200,durationFrames:36},
     {id:"demo",kind:"example",headline:"Spoken cue test",narration:"пример слышно",
-      startMs:1200,endMs:3500,durationFrames:69,motionBeats:[
+      startMs:1200,endMs:5000,durationFrames:114,motionBeats:[
         {id:"show",kind:"meaning",cueText:"пример",visual:{title:"Слово",graphic:{nodes:[]}}},
       ]},
-    {id:"cta",kind:"cta",headline:"Not audible SFX",narration:"Скачай",
-      startMs:3500,endMs:5000,durationFrames:45},
   ];
   const episode={
     id:"soundkit-p4-synthetic-ci",date:"2026-11-15",languageCode:"ru-RU",
@@ -54,7 +52,6 @@ if(process.argv.includes("--clean")){
       {text:"Это",startMs:100,endMs:400},
       {text:"пример",startMs:1500,endMs:1900},
       {text:"слышно",startMs:2500,endMs:2800},
-      {text:"Скачай",startMs:3750,endMs:4200},
     ],
   };
   const timeline=compileCueTimeline(episode,{fps:30});
@@ -72,7 +69,7 @@ if(process.argv.includes("--clean")){
       startMs:beat.startMs,endCueMs:beat.endMs,
       captionIndex:beat.captionIndex,startFrame:beat.startFrame,
       localFrame:beat.localFrame,clipFrames:5,endFrame:beat.startFrame+5,
-      hardDeadlineFrame:105,reason:"SYNTHETIC effect timing only"}],
+      hardDeadlineFrame:150,reason:"SYNTHETIC effect timing only"}],
   },{[id]:stage+"/"+assetSha256+".wav"},visualSystem.sound);
   await fs.writeFile(path.join(output,"baseline.json"),
     JSON.stringify({episode,cueTimeline:timeline},null,2));
