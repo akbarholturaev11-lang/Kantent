@@ -55,7 +55,8 @@
     "content:characters": "node scripts/build-character-references.mjs",
     "content:motionkit:test": "node scripts/codex-motionkit-test.mjs",
     "content:soundkit:test": "node scripts/codex-soundkit-test.mjs",
-    "content:soundkit:bind": "node scripts/codex-soundkit-bind.mjs"
+    "content:soundkit:bind": "node scripts/codex-soundkit-bind.mjs",
+    "content:soundkit:render:test": "node scripts/codex-soundkit-render-test.mjs"
   },
   "sideEffects": [
     "*.css"
