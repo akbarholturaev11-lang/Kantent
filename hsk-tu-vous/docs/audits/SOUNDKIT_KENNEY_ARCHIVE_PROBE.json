@@ -11,14 +11,14 @@
       "source": "https://kenney.nl/assets/ui-audio",
       "expectedFiles": 50,
       "status": "blocked",
-      "reason": "invalid/oversized publisher ZIP"
+      "reason": "publisher did not return a ZIP (MIME=text/html, bytes=18499, ZIP-magic=False); no assets imported"
     },
     "interface-sounds": {
       "name": "interface-sounds",
       "source": "https://kenney.nl/assets/interface-sounds",
       "expectedFiles": 100,
       "status": "blocked",
-      "reason": "invalid/oversized publisher ZIP"
+      "reason": "publisher did not return a ZIP (MIME=text/html, bytes=18690, ZIP-magic=False); no assets imported"
     }
   }
 }
