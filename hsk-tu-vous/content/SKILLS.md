@@ -33,7 +33,7 @@ The recipes in `skill-catalog.json` have `lesson`, `premium` and `special` branc
 | Effects | `remotion-best-practices`, its `rules/effects.md`, `rules/transitions.md` | `hyperframes-animation`, optional `hyperframes-keyframes`/`hyperframes-registry` | `motion-effects` for a standalone effect |
 | Layout | Remotion `rules/video-layout.md`/`rules/measuring-text.md` | `hyperframes-studio` with HSK brand limits | `apple-design` or Figma-specific input |
 | Captions | Remotion `rules/subtitles.md`, existing HSK caption components | `hyperframes-studio` captions track | `embedded-captions` for existing talking-head footage only |
-| Audio | Approved Gemini voice profile and automatic word-timed audio importer; SoundKit P2 is **TEST-only sound intent**, not an audio layer (`content/WORKFLOW.md`) | `hyperframes-audio` for mixing existing tracks | Standalone music/video workflow only |
+| Audio | Approved Gemini voice profile and automatic word-timed audio importer; SoundKit P2/P3 are **TEST-only source-bound sound intents**; P4 adds an explicit isolated opt-in Remotion audio mix preview, never the default renderer (`content/WORKFLOW.md`) | `hyperframes-audio` for mixing existing tracks | Standalone music/video workflow only |
 | Brand | Existing `visual-system.json` (no extra brand files) | `hyperframes-creative` references canonical brand | `brand-intake` only on requested brand reset |
 | Advertising | Existing Remotion renderer for simple promo | `product-launch-video` | Explicit Apple-style or other specialized promo |
 | Export | Remotion video render with its existing audio | `hyperframes-cli` validation | `reel-export` only for video reframe/encoding |
