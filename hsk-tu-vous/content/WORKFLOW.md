@@ -59,9 +59,29 @@ offered for experimental audition; all raw assets are currently marked
 derive exact audio timestamps, alter imported Gemini audio, mix effects into
 Remotion, or connect any remote model API. It is safe to create an advisory
 brief during normal production, but **P2 audio changes no production output**.
-The optional video-audio integration and exact imported word-timing binding
-are future P3/P4 stages requiring real-voice A/B listening and exact owner
-approval; publishing a modified video still requires separate preview approval.
+**P3 — EXACT CUE BINDING, STILL TEST ONLY (now available):** AFTER an
+approved voice has already been generated/imported and `cue-timeline.json`
+exists for the exact RU or TJ review and Codex's P2 `codex-decision.json`
+has passed validation, run:
+`npm run content:soundkit:bind -- <id> --language=ru --platform=shared`;
+repeat `--language=tg` with its OWN voice and timeline and, if there is a
+genuinely different existing TikTok voice take, use `--platform=tiktok`
+for each language separately. This **explicit, optional CLI** reads the
+existing `review` package, checks imported source voice bytes SHA-256
+against `episode.audioSha256`, confirms the current approved language voice
+profile, uses exactly the saved canonical 30 fps cue timeline and validates
+source visual events and audited chosen SFX bytes. It either saves
+`review/sound-design-tests/<id>/<ru|tg>/cue-plan-<shared|tiktok>.json`
+or FAILS CLOSED with an exact error. Missing Codex decision, voice, timeline,
+source SFX file, word cue, or stale/altered audio MUST block P3; never
+regenerate the voice or guess a timestamp to satisfy the test.
+
+P3 records **frame-accurate SOUND INTENT**, not sound in the final MP4. The
+original imported narration file is never changed. P4 audio mixing and
+phone-speaker/headphone A/B approval remain separate later stages. A synthetic
+P3 unit test is not proof that an actual Gemini take was checked. No new
+AI API, runtime sound integration, default audio change, automated SFX
+playback or publication rights are created by P3.
 
 ## Runbook: «Бугунги видеони тайёрла» / "prepare today's video" (Codex)
 
@@ -70,6 +90,7 @@ The short path for the owner's daily command. Each line names the stage the tool
 0. **Start right.** Work in `hsk-tu-vous/` (its `.codex/config.toml` starts the project MCP server) on a checkout whose `HEAD` contains the latest remote `main`; production refuses a stale checkout. Run `npm ci` when `package-lock.json` changed, then `npm run check:consistency`. Call `recommend_skills`; a lesson stays on Remotion.
    **⚠️ MotionKit TEST ONLY.** Codex reads the notice above; the job automatically produces separate RU/TJ source-bound briefs. Codex itself evaluates narration and visual meaning and writes per-language choices. No separate selection AI API is allowed. The optional test may not block established production, add an extra teaching card, alter voice/CTA, or bypass exact preview approval.
    **⚠️ SoundKit P2 TEST ONLY.** Read the SoundKit section above and each automatically prepared `soundKitTest` brief. Codex separately decides SOUND or SILENCE for RU/TJ, records exact source evidence, and validates its decision. Nothing is mixed or published by P2; keep the existing real audio untouched.
+   **⚠️ SoundKit P3 TEST ONLY.** Only after the real imported voice and the matching `cue-timeline.json` exist, run `content:soundkit:bind` separately for both languages and the real TikTok variant if applicable. Save cue intent only; never enable an SFX in the final MP4 or modify the approved Gemini voice.
 1. **Call `prepare_today_video`** (CLI: `npm run content:make -- today`). Act on the returned stage, then call it again:
    - `authoring-required` — the calendar has nothing for today or later: author today's `weeklySchedule` slot (§1.3).
    - `action-plan-required` — complete every beat's cue-linked `motionBeats` with `visual.illustration` (§2.4, `EPISODE_SCHEMA.md`) and register the changed CTA context.
