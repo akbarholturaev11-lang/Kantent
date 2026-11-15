@@ -8,6 +8,11 @@ on:
       - .github/workflows/motion-kit-pilot-ci.yml
       - hsk-tu-vous/scripts/video-component-selector*
       - hsk-tu-vous/scripts/motion-kit-cue-plan*
+      - hsk-tu-vous/scripts/codex-motionkit-*
+      - hsk-tu-vous/content/WORKFLOW.md
+      - hsk-tu-vous/content/EDITING_SPEC.md
+      - hsk-tu-vous/AGENTS.md
+      - hsk-tu-vous/package.json
       - hsk-tu-vous/scripts/motion-kit-optin-fixture.mjs
       - hsk-tu-vous/scripts/render-platform-videos.mjs
       - hsk-tu-vous/scripts/render-episode.mjs
@@ -46,12 +51,18 @@ jobs:
       - name: TypeScript and ESLint
         run: npm run lint
       - name: Deterministic selector tests
-        run: node --test scripts/video-component-selector.test.mjs scripts/preview-video-component-plan.test.mjs scripts/motion-kit-cue-plan.test.mjs
+        run: node --test scripts/video-component-selector.test.mjs scripts/preview-video-component-plan.test.mjs scripts/motion-kit-cue-plan.test.mjs scripts/codex-motionkit-test.test.mjs
       - name: Advisory plan smoke on current real source (no production mutation)
         run: |
           mkdir -p .motion-kit-pilot-output
           node scripts/preview-video-component-plan.mjs shop-shirt-size-20261117 > .motion-kit-pilot-output/advertisement-plan.json
           node scripts/preview-video-component-plan.mjs ji-vs-duoshao-books-price-20261118 > .motion-kit-pilot-output/lesson-plan.json
+      - name: Automatically surface Codex TEST brief, verify it cannot activate AI API
+        run: |
+          node scripts/codex-motionkit-test.mjs ji-vs-duoshao-books-price-20261118 > .motion-kit-pilot-output/codex-test-status.json
+          node --input-type=module -e "import fs from 'node:fs'; const p=JSON.parse(fs.readFileSync('.motion-kit-pilot-output/codex-test-status.json'));if(p.mode!=='TEST_ONLY'||p.selectionOwner!=='Codex'||p.aiApiConnected!==false||p.productionEffectsEnabled!==false)throw Error('Not a safe Codex-only test');"
+          test -s review/motion-kit-tests/ji-vs-duoshao-books-price-20261118/brief.json
+          cp review/motion-kit-tests/ji-vs-duoshao-books-price-20261118/brief.json .motion-kit-pilot-output/codex-test-brief.json
       - name: Project consistency
         run: npm run check:consistency
       - name: Build three exact synthetic frames and silent demo MP4
