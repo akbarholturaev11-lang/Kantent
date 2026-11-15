@@ -3,6 +3,7 @@ name: MotionKit isolated demo CI
 on:
   push:
     branches:
+      - main
       - planning/full-ui-motion-library-20261115
     paths:
       - .github/workflows/motion-kit-pilot-ci.yml
@@ -23,13 +24,21 @@ on:
       - hsk-tu-vous/content/skill-catalog.json
       - hsk-tu-vous/src/video-components/**
       - hsk-tu-vous/src/motion-kit-preview/**
+  pull_request:
+    paths:
+      - hsk-tu-vous/scripts/codex-motionkit-*
+      - hsk-tu-vous/scripts/motion-kit-cue-plan*
+      - hsk-tu-vous/src/video-components/**
+      - hsk-tu-vous/src/EpisodeComposition.tsx
+      - hsk-tu-vous/src/IllustratedLessonScene.tsx
+      - .github/workflows/motion-kit-pilot-ci.yml
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: motion-kit-planning-20261115
+  group: motion-kit-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -59,10 +68,13 @@ jobs:
           node scripts/preview-video-component-plan.mjs ji-vs-duoshao-books-price-20261118 > .motion-kit-pilot-output/lesson-plan.json
       - name: Automatically surface Codex TEST brief, verify it cannot activate AI API
         run: |
-          node scripts/codex-motionkit-test.mjs ji-vs-duoshao-books-price-20261118 > .motion-kit-pilot-output/codex-test-status.json
-          node --input-type=module -e "import fs from 'node:fs'; const p=JSON.parse(fs.readFileSync('.motion-kit-pilot-output/codex-test-status.json'));if(p.mode!=='TEST_ONLY'||p.selectionOwner!=='Codex'||p.aiApiConnected!==false||p.productionEffectsEnabled!==false)throw Error('Not a safe Codex-only test');"
-          test -s review/motion-kit-tests/ji-vs-duoshao-books-price-20261118/brief.json
-          cp review/motion-kit-tests/ji-vs-duoshao-books-price-20261118/brief.json .motion-kit-pilot-output/codex-test-brief.json
+          node scripts/codex-motionkit-test.mjs ji-vs-duoshao-books-price-20261118 --language=ru > .motion-kit-pilot-output/codex-test-status-ru.json
+          node scripts/codex-motionkit-test.mjs ji-vs-duoshao-books-price-20261118 --language=tg > .motion-kit-pilot-output/codex-test-status-tg.json
+          node --input-type=module -e "import fs from 'node:fs';for(const lang of ['ru','tg']){const p=JSON.parse(fs.readFileSync('.motion-kit-pilot-output/codex-test-status-'+lang+'.json'));if(p.mode!=='TEST_ONLY'||p.language!==lang||p.selectionOwner!=='Codex'||p.aiApiConnected!==false||p.productionEffectsEnabled!==false)throw Error('Not a safe language-scoped Codex TEST: '+lang)}"
+          test -s review/motion-kit-tests/ji-vs-duoshao-books-price-20261118/ru/brief.json
+          test -s review/motion-kit-tests/ji-vs-duoshao-books-price-20261118/tg/brief.json
+          cp review/motion-kit-tests/ji-vs-duoshao-books-price-20261118/ru/brief.json .motion-kit-pilot-output/codex-test-brief-ru.json
+          cp review/motion-kit-tests/ji-vs-duoshao-books-price-20261118/tg/brief.json .motion-kit-pilot-output/codex-test-brief-tg.json
       - name: Project consistency
         run: npm run check:consistency
       - name: Build three exact synthetic frames and silent demo MP4
