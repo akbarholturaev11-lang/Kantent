@@ -1,6 +1,6 @@
 # Full UI & Motion Library — Kantent selective per-video adoption
 
-Status: **PLANNING ONLY** (owner direction 2026-11-15). No library has been installed by this plan, no production renderer or publishing settings have changed. Target: active `hsk-tu-vous/` in current `main`; never use legacy `videos/`.
+Status: **EXPERIMENTAL TEST PILOT IMPLEMENTED** (owner direction 2026-11-15). Verified free catalogs have been imported and original Remotion adapters plus Codex-authored, locale-scoped TEST selection are implemented. Normal rendering and publishing behavior remain unchanged; no real voice A/B owner approval exists. Target: active `hsk-tu-vous/`; never use legacy `videos/`.
 
 ## Owner decision
 
@@ -34,7 +34,7 @@ No subscription purchases, credentials, license circumvention, scraping paywalle
 - A component must fit the voice/cue, be legible at 270×480, keep motion smooth and avoid flashes, strobe, glitch, high-frequency decorative motion and conflicting focus.
 - Every adaptation should retain an easy disable/rollback switch, while leaving previously approved/published assets and hashes immutable.
 
-## Implementation sequence (not yet executed)
+## Implementation sequence and progress (2026-11-15)
 
 1. **Licensing and inventory:** verify current upstream sources and licenses; enumerate every legitimately available component, code/recipe availability, upstream version, dependencies, browser-only assumptions and video use case. Create `component-catalog.json` with provenance, availability (`free-source`, `licensed-pro`, `demo-reference-only`, `blocked`), frame compatibility, selection tags and `reviewed` state. Full source acquisition for all allowed free components into a **separate catalog**; do not move them into the active renderer by default.
 2. **Baseline/compatibility audit:** run current main test/consistency/TS lint and record baseline. Investigate actual Remotion/React/Tailwind compatibility, package changes, browser APIs and licensing before any edits to `src/`.
@@ -47,7 +47,7 @@ No subscription purchases, credentials, license circumvention, scraping paywalle
 
 - A full catalog of all legitimately obtainable/free sources, with license/provenance metadata, and clear **not obtainable without license** status for restricted items.
 - Catalog code/reference storage is isolated from production modules; no accidental dependency on Next.js API runtimes, secrets, browser-only interactive state, network calls or Pro code in this public repository.
-- A deterministic, documented, scene-aware component selector makes **per-video combinations genuinely varied** and relevant to narration rather than blindly randomizing effects.
+- **Codex is the creative AI selector** on each registered localized video: a deterministic algorithm only proposes compatible candidates; Codex writes justified, source-hash-bound `TEST_ONLY` decisions per RU/TJ scene. No new AI API is connected. Video variation and visual correctness require actual real-video inspection, not just deterministic structural tests.
 - Successful baseline and regression tests, independent real MP4 visual QA, no breakage to current content language, timing, asset identities, publication gate or approved/published videos.
 - No claims that all components have been ported to Remotion; **download/catalog all allowed**, **adapt only when selected**.
 
@@ -58,4 +58,4 @@ No subscription purchases, credentials, license circumvention, scraping paywalle
 - `https://bencho.dev/` shows interactive examples but source reuse must be verified before copying.
 - `https://www.beautifului.dev/` is the screenshot source; verify actual code license instead of treating it as the unrelated `beautiful-ui.dev` Notchset kit.
 
-This document is implementation guidance, not a second canonical source of runtime settings. Any change to active rules/config must follow `hsk-tu-vous/AGENTS.md` rule-migration process, reconcile dependent copies and pass `npm run check:consistency`.
+**Completed test scope:** pinned BoardUI free catalog; Transitions.dev free agent skills; Beautiful UI public reference; Bencho public index only; seven frame-driven adapters; scene-aware advisory candidate generation; independent RU/TJ Codex TEST briefs; exact imported voice-cue opt-in illustrated-art binder; CI synthetic baseline/candidate frames and MP4. **Still open:** real paid/approved voice A/B, semantic 270×480 review, approved production/default rollout, and opt-in promotional UI bindings. No Pro code imported.\n\nThis document is implementation guidance, not a second canonical source of runtime settings. Any change to active rules/config must follow `hsk-tu-vous/AGENTS.md` rule-migration process, reconcile dependent copies and pass `npm run check:consistency`.
