@@ -1,0 +1,815 @@
+{
+  "schemaVersion": 1,
+  "description": "Pinned publicly redistributed Kenney CC0 Godot mirrors, NOT publisher ZIPs; no claim of 50/50 exactness.",
+  "sources": {
+    "ui-audio": {
+      "sourceType": "pinned third-party CC0 Godot mirror (not original publisher ZIP)",
+      "repository": "Calinou/kenney-ui-audio",
+      "commitSha": "8c3d81b9159d058c444f89d12d518276b0b09345",
+      "rootTreeSha": "acd1ca4f50fee38dd143a79a15090e867a40a77e",
+      "downloadUrl": "https://codeload.github.com/Calinou/kenney-ui-audio/zip/8c3d81b9159d058c444f89d12d518276b0b09345",
+      "license": "CC0-1.0",
+      "publisherPage": "https://kenney.nl/assets/ui-audio",
+      "publisherListedAudio": 50,
+      "pinnedMirrorAudio": 51,
+      "licenseFiles": [
+        "LICENSE.txt",
+        "addons/kenney_ui_audio/LICENSE.txt"
+      ],
+      "files": [
+        {
+          "path": "addons/kenney_ui_audio/click1.wav",
+          "gitBlobSha": "2454780dc0d18f3a4dbf537a43cb6144ec93e624",
+          "size": 18254
+        },
+        {
+          "path": "addons/kenney_ui_audio/click2.wav",
+          "gitBlobSha": "c20fd33c6eb7adfbe378f4629fd44cdbe34f2feb",
+          "size": 10062
+        },
+        {
+          "path": "addons/kenney_ui_audio/click3.wav",
+          "gitBlobSha": "73dc62ec54a50dc88bbc22d3061db47b3dd8f69d",
+          "size": 15694
+        },
+        {
+          "path": "addons/kenney_ui_audio/click4.wav",
+          "gitBlobSha": "0903a32680672d55d21f23b0d56a2a76d72d9136",
+          "size": 6734
+        },
+        {
+          "path": "addons/kenney_ui_audio/click5.wav",
+          "gitBlobSha": "6e907ee72e0590c6d2966d77dbeceed03aef46b0",
+          "size": 6222
+        },
+        {
+          "path": "addons/kenney_ui_audio/LICENSE.txt",
+          "gitBlobSha": "4ff46a65b88ae5bb50da827a146365819c4f7a23",
+          "size": 479
+        },
+        {
+          "path": "addons/kenney_ui_audio/mouseclick1.wav",
+          "gitBlobSha": "dcb3cf43f385861356082484246cb113d6765568",
+          "size": 13646
+        },
+        {
+          "path": "addons/kenney_ui_audio/mouserelease1.wav",
+          "gitBlobSha": "d16c2b0e1171004305650f7311840cceab709b40",
+          "size": 15182
+        },
+        {
+          "path": "addons/kenney_ui_audio/rollover1.wav",
+          "gitBlobSha": "e3ff6eae37a9db7370140725acab9df9dc645860",
+          "size": 41806
+        },
+        {
+          "path": "addons/kenney_ui_audio/rollover2.wav",
+          "gitBlobSha": "6a6573b4f7c644ff76e0f70915b83d2dea79c5d9",
+          "size": 11086
+        },
+        {
+          "path": "addons/kenney_ui_audio/rollover3.wav",
+          "gitBlobSha": "f4c15816f984b84165d03f70c4e0816f40be9719",
+          "size": 15182
+        },
+        {
+          "path": "addons/kenney_ui_audio/rollover4.wav",
+          "gitBlobSha": "11dfeda91cee5857e3e183e52cbc8e1defebc486",
+          "size": 21838
+        },
+        {
+          "path": "addons/kenney_ui_audio/rollover5.wav",
+          "gitBlobSha": "a4d9616a04b7e4b07eb47d2582880d85737d83ae",
+          "size": 22862
+        },
+        {
+          "path": "addons/kenney_ui_audio/rollover6.wav",
+          "gitBlobSha": "929cd043bbf027eb99af246c1683ed734047fdd4",
+          "size": 31054
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch1.wav",
+          "gitBlobSha": "26f0665be65581354bb22747ab1674838154f027",
+          "size": 57166
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch10.wav",
+          "gitBlobSha": "ee435d2a8a4f547007e8e593a3105171781a9f99",
+          "size": 68430
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch11.wav",
+          "gitBlobSha": "65031843ae3e60da9f292f0d3ecacde506a053af",
+          "size": 55118
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch12.wav",
+          "gitBlobSha": "6216f8c270f4ae0a8c0205d2ebb2b006e5a83132",
+          "size": 12110
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch13.wav",
+          "gitBlobSha": "54d699280cb2d85ec2b1d0108c43fe7bd91ff308",
+          "size": 8014
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch14.wav",
+          "gitBlobSha": "91d6f7f24555545753b89222ace1c3fee316a609",
+          "size": 6222
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch15.wav",
+          "gitBlobSha": "ef1e948c9f54b781c70372de4180eab26d360e3c",
+          "size": 46926
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch16.wav",
+          "gitBlobSha": "3412ca2b02391be3de51e5291078dc98f941a260",
+          "size": 66382
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch17.wav",
+          "gitBlobSha": "1d0643e07a9052ebd558d770c54d4b1a980e4191",
+          "size": 62286
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch18.wav",
+          "gitBlobSha": "d6a4c84150ee1abdaf965f60ddac29a1adf9ed82",
+          "size": 77134
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch19.wav",
+          "gitBlobSha": "2b3cec233494a464634158ce0e3bd85f8d70b6fa",
+          "size": 69454
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch2.wav",
+          "gitBlobSha": "3e277c87a9f5d8bb32190ea7d371364a5334ef8a",
+          "size": 56142
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch20.wav",
+          "gitBlobSha": "08e8527535e635bc38c05d45409f633ea7142e3e",
+          "size": 64334
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch21.wav",
+          "gitBlobSha": "c9d769a75ccd7de905cc891b7e4aeb3e0ae5cdb9",
+          "size": 74062
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch22.wav",
+          "gitBlobSha": "0a852e6344989642bc36d5b3558a23e5b6ab69e4",
+          "size": 65358
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch23.wav",
+          "gitBlobSha": "b854bf4251f86824d0deed6a8d762d8a99b85881",
+          "size": 70478
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch24.wav",
+          "gitBlobSha": "6badffd7c71c73d398a0736d451623e53a7ad282",
+          "size": 49998
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch25.wav",
+          "gitBlobSha": "289493b7173609a9b0f27e50b81b7a21bbdc7995",
+          "size": 67918
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch26.wav",
+          "gitBlobSha": "717539f8e9e46f871f2a328c7c0f0836e5765e99",
+          "size": 41806
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch27.wav",
+          "gitBlobSha": "c07ecfb2257853bdb6f924e6ee3e0c7c2e986909",
+          "size": 52046
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch28.wav",
+          "gitBlobSha": "f9cb6634e2482fd9a77180a960e85e2357a2cd49",
+          "size": 38222
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch29.wav",
+          "gitBlobSha": "15a09d92639a04f987285741071638822a46d030",
+          "size": 55630
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch3.wav",
+          "gitBlobSha": "38849408c349a6fde85c9f4609d5d8798feb5902",
+          "size": 64846
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch30.wav",
+          "gitBlobSha": "c6c889d1355f02fb116246b9088589603566e9f9",
+          "size": 65870
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch31.wav",
+          "gitBlobSha": "1c2ed56dc1ae3c17ea9fb758df8be6bd7d0b57e6",
+          "size": 78670
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch32.wav",
+          "gitBlobSha": "9893496ff944c70d485eee9afc13871b79cceed4",
+          "size": 79182
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch33.wav",
+          "gitBlobSha": "ec4ceb5ca7b8f47a98f89c8a3f46440f080f1913",
+          "size": 90446
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch34.wav",
+          "gitBlobSha": "11b0cd4487299cdb595baf353d78f37b4e96aa50",
+          "size": 85326
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch35.wav",
+          "gitBlobSha": "f9277425da3bfbf489f2445b6fd4639f6cd8a344",
+          "size": 60750
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch36.wav",
+          "gitBlobSha": "d234dc7c5efe11ac3cc0c7ec8ba25f7852ec6081",
+          "size": 58190
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch37.wav",
+          "gitBlobSha": "fdc2e3b15155b2350449693d449f5e19d1d59532",
+          "size": 55630
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch38.wav",
+          "gitBlobSha": "a6fa5561407f18616bc78c9d449f4b8286b25275",
+          "size": 75086
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch4.wav",
+          "gitBlobSha": "6d3dd952abdbd63a8665e12a803732328e76ffce",
+          "size": 76110
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch5.wav",
+          "gitBlobSha": "5c10d5a25e635d3d71ff0757fd0fc70320d091a3",
+          "size": 55630
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch6.wav",
+          "gitBlobSha": "15fe622688dd6c97609faea655c2164fa8400017",
+          "size": 64334
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch7.wav",
+          "gitBlobSha": "8de4d1a088667852d59aad5504b4f86b89c6453a",
+          "size": 37710
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch8.wav",
+          "gitBlobSha": "edda00d3b282735291bccc95245c2ffc78496abe",
+          "size": 60238
+        },
+        {
+          "path": "addons/kenney_ui_audio/switch9.wav",
+          "gitBlobSha": "8ac28d3a6fbaed0402d538a35bb121df1cd0d4a3",
+          "size": 46414
+        },
+        {
+          "path": "LICENSE.txt",
+          "gitBlobSha": "4ff46a65b88ae5bb50da827a146365819c4f7a23",
+          "size": 479
+        }
+      ]
+    },
+    "interface-sounds": {
+      "sourceType": "pinned third-party CC0 Godot mirror (not original publisher ZIP)",
+      "repository": "Calinou/kenney-interface-sounds",
+      "commitSha": "4596a49eaf5a533948d49a47467f606bcdea70ff",
+      "rootTreeSha": "fd0196130ea4f26c774a3363a14ae7f7916cd019",
+      "downloadUrl": "https://codeload.github.com/Calinou/kenney-interface-sounds/zip/4596a49eaf5a533948d49a47467f606bcdea70ff",
+      "license": "CC0-1.0",
+      "publisherPage": "https://kenney.nl/assets/interface-sounds",
+      "publisherListedAudio": 100,
+      "pinnedMirrorAudio": 100,
+      "licenseFiles": [
+        "LICENSE.txt",
+        "addons/kenney_interface_sounds/LICENSE.txt"
+      ],
+      "files": [
+        {
+          "path": "addons/kenney_interface_sounds/back_001.wav",
+          "gitBlobSha": "d1e3eea4b3636e741dc50a25ea6c26a959b8d43b",
+          "size": 6094
+        },
+        {
+          "path": "addons/kenney_interface_sounds/back_002.wav",
+          "gitBlobSha": "f0ee13e1a4e41665d267aeb789fb8435d6aa9229",
+          "size": 8142
+        },
+        {
+          "path": "addons/kenney_interface_sounds/back_003.wav",
+          "gitBlobSha": "8fe8596f691b976bc83035b673bc210996ffb189",
+          "size": 8398
+        },
+        {
+          "path": "addons/kenney_interface_sounds/back_004.wav",
+          "gitBlobSha": "d5b6c67115686b523608b79f36882ed6136aa3dc",
+          "size": 8398
+        },
+        {
+          "path": "addons/kenney_interface_sounds/bong_001.wav",
+          "gitBlobSha": "523b70e58ce146b7c7dbf08596c1d80d2ec95790",
+          "size": 11726
+        },
+        {
+          "path": "addons/kenney_interface_sounds/click_001.wav",
+          "gitBlobSha": "f7378a24b790c2ee6340db66c849e617bd315966",
+          "size": 10190
+        },
+        {
+          "path": "addons/kenney_interface_sounds/click_002.wav",
+          "gitBlobSha": "ff6b64fcfe07f29ac9d20edbedb4dbe85a196ce0",
+          "size": 1102
+        },
+        {
+          "path": "addons/kenney_interface_sounds/click_003.wav",
+          "gitBlobSha": "9276c9b268ae96f6473ce7035432bb3aaa78eb37",
+          "size": 1742
+        },
+        {
+          "path": "addons/kenney_interface_sounds/click_004.wav",
+          "gitBlobSha": "0c4a267e2e90981450f5003bde40a3a3cdf8003a",
+          "size": 1998
+        },
+        {
+          "path": "addons/kenney_interface_sounds/click_005.wav",
+          "gitBlobSha": "ac0a5d93373d6fa7be9c714094edd5f6699e8369",
+          "size": 1742
+        },
+        {
+          "path": "addons/kenney_interface_sounds/close_001.wav",
+          "gitBlobSha": "4d037d2148035cfa09d6639fed0bb98e1d282c51",
+          "size": 13134
+        },
+        {
+          "path": "addons/kenney_interface_sounds/close_002.wav",
+          "gitBlobSha": "5483d5851b165a6747540dfa60233587c981ba4e",
+          "size": 28878
+        },
+        {
+          "path": "addons/kenney_interface_sounds/close_003.wav",
+          "gitBlobSha": "400e7ed6c79858708e6aa47c3722fb09a82c5726",
+          "size": 28878
+        },
+        {
+          "path": "addons/kenney_interface_sounds/close_004.wav",
+          "gitBlobSha": "abd6ec71248f2658ce800dcbc444270735a8ba0f",
+          "size": 29646
+        },
+        {
+          "path": "addons/kenney_interface_sounds/confirmation_001.wav",
+          "gitBlobSha": "57b0731148815280947db27a3015c483c3fa24e7",
+          "size": 26062
+        },
+        {
+          "path": "addons/kenney_interface_sounds/confirmation_002.wav",
+          "gitBlobSha": "2ef68f15c22d9966081f923c53926f1b464b7fc2",
+          "size": 49614
+        },
+        {
+          "path": "addons/kenney_interface_sounds/confirmation_003.wav",
+          "gitBlobSha": "d039af65b66614afbfc0aa2703805aebf16d1fb2",
+          "size": 28622
+        },
+        {
+          "path": "addons/kenney_interface_sounds/confirmation_004.wav",
+          "gitBlobSha": "4aa7f6599f0b3291308dc23b39eb555a85dee478",
+          "size": 44238
+        },
+        {
+          "path": "addons/kenney_interface_sounds/drop_001.wav",
+          "gitBlobSha": "45e7312f006749903a668cca34d86b58f00fe2a0",
+          "size": 23374
+        },
+        {
+          "path": "addons/kenney_interface_sounds/drop_002.wav",
+          "gitBlobSha": "97865ee854ed07bb8e7d55e75fc4a2f76329e3f4",
+          "size": 35662
+        },
+        {
+          "path": "addons/kenney_interface_sounds/drop_003.wav",
+          "gitBlobSha": "b7a42211c3f815080e20e3012b135131dfb7c8ea",
+          "size": 35150
+        },
+        {
+          "path": "addons/kenney_interface_sounds/drop_004.wav",
+          "gitBlobSha": "dd67f71f6c3d72a926022e9f4ff3e1b031c00282",
+          "size": 52046
+        },
+        {
+          "path": "addons/kenney_interface_sounds/error_001.wav",
+          "gitBlobSha": "edcf344ee212d13797f250eb5649ce55c655d825",
+          "size": 30542
+        },
+        {
+          "path": "addons/kenney_interface_sounds/error_002.wav",
+          "gitBlobSha": "3bcb6e90959f971d874ca1baaca3514bd2c9bbb3",
+          "size": 29262
+        },
+        {
+          "path": "addons/kenney_interface_sounds/error_003.wav",
+          "gitBlobSha": "d4d07558df9045a8bf703e8209b8e48c66d93a12",
+          "size": 98126
+        },
+        {
+          "path": "addons/kenney_interface_sounds/error_004.wav",
+          "gitBlobSha": "02d8549d049407c9dd8f3d2e034d68fde4881bb7",
+          "size": 18510
+        },
+        {
+          "path": "addons/kenney_interface_sounds/error_005.wav",
+          "gitBlobSha": "e7a024ed37c6766c37b1ee094e21818668dcd9bb",
+          "size": 45774
+        },
+        {
+          "path": "addons/kenney_interface_sounds/error_006.wav",
+          "gitBlobSha": "d66b33ac9130295ed69124f6e47fbf7f96ce1740",
+          "size": 46030
+        },
+        {
+          "path": "addons/kenney_interface_sounds/error_007.wav",
+          "gitBlobSha": "56cc7dcc9c3aceacf2b17df5ee2861eca56b0197",
+          "size": 18126
+        },
+        {
+          "path": "addons/kenney_interface_sounds/error_008.wav",
+          "gitBlobSha": "d8b6354f86484ff904a9184acdc35aa074c07409",
+          "size": 12366
+        },
+        {
+          "path": "addons/kenney_interface_sounds/glass_001.wav",
+          "gitBlobSha": "1babf78e6f0a5f117d9475b2068739e7fb62e0c8",
+          "size": 25806
+        },
+        {
+          "path": "addons/kenney_interface_sounds/glass_002.wav",
+          "gitBlobSha": "e0509e02585f8b44cd2cdb032df7173e0364c9ed",
+          "size": 11470
+        },
+        {
+          "path": "addons/kenney_interface_sounds/glass_003.wav",
+          "gitBlobSha": "4f5b8a17a1c10e7487bd30b02eb580a74986c3b8",
+          "size": 11214
+        },
+        {
+          "path": "addons/kenney_interface_sounds/glass_004.wav",
+          "gitBlobSha": "adc7d70aca2364d0077b3c174a3007bf693b30c7",
+          "size": 62926
+        },
+        {
+          "path": "addons/kenney_interface_sounds/glass_005.wav",
+          "gitBlobSha": "c7700ef64d5fb64bc6eba6c353209d42a382a21c",
+          "size": 11726
+        },
+        {
+          "path": "addons/kenney_interface_sounds/glass_006.wav",
+          "gitBlobSha": "dae02f6c94a4c5629abd9edc53383a74c850a54e",
+          "size": 11726
+        },
+        {
+          "path": "addons/kenney_interface_sounds/glitch_001.wav",
+          "gitBlobSha": "54e529da11a8fda74d6b70f03d1e0437f1a87519",
+          "size": 4430
+        },
+        {
+          "path": "addons/kenney_interface_sounds/glitch_002.wav",
+          "gitBlobSha": "00288dd73db4e535fd16554f9afc01bc8c4aba6b",
+          "size": 6478
+        },
+        {
+          "path": "addons/kenney_interface_sounds/glitch_003.wav",
+          "gitBlobSha": "6852d9e1520f7c6c10e35d39d26f01a0310459a7",
+          "size": 2126
+        },
+        {
+          "path": "addons/kenney_interface_sounds/glitch_004.wav",
+          "gitBlobSha": "f1513909f7912e4855e3882c933da09836c253f0",
+          "size": 4942
+        },
+        {
+          "path": "addons/kenney_interface_sounds/LICENSE.txt",
+          "gitBlobSha": "1fc5acf8243a8ac899403e7297f8c5efdc4258f2",
+          "size": 574
+        },
+        {
+          "path": "addons/kenney_interface_sounds/maximize_001.wav",
+          "gitBlobSha": "58f6d47566ca72fc37ddf5671f0db7603792f8fa",
+          "size": 23118
+        },
+        {
+          "path": "addons/kenney_interface_sounds/maximize_002.wav",
+          "gitBlobSha": "7d752eb1a1a3f76ae62251544fd1715881893f91",
+          "size": 22862
+        },
+        {
+          "path": "addons/kenney_interface_sounds/maximize_003.wav",
+          "gitBlobSha": "256cb393dd924b1cb143b816930503391267564b",
+          "size": 18766
+        },
+        {
+          "path": "addons/kenney_interface_sounds/maximize_004.wav",
+          "gitBlobSha": "efd90add02c5f0f181c5d71c869a362fa2133fb4",
+          "size": 37838
+        },
+        {
+          "path": "addons/kenney_interface_sounds/maximize_005.wav",
+          "gitBlobSha": "61b63c1b404734114bcf872cd1b4e1a2004dacb0",
+          "size": 46670
+        },
+        {
+          "path": "addons/kenney_interface_sounds/maximize_006.wav",
+          "gitBlobSha": "7e9050720ed0c24392b8f5ed2482d5be8f822140",
+          "size": 34254
+        },
+        {
+          "path": "addons/kenney_interface_sounds/maximize_007.wav",
+          "gitBlobSha": "2f1e2fd800118ae730a368368d28dcb9d58b03fb",
+          "size": 17102
+        },
+        {
+          "path": "addons/kenney_interface_sounds/maximize_008.wav",
+          "gitBlobSha": "2ab9ef6c84fd170dd5245ad28adaa865bbf401a2",
+          "size": 21710
+        },
+        {
+          "path": "addons/kenney_interface_sounds/maximize_009.wav",
+          "gitBlobSha": "56d7eab837a2d27f92bbae416764c1269d360bf3",
+          "size": 20174
+        },
+        {
+          "path": "addons/kenney_interface_sounds/minimize_001.wav",
+          "gitBlobSha": "5aaf47cc2fbdcd6dcddcf79af554d1cfc0d18a8b",
+          "size": 24014
+        },
+        {
+          "path": "addons/kenney_interface_sounds/minimize_002.wav",
+          "gitBlobSha": "b76f8fcf787ac42c9e1a775e010575f89b7adfd5",
+          "size": 22862
+        },
+        {
+          "path": "addons/kenney_interface_sounds/minimize_003.wav",
+          "gitBlobSha": "191e2f0e62c9edb26e5cd81704739c993303db6e",
+          "size": 19662
+        },
+        {
+          "path": "addons/kenney_interface_sounds/minimize_004.wav",
+          "gitBlobSha": "5d27a7fef58256c577797569101f8e744efde9ff",
+          "size": 38094
+        },
+        {
+          "path": "addons/kenney_interface_sounds/minimize_005.wav",
+          "gitBlobSha": "f5a8db4078c2a0390957d6f3cb6cd89252ea8f04",
+          "size": 48334
+        },
+        {
+          "path": "addons/kenney_interface_sounds/minimize_006.wav",
+          "gitBlobSha": "5c2b57a29d9c039b915a7e5b88e73e4d188e4f46",
+          "size": 33614
+        },
+        {
+          "path": "addons/kenney_interface_sounds/minimize_007.wav",
+          "gitBlobSha": "1cc3bb6cfc7c7daad2f9cf2032ccfbaa71a1b8e2",
+          "size": 16462
+        },
+        {
+          "path": "addons/kenney_interface_sounds/minimize_008.wav",
+          "gitBlobSha": "849dd3552fcf6e30ffa573b48b389a132a92e5da",
+          "size": 21710
+        },
+        {
+          "path": "addons/kenney_interface_sounds/minimize_009.wav",
+          "gitBlobSha": "9008832318e3a29ef226da4a2b694f0172ea88c7",
+          "size": 21454
+        },
+        {
+          "path": "addons/kenney_interface_sounds/open_001.wav",
+          "gitBlobSha": "e313fc392bbbef001a0cd852e2c7cc5a53a2fcfc",
+          "size": 13134
+        },
+        {
+          "path": "addons/kenney_interface_sounds/open_002.wav",
+          "gitBlobSha": "3078c3f6dfc6d4744ef6982a93b8134437ffe572",
+          "size": 27982
+        },
+        {
+          "path": "addons/kenney_interface_sounds/open_003.wav",
+          "gitBlobSha": "5195040c3313a9dabb165351aea0254341adf83d",
+          "size": 27982
+        },
+        {
+          "path": "addons/kenney_interface_sounds/open_004.wav",
+          "gitBlobSha": "2062d962035ba8843db5d7a3f8b93151bfd4bd1f",
+          "size": 28750
+        },
+        {
+          "path": "addons/kenney_interface_sounds/pluck_001.wav",
+          "gitBlobSha": "45a517f9d968137d1ae50a6eb50b7258a2ceb64b",
+          "size": 19790
+        },
+        {
+          "path": "addons/kenney_interface_sounds/pluck_002.wav",
+          "gitBlobSha": "88d319300afa92441bb161c6c5e9a435504401c6",
+          "size": 32078
+        },
+        {
+          "path": "addons/kenney_interface_sounds/question_001.wav",
+          "gitBlobSha": "ad98e32875658fdffcd1f05a0aa3f3526a302b96",
+          "size": 44238
+        },
+        {
+          "path": "addons/kenney_interface_sounds/question_002.wav",
+          "gitBlobSha": "7321c161441756f59606732baab1101a06a242ae",
+          "size": 29902
+        },
+        {
+          "path": "addons/kenney_interface_sounds/question_003.wav",
+          "gitBlobSha": "9e1fa74ea4fa0ce1d64c119863997673a1bcf486",
+          "size": 30158
+        },
+        {
+          "path": "addons/kenney_interface_sounds/question_004.wav",
+          "gitBlobSha": "6b248bb86005450a1877270571331a1dde31b1f8",
+          "size": 29902
+        },
+        {
+          "path": "addons/kenney_interface_sounds/scratch_001.wav",
+          "gitBlobSha": "0e3bd556a8c91ebfb43fb04ecf076edd443927df",
+          "size": 14286
+        },
+        {
+          "path": "addons/kenney_interface_sounds/scratch_002.wav",
+          "gitBlobSha": "6f06ad2146a5ef6ce1d559e0254797f3245c94c8",
+          "size": 14286
+        },
+        {
+          "path": "addons/kenney_interface_sounds/scratch_003.wav",
+          "gitBlobSha": "c0b13b0426eb7a659a2b16f09469cb16dfd3d8cd",
+          "size": 11086
+        },
+        {
+          "path": "addons/kenney_interface_sounds/scratch_004.wav",
+          "gitBlobSha": "acb75e732aec170bb12028573f74c13c26b9eb3d",
+          "size": 30670
+        },
+        {
+          "path": "addons/kenney_interface_sounds/scratch_005.wav",
+          "gitBlobSha": "1b3710cf4e046567f499fd0bec340f2a09f123ef",
+          "size": 30414
+        },
+        {
+          "path": "addons/kenney_interface_sounds/scroll_001.wav",
+          "gitBlobSha": "88217b2615f402b19b7d8eddccf39371ef9c1419",
+          "size": 90062
+        },
+        {
+          "path": "addons/kenney_interface_sounds/scroll_002.wav",
+          "gitBlobSha": "ca09412f6299f442f32e3caa8232746ff5bcfd5f",
+          "size": 89294
+        },
+        {
+          "path": "addons/kenney_interface_sounds/scroll_003.wav",
+          "gitBlobSha": "f393d3abda1d5017bdff57c3afe62c90a3f53262",
+          "size": 89294
+        },
+        {
+          "path": "addons/kenney_interface_sounds/scroll_004.wav",
+          "gitBlobSha": "bd3c35f76d1ff30fb58d77e2d1dcdca802d40510",
+          "size": 88398
+        },
+        {
+          "path": "addons/kenney_interface_sounds/scroll_005.wav",
+          "gitBlobSha": "dfcea9d131f9b7d4fe1599c206329f884803f831",
+          "size": 90318
+        },
+        {
+          "path": "addons/kenney_interface_sounds/select_001.wav",
+          "gitBlobSha": "9b87d500823213ccb556b286bef7164a44fcabe1",
+          "size": 11086
+        },
+        {
+          "path": "addons/kenney_interface_sounds/select_002.wav",
+          "gitBlobSha": "794f997911bd39a2529231c1f71c870efd8459a7",
+          "size": 11086
+        },
+        {
+          "path": "addons/kenney_interface_sounds/select_003.wav",
+          "gitBlobSha": "5bd21a8364b371cf20f7233dfcb08753685734c2",
+          "size": 33998
+        },
+        {
+          "path": "addons/kenney_interface_sounds/select_004.wav",
+          "gitBlobSha": "006d7303548d52e0fb8b59f287e030c4dee3ff18",
+          "size": 33998
+        },
+        {
+          "path": "addons/kenney_interface_sounds/select_005.wav",
+          "gitBlobSha": "7360f90d32344d35d9c8e0f3317c187ff52d070b",
+          "size": 33998
+        },
+        {
+          "path": "addons/kenney_interface_sounds/select_006.wav",
+          "gitBlobSha": "12592612de0890df80025de670be7345bac823eb",
+          "size": 171982
+        },
+        {
+          "path": "addons/kenney_interface_sounds/select_007.wav",
+          "gitBlobSha": "312b8d742a92c81b74bfa2557151298d0fd8edfd",
+          "size": 5326
+        },
+        {
+          "path": "addons/kenney_interface_sounds/select_008.wav",
+          "gitBlobSha": "bcb0773972bb4132523d08ae37d797a14cb2b6d9",
+          "size": 5326
+        },
+        {
+          "path": "addons/kenney_interface_sounds/switch_001.wav",
+          "gitBlobSha": "d88108d1c6ae984c58d9f808832446b2f79e1918",
+          "size": 109390
+        },
+        {
+          "path": "addons/kenney_interface_sounds/switch_002.wav",
+          "gitBlobSha": "6e7038db79f67b1dde4f9d3a003322a47e7a9d95",
+          "size": 109390
+        },
+        {
+          "path": "addons/kenney_interface_sounds/switch_003.wav",
+          "gitBlobSha": "0c36395921b5b0b2fd093ae8dc9227849128f98c",
+          "size": 88910
+        },
+        {
+          "path": "addons/kenney_interface_sounds/switch_004.wav",
+          "gitBlobSha": "651450b6815c77cba813d0b510a52e75ab8b7e14",
+          "size": 88910
+        },
+        {
+          "path": "addons/kenney_interface_sounds/switch_005.wav",
+          "gitBlobSha": "724fbaefcfd672edaade3a3ef5bfd5f249159bde",
+          "size": 109390
+        },
+        {
+          "path": "addons/kenney_interface_sounds/switch_006.wav",
+          "gitBlobSha": "2c5bbd16037586395d2e2c6734fc2c6657ac9b85",
+          "size": 109390
+        },
+        {
+          "path": "addons/kenney_interface_sounds/switch_007.wav",
+          "gitBlobSha": "00df0016b67ef1c6387aa8ec38e781a7ad264b59",
+          "size": 109390
+        },
+        {
+          "path": "addons/kenney_interface_sounds/tick_001.wav",
+          "gitBlobSha": "40aed86428bfc21e8b54df0f096c43c96004ca19",
+          "size": 4046
+        },
+        {
+          "path": "addons/kenney_interface_sounds/tick_002.wav",
+          "gitBlobSha": "4391d33248beb96f76f62a1e3680822d7be89dbe",
+          "size": 2126
+        },
+        {
+          "path": "addons/kenney_interface_sounds/tick_004.wav",
+          "gitBlobSha": "ba2037d8cbb564e98e77e5c9f1bf0dde578a186a",
+          "size": 4942
+        },
+        {
+          "path": "addons/kenney_interface_sounds/toggle_001.wav",
+          "gitBlobSha": "3fb67d9ab1242000856d986ce007acecb7174416",
+          "size": 14030
+        },
+        {
+          "path": "addons/kenney_interface_sounds/toggle_002.wav",
+          "gitBlobSha": "ff8109f06391972f86fa391403b429739d2f8386",
+          "size": 12494
+        },
+        {
+          "path": "addons/kenney_interface_sounds/toggle_003.wav",
+          "gitBlobSha": "03e748d3e20124a753c2791384ea7195429b6fba",
+          "size": 14286
+        },
+        {
+          "path": "addons/kenney_interface_sounds/toggle_004.wav",
+          "gitBlobSha": "239226df825a93812c951458c01136b8cc58fdd1",
+          "size": 6606
+        },
+        {
+          "path": "LICENSE.txt",
+          "gitBlobSha": "1fc5acf8243a8ac899403e7297f8c5efdc4258f2",
+          "size": 574
+        }
+      ]
+    }
+  }
+}
