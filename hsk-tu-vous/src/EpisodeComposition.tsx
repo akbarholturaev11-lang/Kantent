@@ -22,6 +22,8 @@ import { NarratedMotionScene } from "./NarratedMotionScene";
 import { NarratedActionScene, referenceTone } from "./NarratedActionScene";
 import { IllustratedLessonScene } from "./IllustratedLessonScene";
 import {assertMotionKitCuePlanMatches} from "../scripts/motion-kit-cue-plan.mjs";
+import {assertSoundKitRenderPlanMatches} from "../scripts/sound-kit-render-plan.mjs";
+import type {BoundSoundKitRenderPlan} from "../scripts/sound-kit-render-plan.mjs";
 import type {BoundMotionKitPlan,BoundArtMotionScene} from "../scripts/motion-kit-cue-plan.mjs";
 import {validateActionLesson} from "../scripts/action-design-plan.mjs";
 import type {MotionBeat, ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
@@ -83,6 +85,7 @@ type EpisodeProps = {
   episode: LessonEpisode;
   cueTimeline?: CueTimeline;
   motionKitPlan?: BoundMotionKitPlan;
+  soundKitRenderPlan?: BoundSoundKitRenderPlan;
   semanticTimeline?: SemanticTimeline;
   captionSections?: { startMs: number; endMs: number; styleId: string }[];
 };
@@ -1009,9 +1012,10 @@ const LessonSlide: React.FC<{
   motionBeats?: ResolvedMotionBeat[];
   promoCue?: ResolvedMotionBeat | null;
   motionKitScene?: BoundArtMotionScene;
+  useLegacySfx?: boolean;
   motionDesignEnabled?: boolean;
   motionDesignStyle?: string;
-}> = ({ episodeId, scene, index, sceneCount, durationFrames, timelineStartMs, captions, semanticScene, motionBeats = [], promoCue, motionKitScene, motionDesignEnabled = false, motionDesignStyle }) => {
+}> = ({ episodeId, scene, index, sceneCount, durationFrames, timelineStartMs, captions, semanticScene, motionBeats = [], promoCue, motionKitScene, useLegacySfx = true, motionDesignEnabled = false, motionDesignStyle }) => {
   // A semantic scene must be bound to a compiled, exact-cue timeline.
   if (scene.semanticShot && (!semanticScene || semanticScene.sceneId !== scene.id))
     throw new Error("Semantic scene missing a matching audio-cue timeline: " + scene.id);
@@ -1309,7 +1313,7 @@ const LessonSlide: React.FC<{
         isHook={scene.kind === "hook"}
       />}
 
-      {index > 0 && (
+      {useLegacySfx && index > 0 && (
         <Sequence durationInFrames={SOUND.sceneCueFrames}>
           <Audio
             src={staticFile("sfx/soft-cut.wav")}
@@ -1324,7 +1328,7 @@ const LessonSlide: React.FC<{
           />
         </Sequence>
       )}
-      {motionDesign && scene.kind === "hook" && beatCueMs[0] !== undefined && (
+      {useLegacySfx && motionDesign && scene.kind === "hook" && beatCueMs[0] !== undefined && (
         <Sequence
           from={Math.max(
             0,
@@ -1345,7 +1349,7 @@ const LessonSlide: React.FC<{
           />
         </Sequence>
       )}
-      {scene.kind !== "hook" && !scene.semanticShot &&
+      {useLegacySfx && scene.kind !== "hook" && !scene.semanticShot &&
         beats.slice(1, SOUND.maxBeatCuesPerScene + 1).map((_, beatOffset) => (
           <Sequence
             key={`${scene.id}-sfx-${beatOffset}`}
@@ -1369,9 +1373,13 @@ const LessonSlide: React.FC<{
   );
 };
 
-const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, motionKitPlan, captionSections: variantCaptionSections, semanticTimeline: legacySemanticTimeline }) => {
+const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, motionKitPlan, soundKitRenderPlan, captionSections: variantCaptionSections, semanticTimeline: legacySemanticTimeline }) => {
   const { durationInFrames } = useVideoConfig();
   if (cueTimeline) assertCueTimelineMatches(episode, cueTimeline, FPS);
+  if (soundKitRenderPlan) {
+    if (!cueTimeline) throw Error("SoundKit P4 cannot render without real imported word-cue timeline");
+    assertSoundKitRenderPlanMatches(episode, cueTimeline, soundKitRenderPlan);
+  }
   if (motionKitPlan) {
     if (!cueTimeline) throw new Error("MotionKit cannot run without imported voice cues");
     assertMotionKitCuePlanMatches(episode, cueTimeline, motionKitPlan);
@@ -1431,9 +1439,22 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, motionKitPl
             semanticScene={semanticTimeline?.scenes.find(item => item.sceneId === scene.id)}
             motionBeats={cueTimeline?.scenes.find((item) => item.sceneId === scene.id)?.motionBeats}
             motionKitScene={motionKitPlan?.scenes.find((item) => item.sceneId === scene.id)}
+            useLegacySfx={!soundKitRenderPlan}
             promoCue={cueTimeline?.scenes.find((item) => item.sceneId === scene.id)?.promoCue}
             motionDesignEnabled={episode.motionDesign === true}
             motionDesignStyle={episode.motionDesignStyle}
+          />
+        </Sequence>
+      ))}
+      {soundKitRenderPlan?.selected.map(effect => (
+        <Sequence key={"soundkit-p4-"+effect.sceneId+"-"+effect.eventId}
+          from={effect.startFrame} durationInFrames={effect.clipFrames}>
+          <Audio src={staticFile(effect.staticSrc)}
+            volume={audioFrame => {
+              const fade = Math.min(1, Math.max(0, audioFrame / 2),
+                Math.max(0, (effect.clipFrames - 1 - audioFrame) / 2));
+              return effect.volume * fade;
+            }}
           />
         </Sequence>
       ))}

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "status": "P2_TEST_ONLY",
+  "selectionOwner": "Codex existing video-production agent",
+  "productionEffectsEnabled": false,
+  "newModelApiConnected": false,
+  "audioMixNotImplemented": false,
+  "silenceChoiceId": "SILENCE",
+  "currentVolumeSource": "content/visual-system.json#sound",
+  "catalogueSource": "content/sound-library.json",
+  "allowedContentTypes": [
+    "lesson",
+    "advertisement",
+    "series-part"
+  ],
+  "protectFirstScene": true,
+  "forbidCtaScene": true,
+  "allowOnlySourceGroundedVisualEvents": true,
+  "auditionOnlyIds": {
+    "gentle-illustration-reveal": [
+      "kenney-interface-sounds/select_001.wav",
+      "kenney-interface-sounds/select_007.wav"
+    ],
+    "verified-product-screen-reveal": [
+      "kenney-ui-audio/rollover2.wav",
+      "kenney-ui-audio/rollover4.wav"
+    ],
+    "real-ui-press": [
+      "kenney-ui-audio/click2.wav"
+    ],
+    "verified-success-state": [
+      "kenney-interface-sounds/confirmation_001.wav"
+    ]
+  },
+  "guardrails": {
+    "gentle-illustration-reveal": "Only a real authored visible illustration/graphic state change, not an imaginary UI action; actual audio quality needs later listening QA.",
+    "verified-product-screen-reveal": "Only original authentic UI screenshot entrance; this is a visual reveal, NOT proof the app was clicked or completed an operation.",
+    "real-ui-press": "Requires explicit verified screen recording/capture metadata proving a visible physical tap; text or static image alone is not proof.",
+    "verified-success-state": "Requires explicit verified product state transition to a real success state; do not imply app payment, installation, achievement or answer if not proven."
+  },
+  "gainPresetForTest": "under-voice-subtle-proposal",
+  "explicitSilenceReasonRequired": true,
+  "requireSourceNarrationEvidence": true,
+  "requireExactVisualEvidence": true,
+  "rejectSourceOrCatalogueDrift": true,
+  "lessonEditorialLimits": "Follow content/EDITING_SPEC.md and numeric sound limits only in content/visual-system.json#sound; do not add opening hook cues or compete with Chinese pronunciation.",
+  "phase3Timing": "P3 implemented as explicit local TEST ONLY metadata binder (scripts/codex-soundkit-bind.mjs): validates current approved voice profile, actual imported audio byte SHA-256, exact episode cue-timeline.json, original scene visual events, word anchor, chosen sound SHA-256, and independent shared/TikTok voice/CTA. No P4 audio mixing or production render integration. Real Gemini voice-linked QA still required before P4.",
+  "phase4Rendering": "P4 isolated TEST-only Remotion mix implemented: explicitly run content:soundkit:render:test AFTER actual P2 Codex decision and P3 voice/word-cue binding, with current imported source audio and tested CC0 source SHA; output stored only under ignored review/sound-design-tests. Baseline production renderer never supplies soundKitRenderPlan. Existing soft-cut/tap are suppressed only in the P4 review candidate to avoid double sound, never in ordinary production. Real voice A/B, clipping, loudness and owner approval remain P5/P6.",
+  "publicity": "TEST ONLY / unapproved audio reference catalog / no authorization to publish",
+  "enableVerifiedInteractionSoundsInP2": false,
+  "interactionReviewGate": "P2 must not suggest actual click/success sounds even when future authors mark an interaction as verified; independent source-media hash/provenance review belongs to P3+.",
+  "phase3BindingEnabledForAutomaticProduction": false,
+  "phase3Output": "review/sound-design-tests/<episode-id>/<ru|tg>/cue-plan-<shared|tiktok>.json",
+  "productionAudioMixEnabled": false,
+  "phase4ExperimentalAudioMixImplemented": true,
+  "phase4RequiresExplicitOptIn": "HSK_AI_SOUND_DESIGN_TEST=1",
+  "phase4TestOnlyAudioStatus": "SYNTHETIC engineering Remotion A/B CI, real imported Gemini voice QA still open"
+}

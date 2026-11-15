@@ -1,0 +1,89 @@
+name: SoundKit P3 exact imported voice/visual cue binder CI (TEST ONLY)
+
+on:
+  push:
+    branches:
+      - main
+      - feat/sound-design-phase0-kenney-audit-20261115
+    paths:
+      - .github/workflows/soundkit-p3-ci.yml
+      - hsk-tu-vous/scripts/sound-kit-cue-plan.mjs
+      - hsk-tu-vous/scripts/sound-kit-cue-plan.test.mjs
+      - hsk-tu-vous/scripts/codex-soundkit-bind.mjs
+      - hsk-tu-vous/scripts/codex-soundkit-test.mjs
+      - hsk-tu-vous/scripts/codex-soundkit-selection.mjs
+      - hsk-tu-vous/content/sound-design.json
+      - hsk-tu-vous/package.json
+  pull_request:
+    paths:
+      - .github/workflows/soundkit-p3-ci.yml
+      - hsk-tu-vous/scripts/sound-kit-cue-plan.mjs
+      - hsk-tu-vous/scripts/sound-kit-cue-plan.test.mjs
+      - hsk-tu-vous/scripts/codex-soundkit-bind.mjs
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: soundkit-p3-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  soundkit-p3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Parse binder and tests
+        run: |
+          set -euo pipefail
+          node --check scripts/sound-kit-cue-plan.mjs
+          node --check scripts/sound-kit-cue-plan.test.mjs
+          node --check scripts/codex-soundkit-bind.mjs
+      - name: Exact Gemini word-bound data-only synthetic fixture tests (NO Gemini credits)
+        run: |
+          set -euo pipefail
+          node --test scripts/sound-kit-cue-plan.test.mjs
+          node --test scripts/codex-soundkit-test.test.mjs
+      - name: Verify P3 cannot change production renderer or sound library eligibility
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const library=JSON.parse(fs.readFileSync('content/sound-library.json'));
+          const policy=JSON.parse(fs.readFileSync('content/sound-design.json'));
+          const pkg=JSON.parse(fs.readFileSync('package.json'));
+          if(library.automaticallyUsedInProduction!==false ||
+            library.assets.some(a=>a.eligibleForAutomaticUse!==false)||
+            policy.productionEffectsEnabled!==false||
+            policy.productionAudioMixEnabled!==false||
+            policy.newModelApiConnected!==false)
+            throw Error('P3 inadvertently enabled production SoundKit');
+          if(pkg.scripts['content:soundkit:bind']!=='node scripts/codex-soundkit-bind.mjs')
+            throw Error('P3 should remain an explicit opt-in CLI only');
+          for(const p of ['src/EpisodeComposition.tsx',
+             'scripts/render-episode.mjs','scripts/render-platform-videos.mjs',
+             'scripts/render-tiktok-review.mjs']){
+            if(/sound-kit-cue-plan|codex-soundkit-bind|sound-design\.json|sound-library\.json/
+                 .test(fs.readFileSync(p,'utf8')))
+               throw Error('P3 experimental binder leaked into renderer: '+p);
+          }
+          console.log('P3 is metadata-only, no renderer/voice/audio mix changes');
+          JS
+      - name: Negative production CLI smoke — missing Codex decision or voice MUST reject
+        run: |
+          set -euo pipefail
+          if node scripts/codex-soundkit-bind.mjs ji-vs-duoshao-books-price-20261118 --language=ru >/tmp/p3-stdout 2>/tmp/p3-stderr; then
+            echo 'Unexpected SoundKit P3 success without real voice/decision'; exit 1
+          fi
+          if ! grep -Eq 'SoundKit P3 BLOCKED|decision missing or malformed' /tmp/p3-stderr; then
+            cat /tmp/p3-stderr; exit 1
+          fi
+          test ! -s /tmp/p3-stdout

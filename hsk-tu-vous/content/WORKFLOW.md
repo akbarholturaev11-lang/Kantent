@@ -30,12 +30,97 @@ ready. TEST briefs/decisions and successful synthetic CI do not confer
 real-voice QA, owner approval or publication rights. Never modify historical
 approved media, voice, CTA or another language's preview.
 
+## Codex SoundKit P2 — TEST ONLY (automatic localized source briefs; NO audio mix)
+
+**Read this before each new video preparation.** This SoundKit pilot is distinct
+from MotionKit. `content/sound-design.json` is the canonical SoundKit policy,
+`content/sound-library.json` lists the 151 pinned CC0 Kenney mirror WAV
+references; existing mix values stay solely in `content/visual-system.json#sound`.
+The existing Codex video agent is the creative selector; **no additional AI
+model, API, credentials, sound generation service or purchase is connected**.
+
+The standard `prepare_today_video`, `prepare_video_for_date`, and
+`content:make` flows automatically offer a separate `soundKitTest` result
+per language and create a source-bound test brief at
+`review/sound-design-tests/<episode-id>/<ru|tg>/brief.json`. Codex must read
+the *actual localized* narration and authored visual events, then write an
+independently justified `codex-decision.json` **for every eligible scene**.
+A valid decision chooses a catalog sound reference or **SILENCE**, with genuine
+narration and visual evidence for a sound and a reason even for silence.
+Use `node scripts/codex-soundkit-test.mjs <id> --language=ru --validate`
+or `--language=tg`, after writing the decision file. Do not fabricate
+a test run when the actual source or tool is unavailable.
+
+Never imply a click, successful install, paid subscription or answer from a
+static screenshot. First hook, CTA, and unsupported visuals require **SILENCE**.
+Only a small context-grounded subset of the verified CC0 sound catalog is
+offered for experimental audition; all raw assets are currently marked
+`eligibleForAutomaticUse: false`. The code **does not make a Codex decision**,
+derive exact audio timestamps, alter imported Gemini audio, mix effects into
+Remotion, or connect any remote model API. It is safe to create an advisory
+brief during normal production, but **P2 audio changes no production output**.
+**P3 — EXACT CUE BINDING, STILL TEST ONLY (now available):** AFTER an
+approved voice has already been generated/imported and `cue-timeline.json`
+exists for the exact RU or TJ review and Codex's P2 `codex-decision.json`
+has passed validation, run:
+`npm run content:soundkit:bind -- <id> --language=ru --platform=shared`;
+repeat `--language=tg` with its OWN voice and timeline and, if there is a
+genuinely different existing TikTok voice take, use `--platform=tiktok`
+for each language separately. This **explicit, optional CLI** reads the
+existing `review` package, checks imported source voice bytes SHA-256
+against `episode.audioSha256`, confirms the current approved language voice
+profile, uses exactly the saved canonical 30 fps cue timeline and validates
+source visual events and audited chosen SFX bytes. It either saves
+`review/sound-design-tests/<id>/<ru|tg>/cue-plan-<shared|tiktok>.json`
+or FAILS CLOSED with an exact error. Missing Codex decision, voice, timeline,
+source SFX file, word cue, or stale/altered audio MUST block P3; never
+regenerate the voice or guess a timestamp to satisfy the test.
+
+P3 records **frame-accurate SOUND INTENT**, not sound in the final MP4. The
+original imported narration file is never changed. A synthetic P3 unit test is
+not proof that an actual Gemini take was checked. P3 itself does not change
+any video audio.
+
+**P4 — ISOLATED AUDIO MIX PREVIEW, TEST ONLY (available, NOT production):**
+Only AFTER P2 Codex choices and P3 have passed for the exact already-imported
+voice and canonical cue timeline, explicitly invoke
+`HSK_AI_SOUND_DESIGN_TEST=1 npm run content:soundkit:render:test -- <id> --language=ru --platform=instagram`.
+Repeat for `tg` and only the platforms with current review packages:
+`instagram`, `youtube`, `facebook`, `tiktok`. TikTok requires its separate
+already-imported voice and own P3 `cue-plan-tiktok.json`. DO NOT create or
+replace missing audio to satisfy this experiment. Default without the
+environment flag MUST REFUSE to run. No standard `content:render`,
+`content:make`, MCP or scheduled publication routine sets this flag or passes
+the experimental `soundKitRenderPlan`.
+
+P4 uses the same Remotion composition with one explicit optional SOUND track,
+after checking original voice SHA-256, actual source locale, current approved
+voice profile, bound real word frames, validated Codex decision and every
+selected CC0 WAV SHA-256. Temporary audio files stage under ignored
+`public/soundkit-p4-preview-*/` and are removed even on render failure.
+P4 outputs only to
+`review/sound-design-tests/<id>/<ru|tg>/p4-preview/<platform>/`.
+The candidate **replaces, never doubles** the old soft-cut/soft-tap cues;
+default Remotion output without P4 props keeps the original audio unchanged.
+Existing music remains optional according to the canonical tokens in
+`content/visual-system.json#sound`; P4's low test-only gains are calculated
+from those current tokens. Neither Gemini source voice nor any original
+approved MP4 is overwritten. A new preview is NEVER publication permission.
+
+P4 synthetic AAC A/B CI checks that an actual sound difference is rendered
+without new AI API or real Gemini credits; it is NOT P5 loudness/clipping/phone
+speaker QA, NOT P6 human real RU/TG A/B acceptance and NOT approval to
+turn SoundKit on by default. P5 and P6 remain mandatory.
+
 ## Runbook: «Бугунги видеони тайёрла» / "prepare today's video" (Codex)
 
 The short path for the owner's daily command. Each line names the stage the tool returns and the section that owns the details; it adds no rule of its own.
 
 0. **Start right.** Work in `hsk-tu-vous/` (its `.codex/config.toml` starts the project MCP server) on a checkout whose `HEAD` contains the latest remote `main`; production refuses a stale checkout. Run `npm ci` when `package-lock.json` changed, then `npm run check:consistency`. Call `recommend_skills`; a lesson stays on Remotion.
    **⚠️ MotionKit TEST ONLY.** Codex reads the notice above; the job automatically produces separate RU/TJ source-bound briefs. Codex itself evaluates narration and visual meaning and writes per-language choices. No separate selection AI API is allowed. The optional test may not block established production, add an extra teaching card, alter voice/CTA, or bypass exact preview approval.
+   **⚠️ SoundKit P2 TEST ONLY.** Read the SoundKit section above and each automatically prepared `soundKitTest` brief. Codex separately decides SOUND or SILENCE for RU/TJ, records exact source evidence, and validates its decision. Nothing is mixed or published by P2; keep the existing real audio untouched.
+   **⚠️ SoundKit P3 TEST ONLY.** Only after the real imported voice and the matching `cue-timeline.json` exist, run `content:soundkit:bind` separately for both languages and the real TikTok variant if applicable. Save cue intent only; never enable an SFX in the final MP4 or modify the approved Gemini voice.
+   **⚠️ SoundKit P4 TEST ONLY.** A separate explicit `content:soundkit:render:test` can create an isolated A/B audio preview after verified P3. Never activate it in the normal producer, replace official packages, or publish this test.
 1. **Call `prepare_today_video`** (CLI: `npm run content:make -- today`). Act on the returned stage, then call it again:
    - `authoring-required` — the calendar has nothing for today or later: author today's `weeklySchedule` slot (§1.3).
    - `action-plan-required` — complete every beat's cue-linked `motionBeats` with `visual.illustration` (§2.4, `EPISODE_SCHEMA.md`) and register the changed CTA context.
