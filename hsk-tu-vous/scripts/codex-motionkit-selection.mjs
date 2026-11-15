@@ -25,6 +25,8 @@ export function validateCodexMotionDecision(decision,brief) {
      decision.chosenBy!=="Codex"||
      decision.episodeId!==brief.episodeId||
      decision.contentType!==brief.contentType||
+     decision.language!==brief.language||
+     decision.languageCode!==brief.languageCode||
      decision.sourceSha256!==brief.sourceSha256||
      !Array.isArray(decision.scenes))
     throw Error("Codex MotionKit: decision must match current TEST ONLY source and creator");
