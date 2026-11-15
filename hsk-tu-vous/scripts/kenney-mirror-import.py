@@ -262,6 +262,10 @@ def import_mirrors(lock, download=get_archive, analyze=inspect_wav):
         }
         for locked in source["files"]:
             path = locked["path"]
+            if path not in checked:
+                if path == "LICENSE.txt" and source["rootLicenseExportIgnored"]:
+                    continue
+                raise ValueError("required locked source file missing: " + path)
             raw = checked[path]
             if path.lower().endswith(".wav"):
                 filename = PurePosixPath(path).name
