@@ -11,7 +11,8 @@ Beautiful UI, Bencho or Transitions.dev browser/Next.js modules.
 - `MotionKitPilot.tsx`: synthetic 1080x1920, 30fps **silent technical demo**.
 - `../motion-kit-preview/index.tsx`: separate Remotion entrypoint, with no change
   to the existing `src/index.ts` production entrypoint.
-- `../../scripts/preview-video-component-plan.mjs`: read-only planning for a real `calendar.json` date or episode ID (includes promo beats, registered content type and transparent history exclusions).\n- `../../scripts/video-component-selector.mjs`: deterministic, per-episode
+- `../../scripts/preview-video-component-plan.mjs`: read-only planning for a real `calendar.json` date or episode ID (includes promo beats, registered content type and transparent history exclusions).
+- `../../scripts/video-component-selector.mjs`: deterministic, per-episode
   advisory component selector. Does not invent voice cues or render a real video.
   It deliberately limits the current illustrated-glass lesson to artwork-only
   `art-dissolve` / `art-drift` and never edits a central CTA.
@@ -22,15 +23,15 @@ Beautiful UI, Bencho or Transitions.dev browser/Next.js modules.
 or recurring inference charge has been added to MotionKit.
 
 For each registered video, the experimental `content:make` and MCP
-preparation workflows automatically create `review/motion-kit-tests/<id>/brief.json`.
+preparation workflows automatically create `review/motion-kit-tests/<id>/<ru|tg>/<ru|tg>/brief.json`.
 This is a **TEST ONLY** advisory with the full per-scene candidate list and
 actual narration, plus an algorithmic suggestion **explicitly marked non-AI**.
 
 Codex—not the hash selector—uses its existing reasoning to pick the visual
 treatment, writes `codex-decision.json` in that same test directory with
-`mode:"TEST_ONLY"`, `chosenBy:"Codex"`, matching `sourceSha256`, scene
+`mode:"TEST_ONLY"`, `chosenBy:"Codex"`, matching `languageCode`, `sourceSha256`, scene
 IDs, `componentId`, meaningful `reason` and exact `narrationEvidence`.
-Run `node scripts/codex-motionkit-test.mjs <id> --validate` before using
+Run `node scripts/codex-motionkit-test.mjs <id> --language=ru|tg --validate` with the chosen language before using
 any opted-in effect. If absent, invalid or stale, test rendering refuses to
 fall back silently to the algorithm's suggestion. The normal renderer
 remains unchanged.
@@ -49,22 +50,33 @@ episode**. At render time it is revalidated against the original canonical
 `cueTimeline`, exact words, scene order, cue frames, episode ID and locale.
 The CTA is never modified.
 
-For an unapproved, voice-ready illustrated lesson in a local copy:
+For an unapproved, voice-ready illustrated lesson in a local copy
+(execute the `ru` and `tg` steps independently):
 
 ```sh
-# Default: untouched current output
+# Default: the current unchanged review video
 npm run content:render -- <existing-episode-id>
-# Explicit opt-in review package only; it does NOT authorize publishing
-node scripts/codex-motionkit-test.mjs <existing-episode-id>  # automatic test brief also appears in content:make/MCP\n# Codex reviews, saves codex-decision.json, and validates it before enabling effects:\nnode scripts/codex-motionkit-test.mjs <existing-episode-id> --validate\nHSK_AI_MOTION_KIT_REVIEW=1 npm run content:render -- <existing-episode-id>
+# TEST ONLY: brief is also created automatically by content:make / MCP
+node scripts/codex-motionkit-test.mjs <existing-episode-id> --language=ru
+# Codex must examine the localized script, create the corresponding
+# review/motion-kit-tests/<id>/ru/codex-decision.json, and validate:
+node scripts/codex-motionkit-test.mjs <existing-episode-id> --language=ru --validate
+# Explicit experimental preview, not a production default:
+HSK_CONTENT_LANGUAGE=ru HSK_AI_MOTION_KIT_REVIEW=1 npm run content:render -- <existing-episode-id>
 ```
 
-The second command writes `review/<id>/motion-kit-cue-plan.json` and supplies the
-validated plan to all same-audio platform variants. It refuses pending/guessed
-word cues, missing audio SHA-256, incompatible lesson style, missing art beats,
-stale narration, mismatched voice/locale or an approved/published snapshot.
-**Do not run either command against an approved/published episode.** Compare
-separate captured baseline/candidate MP4 hashes and visual contact sheets
-before claiming a quality improvement.
+For Tajik, choose `--language=tg` and `HSK_CONTENT_LANGUAGE=tg`.
+A Russian decision cannot be reused to render a Tajik video.
+The flagged render writes `review/<id>/motion-kit-cue-plan.json` inside
+the current language's review root and supplies the validated plan to
+all same-voice platform variants. It refuses stale/missing Codex decisions,
+guessed word cues, missing audio SHA-256, incompatible lesson style, missing
+illustration beats, changed narration, mismatched language or an
+approved/published snapshot.
+
+**Do not run either render command against an approved/published episode.**
+Compare separately captured baseline/candidate MP4 hashes and visual contact
+sheets before claiming quality improvement.
 
 This is not yet a default-per-video automatic production feature. Only the
 illustrated-glass **lesson artwork** is voice-bound so far; product demo UI
