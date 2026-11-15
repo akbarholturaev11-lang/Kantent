@@ -16,6 +16,7 @@ import { validateProductionDuration } from "./duration-policy.mjs";
 import { compileMotionDesignTimeline } from "./motion-design-plan.mjs";
 import { compileCueTimeline } from "./compile-cue-timeline.mjs";
 import {compileMotionKitCuePlan} from "./motion-kit-cue-plan.mjs";
+import {loadValidCodexMotionTestDecision} from "./codex-motionkit-test.mjs";
 import { buildCaptionSections, groupTimedCaptions } from "./caption-utils.mjs";
 import { buildActionCaptionScenes, validateActionSubtitlePages } from "./action-text-layout.mjs";
 import { assertImportedAudioHash } from "./voice-import-state.mjs";
@@ -102,8 +103,12 @@ if(!["0","1"].includes(motionKitEnv))
   throw Error("HSK_AI_MOTION_KIT_REVIEW must be 0 (default) or explicit 1");
 if(motionKitEnv==="1" && ["approved","published"].includes(episode.publishingStatus))
   throw Error("MotionKit review cannot modify approved or published video snapshots");
-const motionKitPlan=motionKitEnv==="1"
-  ? compileMotionKitCuePlan(episode,cueTimeline,{contentType:"lesson"})
+// TEST ONLY: the existing Codex agent decides; no model/API is invoked here.
+const codexMotionDecision=motionKitEnv==="1"
+  ? (await loadValidCodexMotionTestDecision(episode.id)).decision
+  : null;
+const motionKitPlan=codexMotionDecision
+  ? compileMotionKitCuePlan(episode,cueTimeline,{contentType:"lesson",codexDecision:codexMotionDecision})
   : null;
 validateActionSubtitlePages(
   groupTimedCaptions(cueTimeline.wordCues, {
