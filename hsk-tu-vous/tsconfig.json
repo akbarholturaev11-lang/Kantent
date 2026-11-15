@@ -7,11 +7,17 @@
     "resolveJsonModule": true,
     "strict": true,
     "noEmit": true,
-    "lib": ["es2015"],
+    "lib": [
+      "es2015"
+    ],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true
   },
-  "exclude": ["remotion.config.ts"]
+  "exclude": [
+    "remotion.config.ts",
+    "vendor-catalog/**",
+    "node_modules/**"
+  ]
 }
