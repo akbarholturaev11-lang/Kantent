@@ -1,4 +1,6 @@
 import {AbsoluteFill, Easing, Img, interpolate, staticFile} from "remotion";
+import {CueBoundArtLayer} from "./video-components/MotionKit";
+import type {BoundArtMotionScene} from "../scripts/motion-kit-cue-plan.mjs";
 import type {ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
 import visual from "../content/visual-system.json";
 import {activeNarratedBeat} from "../scripts/narrated-beat-state.mjs";
@@ -122,7 +124,7 @@ function distinctCardBeats(beats:ResolvedMotionBeat[],activeIndex:number){
   return (result.length?result:[beats[0]]).slice(-2);
 }
 
-export const IllustratedLessonScene:React.FC<{episodeId:string;frame:number;beats:ResolvedMotionBeat[]}>=({episodeId,frame,beats})=>{
+export const IllustratedLessonScene:React.FC<{episodeId:string;frame:number;beats:ResolvedMotionBeat[];motionKitScene?:BoundArtMotionScene}>=({episodeId,frame,beats,motionKitScene})=>{
   const active=activeNarratedBeat(beats,frame)??beats[0];
   if(!active?.visual) return <AbsoluteFill style={{background:"#08090B"}}/>;
   const ill=(active.visual as {illustration?:Illustration}).illustration;
@@ -149,11 +151,19 @@ export const IllustratedLessonScene:React.FC<{episodeId:string;frame:number;beat
       {previousIll.layout==="pair"&&<PairLayer episodeId={episodeId} ill={{...previousIll,cast:undefined}} local={0} frameAbs={frame}/>}
       {previousIll.layout==="board"&&<BoardLayer episodeId={episodeId} ill={previousIll} local={0}/>}
     </div>}
-    <div style={{position:"absolute",inset:0,opacity:transition}}>
-      {ill.layout==="scene"&&<SceneLayer episodeId={episodeId} ill={ill} beat={active} local={local} camera={camera} frameAbs={frame}/>}
-      {ill.layout==="pair"&&<PairLayer episodeId={episodeId} ill={ill} local={local} frameAbs={frame}/>}
-      {ill.layout==="board"&&<BoardLayer episodeId={episodeId} ill={ill} local={local}/>}
-    </div>
+    {motionKitScene
+      ? <CueBoundArtLayer scene={motionKitScene} beatId={active.id} frame={frame}>
+          <div style={{position:"absolute",inset:0,opacity:transition}}>
+            {ill.layout==="scene"&&<SceneLayer episodeId={episodeId} ill={ill} beat={active} local={local} camera={camera} frameAbs={frame}/>}
+            {ill.layout==="pair"&&<PairLayer episodeId={episodeId} ill={ill} local={local} frameAbs={frame}/>}
+            {ill.layout==="board"&&<BoardLayer episodeId={episodeId} ill={ill} local={local}/>}
+          </div>
+        </CueBoundArtLayer>
+      : <div style={{position:"absolute",inset:0,opacity:transition}}>
+          {ill.layout==="scene"&&<SceneLayer episodeId={episodeId} ill={ill} beat={active} local={local} camera={camera} frameAbs={frame}/>}
+          {ill.layout==="pair"&&<PairLayer episodeId={episodeId} ill={ill} local={local} frameAbs={frame}/>}
+          {ill.layout==="board"&&<BoardLayer episodeId={episodeId} ill={ill} local={local}/>}
+        </div>}
     <div style={{position:"absolute",left:0,right:0,top:0,height:900,background:"linear-gradient(180deg, rgba(6,8,12,.5) 0%, rgba(6,8,12,.38) 40%, transparent 100%)"}}/>
     <div style={{position:"absolute",left:0,right:0,bottom:0,height:620,background:"linear-gradient(0deg, rgba(6,8,12,.72) 0%, rgba(6,8,12,.38) 44%, transparent 100%)"}}/>
     <div style={{position:"absolute",top:LAY.brandTopPx-24,left:0,right:0,display:"flex",justifyContent:"center",alignItems:"center",gap:12,
