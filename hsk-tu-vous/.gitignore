@@ -9,3 +9,6 @@ build
 out
 review
 public/generated
+
+# SoundKit P4 uses short-lived verified WAVs only for explicit private TEST previews.
+public/soundkit-p4-preview-*/
