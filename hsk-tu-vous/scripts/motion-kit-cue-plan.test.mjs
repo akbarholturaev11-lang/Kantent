@@ -86,3 +86,21 @@ test("art-adapters only and no implicit promo mode",()=>{
   plan.scenes[0].componentId="glass-info";
   assert.throws(()=>assertMotionKitCuePlanMatches(episode,timeline,plan),/Invalid MotionKit/);
 });
+
+test("Codex-supplied choice overrides algorithm suggestion in TEST mode",()=>{
+  const {episode,timeline}=fixture();
+  const codexDecision={chosenBy:"Codex",mode:"TEST_ONLY",episodeId:episode.id,
+    contentType:"lesson",scenes:[{sceneId:"hook",componentId:"art-drift",
+      reason:"Slow artwork movement fits spoken picture, avoids extra labels",
+      narrationEvidence:"пример"}]};
+  const plan=compileMotionKitCuePlan(episode,timeline,{codexDecision});
+  assert.equal(plan.selectionOwner,"Codex");
+  assert.equal(plan.scenes[0].componentId,"art-drift");
+  assert.equal(assertMotionKitCuePlanMatches(episode,timeline,plan),true);
+});
+test("motion binder rejects a falsely attributed model decision",()=>{
+  const {episode,timeline}=fixture();
+  assert.throws(()=>compileMotionKitCuePlan(episode,timeline,{codexDecision:{
+    chosenBy:"LLM API",mode:"TEST_ONLY",episodeId:episode.id,contentType:"lesson",scenes:[]
+  }}),/episode-bound Codex/);
+});
