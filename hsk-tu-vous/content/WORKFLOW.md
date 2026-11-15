@@ -4,34 +4,38 @@ This file describes **the sequence of operations**, not the values of production
 
 For a new standalone advertisement, enter `content/PROMO_WORKFLOW.md` before authoring. `recommend_skills` returns those advertising references as `creativeGuidance`, and `get_promo_plan` / `content:promo-plan` validates its original story and frame plan read-only. The calendar selects the required production path by content type; Calendar Reserve drafts the typed future source reserve described below.
 
-## Codex preflight: experimental MotionKit (TEST ONLY; not deployed on main)
+## Codex MotionKit experiment — TEST ONLY (automatic briefs; effects off by default)
 
-**Read this on every new video preparation.** The owner is testing a reusable
-component catalog in [draft PR #70](https://github.com/akbarholturaev11-lang/Kantent/pull/70),
-branch `planning/full-ui-motion-library-20261115`. This is **not** the main
-production video feature. Codex is the **AI that personally chooses** visual
-components during video production; the deterministic selector in the pilot
-offers compatible candidates only, **not an AI decision**. There is **no new
-LLM/API provider or key** for component selection.
+**Read at the start of every new video job.** Codex is the AI that selects
+visual treatments, using the meaning of each **actual RU or TJ source** and its
+own existing reasoning. No additional LLM API, API key or inference service
+is connected for motion selection. The selector supplies deterministic
+*compatible suggestions only*, not an AI creative decision.
 
-In a separate pilot checkout, the experimental workflow automatically gives
-Codex a `TEST_ONLY` per-video brief at
-`review/motion-kit-tests/<episode-id>/brief.json`. Codex reads the real
-script and scene meanings, writes a justified source-bound
-`codex-decision.json` and tests the result. Only a flagged, verified
-illustrated-lesson artwork pilot can currently use those decisions in Remotion.
-**On main, these pilot scripts are not yet installed or active**: do not report
-that automatic test selection ran, do not silently turn on experimental
-rendering, and never switch the production pipeline to the draft branch.
-Instead, report the TEST status and use an isolated pilot workspace when
-testing is appropriate. Never change approved audio, CTA, historical video
-or publish without the owner's exact video approval.
+The current experimental code was introduced in
+[PR #70](https://github.com/akbarholturaev11-lang/Kantent/pull/70).
+Where `scripts/codex-motionkit-test.mjs` exists, the video preparation workflow
+automatically creates separate TEST briefs for each language under
+`review/motion-kit-tests/<episode-id>/<ru|tg>/brief.json`. Codex chooses
+meaningful components, writes the reason and matching narration evidence
+to that language's `codex-decision.json`, and validates it before any
+opt-in effect. Run `node scripts/codex-motionkit-test.mjs <id> --language=ru|tg --validate`
+using one actual language at a time. If the pilot script is not available in
+the checkout, report that the test is unavailable; never fabricate a run.
+
+**Default production rendering remains unchanged.** Only an explicit
+`HSK_AI_MOTION_KIT_REVIEW=1` can currently apply verified cue-bound
+*illustrated lesson artwork* motion; promotional UI concepts are not production
+ready. TEST briefs/decisions and successful synthetic CI do not confer
+real-voice QA, owner approval or publication rights. Never modify historical
+approved media, voice, CTA or another language's preview.
 
 ## Runbook: «Бугунги видеони тайёрла» / "prepare today's video" (Codex)
 
 The short path for the owner's daily command. Each line names the stage the tool returns and the section that owns the details; it adds no rule of its own.
 
-0. **Start right.** Work in `hsk-tu-vous/` (its `.codex/config.toml` starts the project MCP server) on a checkout whose `HEAD` contains the latest remote `main`; production refuses a stale checkout. Run `npm ci` when `package-lock.json` changed, then `npm run check:consistency`. Call `recommend_skills`; a lesson stays on Remotion.\n   **⚠️ MOTIONKIT EXPERIMENT — TEST ONLY (Codex-owned, no extra AI API).** For every new video request, Codex must immediately recognize this experimental stage. `prepare_today_video`, `prepare_video_for_date`, and `content:make` automatically write an advisory brief in `review/motion-kit-tests/<episode-id>/brief.json` on the experimental branch. Codex reads the real narration, semantic beats, source evidence, existing composition and catalog, **chooses components itself** (do not call any separate AI/model API), and saves the justified, source-hash-bound `codex-decision.json`; validate it with `node scripts/codex-motionkit-test.mjs <episode-id> --validate`. The seeded algorithm in `video-component-selector.mjs` supplies **candidate suggestions only, never the creative AI decision**. Each brief and selection must say `TEST_ONLY` and disclose no new model/API. Promo/UI concepts are planning/reference previews only; the real-audio opt-in renderer currently supports artwork-only illustrated lessons, after imported Gemini timestamps and audio SHA. **No silent adoption in normal video outputs**, no paid component/code, no extra card/caption, no audio/CTA changes, no owner-approval bypass. If the experimental branch is not available in the active checkout, report `MotionKit TEST unavailable` instead of pretending it ran; never block the approved production path for this optional experiment.\n
+0. **Start right.** Work in `hsk-tu-vous/` (its `.codex/config.toml` starts the project MCP server) on a checkout whose `HEAD` contains the latest remote `main`; production refuses a stale checkout. Run `npm ci` when `package-lock.json` changed, then `npm run check:consistency`. Call `recommend_skills`; a lesson stays on Remotion.
+   **⚠️ MotionKit TEST ONLY.** Codex reads the notice above; the job automatically produces separate RU/TJ source-bound briefs. Codex itself evaluates narration and visual meaning and writes per-language choices. No separate selection AI API is allowed. The optional test may not block established production, add an extra teaching card, alter voice/CTA, or bypass exact preview approval.
 1. **Call `prepare_today_video`** (CLI: `npm run content:make -- today`). Act on the returned stage, then call it again:
    - `authoring-required` — the calendar has nothing for today or later: author today's `weeklySchedule` slot (§1.3).
    - `action-plan-required` — complete every beat's cue-linked `motionBeats` with `visual.illustration` (§2.4, `EPISODE_SCHEMA.md`) and register the changed CTA context.
