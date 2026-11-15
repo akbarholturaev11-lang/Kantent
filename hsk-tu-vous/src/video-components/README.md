@@ -6,15 +6,15 @@ Beautiful UI, Bencho or Transitions.dev browser/Next.js modules.
 
 ## What exists
 
-- `MotionKit.tsx`: five seek-safe, frame-parametric React animations using Remotion
+- `MotionKit.tsx`: seven seek-safe, frame-parametric React animations using Remotion
   `interpolate`, no CSS transitions, timers, browser events, non-seeded randomness or network.
 - `MotionKitPilot.tsx`: synthetic 1080x1920, 30fps **silent technical demo**.
 - `../motion-kit-preview/index.tsx`: separate Remotion entrypoint, with no change
   to the existing `src/index.ts` production entrypoint.
 - `../../scripts/video-component-selector.mjs`: deterministic, per-episode
   advisory component selector. Does not invent voice cues or render a real video.
-  It deliberately limits the current illustrated-glass lesson to a quiet
-  `type-reveal` and never edits a central CTA.
+  It deliberately limits the current illustrated-glass lesson to artwork-only
+  `art-dissolve` / `art-drift` and never edits a central CTA.
 
 ## Local test and preview
 
