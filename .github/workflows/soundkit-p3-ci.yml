@@ -3,6 +3,7 @@ name: SoundKit P3 exact imported voice/visual cue binder CI (TEST ONLY)
 on:
   push:
     branches:
+      - main
       - feat/sound-design-phase0-kenney-audit-20261115
     paths:
       - .github/workflows/soundkit-p3-ci.yml
