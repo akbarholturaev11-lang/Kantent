@@ -36,7 +36,7 @@ If no valid P2 Codex decision, audio, approval, current per-language timeline, s
 
 ## Audited CI and limitations
 
-- [SoundKit P3 exact cue binder CI run #43692581245 — SUCCESS](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/43692581245), covers **synthetic fixture tests only**, including authentic project cue resolver logic, lesson/promo anchors, injected wrong timestamps, old/changed voice SHA, forbidden opening/CTA, falsified asset hash, deliberate SILENCE and separate TikTok platform identity.
+- [Final SoundKit P3 exact cue binder CI run #43692755982 — SUCCESS](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/43692755982), covers **synthetic fixture tests only**, including authentic project cue resolver logic, lesson/promo anchors, injected wrong timestamps, old/changed voice SHA, forbidden opening/CTA, falsified asset hash, deliberate SILENCE and separate TikTok platform identity.
 - P2 selection CI and read-only CC0 import CI must also remain green.
 - CI explicitly inspects current Remotion runtime source for accidental `SoundKit` imports. P3 is not connected to the production render or MP4 packaging.
 - **No real imported RU/TG Gemini voice A/B was available in CI**. Unit tests use explicitly synthetic, hashed fake voice bytes and timestamps to exercise the contract. This passes engineering correctness only, not acoustic intelligibility, gain, LUFS or final approved video playback.
