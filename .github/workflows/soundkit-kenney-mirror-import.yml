@@ -1,0 +1,80 @@
+name: SoundKit pinned Kenney CC0 mirror audit and branch-only import
+
+on:
+  push:
+    branches:
+      - feat/sound-design-phase0-kenney-audit-20261115
+    paths:
+      - .github/workflows/soundkit-kenney-mirror-import.yml
+      - hsk-tu-vous/scripts/kenney-mirror-import.py
+      - hsk-tu-vous/scripts/kenney_mirror_import_test.py
+      - hsk-tu-vous/vendor-catalog/soundkit/kenney-mirror-lock.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: soundkit-pinned-mirror-import-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit-and-import:
+    if: github.ref == 'refs/heads/feat/sound-design-phase0-kenney-audit-20261115'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check ffprobe and ffmpeg tools
+        run: |
+          ffprobe -version | head -1
+          ffmpeg -version | head -1
+      - name: Run offline locked-source and archive safety tests
+        run: |
+          python -m unittest discover -s scripts -p 'kenney_sound_probe_test.py' -v
+          python -m unittest discover -s scripts -p 'kenney_mirror_import_test.py' -v
+      - name: Download EXACT pinned GitHub archive commits and audit every WAV
+        run: |
+          set -euo pipefail
+          python scripts/kenney-mirror-import.py --mode import --report content/sound-library.json
+          python scripts/kenney-mirror-import.py --mode verify
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path('content/sound-library.json').read_text())
+          assert data['exactFileCount']==151, 'Do not misrepresent this mirror as the official 150'
+          assert data['packs']['ui-audio']['mirrorObserved']==51
+          assert data['packs']['ui-audio']['publisherListed']==50
+          assert data['packs']['ui-audio']['countDiscrepancy'] is True
+          assert data['packs']['interface-sounds']['mirrorObserved']==100
+          assert all(a['eligibleForAutomaticUse'] is False for a in data['assets'])
+          assert data['automaticallyUsedInProduction'] is False
+          assert data['aiApiConnected'] is False
+          print('Verified pinned mirror inventory:',data['exactFileCount'],
+                'files, duplicate groups:',len(data['exactDuplicateGroups']))
+          PY
+      - name: Upload inspectable manifest (not published audio)
+        uses: actions/upload-artifact@v4
+        with:
+          name: soundkit-verified-kenney-mirror-audit
+          path: hsk-tu-vous/content/sound-library.json
+          retention-days: 14
+          if-no-files-found: error
+      - name: Commit the verified CC0 WAV files ONLY to this isolated branch
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/sound-library/ content/sound-library.json
+          if ! git diff --cached --quiet; then
+            git commit -m "assets(content): import 151 pinned Kenney CC0 mirror WAVs, SHA verified [skip ci]"
+            git push origin HEAD:feat/sound-design-phase0-kenney-audit-20261115
+          fi
