@@ -5,7 +5,7 @@ import {buildCodexMotionKitTestBrief,motionKitTestPaths} from "./codex-motionkit
 
 const makeDecision=(brief)=>({
   schemaVersion:1,mode:"TEST_ONLY",chosenBy:"Codex",episodeId:brief.episodeId,
-  contentType:brief.contentType,sourceSha256:brief.sourceSha256,
+  contentType:brief.contentType,language:brief.language,languageCode:brief.languageCode,sourceSha256:brief.sourceSha256,
   scenes:brief.scenes.map(row=>({
     sceneId:row.sceneId,componentId:row.candidates[0].id,
     reason:"Chosen for the authored sentence meaning; avoids competing with spoken focus.",
@@ -55,4 +55,30 @@ test("stale source, copied selection and CTA injection are rejected",async()=>{
  decision.scenes.push({sceneId:"cta",componentId:"glass-info",reason:"Invented fake CTA screenshot",narrationEvidence:"CTA"});
  assert.throws(()=>validateCodexMotionDecision(decision,brief),/every eligible scene/);
  assert.throws(()=>motionKitTestPaths("../../secret"),/safe episode ID/);
+});
+
+
+test("RU and TJ are independent: source hashes, evidence, paths, decisions",async()=>{
+  const id="ji-vs-duoshao-books-price-20261118";
+  const ru=await buildCodexMotionKitTestBrief(id,{language:"ru"});
+  const tg=await buildCodexMotionKitTestBrief(id,{language:"tg"});
+  assert.equal(ru.languageCode,"ru-RU");
+  assert.equal(tg.languageCode,"tg-TJ");
+  assert.notEqual(ru.sourceSha256,tg.sourceSha256);
+  assert.notEqual(ru.scenes[0].narration,tg.scenes[0].narration);
+  assert.notEqual(motionKitTestPaths(id,"ru").decisionFile,motionKitTestPaths(id,"tg").decisionFile);
+  assert.match(tg.sourcePath,/content\/locales\/tg\/episodes\//);
+  assert.equal(validateCodexMotionDecision(makeDecision(tg),tg),true);
+  assert.throws(()=>validateCodexMotionDecision(makeDecision(ru),tg),/current TEST ONLY/);
+  const swapped={...makeDecision(tg),languageCode:"ru-RU"};
+  assert.throws(()=>validateCodexMotionDecision(swapped,tg),/current TEST ONLY/);
+});
+test("localized advertisement cannot reuse Russian narration evidence or candidate decision",async()=>{
+  const id="shop-shirt-size-20261117";
+  const ru=await buildCodexMotionKitTestBrief(id,{language:"ru"});
+  const tg=await buildCodexMotionKitTestBrief(id,{language:"tg"});
+  assert.equal(tg.contentType,"advertisement");
+  assert.notEqual(ru.sourceSha256,tg.sourceSha256);
+  assert.equal(validateCodexMotionDecision(makeDecision(tg),tg),true);
+  assert.throws(()=>validateCodexMotionDecision(makeDecision(ru),tg),/current TEST ONLY/);
 });
