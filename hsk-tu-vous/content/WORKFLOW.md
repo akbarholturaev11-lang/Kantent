@@ -30,12 +30,46 @@ ready. TEST briefs/decisions and successful synthetic CI do not confer
 real-voice QA, owner approval or publication rights. Never modify historical
 approved media, voice, CTA or another language's preview.
 
+## Codex SoundKit P2 — TEST ONLY (automatic localized source briefs; NO audio mix)
+
+**Read this before each new video preparation.** This SoundKit pilot is distinct
+from MotionKit. `content/sound-design.json` is the canonical SoundKit policy,
+`content/sound-library.json` lists the 151 pinned CC0 Kenney mirror WAV
+references; existing mix values stay solely in `content/visual-system.json#sound`.
+The existing Codex video agent is the creative selector; **no additional AI
+model, API, credentials, sound generation service or purchase is connected**.
+
+The standard `prepare_today_video`, `prepare_video_for_date`, and
+`content:make` flows automatically offer a separate `soundKitTest` result
+per language and create a source-bound test brief at
+`review/sound-design-tests/<episode-id>/<ru|tg>/brief.json`. Codex must read
+the *actual localized* narration and authored visual events, then write an
+independently justified `codex-decision.json` **for every eligible scene**.
+A valid decision chooses a catalog sound reference or **SILENCE**, with genuine
+narration and visual evidence for a sound and a reason even for silence.
+Use `node scripts/codex-soundkit-test.mjs <id> --language=ru --validate`
+or `--language=tg`, after writing the decision file. Do not fabricate
+a test run when the actual source or tool is unavailable.
+
+Never imply a click, successful install, paid subscription or answer from a
+static screenshot. First hook, CTA, and unsupported visuals require **SILENCE**.
+Only a small context-grounded subset of the verified CC0 sound catalog is
+offered for experimental audition; all raw assets are currently marked
+`eligibleForAutomaticUse: false`. The code **does not make a Codex decision**,
+derive exact audio timestamps, alter imported Gemini audio, mix effects into
+Remotion, or connect any remote model API. It is safe to create an advisory
+brief during normal production, but **P2 audio changes no production output**.
+The optional video-audio integration and exact imported word-timing binding
+are future P3/P4 stages requiring real-voice A/B listening and exact owner
+approval; publishing a modified video still requires separate preview approval.
+
 ## Runbook: «Бугунги видеони тайёрла» / "prepare today's video" (Codex)
 
 The short path for the owner's daily command. Each line names the stage the tool returns and the section that owns the details; it adds no rule of its own.
 
 0. **Start right.** Work in `hsk-tu-vous/` (its `.codex/config.toml` starts the project MCP server) on a checkout whose `HEAD` contains the latest remote `main`; production refuses a stale checkout. Run `npm ci` when `package-lock.json` changed, then `npm run check:consistency`. Call `recommend_skills`; a lesson stays on Remotion.
    **⚠️ MotionKit TEST ONLY.** Codex reads the notice above; the job automatically produces separate RU/TJ source-bound briefs. Codex itself evaluates narration and visual meaning and writes per-language choices. No separate selection AI API is allowed. The optional test may not block established production, add an extra teaching card, alter voice/CTA, or bypass exact preview approval.
+   **⚠️ SoundKit P2 TEST ONLY.** Read the SoundKit section above and each automatically prepared `soundKitTest` brief. Codex separately decides SOUND or SILENCE for RU/TJ, records exact source evidence, and validates its decision. Nothing is mixed or published by P2; keep the existing real audio untouched.
 1. **Call `prepare_today_video`** (CLI: `npm run content:make -- today`). Act on the returned stage, then call it again:
    - `authoring-required` — the calendar has nothing for today or later: author today's `weeklySchedule` slot (§1.3).
    - `action-plan-required` — complete every beat's cue-linked `motionBeats` with `visual.illustration` (§2.4, `EPISODE_SCHEMA.md`) and register the changed CTA context.
