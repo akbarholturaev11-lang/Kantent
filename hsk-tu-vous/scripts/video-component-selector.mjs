@@ -5,6 +5,8 @@
  * be bound to verified word cues and pass the project review/approval gates.
  */
 export const MOTION_COMPONENTS = Object.freeze([
+  {id:"art-dissolve",source:"transitions.dev",formats:["lesson"],sceneKinds:["hook","context","example","vocabulary","story"],purpose:"Subtle incoming existing lesson art dissolve; never add extra lesson text/cards"},
+  {id:"art-drift",source:"boardui",formats:["lesson"],sceneKinds:["hook","context","example","vocabulary","story"],purpose:"Slow focus movement on the existing meaningful lesson artwork without changing content"},
   {id:"type-reveal",source:"transitions.dev",formats:["lesson","advertisement","series-part"],sceneKinds:["hook","context","example","vocabulary","story","promo"],purpose:"Introduce one actual spoken concept using a short eased text reveal"},
   {id:"card-reveal",source:"boardui",formats:["advertisement","series-part","lesson"],sceneKinds:["hook","context","example","story","promo"],purpose:"Reveal one verified product or lesson card, not an invented screenshot"},
   {id:"glass-info",source:"beautifului.dev",formats:["lesson","advertisement","series-part"],sceneKinds:["vocabulary","example","context","story","promo"],purpose:"A restrained glass context card; for illustrated lessons keep their one stable teaching card"},
@@ -40,8 +42,8 @@ export function selectVideoComponents(episode,{contentType,recentSequences=[]}={
     const seq=editableScenes.map((scene,index)=>{
       let pool=MOTION_COMPONENTS.filter(c=>c.formats.includes(contentType)&&c.sceneKinds.includes(scene.kind));
       // The current illustrated-glass format permits no additional animated
-      // teaching cards or HUD layers. It uses only the quiet text/scene reveal.
-      if(contentType==="lesson")pool=pool.filter(c=>c.id==="type-reveal");
+      // teaching cards or HUD layers. It permits only artwork movement.
+      if(contentType==="lesson")pool=pool.filter(c=>c.id==="art-dissolve"||c.id==="art-drift");
       if(!pool.length)throw Error("No compatible motion component: "+scene.id+"/"+scene.kind);
       const n=hashString(episode.id+"|"+scene.id+"|"+contentType);
       const c=pool[(n+offset+index)%pool.length];
