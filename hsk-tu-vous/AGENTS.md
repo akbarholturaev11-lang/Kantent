@@ -19,7 +19,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 
 Handoffs: Calendar Reserve → Codex (complete sources); Codex → owner (one preview bundle); owner → Codex or Actions (exact approval); Feedback → Calendar Reserve (hypotheses and test IDs); any agent → `docs/audits/CURRENT_TASKS.md` (open defects). Every agent first reads the latest `main`.\n\n**Codex video-start check — MotionKit TEST ONLY:** Read the experimental motion section at the beginning of `content/WORKFLOW.md` before every video job. The **Codex agent itself** makes the semantic component choice; the code only provides deterministic candidate lists. No new AI API/keys are connected. This is a TEST-only pilot introduced by PR #70; even after merging code, the optional effects are off by default pending real-voice visual QA and exact owner approval. Never mistake a TEST brief for default rendering, owner approval or publication.\n
 
-## Source ownership (do not duplicate values)
+**Codex video-start check — SoundKit P2 TEST ONLY:** At every new RU/TJ video job, read `content/WORKFLOW.md#codex-soundkit-p2--test-only-automatic-localized-source-briefs-no-audio-mix` and the automatic `soundKitTest` result. Codex itself chooses scene-specific licensed sound references **or SILENCE**, with authentic localized narration and visual evidence; run `content:soundkit:test` validation on each language’s decision. P2 does not render, mix, alter Gemini voice, call a new AI API or grant publication approval.\n\n## Source ownership (do not duplicate values)
 
 | Information | Canonical source |
 |---|---|
@@ -43,6 +43,7 @@ Handoffs: Calendar Reserve → Codex (complete sources); Codex → owner (one pr
 | The separate goal of each weekly content type (lesson → HSK AI users, advertisement → brand recall, serial part → followers/subscribers), its closing and the metric it is judged by | `content/creative-formats.json#contentGoals` |
 | Standalone advertising stories, minimalist presentation and production procedure | `content/creative-formats.json#promoPolicy`, `content/visual-system.json#promoPresentation` and `content/PROMO_WORKFLOW.md` |
 | Design tokens, active lesson presentation/date, full-video duration, caption numbers and motion parameters | `content/visual-system.json` |
+| Experimental SFX selection and source-evidence policy (P2 TEST ONLY; not a production audio change) | `content/sound-design.json` (inventory `content/sound-library.json`; original mix tokens remain in `visual-system.json#sound`) |
 | Visual editorial method | `content/EDITING_SPEC.md` |
 | Semantic shot/action enumeration and rollout status | `content/semantic-visual-system.json`, explained by `content/SEMANTIC_VISUAL_SCHEMA.md` |
 | P3 evidence-based shot suggestion rules | `content/semantic-shot-intents.json`, explained by `content/SEMANTIC_SHOT_ADVISER.md` |
