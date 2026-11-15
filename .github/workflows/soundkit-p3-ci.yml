@@ -62,7 +62,7 @@ jobs:
           if(library.automaticallyUsedInProduction!==false ||
             library.assets.some(a=>a.eligibleForAutomaticUse!==false)||
             policy.productionEffectsEnabled!==false||
-            policy.audioMixNotImplemented!==true||
+            policy.productionAudioMixEnabled!==false||
             policy.newModelApiConnected!==false)
             throw Error('P3 inadvertently enabled production SoundKit');
           if(pkg.scripts['content:soundkit:bind']!=='node scripts/codex-soundkit-bind.mjs')
