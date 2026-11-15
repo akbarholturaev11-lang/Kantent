@@ -1,0 +1,75 @@
+name: Snapshot Beautiful UI public MIT demo for motion planning
+
+on:
+  push:
+    branches:
+      - planning/full-ui-motion-library-20261115
+    paths:
+      - .github/workflows/import-beautifului-reference.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reference:
+    if: github.ref == 'refs/heads/planning/full-ui-motion-library-20261115'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 1
+      - name: Fetch public MIT HTML demo and license (not a React package)
+        shell: bash
+        run: |
+          set -euo pipefail
+          DEST="hsk-tu-vous/vendor-catalog/beautifului-reference"
+          mkdir -p "$DEST"
+          curl --fail --location --silent --show-error --max-time 50 --retry 2 --compressed \
+            'https://www.beautifului.dev/' > "$DEST/upstream-demo.html"
+          curl --fail --location --silent --show-error --max-time 50 --retry 2 --compressed \
+            'https://www.beautifului.dev/license' > "$DEST/upstream-license-page.html"
+          test "$(wc -c < "$DEST/upstream-demo.html")" -gt 2000
+          grep -qi 'Beautiful UI' "$DEST/upstream-demo.html"
+          grep -qi 'MIT License' "$DEST/upstream-license-page.html"
+          cat > "$DEST/README.md" <<'EOT'
+          # Beautiful UI reference (public MIT demo, not ready-to-use React source)
+
+          Canonical website: https://www.beautifului.dev/
+          License: https://www.beautifului.dev/license (MIT, Shane Levine, 2026).
+          These two HTML files are a dated snapshot of the public website and license page.
+          **They are not a working React component package** and must not be imported into
+          the Remotion renderer. Their inline/linked scripts, if any, are demo-site assets.
+          Before adapting any component, inspect provenance, dependencies, video safe zones
+          and the current license; implement only the scenes selected for actual video use.
+
+          Public gallery contains these 21 visuals:
+          01 Loading State
+          02 Thinking
+          03 Streaming Text
+          04 Approval Card
+          05 Tool Chips
+          06 Task Rows
+          07 Chat
+          08 Prompt Bar
+          09 Recommendation Card
+          10 Context Cards
+          11 Diff Table
+          12 Records Table
+          13 Filter Table
+          14 Sidebar Nav
+          15 Search
+          16 Flowchart
+          17 Insight Cards
+          18 Code Block
+          19 Fine-tune Card
+          20 Selection Actions
+          21 Agent Screen
+          EOT
+          git add "$DEST"
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m "docs(content): snapshot licensed Beautiful UI demo as isolated reference"
+            git push origin HEAD:refs/heads/planning/full-ui-motion-library-20261115
+          fi
