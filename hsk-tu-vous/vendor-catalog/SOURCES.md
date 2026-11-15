@@ -1,8 +1,8 @@
 # Kantent external UI & motion sources — verified import status
 
-Updated: 2026-11-15. Target branch: `planning/full-ui-motion-library-20261115`.
+Updated: 2026-11-15. Implementation tracked in PR #70; catalog remains experimental even when merged.
 
-All sources are **isolated** from Remotion production code. This is a catalog/acquisition task; it is **not** proof of video QA, working adapters, or a working component selector.
+All third-party source trees remain **isolated** from the Remotion production dependency graph. Original local adapters and a Codex TEST selection workflow exist, but neither a catalog import nor passing synthetic CI proves real-voice video QA or authorizes publication.
 
 | Source | Current import | Path | Licensing |
 | --- | --- | --- | --- |
@@ -21,7 +21,7 @@ Sources: https://github.com/BoardUI/boardui ; https://github.com/Jakubantalik/tr
 4. Register per-video selection in source-controlled metadata; validate meaningful motion, speech sync, RU/TJ localization, 1080×1920 and 270×480 legibility. Preserve approved/published assets.
 5. Show owner exact preview for video approval before any publishing.
 
-**Current planning-branch engineering state:** Free catalog acquisition is complete as above. Seven original deterministic, frame-driven Remotion adapters have been written in `../src/video-components/MotionKit.tsx` (five UI effects, two artwork-only effects); an isolated silent pilot is in `../src/video-components/MotionKitPilot.tsx`. The deterministic, read-only selector is `../scripts/video-component-selector.mjs`. The calendar-aware planning command is `../scripts/preview-video-component-plan.mjs <date-or-id>` and reads registered lesson or promo source data without inventing cue timing. GitHub Actions runs `motion-kit-pilot-ci.yml` for TS/ESLint, scenario tests, main consistency and technical demo still/MP4 rendering. The adapters are **not wired into real production video/cue pipelines**, and there is no exact owner approval to alter an issued video. Continue with `../plans/FULL_UI_MOTION_LIBRARY_ADOPTION_2026-11-15.md` for voice-bound QA and rollout.
+**Experimental engineering state:** Free catalog acquisition is complete as above. Seven original deterministic, frame-driven Remotion adapters have been written in `../src/video-components/MotionKit.tsx` (five UI effects, two artwork-only effects); an isolated silent pilot is in `../src/video-components/MotionKitPilot.tsx`. The deterministic, read-only selector is `../scripts/video-component-selector.mjs`. The calendar-aware planning command is `../scripts/preview-video-component-plan.mjs <date-or-id>` and reads registered lesson or promo source data without inventing cue timing. GitHub Actions runs `motion-kit-pilot-ci.yml` for TS/ESLint, scenario tests, main consistency and technical demo still/MP4 rendering. Artwork-only adapters are wired to an **explicit opt-in** `HSK_AI_MOTION_KIT_REVIEW=1` path that validates real imported Gemini word cues plus a distinct Codex TEST decision for each RU/TJ narration source. Ordinary/default rendering is unchanged. Promotional UI concepts are still reference-only. No real imported-voice A/B or exact owner approval has occurred. Continue with `../plans/FULL_UI_MOTION_LIBRARY_ADOPTION_2026-11-15.md` for voice-bound QA and rollout.
 
 ## Safety notes
 
