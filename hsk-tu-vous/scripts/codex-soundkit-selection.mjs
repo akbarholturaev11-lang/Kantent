@@ -93,8 +93,11 @@ export function soundCandidatesForScene(scene,contentType,policy,library,sceneIn
     roles.add("gentle-illustration-reveal");
   if(events.some(x=>x.realProductCapture))
     roles.add("verified-product-screen-reveal");
-  if(events.some(x=>x.provenTap))roles.add("real-ui-press");
-  if(events.some(x=>x.provenSuccess))roles.add("verified-success-state");
+  // P2 cannot authenticate a screen recording asset at the media level.
+  // Self-declared "verified" metadata MUST NOT unlock fake click/success sounds.
+  // P3+ may add a separate file-provenance gate before explicitly enabling it.
+  if(policy.enableVerifiedInteractionSoundsInP2!==false)
+    throw Error("SoundKit P2 requires real UI click/success roles to stay disabled");
   const index=new Map(library.assets.map(x=>[x.id,x]));
   const candidates=[silent];
   for(const role of roles) {
