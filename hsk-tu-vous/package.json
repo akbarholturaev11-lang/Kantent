@@ -52,7 +52,8 @@
     "content:variety": "node scripts/visual-variety-plan.mjs",
     "content:art": "node scripts/generate-lesson-art.mjs",
     "content:art:review": "node scripts/review-lesson-art.mjs",
-    "content:characters": "node scripts/build-character-references.mjs"
+    "content:characters": "node scripts/build-character-references.mjs",
+    "content:motionkit:test": "node scripts/codex-motionkit-test.mjs"
   },
   "sideEffects": [
     "*.css"
