@@ -11,7 +11,7 @@ Beautiful UI, Bencho or Transitions.dev browser/Next.js modules.
 - `MotionKitPilot.tsx`: synthetic 1080x1920, 30fps **silent technical demo**.
 - `../motion-kit-preview/index.tsx`: separate Remotion entrypoint, with no change
   to the existing `src/index.ts` production entrypoint.
-- `../../scripts/video-component-selector.mjs`: deterministic, per-episode
+- `../../scripts/preview-video-component-plan.mjs`: read-only planning for a real `calendar.json` date or episode ID (includes promo beats, registered content type and transparent history exclusions).\n- `../../scripts/video-component-selector.mjs`: deterministic, per-episode
   advisory component selector. Does not invent voice cues or render a real video.
   It deliberately limits the current illustrated-glass lesson to artwork-only
   `art-dissolve` / `art-drift` and never edits a central CTA.
@@ -22,7 +22,9 @@ From `hsk-tu-vous/` (Node 20+):
 
 ```sh
 npm ci
-node --test scripts/video-component-selector.test.mjs
+node --test scripts/video-component-selector.test.mjs scripts/preview-video-component-plan.test.mjs
+node scripts/preview-video-component-plan.mjs shop-shirt-size-20261117
+node scripts/preview-video-component-plan.mjs ji-vs-duoshao-books-price-20261118
 npm run lint
 npx remotion still src/motion-kit-preview/index.tsx MotionKitPilot /tmp/motion-kit-0.png --frame=0
 npx remotion still src/motion-kit-preview/index.tsx MotionKitPilot /tmp/motion-kit-80.png --frame=80
