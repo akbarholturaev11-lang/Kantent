@@ -21,7 +21,7 @@ Sources: https://github.com/BoardUI/boardui ; https://github.com/Jakubantalik/tr
 4. Register per-video selection in source-controlled metadata; validate meaningful motion, speech sync, RU/TJ localization, 1080×1920 and 270×480 legibility. Preserve approved/published assets.
 5. Show owner exact preview for video approval before any publishing.
 
-**Current state:** Only steps toward acquisition are complete. This catalog has not implemented a selector or tested adapted Remotion components. Continue with `../plans/FULL_UI_MOTION_LIBRARY_ADOPTION_2026-11-15.md`.
+**Current planning-branch engineering state:** Free catalog acquisition is complete as above. Seven original deterministic, frame-driven Remotion adapters have been written in `../src/video-components/MotionKit.tsx` (five UI effects, two artwork-only effects); an isolated silent pilot is in `../src/video-components/MotionKitPilot.tsx`. The deterministic, read-only selector is `../scripts/video-component-selector.mjs`. The calendar-aware planning command is `../scripts/preview-video-component-plan.mjs <date-or-id>` and reads registered lesson or promo source data without inventing cue timing. GitHub Actions runs `motion-kit-pilot-ci.yml` for TS/ESLint, scenario tests, main consistency and technical demo still/MP4 rendering. The adapters are **not wired into real production video/cue pipelines**, and there is no exact owner approval to alter an issued video. Continue with `../plans/FULL_UI_MOTION_LIBRARY_ADOPTION_2026-11-15.md` for voice-bound QA and rollout.
 
 ## Safety notes
 
