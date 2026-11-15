@@ -92,6 +92,9 @@ def validate_lock(lock):
                 raise ValueError("invalid locked byte count")
         if not set(source.get("licenseFiles", [])).issubset(seen):
             raise ValueError("missing license lock")
+        if (source.get("rootLicenseExportIgnored") is not True
+                or "export-ignore" not in source.get("rootLicenseExportIgnoreEvidence", "")):
+            raise ValueError("root LICENSE ZIP omission must be explicitly pinned")
     return True
 
 
@@ -151,12 +154,19 @@ def zip_contents(payload, source):
             added = sorted(audio_paths - expected_audio)
             raise ValueError("source audio differs from locked file set: "
                              + f"missing={missing[:5]}, unlisted={added[:5]}")
-        if not expected.keys() <= entries.keys():
-            missing=sorted(expected.keys()-entries.keys())
+        missing = expected.keys() - entries.keys()
+        allowed_missing = ({"LICENSE.txt"} if source.get("rootLicenseExportIgnored")
+                           else set())
+        if missing - allowed_missing:
             raise ValueError("archive lacks locked license/audio files: "
-                             + repr(missing[:8])+"; archive sample: "+repr(sorted(entries.keys())[:8]))
+                             + repr(sorted(missing)[:8])+"; archive sample: "
+                             + repr(sorted(entries.keys())[:8]))
+        # Mirrors explicitly use "/LICENSE.txt export-ignore" in .gitattributes.
+        # Their pinned addon LICENSE must still be present, SHA-verified and CC0.
         result = {}
         for rel, pin in expected.items():
+            if rel in allowed_missing and rel not in entries:
+                continue
             if entries[rel].file_size != pin["size"]:
                 raise ValueError("pinned file byte size mismatch: " + rel)
             if entries[rel].file_size > MAX_INDIVIDUAL_AUDIO and rel.endswith(".wav"):
@@ -165,10 +175,18 @@ def zip_contents(payload, source):
             if git_blob(data) != pin["gitBlobSha"]:
                 raise ValueError("Git blob SHA mismatch: " + rel)
             result[rel] = data
+        verified_license_count = 0
         for filename in source["licenseFiles"]:
+            if filename not in result:
+                if filename == "LICENSE.txt" and source.get("rootLicenseExportIgnored"):
+                    continue
+                raise ValueError("missing required locked addon CC0 license: " + filename)
             legal = result[filename].decode("utf8", errors="replace").lower()
             if not ("cc0" in legal or "creative commons zero" in legal):
                 raise ValueError("locked source license missing CC0: " + filename)
+            verified_license_count += 1
+        if verified_license_count < 1:
+            raise ValueError("cannot import mirror without an embedded CC0 license")
         return result
 
 
@@ -234,8 +252,11 @@ def import_mirrors(lock, download=get_archive, analyze=inspect_wav):
             "countDiscrepancy": (source["pinnedMirrorAudio"]
                                  != source["publisherListedAudio"]),
             "licenseFiles": source["licenseFiles"],
+            "rootLicenseExportIgnoredFromZip": ("LICENSE.txt" not in checked),
+            "rootLicenseOmissionEvidence": source["rootLicenseExportIgnoreEvidence"],
             "licenseHashesSha256": {
                 path: digest(checked[path]) for path in source["licenseFiles"]
+                if path in checked
             },
             "status": "mirror-bytes-verified",
         }
@@ -261,8 +282,10 @@ def import_mirrors(lock, download=get_archive, analyze=inspect_wav):
                 }
                 all_hashes.setdefault(data["sha256"], []).append(data["id"])
                 report["assets"].append(data)
-        license_bytes = checked["LICENSE.txt"]
-        staged_data[f"assets/sound-library/kenney-{name}/LICENSE.txt"] = license_bytes
+        addon_license = [p for p in source["licenseFiles"] if p != "LICENSE.txt"]
+        if len(addon_license) != 1 or addon_license[0] not in checked:
+            raise ValueError("verified addon CC0 license is required")
+        staged_data[f"assets/sound-library/kenney-{name}/LICENSE.txt"] = checked[addon_license[0]]
     report["exactFileCount"] = len(report["assets"])
     if report["exactFileCount"] != sum(COUNT_PINS.values()):
         raise ValueError("mirror catalog total count unexpectedly changed")
