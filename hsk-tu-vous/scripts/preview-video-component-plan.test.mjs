@@ -37,5 +37,5 @@ test("real future lesson remains guarded against UI intrusion",async()=>{
  const p=await previewVideoComponentPlan("ji-vs-duoshao-books-price-20261118");
  assert.equal(p.plan.contentType,"lesson");
  assert.equal(p.plan.productionReady,false);
- assert(p.plan.sequence.every(c=>c==="type-reveal"));
+ assert(p.plan.sequence.every(c=>c==="art-dissolve"||c==="art-drift"));
 });
