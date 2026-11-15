@@ -8,6 +8,9 @@ on:
       - .github/workflows/motion-kit-pilot-ci.yml
       - hsk-tu-vous/scripts/video-component-selector*
       - hsk-tu-vous/scripts/motion-kit-cue-plan*
+      - hsk-tu-vous/scripts/motion-kit-optin-fixture.mjs
+      - hsk-tu-vous/scripts/render-platform-videos.mjs
+      - hsk-tu-vous/scripts/render-episode.mjs
       - hsk-tu-vous/src/EpisodeComposition.tsx
       - hsk-tu-vous/src/IllustratedLessonScene.tsx
       - hsk-tu-vous/scripts/preview-video-component-plan*
@@ -59,6 +62,15 @@ jobs:
           npx remotion still src/motion-kit-preview/index.tsx MotionKitPilot .motion-kit-pilot-output/frame-79.png --frame=79 --log=error
           npx remotion still src/motion-kit-preview/index.tsx MotionKitPilot .motion-kit-pilot-output/frame-160.png --frame=160 --log=error
           npx remotion render src/motion-kit-preview/index.tsx MotionKitPilot .motion-kit-pilot-output/motion-kit-pilot.mp4 --codec=h264 --log=error
+
+      - name: Test actual HSKAI-Episode frame with and without optional cue-bound art
+        run: |
+          set -euo pipefail
+          mkdir -p .motion-kit-pilot-output/bound
+          node scripts/motion-kit-optin-fixture.mjs .motion-kit-pilot-output/bound
+          npx remotion still src/index.ts HSKAI-Episode .motion-kit-pilot-output/bound/baseline-6.png --props .motion-kit-pilot-output/bound/baseline.json --frame=6 --log=error
+          npx remotion still src/index.ts HSKAI-Episode .motion-kit-pilot-output/bound/candidate-6.png --props .motion-kit-pilot-output/bound/candidate.json --frame=6 --log=error
+          node --input-type=module -e "import fs from 'node:fs';import crypto from 'node:crypto';const root='.motion-kit-pilot-output/bound/';const hash=n=>crypto.createHash('sha256').update(fs.readFileSync(root+n+'.png')).digest('hex');if(hash('baseline-6')===hash('candidate-6'))throw Error('Opt-in MotionKit did not alter selected art layer at cue frame');console.log('Synthetic cue-frame render changed only when opt-in prop was present');"
       - name: Upload silent technical pilot for owner visual review
         uses: actions/upload-artifact@v4
         with:
