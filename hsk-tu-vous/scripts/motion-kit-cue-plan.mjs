@@ -59,14 +59,23 @@ function validateResolvedScene(episode, timeline, scene, timedScene) {
 
 /** One deliberate effect per eligible scene, applied ONLY to visual artwork. */
 export function compileMotionKitCuePlan(episode, cueTimeline, {
-  contentType = "lesson", recentSequences = [],
+  contentType = "lesson", recentSequences = [], codexDecision = null,
 } = {}) {
   if (contentType !== "lesson")
     throw Error("MotionKit v1 voice-bound pilot supports illustrated lesson art only");
   verifyVoiceEvidence(episode, cueTimeline, cueTimeline?.fps ?? 30);
-  const selection = selectVideoComponents(episode, {contentType, recentSequences});
+  // The deterministic selector is ONLY a candidate/CI fallback. A real opt-in
+  // run must pass an already-validated per-video Codex decision.
+  if(codexDecision && (codexDecision.chosenBy!=="Codex" ||
+      codexDecision.mode!=="TEST_ONLY" ||
+      codexDecision.episodeId!==episode.id ||
+      codexDecision.contentType!==contentType))
+    throw Error("MotionKit requires an episode-bound Codex TEST decision");
+  const selection = codexDecision
+    ? codexDecision.scenes
+    : selectVideoComponents(episode, {contentType, recentSequences}).scenes;
   const scenes = [];
-  for (const selected of selection.scenes) {
+  for (const selected of selection) {
     const source = episode.scenes.find(s=>s.id===selected.sceneId);
     const timed = cueTimeline.scenes.find(s=>s.sceneId===selected.sceneId);
     if (!ART_EFFECTS.has(selected.componentId))
@@ -80,6 +89,7 @@ export function compileMotionKitCuePlan(episode, cueTimeline, {
     schemaVersion:MOTION_KIT_CUE_SCHEMA_VERSION,
     mode:"opt-in-review-only", contentType, episodeId:episode.id,
     languageCode:episode.languageCode, fps:cueTimeline.fps,
+    selectionOwner:codexDecision?"Codex":"synthetic-fixture-only",
     voiceTextHash:episode.voiceTextHash, audioSha256:episode.audioSha256,
     sceneIds:cueTimeline.scenes.map(s=>s.sceneId),
     scenes,
@@ -92,7 +102,9 @@ export function assertMotionKitCuePlanMatches(episode, cueTimeline, plan) {
       plan.mode !== "opt-in-review-only" || plan.contentType !== "lesson" ||
       plan.episodeId !== episode?.id || plan.languageCode !== episode?.languageCode ||
       plan.fps !== cueTimeline?.fps || plan.voiceTextHash !== episode?.voiceTextHash ||
-      plan.audioSha256 !== episode?.audioSha256 || !Array.isArray(plan.scenes) ||
+      plan.audioSha256 !== episode?.audioSha256 ||
+      !["Codex","synthetic-fixture-only"].includes(plan.selectionOwner) ||
+      !Array.isArray(plan.scenes) ||
       !Array.isArray(plan.sceneIds))
     throw Error("MotionKit plan does not match this voice/episode/locale");
   verifyVoiceEvidence(episode,cueTimeline,cueTimeline.fps);
