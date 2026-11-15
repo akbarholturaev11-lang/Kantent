@@ -308,15 +308,51 @@ def main():
     parser.add_argument("--report", required=False, default=str(CATALOG))
     args = parser.parse_args()
     lock = json.loads(LOCK_FILE.read_text(encoding="utf8"))
+    validate_lock(lock)
     if args.mode == "verify":
         manifest = json.loads(CATALOG.read_text(encoding="utf8"))
-        if manifest["exactFileCount"] != sum(COUNT_PINS.values()):
-            raise ValueError("unexpected existing audio inventory count")
+        if (manifest.get("exactFileCount") != sum(COUNT_PINS.values())
+                or manifest.get("status") != "verified"
+                or manifest.get("automaticallyUsedInProduction") is not False
+                or manifest.get("aiApiConnected") is not False):
+            raise ValueError("unexpected existing audio inventory count or production enablement")
+        expected = {}
+        for name, source in lock["sources"].items():
+            for obj in source["files"]:
+                if obj["path"].lower().endswith(".wav"):
+                    basename = PurePosixPath(obj["path"]).name
+                    ident = f"kenney-{name}/{basename.lower()}"
+                    rel = f"assets/sound-library/kenney-{name}/{basename}"
+                    expected[ident] = (rel, obj["gitBlobSha"])
+            license_path = ROOT / f"assets/sound-library/kenney-{name}/LICENSE.txt"
+            if (not license_path.is_file()
+                    or b"cc0" not in license_path.read_bytes().lower()):
+                raise ValueError("missing source-verified local CC0 license")
+        if len(manifest.get("assets", [])) != len(expected):
+            raise ValueError("unexpected number of manifest entries")
+        seen = set()
+        actual_files = set()
         for entry in manifest["assets"]:
-            path = ROOT / entry["file"]
-            if not path.is_file() or digest(path.read_bytes()) != entry["sha256"]:
-                raise ValueError("missing or altered imported audio: " + str(path))
-        print(f"Verified {len(manifest['assets'])} imported source hashes offline")
+            ident = entry["id"]
+            if ident in seen or ident not in expected:
+                raise ValueError("unknown or repeated imported sound ID")
+            seen.add(ident)
+            rel, locked_blob = expected[ident]
+            if (entry["file"] != rel or entry.get("gitBlobSha") != locked_blob
+                    or entry.get("eligibleForAutomaticUse") is not False):
+                raise ValueError("audio file path or production eligibility changed")
+            path = ROOT / rel
+            if not path.is_file():
+                raise ValueError("missing imported WAV: " + rel)
+            data = path.read_bytes()
+            if (digest(data) != entry["sha256"] or git_blob(data) != locked_blob):
+                raise ValueError("altered WAV payload: " + rel)
+            actual_files.add(path.resolve())
+        on_disk = {p.resolve() for p in DESTINATION.rglob("*.wav")}
+        if on_disk != actual_files:
+            raise ValueError("unlisted or missing WAV in import catalog")
+        print(f"Verified {len(seen)} license-scoped imported WAV hashes offline; "
+              "none authorized for automatic production")
         return 0
     catalog, files = import_mirrors(lock)
     report = Path(args.report)
