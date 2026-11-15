@@ -22,7 +22,10 @@ test("selection is deterministic, serializable and cannot touch the central CTA"
 });
 test("lesson never adds a second teaching card or app dashboard HUD",()=>{
   const p=selectVideoComponents(episode,{contentType:"lesson"});
-  assert.deepEqual(p.sequence,["type-reveal","type-reveal","type-reveal"]);
+  assert(p.sequence.every(id=>id==="art-dissolve"||id==="art-drift"));
+  assert.equal(p.scenes.length,3);
+  const next=selectVideoComponents(episode,{contentType:"lesson",recentSequences:[p.sequence]});
+  assert.notDeepEqual(next.sequence,p.sequence);
 });
 test("series can select varied complete sequences when history contains last choice",()=>{
   const old=selectVideoComponents(episode,{contentType:"series-part"});
