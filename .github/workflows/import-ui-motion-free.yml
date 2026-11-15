@@ -1,0 +1,67 @@
+name: Import vetted free UI components (isolated vendor catalog)
+
+# One-time pinned source import on this PLANNING branch; never touches main.
+on:
+  push:
+    branches:
+      - planning/full-ui-motion-library-20261115
+    paths:
+      - .github/workflows/import-ui-motion-free.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-boardui:
+    if: github.ref == 'refs/heads/planning/full-ui-motion-library-20261115'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 1
+      - name: Fetch pinned MIT BoardUI free collection (no install/build/run)
+        shell: bash
+        run: |
+          set -euo pipefail
+          SHA="ec5c5eb3e29c2441be63b9422cd54f411ef23466"
+          SOURCE="$(mktemp -d)"
+          trap 'rm -rf "$SOURCE"' EXIT
+          git clone --quiet https://github.com/BoardUI/boardui.git "$SOURCE"
+          git -C "$SOURCE" checkout --quiet "$SHA"
+          test "$(git -C "$SOURCE" rev-parse HEAD)" = "$SHA"
+          test -f "$SOURCE/LICENSE"
+          TARGET="hsk-tu-vous/vendor-catalog/boardui-free"
+          mkdir -p "$TARGET"
+          # Upstream free components and dependent source resources only.
+          # Its Next.js app, server routes, runtime and credentials are not imported.
+          for directory in components hooks styles utils; do
+            test -d "$SOURCE/$directory"
+            rm -rf "$TARGET/$directory"
+            cp -a "$SOURCE/$directory" "$TARGET/$directory"
+          done
+          cp "$SOURCE/LICENSE" "$TARGET/LICENSE"
+          cp "$SOURCE/README.md" "$TARGET/UPSTREAM_README.md"
+          cp "$SOURCE/package.json" "$TARGET/UPSTREAM_PACKAGE.json"
+          cat > "$TARGET/IMPORT_METADATA.md" <<'EOT'
+          # Pinned BoardUI Free snapshot
+
+          Source: https://github.com/BoardUI/boardui
+          Upstream commit: `ec5c5eb3e29c2441be63b9422cd54f411ef23466`
+          License: MIT; see `LICENSE`. The upstream repository identifies 69 free catalog entries.
+          Contents: `components/`, `hooks/`, `styles/`, `utils/` and original upstream metadata.
+          Excluded: Next.js application, server routes, sample AI endpoint, developer secrets, third-party Pro content.
+          Status: Source catalog only. Not installed into the Remotion production dependency graph.
+          IMPORTANT: These components may rely on Next.js, React Aria, browser state or network;
+          do not render directly with Remotion until adapted and individually tested.
+          EOT
+          echo "VENDORED_SOURCE_FILES=$(find "$TARGET" -type f | wc -l)" >> "$GITHUB_STEP_SUMMARY"
+          git add "$TARGET"
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m "vendor(content): pin full MIT BoardUI free component source catalog"
+            git push origin HEAD:refs/heads/planning/full-ui-motion-library-20261115
+          else
+            echo "Pinned BoardUI catalog already imported" >> "$GITHUB_STEP_SUMMARY"
+          fi
