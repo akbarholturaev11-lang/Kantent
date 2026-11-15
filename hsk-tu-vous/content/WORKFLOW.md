@@ -4,6 +4,29 @@ This file describes **the sequence of operations**, not the values of production
 
 For a new standalone advertisement, enter `content/PROMO_WORKFLOW.md` before authoring. `recommend_skills` returns those advertising references as `creativeGuidance`, and `get_promo_plan` / `content:promo-plan` validates its original story and frame plan read-only. The calendar selects the required production path by content type; Calendar Reserve drafts the typed future source reserve described below.
 
+## Codex preflight: experimental MotionKit (TEST ONLY; not deployed on main)
+
+**Read this on every new video preparation.** The owner is testing a reusable
+component catalog in [draft PR #70](https://github.com/akbarholturaev11-lang/Kantent/pull/70),
+branch `planning/full-ui-motion-library-20261115`. This is **not** the main
+production video feature. Codex is the **AI that personally chooses** visual
+components during video production; the deterministic selector in the pilot
+offers compatible candidates only, **not an AI decision**. There is **no new
+LLM/API provider or key** for component selection.
+
+In a separate pilot checkout, the experimental workflow automatically gives
+Codex a `TEST_ONLY` per-video brief at
+`review/motion-kit-tests/<episode-id>/brief.json`. Codex reads the real
+script and scene meanings, writes a justified source-bound
+`codex-decision.json` and tests the result. Only a flagged, verified
+illustrated-lesson artwork pilot can currently use those decisions in Remotion.
+**On main, these pilot scripts are not yet installed or active**: do not report
+that automatic test selection ran, do not silently turn on experimental
+rendering, and never switch the production pipeline to the draft branch.
+Instead, report the TEST status and use an isolated pilot workspace when
+testing is appropriate. Never change approved audio, CTA, historical video
+or publish without the owner's exact video approval.
+
 ## Runbook: «Бугунги видеони тайёрла» / "prepare today's video" (Codex)
 
 The short path for the owner's daily command. Each line names the stage the tool returns and the section that owns the details; it adds no rule of its own.
