@@ -19,7 +19,7 @@
 
 ## Evidence / test coverage
 
-- [P2 CI #43691185712 — SUCCESS](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/43691185712). Test sources include the 2026-11-15 series, 2026-11-17 ad, 2026-11-18 lesson, and 2026-11-19 ad, across RU and TG. CI also actually writes real test briefs for the 17th and 18th in RU/TG. No paid Gemini voice generation is required.
+- [Final P2 CI #43691525354 — SUCCESS](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/43691525354). The final CI additionally proves the source files for the existing Remotion renderers do not import SoundKit or its catalogue; `productionEffectsEnabled` stays false. Test sources include the 2026-11-15 series, 2026-11-17 ad, 2026-11-18 lesson, and 2026-11-19 ad, across RU and TG. CI also actually writes real test briefs for the 17th and 18th in RU/TG. No paid Gemini voice generation is required.
 - [P1 asset import #43689444267 — SUCCESS](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/43689444267); 151 playable SHA-pinned WAV files with verified CC0 licenses.
 - [Read-only asset integrity #43689807132 — SUCCESS](https://github.com/akbarholturaev11-lang/Kantent/actions/runs/43689807132) after retiring all acquisition write workflows.
 - Per-scene sound choices are **candidate references**, not measured sound design. Their name/role classification does not establish professional timbre, volume or intelligibility. Actual audio listening is required before activation.
