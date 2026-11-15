@@ -58,6 +58,24 @@ class KenneyMirrorTests(unittest.TestCase):
         checked = mod.zip_contents(make_zip(source, content), source)
         self.assertEqual(checked, content)
 
+    def test_github_export_ignore_excludes_root_license_but_pinned_addon_license_proves_cc0(self):
+        source, content = fake_source()
+        source["rootLicenseExportIgnored"] = True
+        archived = dict(content)
+        del archived["LICENSE.txt"]
+        checked = mod.zip_contents(make_zip(source, archived), source)
+        self.assertNotIn("LICENSE.txt", checked)
+        self.assertIn("addons/kenney_ui_audio/LICENSE.txt", checked)
+
+    def test_missing_addon_cc0_license_fails_even_if_root_license_is_export_ignored(self):
+        source, content = fake_source()
+        source["rootLicenseExportIgnored"] = True
+        archived = dict(content)
+        del archived["LICENSE.txt"]
+        del archived["addons/kenney_ui_audio/LICENSE.txt"]
+        with self.assertRaisesRegex(ValueError, "archive lacks locked license"):
+            mod.zip_contents(make_zip(source, archived), source)
+
     def test_tampered_wav_same_length_rejected_by_git_blob_sha(self):
         source, content = fake_source()
         audio = content["addons/kenney_ui_audio/click1.wav"]
