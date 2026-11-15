@@ -123,7 +123,7 @@ export async function prepareCodexSoundKitTestBrief(key,{language=activeLanguage
     language:brief.language,languageCode:brief.languageCode,
     status:"codex-sound-selection-required",
     selectionOwner:"Codex",aiApiConnected:false,
-    productionEffectsEnabled:false,audioMixNotImplemented:true,
+    productionEffectsEnabled:false,productionAudioMixEnabled:false,experimentalMixTestAvailable:true,
     briefFile:loc.briefFile,decisionFile:loc.decisionFile,
     nextAgentAction:"⚠️ SOUNDKIT TEST ONLY: Codex read the exact localized brief and decide sound/SILENCE for each scene. Write codex-decision.json with genuine evidence, then run node scripts/codex-soundkit-test.mjs <id> --language="+language+" --validate. P2 does not render effects, modify approved audio or connect an AI API."
   };
