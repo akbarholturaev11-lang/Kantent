@@ -46,5 +46,7 @@
   "lessonEditorialLimits": "Follow content/EDITING_SPEC.md and numeric sound limits only in content/visual-system.json#sound; do not add opening hook cues or compete with Chinese pronunciation.",
   "phase3Timing": "Not implemented: selection intent has NO timestamps; exact audio/visual cues and original voice SHA required later.",
   "phase4Rendering": "Not implemented: no SFX selection is applied to Remotion/HyperFrames, and no renderer reads this policy yet.",
-  "publicity": "TEST ONLY / unapproved audio reference catalog / no authorization to publish"
+  "publicity": "TEST ONLY / unapproved audio reference catalog / no authorization to publish",
+  "enableVerifiedInteractionSoundsInP2": false,
+  "interactionReviewGate": "P2 must not suggest actual click/success sounds even when future authors mark an interaction as verified; independent source-media hash/provenance review belongs to P3+."
 }
