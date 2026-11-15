@@ -61,7 +61,7 @@ jobs:
           if(soundPolicy.status!=="P2_TEST_ONLY"||
              soundPolicy.productionEffectsEnabled!==false||
              soundPolicy.enableVerifiedInteractionSoundsInP2!==false||
-             soundPolicy.audioMixNotImplemented!==true||
+             soundPolicy.productionAudioMixEnabled!==false||
              soundPolicy.newModelApiConnected!==false||
              library.automaticallyUsedInProduction!==false||
              library.assets.some(a=>a.eligibleForAutomaticUse!==false))
