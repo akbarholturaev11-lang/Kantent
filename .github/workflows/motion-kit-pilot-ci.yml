@@ -7,6 +7,8 @@ on:
     paths:
       - .github/workflows/motion-kit-pilot-ci.yml
       - hsk-tu-vous/scripts/video-component-selector*
+      - hsk-tu-vous/tsconfig.json
+      - hsk-tu-vous/content/skill-catalog.json
       - hsk-tu-vous/src/video-components/**
       - hsk-tu-vous/src/motion-kit-preview/**
   workflow_dispatch:
