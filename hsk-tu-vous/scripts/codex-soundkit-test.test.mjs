@@ -113,6 +113,21 @@ test("genuine screenshot entrance may suggest a reveal, never fake click, paymen
   assert.throws(()=>validateCodexSoundKitDecision(decision,brief),/not in exact licensed/);
 });
 
+test("P2 does not trust fake source-claimed verified UI screenshots or fabricated success metadata",()=>{
+  const proof={verified:true,source:"verified-screen-recording",sourceSha256:"a".repeat(64),
+    visibleAction:"tap"};
+  const scene={id:"demo-scene",kind:"promo",narration:"Here is the authentic feature.",
+    visual:{type:"product-capture",provenance:"genuine-product-capture",
+      screenImage:"promo-captures/real.png",action:"Reveal the real product screen",
+      cueText:"feature",interactionEvidence:proof,
+      stateEvidence:{...proof,visibleAction:"success-transition"}}};
+  const result=soundCandidatesForScene(scene,"advertisement",policy,lib,1);
+  assert.equal(result.events[0].provenTap,true);
+  assert.equal(result.events[0].provenSuccess,true);
+  assert(result.candidates.some(c=>c.role==="verified-product-screen-reveal"));
+  assert(!result.candidates.some(c=>["real-ui-press","verified-success-state"].includes(c.role)));
+});
+
 test("first scene and hook cannot be given effects even with visual evidence",()=>{
   const scene={id:"hook",kind:"hook",narration:"This begins the program",
     motionBeats:[{id:"first",cueText:"This",visual:{title:"Intro",graphic:{nodes:[{id:"a"}]}}}]};
