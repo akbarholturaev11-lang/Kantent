@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "phase": "P1-publisher-archive-probe",
+  "mode": "probe-only",
+  "allSourcesVerified": false,
+  "externalSoundAPIUsed": false,
+  "requiresRealVoiceA_B": true,
+  "packs": {
+    "ui-audio": {
+      "name": "ui-audio",
+      "source": "https://kenney.nl/assets/ui-audio",
+      "expectedFiles": 50,
+      "status": "blocked",
+      "reason": "invalid/oversized publisher ZIP"
+    },
+    "interface-sounds": {
+      "name": "interface-sounds",
+      "source": "https://kenney.nl/assets/interface-sounds",
+      "expectedFiles": 100,
+      "status": "blocked",
+      "reason": "invalid/oversized publisher ZIP"
+    }
+  }
+}
