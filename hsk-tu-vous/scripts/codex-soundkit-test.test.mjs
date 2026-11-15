@@ -4,7 +4,7 @@ import {readFileSync} from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {
-  buildCodexSoundKitTestBrief,soundKitTestPaths,loadValidCodexSoundKitDecision
+  buildCodexSoundKitTestBrief,soundKitTestPaths
 } from "./codex-soundkit-test.mjs";
 import {
   SOUNDKIT_SILENCE,soundCandidatesForScene,validateCodexSoundKitDecision
@@ -145,11 +145,13 @@ test("silence has to be an intentional, evidence-free documented choice",async()
   assert.throws(()=>validateCodexSoundKitDecision(d,brief),/rationale/);
 });
 
-test("decision file is not fabricated or silently filled by the selection algorithm",async()=>{
-  await assert.rejects(
-    ()=>loadValidCodexSoundKitDecision("shop-shirt-size-20261117",{language:"ru"}),
-    /missing or malformed|Codex must author/
-  );
+test("a test brief does not silently assign sounds and has no generated choice",async()=>{
+  const brief=await buildCodexSoundKitTestBrief("shop-shirt-size-20261117");
+  assert.equal(brief.status,"Codex decision required; source-scoped SOUND INTENT only");
+  assert.equal(brief.selectionOwner,"Codex existing video-production agent");
+  assert.equal(brief.scenes.every(scene=>scene.candidates[0].id==="SILENCE"),true);
+  assert.equal(Object.hasOwn(brief,"decision"),false);
+  assert.equal(Object.hasOwn(brief,"selectedSounds"),false);
 });
 
 test("catalogue cannot opt into production or quietly swap source ID",()=>{
