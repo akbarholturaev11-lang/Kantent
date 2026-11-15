@@ -1,3 +1,4 @@
+import type {BoundArtMotionScene} from "../../scripts/motion-kit-cue-plan.mjs";
 import type {CSSProperties,ReactNode} from "react";
 import {Easing,interpolate} from "remotion";
 import visual from "../../content/visual-system.json";
@@ -65,7 +66,7 @@ export const ProgressTrace=({frame,steps}:{frame:number;steps:readonly string[]}
 /** Artwork-only motion adapters for active illustrated-glass lessons.
  * They wrap existing approved lesson art; no new text, cards, characters or copy. */
 export const ArtDissolve=({frame,children}:{frame:number;children:ReactNode})=>{
-  const amount=ease(frame,0,12);
+  const amount=frame<0?1:.95+.05*ease(frame,0,12);
   return <div style={{position:"relative",width:"100%",height:"100%",opacity:amount}}>
     {children}
   </div>;
@@ -77,6 +78,19 @@ export const ArtDrift=({frame,children}:{frame:number;children:ReactNode})=>{
       {children}
     </div>
   </div>;
+};
+/** Apply only a validated imported-word-cue animation to the existing art layer.
+ * The lesson glass teaching card, logo and timed subtitle sit outside this wrapper.
+ */
+export const CueBoundArtLayer=({scene,beatId,frame,children}:{
+  scene:BoundArtMotionScene;beatId:string;frame:number;children:ReactNode;
+})=>{
+  const cue=scene.beats.find(b=>b.beatId===beatId);
+  if(!cue)throw Error("MotionKit artwork cue not registered: "+scene.sceneId+"/"+beatId);
+  const local=frame-cue.localFrame;
+  return scene.componentId==="art-drift"
+    ? <ArtDrift frame={local}>{children}</ArtDrift>
+    : <ArtDissolve frame={local}>{children}</ArtDissolve>;
 };
 /** Read-only typed registry. It never imports the upstream web packages into Remotion. */
 export type MotionId="art-dissolve"|"art-drift"|"type-reveal"|"card-reveal"|"glass-info"|"state-transition"|"progress-trace";
