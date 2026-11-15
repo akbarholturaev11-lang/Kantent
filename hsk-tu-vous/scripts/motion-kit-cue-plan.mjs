@@ -46,7 +46,7 @@ function validateResolvedScene(episode, timeline, scene, timedScene) {
   const ids = new Set();
   return expected.map((beat,i) => {
     const resolved = actual[i];
-    if (!ART_EFFECTS.has("art-dissolve") || ids.has(beat.id) || !hasIllustration(beat))
+    if (ids.has(beat.id) || !hasIllustration(beat))
       throw Error("MotionKit: duplicate beat or missing reviewed illustration: "+scene.id+"/"+beat.id);
     ids.add(beat.id);
     if (resolved.id !== beat.id || resolved.startMs !== beat.startMs ||
