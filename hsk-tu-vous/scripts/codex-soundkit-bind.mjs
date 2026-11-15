@@ -41,6 +41,24 @@ export async function prepareSoundKitCuePlan(key,{
   const {brief,decision}=await loadValidCodexSoundKitDecision(key,{language});
   const dir=withLanguage(language,()=>reviewDir(brief.episodeId));
   const realDir=platform==="shared"?dir:path.join(dir,"tiktok");
+  // The P3 plan is derived metadata, but even so do not create a new
+  // experimental variant for already owner-approved historical content.
+  for(const protectedDir of [dir,realDir]){
+    try {
+      await fs.access(path.join(protectedDir,"approval.json"));
+      throw Error("SoundKit P3 refuses owner-approved review package");
+    } catch(e) {
+      if(e.code!=="ENOENT")throw e;
+    }
+  }
+  for(const statusPath of [path.join(dir,"status.json"),path.join(realDir,"status.json")]){
+    try {
+      const status=JSON.parse(await fs.readFile(statusPath,"utf8"));
+      if(["owner-approved-for-zernio-publishing","zernio-published",
+          "zernio-scheduled","zernio-publication-processing"].includes(status.stage))
+        throw Error("SoundKit P3 cannot create test plans for approved/published historical packages");
+    }catch(e){if(e.code!=="ENOENT")throw e;}
+  }
   const episode=JSON.parse(await fs.readFile(path.join(realDir,"episode.json"),"utf8"));
   const timeline=JSON.parse(await fs.readFile(path.join(realDir,"cue-timeline.json"),"utf8"));
   if(episode.id!==brief.episodeId||episode.languageCode!==lang.languageCode||
