@@ -1,0 +1,113 @@
+name: SoundKit P4 isolated source-cue audio mix CI (TEST ONLY)
+
+on:
+  push:
+    branches:
+      - feat/sound-design-phase0-kenney-audit-20261115
+    paths:
+      - .github/workflows/soundkit-p4-ci.yml
+      - hsk-tu-vous/scripts/sound-kit-render-plan*
+      - hsk-tu-vous/scripts/sound-kit-p4-synthetic-fixture.mjs
+      - hsk-tu-vous/scripts/codex-soundkit-render-test.mjs
+      - hsk-tu-vous/src/EpisodeComposition.tsx
+      - hsk-tu-vous/content/sound-design.json
+      - hsk-tu-vous/package.json
+      - hsk-tu-vous/.gitignore
+  pull_request:
+    paths:
+      - .github/workflows/soundkit-p4-ci.yml
+      - hsk-tu-vous/scripts/sound-kit-render-plan*
+      - hsk-tu-vous/scripts/codex-soundkit-render-test.mjs
+      - hsk-tu-vous/src/EpisodeComposition.tsx
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: soundkit-p4-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  isolated-p4:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: hsk-tu-vous
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: hsk-tu-vous/package-lock.json
+      - name: Install pinned Remotion dependencies and FFmpeg/FFprobe
+        run: |
+          npm ci
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y ffmpeg
+          fi
+      - name: Type check and lint
+        run: npm run lint
+      - name: Syntax, no-new-API and frame-bound safety tests
+        run: |
+          set -euo pipefail
+          node --check scripts/codex-soundkit-render-test.mjs
+          node --check scripts/sound-kit-render-plan.mjs
+          node --check scripts/sound-kit-p4-synthetic-fixture.mjs
+          node --test scripts/sound-kit-render-plan.test.mjs scripts/sound-kit-cue-plan.test.mjs scripts/codex-soundkit-test.test.mjs
+      - name: Ensure test path fails closed by default — no voice or API generated
+        run: |
+          set -euo pipefail
+          if node scripts/codex-soundkit-render-test.mjs ji-vs-duoshao-books-price-20261118 --language=ru >/tmp/p4-out 2>/tmp/p4-err; then
+            echo "P4 incorrectly started without opt-in"; exit 1
+          fi
+          grep -q "HSK_AI_SOUND_DESIGN_TEST=1" /tmp/p4-err
+          test ! -s /tmp/p4-out
+      - name: Real FFmpeg synthetic PCM + Remotion baseline/candidate MP4-like AAC render
+        run: |
+          set -euo pipefail
+          mkdir -p .soundkit-p4-ci
+          trap 'node scripts/sound-kit-p4-synthetic-fixture.mjs .soundkit-p4-ci --clean' EXIT
+          node scripts/sound-kit-p4-synthetic-fixture.mjs .soundkit-p4-ci > .soundkit-p4-ci/source.json
+          npx remotion render src/index.ts HSKAI-Episode .soundkit-p4-ci/baseline.aac --props .soundkit-p4-ci/baseline.json --codec=aac --log=error
+          npx remotion render src/index.ts HSKAI-Episode .soundkit-p4-ci/candidate.aac --props .soundkit-p4-ci/candidate.json --codec=aac --log=error
+          test -s .soundkit-p4-ci/baseline.aac
+          test -s .soundkit-p4-ci/candidate.aac
+          ffmpeg -hide_banner -loglevel error -y -i .soundkit-p4-ci/baseline.aac -ac 1 -ar 48000 .soundkit-p4-ci/baseline.wav
+          ffmpeg -hide_banner -loglevel error -y -i .soundkit-p4-ci/candidate.aac -ac 1 -ar 48000 .soundkit-p4-ci/candidate.wav
+          python - <<'PY'
+          import json, wave, struct
+          def read(path):
+              with wave.open(path,'rb') as w:
+                  assert w.getframerate()==48000
+                  frames=w.getnframes()
+                  data=w.readframes(frames)
+                  samples=struct.unpack('<'+'h'*(len(data)//2),data)
+                  return samples
+          a=read('.soundkit-p4-ci/baseline.wav')
+          b=read('.soundkit-p4-ci/candidate.wav')
+          assert len(a)>200_000 and len(b)>200_000, 'Expected real decoded synthetic audio'
+          assert abs(len(a)-len(b))<=4096, 'Audio duration unexpectedly shifted'
+          # The voice track remains present in both; P4 must audibly modify the mix.
+          window=(int(1.5*48000),int(1.7*48000))
+          n=min(len(a),len(b))
+          delta=sum(abs(a[i]-b[i]) for i in range(*window))
+          assert delta>10_000, f'Opt-in SFX produced no audible test change: {delta}'
+          print('SYNTHETIC engineering audio A/B differs at cue frame (not real Gemini acceptance)',delta)
+          PY
+      - name: Project source integrity
+        run: npm run check:consistency
+      - name: Keep synthetic offline QA logs only, never a publishable video
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: soundkit-p4-unapproved-synthetic-audio
+          path: |
+            hsk-tu-vous/.soundkit-p4-ci/source.json
+            hsk-tu-vous/.soundkit-p4-ci/baseline.aac
+            hsk-tu-vous/.soundkit-p4-ci/candidate.aac
+          retention-days: 7
+          if-no-files-found: ignore
