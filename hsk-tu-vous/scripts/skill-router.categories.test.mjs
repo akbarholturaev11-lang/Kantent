@@ -4,11 +4,15 @@ import { recommendSkills, loadSkillCatalog } from "./skill-router.mjs";
 
 const catalog = loadSkillCatalog();
 
-test("all 36 original skills plus 3 scoped Instagram advisors have one categorized owner", () => {
+test("39 existing skills plus 3 free Transitions.dev skills have one categorized owner", () => {
   const entries = Object.entries(catalog.skills);
-  assert.equal(entries.length, 39);
+  assert.equal(entries.length, 42);
   assert.ok(!catalog.skills["launch-video"], "generic launch skill must not reappear");
-  assert.equal(new Set(entries.map(([name]) => name)).size, 39);
+  assert.equal(new Set(entries.map(([name]) => name)).size, 42);
+  for(const name of ["transitions-dev","transitions-polish","transitions-ui-generation"]){
+    assert.equal(catalog.skills[name]?.category,"effects");
+    assert.equal(catalog.skills[name]?.route,"conditional");
+  }
   for (const [name, item] of entries) {
     assert.ok(item.category && item.branch && item.route && item.purpose, name);
   }

@@ -13,6 +13,7 @@ import {proposeBuffer} from "./scenario-buffer-plan.mjs";
 import {dateInTimezone,isDraftReady} from "./self-improvement-check.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { lessonArtPreflight } from "./review-lesson-art.mjs";
+import {prepareCodexMotionKitTestBrief} from "./codex-motionkit-test.mjs";
 import { suggestSemanticShots } from "./semantic-shot-adviser.mjs";
 import { CTA_PLATFORMS, getPlatformCtaStatus } from "./platform-cta.mjs";
 import { requirePlatformPackage, requireApprovedPlatformPackages } from "./platform-exports.mjs";
@@ -902,6 +903,9 @@ export const createServer = () => {
         const sourceRevision = requireFreshGitMain();
           const { item, episode } = await currentEpisode(date);
         const { item: runItem } = await ensureRunCopy(date);
+        const motionKitTest=await prepareCodexMotionKitTestBrief(item.id)
+          .catch(error=>({mode:"TEST_ONLY",status:"source-not-ready",
+            reason:String(error.message||error),aiApiConnected:false,productionEffectsEnabled:false}));
         const folder = reviewDir(item.id);
         const visualSystem = await readJson(path.join(PROJECT_ROOT, "content", "visual-system.json"));
         try {
@@ -910,6 +914,7 @@ export const createServer = () => {
           return {
             date, episodeId: item.id, reviewFolder: folder,
             stage: "action-plan-required",
+            motionKitTest,
             reason: error.message,
             episode,
             nextAgentAction: "Read content/EDITING_SPEC.md, content/EPISODE_SCHEMA.md and content/GRAPHIC_SCENES.md. Author every scene's complete meaning-linked motionBeats with update_production_plan. Use graphic nodes/tracks for new drawings/actions instead of substituting a cup or leaving a blank stage. Register the new immutable CTA context, then retry preparation. No additional format approval is needed.",
@@ -920,7 +925,7 @@ export const createServer = () => {
         // the exact Codex frame brief until its frames pass the review service.
         const art = await lessonArtPreflight(episode);
         if (!art.ready) {
-          return { date, episodeId: item.id, reviewFolder: folder, ...art, publishing: "nothing was published" };
+          return { date, episodeId: item.id, reviewFolder: folder, motionKitTest, ...art, publishing: "nothing was published" };
         }
         const voiceProfile = await requireApprovedVoiceProfile(item.id);
         const needsVoice =
@@ -993,6 +998,7 @@ export const createServer = () => {
           episodeId: item.id,
           stage: platformPackagesComplete ? "ready-for-review" : "partial",
           reviewFolder: folder,
+          motionKitTest,
           sourceRevision,
           files: {
             video: path.join(folder, "video.mp4"),

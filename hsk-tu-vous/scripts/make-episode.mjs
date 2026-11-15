@@ -7,6 +7,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
 import { lessonArtPreflight } from "./review-lesson-art.mjs";
+import {prepareCodexMotionKitTestBrief} from "./codex-motionkit-test.mjs";
 import {
   PROJECT_ROOT,
   CALENDAR_PATH,
@@ -54,7 +55,17 @@ const item = resolved ? await getCalendarItemByDate(resolved.selectedDate) : /^\
   : await getCalendarItem(input);
 const result = await prepareLanguagePackages(languages, async (language) => {
   const published = confirmedPublishedFor(item.id);
-  if (published.length) return { status: { stage: "externally-verified-published", records: published }, reviewFolder: reviewDir(item.id) };
+  if (published.length) return { status: { stage: "externally-verified-published", records: published },
+    motionKitTest:{mode:"TEST_ONLY",language,status:"skipped-already-published",aiApiConnected:false},
+    reviewFolder: reviewDir(item.id) };
+  // Separate TEST briefs and Codex decisions for each narration language.
+  // This advisory step does not enable effects or invoke a separate AI API.
+  const motionKitTest = await prepareCodexMotionKitTestBrief(item.id,{language}).catch(error=>({
+    mode:"TEST_ONLY",language,status:"source-not-ready",reason:String(error.message||error),
+    aiApiConnected:false,productionEffectsEnabled:false
+  }));
+  console.log("[MOTIONKIT TEST ONLY — Codex chooses, "+language+", no new AI API]");
+  console.log(JSON.stringify(motionKitTest,null,2));
   const { episode } = await getRunEpisodeByDate(item.date);
   const voiceProfile = await requireApprovedVoiceProfile(item.id);
   if (episode.voiceProvider !== voiceProfile.provider)
@@ -96,7 +107,7 @@ const result = await prepareLanguagePackages(languages, async (language) => {
   for (const [platform, exported] of Object.entries(status.platformPackages ?? {})) {
     console.log(`${platform}: ${exported.video}`);
   }
-  return { stage: "ready-for-review", reviewFolder: folder, status, sourceRevision };
+  return { stage: "ready-for-review", motionKitTest, reviewFolder: folder, status, sourceRevision };
 });
 await writeJson(path.join(PROJECT_ROOT, "review", item.id, "languages-status.json"), { date: item.date, episodeId: item.id, ...result });
 console.log(JSON.stringify(result, null, 2));

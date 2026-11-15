@@ -21,6 +21,8 @@ import { BoldMotionScene } from "./BoldMotionScene";
 import { NarratedMotionScene } from "./NarratedMotionScene";
 import { NarratedActionScene, referenceTone } from "./NarratedActionScene";
 import { IllustratedLessonScene } from "./IllustratedLessonScene";
+import {assertMotionKitCuePlanMatches} from "../scripts/motion-kit-cue-plan.mjs";
+import type {BoundMotionKitPlan,BoundArtMotionScene} from "../scripts/motion-kit-cue-plan.mjs";
 import {validateActionLesson} from "../scripts/action-design-plan.mjs";
 import type {MotionBeat, ResolvedMotionBeat} from "../scripts/motion-design-plan.mjs";
 import { assertCueTimelineMatches } from "../scripts/cue-timeline.mjs";
@@ -80,6 +82,7 @@ type LessonEpisode = {
 type EpisodeProps = {
   episode: LessonEpisode;
   cueTimeline?: CueTimeline;
+  motionKitPlan?: BoundMotionKitPlan;
   semanticTimeline?: SemanticTimeline;
   captionSections?: { startMs: number; endMs: number; styleId: string }[];
 };
@@ -1005,9 +1008,10 @@ const LessonSlide: React.FC<{
   semanticScene?: SemanticTimelineScene;
   motionBeats?: ResolvedMotionBeat[];
   promoCue?: ResolvedMotionBeat | null;
+  motionKitScene?: BoundArtMotionScene;
   motionDesignEnabled?: boolean;
   motionDesignStyle?: string;
-}> = ({ episodeId, scene, index, sceneCount, durationFrames, timelineStartMs, captions, semanticScene, motionBeats = [], promoCue, motionDesignEnabled = false, motionDesignStyle }) => {
+}> = ({ episodeId, scene, index, sceneCount, durationFrames, timelineStartMs, captions, semanticScene, motionBeats = [], promoCue, motionKitScene, motionDesignEnabled = false, motionDesignStyle }) => {
   // A semantic scene must be bound to a compiled, exact-cue timeline.
   if (scene.semanticShot && (!semanticScene || semanticScene.sceneId !== scene.id))
     throw new Error("Semantic scene missing a matching audio-cue timeline: " + scene.id);
@@ -1198,7 +1202,7 @@ const LessonSlide: React.FC<{
     >
       {motionDesign && motionDesignStyle==="explain-actions-v1" && narratedBeats.length ? (
         narratedBeats.some((beat) => (beat.visual as {illustration?: unknown} | undefined)?.illustration)
-          ? <IllustratedLessonScene episodeId={episodeId} frame={frame} beats={narratedBeats}/>
+          ? <IllustratedLessonScene episodeId={episodeId} frame={frame} beats={narratedBeats} motionKitScene={motionKitScene}/>
           : <NarratedActionScene frame={frame} beats={narratedBeats} tone={referenceTone(index)}/>
       ) : motionDesign && narratedBeats.length ? (
         <NarratedMotionScene sceneId={scene.id} frame={frame} beats={narratedBeats}/>
@@ -1365,9 +1369,13 @@ const LessonSlide: React.FC<{
   );
 };
 
-const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, captionSections: variantCaptionSections, semanticTimeline: legacySemanticTimeline }) => {
+const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, motionKitPlan, captionSections: variantCaptionSections, semanticTimeline: legacySemanticTimeline }) => {
   const { durationInFrames } = useVideoConfig();
   if (cueTimeline) assertCueTimelineMatches(episode, cueTimeline, FPS);
+  if (motionKitPlan) {
+    if (!cueTimeline) throw new Error("MotionKit cannot run without imported voice cues");
+    assertMotionKitCuePlanMatches(episode, cueTimeline, motionKitPlan);
+  }
   const semanticTimeline = cueTimeline?.semanticTimeline ?? legacySemanticTimeline;
   const needsCueTimeline = episode.scenes.some((scene) => scene.motionBeats?.length || scene.promoVisual) ||
     episode.motionDesignStyle === "explain-actions-v1";
@@ -1422,6 +1430,7 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, captionSect
             captions={cueTimeline?.wordCues ?? episode.captions ?? []}
             semanticScene={semanticTimeline?.scenes.find(item => item.sceneId === scene.id)}
             motionBeats={cueTimeline?.scenes.find((item) => item.sceneId === scene.id)?.motionBeats}
+            motionKitScene={motionKitPlan?.scenes.find((item) => item.sceneId === scene.id)}
             promoCue={cueTimeline?.scenes.find((item) => item.sceneId === scene.id)?.promoCue}
             motionDesignEnabled={episode.motionDesign === true}
             motionDesignStyle={episode.motionDesignStyle}

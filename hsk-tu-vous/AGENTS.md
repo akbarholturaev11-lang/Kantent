@@ -17,7 +17,7 @@ Before work, read `AI_RULES.md` (global guardrails), `PROJECT_MEMORY.md` (archit
 | **HSK AI News — ChatGPT scheduled, every 3 days** | its schedule | source-verified static photo news to the four authorized feeds (`content/telegram-agent.json`) | video, Reels, Stories, RU Facebook |
 | **GitHub Actions** | push/PR, or an owner dispatch | consistency and test CI; `video-review.yml` review renders; the Zernio publish workflows only on an owner dispatch with exact hashes | publishing on their own |
 
-Handoffs: Calendar Reserve → Codex (complete sources); Codex → owner (one preview bundle); owner → Codex or Actions (exact approval); Feedback → Calendar Reserve (hypotheses and test IDs); any agent → `docs/audits/CURRENT_TASKS.md` (open defects). Every agent first reads the latest `main`.
+Handoffs: Calendar Reserve → Codex (complete sources); Codex → owner (one preview bundle); owner → Codex or Actions (exact approval); Feedback → Calendar Reserve (hypotheses and test IDs); any agent → `docs/audits/CURRENT_TASKS.md` (open defects). Every agent first reads the latest `main`.\n\n**Codex video-start check — MotionKit TEST ONLY:** Read the experimental motion section at the beginning of `content/WORKFLOW.md` before every video job. The **Codex agent itself** makes the semantic component choice; the code only provides deterministic candidate lists. No new AI API/keys are connected. This is a TEST-only pilot introduced by PR #70; even after merging code, the optional effects are off by default pending real-voice visual QA and exact owner approval. Never mistake a TEST brief for default rendering, owner approval or publication.\n
 
 ## Source ownership (do not duplicate values)
 

@@ -235,6 +235,24 @@
       "route": "conditional",
       "branch": "special",
       "purpose": "Read-only, source-traceable competitor Reel analysis without scraping or fabricated engagement data"
+    },
+    "transitions-dev": {
+      "category": "effects",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Free Transitions.dev UI motion recipes for adaptation to deterministic Remotion frames; not a production dependency"
+    },
+    "transitions-polish": {
+      "category": "effects",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "Transition polish reference for smooth semantic frame-based transitions; no CSS-timed rendering"
+    },
+    "transitions-ui-generation": {
+      "category": "effects",
+      "route": "conditional",
+      "branch": "special",
+      "purpose": "UI motion generation reference, preview-only until evidence- and cue-bound adaptation passes QA"
     }
   },
   "recipes": {

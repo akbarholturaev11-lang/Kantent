@@ -15,6 +15,8 @@ import { prepareSemanticRender } from "./semantic-review-integration.mjs";
 import { validateProductionDuration } from "./duration-policy.mjs";
 import { compileMotionDesignTimeline } from "./motion-design-plan.mjs";
 import { compileCueTimeline } from "./compile-cue-timeline.mjs";
+import {compileMotionKitCuePlan} from "./motion-kit-cue-plan.mjs";
+import {loadValidCodexMotionTestDecision} from "./codex-motionkit-test.mjs";
 import { buildCaptionSections, groupTimedCaptions } from "./caption-utils.mjs";
 import { buildActionCaptionScenes, validateActionSubtitlePages } from "./action-text-layout.mjs";
 import { assertImportedAudioHash } from "./voice-import-state.mjs";
@@ -96,6 +98,18 @@ const cueTimeline = compileCueTimeline(episode, {
   presentationPolicy: visualSystem.lessonPresentation,
   semanticTimeline,
 });
+const motionKitEnv=process.env.HSK_AI_MOTION_KIT_REVIEW ?? "0";
+if(!["0","1"].includes(motionKitEnv))
+  throw Error("HSK_AI_MOTION_KIT_REVIEW must be 0 (default) or explicit 1");
+if(motionKitEnv==="1" && ["approved","published"].includes(episode.publishingStatus))
+  throw Error("MotionKit review cannot modify approved or published video snapshots");
+// TEST ONLY: the existing Codex agent decides; no model/API is invoked here.
+const codexMotionDecision=motionKitEnv==="1"
+  ? (await loadValidCodexMotionTestDecision(episode.id)).decision
+  : null;
+const motionKitPlan=codexMotionDecision
+  ? compileMotionKitCuePlan(episode,cueTimeline,{contentType:"lesson",codexDecision:codexMotionDecision})
+  : null;
 validateActionSubtitlePages(
   groupTimedCaptions(cueTimeline.wordCues, {
     ...visualSystem.captions,
@@ -119,6 +133,7 @@ if (semanticTimeline) await writeJson(path.join(folder, "visual-timeline.json"),
 if (promoTimeline) await writeJson(path.join(folder,"promo-timeline.json"),promoTimeline);
 if (motionTimeline) await writeJson(path.join(folder, "motion-timeline.json"), motionTimeline);
 await writeJson(path.join(folder, "cue-timeline.json"), cueTimeline);
+if (motionKitPlan) await writeJson(path.join(folder, "motion-kit-cue-plan.json"), motionKitPlan);
 await writeStatus(id, {
   stage: "rendering",
   sourceRevision,
@@ -153,6 +168,7 @@ try {
     workDir: path.join(folder, ".render-work"),
     semanticTimeline,
     cueTimeline,
+    motionKitPlan,
   });
   for (const [platform, variant] of Object.entries(episodes)) {
     const files = paths[platform];
