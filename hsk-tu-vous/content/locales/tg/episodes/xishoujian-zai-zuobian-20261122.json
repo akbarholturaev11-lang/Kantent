@@ -1,0 +1,1158 @@
+{
+  "id": "xishoujian-zai-zuobian-20261122",
+  "date": "2026-11-22",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "tg-TJ",
+  "title": "Ду дар: ҳоҷатхона аз чап аст ё рост? — қисми 2",
+  "level": "HSK 1–2",
+  "topic": "Гуфтани ҷой: 洗手间在左边, самти рост — 右边",
+  "durationTargetSec": 48,
+  "caption": "Анҷоми ҳикоя: 洗手间在左边 — «Ҳоҷатхона дар тарафи чап аст»; 右边 — «тарафи рост».",
+  "hashtags": [
+    "#HSKAI",
+    "#ЗабониЧинӣ",
+    "#HSK1",
+    "#ЗабониХитоӣ"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "洗手间在左边。 Xǐshǒujiān zài zuǒbian. — Ҳоҷатхона дар тарафи чап аст.",
+    "洗手间在右边。 Xǐshǒujiān zài yòubian. — Ҳоҷатхона дар тарафи рост аст.",
+    "Қолаб: номи ҷой + 在 + 左边 / 右边; ин ҷавоб ба 在哪儿 мебошад."
+  ],
+  "examples": [
+    "左边 zuǒbian — тарафи чап",
+    "右边 yòubian — тарафи рост",
+    "洗手间在左边。 Xǐshǒujiān zài zuǒbian. — Ҳоҷатхона дар тарафи чап аст.",
+    "洗手间在右边。 Xǐshǒujiān zài yòubian. — Ҳоҷатхона дар тарафи рост аст."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 9,
+      "headline": "КАДОМ ДАРРО ИНТИХОБ КУНЕМ?",
+      "narration": "Панда ба роҳрави қаҳвахона расид: дар пешаш ду дар аст. Маймунча ба чап ишора мекунад: 洗手间在左边 — ҳоҷатхона дар тарафи чап аст. Ин ҳамон дар!",
+      "cards": [
+        {
+          "hanzi": "洗手间在左边。",
+          "pinyin": "Xǐshǒujiān zài zuǒbian.",
+          "meaning": "Ҳоҷатхона дар тарафи чап аст."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "ду дар аст",
+          "explains": "Бо тасвири қаҳвахона маънои hook-ро нишон диҳад: Ҳоҷатхона дар тарафи чап аст.; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Ду роҳи имконпазир",
+            "hanzi": "洗手间在左边。",
+            "pinyin": "Xǐshǒujiān zài zuǒbian.",
+            "meaning": "Ҳоҷатхона дар тарафи чап аст.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 410,
+                    "cy": 235,
+                    "rx": 305,
+                    "ry": 135,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-main-room"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.12
+            }
+          }
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "洗手间在左边",
+          "explains": "Бо тасвири қаҳвахона маънои hook-ро нишон диҳад: Ҳоҷатхона дар тарафи чап аст.; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Интихоби дуруст",
+            "hanzi": "洗手间在左边。",
+            "pinyin": "Xǐshǒujiān zài zuǒbian.",
+            "meaning": "Ҳоҷатхона дар тарафи чап аст.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 260,
+                    "cy": 235,
+                    "rx": 115,
+                    "ry": 125,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-side-corridor"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.24
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "structure",
+      "kind": "example",
+      "durationSec": 13,
+      "headline": "ҶУМЛАИ ҶОЙ",
+      "narration": "Ҷавобро месозем: 洗手间 — ҳоҷатхона, баъд 在 — ҷойгир аст, ва 左边 — тарафи чап. Ҳамин тавр: 洗手间在左边. Ҷой баъди 在 меояд.",
+      "cards": [
+        {
+          "hanzi": "洗手间在左边。",
+          "pinyin": "Xǐshǒujiān zài zuǒbian.",
+          "meaning": "Ҳоҷатхона дар тарафи чап аст."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "structure-action-1",
+          "kind": "graphic",
+          "cueText": "洗手间 — ҳоҷатхона",
+          "explains": "Бо тасвири қаҳвахона маънои structure-ро нишон диҳад: Ҳоҷатхона дар тарафи чап аст.; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Номи ҷой",
+            "hanzi": "洗手间在左边。",
+            "pinyin": "Xǐshǒujiān zài zuǒbian.",
+            "meaning": "Ҳоҷатхона дар тарафи чап аст.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "question-marker",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 410,
+                    "cy": 78,
+                    "r": 26,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-side-corridor"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.12
+            }
+          }
+        },
+        {
+          "id": "structure-action-2",
+          "kind": "graphic",
+          "cueText": "左边 — тарафи чап",
+          "explains": "Бо тасвири қаҳвахона маънои structure-ро нишон диҳад: Ҳоҷатхона дар тарафи чап аст.; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Самти чап",
+            "hanzi": "洗手间在左边。",
+            "pinyin": "Xǐshǒujiān zài zuǒbian.",
+            "meaning": "Ҳоҷатхона дар тарафи чап аст.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 260,
+                    "cy": 235,
+                    "rx": 115,
+                    "ry": 125,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-two-doors"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.24
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "direction",
+      "kind": "context",
+      "durationSec": 12,
+      "headline": "ЧАП ВА РОСТ",
+      "narration": "Агар дар тарафи рост бошад, мегӯем: 洗手间在右边. 左边 — чап, 右边 — рост. Тартиб як аст, танҳо самт иваз мешавад.",
+      "cards": [
+        {
+          "hanzi": "洗手间在右边。",
+          "pinyin": "Xǐshǒujiān zài yòubian.",
+          "meaning": "Чап / рост."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "direction-action-1",
+          "kind": "graphic",
+          "cueText": "洗手间在右边",
+          "explains": "Бо тасвири қаҳвахона маънои direction-ро нишон диҳад: Чап / рост.; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Тарафи дигар",
+            "hanzi": "洗手间在右边。",
+            "pinyin": "Xǐshǒujiān zài yòubian.",
+            "meaning": "Чап / рост.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 560,
+                    "cy": 235,
+                    "rx": 115,
+                    "ry": 125,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-side-corridor"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.12
+            }
+          }
+        },
+        {
+          "id": "direction-action-2",
+          "kind": "graphic",
+          "cueText": "右边 — рост",
+          "explains": "Бо тасвири қаҳвахона маънои direction-ро нишон диҳад: Чап / рост.; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Муқоисаи самтҳо",
+            "hanzi": "洗手间在右边。",
+            "pinyin": "Xǐshǒujiān zài yòubian.",
+            "meaning": "Чап / рост.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 410,
+                    "cy": 235,
+                    "rx": 305,
+                    "ry": 135,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-two-doors"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.24
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "recall",
+      "kind": "example",
+      "durationSec": 14,
+      "headline": "РОҲ ПАЙДО ШУД",
+      "narration": "Худро бисанҷ: Панда ба кадом тараф меравад? Ба чап! Ҷавоб: 洗手间在左边. Ӯ дари дурустро ёфт. Ҳикоя тамом шуд: мепурсем 在哪儿, ҷавоб медиҳем 在左边.",
+      "cards": [
+        {
+          "hanzi": "洗手间在左边。",
+          "pinyin": "Xǐshǒujiān zài zuǒbian.",
+          "meaning": "Ҳоҷатхона дар тарафи чап аст."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recall-action-1",
+          "kind": "graphic",
+          "cueText": "ба кадом тараф меравад",
+          "explains": "Бо тасвири қаҳвахона маънои recall-ро нишон диҳад: Ҳоҷатхона дар тарафи чап аст.; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Саволи такрорӣ",
+            "hanzi": "洗手间在左边。",
+            "pinyin": "Xǐshǒujiān zài zuǒbian.",
+            "meaning": "Ҳоҷатхона дар тарафи чап аст.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 410,
+                    "cy": 235,
+                    "rx": 305,
+                    "ry": 135,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-two-doors"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.12
+            }
+          }
+        },
+        {
+          "id": "recall-action-2",
+          "kind": "graphic",
+          "cueText": "洗手间在左边",
+          "explains": "Бо тасвири қаҳвахона маънои recall-ро нишон диҳад: Ҳоҷатхона дар тарафи чап аст.; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Анҷоми сафар",
+            "hanzi": "洗手间在左边。",
+            "pinyin": "Xǐshǒujiān zài zuǒbian.",
+            "meaning": "Ҳоҷатхона дар тарафи чап аст.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 260,
+                    "cy": 235,
+                    "rx": 115,
+                    "ry": 125,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-left-door-open"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.24
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "tg-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "Elon.io — 左 / 右 (Left / Right)",
+      "url": "https://elon.io/grammar/chinese-mandarin/coverbs/zuo-you-left-right",
+      "checkedAt": "2026-11-17",
+      "supports": "Verifies 左边 (zuǒbian) and 右边 (yòubian) with 在 for location, e.g. 洗手间在右边."
+    },
+    {
+      "title": "Elon.io — 方位词 localizers",
+      "url": "https://elon.io/grammar/chinese-mandarin/coverbs/localizers-overview",
+      "checkedAt": "2026-11-17",
+      "supports": "Verifies left/right side localizers and position complement after 在."
+    }
+  ],
+  "hookExperiment": {
+    "id": "xishoujian-zai-zuobian-20261122-tg-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Идомаи воқеии ду дар ва ҷавоби барвақт метавонад тамошоро беҳтар кунад; ҳанӯз чен нашудааст.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-17"
+  },
+  "audienceProblem": "Навомӯз баъди саволи «куҷо» ҷавоби бо 左边 ва 右边-ро намефаҳмад ва тартиби калимаҳоро омехта мекунад.",
+  "learningOutcome": "Ҷумлаҳои 洗手间在左边 ва 洗手间在右边-ро фаҳмад ва самтро баъди 在 гӯяд.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Ҳамон роҳрави қаҳвахонаи Чин, ду дари якхела",
+      "learnerGoal": "Баъди саволи қисми якум аз рӯи ҷавоби «чап» дари дурустро интихоб кунад.",
+      "obstacle": "Самтро мешунавад, аммо 左边 ва 右边-ро фарқ намекунад."
+    },
+    "selectionReason": "Ҷавоби аввал дар оғоз меояд, ҳар қисм қоидаи пурра меомӯзад; идома ба интихоби воқеии ду дар асос ёфтааст, на ба сирри сохта.",
+    "firstPayoff": {
+      "sceneId": "hook",
+      "cueText": "洗手间在左边"
+    },
+    "reHooks": []
+  },
+  "localization": {
+    "language": "tg",
+    "sourceEpisodeId": "xishoujian-zai-zuobian-20261122",
+    "sourceHash": "664f363bd6174f1451e6a38a719ae6e010e8e8f2b7715101685eb6ac64525fec",
+    "authoredOn": "2026-11-17",
+    "status": "draft-awaiting-audio-review"
+  }
+}
