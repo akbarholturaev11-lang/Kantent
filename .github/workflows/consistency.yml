@@ -66,7 +66,7 @@ jobs:
       - name: Validate active source references and config
         run: npm run check:consistency
       - name: Validate content experiments and the publication ledger
-        run: node --test scripts/experiments.test.mjs scripts/publication-ledger.test.mjs scripts/content-attribution.test.mjs
+        run: node --test scripts/experiments.test.mjs scripts/publication-ledger.test.mjs scripts/content-attribution.test.mjs scripts/weekly-autopilot.test.mjs
       - name: Validate standalone ad stories and minimalist frame planning
         run: |
           node --check scripts/promo-plan.mjs

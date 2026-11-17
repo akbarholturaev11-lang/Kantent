@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "$comment": "Owner rule 2026-11-17: the weekly autopilot prepares next week's videos and schedules each one on its own calendar date without asking the owner. Runbook: content/WORKFLOW.md#weekly-autopilot. Helper: scripts/weekly-autopilot.mjs. This is the ONE owner-authorized exception to per-video preview approval; every other route keeps it.",
+  "decidedOn": "2026-11-17",
+  "ownerWords": "хар хафта якшабакуни соат 14:02 да … агенти бирхафталик видеони олдиндан таёрлаб барчасини уз санасига ва бир кулай вахтни танлап режалаштирип кояди мени тастик бошка суралмайди. … Йикилса тузатиб каета уринснсин то утмагунча.",
+  "enabled": true,
+  "run": {
+    "weekday": "SU",
+    "time": "14:02",
+    "timezone": "Asia/Shanghai",
+    "agentName": "Hafta Rejachisi",
+    "runner": "scheduled task on the owner's Mac (owner choice 2026-11-17: keys, VPN and Remotion are local)",
+    "taskName": "hsk-hafta-rejachisi",
+    "coversWeek": "the next Monday through Sunday in calendar.json, every content type, every default production language"
+  },
+  "approval": {
+    "standingOwnerApproval": true,
+    "scope": "Only videos produced by this weekly run that pass every automated gate below. The run records the owner's standing approval with the exact video and post hashes it published; it never covers a manual or other route.",
+    "requiredGates": [
+      "complete source draft in every language (content:buffer), with the active experiment arm (content:experiments -- --check)",
+      "lesson-art frames generated, automatically reviewed AND looked at and confirmed (content:art:review)",
+      "meaning visuals covered (meaning-visual-check --strict)",
+      "registered CTA and verified kept CTA voice",
+      "Gemini voice with STT-verified word timestamps (never guessed)",
+      "cue timeline, render gates and node scripts/mix-check.mjs pass",
+      "the agent looked at cue frames of every final MP4 (EDITING_SPEC.md#review-before-delivery)"
+    ]
+  },
+  "publishTimes": {
+    "rule": "One post per account per day, on the item's own calendar date. Default 16:00 in the audience's local time; the agent may choose another time only with sourced Zernio evidence written in its report.",
+    "default": {
+      "ru": {
+        "localTime": "16:00",
+        "timezone": "Europe/Moscow"
+      },
+      "tg": {
+        "localTime": "16:00",
+        "timezone": "Asia/Dushanbe"
+      }
+    },
+    "manualPlatforms": "Platforms with zernioPublishingAuthorized false in publication-destinations.json (RU Facebook) are left for the owner and listed in the report."
+  },
+  "retry": {
+    "rule": "When a gate fails, diagnose the root cause, fix it and retry until it passes (owner 2026-11-17). Free steps (STT resume, re-render, source fixes, meaning visuals) retry without limit inside the run.",
+    "rateLimits": "Owner 2026-11-17: when the Gemini (free-tier) quota is exhausted (HTTP 429), switch TTS/STT to the approved OpenRouter transport (HSK_AI_OPENROUTER_FALLBACK_ENABLED=true + OPENROUTER_API_KEY; the voice script does this itself) on the SAME saved speech. Only if OpenRouter also cannot verify the words, wait for the Gemini quota reset and --resume the kept take. Never rotate Google keys, never mix TTS providers inside a saved take, never accept unverified words.",
+    "paidCaps": {
+      "newVoiceTakesPerVideoLanguage": 3,
+      "paidFrameRegenerationsPerFrame": 2
+    },
+    "afterCaps": "Leave that one video unscheduled, keep every paid artifact, continue with the others and name the blocker in the report.",
+    "providerOrder": [
+      "gemini-direct",
+      "openrouter",
+      "wait-for-gemini-reset-then-resume"
+    ],
+    "openRouterOwnerWords": "гемини бупул тугаса опен роутердан фойдалансин."
+  },
+  "report": {
+    "file": "content/autopilot/<week-start>-report.md",
+    "contents": "per date and language: content ID, experiment arm, gates, scheduled platforms with Zernio post IDs and times, manual platforms, blockers and money spent",
+    "commit": "Commit and push the week's source fixes, frames, CTA/voice library, ledger and report to main."
+  }
+}

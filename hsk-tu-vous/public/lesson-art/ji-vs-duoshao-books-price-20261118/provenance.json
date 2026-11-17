@@ -1,0 +1,133 @@
+{
+  "episodeId": "ji-vs-duoshao-books-price-20261118",
+  "assets": {
+    "office": {
+      "file": "office.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "d77756dc5ea87eaf73549bc97624c03b31d7bb768fce0f3ef3b91da1a53cd440",
+      "characters": [],
+      "references": [],
+      "sha256": "493986a2ee1c7e72c260ff09285c2d3f0539981258d6d5170e82b6dd73053ccd",
+      "rawSha256": "e509f65775f3b5fcfcf4d3891c3991361456e1a56b3906dad9d9a77bdca40c3c",
+      "generationId": "gen-1794902689-Bk6EuaUGp4Kdeg8gZz5b",
+      "usage": {
+        "prompt_tokens": 219,
+        "completion_tokens": 1680,
+        "total_tokens": 1899,
+        "cost": 0.1009095,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1009095,
+          "upstream_inference_prompt_cost": 0.0001095,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-17T08:05:06.208Z",
+      "visual": {
+        "by": "Looked at it: text-free (blank laptop screens, blank book spines), no people or characters, modern Chinese office with city windows and a stack of plain books; sharp, clean, room for the cast.",
+        "sha256": "493986a2ee1c7e72c260ff09285c2d3f0539981258d6d5170e82b6dd73053ccd",
+        "at": "2026-11-17T08:06:20.104Z"
+      }
+    },
+    "office-books": {
+      "file": "office-books.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "a734d48be7725dba2c9cdc14df044bc7d08d39afe42277a6825c8f37c26055a8",
+      "characters": [],
+      "references": [
+        "office"
+      ],
+      "sha256": "1686c0111736d3ed296f1b56063ca8e1c96579733d8b36080d54495d7c890283",
+      "rawSha256": "fa58645b1566765945a45a396489329ba4071464b4b6c37b6fbad27e2fdfc5b6",
+      "generationId": "gen-1794902708-I3cjNoFIabnQ6RYs0PsX",
+      "usage": {
+        "prompt_tokens": 1335,
+        "completion_tokens": 1680,
+        "total_tokens": 3015,
+        "cost": 0.1014675,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1014675,
+          "upstream_inference_prompt_cost": 0.0006675,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-17T08:05:25.853Z",
+      "visual": {
+        "by": "Looked at it: same office desk and window, small stack of plain books plus a blank notebook, no text, no people or characters, matching palette; clean composition.",
+        "sha256": "1686c0111736d3ed296f1b56063ca8e1c96579733d8b36080d54495d7c890283",
+        "at": "2026-11-17T08:06:20.443Z"
+      }
+    },
+    "office-price": {
+      "file": "office-price.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "fa66fde528f61b27071e419592b93976ef1233871d398414997ec8cff295c84c",
+      "characters": [],
+      "references": [
+        "office",
+        "office-books"
+      ],
+      "sha256": "733f93e2a0580ccf17516836f553c4d5b2a0d627c09677d4129d0df25a639700",
+      "rawSha256": "141efaf88bbc0884f1867edcb6ff3998f229c7a68f3d22336787e48026b3d319",
+      "generationId": "gen-1794902726-mKcRipDfA6zIlFShGNtM",
+      "usage": {
+        "prompt_tokens": 2452,
+        "completion_tokens": 1680,
+        "total_tokens": 4132,
+        "cost": 0.102026,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.102026,
+          "upstream_inference_prompt_cost": 0.001226,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-17T08:05:47.935Z",
+      "visual": {
+        "by": "Looked at it: same office, one plain book beside a blank receipt slip whose lines are abstract with no legible numbers or letters (checked full-resolution crop); no people or characters; consistent style.",
+        "sha256": "733f93e2a0580ccf17516836f553c4d5b2a0d627c09677d4129d0df25a639700",
+        "at": "2026-11-17T08:06:20.786Z"
+      }
+    }
+  }
+}
