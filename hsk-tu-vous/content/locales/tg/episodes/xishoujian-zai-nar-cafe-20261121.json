@@ -1,0 +1,1154 @@
+{
+  "id": "xishoujian-zai-nar-cafe-20261121",
+  "date": "2026-11-21",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "tg-TJ",
+  "title": "Ҳоҷатхона куҷост? Панда дар қаҳвахона — қисми 1",
+  "level": "HSK 1–2",
+  "topic": "Саволи боадабона дар бораи ҷой: 请问，洗手间在哪儿？",
+  "durationTargetSec": 48,
+  "caption": "Дар қаҳвахонаи Чин Панда мепурсад: 请问，洗手间在哪儿？ — «Бубахшед, ҳоҷатхона куҷост?» Қисми якуми ҳикоя.",
+  "hashtags": [
+    "#HSKAI",
+    "#ЗабониЧинӣ",
+    "#HSK1",
+    "#ЗабониХитоӣ"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "请问，洗手间在哪儿？ Qǐngwèn, xǐshǒujiān zài nǎr? — Бубахшед, ҳоҷатхона куҷост?",
+    "Дар саволи ҷой: номи ҷой + 在 + 哪儿; «куҷо» дар охир меояд ва 吗 лозим нест."
+  ],
+  "examples": [
+    "请问 qǐngwèn — бубахшед, иҷозат диҳед пурсам",
+    "洗手间 xǐshǒujiān — ҳоҷатхона",
+    "在哪儿 zài nǎr — дар куҷо",
+    "洗手间在哪儿？ Xǐshǒujiān zài nǎr? — Ҳоҷатхона куҷост?"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 9,
+      "headline": "ҶОЙРО ЧӢ ГУНА ПУРСЕМ?",
+      "narration": "Панда бо маймунча ба қаҳвахонаи Чин даромаданд. Панда мепурсад: 请问，洗手间在哪儿？ Ин саволи боадабона аст: «Бубахшед, ҳоҷатхона куҷост?»",
+      "cards": [
+        {
+          "hanzi": "请问，洗手间在哪儿？",
+          "pinyin": "Qǐngwèn, xǐshǒujiān zài nǎr?",
+          "meaning": "Бубахшед, ҳоҷатхона куҷост?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "Панда мепурсад",
+          "explains": "Бо тасвири қаҳвахона маънои hook-ро нишон диҳад: Бубахшед, ҳоҷатхона куҷост?; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Вазъият дар қаҳвахона",
+            "hanzi": "请问，洗手间在哪儿？",
+            "pinyin": "Qǐngwèn, xǐshǒujiān zài nǎr?",
+            "meaning": "Бубахшед, ҳоҷатхона куҷост?",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "question-marker",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 410,
+                    "cy": 78,
+                    "r": 26,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-main-room"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.12
+            }
+          }
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "请问，洗手间在哪儿",
+          "explains": "Бо тасвири қаҳвахона маънои hook-ро нишон диҳад: Бубахшед, ҳоҷатхона куҷост?; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Ҷойи савол",
+            "hanzi": "请问，洗手间在哪儿？",
+            "pinyin": "Qǐngwèn, xǐshǒujiān zài nǎr?",
+            "meaning": "Бубахшед, ҳоҷатхона куҷост?",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 410,
+                    "cy": 235,
+                    "rx": 305,
+                    "ry": 135,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-side-corridor"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.24
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "structure",
+      "kind": "example",
+      "durationSec": 13,
+      "headline": "ТАРТИБИ САВОЛ",
+      "narration": "Ба тартиб нигоҳ кун: 洗手间 — ҳоҷатхона, баъд 在 — ҷойгир аст, ва 哪儿 — куҷо. Якҷоя: 洗手间在哪儿？ Калимаи саволӣ дар охир мемонад.",
+      "cards": [
+        {
+          "hanzi": "洗手间在哪儿？",
+          "pinyin": "Xǐshǒujiān zài nǎr?",
+          "meaning": "Ҳоҷатхона куҷост?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "structure-action-1",
+          "kind": "graphic",
+          "cueText": "洗手间 — ҳоҷатхона",
+          "explains": "Бо тасвири қаҳвахона маънои structure-ро нишон диҳад: Ҳоҷатхона куҷост?; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Номи ҷой",
+            "hanzi": "洗手间在哪儿？",
+            "pinyin": "Xǐshǒujiān zài nǎr?",
+            "meaning": "Ҳоҷатхона куҷост?",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 260,
+                    "cy": 235,
+                    "rx": 115,
+                    "ry": 125,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-side-corridor"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.12
+            }
+          }
+        },
+        {
+          "id": "structure-action-2",
+          "kind": "graphic",
+          "cueText": "哪儿 — куҷо",
+          "explains": "Бо тасвири қаҳвахона маънои structure-ро нишон диҳад: Ҳоҷатхона куҷост?; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Калимаи пурсиш",
+            "hanzi": "洗手间在哪儿？",
+            "pinyin": "Xǐshǒujiān zài nǎr?",
+            "meaning": "Ҳоҷатхона куҷост?",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "question-marker",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 410,
+                    "cy": 78,
+                    "r": 26,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-two-doors"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.24
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "direction",
+      "kind": "context",
+      "durationSec": 12,
+      "headline": "РОҲ ПАЙДО ШУД",
+      "narration": "Маймунча ба тарафи роҳрав ишора мекунад: 在那边 — ана он тараф. Панда акнун медонад, ки куҷо равад. Саволи ҷой фоида дод!",
+      "cards": [
+        {
+          "hanzi": "在那边。",
+          "pinyin": "Zài nàbiān.",
+          "meaning": "Ана он тараф."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "direction-action-1",
+          "kind": "graphic",
+          "cueText": "ба тарафи роҳрав ишора мекунад",
+          "explains": "Бо тасвири қаҳвахона маънои direction-ро нишон диҳад: Ана он тараф.; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Роҳи нишоншуда",
+            "hanzi": "在那边。",
+            "pinyin": "Zài nàbiān.",
+            "meaning": "Ана он тараф.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "route-arrow",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "390,325 390,190 368,220 390,190 412,220",
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-side-corridor"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.12
+            }
+          }
+        },
+        {
+          "id": "direction-action-2",
+          "kind": "graphic",
+          "cueText": "在那边",
+          "explains": "Бо тасвири қаҳвахона маънои direction-ро нишон диҳад: Ана он тараф.; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Самти роҳ",
+            "hanzi": "在那边。",
+            "pinyin": "Zài nàbiān.",
+            "meaning": "Ана он тараф.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 260,
+                    "cy": 235,
+                    "rx": 115,
+                    "ry": 125,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-two-doors"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.24
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "recall",
+      "kind": "example",
+      "durationSec": 14,
+      "headline": "ХУДРО БИСАНҶ",
+      "narration": "Худро бисанҷ: «Бубахшед, ҳоҷатхона куҷост?» — 请问，洗手间在哪儿？ Панда ба роҳрав мерасад. Аммо он ҷо ду дари якхела ҳаст — чап ё рост? Дар қисми дуюм ҷавоб маълум мешавад.",
+      "cards": [
+        {
+          "hanzi": "请问，洗手间在哪儿？",
+          "pinyin": "Qǐngwèn, xǐshǒujiān zài nǎr?",
+          "meaning": "Бубахшед, ҳоҷатхона куҷост?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recall-action-1",
+          "kind": "graphic",
+          "cueText": "Худро бисанҷ",
+          "explains": "Бо тасвири қаҳвахона маънои recall-ро нишон диҳад: Бубахшед, ҳоҷатхона куҷост?; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Такрори савол",
+            "hanzi": "请问，洗手间在哪儿？",
+            "pinyin": "Qǐngwèn, xǐshǒujiān zài nǎr?",
+            "meaning": "Бубахшед, ҳоҷатхона куҷост?",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 410,
+                    "cy": 235,
+                    "rx": 305,
+                    "ry": 135,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-two-doors"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.12
+            }
+          }
+        },
+        {
+          "id": "recall-action-2",
+          "kind": "graphic",
+          "cueText": "请问，洗手间在哪儿",
+          "explains": "Бо тасвири қаҳвахона маънои recall-ро нишон диҳад: Бубахшед, ҳоҷатхона куҷост?; навиштаҷот дар замина набошад.",
+          "visual": {
+            "title": "Ду дари пеш",
+            "hanzi": "请问，洗手间在哪儿？",
+            "pinyin": "Qǐngwèn, xǐshǒujiān zài nǎr?",
+            "meaning": "Бубахшед, ҳоҷатхона куҷост?",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "route-arrow",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "390,325 390,190 368,220 390,190 412,220",
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-side-corridor"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.24
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "tg-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "Elon.io — 哪儿 / 哪里 (Where)",
+      "url": "https://elon.io/grammar/chinese-mandarin/questions/nar-nali-where",
+      "checkedAt": "2026-11-17",
+      "supports": "Verifies 洗手间在哪儿？ (xǐshǒujiān zài nǎr), X + 在 + 哪儿 order and no redundant 吗."
+    },
+    {
+      "title": "LibreTexts — Placement of question words",
+      "url": "https://human.libretexts.org/Bookshelves/Languages/Chinese/Introductory_Chinese_Grammar_I_-_under_construction/02%3A_Grammatical_Structures/2.02%3A_Question_Forms/2.02%3A_Placement_of_question_words",
+      "checkedAt": "2026-11-17",
+      "supports": "Verifies the 哪儿/哪里 position stays where the location answer belongs."
+    }
+  ],
+  "hookExperiment": {
+    "id": "xishoujian-zai-nar-cafe-20261121-tg-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Вазъияти воқеии гум шудани роҳ ва ҷавоби зуд метавонад диққатро нигоҳ дорад; ҳанӯз санҷида нашудааст.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-17"
+  },
+  "audienceProblem": "Навомӯз дар қаҳвахонаи Чин ҷои ҳоҷатхонаро пурсида наметавонад ва «куҷо»-ро ба оғози ҷумла мебарад.",
+  "learningOutcome": "Бо тартиби ҷой + 在 + 哪儿 саволи 请问，洗手间在哪儿？-ро боадабона гӯяд.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Қаҳвахонаи Чин, роҳи аз пештахта то роҳрав",
+      "learnerGoal": "Боадабона ҷойи ҳоҷатхонаро пурсад ва аз рӯи ишора равад.",
+      "obstacle": "Тартиби «куҷо»-ро дар саволи хитойӣ намедонад."
+    },
+    "selectionReason": "Ҷавоби аввал дар оғоз меояд, ҳар қисм қоидаи пурра меомӯзад; идома ба интихоби воқеии ду дар асос ёфтааст, на ба сирри сохта.",
+    "firstPayoff": {
+      "sceneId": "hook",
+      "cueText": "请问，洗手间在哪儿"
+    },
+    "reHooks": []
+  },
+  "localization": {
+    "language": "tg",
+    "sourceEpisodeId": "xishoujian-zai-nar-cafe-20261121",
+    "sourceHash": "97eadd62a5b01979ef10a5e166f9178d10e7d6ff930f456f3fdb5dca6d4f5609",
+    "authoredOn": "2026-11-17",
+    "status": "draft-awaiting-audio-review"
+  }
+}
