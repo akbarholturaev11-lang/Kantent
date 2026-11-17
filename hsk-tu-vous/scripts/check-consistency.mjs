@@ -8,6 +8,7 @@ import { validateSeriesCalendar } from "./series-plan.mjs";
 import { auditPlanningBuffer, inspectDraftReadiness, dateInTimezone } from "./self-improvement-check.mjs";
 import { readPromoRules, reviewPromoPlan, reviewPromoVariants } from "./promo-plan.mjs";
 import {contentTypeOf,validateScheduledContent} from "./content-schedule.mjs";
+import { EXPERIMENTS_FILE, validateExperiments } from "./experiments.mjs";
 
 export const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -171,6 +172,14 @@ export function validateConsistency(root = projectRoot) {
     } catch(error){errors.push('content/feedback/publications.json: '+error.message);}
   }
   const calendar = readJson(root, "content/calendar.json", errors);
+  // Owner rule 2026-11-17: one valid experiments registry, one active test (content/EXPERIMENTS.md).
+  if (fs.existsSync(asPath(root, EXPERIMENTS_FILE))) {
+    const registry = readJson(root, EXPERIMENTS_FILE, errors);
+    const formats = readJson(root, "content/creative-formats.json", errors);
+    const variety = fs.existsSync(asPath(root, "content/visual-variety.json")) ? readJson(root, "content/visual-variety.json", errors) : null;
+    if (registry) for (const error of validateExperiments(registry, { goals: formats?.contentGoals?.byContentType ?? {}, variety }))
+      errors.push(`${EXPERIMENTS_FILE}: ${error}`);
+  }
   const voice = readJson(root, "content/voice-profile.json", errors);
   const cta = readJson(root, "content/cta-lab.json", errors);
   const hook = readJson(root, "content/hook-lab.json", errors);

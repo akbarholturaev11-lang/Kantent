@@ -1,4 +1,746 @@
 {
   "schemaVersion": 1,
-  "records": []
+  "records": [
+    {
+      "content": {
+        "id": "bi-comparison-height-20261116",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "521ccbeba91decd90a556d9c35a3811370ee57d531fc2e489d509e8740173ab2"
+      },
+      "platform": "instagram",
+      "accountId": "6a411e989d9472faae10a430",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6afbc4294a8ecfab59d2fdd2",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "a74356dbd523a601c073cef9bc56ba1d7a8182d793b2d98da72c7128dff4028f",
+      "approvedVideoSha256": "a74356dbd523a601c073cef9bc56ba1d7a8182d793b2d98da72c7128dff4028f",
+      "approvedAt": "2026-11-17T03:02:59.573Z",
+      "verifiedAt": "2026-11-17T03:04:11.249Z",
+      "scheduledFor": "2026-11-17T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "bi-comparison-height-20261116-ru-cta-v2",
+      "postPreviewSha256": "7c251d7bf1bb6f152f31419fa577130ce3cf3af71c29a5ca94788ffdb52e2826",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "bi-comparison-height-20261116-ru-hook-v1",
+        "hookFormat": "question",
+        "hookText": "В книжном магазине сравнивают рост: он выше меня. Как сказать по-китайски: с 比 или с 很?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "104dd42619a4af7456cad74ed2f9c63dab5a14ac3e0a82f4091223dec9fdb96f"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "ffb8946980d10be91f5b1f44",
+        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06"
+      }
+    },
+    {
+      "content": {
+        "id": "bi-comparison-height-20261116",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "521ccbeba91decd90a556d9c35a3811370ee57d531fc2e489d509e8740173ab2"
+      },
+      "platform": "youtube",
+      "accountId": "6ac96e053f8f4ffc10b0655f",
+      "accountUsername": "hskai_app",
+      "zernioPostId": "6afbc4ae86f07caca87ae669",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "3cf6a7ab142ada7ead74b11244a91a500f7ef8fa34609dbbb4cf9455e360dda9",
+      "approvedVideoSha256": "3cf6a7ab142ada7ead74b11244a91a500f7ef8fa34609dbbb4cf9455e360dda9",
+      "approvedAt": "2026-11-17T03:05:00.480Z",
+      "verifiedAt": "2026-11-17T03:06:23.611Z",
+      "scheduledFor": "2026-11-17T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "bi-comparison-height-20261116-youtube-cta-v1",
+      "postPreviewSha256": "f79272e97124ef5affa44fec75426f0db903bf7e21362155cbd67ef1f51c4d92",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "bi-comparison-height-20261116-ru-hook-v1",
+        "hookFormat": "question",
+        "hookText": "В книжном магазине сравнивают рост: он выше меня. Как сказать по-китайски: с 比 или с 很?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "104dd42619a4af7456cad74ed2f9c63dab5a14ac3e0a82f4091223dec9fdb96f"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "d1929cc0f416c2894a7bc586",
+        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06"
+      }
+    },
+    {
+      "content": {
+        "id": "bi-comparison-height-20261116",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "521ccbeba91decd90a556d9c35a3811370ee57d531fc2e489d509e8740173ab2"
+      },
+      "platform": "tiktok",
+      "accountId": "6ae16327a2845fbdb07e5ccb",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6afbc506660b23b40d686be9",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "1f84927d6f7377b44fc3ab4d98ed644e71336c53ef2183bc0326155652939772",
+      "approvedVideoSha256": "1f84927d6f7377b44fc3ab4d98ed644e71336c53ef2183bc0326155652939772",
+      "approvedAt": "2026-11-17T03:06:37.628Z",
+      "verifiedAt": "2026-11-17T03:07:52.044Z",
+      "scheduledFor": "2026-11-17T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "bi-comparison-height-20261116-tiktok-cta-v1",
+      "postPreviewSha256": "9cf7abda19818092d885402e3d55004415973bf464ffed01b95e332c1fac74ee",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "bi-comparison-height-20261116-ru-hook-v1",
+        "hookFormat": "question",
+        "hookText": "В книжном магазине сравнивают рост: он выше меня. Как сказать по-китайски: с 比 или с 很?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "c81e3b49530414a161675da0b51cdd9b1bd5f1cfc4c40f3ea478ac5bdee8e312"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "d75fca9a3c36866b1fda566d",
+        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06"
+      }
+    },
+    {
+      "content": {
+        "id": "bi-comparison-height-20261116",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "366ed91502617e9e204f1d83432b739c16d9ac68c5cf6f8c56e640ed0bc40931"
+      },
+      "platform": "instagram",
+      "accountId": "6ae0f16205fd6f5357f8503d",
+      "accountUsername": "hskai.apptj",
+      "zernioPostId": "6afbc565660b23b40d686cd7",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "ec76269e27429269dee5b2f4fef711d88929f9f34bfb9ca4e9dde1976764596c",
+      "approvedVideoSha256": "ec76269e27429269dee5b2f4fef711d88929f9f34bfb9ca4e9dde1976764596c",
+      "approvedAt": "2026-11-17T03:08:09.178Z",
+      "verifiedAt": "2026-11-17T03:09:27.210Z",
+      "scheduledFor": "2026-11-17T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "bi-comparison-height-20261116-tg-cta-v2",
+      "postPreviewSha256": "76071b8715426585817f4a973cbe456240e1a30a4f7a9cd7ce34e229734ee0db",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "bi-comparison-height-20261116-tg-hook-v1",
+        "hookFormat": "question",
+        "hookText": "Дар китобфурӯшӣ қадро муқоиса мекунанд: аз ман қадбаландтар аст. Ба чинӣ бо 比 мегӯӣ ё бо 很?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "fdc62ffd7a3d991e713b38411374221c4839ca132e25d5725188e948d99f59a2"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "8693aaa10acf0e2a4b75f279",
+        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06"
+      }
+    },
+    {
+      "content": {
+        "id": "bi-comparison-height-20261116",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "366ed91502617e9e204f1d83432b739c16d9ac68c5cf6f8c56e640ed0bc40931"
+      },
+      "platform": "youtube",
+      "accountId": "6ae160123787e4c71b522d64",
+      "accountUsername": "hskai.app-tj",
+      "zernioPostId": "6afbc5bfd0ac7be2b45a693d",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "2c5243fc3bbf20fa9fe7784b72c772cf67a7ae3ce21c840fd63cbdf4534a5c9d",
+      "approvedVideoSha256": "2c5243fc3bbf20fa9fe7784b72c772cf67a7ae3ce21c840fd63cbdf4534a5c9d",
+      "approvedAt": "2026-11-17T03:09:44.034Z",
+      "verifiedAt": "2026-11-17T03:10:56.627Z",
+      "scheduledFor": "2026-11-17T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "bi-comparison-height-20261116-youtube-cta-v1",
+      "postPreviewSha256": "1bfd0bbb85062afb25557f26bc6698dd0d25ae970b350e7714d0cbd349756060",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "bi-comparison-height-20261116-tg-hook-v1",
+        "hookFormat": "question",
+        "hookText": "Дар китобфурӯшӣ қадро муқоиса мекунанд: аз ман қадбаландтар аст. Ба чинӣ бо 比 мегӯӣ ё бо 很?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "fdc62ffd7a3d991e713b38411374221c4839ca132e25d5725188e948d99f59a2"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "5ac41881382d11f196182919",
+        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06"
+      }
+    },
+    {
+      "content": {
+        "id": "bi-comparison-height-20261116",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "366ed91502617e9e204f1d83432b739c16d9ac68c5cf6f8c56e640ed0bc40931"
+      },
+      "platform": "tiktok",
+      "accountId": "6ae16064ecf91092adba7d68",
+      "accountUsername": "hskai.ru",
+      "zernioPostId": "6afbc62333311ee0092215d3",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "3c40d107dac3e340423d7fb354606357d7d7716a738d1fb922530e41e1517722",
+      "approvedVideoSha256": "3c40d107dac3e340423d7fb354606357d7d7716a738d1fb922530e41e1517722",
+      "approvedAt": "2026-11-17T03:11:12.971Z",
+      "verifiedAt": "2026-11-17T03:12:36.972Z",
+      "scheduledFor": "2026-11-17T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "bi-comparison-height-20261116-tiktok-cta-v1",
+      "postPreviewSha256": "3b70ed4af6e0a21872afe7c5544018393470fc0f0805f6545ca4b0c640420128",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "bi-comparison-height-20261116-tg-hook-v1",
+        "hookFormat": "question",
+        "hookText": "Дар китобфурӯшӣ қадро муқоиса мекунанд: аз ман қадбаландтар аст. Ба чинӣ бо 比 мегӯӣ ё бо 很?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "3a3cbc7d9db385c81b3061237543b6d6b2e2549fa2702ec8758c37068d5ef40e"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "a0dc3535f29388398711a81f",
+        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06"
+      }
+    },
+    {
+      "content": {
+        "id": "bi-comparison-height-20261116",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "366ed91502617e9e204f1d83432b739c16d9ac68c5cf6f8c56e640ed0bc40931"
+      },
+      "platform": "facebook",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "accountUsername": "Akbarholturaev",
+      "zernioPostId": "6afbc675d7ef3259fe0634a1",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "21a4dc5b5463bd9c1bdde742181c84dc25a9d2bba0d6e4db493f6a2b9a910333",
+      "approvedVideoSha256": "21a4dc5b5463bd9c1bdde742181c84dc25a9d2bba0d6e4db493f6a2b9a910333",
+      "approvedAt": "2026-11-17T03:12:53.596Z",
+      "verifiedAt": "2026-11-17T03:13:58.442Z",
+      "scheduledFor": "2026-11-17T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "bi-comparison-height-20261116-facebook-cta-v1",
+      "postPreviewSha256": "64c07ba531a0b1702b84e112c69be18315d25f87e678fc3d40ab8ca47366f740",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "bi-comparison-height-20261116-tg-hook-v1",
+        "hookFormat": "question",
+        "hookText": "Дар китобфурӯшӣ қадро муқоиса мекунанд: аз ман қадбаландтар аст. Ба чинӣ бо 比 мегӯӣ ё бо 很?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "fdc62ffd7a3d991e713b38411374221c4839ca132e25d5725188e948d99f59a2"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "5736759e8343377e8b2d9912",
+        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06"
+      }
+    },
+    {
+      "content": {
+        "id": "haishi-vs-huozhe-tea-20261113",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "19daacf306502610a67cb6345b55c060527fdd12013727d882523216b048fefa"
+      },
+      "platform": "instagram",
+      "accountId": "6a411e989d9472faae10a430",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6af7df6f60f43b40f930b1a6",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "c2abaf80f8c7825ad3daf950102edcff52c482f18e2300b1b75f6a02a40bcfe6",
+      "approvedVideoSha256": "c2abaf80f8c7825ad3daf950102edcff52c482f18e2300b1b75f6a02a40bcfe6",
+      "approvedAt": "2026-11-14T04:08:53.852Z",
+      "verifiedAt": "2026-11-14T04:11:28.564Z",
+      "scheduledFor": "2026-11-14T22:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "haishi-vs-huozhe-20261113-ru-cta-v2",
+      "postPreviewSha256": "fca75ed9230fde48d0775c2e41a19a89be901ee955de5aa6ec9572cedc4eec26",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "haishi-vs-huozhe-tea-20261113-ru-hook-v1",
+        "hookFormat": "contrast",
+        "hookText": "В кафе спрашивают: «Чай или кофе?» По-китайски здесь нужно 还是, а не 或者. Почему?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "69b4bf33de9517fbdaf8b518415905544f9869cf3d8606480ec8d61453e9d4af"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "84532f1f5b5b574815102e62",
+        "sourceCommit": "68df7ad2c1111a8d40f4b3d347100c86c9482e59"
+      }
+    },
+    {
+      "content": {
+        "id": "haishi-vs-huozhe-tea-20261113",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "19daacf306502610a67cb6345b55c060527fdd12013727d882523216b048fefa"
+      },
+      "platform": "youtube",
+      "accountId": "6ac96e053f8f4ffc10b0655f",
+      "accountUsername": "hskai_app",
+      "zernioPostId": "6af7dfe90acc2e26cd09cbde",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "577c4430858d59c5647255ee7ea2078f6ad540fadb793b6be356ed9f8176f642",
+      "approvedVideoSha256": "577c4430858d59c5647255ee7ea2078f6ad540fadb793b6be356ed9f8176f642",
+      "approvedAt": "2026-11-14T04:12:00.615Z",
+      "verifiedAt": "2026-11-14T04:13:30.823Z",
+      "scheduledFor": "2026-11-14T22:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "haishi-vs-huozhe-tea-20261113-youtube-cta-v1",
+      "postPreviewSha256": "77091a60b9a368a43fcc7cef3d63e2ce1fcfde2d80d2c0e54079c4538bc58dfb",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "haishi-vs-huozhe-tea-20261113-ru-hook-v1",
+        "hookFormat": "contrast",
+        "hookText": "В кафе спрашивают: «Чай или кофе?» По-китайски здесь нужно 还是, а не 或者. Почему?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "69b4bf33de9517fbdaf8b518415905544f9869cf3d8606480ec8d61453e9d4af"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "ffacea28a0853d3408c43e18",
+        "sourceCommit": "68df7ad2c1111a8d40f4b3d347100c86c9482e59"
+      }
+    },
+    {
+      "content": {
+        "id": "haishi-vs-huozhe-tea-20261113",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "ed4660c160f9050ff85109ddb2084b487144929df8f03feabe256e15615cbfb9"
+      },
+      "platform": "instagram",
+      "accountId": "6ae0f16205fd6f5357f8503d",
+      "accountUsername": "hskai.apptj",
+      "zernioPostId": "6af7e061109932a603fe34c2",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "071284564c38ffee419cbb6c09eec1dc5db896dfe3e95bc57c54d044e50a75c5",
+      "approvedVideoSha256": "071284564c38ffee419cbb6c09eec1dc5db896dfe3e95bc57c54d044e50a75c5",
+      "approvedAt": "2026-11-14T04:14:29.916Z",
+      "verifiedAt": "2026-11-14T04:15:31.259Z",
+      "scheduledFor": "2026-11-14T19:40:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "haishi-vs-huozhe-20261113-tg-cta-v5",
+      "postPreviewSha256": "cb565fb816fe3b0ecb1de6c5c394ce2d63cb61de4a3f674cf89a580f3fc846c8",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "haishi-vs-huozhe-tea-20261113-tg-hook-v1",
+        "hookFormat": "contrast",
+        "hookText": "Дар қаҳвахона мепурсанд: «Чой ё қаҳва?» Дар ин савол 还是 меояд, на 或者. Чаро?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "84425b173930961de9d15b1f2cdd44b8ba482d0e9febccbb6e1ddc16c6acb7d5"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "b510ce6f1643d8f40adfeba0",
+        "sourceCommit": "68df7ad2c1111a8d40f4b3d347100c86c9482e59"
+      }
+    },
+    {
+      "content": {
+        "id": "haishi-vs-huozhe-tea-20261113",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "ed4660c160f9050ff85109ddb2084b487144929df8f03feabe256e15615cbfb9"
+      },
+      "platform": "youtube",
+      "accountId": "6ae160123787e4c71b522d64",
+      "accountUsername": "hskai.app-tj",
+      "zernioPostId": "6af7e15d5d1234aaabf1ec4a",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "6a67e495fa4913b1f9b03d538bcefea7e901c1591fed1d6f3a3724f3aa71c1f8",
+      "approvedVideoSha256": "6a67e495fa4913b1f9b03d538bcefea7e901c1591fed1d6f3a3724f3aa71c1f8",
+      "approvedAt": "2026-11-14T04:18:22.084Z",
+      "verifiedAt": "2026-11-14T04:19:42.872Z",
+      "scheduledFor": "2026-11-14T19:40:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "haishi-vs-huozhe-tea-20261113-youtube-cta-v1",
+      "postPreviewSha256": "786299349caeb2702168e3b242e03c3a63aca51ac7defc1b2b02a2d0a29c5de3",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "haishi-vs-huozhe-tea-20261113-tg-hook-v1",
+        "hookFormat": "contrast",
+        "hookText": "Дар қаҳвахона мепурсанд: «Чой ё қаҳва?» Дар ин савол 还是 меояд, на 或者. Чаро?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "84425b173930961de9d15b1f2cdd44b8ba482d0e9febccbb6e1ddc16c6acb7d5"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "8423b1db5f9eb600cf1abdc1",
+        "sourceCommit": "68df7ad2c1111a8d40f4b3d347100c86c9482e59"
+      }
+    },
+    {
+      "content": {
+        "id": "haishi-vs-huozhe-tea-20261113",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "ed4660c160f9050ff85109ddb2084b487144929df8f03feabe256e15615cbfb9"
+      },
+      "platform": "facebook",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "accountUsername": "Akbarholturaev",
+      "zernioPostId": "6af7e1ccbb09bc1e9ffe63e5",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "2ae5c1b629298140bb3e92c8b8dcdc52950aad94c421f83fe2eb957817a42f7a",
+      "approvedVideoSha256": "2ae5c1b629298140bb3e92c8b8dcdc52950aad94c421f83fe2eb957817a42f7a",
+      "approvedAt": "2026-11-14T04:20:04.843Z",
+      "verifiedAt": "2026-11-14T04:21:34.137Z",
+      "scheduledFor": "2026-11-14T19:40:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "haishi-vs-huozhe-tea-20261113-facebook-cta-v1",
+      "postPreviewSha256": "a0b5f2575f2d6620433894b02c1679201a5fe40f184e874ca6aef63cdba3758c",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "haishi-vs-huozhe-tea-20261113-tg-hook-v1",
+        "hookFormat": "contrast",
+        "hookText": "Дар қаҳвахона мепурсанд: «Чой ё қаҳва?» Дар ин савол 还是 меояд, на 或者. Чаро?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "84425b173930961de9d15b1f2cdd44b8ba482d0e9febccbb6e1ddc16c6acb7d5"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "c5adb4b73951287284da2cd9",
+        "sourceCommit": "68df7ad2c1111a8d40f4b3d347100c86c9482e59"
+      }
+    },
+    {
+      "content": {
+        "id": "youdianr-vs-yidianr-price-20261111",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "928a1f335122195a83f639593c3a45b17af3dde3806dbb63d2b108fee29e4df5"
+      },
+      "platform": "instagram",
+      "accountId": "6a411e989d9472faae10a430",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6af5187db849fdb7188f341f",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "815eb0c800ab3b80c6806155c8e7738fb1bd5c90a1e14ddb86c03a96806da3f0",
+      "approvedVideoSha256": "815eb0c800ab3b80c6806155c8e7738fb1bd5c90a1e14ddb86c03a96806da3f0",
+      "approvedAt": "2026-11-12T01:37:06.410Z",
+      "verifiedAt": "2026-11-12T01:38:06.971Z",
+      "scheduledFor": "2026-11-12T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "youdianr-vs-yidianr-price-20261111-cta-v8",
+      "postPreviewSha256": "5ec4fb0a3f3761a1127361166726f0a80cb2a79909f067dfd36567fa4704428d",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "youdianr-vs-yidianr-price-20261111-ru-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Дороговато? По-китайски: 这个有点儿贵。",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "5fe7ec7e9faa6b190024e9f41b0de446cb9f8a34046d5e6805b1218e0a99ee8e"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "353221f744bc94b97eeab923",
+        "sourceCommit": "e33b2d5d1debe5b28ef73c49eab7ad25a4981c03"
+      }
+    },
+    {
+      "content": {
+        "id": "youdianr-vs-yidianr-price-20261111",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "928a1f335122195a83f639593c3a45b17af3dde3806dbb63d2b108fee29e4df5"
+      },
+      "platform": "youtube",
+      "accountId": "6ac96e053f8f4ffc10b0655f",
+      "accountUsername": "hskai_app",
+      "zernioPostId": "6af518cab849fdb7188f36a0",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "65f2f56413ef95e489ec607ed4dbe4c7e2bf19e2586729b5e640bab7d398dc3f",
+      "approvedVideoSha256": "65f2f56413ef95e489ec607ed4dbe4c7e2bf19e2586729b5e640bab7d398dc3f",
+      "approvedAt": "2026-11-12T01:38:25.238Z",
+      "verifiedAt": "2026-11-12T01:39:23.996Z",
+      "scheduledFor": "2026-11-12T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "youdianr-vs-yidianr-price-20261111-youtube-cta-v4",
+      "postPreviewSha256": "19040b69eb871874e79834a8ae1c171dec7bd987355e71416919c57e2be34a3f",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "youdianr-vs-yidianr-price-20261111-ru-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Дороговато? По-китайски: 这个有点儿贵。",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "5fe7ec7e9faa6b190024e9f41b0de446cb9f8a34046d5e6805b1218e0a99ee8e"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "f39d06bb0a8ff1a55ace7bba",
+        "sourceCommit": "e33b2d5d1debe5b28ef73c49eab7ad25a4981c03"
+      }
+    },
+    {
+      "content": {
+        "id": "youdianr-vs-yidianr-price-20261111",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "928a1f335122195a83f639593c3a45b17af3dde3806dbb63d2b108fee29e4df5"
+      },
+      "platform": "tiktok",
+      "accountId": "6ae16327a2845fbdb07e5ccb",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6af5191f459a0acd35c90c3d",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "825abb94667712ea2fc19398d85fd4f815795632a8355b8532f18056ef78a41e",
+      "approvedVideoSha256": "825abb94667712ea2fc19398d85fd4f815795632a8355b8532f18056ef78a41e",
+      "approvedAt": "2026-11-12T01:39:36.131Z",
+      "verifiedAt": "2026-11-12T01:40:48.381Z",
+      "scheduledFor": "2026-11-12T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "youdianr-vs-yidianr-price-20261111-tiktok-cta-v4",
+      "postPreviewSha256": "cd060e505496a668a5439ad6e293a157be7607e94014b0e7efc14b884079b03e",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "youdianr-vs-yidianr-price-20261111-ru-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Дороговато? По-китайски: 这个有点儿贵。",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "8baa46e47ab6d55671730ed39bf6030832ae3366b91a84d5b8644322507158ba"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "7425dfe5ab9e345568afd780",
+        "sourceCommit": "e33b2d5d1debe5b28ef73c49eab7ad25a4981c03"
+      }
+    },
+    {
+      "content": {
+        "id": "youdianr-vs-yidianr-price-20261111",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "8ac1f6402a3e84b8ae939f6e4d5b6f7fef4356e2c7875565793f582b37f80652"
+      },
+      "platform": "instagram",
+      "accountId": "6ae0f16205fd6f5357f8503d",
+      "accountUsername": "hskai.apptj",
+      "zernioPostId": "6af5197ab7bcb7089973e1a2",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "b60a1b8d5bceb52a3aad57bd57d73f21c876cd9f16c9ecc8f6a072b7a03aaa89",
+      "approvedVideoSha256": "b60a1b8d5bceb52a3aad57bd57d73f21c876cd9f16c9ecc8f6a072b7a03aaa89",
+      "approvedAt": "2026-11-12T01:41:03.430Z",
+      "verifiedAt": "2026-11-12T01:42:20.786Z",
+      "scheduledFor": "2026-11-12T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "youdianr-vs-yidianr-price-20261111-cta-v9",
+      "postPreviewSha256": "d57520ece3266e515b240794332ab2057b9e0a457c16ba73ca8b53c54b918183",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "youdianr-vs-yidianr-price-20261111-tg-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Нархи мол каме баланд аст. Ба чинӣ: 这个有点儿贵。",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "2d2d90b4bac38add526922a6a4fd9cc273a24581782a70166442a445f585bd01"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "cf0c5c625526d8f0ccf8b972",
+        "sourceCommit": "e33b2d5d1debe5b28ef73c49eab7ad25a4981c03"
+      }
+    },
+    {
+      "content": {
+        "id": "youdianr-vs-yidianr-price-20261111",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "8ac1f6402a3e84b8ae939f6e4d5b6f7fef4356e2c7875565793f582b37f80652"
+      },
+      "platform": "tiktok",
+      "accountId": "6ae16064ecf91092adba7d68",
+      "accountUsername": "hskai.ru",
+      "zernioPostId": "6af556a31ae295872e7fe5a9",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "a362e13e339cc4d97f44f28dbe8b85d6c61dfd57f26746e7b8aed06d3ee3ba07",
+      "approvedVideoSha256": "a362e13e339cc4d97f44f28dbe8b85d6c61dfd57f26746e7b8aed06d3ee3ba07",
+      "approvedAt": "2026-11-12T06:02:04.716Z",
+      "verifiedAt": "2026-11-12T06:03:16.927Z",
+      "scheduledFor": "2026-11-12T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "youdianr-vs-yidianr-price-20261111-tiktok-cta-v5",
+      "postPreviewSha256": "8e8c2bb77832b0175d776a4a28baefc1f373e9ba49da2f558722b17f27a7556b",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "youdianr-vs-yidianr-price-20261111-tg-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Нархи мол каме баланд аст. Ба чинӣ: 这个有点儿贵。",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "0044d117ac42dbebe5ee635c3a3b8a36b9394b29cb491269c76af073bfa63afe"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "ffc70227e530fc83b64c5c37",
+        "sourceCommit": "e33b2d5d1debe5b28ef73c49eab7ad25a4981c03"
+      }
+    },
+    {
+      "content": {
+        "id": "youdianr-vs-yidianr-price-20261111",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "8ac1f6402a3e84b8ae939f6e4d5b6f7fef4356e2c7875565793f582b37f80652"
+      },
+      "platform": "facebook",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "accountUsername": "Akbarholturaev",
+      "zernioPostId": "6af556fdbf6b40867fb23aeb",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "c8ab30bf290a6c69bdff360558d45c1128f9f4f357e00967403a8009c9b04ad3",
+      "approvedVideoSha256": "c8ab30bf290a6c69bdff360558d45c1128f9f4f357e00967403a8009c9b04ad3",
+      "approvedAt": "2026-11-12T06:03:29.524Z",
+      "verifiedAt": "2026-11-12T06:04:46.996Z",
+      "scheduledFor": "2026-11-12T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "youdianr-vs-yidianr-price-20261111-facebook-cta-v3",
+      "postPreviewSha256": "0bfd58deca73ac4d59d155def242a9637ffe8333f1e4af7f02ccec0b97cbf551",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "youdianr-vs-yidianr-price-20261111-tg-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Нархи мол каме баланд аст. Ба чинӣ: 这个有点儿贵。",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "2d2d90b4bac38add526922a6a4fd9cc273a24581782a70166442a445f585bd01"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "6322c2f2adc955654eb2f799",
+        "sourceCommit": "e33b2d5d1debe5b28ef73c49eab7ad25a4981c03"
+      }
+    },
+    {
+      "content": {
+        "id": "youdianr-vs-yidianr-price-20261111",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "8ac1f6402a3e84b8ae939f6e4d5b6f7fef4356e2c7875565793f582b37f80652"
+      },
+      "platform": "youtube",
+      "accountId": "6ae160123787e4c71b522d64",
+      "accountUsername": "hskai.app-tj",
+      "zernioPostId": "6af558a1bf539e81acb2fd60",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "c53e75b5feb141415b27b3d01077e99a26f64340d07085232cfd57d14844f6fe",
+      "approvedVideoSha256": "c53e75b5feb141415b27b3d01077e99a26f64340d07085232cfd57d14844f6fe",
+      "approvedAt": "2026-11-12T06:10:26.018Z",
+      "verifiedAt": "2026-11-12T06:11:47.062Z",
+      "scheduledFor": "2026-11-12T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "youdianr-vs-yidianr-price-20261111-youtube-cta-v3",
+      "postPreviewSha256": "64dd9a7100e9339d4141680c11f1d00045926d6fe28161250d282fa11ccb6834",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "youdianr-vs-yidianr-price-20261111-tg-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Нархи мол каме баланд аст. Ба чинӣ: 这个有点儿贵。",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "2d2d90b4bac38add526922a6a4fd9cc273a24581782a70166442a445f585bd01"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "c404cf46a3bf744c3b9f20ce",
+        "sourceCommit": "5aa67b97324734ea7211545a2cf559eec4310e9e"
+      }
+    }
+  ]
 }

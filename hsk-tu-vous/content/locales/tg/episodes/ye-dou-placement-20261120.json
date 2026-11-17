@@ -31,9 +31,9 @@
     {
       "id": "hook",
       "kind": "hook",
-      "durationSec": 6,
+      "durationSec": 8,
       "headline": "Ман ҳам донишҷӯ: 也 куҷо?",
-      "narration": "Дар истгоҳи метро шиносат мегӯяд: 我是学生。 Ту ҳам донишҷӯ ҳастӣ — «ҳам»-ро чӣ тавр илова мекунӣ? 我也是学生。",
+      "narration": "Дар истгоҳи метро шиносат мегӯяд: 我是学生。 Навомӯз ҷавоб медиҳад: 我是学生也。 Ин хато аст! Дуруст: 我也是学生。",
       "screenCaption": "也 — пеш аз 我 ё баъд?",
       "editPlan": "Дарҳол синф: дӯст ва панда. Баъд дар тахта ду тартиб — 也 我 ва 我 也 — бе ҷавоб. Логотип ва муқаддима нест; ҳама навиштаҳо дар минтақаи бехатар.",
       "cards": [
@@ -318,6 +318,185 @@
           "explains": "hook: Дар тахта 也 пеш аз 我 — ҳоло бе ҷавоб. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
         },
         {
+          "id": "hook-action-mistake",
+          "kind": "graphic",
+          "cueText": "我是学生也",
+          "visual": {
+            "title": "Хатои маъмул",
+            "hanzi": "我也是学生。",
+            "pinyin": "Wǒ yě shì xuésheng.",
+            "meaning": "Ман ҳам донишҷӯ ҳастам.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 65,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-o",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-3-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 431,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-a",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 500,
+                    "y1": 60,
+                    "x2": 560,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-b",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 560,
+                    "y1": 60,
+                    "x2": 500,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-a",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-b",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "metro-board"
+              ],
+              "parts": [
+                "我",
+                "是",
+                "也"
+              ],
+              "overlay": "stamp",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "wrong",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "monkey",
+                  "mood": "wrong",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
+            }
+          },
+          "explains": "hook: Дар тахта 我 是 学生 也 бо мӯҳр — «ҳам» дар охир намеояд. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+        },
+        {
           "id": "hook-action-3",
           "kind": "graphic",
           "cueText": "我也是学生",
@@ -434,7 +613,7 @@
               ]
             }
           },
-          "explains": "hook: Дар тахта 我 пеш аз 也 — варианти дуюм. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
+          "explains": "hook: Ислоҳ — 也 фавран баъд аз 我, пеш аз 是. Маънои дарс: 也 ва 都 баъд аз мубтадо ва пеш аз феъл меистанд — 我也是学生, 我们都是学生."
         }
       ]
     },
@@ -3779,12 +3958,12 @@
     }
   ],
   "hookExperiment": {
-    "id": "ye-dou-placement-20261120-tg-hook-v1",
-    "formatId": "question",
-    "hypothesis": "Саволи «Ман ҳам донишҷӯ: 也 куҷо?» бо ду тартиб дар тахта метавонад навомӯзро то ҷавоби 我也是学生 нигоҳ дорад; ин ҳанӯз санҷида нашудааст.",
+    "id": "ye-dou-placement-20261120-tg-hook-v2",
+    "formatId": "contrast",
+    "hypothesis": "Хатои маъмули 我是学生也 ва ислоҳи фаврии 我也是学生 дар сонияҳои аввал мушкили худи навомӯзро нишон медиҳад ва ӯро то қоида нигоҳ медорад; ин ҳанӯз санҷида нашудааст. Варианти B-и санҷиши lesson-opening-v1.",
     "primaryMetric": "three-second-hold-rate",
     "fallbackMetric": "average-watch-ratio",
-    "registeredAt": "2026-11-10"
+    "registeredAt": "2026-11-17"
   },
   "audienceProblem": "Навомӯз тартиби озоди «ҳам»-и тоҷикиро ба чинӣ мегузаронад ва 也 ё 都-ро пеш аз мубтадо ё дар охири ҷумла мегузорад.",
   "learningOutcome": "也 ва 都-ро баъд аз мубтадо ва пеш аз феъл гузорад: 我也是学生, 我们都是学生.",
@@ -3798,7 +3977,7 @@
       "learnerGoal": "Гӯяд, ки ӯ ҳам донишҷӯ аст ва ҳамаи гурӯҳ донишҷӯянд, 也 ва 都-ро баъд аз субъект гузошта.",
       "obstacle": "Дар тоҷикӣ «ҳам» дар ҷойҳои гуногун меояд, аммо дар чинӣ 也 ва 都 танҳо баъд аз мубтадо, пеш аз феъл меистанд"
     },
-    "selectionReason": "Муколамаи кӯтоҳ дар истгоҳи метро ҷойи 也-ро фавран нишон медиҳад ва баъд ҳамин тартибро бо 都 барои гурӯҳ истифода мебарад; саволи иловагӣ лозим нест.",
+    "selectionReason": "Дарс бо хатои маъмул ва ислоҳи он оғоз мешавад (варианти B-и санҷиши lesson-opening-v1: хато → ислоҳ → машқ) дар истгоҳи метро, баъд ҳамон тартиб ба 都 гузаронида мешавад ва бо худсанҷӣ мустаҳкам мегардад.",
     "firstPayoff": {
       "sceneId": "hook",
       "cueText": "我也是学生"
@@ -3808,8 +3987,17 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "ye-dou-placement-20261120",
-    "sourceHash": "1a9d8df2af7575f448bdeca54abc5ab761d3d33035525969c56b99b80991e3d9",
-    "authoredOn": "2026-11-10",
+    "sourceHash": "675c34dfba2d4d0dce6a4829674f708aeff0712b39e011fb0dae3c6164f798ee",
+    "authoredOn": "2026-11-17",
     "status": "draft-awaiting-audio-review"
+  },
+  "experiment": {
+    "id": "lesson-opening-v1",
+    "arm": "B",
+    "structure": {
+      "mistake": "hook",
+      "correction": "answer",
+      "practice": "recall"
+    }
   }
 }

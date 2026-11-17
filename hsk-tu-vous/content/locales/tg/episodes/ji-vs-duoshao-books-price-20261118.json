@@ -31,7 +31,7 @@
       "id": "hook",
       "kind": "hook",
       "durationSec": 5,
-      "narration": "Дар офис китобҳоро барои фармоиш ҳисоб мекунанд: «Чанд китоб?» Баъд мепурсанд: «Нархаш чанд?» Дар чинӣ барои ин ду савол 几 ва 多少 истифода мешаванд.",
+      "narration": "Кӯшиш кун, ҷавоб деҳ: «Чанд китоб?» ва «Нархаш чанд?» — дар забони чинӣ як калима аст ё ду? Ду: 几 ва 多少.",
       "cards": [
         {
           "hanzi": "几",
@@ -148,7 +148,7 @@
               ]
             }
           },
-          "explains": "Аввал шумораи китобҳои дӯконро дидан."
+          "explains": "Супориш: бинанда китобҳоро мебинад ва калимаи «чанд»-ро интихоб карданӣ мешавад."
         },
         {
           "id": "hook-step-2",
@@ -2604,12 +2604,12 @@
     }
   ],
   "hookExperiment": {
-    "id": "ji-vs-duoshao-books-price-20261118-tg-hook-v1",
-    "formatId": "scenario",
-    "hypothesis": "Мисоли воқеии шумораи китоб ва нархи мол метавонад барои навомӯзи тоҷикзабон фаҳмотар бошад; натиҷа ҳанӯз тасдиқ нашудааст.",
+    "id": "ji-vs-duoshao-books-price-20261118-tg-hook-v2",
+    "formatId": "question",
+    "hypothesis": "Супориш дар сонияҳои аввал («як калима ё ду?») бинандаро водор мекунад, ки пеш аз шарҳи 几 ва 多少 худаш ҷавоб диҳад; ин фарзияи таҳририст ва ҳанӯз санҷида нашудааст. Варианти A-и санҷиши lesson-opening-v1.",
     "primaryMetric": "three-second-hold-rate",
     "fallbackMetric": "average-watch-ratio",
-    "registeredAt": "2026-11-10"
+    "registeredAt": "2026-11-17"
   },
   "audienceProblem": "Навомӯз дар саволи шумораи китоб ва нархи мол «чанд»-ро бо як калимаи чинӣ ифода мекунад.",
   "learningOutcome": "Барои китоб 你有几本书？ ва барои нарх 这个多少钱？-ро дуруст бигӯяд.",
@@ -2623,7 +2623,7 @@
       "learnerGoal": "Шумораи китоб ва нархи номаълумро бо калимаи мувофиқ бипурсад",
       "obstacle": "Ҳарду ба «чанд» тарҷума мешавад, вале 几 ва 多少 вазифаҳои гуногун доранд"
     },
-    "selectionReason": "Як саҳнаи дӯкон барои фарқи шумораи кам ва нархи кушода ҷавоби фаврӣ медиҳад",
+    "selectionReason": "Дарс бо супориш оғоз мешавад (варианти A-и санҷиши lesson-opening-v1: супориш → ҷавоб → машқ); ҷавоби 几/多少 фавран дода мешавад, баъд шарҳ ва худсанҷӣ.",
     "firstPayoff": {
       "sceneId": "books",
       "cueText": "你有几本书"
@@ -2633,8 +2633,17 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "ji-vs-duoshao-books-price-20261118",
-    "sourceHash": "f49e919121e5ff1413b57dc98aa8ded209fc56e8c19dd69d302eca0886f538bd",
-    "authoredOn": "2026-11-10",
+    "sourceHash": "6d883e09c11ab18e9e1b6bb46c58d17eeac54ce06b47d06c04fd33310ff7ac1e",
+    "authoredOn": "2026-11-17",
     "status": "draft-awaiting-audio-review"
+  },
+  "experiment": {
+    "id": "lesson-opening-v1",
+    "arm": "A",
+    "structure": {
+      "challenge": "hook",
+      "answer": "books",
+      "practice": "recap"
+    }
   }
 }

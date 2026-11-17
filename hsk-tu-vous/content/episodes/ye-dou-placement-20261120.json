@@ -32,9 +32,9 @@
     {
       "id": "hook",
       "kind": "hook",
-      "durationSec": 5,
+      "durationSec": 7,
       "headline": "Я ТОЖЕ СТУДЕНТ: ГДЕ 也?",
-      "narration": "На платформе метро знакомый говорит: 我是学生。 Ты тоже студент — как добавить «тоже»? 我也是学生。",
+      "narration": "На платформе метро знакомый говорит: 我是学生。 Новичок отвечает: 我是学生也。 Это ошибка! Правильно: 我也是学生。",
       "screenCaption": "也 — до 我 или после?",
       "editPlan": "Сразу класс: друг и панда. Затем на доске два порядка — 也 我 и 我 也 — без ответа. Никаких логотипов и вступлений; вся надпись в безопасной зоне.",
       "cards": [
@@ -319,6 +319,185 @@
           "explains": "hook: На доске порядок 也 перед 我 — пока без ответа. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
         },
         {
+          "id": "hook-action-mistake",
+          "kind": "graphic",
+          "cueText": "我是学生也",
+          "visual": {
+            "title": "Частая ошибка",
+            "hanzi": "我也是学生。",
+            "pinyin": "Wǒ yě shì xuésheng.",
+            "meaning": "Я тоже студент.",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "block-0-s",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 65,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "teal",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-1-v",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 187,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "foreground",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-2-o",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 309,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "block-3-a",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 431,
+                    "y": 170,
+                    "width": 104,
+                    "height": 90,
+                    "rx": 18,
+                    "fill": "gold",
+                    "stroke": "none"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-a",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 500,
+                    "y1": 60,
+                    "x2": 560,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                },
+                {
+                  "id": "cross-b",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 560,
+                    "y1": 60,
+                    "x2": 500,
+                    "y2": 120,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  },
+                  "parentId": "stage"
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-a",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-b",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 360,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "metro-board"
+              ],
+              "parts": [
+                "我",
+                "是",
+                "也"
+              ],
+              "overlay": "stamp",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "wrong",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "monkey",
+                  "mood": "wrong",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
+            }
+          },
+          "explains": "hook: На доске 我 是 学生 也 со штампом — «тоже» в конце нельзя. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+        },
+        {
           "id": "hook-action-3",
           "kind": "graphic",
           "cueText": "我也是学生",
@@ -435,7 +614,7 @@
               ]
             }
           },
-          "explains": "hook: На доске порядок 我 перед 也 — второй вариант. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
+          "explains": "hook: Исправление — 也 сразу после 我, перед 是. Учебный смысл: 也 и 都 стоят после подлежащего и перед глаголом — 我也是学生, 我们都是学生."
         }
       ]
     },
@@ -3780,12 +3959,12 @@
     }
   ],
   "hookExperiment": {
-    "id": "ye-dou-placement-20261120-ru-hook-v1",
-    "formatId": "question",
-    "hypothesis": "Вопрос «Я тоже студент: где 也?» с двумя порядками слов на доске может удержать новичка до ответа 我也是学生; эффективность ещё не измерена.",
+    "id": "ye-dou-placement-20261120-ru-hook-v2",
+    "formatId": "contrast",
+    "hypothesis": "Частая ошибка 我是学生也 и сразу исправление 我也是学生 в первые секунды показывают новичку его собственную проблему и удерживают до правила; эффективность ещё не измерена. Вариант B теста lesson-opening-v1.",
     "primaryMetric": "three-second-hold-rate",
     "fallbackMetric": "average-watch-ratio",
-    "registeredAt": "2026-11-10"
+    "registeredAt": "2026-11-17"
   },
   "audienceProblem": "Новичок переносит свободный порядок русского «тоже» и ставит 也 или 都 перед подлежащим или в конец фразы.",
   "learningOutcome": "Ставить 也 и 都 после подлежащего и перед глаголом: 我也是学生, 我们都是学生.",
@@ -3799,11 +3978,20 @@
       "learnerGoal": "Ответить, что ты тоже студент, и сказать, что все в группе студенты, ставя 也 и 都 после подлежащего.",
       "obstacle": "В русском «тоже» может стоять в разных местах, а в китайском 也 и 都 стоят только после подлежащего, перед глаголом"
     },
-    "selectionReason": "Короткий обмен репликами на платформе метро сразу показывает, куда ставить 也, а затем переносит тот же порядок на групповое 都; отдельный повторный вопрос не нужен.",
+    "selectionReason": "Урок открывается частой ошибкой и её исправлением (вариант B теста lesson-opening-v1: ошибка → исправление → практика) на платформе метро, затем тот же порядок переносится на 都 и закрепляется самопроверкой; отдельный повторный вопрос не нужен.",
     "firstPayoff": {
       "sceneId": "hook",
       "cueText": "我也是学生"
     },
     "reHooks": []
+  },
+  "experiment": {
+    "id": "lesson-opening-v1",
+    "arm": "B",
+    "structure": {
+      "mistake": "hook",
+      "correction": "answer",
+      "practice": "recall"
+    }
   }
 }

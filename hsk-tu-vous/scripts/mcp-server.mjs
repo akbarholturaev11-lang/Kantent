@@ -73,6 +73,7 @@ import {
   validateCtaEpisode,
   writeCtaLab,
 } from "./cta-lab.mjs";
+import { assignmentFor, experimentBrief, readExperiments, reviewExperiments } from "./experiments.mjs";
 
 export const createServer = () => {
   const server = new McpServer(
@@ -425,6 +426,23 @@ export const createServer = () => {
     async ({date})=>withToolErrors(async()=>{
       const calendar=await readJson(CALENDAR_PATH);
       return proposeBuffer(calendar,{today:date??dateInTimezone(new Date(),calendar.timezone),episodeIsReady:item=>isDraftReady(PROJECT_ROOT,item)});
+    }),
+  );
+
+  server.registerTool(
+    "get_content_experiments",
+    {
+      title:"Read the content experiments: goal, compared styles, results and the next decision",
+      description:"Owner rule 2026-11-17 (content/EXPERIMENTS.md). Read-only. Without a date: every experiment with its goal, styles A/B, first-week results from sourced Zernio observations joined to verified publications, and the reasoned next decision (never a forced winner). With a date: the script-writer brief and stored/next arm for that calendar item. Never writes scripts, assigns arms, publishes or promotes a style.",
+      inputSchema:z.object({date:dateSchema.optional()}),
+    },
+    async ({date})=>withToolErrors(async()=>{
+      const registry=readExperiments(PROJECT_ROOT);
+      if(!date) return reviewExperiments({root:PROJECT_ROOT,registry});
+      const calendar=await readJson(CALENDAR_PATH);
+      const goals=(await readJson(path.join(PROJECT_ROOT,"content","creative-formats.json"))).contentGoals?.byContentType??{};
+      return calendar.items.filter(item=>item.date===date).map(item=>({id:item.id,assignment:assignmentFor(registry,item),
+        brief:experimentBrief(registry,item,goals)}));
     }),
   );
 

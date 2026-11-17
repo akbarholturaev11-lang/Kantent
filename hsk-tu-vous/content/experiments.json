@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "$comment": "Owner rule 2026-11-17: one experiments section steers HSK AI content from script to result. Rules and owner view: content/EXPERIMENTS.md. Engine: scripts/experiments.mjs (npm run content:experiments). Per-video records: content/feedback/publications.json (scripts/publication-ledger.mjs). Weekly reviews are dated files in content/feedback/reports/. Only the owner promotes a style or changes a permanent rule.",
+  "decidedOn": "2026-11-17",
+  "policy": {
+    "goalsSource": "content/creative-formats.json#contentGoals",
+    "thresholdsSource": "content/hook-lab.json#policy",
+    "cadence": "weekly",
+    "reviewWeekday": "MO",
+    "timezone": "Asia/Shanghai",
+    "maxActiveExperiments": 1,
+    "oneVariablePerTest": true,
+    "resultWindow": {
+      "days": 7,
+      "accepted": [
+        { "kind": "provider-exact", "window": "7d" },
+        { "kind": "cumulative-at-age", "window": "lifetime", "minAgeHours": 168, "maxAgeHours": 240,
+          "note": "A provider lifetime snapshot taken 7 to 10 days after publication counts as the first-week result of that post and is reported with its exact age. It is never relabelled 7d (Hook Lab keeps its stricter rule). 10 days covers the Monday/Wednesday/Friday Feedback cadence." }
+      ]
+    },
+    "cohort": ["platform", "language"],
+    "missingData": "insufficient-evidence",
+    "noForcedWeeklyWinner": true,
+    "promotionRequiresOwnerApproval": true,
+    "permanentRuleChangeRequiresOwnerApproval": true,
+    "unchanged": [
+      "calendar.json dates, weekly content mix and publishing times",
+      "production languages",
+      "design and visual-system rules",
+      "owner approval of every exact final video before publication",
+      "CTA Lab wording, voice profile and approved/published history"
+    ]
+  },
+  "experiments": [
+    {
+      "id": "lesson-opening-v1",
+      "status": "active",
+      "contentType": "lesson",
+      "unit": "video",
+      "variable": "opening-structure",
+      "registeredAt": "2026-11-17",
+      "startDate": "2026-11-18",
+      "hypothesis": "Opening a lesson with a common learner mistake and its correction (B) brings more HSK AI link requests per 1000 views than opening with a quick challenge (A, the current style). Both are complete, equally useful lessons; only the opening differs.",
+      "arms": [
+        {
+          "id": "A",
+          "role": "control",
+          "name": "Challenge → Answer → Practice",
+          "steps": ["challenge", "answer", "practice"],
+          "scriptBrief": "Arm A (current style). Open in the first 1-2 seconds with a quick challenge the viewer can try: one concrete beginner question about the lesson's Chinese point (choose, guess or complete). Give the truthful answer early (within the first 30%), then teach the point completely with the lesson's examples, and end the teaching body with a short practice the viewer can do aloud (recall or say the example). Do not open with a wrong form. Keep the topic, examples, CTA, voice, visual system and duration band as the lesson already requires."
+        },
+        {
+          "id": "B",
+          "role": "candidate",
+          "name": "Mistake → Correction → Practice",
+          "steps": ["mistake", "correction", "practice"],
+          "scriptBrief": "Arm B (candidate). Open in the first 1-2 seconds with one real, common beginner mistake about the lesson's Chinese point, clearly marked as wrong (never present a wrong form as correct). Correct it right away with the right form and the reason (within the first 30%), then teach the point completely with the lesson's examples, and end the teaching body with a short practice the viewer can do aloud (recall or say the example). Do not open with a quiz question. Keep the topic, examples, CTA, voice, visual system and duration band as the lesson already requires."
+        }
+      ],
+      "constants": ["topic and examples from the calendar", "lesson CTA from cta-lab.json", "voice profile", "visual system and lesson-art rules", "duration band", "platform settings and publishing time"],
+      "assignment": { "method": "balanced-alternation", "note": "The arm with fewer assignments goes next; a tie takes the arm opposite the latest one. Assignments are stored here and never hand-picked by topic." },
+      "knownConfounders": [
+        "Lesson topic differs between videos.",
+        "Weekday differs; alternation over three lessons a week rotates it.",
+        "Setting: the two first videos were drawn before this test (office for A, metro for B). The visual setting-group test is paused, so later settings do not follow the arm."
+      ],
+      "assignments": [
+        { "contentId": "ji-vs-duoshao-books-price-20261118", "date": "2026-11-18", "arm": "A", "assignedAt": "2026-11-17" },
+        { "contentId": "ye-dou-placement-20261120", "date": "2026-11-20", "arm": "B", "assignedAt": "2026-11-17" }
+      ],
+      "decision": null
+    },
+    {
+      "id": "ad-brand-demo-v1",
+      "status": "queued",
+      "startsAfter": "lesson-opening-v1",
+      "contentType": "advertisement",
+      "unit": "video",
+      "variable": "brand-entry-and-product-demo",
+      "hypothesis": "Naming and showing HSK AI in the first two seconds and then a real product demo (B) keeps more viewers to the brand ending and reaches more people than the current advertisement style (A). The goal stays brand recall.",
+      "arms": [
+        {
+          "id": "A",
+          "role": "control",
+          "name": "Current advertisement style",
+          "steps": ["situation", "benefit", "brand-ending"],
+          "scriptBrief": "Arm A (current style). Follow content/PROMO_WORKFLOW.md as today: one recognisable life situation tied to one real product benefit, the brand cues early and again at the brand ending."
+        },
+        {
+          "id": "B",
+          "role": "candidate",
+          "name": "Early brand + real product demo",
+          "steps": ["brand-open", "product-demo", "brand-ending"],
+          "scriptBrief": "Arm B (candidate). Say and show the HSK AI name and logo in the first two seconds, then show a real product demo from real product evidence (a real screen recording or capture of the HSK AI feature; never a fake or invented screenshot) solving the situation, then the unchanged brand ending."
+        }
+      ],
+      "constants": ["brand ending from cta-lab.json#contentTypeEndings", "voice profile", "visual system", "duration band", "publishing time"],
+      "assignment": { "method": "balanced-alternation" },
+      "assignments": [],
+      "decision": null
+    },
+    {
+      "id": "serial-micro-drama-v1",
+      "status": "queued",
+      "startsAfter": "ad-brand-demo-v1",
+      "contentType": "series-part",
+      "unit": "story",
+      "variable": "serial-story-format",
+      "hypothesis": "A micro-drama with one recurring HSK AI hero and a story that continues across weekends (B) grows more followers per 1000 views than the current self-contained two-part stories (A).",
+      "arms": [
+        {
+          "id": "A",
+          "role": "control",
+          "name": "Current two-part story",
+          "steps": ["part-1-teach-and-cue", "part-2-payoff-and-teach"],
+          "scriptBrief": "Arm A (current style). Follow creative-formats.json#storytellingPolicy.seriesPartPolicy: one two-part story, resolved in part 2."
+        },
+        {
+          "id": "B",
+          "role": "candidate",
+          "name": "Micro-Drama",
+          "steps": ["part-1-teach-and-cue", "part-2-payoff-and-teach"],
+          "scriptBrief": "Arm B (candidate). One recurring HSK AI cast member is the hero of a continuing story across weekends; each part still teaches one complete Chinese point on its own and never withholds its answer; the honest teaser rules of seriesPartPolicy apply."
+        }
+      ],
+      "rule": "Both parts of one story are always in the same arm; part 1 and part 2 of one story are never compared as A and B.",
+      "constants": ["series CTAs from cta-lab.json#contentTypeEndings", "voice profile", "visual system", "weekend calendar slots"],
+      "assignment": { "method": "balanced-alternation" },
+      "assignments": [],
+      "decision": null
+    }
+  ],
+  "linkedTests": [
+    {
+      "id": "vv-setting-group-v1",
+      "source": "content/visual-variety.json",
+      "contentType": "lesson",
+      "status": "paused",
+      "pausedOn": "2026-11-17",
+      "reason": "Only one test runs at a time (owner rule 2026-11-17). Its recorded arms stay in content/lesson-art/*.json#variety; it can resume only as the single active test after lesson-opening-v1 is decided."
+    }
+  ]
+}

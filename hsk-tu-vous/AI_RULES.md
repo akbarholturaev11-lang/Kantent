@@ -10,6 +10,7 @@ Read `AGENTS.md` for the ownership map and migration protocol. In case of confli
 - `content/languages.json`: sole source of default production languages, locale codes and language-specific content roots.
 - Each configured content root's `voice-profile.json`: sole source of that language's provider/voice/settings and approval state.
 - Each configured content root's `cta-lab.json`: sole source of that language's current CTA wording/offer and correction state; `content/CTA_LAB.md` describes its use.
+- `content/experiments.json` + `content/EXPERIMENTS.md`: the single active content test (styles A/B, stored arms, owner decisions); a future draft of the active test carries its stored arm, and only the owner promotes a style.
 - Each configured content root's `hook-lab.json` and shared `content/HOOK_LAB.md`: language-specific hook experiments, corrections, readbacks and common editorial criteria.
 - `content/calendar.json`: dates, IDs, schedule and timezone.
 - `content/visual-system.json`: numeric design and caption settings; `content/EDITING_SPEC.md` explains editing technique.

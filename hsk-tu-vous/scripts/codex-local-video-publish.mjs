@@ -13,6 +13,7 @@ import { generateKeyPairSync, randomBytes } from "node:crypto";
 import { validateApprovedIntent } from "./zernio-publication-core.mjs";
 import { exactCaptionFromPostPreview, requestEnv } from "./zernio-approved-publish.mjs";
 import { zernioTargetAccount } from "./video-credentials.mjs";
+import { LEDGER_PATH, syncPublicationLedger } from "./publication-ledger.mjs";
 import {
   MAX_LOCAL_VIDEO_BYTES, decryptTicket, isSha256, localMediaSecretName,
   safeRequestId, safeZernioPublicUrl, sha256, verifyPostPreview,
@@ -356,6 +357,13 @@ async function savePublicationRecord(data, receipt) {
     [path.join(data.reviewDir, "episode.json"), nextEpisode],
   ];
   for (const [file, value] of staged) await writeLocalState(file, value);
+  // Durable video ↔ script ↔ publication link for results and experiments (content/EXPERIMENTS.md).
+  try {
+    const ledger = syncPublicationLedger({ dirs: [data.reviewDir], write: true });
+    if (ledger.written) console.log("Publication ledger updated: " + LEDGER_PATH + " (commit it with the next push).");
+  } catch (error) {
+    console.error("Publication ledger needs attention (node scripts/publication-ledger.mjs): " + String(error.message).slice(0, 300));
+  }
   return { status: nextStatus, publications };
 }
 

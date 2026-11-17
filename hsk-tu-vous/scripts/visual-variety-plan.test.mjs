@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { armFor, planVariety, readVarietyResults } from "./visual-variety-plan.mjs";
 
-const policy = JSON.parse(readFileSync(new URL("../content/visual-variety.json", import.meta.url), "utf8"));
+const base = JSON.parse(readFileSync(new URL("../content/visual-variety.json", import.meta.url), "utf8"));
+const policy = base;
 const lesson = (id, date, narration) => ({ id, date, scenes: [{ narration }] });
 
 test("the script chooses the supporting character and layout; the panda stays the coach", () => {
@@ -24,6 +25,8 @@ test("recent settings, characters and patterns are not repeated", () => {
 });
 
 test("A/B arms are stable, settings follow the arm, and results need the minimum sample", () => {
+  // The canonical test is paused (one test at a time, content/EXPERIMENTS.md); the mechanism is tested on an active copy.
+  const policy = { ...base, experiments: base.experiments.map((e) => ({ ...e, status: "active" })) };
   const experiment = policy.experiments[0];
   assert.equal(armFor(experiment, "x-20261111"), armFor(experiment, "x-20261111"));
   const plan = planVariety({ episode: lesson("x-20261111", "2026-11-11", "Привет"), history: [], policy });
@@ -37,6 +40,11 @@ test("A/B arms are stable, settings follow the arm, and results need the minimum
   assert.equal(lifetimeIgnored.arms.A.n, 0, "only the fixed-age window counts");
   const full = readVarietyResults({ history, observations: [obs("e1", .4), obs("e2", .4), obs("e3", .4), obs("e4", .6), obs("e5", .6), obs("e6", .6)], policy })[0];
   assert.match(full.decision, /^leader B/);
+});
+
+test("a paused setting-group test assigns no arm", () => {
+  assert.equal(base.experiments[0].status, "paused");
+  assert.equal(planVariety({ episode: lesson("x-20261123", "2026-11-23", "Привет"), history: [], policy: base }).experiment, null);
 });
 
 test("reserve readiness rejects an illustrated draft whose variety record is missing or hand-picked", async () => {

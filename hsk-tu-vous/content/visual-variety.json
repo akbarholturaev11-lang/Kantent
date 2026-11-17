@@ -28,7 +28,9 @@
   "experiments": [
     {
       "id": "vv-setting-group-v1",
-      "status": "active",
+      "status": "paused",
+      "pausedOn": "2026-11-17",
+      "pauseReason": "Owner rule 2026-11-17: one test at a time (content/experiments.json). lesson-opening-v1 is the active lesson test; recorded arms are kept.",
       "startDate": "2026-11-07",
       "variable": "setting group",
       "arms": { "A": "outdoor-china", "B": "indoor-daily" },

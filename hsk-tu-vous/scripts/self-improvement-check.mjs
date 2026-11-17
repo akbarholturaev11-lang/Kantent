@@ -9,6 +9,7 @@ import { validateSeriesCalendar } from './series-plan.mjs';
 import {contentTypeOf,weeklyCoverage} from './content-schedule.mjs';
 import {reviewPromoVariants} from './promo-plan.mjs';
 import { readLanguages, assertLocalizedLessonSource } from './language-context.mjs';
+import { draftExperimentErrors, readExperimentsIfPresent } from './experiments.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -160,8 +161,11 @@ export function inspectDraftReadiness(rootDirectory, item) {
     if (contentTypeOf(item) === 'advertisement') {
       if(item.promoFile !== `promos/${item.id}.json`) throw Error('invalid promo path');
       const report=reviewPromoVariants(item.id,{root:rootDirectory});
-      return {ready:report.plansComplete, languages:report.variants,
-        ...(report.plansComplete?{}:{reason:'complete source-bound promo plans required in every default language'})};
+      const promo=JSON.parse(fs.readFileSync(path.join(rootDirectory,'content',item.promoFile),'utf8'));
+      const experimentErrors=draftExperimentErrors(readExperimentsIfPresent(rootDirectory),item,promo);
+      const ready=report.plansComplete&&!experimentErrors.length;
+      return {ready, languages:report.variants,
+        ...(ready?{}:{reason:[report.plansComplete?null:'complete source-bound promo plans required in every default language',...experimentErrors].filter(Boolean).join('; ')})};
     }
     if (typeof item?.episodeFile !== 'string' ||
         !/^episodes\/[a-z0-9][a-z0-9-]*\.json$/.test(item.episodeFile))
@@ -177,6 +181,9 @@ export function inspectDraftReadiness(rootDirectory, item) {
         if (language !== 'ru') assertLocalizedLessonSource(episode, canonical, language);
         checkLessonSource(episode, item, settings.languageCode, visualSystem, { localized: language !== 'ru' });
         checkLessonArtSource(rootDirectory, episode, visualSystem);
+        // Owner rule 2026-11-17: a draft of the active test carries its stored arm (content/EXPERIMENTS.md).
+        const experimentErrors = draftExperimentErrors(readExperimentsIfPresent(rootDirectory), item, episode);
+        if (experimentErrors.length) throw Error(experimentErrors.join('; '));
         languages[language] = { ready: true };
       } catch (error) {
         languages[language] = { ready: false, reason: error.message };
