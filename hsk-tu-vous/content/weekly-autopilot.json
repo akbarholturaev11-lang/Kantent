@@ -53,7 +53,8 @@
       "openrouter",
       "wait-for-gemini-reset-then-resume"
     ],
-    "openRouterOwnerWords": "гемини бупул тугаса опен роутердан фойдалансин."
+    "openRouterOwnerWords": "гемини бупул тугаса опен роутердан фойдалансин.",
+    "listenedSpans": "Owner 2026-11-17 (\"шу ёзган вахтини олип сен хитойчага угирсангчи\" → \"тугри 2 ласихам\"): when the only unverified words are Mandarin that the recognizer wrote as a translation or homophone, the provider's own word edges may carry the source words ONLY after the owner listens to that exact clip and confirms it (review/<id>/<take>/owner-span-exceptions.json, scripts/owner-span-exception.mjs). The autopilot never writes that file itself: it cuts the clips into review/<id>/listen-check/, sends them to the owner, leaves that video unscheduled and continues with the others."
   },
   "report": {
     "file": "content/autopilot/<week-start>-report.md",

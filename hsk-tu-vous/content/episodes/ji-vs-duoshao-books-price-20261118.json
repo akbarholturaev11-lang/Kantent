@@ -843,6 +843,215 @@
           "explains": "Движением показать выбор между счётом и ценой."
         },
         {
+          "id": "books-step-2b",
+          "kind": "graphic",
+          "cueText": "После 几",
+          "visual": {
+            "title": "Вопрос о малом числе",
+            "hanzi": "几",
+            "pinyin": "jǐ",
+            "meaning": "сколько (немного)",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 164,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 171,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 181,
+                    "y1": 171,
+                    "x2": 211,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 240,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 247,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 257,
+                    "y1": 164,
+                    "x2": 287,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-2-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 316,
+                    "y": 136,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-2-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 323,
+                    "y": 149,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-2-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 333,
+                    "y1": 157,
+                    "x2": 363,
+                    "y2": 157,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "ji-spot",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 268,
+                    "cy": 110,
+                    "r": 18,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "ji-spot",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 300,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "office"
+              ],
+              "parts": [
+                "几"
+              ],
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
+            }
+          },
+          "explains": "Выделить 几 как вопрос о небольшом числе перед счётным словом."
+        },
+        {
           "id": "books-step-3",
           "kind": "graphic",
           "cueText": "счётное слово 本",
@@ -1884,6 +2093,220 @@
             }
           },
           "explains": "Движением показать выбор между счётом и ценой."
+        },
+        {
+          "id": "contrast-step-2b",
+          "kind": "graphic",
+          "cueText": "Для 几",
+          "visual": {
+            "title": "Нужно счётное слово",
+            "hanzi": "几本",
+            "pinyin": "jǐ běn",
+            "meaning": "сколько + счётное слово",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "base",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "book-0-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 164,
+                    "y": 150,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-0-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 171,
+                    "y": 163,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-0-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 181,
+                    "y1": 171,
+                    "x2": 211,
+                    "y2": 171,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-1-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 240,
+                    "y": 143,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "book-1-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 247,
+                    "y": 156,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-1-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 257,
+                    "y1": 164,
+                    "x2": 287,
+                    "y2": 164,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-2-body",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 316,
+                    "y": 136,
+                    "width": 57,
+                    "height": 160,
+                    "rx": 8,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "book-2-spine",
+                  "type": "rect",
+                  "parentId": "base",
+                  "attrs": {
+                    "x": 323,
+                    "y": 149,
+                    "width": 9,
+                    "height": 128,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-2-top",
+                  "type": "line",
+                  "parentId": "base",
+                  "attrs": {
+                    "x1": 333,
+                    "y1": 157,
+                    "x2": 363,
+                    "y2": 157,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "measure-spot",
+                  "type": "circle",
+                  "parentId": "base",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 100,
+                    "r": 18,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "base",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 10
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "measure-spot",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 300,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "office-books",
+                "office-price"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.31,
+                  "card": 0
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.9,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ],
+              "parts": [
+                "几",
+                "本"
+              ]
+            }
+          },
+          "explains": "Вернуться к 几: перед предметом встаёт счётное слово 本."
         },
         {
           "id": "contrast-step-3",
