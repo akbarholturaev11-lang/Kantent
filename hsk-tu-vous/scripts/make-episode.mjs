@@ -7,8 +7,12 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
 import { lessonArtPreflight } from "./review-lesson-art.mjs";
+import { meaningVisualPreflight } from "./meaning-visual-preflight.mjs";
+import { keepVerifiedCtas } from "./cta-voice-library.mjs";
 import {prepareCodexMotionKitTestBrief} from "./codex-motionkit-test.mjs";
 import {prepareCodexSoundKitTestBrief} from "./codex-soundkit-test.mjs";
+import { requirePlatformPackage } from "./platform-exports.mjs";
+import { APPROVED_PUBLICATION_PLATFORMS } from "./publication-policy.mjs";
 import {
   PROJECT_ROOT,
   CALENDAR_PATH,
@@ -98,6 +102,14 @@ const result = await prepareLanguagePackages(languages, async (language) => {
     error.stage = "lesson-art-required";
     throw error;
   }
+  // Meaning visuals come before paid voice too (professional-motion lessons):
+  // a form the library cannot show stops here with the Codex build brief.
+  const meaning = await meaningVisualPreflight(episode);
+  if (!meaning.ready) {
+    const error = new Error(`${meaning.stage}: ${meaning.missing.join("; ")}. ${meaning.nextAgentAction}`);
+    error.stage = meaning.stage;
+    throw error;
+  }
   if (!hasImportedVoice) runStage("generate-voice-gemini.mjs");
   runStage("render-episode.mjs");
   runStage("prepare-tiktok-review.mjs");
@@ -109,9 +121,17 @@ const result = await prepareLanguagePackages(languages, async (language) => {
     tiktokEpisode.captions?.length;
   if (!hasTikTokVoice)
     runStage("generate-voice-gemini.mjs", "--platform", "tiktok");
+  // Owner 2026-11-17: every verified CTA voice and its subtitles are kept, so the
+  // next episode reuses them instead of voicing (and re-checking) them again.
+  const ctas = await keepVerifiedCtas({ language, episodeId: item.id });
+  if (ctas.failed.length) console.warn(`CTA voice could not be kept for ${ctas.failed.map((c) => c.platform ?? "main").join(", ")}; ` +
+    "run node scripts/cta-voice-library.mjs --seed (content/WORKFLOW.md#reusable-cta-voice).");
   runStage("render-tiktok-review.mjs");
   console.log("Пакет готов для ручной проверки: " + folder);
   const status = await readStatus(item.id);
+  const renderedEpisode = await readJson(path.join(folder, "episode.json"));
+  for (const platform of APPROVED_PUBLICATION_PLATFORMS)
+    await requirePlatformPackage(renderedEpisode, status, platform, { requireCover: true });
   for (const [platform, exported] of Object.entries(status.platformPackages ?? {})) {
     console.log(`${platform}: ${exported.video}`);
   }

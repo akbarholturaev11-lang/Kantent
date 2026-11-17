@@ -1,0 +1,14 @@
+{
+  "key": "3a143f7ce4370fa99a381849c7fcb9b7066d95ae1e5e01d8780c7c3b0887d805",
+  "audioSha256": "9359071ba20ffee347b2f5c70c7989c6c7368296d837a2883d17c5657bbf3bb3",
+  "wordsSha256": "b3050e9667152eb94414c81738b1572c4818b26b76b2dc47d84ea46182ae0512",
+  "source": {
+    "episodeId": "haishi-vs-huozhe-tea-20261113",
+    "startMs": 43500,
+    "wavSha256": "0e913c431f1fac34df7bffe31bc9d33009b6f85eabbb8ad0b8fa7b57b4a6e44d"
+  },
+  "captionsSha256": "be3950909ab423281b0c5482fecfdfa4ecd8d0e3ed0a91db877bc9fa65ecb2a1",
+  "locale": "ru-RU",
+  "transport": "gemini-direct",
+  "text": "Попробуй HSK AI. Зайди в профиль, открой ссылку, скачай HSK AI и учи китайский каждый день."
+}

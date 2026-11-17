@@ -7,6 +7,7 @@ import {
 } from "remotion";
 import { NarrativeVisual, type VisualFocus } from "./NarrativeVisual";
 import type { VisualBeat } from "./EpisodeComposition";
+import { LiquidGlass, LiquidGlassDefs } from "./IllustratedLessonScene";
 
 const clamp = {
   extrapolateLeft: "clamp" as const,
@@ -119,7 +120,8 @@ export const BoldMotionScene: React.FC<{
   frame: number;
   beatFrame: number;
   accent: string;
-}> = ({ sceneId, beat, previousBeat, frame, beatFrame, accent: sceneAccent }) => {
+  glassBrand?: boolean;
+}> = ({ sceneId, beat, previousBeat, frame, beatFrame, accent: sceneAccent, glassBrand }) => {
   const isCta = sceneId === "cta";
   const accent = accentFor(sceneId, beat);
   const field = sceneId === "measure" && beat.visualFocus === "apple-near"
@@ -451,7 +453,14 @@ export const BoldMotionScene: React.FC<{
             pointerEvents: "none",
           }}
         >
-          <div
+          {glassBrand && beat.hero === "HSK AI" ? <>
+            <LiquidGlassDefs/>
+            <LiquidGlass radius={64} style={{padding:"24px 48px"}}>
+              <div style={{fontFamily:"Arial, sans-serif",fontSize:heroSize,fontWeight:950,whiteSpace:"nowrap",lineHeight:1.08}}>
+                HSK <span style={{color:GOLD}}>AI</span>
+              </div>
+            </LiquidGlass>
+          </> : <div
             style={{
               display: "flex",
               justifyContent: hero.align === "center" ? "center" : hero.align === "left" ? "flex-start" : "flex-end",
@@ -497,7 +506,7 @@ export const BoldMotionScene: React.FC<{
                 </span>
               );
             })}
-          </div>
+          </div>}
           {beat.pinyin && (
             <div
               style={{

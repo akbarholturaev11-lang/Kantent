@@ -11,6 +11,7 @@ const A=visual.narratedActionLayout;
 const P=visual.narratedActionPalette;
 const easing={extrapolateLeft:"clamp" as const,extrapolateRight:"clamp" as const,easing:Easing.bezier(.18,.82,.2,1)};
 const enter=(frame:number,start=0)=>interpolate(frame,[start,start+L.actionFrames],[0,1],easing);
+const countProgress=(frame:number)=>interpolate(frame,[0,visual.motion.numericCountFrames],[0,1],easing);
 
 // The same object/count/group components serve arbitrary authored lessons.
 const ObjectGlyph:React.FC<{object:string;frame:number}>=({object,frame})=>{
@@ -33,10 +34,11 @@ export const QuantityStage:React.FC<{model:ActionModel;frame:number;compact?:boo
   const step=count>3?135:210;
   const scale=count>3?.68:.95;
   const grouping=model.grouped?enter(frame):0;
+  const countedValue=Math.round(count*countProgress(frame));
   const groupHalfWidth=Math.min(355,count*82);
   return <svg width="100%" height={compact?A.comparisonObjectHeightPx:A.objectHeightPx} viewBox="0 0 820 320" aria-label={`${count} ${model.object}; ${model.grouped?"grouped":"separate"}`}>
     <ellipse cx="410" cy="274" rx={Math.min(355,count*100)} ry="21" fill={C.brandGold} opacity={.03+grouping*.12}/>
-    {model.grouped&&<g opacity={grouping}><path d={`M${410-groupHalfWidth} 263v18h${groupHalfWidth*2}v-18`} fill="none" stroke={C.brandGold} strokeWidth="5" strokeLinecap="round"/><text x="410" y="319" textAnchor="middle" fill={C.brandGold} fontSize="33" fontWeight="850">{count}</text></g>}
+    {model.grouped&&<g opacity={grouping}><path d={`M${410-groupHalfWidth} 263v18h${groupHalfWidth*2}v-18`} fill="none" stroke={C.brandGold} strokeWidth="5" strokeLinecap="round"/><text x="410" y="319" textAnchor="middle" fill={C.brandGold} fontSize="33" fontWeight="850" data-count-target={count}>{countedValue}</text></g>}
     {Array.from({length:count},(_,i)=>{
       const p=enter(frame,i*visual.motion.heroCharacterStaggerFrames);
       const x=410+(i-(count-1)/2)*(step-grouping*26);
@@ -51,10 +53,14 @@ export const QuantityStage:React.FC<{model:ActionModel;frame:number;compact?:boo
 const NumberStage:React.FC<{model:ActionModel;frame:number;compact?:boolean}>=({model,frame,compact=false})=>{
   const value=model.value??0;
   const p=enter(frame);
+  const progress=countProgress(frame);
+  const countedValue=Math.round(value*progress);
   return <div style={{width:"100%",height:compact?A.comparisonObjectHeightPx:A.objectHeightPx,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:12}}>
-    <div style={{fontSize:compact?A.comparisonNumberFontPx:A.numberFontPx,fontWeight:900,lineHeight:.9,color:C.brandGold,scale:.9+.1*p}}>{value}</div>
-    <svg width={compact?310:600} height="74" viewBox="0 0 600 74" aria-label={`${value} counted dots`}>
-      {Array.from({length:value},(_,i)=><circle key={i} cx={38+(i%10)*58} cy={18+Math.floor(i/10)*21} r="7" fill={i<10?C.brandGold:C.brandTeal} opacity={enter(frame,Math.floor(i/10)*6)}/>) }
+    <div data-count-up data-count-target={value} data-count-current={countedValue} style={{fontSize:compact?A.comparisonNumberFontPx:A.numberFontPx,fontWeight:900,lineHeight:.9,color:C.brandGold,scale:.9+.1*p}}>{countedValue}</div>
+    <svg width={compact?310:600} height="74" viewBox="0 0 600 74" aria-label={`count from zero to ${value}`}>
+      <rect x="32" y="69" width="536" height="4" rx="2" fill="rgba(255,255,255,.2)"/>
+      <rect x="32" y="69" width={536*progress} height="4" rx="2" fill={C.brandGold}/>
+      {Array.from({length:value},(_,i)=><circle key={i} cx={38+(i%10)*58} cy={18+Math.floor(i/10)*21} r="7" fill={i<10?C.brandGold:C.brandTeal} opacity={i<countedValue?1:0}/>) }
     </svg>
   </div>;
 };

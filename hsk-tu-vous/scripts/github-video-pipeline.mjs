@@ -14,6 +14,7 @@ import { requestedLanguages } from "./bilingual-production.mjs";
 import { confirmedPublishedFor, confirmedPublishedInAllLanguages } from "./published-evidence.mjs";
 import { resolveTodayVideo } from "./resolve-production-date.mjs";
 import { platformPackagePaths } from "./platform-exports.mjs";
+import { verifyVideoCover } from "./video-cover.mjs";
 import { PROJECT_ROOT, readJson, readStatus, reviewDir, safeId } from "./lib.mjs";
 
 const scriptPath = fileURLToPath(import.meta.url);
@@ -128,6 +129,7 @@ async function verifyReviewPackage(episodeId, language, platform) {
     throw new Error(language + "/" + platform + ": no complete unapproved review package exists.");
   }
   const paths = platformPackagePaths(episodeId, platform);
+  const coverSha256 = await verifyVideoCover(paths.cover, stored.platformPackages[platform].coverSha256);
   const expectedHash = stored.platformPackages[platform].videoSha256;
   if (!SHA.test(expectedHash)) throw new Error("Invalid stored video SHA-256 for " + language + "/" + platform);
   for (const file of [paths.video, paths.captions, paths.post]) {
@@ -142,7 +144,7 @@ async function verifyReviewPackage(episodeId, language, platform) {
   if (!(await fs.readFile(paths.post, "utf8")).trim())
     throw new Error("Empty post text for " + language + "/" + platform);
   const postSha256 = createHash("sha256").update(await fs.readFile(paths.post)).digest("hex");
-  return { paths, sha256: hash, postSha256, bytes: size, ...ffprobe(paths.video),
+  return { paths, sha256: hash, postSha256, coverSha256, bytes: size, ...ffprobe(paths.video),
     ctaExperimentId: stored.platformPackages[platform].ctaExperimentId,
     contentHash: stored.platformPackages[platform].contentHash };
 }
@@ -184,14 +186,18 @@ export async function packageReview(episodeId, languages, outputDir = DEFAULT_OU
         ["video.mp4", verified.paths.video],
         ["captions.srt", verified.paths.captions],
         ["post.md", verified.paths.post],
+        ["cover.jpg", verified.paths.cover],
       ]) await fs.copyFile(source, path.join(target, name));
       const copiedHash = createHash("sha256").update(await fs.readFile(path.join(target, "video.mp4"))).digest("hex");
       if (copiedHash !== verified.sha256) throw new Error("Artifact copy changed MP4 bytes.");
       const copiedPostSha = createHash("sha256").update(await fs.readFile(path.join(target, "post.md"))).digest("hex");
       if (copiedPostSha !== verified.postSha256) throw new Error("Artifact copy changed proposed post preview text.");
+      const copiedCoverSha = createHash("sha256").update(await fs.readFile(path.join(target, "cover.jpg"))).digest("hex");
+      if (copiedCoverSha !== verified.coverSha256) throw new Error("Artifact copy changed review cover.");
       manifest.languages[language][platform] = {
         video: language + "/" + platform + "/video.mp4",
         sha256: verified.sha256, postSha256: copiedPostSha, bytes: verified.bytes,
+        cover: language + "/" + platform + "/cover.jpg", coverSha256: copiedCoverSha,
         width: verified.width, height: verified.height, durationSec: verified.durationSec,
         ctaExperimentId: verified.ctaExperimentId, contentHash: verified.contentHash,
       };

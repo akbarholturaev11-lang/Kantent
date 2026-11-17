@@ -10,7 +10,29 @@ import {loadValidCodexSoundKitDecision,soundKitTestPaths} from "./codex-soundkit
 import {compileSoundKitCuePlan} from "./sound-kit-cue-plan.mjs";
 import {makeSoundKitRenderPlan} from "./sound-kit-render-plan.mjs";
 import {assertCueTimelineMatches} from "./cue-timeline.mjs";
+import {buildCaptionSections} from "./caption-utils.mjs";
+import {assertMotionKitCuePlanMatches} from "./motion-kit-cue-plan.mjs";
 import visualSystem from "../content/visual-system.json" with {type:"json"};
+
+/**
+ * The shared review render stores its validated MotionKit plan only when it
+ * ran with the explicit HSK_AI_MOTION_KIT_REVIEW=1 opt-in. A P4 preview of a
+ * shared-voice platform reuses that exact plan under the same opt-in, so the
+ * TEST preview differs from the review package by its sound track alone.
+ */
+export async function loadReviewMotionKitPlan({root,platform,episode,timeline,
+  env=process.env,readFile=fs.readFile}) {
+  if((env.HSK_AI_MOTION_KIT_REVIEW??"0")!=="1"||platform==="tiktok")return null;
+  let plan;
+  try{plan=JSON.parse(await readFile(path.join(root,"motion-kit-cue-plan.json"),"utf8"))}
+  catch(e){
+    if(e.code==="ENOENT")
+      throw Error("SoundKit P4 MotionKit opt-in needs the review render's motion-kit-cue-plan.json");
+    throw e;
+  }
+  assertMotionKitCuePlanMatches(episode,timeline,plan);
+  return plan;
+}
 
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const PUBLIC=path.join(ROOT,"public");
@@ -103,8 +125,12 @@ export async function renderSoundKitTest(key,{
     await fs.mkdir(out,{recursive:true});
     const propsFile=path.join(temp,"props.json");
     const video=path.join(out,"p4-audio-test.mp4");
+    const motionKitPlan=await loadReviewMotionKitPlan({root,platform,episode,timeline});
     await fs.writeFile(propsFile,JSON.stringify({episode,
-      cueTimeline:timeline,soundKitRenderPlan}));
+      cueTimeline:timeline,soundKitRenderPlan,
+      // Same caption pages as the review package render.
+      captionSections:buildCaptionSections(episode.scenes,30),
+      ...(motionKitPlan?{motionKitPlan}:{})}));
     const command=path.join(ROOT,"node_modules/.bin/remotion");
     const result=spawnSync(command,["render","src/index.ts","HSKAI-Episode",
       video,"--props",propsFile,"--codec","h264",
@@ -125,6 +151,7 @@ export async function renderSoundKitTest(key,{
         soundId:x.soundId,assetSha256:x.assetSha256,
         startFrame:x.startFrame,clipFrames:x.clipFrames,volume:x.volume,
       })),
+      motionKitReviewApplied:Boolean(motionKitPlan),
       legacyEffectsSuppressed:true,productionEffectsEnabled:false,
       publishingAuthorized:false,ownerApproved:false,externalAiApiCalls:0,
       videoSha256:sha(bytes),output:video,

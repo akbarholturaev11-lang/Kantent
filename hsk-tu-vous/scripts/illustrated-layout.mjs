@@ -14,13 +14,14 @@ export const ILLUSTRATED_LAYOUT = {
   brandTopPx: 262, headlineTopPx: 348, chipTopPx: 560, chipBottomPx: 780,
   subtitleSlotsPx: [720, 1090, 1200, 1430], subtitleHeightPx: 80,
   pairTopPx: 820, pairHeightPx: 580, boardTopPx: 960, boardHeightPx: 260,
+  graphicOverlayTopPx: 830, graphicOverlayHeightPx: 450, graphicOverlaySideInsetPx: 80,
   // A 9:16 illustration cover-fitted to the frame (768x1376 source).
   sceneImageHeightPx: 1935, sceneImageTopPx: -7.5,
 };
 
 export function cameraFor(ill) {
   const box = ill?.focus && ill.anchors?.[ill.focus];
-  if (ill?.layout === "scene" && box) return { scale: 1.28, cx: box.x + box.w / 2, cy: box.y + box.h * 0.42 };
+  if (ill?.layout === "scene" && box) return { scale: ill.zoom ?? 1.28, cx: box.x + box.w / 2, cy: box.y + box.h * 0.42 };
   return { scale: 1, cx: 0.5, cy: 0.6 };
 }
 

@@ -2,8 +2,29 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   fallbackHttpStatus, isOpenRouterBackupEligible, openRouterBackupKey,
-  withOpenRouterBackup,
+  resumedRecoveryTransport, withOpenRouterBackup,
 } from "./voice-transport-backup.mjs";
+
+test("a resumed clip recovery never replays a recovery that already failed on the backup", () => {
+  assert.equal(resumedRecoveryTransport("gemini-direct", "gemini-direct"), "openrouter");
+  assert.equal(resumedRecoveryTransport(undefined, "gemini-direct"), "openrouter");
+  assert.equal(resumedRecoveryTransport("openrouter", "gemini-direct"), "gemini-direct");
+  assert.equal(resumedRecoveryTransport("openrouter", "openrouter"), "openrouter");
+  assert.equal(resumedRecoveryTransport("openrouter", "openrouter", true), "openrouter");
+});
+
+test("a Direct clip that never got an answer is retried on Direct, not skipped to the backup", async () => {
+  // Real 2026-11-16 RU take: the "比" span request on Direct ended in "fetch failed".
+  assert.equal(resumedRecoveryTransport("gemini-direct", "gemini-direct", true), "gemini-direct");
+  assert.equal(resumedRecoveryTransport("openrouter", "gemini-direct", true), "gemini-direct");
+  const { isUnansweredRequest } = await import("./voice-transport-backup.mjs");
+  const reset = Object.assign(new TypeError("fetch failed"), { cause: Object.assign(new Error("other side closed"), { code: "UND_ERR_SOCKET" }) });
+  const connect = Object.assign(new TypeError("fetch failed"), { cause: { code: "UND_ERR_CONNECT_TIMEOUT" } });
+  const timeout = Object.assign(new Error("The operation was aborted due to timeout"), { name: "TimeoutError" });
+  for (const error of [reset, connect, timeout]) assert.equal(isUnansweredRequest(error), true);
+  for (const error of [new Error("Recovered words did not match"), new Error("failed (HTTP 500)"), new TypeError("x is not a function")])
+    assert.equal(isUnansweredRequest(error), false);
+});
 
 test("paid transport is never enabled implicitly", () => {
   assert.equal(openRouterBackupKey({}, "gemini-direct"), null);

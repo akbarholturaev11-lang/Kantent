@@ -100,7 +100,11 @@ test("missing/invalid provider word timing blocks transcription", async () => {
   };
   await assert.rejects(
     transcribeOpenRouter({ ...opts, fetchImpl:async()=>new Response(JSON.stringify({text:"hello"}),{status:200}) }),
-    /no provider word timestamps/);
+    (error) => /no provider word timestamps/.test(error.message) && error.emptyResult === true);
+  // Malformed timing is not an empty answer: clip recovery must not skip it.
+  await assert.rejects(
+    transcribeOpenRouter({ ...opts, fetchImpl:async()=>new Response("not json",{status:200}) }),
+    (error) => error.emptyResult !== true);
   await assert.rejects(
     transcribeOpenRouter({ ...opts, fetchImpl:async()=>new Response(JSON.stringify({
       text:"hello",words:[{word:"hello",start:2,end:1}],

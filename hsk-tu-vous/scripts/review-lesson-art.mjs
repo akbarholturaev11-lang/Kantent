@@ -138,7 +138,7 @@ export async function lessonArtPreflight(episode) {
     failures: [...result.frames.flatMap((f) => f.failures.map((x) => `${f.name}: ${x}`)),
       ...result.beats.flatMap((b) => b.failures.map((x) => `${b.id}: ${x}`)),
       ...result.frames.filter((f) => !f.failures.length && !f.visual).map((f) => `${f.name}: visual check not confirmed`)],
-    nextAgentAction: `Codex task: generate every missing frame listed in ${path.relative(PROJECT_ROOT, brief.file)} with your own image generation, record each with node scripts/generate-lesson-art.mjs ${id} --record-codex <name>, run node scripts/review-lesson-art.mjs ${id}, fix failures, LOOK at each frame and confirm it with --confirm-visual <name> "<what you checked>", then rerun preparation. Never use --paid without the owner's request.` };
+    nextAgentAction: `Codex task: generate every missing frame listed in ${path.relative(PROJECT_ROOT, brief.file)} with your own free image generation (never the paid --paid API — Claude Code only, owner 2026-11-17), record each with node scripts/generate-lesson-art.mjs ${id} --record-codex <name>, run node scripts/review-lesson-art.mjs ${id}, fix failures, LOOK at each frame and confirm it with --confirm-visual <name> "<what you checked>", then rerun preparation. Never use --paid without the owner's request.` };
 }
 
 /** Render gate: the illustrated lesson's current frames have a passing review. */

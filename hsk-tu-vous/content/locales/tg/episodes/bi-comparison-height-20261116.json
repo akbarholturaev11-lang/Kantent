@@ -48,6 +48,163 @@
       "captionStyleId": "highlight",
       "motionBeats": [
         {
+          "id": "hook-setup",
+          "kind": "graphic",
+          "cueText": "қадро муқоиса",
+          "visual": {
+            "title": "Ду нафар паҳлӯи ҳам",
+            "hanzi": "高",
+            "pinyin": "gāo",
+            "meaning": "баланд",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "type": "circle",
+                  "id": "a-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 169,
+                    "cy": 101,
+                    "r": 28,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "a-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 138,
+                    "y": 133,
+                    "width": 62,
+                    "height": 194,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "a-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 123,
+                    "y1": 336,
+                    "x2": 216,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "b-head",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 413,
+                    "cy": 175,
+                    "r": 28,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "b-torso",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 382,
+                    "y": 207,
+                    "width": 62,
+                    "height": 120,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "b-ground",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 367,
+                    "y1": 336,
+                    "x2": 460,
+                    "y2": 336,
+                    "stroke": "muted",
+                    "strokeWidth": 4,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "bookstore"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.14,
+                  "y": 0.29,
+                  "w": 0.34,
+                  "h": 0.64
+                },
+                "b": {
+                  "x": 0.55,
+                  "y": 0.19,
+                  "w": 0.34,
+                  "h": 0.75
+                }
+              },
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                },
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.52,
+                  "y": 0.88,
+                  "h": 0.28
+                }
+              ]
+            }
+          },
+          "explains": "hook: Ду нафар паҳлӯи ҳам истодаанд — бинанда худаш муқоиса мекунад; фарқи қад танҳо дар «аз ман қадбаландтар» пайдо мешавад."
+        },
+        {
           "id": "hook-action-1",
           "kind": "graphic",
           "cueText": "аз ман қадбаландтар",
@@ -5083,7 +5240,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "bi-comparison-height-20261116",
-    "sourceHash": "5f679e4fe5a533321a3857b661f27aaafa8fd774dedfde33d5ab6fc01ae93699",
+    "sourceHash": "521ccbeba91decd90a556d9c35a3811370ee57d531fc2e489d509e8740173ab2",
     "authoredOn": "2026-11-10",
     "status": "draft-awaiting-audio-review"
   }

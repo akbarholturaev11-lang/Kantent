@@ -7,7 +7,7 @@ export const ACTION_OBJECTS = ["tea-cup", "book", "apple"];
 // Illustrated-glass lesson beats (owner decision 2026-11-09): generated art
 // from public/lesson-art/<episode>/ plus the overlay that explains the cue.
 export const ILLUSTRATION_LAYOUTS = ["scene", "pair", "board"];
-export const ILLUSTRATION_OVERLAYS = ["rise", "marks", "link", "cross", "drop", "compare", "adjective", "stamp"];
+export const ILLUSTRATION_OVERLAYS = ["rise", "marks", "link", "cross", "drop", "compare", "adjective", "stamp", "both-accepted"];
 // The HSK AI cast (content/characters/hsk-ai-characters.json; a test keeps
 // this list equal to the registry). No other character may appear.
 export const HSK_CHARACTER_IDS = ["panda", "dragon", "crane", "monkey", "rabbit"];
@@ -16,6 +16,7 @@ export function validateIllustration(id, ill) {
   const fail = (message) => { throw Error(id + ": illustration " + message); };
   if (!ill || typeof ill !== "object") fail("must be an object");
   if (!ILLUSTRATION_LAYOUTS.includes(ill.layout)) fail("layout must be scene, pair or board");
+  if (ill.zoom !== undefined && (!Number.isFinite(ill.zoom) || ill.zoom < 1 || ill.zoom > 1.6)) fail("zoom must be between 1 and 1.6");
   const name = /^[a-z][a-z0-9-]{1,40}$/;
   const wanted = ill.layout === "pair" ? 2 : 1;
   if (!Array.isArray(ill.images) || ill.images.length !== wanted || ill.images.some((x) => !name.test(x)))
@@ -23,6 +24,8 @@ export function validateIllustration(id, ill) {
   if (ill.icons !== undefined && (!Array.isArray(ill.icons) || ill.icons.length !== wanted || ill.icons.some((x) => x !== null && !name.test(x))))
     fail("icons must match the images");
   if (ill.overlay !== undefined && !ILLUSTRATION_OVERLAYS.includes(ill.overlay)) fail("has an unsupported overlay");
+  if (ill.overlay === "both-accepted" && (ill.layout !== "pair" || ill.focus !== undefined))
+    fail("both-accepted needs two equally visible images");
   for (const [key, box] of Object.entries(ill.anchors ?? {}))
     if (!/^[a-z]+$/.test(key) || !["x", "y", "w", "h"].every((k) => Number.isFinite(box?.[k]) && box[k] >= 0 && box[k] <= 1)) fail("anchors are normalized boxes");
   if (ill.focus !== undefined) {

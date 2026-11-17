@@ -14,6 +14,9 @@ on:
       - hsk-tu-vous/scripts/voice-checkpoint.mjs
       - hsk-tu-vous/scripts/voice-checkpoint.test.mjs
       - hsk-tu-vous/scripts/voice-checkpoint-artifact.mjs
+      - hsk-tu-vous/scripts/video-cover.mjs
+      - hsk-tu-vous/scripts/video-cover.test.mjs
+      - hsk-tu-vous/src/cover-entry.tsx
       - hsk-tu-vous/scripts/voice-checkpoint-artifact.test.mjs
       - hsk-tu-vous/scripts/voice-import-state.mjs
       - hsk-tu-vous/scripts/voice-import-state.d.mts
@@ -68,6 +71,9 @@ on:
       - hsk-tu-vous/scripts/voice-checkpoint.mjs
       - hsk-tu-vous/scripts/voice-checkpoint.test.mjs
       - hsk-tu-vous/scripts/voice-checkpoint-artifact.mjs
+      - hsk-tu-vous/scripts/video-cover.mjs
+      - hsk-tu-vous/scripts/video-cover.test.mjs
+      - hsk-tu-vous/src/cover-entry.tsx
       - hsk-tu-vous/scripts/voice-checkpoint-artifact.test.mjs
       - hsk-tu-vous/scripts/voice-import-state.mjs
       - hsk-tu-vous/scripts/voice-import-state.d.mts
@@ -187,12 +193,12 @@ jobs:
           node --check scripts/zernio-publication-core.test.mjs
           node --check scripts/zernio-approved-publish.mjs
           node --check scripts/zernio-approved-publish.test.mjs
-          node --test scripts/gemini-word-recovery.test.mjs scripts/openrouter-voice.test.mjs scripts/voice-checkpoint.test.mjs scripts/voice-checkpoint-artifact.test.mjs scripts/voice-import-state.test.mjs scripts/voice-reuse-integration.test.mjs scripts/media-duration.test.mjs scripts/voice-caption-boundary.test.mjs scripts/caption-utils.test.mjs scripts/cue-timeline.test.mjs scripts/narrated-beat-state.test.mjs scripts/cta-current-registration.test.mjs scripts/both-allowed-state.test.mjs scripts/action-design-plan.test.mjs scripts/motion-design-plan.test.mjs scripts/promo-production.test.mjs scripts/platform-exports.test.mjs scripts/semantic-review-integration.test.mjs scripts/cta-mcp.test.mjs
+          node --test scripts/gemini-word-recovery.test.mjs scripts/openrouter-voice.test.mjs scripts/voice-checkpoint.test.mjs scripts/voice-checkpoint-artifact.test.mjs scripts/voice-import-state.test.mjs scripts/voice-reuse-integration.test.mjs scripts/media-duration.test.mjs scripts/voice-caption-boundary.test.mjs scripts/caption-utils.test.mjs scripts/cue-timeline.test.mjs scripts/narrated-beat-state.test.mjs scripts/cta-current-registration.test.mjs scripts/both-allowed-state.test.mjs scripts/action-design-plan.test.mjs scripts/motion-design-plan.test.mjs scripts/promo-production.test.mjs scripts/platform-exports.test.mjs scripts/semantic-review-integration.test.mjs scripts/cta-mcp.test.mjs scripts/video-cover.test.mjs
           npm run check:consistency
       - name: Install FFmpeg and FFprobe for real synthetic MP4 tests
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg
+          sudo apt-get install -y -qq ffmpeg fonts-noto-cjk
           ffprobe -version | head -n 1
       - name: Test exact-date safety, isolation and actual FFmpeg MP4/SRT verification
         run: node --test scripts/github-video-pipeline.test.mjs scripts/video-credentials.test.mjs scripts/zernio-publication-core.test.mjs scripts/zernio-approved-publish.test.mjs
@@ -262,7 +268,7 @@ jobs:
       - name: Install FFmpeg and FFprobe for real production MP4 validation
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg
+          sudo apt-get install -y -qq ffmpeg fonts-noto-cjk
           ffmpeg -version | head -n 1
           ffprobe -version | head -n 1
       - name: Resolve exact lesson and fail closed for protected approved audio

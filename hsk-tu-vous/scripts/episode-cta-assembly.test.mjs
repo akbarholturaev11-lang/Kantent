@@ -136,3 +136,18 @@ test("older legacy lesson source remains exempt from future source guard", async
   ));
   assert.doesNotThrow(() => assertCanonicalLessonSource(source, lab));
 });
+
+test("an imported hook can finish its verified speech after the draft pacing limit", async () => {
+  const { episode } = await getPlannedEpisode("2026-11-13");
+  const hook = episode.scenes[0];
+  hook.durationFrames = 204;
+  assert.throws(() => validateEpisode(episode), /Hook 6/);
+
+  episode.captionSource = "gemini-word-timestamps";
+  episode.audioSrc = "generated/test/voice.mp3";
+  episode.captions = [{ text: "Почему?", startMs: 6500, endMs: 6800 }];
+  assert.doesNotThrow(() => validateEpisode(episode));
+
+  hook.durationSec = 7;
+  assert.throws(() => validateEpisode(episode), /Hook 6/);
+});

@@ -267,7 +267,7 @@
         "helpers": [
           "heroui-react"
         ],
-        "notes": "Frame-driven transitions and teaching cues; only approved subtle motion; skip glitch, strobe, bright sweeps."
+        "notes": "Frame-driven transitions and teaching cues; skip glitch, strobe and bright sweeps; professional-motion lessons follow content/EDITING_SPEC.md#professional-motion-system."
       },
       "premium": {
         "owner": "hyperframes-animation",

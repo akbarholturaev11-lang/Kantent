@@ -24,6 +24,15 @@
         "empty-book-table"
       ],
       "prompt": "The same night-market table now with one plain closed book on it, blank cover and pages, warm lantern light. No people or characters; no text, letters, numbers, logos or watermark."
+    },
+    {
+      "name": "night-market-one-book",
+      "aspectRatio": "9:16",
+      "references": [
+        "night-market-bookstall",
+        "single-book-table"
+      ],
+      "prompt": "Continue the exact same vertical Chinese night-market bookstall scene and camera composition from the first reference: warm lanterns, nearby food stalls, glossy market walkway, wooden book counter in the foreground. Add exactly one plain closed red book with a completely blank cover on the center of the foreground counter, matching the simple book in the second reference. Preserve the recognizable lively evening market around the book; the market stays clearly visible behind and beside the counter. No people, no animals, no characters, no writing, letters, numbers, logos or watermark."
     }
   ],
   "variety": {

@@ -4,7 +4,7 @@
  * decisions 2026-11-09). Frames are a CODEX task:
  *   node scripts/generate-lesson-art.mjs <id>                    write the Codex brief for missing frames
  *   node scripts/generate-lesson-art.mjs <id> --record-codex <n> record a frame Codex saved
- *   node scripts/generate-lesson-art.mjs <id> --paid             paid OpenRouter fallback (owner request only)
+ *   node scripts/generate-lesson-art.mjs <id> --paid             paid OpenRouter route — Claude Code only (owner 2026-11-17)
  * Reads content/lesson-art/<episode-id>.json; frames are text-free JPEG
  * backgrounds at public/lesson-art/<episode-id>/<name>.jpg with provenance.json
  * (provider, prompt hash, sha256). Characters are never baked into a frame: the
@@ -100,7 +100,7 @@ export async function writeCodexBrief({ episodeId, manifest, outDir }) {
       ...(asset.references ?? []).map((name) => path.relative(PROJECT_ROOT, path.join(outDir, name + ".jpg")))] });
   }
   const lines = [`# Codex frame brief — ${episodeId}`, "",
-    "Generate each frame below with Codex's own image generation (no paid API). Rules: content/EDITING_SPEC.md#illustrated-glass-lesson-format.",
+    "Generate each frame below with Codex's own image generation — it is free. Codex never uses the paid image API (`--paid` is for Claude Code only, owner 2026-11-17). Rules: content/EDITING_SPEC.md#illustrated-glass-lesson-format.",
     "- Text-free backgrounds: no letters, no people, no characters (characters are drawn later from content/characters/hsk-ai-characters.json).",
     "- Highest available resolution, at least 1500 px on the long side, exact aspect ratio; save as JPEG (quality ≥ 90) at the given path.",
     "- Use each listed reference image for continuity. Generate in the listed order (later frames reference earlier ones).",
@@ -132,6 +132,20 @@ async function recordCodexFrames({ episodeId, manifest, outDir, names }) {
   await fs.writeFile(provenancePath, JSON.stringify(provenance, null, 2) + "\n");
 }
 
+/**
+ * Owner 2026-11-17: "codex API orqali kadrlarni generatsiya qilmasin, u o'zi
+ * bepul generatsiya qila oladi; API orqali faqat senga ruxsat" — Codex draws
+ * frames with its own free image generation; the paid image API is only for
+ * Claude Code, which cannot generate images itself.
+ */
+export function paidImageRouteAllowed(env = process.env) {
+  if (Object.keys(env).some((name) => /^CODEX_/u.test(name)))
+    return { allowed: false, reason: "Codex generates frames with its own free image generation; the paid image API is for Claude Code only (owner 2026-11-17)." };
+  if (env.CLAUDECODE !== "1")
+    return { allowed: false, reason: "The paid image API (--paid) runs only inside Claude Code (owner 2026-11-17). Codex: use your own free image generation and --record-codex." };
+  return { allowed: true };
+}
+
 async function main() {
   const [episodeId, ...options] = process.argv.slice(2);
   if (!episodeId) throw new Error("Use: node scripts/generate-lesson-art.mjs <episode-id> [--paid] [--regenerate <name>] [--record-codex <name>]");
@@ -159,6 +173,8 @@ async function main() {
     if (brief.missing.length) process.exitCode = 3;
     return;
   }
+  const route = paidImageRouteAllowed();
+  if (!route.allowed) throw new Error(route.reason);
   if (typeof process.loadEnvFile === "function" && !process.env.OPENROUTER_API_KEY) {
     try { process.loadEnvFile(path.join(PROJECT_ROOT, ".env.local")); } catch (error) { if (error?.code !== "ENOENT") throw error; }
   }

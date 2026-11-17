@@ -1,0 +1,52 @@
+{
+  "episodeId": "haishi-vs-huozhe-tea-20261113",
+  "assets": {
+    "tea-house": {
+      "file": "tea-house.jpg",
+      "provider": "codex",
+      "promptSha256": "0e71ac3f86efac2a4c553fafa37b10dcfe6908e27ef2166144887d8b931b4e4a",
+      "characters": [],
+      "references": [],
+      "sha256": "62adf78d9619463cc367df84d2186dddcd4556b918bbc2de7a8c0581fce573fb",
+      "recordedAt": "2026-11-13T00:53:21.503Z",
+      "visual": {
+        "by": "Wide café establishing shot with sharp walnut table and celadon teapot, consistent warm side light, clear space for the card; no text, logo, figures, baked characters or visible artifacts.",
+        "sha256": "62adf78d9619463cc367df84d2186dddcd4556b918bbc2de7a8c0581fce573fb",
+        "at": "2026-11-13T00:53:21.908Z"
+      }
+    },
+    "tea-choice": {
+      "file": "tea-choice.jpg",
+      "provider": "codex",
+      "promptSha256": "db780ce65989b24c511c06bac368be8b7a8e2dbca300ad183beb3f3c62b32706",
+      "characters": [],
+      "references": [
+        "tea-house"
+      ],
+      "sha256": "6b8b0cf9ccc7c08bb908db662ed53e1b6d34e69fb56359e590c34250176d3c43",
+      "recordedAt": "2026-11-13T00:53:21.599Z",
+      "visual": {
+        "by": "Centered celadon cup with golden tea and matching teapot, same room and soft side light, clean geometry and crop margin; no text, people or mascots.",
+        "sha256": "6b8b0cf9ccc7c08bb908db662ed53e1b6d34e69fb56359e590c34250176d3c43",
+        "at": "2026-11-13T00:53:35.946Z"
+      }
+    },
+    "coffee-choice": {
+      "file": "coffee-choice.jpg",
+      "provider": "codex",
+      "promptSha256": "f3c1fbba48753137ae4e67768740ff117993f293208b7d84374d988a87b814aa",
+      "characters": [],
+      "references": [
+        "tea-house",
+        "tea-choice"
+      ],
+      "sha256": "402c6acab9c47b5f253498e5aaf3468416a64dff3c89f17b582e9cd75346adc6",
+      "recordedAt": "2026-11-13T00:53:21.692Z",
+      "visual": {
+        "by": "Ivory espresso cup and saucer, crema visible, paired composition matches the tea image and setting; no text, logos, people or mascots.",
+        "sha256": "402c6acab9c47b5f253498e5aaf3468416a64dff3c89f17b582e9cd75346adc6",
+        "at": "2026-11-13T00:53:36.474Z"
+      }
+    }
+  }
+}

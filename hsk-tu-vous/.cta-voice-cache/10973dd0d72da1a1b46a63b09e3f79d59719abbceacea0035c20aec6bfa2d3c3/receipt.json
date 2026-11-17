@@ -1,0 +1,14 @@
+{
+  "key": "10973dd0d72da1a1b46a63b09e3f79d59719abbceacea0035c20aec6bfa2d3c3",
+  "audioSha256": "24127668cd724edf0963926deef1fb7a6d73bb6e1d9509e3ad6840952479bc00",
+  "wordsSha256": "bfeb4fe93a9cb312e4cf1f4f7a85753f6ef54fbd4210d6a833c412fc322b1bb1",
+  "source": {
+    "episodeId": "bi-comparison-height-20261116",
+    "startMs": 54666.666666666664,
+    "wavSha256": "3f51432b5521b0b175b7de878fd8208d5990a7d728248c430fcfdea8d6fe1b78"
+  },
+  "captionsSha256": "3c0e3cfaba654d1ca1ea421683bc8a8cfe6ae21f0ad229156aa729d71b3a60ce",
+  "locale": "ru-RU",
+  "transport": "openrouter",
+  "text": "Попробуй HSK AI. Зайди в профиль, открой ссылку, скачай HSK AI и учи китайский каждый день."
+}

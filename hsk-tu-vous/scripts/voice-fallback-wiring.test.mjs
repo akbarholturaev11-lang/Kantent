@@ -141,7 +141,7 @@ test("X-10 wiring: single-hint passes only for missing languages, only in window
 
 test("one-take is the default; long takes are transcribed in saved silence-bounded windows", () => {
   assert.match(source, /const TTS_MODE_SETTING = \(process\.env\.HSK_AI_TTS_MODE \?\? "one-take"\)/);
-  assert.match(source, /const ttsMode = ONE_TAKE \? "continuous-pilot" : "scene";/, "stored id unchanged: saved takes stay resumable");
+  assert.match(source, /const ttsMode = cachedCta \? "continuous-with-cached-cta" : \(ONE_TAKE \? "continuous-pilot" : "scene"\);/, "stored id unchanged: saved takes stay resumable");
   const loop = between("metadata.sttWindows ??= [];", "if (!chunkAlignment?.captions && !retryRecoveryOnly) {\n      // Direct Gemini STT");
   assert.match(loop, /planSttWindows\(\{/);
   assert.match(loop, /cutWavClip\(chunkWavPath, window\.startMs, window\.endMs, clipPath, ffmpegRuntime\);/);
@@ -165,4 +165,25 @@ test("tokenization folds traditional Hanzi, drops verified erhua 儿 and splits 
   assert.match(recognized, /erhuaBigrams\(\)\.has\(lastHan \+ "儿"\)/, "a separately timed erhua 儿 is not a spoken token");
   const recovery = between("async function recoverActualWordClips", "function safeErrorMessage");
   assert.match(recovery, /language: entry\.han \? "zh" : "locale"/, "each token keeps its own language");
+});
+
+test("a failed upload cleanup never discards a paid clip transcription", () => {
+  // Real 2026-11-16 RU run: the region flipped between the answer and the DELETE.
+  const clip = between("async function transcribeDirectAudio", "const pad2");
+  assert.match(clip, /finally \{[\s\S]*try \{\s*await deleteGeminiFile\([\s\S]*catch \(cleanupError\)/);
+  assert.match(clip, /GEMINI_FILE_CLEANUP_SKIPPED/);
+});
+
+test("clip recovery records its transport and unanswered clips for the resumed run", () => {
+  assert.match(source, /metadata\.lastRecoveryTransport=config\.transcriptionTransport/);
+  assert.match(source, /metadata\.lastRecoveryUnanswered=Boolean\(recoveryError\?\.unansweredSpans\)/);
+  assert.match(source, /resumedRecoveryTransport\(\s*metadata\.lastRecoveryTransport \?\? metadata\.transcriptionTransport, config\.apiProvider,\s*metadata\.lastRecoveryUnanswered === true\)/);
+  assert.match(source, /error instanceof TranscriptionResponseError && error\.emptyResult === true\) return \[\]/);
+});
+
+test("owner span exceptions are read only from the take folder and only replace an unconfirmed gap", () => {
+  assert.match(source, /readJson\(path\.join\(outputDir, OWNER_SPAN_EXCEPTIONS_FILE\)\)/);
+  const unconfirmedBranch = between("const excepted = ownerSpanException(", "unconfirmed.push({ startMs: gap.startMs, endMs: gap.endMs, expected: gap.tokens.join(\" \"),\n        heard: gapBlocks");
+  assert.match(unconfirmedBranch, /audioSha256: chunkAudioSha256/);
+  assert.match(unconfirmedBranch, /recovered\.push\(\[excepted\.block\]\)[\s\S]*metadata\.ownerSpanExceptions[\s\S]*continue;/);
 });

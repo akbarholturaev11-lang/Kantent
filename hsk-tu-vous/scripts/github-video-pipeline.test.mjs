@@ -63,6 +63,8 @@ test("review verifier stages every mapped RU/TJ video destination and excludes T
     ], { encoding: "utf8", timeout: 120000 });
     assert.equal(ff.status, 0, ff.stderr ?? ff.error?.message);
     const sha = createHash("sha256").update(await fs.readFile(mp4)).digest("hex");
+    const cover = Buffer.from("cover test bytes");
+    const coverSha256 = createHash("sha256").update(cover).digest("hex");
     for (const language of ["ru", "tg"]) {
       await withLanguage(language, async () => {
         const platformPackages = {};
@@ -70,9 +72,10 @@ test("review verifier stages every mapped RU/TJ video destination and excludes T
           const files = platformPackagePaths(id, platform);
           await fs.mkdir(files.folder, { recursive: true });
           await fs.copyFile(mp4, files.video);
+          await fs.writeFile(files.cover, cover);
           await fs.writeFile(files.captions, "1\n00:00:00,100 --> 00:00:01,000\nТест\n");
           await fs.writeFile(files.post, "Synthetic technical test only - NOT A REAL LESSON\n");
-          platformPackages[platform] = { videoSha256: sha, ctaExperimentId: "fixture-v1", contentHash: "fixture-source" };
+          platformPackages[platform] = { videoSha256: sha, coverSha256, ctaExperimentId: "fixture-v1", contentHash: "fixture-source" };
         }
         await writeStatus(id, { stage: "rendered-pending-owner-approval", platformPackages });
       });
@@ -83,11 +86,17 @@ test("review verifier stages every mapped RU/TJ video destination and excludes T
     assert.equal(manifest.state, "rendered-pending-owner-approval");
     assert.deepEqual(Object.keys(manifest.languages), ["ru", "tg"]);
     assert.equal(manifest.languages.tg.instagram.sha256, sha);
+    assert.equal(manifest.languages.tg.instagram.coverSha256, coverSha256);
+    assert.deepEqual(await fs.readFile(path.join(bundle, "tg", "instagram", "cover.jpg")), cover);
     assert.deepEqual(Object.keys(manifest.languages.ru), enabledVideoPlatforms("ru"));
     assert.deepEqual(Object.keys(manifest.languages.tg), enabledVideoPlatforms("tg"));
     await assert.rejects(fs.stat(path.join(bundle,"tg","telegram","video.mp4")), {code:"ENOENT"});
     assert.equal(createHash("sha256").update(await fs.readFile(path.join(bundle, "ru", "instagram", "video.mp4"))).digest("hex"), sha);
     assert.equal((await fs.readFile(path.join(bundle, "manifest.json"), "utf8")).includes("published\": false"), true);
+    const tgCover = path.join(sourceDir, "tg", "cover.jpg");
+    await fs.appendFile(tgCover, "tamper");
+    await assert.rejects(packageReview(id, ["tg"], path.join(temp, "bad-cover")), /cover changed/);
+    await fs.writeFile(tgCover, cover);
     // Hash tamper test: existing artifact must never be marked complete.
     await fs.appendFile(path.join(sourceDir, "tg", "video.mp4"), "tamper");
     await assert.rejects(packageReview(id, ["ru", "tg"], path.join(temp, "unsafe")), /does not match/);

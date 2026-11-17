@@ -12,3 +12,5 @@ public/generated
 
 # SoundKit P4 uses short-lived verified WAVs only for explicit private TEST previews.
 public/soundkit-p4-preview-*/
+# The verified CTA voice cache (.cta-voice-cache/) is tracked on purpose: owner
+# 2026-11-17 — every CTA voice and its subtitles are kept and reused.

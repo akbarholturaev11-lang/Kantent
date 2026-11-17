@@ -1,0 +1,14 @@
+{
+  "key": "c340e3a3dddec09ea791936323ca5432c72fe393e4fcada7fac87a0d247a3984",
+  "audioSha256": "5ff7202949eb147dd431483be71afa3ec8db900b0a4350d4afae5ff598aeca21",
+  "wordsSha256": "5d75185db5416692683b2b515063d0392d60337d7f87c585286890d59f442333",
+  "source": {
+    "episodeId": "youdianr-vs-yidianr-price-20261111",
+    "startMs": 0,
+    "wavSha256": "c580e9654f276508f0e7890bb387125f6c6ebe4928acb16777dcefa5541030fb"
+  },
+  "captionsSha256": "6d8c37380ded3fbbe703a860518ed6b551a82cf6f0b05005faa276918081c291",
+  "text": "Попробуй HSK AI. Зайди в мой профиль и напиши мне в личные сообщения «HSK» — я пришлю ссылку, чтобы скачать HSK AI.",
+  "locale": "ru-RU",
+  "transport": "openrouter"
+}

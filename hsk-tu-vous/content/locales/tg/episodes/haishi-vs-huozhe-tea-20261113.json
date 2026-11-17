@@ -50,12 +50,12 @@
         {
           "id": "hook-action-1",
           "kind": "graphic",
-          "cueText": "Чой ё қаҳва",
+          "cueText": "Дар қаҳвахона",
           "visual": {
             "title": "Нӯшокиҳо",
-            "hanzi": "还是",
-            "pinyin": "háishi",
-            "meaning": "ё (саволи интихоб)",
+            "hanzi": "茶 / 咖啡",
+            "pinyin": "chá / kāfēi",
+            "meaning": "чой / қаҳва",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -202,39 +202,28 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "scene",
               "images": [
-                "tea-choice",
-                "coffee-choice"
-              ],
-              "focus": "left",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "crane",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
+                "tea-house"
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "茶",
+                "pinyin": "chá"
+              },
+              {
+                "hanzi": "咖啡",
+                "pinyin": "kāfēi"
+              }
+            ]
           },
           "explains": "Муҳити дарс: Дар қаҳвахона муштарӣ байни чой ва қаҳва интихоб мекунад. Ҳолати аввал ва ҳадаф: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
         },
         {
           "id": "hook-action-2",
           "kind": "graphic",
-          "cueText": "还是",
+          "cueText": "Чой ё қаҳва",
           "visual": {
             "title": "Ду интихоб",
             "hanzi": "茶 / 咖啡",
@@ -416,35 +405,25 @@
               "images": [
                 "tea-choice",
                 "coffee-choice"
-              ],
-              "focus": "right",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "crane",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "茶",
+                "pinyin": "chá"
+              },
+              {
+                "hanzi": "咖啡",
+                "pinyin": "kāfēi"
+              }
+            ]
           },
           "explains": "Тағйири намоён барои маънои нав: Дар тоҷикӣ ҳарду бо «ё» ифода мешаванд, аммо чинӣ онҳоро фарқ мекунад."
         },
         {
           "id": "hook-action-3",
           "kind": "graphic",
-          "cueText": "Чаро",
+          "cueText": "还是",
           "visual": {
             "title": "Навъи ҷумла",
             "hanzi": "还是",
@@ -613,26 +592,7 @@
                 "tea-choice",
                 "coffee-choice"
               ],
-              "focus": "left",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "crane",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
-              ]
+              "focus": "right"
             }
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
@@ -813,28 +773,34 @@
               "images": [
                 "tea-choice",
                 "coffee-choice"
-              ],
-              "focus": "left",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "crane",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "你",
+                "pinyin": "nǐ"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "茶",
+                "pinyin": "chá"
+              },
+              {
+                "hanzi": "还是",
+                "pinyin": "háishi"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "咖啡",
+                "pinyin": "kāfēi"
+              }
+            ]
           },
           "explains": "Муҳити дарс: Дар қаҳвахона муштарӣ байни чой ва қаҳва интихоб мекунад. Ҳолати аввал ва ҳадаф: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
         },
@@ -1024,36 +990,43 @@
                 "tea-choice",
                 "coffee-choice"
               ],
-              "focus": "right",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "crane",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
-              ]
-            }
+              "focus": "left"
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "你",
+                "pinyin": "nǐ"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "茶",
+                "pinyin": "chá"
+              },
+              {
+                "hanzi": "还是",
+                "pinyin": "háishi"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "咖啡",
+                "pinyin": "kāfēi"
+              }
+            ]
           },
           "explains": "Тағйири намоён барои маънои нав: Дар тоҷикӣ ҳарду бо «ё» ифода мешаванд, аммо чинӣ онҳоро фарқ мекунад."
         },
         {
-          "id": "choice-action-3",
+          "id": "choice-action-connector",
           "kind": "graphic",
-          "cueText": "якеро интихоб",
+          "cueText": "ду вариантро мепайвандад",
           "visual": {
-            "title": "Ҳадафи пурсиш",
+            "title": "Робитаи ду интихоб",
             "hanzi": "你喝茶还是喝咖啡？",
             "pinyin": "Nǐ hē chá háishi hē kāfēi?",
             "meaning": "Ту чой менӯшӣ ё қаҳва?",
@@ -1207,28 +1180,251 @@
               "images": [
                 "tea-choice",
                 "coffee-choice"
-              ],
-              "focus": "left",
-              "overlay": "compare",
-              "cast": [
+              ]
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "你",
+                "pinyin": "nǐ"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "茶",
+                "pinyin": "chá"
+              },
+              {
+                "hanzi": "还是",
+                "pinyin": "háishi"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "咖啡",
+                "pinyin": "kāfēi"
+              }
+            ]
+          },
+          "explains": "Ҳар ду нӯшокӣ равшан мешаванд: 还是 ду интихобро ба як савол мепайвандад."
+        },
+        {
+          "id": "choice-action-3",
+          "kind": "graphic",
+          "cueText": "якеро интихоб",
+          "visual": {
+            "title": "Ҳадафи пурсиш",
+            "hanzi": "你喝茶还是喝咖啡？",
+            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+            "meaning": "Ту чой менӯшӣ ё қаҳва?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
                 {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
+                  "id": "stage",
+                  "type": "g",
+                  "attrs": {}
                 },
                 {
-                  "id": "crane",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
+                  "type": "rect",
+                  "id": "tea-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 105,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 216,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "tea-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 160,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tea-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "139,130 145,108 136,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "tea-halo",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 158,
+                    "cy": 194,
+                    "r": 80,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "rect",
+                  "id": "coffee-body",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x": 379,
+                    "y": 150,
+                    "width": 110,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "red",
+                    "stroke": "none"
+                  }
+                },
+                {
+                  "type": "circle",
+                  "id": "coffee-handle",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 490,
+                    "cy": 193,
+                    "r": 22,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "coffee-surface",
+                  "parentId": "stage",
+                  "attrs": {
+                    "cx": 434,
+                    "cy": 150,
+                    "rx": 55,
+                    "ry": 14,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "coffee-steam",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "413,130 419,108 410,96",
+                    "fill": "none",
+                    "stroke": "muted",
+                    "strokeWidth": 5,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "polyline",
+                  "id": "tick-tea",
+                  "parentId": "stage",
+                  "attrs": {
+                    "points": "143,280 165,300 199,262",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "type": "line",
+                  "id": "choice-line",
+                  "parentId": "stage",
+                  "attrs": {
+                    "x1": 285,
+                    "y1": 130,
+                    "x2": 340,
+                    "y2": 130,
+                    "stroke": "gold",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "stage",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 8
+                    },
+                    {
+                      "atMs": 480,
+                      "value": 0
+                    }
+                  ]
                 }
               ]
-            }
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "tea-choice",
+                "coffee-choice"
+              ],
+              "focus": "right"
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "你",
+                "pinyin": "nǐ"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "茶",
+                "pinyin": "chá"
+              },
+              {
+                "hanzi": "还是",
+                "pinyin": "háishi"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "咖啡",
+                "pinyin": "kāfēi"
+              }
+            ]
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
         }
@@ -1404,31 +1600,33 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "scene",
               "images": [
-                "tea-choice",
-                "coffee-choice"
-              ],
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "crane",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
+                "tea-house"
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "茶",
+                "pinyin": "chá"
+              },
+              {
+                "hanzi": "或者",
+                "pinyin": "huòzhě"
+              },
+              {
+                "hanzi": "咖啡",
+                "pinyin": "kāfēi"
+              },
+              {
+                "hanzi": "都",
+                "pinyin": "dōu"
+              },
+              {
+                "hanzi": "行",
+                "pinyin": "xíng"
+              }
+            ]
           },
           "explains": "Муҳити дарс: Дар қаҳвахона муштарӣ байни чой ва қаҳва интихоб мекунад. Ҳолати аввал ва ҳадаф: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
         },
@@ -1603,27 +1801,30 @@
               "images": [
                 "tea-choice",
                 "coffee-choice"
-              ],
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "crane",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "茶",
+                "pinyin": "chá"
+              },
+              {
+                "hanzi": "或者",
+                "pinyin": "huòzhě"
+              },
+              {
+                "hanzi": "咖啡",
+                "pinyin": "kāfēi"
+              },
+              {
+                "hanzi": "都",
+                "pinyin": "dōu"
+              },
+              {
+                "hanzi": "行",
+                "pinyin": "xíng"
+              }
+            ]
           },
           "explains": "Тағйири намоён барои маънои нав: Дар тоҷикӣ ҳарду бо «ё» ифода мешаванд, аммо чинӣ онҳоро фарқ мекунад.",
           "visualStateIntent": {
@@ -1637,7 +1838,7 @@
         {
           "id": "options-action-3",
           "kind": "graphic",
-          "cueText": "或者 меояд",
+          "cueText": "ҳарду мешавад",
           "visual": {
             "title": "Пайвандак дар хабар",
             "hanzi": "茶或者咖啡都行。",
@@ -1833,26 +2034,30 @@
                 "tea-choice",
                 "coffee-choice"
               ],
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "crane",
-                  "mood": "talk",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
-              ]
-            }
+              "overlay": "both-accepted"
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "茶",
+                "pinyin": "chá"
+              },
+              {
+                "hanzi": "或者",
+                "pinyin": "huòzhě"
+              },
+              {
+                "hanzi": "咖啡",
+                "pinyin": "kāfēi"
+              },
+              {
+                "hanzi": "都",
+                "pinyin": "dōu"
+              },
+              {
+                "hanzi": "行",
+                "pinyin": "xíng"
+              }
+            ]
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан.",
           "visualStateIntent": {
@@ -2066,34 +2271,15 @@
               ]
             },
             "illustration": {
-              "layout": "board",
+              "layout": "pair",
               "images": [
-                "tea-house"
-              ],
-              "parts": [
-                "还是",
-                "或者"
-              ],
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "talk",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "crane",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
+                "tea-choice",
+                "coffee-choice"
               ]
             }
           },
-          "explains": "Муҳити дарс: Дар қаҳвахона муштарӣ байни чой ва қаҳва интихоб мекунад. Ҳолати аввал ва ҳадаф: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
+          "explains": "Муҳити дарс: Дар қаҳвахона муштарӣ байни чой ва қаҳва интихоб мекунад. Ҳолати аввал ва ҳадаф: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан.",
+          "cueOccurrence": 1
         },
         {
           "id": "contrast-action-2",
@@ -2262,31 +2448,12 @@
               ]
             },
             "illustration": {
-              "layout": "board",
+              "layout": "pair",
               "images": [
-                "tea-house"
+                "tea-choice",
+                "coffee-choice"
               ],
-              "parts": [
-                "还是",
-                "或者"
-              ],
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "crane",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
-              ]
+              "overlay": "both-accepted"
             }
           },
           "explains": "Тағйири намоён барои маънои нав: Дар тоҷикӣ ҳарду бо «ё» ифода мешаванд, аммо чинӣ онҳоро фарқ мекунад."
@@ -2294,12 +2461,12 @@
         {
           "id": "contrast-action-3",
           "kind": "graphic",
-          "cueText": "吗 намегузорем",
+          "cueText": "дар чунин савол",
           "visual": {
             "title": "Бе ҳиссачаи охир",
-            "hanzi": "还是",
-            "pinyin": "háishi",
-            "meaning": "ё (саволи интихоб)",
+            "hanzi": "你喝茶还是喝咖啡？",
+            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+            "meaning": "Ту чой менӯшӣ ё қаҳва?",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -2446,32 +2613,38 @@
               ]
             },
             "illustration": {
-              "layout": "board",
+              "layout": "pair",
               "images": [
-                "tea-house"
-              ],
-              "parts": [
-                "还是",
-                "或者"
-              ],
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "crane",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
+                "tea-choice",
+                "coffee-choice"
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "你",
+                "pinyin": "nǐ"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "茶",
+                "pinyin": "chá"
+              },
+              {
+                "hanzi": "还是",
+                "pinyin": "háishi"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "咖啡",
+                "pinyin": "kāfēi"
+              }
+            ]
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
         }
@@ -2482,7 +2655,7 @@
       "id": "recall",
       "kind": "example",
       "durationSec": 5,
-      "narration": "Чой ё қаҳва? 你喝茶还是喝咖啡？ Ҳардуи онҳо мешавад: 茶或者咖啡都行。",
+      "narration": "Чой ё қаҳва? 你喝茶还是喝咖啡？ 茶或者咖啡都行。",
       "cards": [
         {
           "hanzi": "你喝茶还是喝咖啡？",
@@ -2652,32 +2825,37 @@
               ]
             },
             "illustration": {
-              "layout": "pair",
+              "layout": "scene",
               "images": [
-                "tea-choice",
-                "coffee-choice"
-              ],
-              "focus": "left",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "proud",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "crane",
-                  "mood": "celebrate",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
+                "tea-house"
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "你",
+                "pinyin": "nǐ"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "茶",
+                "pinyin": "chá"
+              },
+              {
+                "hanzi": "还是",
+                "pinyin": "háishi"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "咖啡",
+                "pinyin": "kāfēi"
+              }
+            ]
           },
           "explains": "Муҳити дарс: Дар қаҳвахона муштарӣ байни чой ва қаҳва интихоб мекунад. Ҳолати аввал ва ҳадаф: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
         },
@@ -2687,9 +2865,9 @@
           "cueText": "你喝茶还是喝咖啡",
           "visual": {
             "title": "Тартиби савол",
-            "hanzi": "茶或者咖啡都行。",
-            "pinyin": "Chá huòzhě kāfēi dōu xíng.",
-            "meaning": "Чой ё қаҳва, ҳарду мешавад.",
+            "hanzi": "你喝茶还是喝咖啡？",
+            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
+            "meaning": "Ту чой менӯшӣ ё қаҳва?",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -2866,28 +3044,34 @@
               "images": [
                 "tea-choice",
                 "coffee-choice"
-              ],
-              "focus": "right",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "proud",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "crane",
-                  "mood": "celebrate",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "你",
+                "pinyin": "nǐ"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "茶",
+                "pinyin": "chá"
+              },
+              {
+                "hanzi": "还是",
+                "pinyin": "háishi"
+              },
+              {
+                "hanzi": "喝",
+                "pinyin": "hē"
+              },
+              {
+                "hanzi": "咖啡",
+                "pinyin": "kāfēi"
+              }
+            ]
           },
           "explains": "Тағйири намоён барои маънои нав: Дар тоҷикӣ ҳарду бо «ё» ифода мешаванд, аммо чинӣ онҳоро фарқ мекунад."
         },
@@ -2897,9 +3081,9 @@
           "cueText": "茶或者咖啡都行",
           "visual": {
             "title": "Рӯйхати интихобҳо",
-            "hanzi": "你喝茶还是喝咖啡？",
-            "pinyin": "Nǐ hē chá háishi hē kāfēi?",
-            "meaning": "Ту чой менӯшӣ ё қаҳва?",
+            "hanzi": "茶或者咖啡都行。",
+            "pinyin": "Chá huòzhě kāfēi dōu xíng.",
+            "meaning": "Чой ё қаҳва, ҳарду мешавад.",
             "graphic": {
               "width": 600,
               "height": 400,
@@ -3063,27 +3247,30 @@
                 "tea-choice",
                 "coffee-choice"
               ],
-              "focus": "left",
-              "overlay": "compare",
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "proud",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.31,
-                  "card": 0
-                },
-                {
-                  "id": "crane",
-                  "mood": "celebrate",
-                  "x": 0.5,
-                  "y": 0.9,
-                  "h": 0.3,
-                  "card": 1
-                }
-              ]
-            }
+              "overlay": "both-accepted"
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "茶",
+                "pinyin": "chá"
+              },
+              {
+                "hanzi": "或者",
+                "pinyin": "huòzhě"
+              },
+              {
+                "hanzi": "咖啡",
+                "pinyin": "kāfēi"
+              },
+              {
+                "hanzi": "都",
+                "pinyin": "dōu"
+              },
+              {
+                "hanzi": "行",
+                "pinyin": "xíng"
+              }
+            ]
           },
           "explains": "Натиҷа ва муқоисаи қоидаи дуруст: Саволи интихоби нӯшокӣ ва ҷавоби «ҳарду мешавад»-ро фарқ кардан."
         }
@@ -3139,7 +3326,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "haishi-vs-huozhe-tea-20261113",
-    "sourceHash": "abe022ebeba1607000f354d7cd939b134c9970c3a62bfa171da862ae1986c375",
+    "sourceHash": "19daacf306502610a67cb6345b55c060527fdd12013727d882523216b048fefa",
     "authoredOn": "2026-11-10",
     "status": "draft-awaiting-audio-review"
   }

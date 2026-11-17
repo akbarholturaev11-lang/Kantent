@@ -21,6 +21,10 @@ import { BoldMotionScene } from "./BoldMotionScene";
 import { NarratedMotionScene } from "./NarratedMotionScene";
 import { NarratedActionScene, referenceTone } from "./NarratedActionScene";
 import { IllustratedLessonScene } from "./IllustratedLessonScene";
+import { ProIllustratedLessonScene } from "./pro-motion/ProIllustratedLessonScene";
+import { FilmFinish, LightLeak, PRO, WipeEdge, sceneTransitionArt } from "./pro-motion/SceneTransitions";
+import { lessonFocus, planProSfx, planSceneTransitions, planSlideThemes, proMotionActive, slideFrameRanges } from "../scripts/pro-motion-plan.mjs";
+import type { SceneTransition } from "../scripts/pro-motion-plan.mjs";
 import {assertMotionKitCuePlanMatches} from "../scripts/motion-kit-cue-plan.mjs";
 import {assertSoundKitRenderPlanMatches} from "../scripts/sound-kit-render-plan.mjs";
 import type {BoundSoundKitRenderPlan} from "../scripts/sound-kit-render-plan.mjs";
@@ -1015,7 +1019,9 @@ const LessonSlide: React.FC<{
   useLegacySfx?: boolean;
   motionDesignEnabled?: boolean;
   motionDesignStyle?: string;
-}> = ({ episodeId, scene, index, sceneCount, durationFrames, timelineStartMs, captions, semanticScene, motionBeats = [], promoCue, motionKitScene, useLegacySfx = true, motionDesignEnabled = false, motionDesignStyle }) => {
+  illustratedLesson?: boolean;
+  proMotion?: { transitionIn: SceneTransition | null; transitionOut: SceneTransition | null; focus: { hanzi: string; pinyin: string | null } | null; theme?: string };
+}> = ({ episodeId, scene, index, sceneCount, durationFrames, timelineStartMs, captions, semanticScene, motionBeats = [], promoCue, motionKitScene, useLegacySfx = true, motionDesignEnabled = false, motionDesignStyle, illustratedLesson, proMotion }) => {
   // A semantic scene must be bound to a compiled, exact-cue timeline.
   if (scene.semanticShot && (!semanticScene || semanticScene.sceneId !== scene.id))
     throw new Error("Semantic scene missing a matching audio-cue timeline: " + scene.id);
@@ -1031,10 +1037,20 @@ const LessonSlide: React.FC<{
     if (!promoCue) throw new Error("Promo visual is missing its canonical word-cue timeline: " + scene.id);
     return <PromoScene visual={scene.promoVisual} frame={frame} cueFrame={promoCue.localFrame} durationFrames={durationFrames} first={index===0}/>;
   }
-  const fadeIn = index === 0
+  // Professional motion (content/EDITING_SPEC.md#professional-motion-system):
+  // the illustrated art carries its own scene transition; text never fades.
+  const proIllustrated = Boolean(proMotion) && motionDesign && motionDesignStyle === "explain-actions-v1" &&
+    narratedBeats.some((beat) => (beat.visual as {illustration?: unknown} | undefined)?.illustration);
+  const proArtTransition = !proMotion ? null
+    : frame < PRO.sceneTransition.frames
+      ? (index > 0 ? sceneTransitionArt(proMotion.transitionIn, "in", frame) : null)
+      : frame >= durationFrames ? sceneTransitionArt(proMotion.transitionOut, "out", frame - durationFrames) : null;
+  const fadeIn = index === 0 || proIllustrated
     ? 1
     : interpolate(frame, [0, MOTION.sceneCrossfadeFrames], [0, 1], clampEase);
-  const fadeOut = index === sceneCount - 1
+  // The incoming opaque scene dissolves over the outgoing scene. Fading
+  // both layers exposes the black canvas halfway through the dissolve.
+  const fadeOut = illustratedLesson || index === sceneCount - 1
     ? 1
     : interpolate(
         frame,
@@ -1199,14 +1215,17 @@ const LessonSlide: React.FC<{
     <AbsoluteFill
       style={{
         overflow: "hidden",
-        background: COLORS.background,
+        background: proIllustrated && index > 0 ? "transparent" : COLORS.background,
         color: COLORS.foreground,
         opacity: sceneOpacity,
       }}
     >
       {motionDesign && motionDesignStyle==="explain-actions-v1" && narratedBeats.length ? (
         narratedBeats.some((beat) => (beat.visual as {illustration?: unknown} | undefined)?.illustration)
-          ? <IllustratedLessonScene episodeId={episodeId} frame={frame} beats={narratedBeats} motionKitScene={motionKitScene}/>
+          ? proIllustrated && proMotion
+            ? <ProIllustratedLessonScene episodeId={episodeId} sceneId={scene.id} frame={frame} beats={narratedBeats}
+                focus={proMotion.focus} theme={proMotion.theme} showText={frame < durationFrames} artMotion={proArtTransition}/>
+            : <IllustratedLessonScene episodeId={episodeId} frame={frame} beats={narratedBeats} motionKitScene={motionKitScene} showText={frame < durationFrames}/>
           : <NarratedActionScene frame={frame} beats={narratedBeats} tone={referenceTone(index)}/>
       ) : motionDesign && narratedBeats.length ? (
         <NarratedMotionScene sceneId={scene.id} frame={frame} beats={narratedBeats}/>
@@ -1218,6 +1237,7 @@ const LessonSlide: React.FC<{
           frame={frame}
           beatFrame={localBeatFrame}
           accent={accent}
+          glassBrand={illustratedLesson}
         />
       ) : scene.semanticShot && semanticScene ? (
         <SemanticStoryScene
@@ -1313,6 +1333,9 @@ const LessonSlide: React.FC<{
         isHook={scene.kind === "hook"}
       />}
 
+      {proMotion && index > 0 && proMotion.transitionIn === "light-leak" &&
+        frame < PRO.sceneTransition.frames + 8 && <LightLeak frame={frame} frames={PRO.sceneTransition.frames + 8}/>}
+      {proArtTransition?.wipeEdge !== undefined && <WipeEdge edge={proArtTransition.wipeEdge}/>}
       {useLegacySfx && index > 0 && (
         <Sequence durationInFrames={SOUND.sceneCueFrames}>
           <Audio
@@ -1373,6 +1396,8 @@ const LessonSlide: React.FC<{
   );
 };
 
+const ProFinish: React.FC = () => <FilmFinish frame={useCurrentFrame()}/>;
+
 const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, motionKitPlan, soundKitRenderPlan, captionSections: variantCaptionSections, semanticTimeline: legacySemanticTimeline }) => {
   const { durationInFrames } = useVideoConfig();
   if (cueTimeline) assertCueTimelineMatches(episode, cueTimeline, FPS);
@@ -1414,6 +1439,23 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, motionKitPl
     () => buildActionCaptionScenes(episode, cueTimeline, FPS),
     [cueTimeline, episode],
   );
+  const illustratedLesson = episode.motionDesignStyle === "explain-actions-v1" && episode.scenes.some(scene =>
+    scene.motionBeats?.some(beat => Boolean((beat.visual as {illustration?: unknown} | undefined)?.illustration)));
+  // Professional motion: from its effective date, driven only by the
+  // verified cue timeline (scene boundaries and resolved beat cue frames).
+  const pro = useMemo(() => {
+    if (!cueTimeline || !proMotionActive(episode, PRO)) return null;
+    const scenes = timeline.map(({ scene, from, durationFrames }) => ({ id: scene.id, kind: scene.kind, from, durationFrames,
+      beats: cueTimeline.scenes.find((item) => item.sceneId === scene.id)?.motionBeats ?? [] }));
+    const illustration = (beat?: { visual?: unknown }) => (beat?.visual as { illustration?: unknown } | undefined)?.illustration;
+    const transitions = planSceneTransitions(scenes.map((scene) => ({ kind: scene.kind,
+      firstIll: illustration(scene.beats[0]), lastIll: illustration(scene.beats.at(-1)) })), PRO);
+    const focus = lessonFocus(scenes.flatMap((scene) => scene.beats));
+    return { transitions, focus, themes: planSlideThemes(scenes, PRO), slides: slideFrameRanges(scenes, focus),
+      sfx: soundKitRenderPlan ? [] : planProSfx({ scenes, config: PRO }),
+      finishFrames: timeline.find(({ scene }) => scene.kind === "cta")?.from ?? durationInFrames };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cueTimeline, episode, soundKitRenderPlan, durationInFrames]);
 
   return (
     <AbsoluteFill>
@@ -1439,11 +1481,19 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, motionKitPl
             semanticScene={semanticTimeline?.scenes.find(item => item.sceneId === scene.id)}
             motionBeats={cueTimeline?.scenes.find((item) => item.sceneId === scene.id)?.motionBeats}
             motionKitScene={motionKitPlan?.scenes.find((item) => item.sceneId === scene.id)}
-            useLegacySfx={!soundKitRenderPlan}
+            useLegacySfx={!soundKitRenderPlan && !pro}
             promoCue={cueTimeline?.scenes.find((item) => item.sceneId === scene.id)?.promoCue}
             motionDesignEnabled={episode.motionDesign === true}
             motionDesignStyle={episode.motionDesignStyle}
+            illustratedLesson={illustratedLesson}
+            proMotion={pro ? { transitionIn: pro.transitions[index] ?? null, transitionOut: pro.transitions[index + 1] ?? null, focus: pro.focus, theme: pro.themes[index] } : undefined}
           />
+        </Sequence>
+      ))}
+      {pro && <Sequence durationInFrames={pro.finishFrames}><ProFinish/></Sequence>}
+      {pro?.sfx.map((effect) => (
+        <Sequence key={"pro-sfx-" + effect.frame + "-" + effect.id} from={effect.frame} durationInFrames={effect.durationFrames}>
+          <Audio src={staticFile(effect.file)} volume={() => effect.volume}/>
         </Sequence>
       ))}
       {soundKitRenderPlan?.selected.map(effect => (
@@ -1512,9 +1562,9 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, motionKitPl
         sceneSections={captionSections}
         motionDesign={episode.motionDesign === true || episode.id === "zhe-na-ge"}
         plainMotionDesign={episode.scenes.some(scene => Boolean(scene.motionBeats?.length || scene.promoVisual))}
-        alwaysShowActionSubtitle={episode.motionDesignStyle === "explain-actions-v1" && episode.scenes.some(scene =>
-          scene.motionBeats?.some(beat => Boolean((beat.visual as {illustration?: unknown} | undefined)?.illustration)))}
+        alwaysShowActionSubtitle={illustratedLesson}
         actionCaptionScenes={actionCaptionScenes}
+        proSubtitles={pro ? { slides: pro.slides } : undefined}
       />
     </AbsoluteFill>
   );

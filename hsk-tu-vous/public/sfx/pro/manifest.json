@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "generator": "scripts/build-pro-sfx.mjs",
+  "sampleRate": 48000,
+  "channels": 1,
+  "license": "Original effects synthesized in this repository from deterministic noise and sine partials; no third-party audio.",
+  "sounds": [
+    {
+      "id": "chime",
+      "file": "sfx/pro/chime.wav",
+      "durationMs": 1100,
+      "peakDbfs": -5.2,
+      "sha256": "c49e17ab5d2f7d7294c0e84e145ae26ec651d5b2d9d97bf21acf7259198d5f9e"
+    },
+    {
+      "id": "impact",
+      "file": "sfx/pro/impact.wav",
+      "durationMs": 500,
+      "peakDbfs": -3.6,
+      "sha256": "a6df2df17619899b3ebfcfab940d9158a85c46d1355910787245d1b0c262c99d"
+    },
+    {
+      "id": "pop-a",
+      "file": "sfx/pro/pop-a.wav",
+      "durationMs": 167,
+      "peakDbfs": -6,
+      "sha256": "eecc36876d5c739fc6e65dd8fe5ca391bc46b4294bf3800e35f0fd0b44ffd3b8"
+    },
+    {
+      "id": "pop-b",
+      "file": "sfx/pro/pop-b.wav",
+      "durationMs": 167,
+      "peakDbfs": -6,
+      "sha256": "54514b61f0747cab1f43016a4460061c2ea5876b9a9df4a8b9ce9c3a1bf7a739"
+    },
+    {
+      "id": "pop-c",
+      "file": "sfx/pro/pop-c.wav",
+      "durationMs": 167,
+      "peakDbfs": -6,
+      "sha256": "95f33d18e11ed7ee40b97f12626dc14bba904bbc809462c1b4aed5584fcc80f9"
+    },
+    {
+      "id": "shimmer",
+      "file": "sfx/pro/shimmer.wav",
+      "durationMs": 1000,
+      "peakDbfs": -6,
+      "sha256": "3231a195864d7d251789c450a865659f7bf078cf2d3823271f3fecfc88c5f184"
+    },
+    {
+      "id": "whoosh-deep",
+      "file": "sfx/pro/whoosh-deep.wav",
+      "durationMs": 800,
+      "peakDbfs": -3.6,
+      "sha256": "f429a3a8f1b804e4eda430298330b41d17ab31502308012dd758188821c567d1"
+    },
+    {
+      "id": "whoosh-fast",
+      "file": "sfx/pro/whoosh-fast.wav",
+      "durationMs": 333,
+      "peakDbfs": -4.4,
+      "sha256": "20e56c0f8e74edc013f8ddd7fbfebf0246a804848020a2fcf1d0bbda953ce854"
+    },
+    {
+      "id": "whoosh-soft",
+      "file": "sfx/pro/whoosh-soft.wav",
+      "durationMs": 567,
+      "peakDbfs": -4.4,
+      "sha256": "8c7b0fb7e1ca2b7c41fe4673d04382a2ad5e61280db41d54a488f433b0ee9020"
+    }
+  ]
+}

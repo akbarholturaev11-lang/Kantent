@@ -1,0 +1,14 @@
+{
+  "key": "f10fa73d6c1a31935331dfc8ede55fdcb5c6b4ded5ae718e7e16d00e7b944fdf",
+  "audioSha256": "217792af3eda269f94b99b18f51af5d872cde106e6752d80e8cdbc8aaa86e9c4",
+  "wordsSha256": "35764b772ab11c177718952135bd56219e7599b95b7ded900cefb3134bb9407f",
+  "source": {
+    "episodeId": "youdianr-vs-yidianr-price-20261111",
+    "startMs": 0,
+    "wavSha256": "b2f6b22d06fae3b2dacfe0c775cae560dac98ee97aecb324bb574504e0bca296"
+  },
+  "captionsSha256": "1f0d68218145e49bd5cb303852d4af85f43ae73d5b0700182a2b336a751d5875",
+  "text": "HSK AI-ро санҷ. Ба профили ман даро ва дар паёми хусусӣ «HSK» навис — ман пайванди боргирии HSK AI-ро дастӣ мефиристам.",
+  "locale": "tg-TJ",
+  "transport": "gemini-direct"
+}

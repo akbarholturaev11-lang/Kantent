@@ -24,6 +24,8 @@ import { sha256 } from "./voice-checkpoint.mjs";
 import { runSfxPreparation } from "./render-sfx-step.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { assertLessonArtReviewed } from "./review-lesson-art.mjs";
+import { assertMeaningVisualsCovered } from "./meaning-visual-preflight.mjs";
+import { renderVideoCover } from "./video-cover.mjs";
 import {
   getEpisode,
   episodeContentHash,
@@ -52,6 +54,7 @@ validateEpisode(episode);
 validateLessonPresentation(episode, visualSystem.lessonPresentation);
 // Lesson-art review service: current frames must pass before any render.
 await assertLessonArtReviewed(episode);
+await assertMeaningVisualsCovered(episode);
 const ctaValidation = await requireCurrentCta(episode);
 const voiceProfile = await requireApprovedVoiceProfile(id);
 if (episode.voiceProvider !== voiceProfile.provider)
@@ -170,8 +173,10 @@ try {
     cueTimeline,
     motionKitPlan,
   });
+  const cover = await renderVideoCover({ episode, video: paths.instagram.video, output: paths.instagram.cover });
   for (const [platform, variant] of Object.entries(episodes)) {
     const files = paths[platform];
+    if (platform !== "instagram") await fs.copyFile(cover.cover, files.cover);
     await writeJson(files.episode, variant);
     await fs.writeFile(
       files.captions,
@@ -198,6 +203,7 @@ try {
       ctaCopyHash: variant.ctaExperiment.copyHash,
       ctaRuleVersion: variant.ctaExperiment.ruleVersion,
       videoSha256: await videoHash(files.video),
+      coverSha256: cover.coverSha256,
     };
   }
 } catch (error) {
@@ -216,6 +222,7 @@ await writeStatus(id, {
   video: paths.instagram.video,
   captions: paths.instagram.captions,
   post: paths.instagram.post,
+  cover: paths.instagram.cover,
   platformPackages,
   sharedLessonRenderedOnce: true,
   semanticReviewRendered: Boolean(semanticTimeline) && !motionTimeline,

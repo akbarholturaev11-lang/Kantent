@@ -4,6 +4,8 @@ import { createHash } from "node:crypto";
 import {
   createCtaExperiment,
   ctaExperimentMetadata,
+  ctaContextSnapshot,
+  ctaCopySnapshot,
   readCtaLab,
   validateCtaEpisode,
 } from "./cta-lab.mjs";
@@ -12,6 +14,7 @@ import {
   preparePlatformCtaDraft,
 } from "./platform-cta.mjs";
 import { APPROVED_PUBLICATION_PLATFORMS } from "./publication-policy.mjs";
+import { verifyVideoCover } from "./video-cover.mjs";
 
 // These destinations reuse the lesson's spoken CTA. TikTok has a separate
 // spoken manual-DM CTA and is rendered by its dedicated voice workflow.
@@ -155,6 +158,7 @@ export function platformPackagePaths(id, platform) {
     video: path.join(folder, "video.mp4"),
     captions: path.join(folder, "captions.srt"),
     post: path.join(folder, "post.md"),
+    cover: path.join(folder, "cover.jpg"),
   };
 }
 
@@ -169,7 +173,7 @@ export async function requirePlatformPackage(
   base,
   status,
   platform,
-  { lab } = {},
+  { lab, requireCover = false } = {},
 ) {
   lab ??= await readCtaLab();
   const stored = status.platformPackages?.[platform];
@@ -185,11 +189,21 @@ export async function requirePlatformPackage(
   if (stored) {
     const expected = preparePlatformCtaDraft(base, lab, platform);
     expected.ctaExperiment = episode.ctaExperiment;
+    // TikTok imports a separately voiced ending. The platform draft has
+    // pending audio by design; compare authored content separately there.
+    const matchesDraft = platform === "tiktok"
+      ? JSON.stringify(ctaCopySnapshot(expected)) === JSON.stringify(ctaCopySnapshot(episode)) &&
+        JSON.stringify(ctaContextSnapshot(expected)) === JSON.stringify(ctaContextSnapshot(episode)) &&
+        episode.voiceTextHash === narrationHash(episode) &&
+        episode.captionSource === "gemini-word-timestamps" &&
+        Boolean(episode.audioSrc && episode.captions?.length) &&
+        JSON.stringify(base.scenes.slice(0, -1)) === JSON.stringify(episode.scenes.slice(0, -1))
+      : episodeContentHash(expected) === episodeContentHash(episode);
     if (
       stored.baseContentHash !== episodeContentHash(base) ||
       stored.contentHash !== episodeContentHash(episode) ||
       stored.ctaExperimentId !== episode.ctaExperiment?.id ||
-      episodeContentHash(expected) !== episodeContentHash(episode)
+      !matchesDraft
     )
       throw new Error(
         `${platform} export no longer matches the current lesson/CTA. Render again.`,
@@ -208,8 +222,12 @@ export async function requirePlatformPackage(
     throw new Error(
       `${platform} rendered video changed. Render and review again.`,
     );
+  const coverSha256 = requireCover || stored?.coverSha256
+    ? await verifyVideoCover(paths.cover, stored?.coverSha256)
+    : undefined;
   return {
     ...paths,
+    ...(coverSha256 ? { coverSha256 } : {}),
     contentHash: episodeContentHash(episode),
     baseContentHash: episodeContentHash(base),
     ctaExperimentId: episode.ctaExperiment.id,
@@ -245,10 +263,11 @@ export async function requireApprovedPlatformPackages(
       (!approved && target.platform !== "instagram") ||
       (approved &&
         (approved.contentHash !== current.contentHash ||
-          approved.videoSha256 !== current.videoSha256))
+          approved.videoSha256 !== current.videoSha256 ||
+          approved.coverSha256 !== current.coverSha256))
     )
       throw new Error(
-        `${target.platform} video is not the exact owner-approved export.`,
+        `${target.platform} video or cover is not the exact owner-approved export.`,
       );
   }
 }

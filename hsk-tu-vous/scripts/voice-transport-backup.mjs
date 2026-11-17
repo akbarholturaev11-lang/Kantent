@@ -3,6 +3,30 @@
  * Distinct Google API keys are NOT rotated on HTTP 429.
  * Only provider availability failures may trigger a separate paid transport.
  */
+/**
+ * Transport for a resumed, saved-transcript clip recovery.
+ * - A Direct recovery that answered every clip and still did not match goes to
+ *   the OpenRouter backup once, for independent evidence.
+ * - A recovery that already failed on the backup goes back to the requested
+ *   transport instead of replaying the same saved backup clip responses (real
+ *   2026-11-16 RU/TG takes: backup clips heard "" / "Бад Бад бад").
+ * - A Direct recovery whose clip request never got an answer (network failure,
+ *   real 2026-11-16 RU "比" span: "fetch failed") stays on Direct: that clip
+ *   was never heard, so switching would skip it instead of retrying it.
+ */
+export function resumedRecoveryTransport(lastRecoveryTransport, requestedTransport, lastRecoveryUnanswered = false) {
+  if (requestedTransport === "openrouter") return "openrouter";
+  if (lastRecoveryTransport === "openrouter") return requestedTransport;
+  return lastRecoveryUnanswered ? requestedTransport : "openrouter";
+}
+
+/** A request that got no provider answer at all (nothing was heard or billed). */
+export function isUnansweredRequest(error) {
+  if (isPreConnectFailure(error)) return true;
+  if (error?.name === "TimeoutError" || error?.name === "AbortError") return true;
+  return error instanceof TypeError && /^fetch failed$/i.test(String(error.message ?? ""));
+}
+
 export function fallbackHttpStatus(error) {
   const value = Number(error?.httpStatus);
   if (Number.isInteger(value) && value >= 100 && value <= 599) return value;

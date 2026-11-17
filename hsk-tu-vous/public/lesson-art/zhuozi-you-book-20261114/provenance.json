@@ -1,0 +1,69 @@
+{
+  "episodeId": "zhuozi-you-book-20261114",
+  "assets": {
+    "empty-book-table": {
+      "file": "empty-book-table.jpg",
+      "provider": "codex",
+      "promptSha256": "31c64c0adc4d6ad63984ed4f0222be3fd658527b0e63a0e3b925890860d773f9",
+      "characters": [],
+      "references": [
+        "night-market-bookstall"
+      ],
+      "sha256": "84735e09357c91a40012aa00fdbb33e00377ebd9ea2e9e772544a2a742deed72",
+      "recordedAt": "2026-11-14T03:27:14.264Z",
+      "visual": {
+        "by": "Inspected full frame: empty tabletop, no people or text, same wood and lantern palette as the environment frame, clear composition for the cast.",
+        "sha256": "84735e09357c91a40012aa00fdbb33e00377ebd9ea2e9e772544a2a742deed72",
+        "at": "2026-11-14T03:28:44.093Z"
+      }
+    },
+    "single-book-table": {
+      "file": "single-book-table.jpg",
+      "provider": "codex",
+      "promptSha256": "eada272742157d734dbc4247b78e826e696bf9e89745dd5a9f93cc93ea617342",
+      "characters": [],
+      "references": [
+        "night-market-bookstall",
+        "empty-book-table"
+      ],
+      "sha256": "6e79949b166ac964c4334831e58526c37b9aec143474cf7c9558cf0d621e2135",
+      "recordedAt": "2026-11-14T03:27:48.170Z",
+      "visual": {
+        "by": "Inspected full frame: exactly one plain closed book on the same table, blank cover, no people or text, with the same setting and palette.",
+        "sha256": "6e79949b166ac964c4334831e58526c37b9aec143474cf7c9558cf0d621e2135",
+        "at": "2026-11-14T03:28:44.197Z"
+      }
+    },
+    "night-market-bookstall": {
+      "file": "night-market-bookstall.jpg",
+      "provider": "codex",
+      "promptSha256": "8a0f3ebf7647df7d8c18cf6aaef92942353fcbe93b93cb238694a15201e41899",
+      "characters": [],
+      "references": [],
+      "sha256": "bad4c189fe6010a553962c9ffc63dedb669d31ead1286819555fce4003c8f56b",
+      "recordedAt": "2026-11-14T03:27:48.488Z",
+      "visual": {
+        "by": "Inspected full frame: text free, no people or baked characters, empty foreground table, warm dusk market, and clear room for cast and captions.",
+        "sha256": "bad4c189fe6010a553962c9ffc63dedb669d31ead1286819555fce4003c8f56b",
+        "at": "2026-11-14T03:28:43.982Z"
+      }
+    },
+    "night-market-one-book": {
+      "file": "night-market-one-book.jpg",
+      "provider": "codex",
+      "promptSha256": "4ce809fb4d8156b45f5e60c6800f779a707ee4549b843b731e170c5ddf26fd9c",
+      "characters": [],
+      "references": [
+        "night-market-bookstall",
+        "single-book-table"
+      ],
+      "sha256": "6492915b8e09e7549ac2fce83f18559fc4b1015f15f3345802d4814e44a8329b",
+      "recordedAt": "2026-11-14T05:32:13.549Z",
+      "visual": {
+        "by": "Inspected the full frame: exactly one blank red book on the foreground market counter, evening stalls and lanterns remain clear, no people, animals, text, logos or watermark, and the existing warm illustration style is preserved.",
+        "sha256": "6492915b8e09e7549ac2fce83f18559fc4b1015f15f3345802d4814e44a8329b",
+        "at": "2026-11-14T05:46:36.402Z"
+      }
+    }
+  }
+}

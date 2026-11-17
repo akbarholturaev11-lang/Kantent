@@ -1,0 +1,176 @@
+{
+  "episodeId": "bi-comparison-height-20261116",
+  "assets": {
+    "bookstore": {
+      "file": "bookstore.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "f30f31cf84565e37b2d98fbf83d4da237c23c28268160de7229ea7556e89bbd6",
+      "characters": [],
+      "references": [],
+      "sha256": "7207e4074f9296b0ab7782bfb0c3457dfe712a97cd55bee92b819cdcb84c93aa",
+      "rawSha256": "0cc89abf0e297ed486d0ad8eb1a7ac71986088fd5ea36bded52a0bea4e84152e",
+      "generationId": "gen-1794813874-b9q0uMpff6uSkL1g6CMu",
+      "usage": {
+        "prompt_tokens": 219,
+        "completion_tokens": 1680,
+        "total_tokens": 1899,
+        "cost": 0.1009095,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1009095,
+          "upstream_inference_prompt_cost": 0.0001095,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-16T07:25:25.916Z",
+      "visual": {
+        "by": "Viewed full 1536x2752: warm Chinese bookstore, tall shelves with blank spines (no letters/numbers/logos), arched window onto courtyard, two reading chairs, wide open rug floor for panda+crane placement; no people, no characters baked in; clean linework, no warped geometry.",
+        "sha256": "7207e4074f9296b0ab7782bfb0c3457dfe712a97cd55bee92b819cdcb84c93aa",
+        "at": "2026-11-16T07:27:41.707Z"
+      }
+    },
+    "sunny-window": {
+      "file": "sunny-window.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "585937d292e84ec0fb5daa9a081191297816bbf350b26d4e4632246748cb3ce8",
+      "characters": [],
+      "references": [
+        "bookstore"
+      ],
+      "sha256": "3109728e6f8654d0a92c88e8f5fe5a283854577e3b393728bcbaad021fea62ce",
+      "rawSha256": "873b6c929433a977cfaf493565cdbe7466f10dc64cc834b957c0096f7ea17717",
+      "generationId": "gen-1794813928-VB9NfY8fY079CML66KvW",
+      "usage": {
+        "prompt_tokens": 1333,
+        "completion_tokens": 1680,
+        "total_tokens": 3013,
+        "cost": 0.1014665,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1014665,
+          "upstream_inference_prompt_cost": 0.0006665,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-16T07:26:05.710Z",
+      "visual": {
+        "by": "Viewed full 1856x2304: same bookstore corner and arched window on a bright mild sunny day with green courtyard trees; blank spines, no text/logos, no people or characters; matches bookstore palette and shelving (reading chairs omitted, room/window identical); sharp, clean.",
+        "sha256": "3109728e6f8654d0a92c88e8f5fe5a283854577e3b393728bcbaad021fea62ce",
+        "at": "2026-11-16T07:27:42.162Z"
+      }
+    },
+    "cold-window": {
+      "file": "cold-window.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "2a0e98e95b48542dcdd65e66eb52a2b3e06158c72aa1a4f3a4c91725e6486abe",
+      "characters": [],
+      "references": [
+        "bookstore",
+        "sunny-window"
+      ],
+      "sha256": "1286fc9fee19c7a79d99e9d952e6097063f5f53ee62c0e983e819d5a11ed6345",
+      "rawSha256": "fb068f1b24c5bbb6f554722f382f6a93a2e5845174eec65e6001afad6a45f1f5",
+      "generationId": "gen-1794813966-trgc5CV4jlKSVCDuxREx",
+      "usage": {
+        "prompt_tokens": 2453,
+        "completion_tokens": 1680,
+        "total_tokens": 4133,
+        "cost": 0.1020265,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1020265,
+          "upstream_inference_prompt_cost": 0.0012265,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-16T07:26:38.097Z",
+      "visual": {
+        "by": "Viewed full 1856x2304: same bookstore window on a grey cold winter day (bare branches, frosted glass, snow light), cooler tone vs sunny-window; same chairs/shelves as bookstore; blank spines, no text/logos, no people or characters; sharp, no artifacts.",
+        "sha256": "1286fc9fee19c7a79d99e9d952e6097063f5f53ee62c0e983e819d5a11ed6345",
+        "at": "2026-11-16T07:27:42.597Z"
+      }
+    },
+    "blank-notebook": {
+      "file": "blank-notebook.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "a0aebb9d9c44476aa7e8d87e5944be47fc2baced81b68fdaf02ba9191670f189",
+      "characters": [],
+      "references": [
+        "bookstore"
+      ],
+      "sha256": "d6a18e4f3f8302bad8de7d04e7e0e37af6fb81eb15a7e3b8c4cf2e1f6288aa6e",
+      "rawSha256": "6247f6b5fcfe8fea847fea84428d524b1c111a4398efd5a3f5c97c09ac631476",
+      "generationId": "gen-1794813998-MBEUvxdqvg00UvVZ9q3O",
+      "usage": {
+        "prompt_tokens": 1331,
+        "completion_tokens": 1789,
+        "total_tokens": 3120,
+        "cost": 0.1017925,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1017925,
+          "upstream_inference_prompt_cost": 0.0006655,
+          "upstream_inference_completions_cost": 0.101127
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-16T07:27:07.799Z",
+      "visual": {
+        "by": "Viewed full 1856x2304: open completely blank notebook with pen on wooden reading table, same warm bookstore shelves softly behind; pages have no writing, letters or numbers; no people or characters; clean composition with open page area for the board overlay.",
+        "sha256": "d6a18e4f3f8302bad8de7d04e7e0e37af6fb81eb15a7e3b8c4cf2e1f6288aa6e",
+        "at": "2026-11-16T07:27:43.026Z"
+      }
+    }
+  }
+}

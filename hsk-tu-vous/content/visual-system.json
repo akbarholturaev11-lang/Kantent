@@ -89,6 +89,7 @@
     "storyVisualBobAmplitudePx": 2,
     "beatCrossfadeFrames": 12,
     "sceneCrossfadeFrames": 16,
+    "numericCountFrames": 26,
     "sceneBackgroundPushScale": 1.025,
     "toneContourDrawFrames": 9,
     "toneContourWidthPx": 240,
@@ -197,6 +198,143 @@
       "volume": 0.07,
       "fadeInFrames": 18,
       "fadeOutFrames": 24
+    }
+  },
+  "proMotion": {
+    "enabled": true,
+    "effectiveFromDate": "2026-11-16",
+    "description": "Owner 2026-11-16: professional motion for illustrated-glass lessons. Spring camera between subjects, cue-timed shot moves, varied scene transitions, kinetic teaching card, morphing/draw-on graphics, cast reactions, film finish and cue-bound sound design in the official mix. Earlier lessons keep their historical look.",
+    "camera": {
+      "naturalHz": 2.1,
+      "dampingRatio": 0.78,
+      "settleFrames": 20,
+      "whipMinTravel": 0.12,
+      "whip": {
+        "naturalHz": 2.5,
+        "dampingRatio": 0.8,
+        "anticipation": 0.012,
+        "anticipationFrames": 4,
+        "breath": 0.05
+      },
+      "glide": {
+        "naturalHz": 1.5,
+        "dampingRatio": 1
+      },
+      "punchScale": 0.025,
+      "motionBlurFactor": 0.35,
+      "motionBlurMaxPx": 18,
+      "holdPushPerSec": 0.012,
+      "holdMaxPush": 0.045,
+      "holdDrift": 0.014
+    },
+    "beatTransition": {
+      "morphFrames": 14,
+      "crossZoomFrames": 14,
+      "crossZoomScale": 0.08,
+      "crossZoomBlurPx": 12
+    },
+    "sceneTransition": {
+      "frames": 16,
+      "zoomThroughScale": 0.16,
+      "zoomThroughBlurPx": 16,
+      "whipDistancePct": 38,
+      "whipBlurPx": 26,
+      "wipeGlowPx": 10,
+      "lightLeakOpacity": 0.28,
+      "order": [
+        "zoom-through",
+        "wipe",
+        "whip-up",
+        "light-leak"
+      ]
+    },
+    "card": {
+      "entryNaturalHz": 2.6,
+      "entryDampingRatio": 0.7,
+      "charStaggerFrames": 3,
+      "charRisePx": 34,
+      "charBlurPx": 10,
+      "pinyinDelayFrames": 5,
+      "meaningDelayFrames": 8,
+      "sweepFrames": 18,
+      "focusGlowPx": 18,
+      "rowShiftPx": 44
+    },
+    "graphic": {
+      "drawFrames": 14,
+      "staggerFrames": 2,
+      "riseFrames": 12,
+      "risePx": 16,
+      "exitFrames": 8
+    },
+    "cast": {
+      "entryFrames": 18,
+      "entryRisePct": 0.22,
+      "reactionFrames": 16,
+      "reactionHopPct": 0.07,
+      "reactionWiggleDeg": 4,
+      "swayDeg": 0.8
+    },
+    "finish": {
+      "vignetteOpacity": 0.34,
+      "grainOpacity": 0.055
+    },
+    "slide": {
+      "contentTopPx": 700,
+      "blurInPx": 18,
+      "chipStaggerFrames": 4,
+      "dissolveFrames": 12,
+      "dissolveBlurPx": 22,
+      "exitFrames": 8,
+      "exitRisePx": 50,
+      "subtitleTopPx": 1430,
+      "themes": [
+        "glass",
+        "ink",
+        "sky",
+        "teal"
+      ],
+      "wrongTheme": "ember"
+    },
+    "meaning": {
+      "formulaTopPx": 430,
+      "stageTopPx": 790,
+      "stageHeightPx": 570,
+      "growStartFrames": 16,
+      "growFrames": 30,
+      "badgeFrames": 50,
+      "thermoMin": -10,
+      "thermoMax": 40,
+      "particles": 14,
+      "iconHeroPx": 300,
+      "iconCardPx": 130
+    },
+    "karaoke": {
+      "enabled": true,
+      "upcomingOpacity": 0.5,
+      "activeScale": 1.08,
+      "activeGlowPx": 18
+    },
+    "sound": {
+      "enabled": true,
+      "minGapFrames": 12,
+      "leadFrames": {
+        "whoosh": 4,
+        "impact": 1
+      },
+      "volume": {
+        "whoosh-deep": 0.2,
+        "whoosh-soft": 0.17,
+        "whoosh-fast": 0.17,
+        "shimmer": 0.12,
+        "whooshBeat": 0.08,
+        "pop": 0.11,
+        "chime": 0.13,
+        "impact": 0.17
+      },
+      "beatWhooshMinGapFrames": 90,
+      "popMinGapFrames": 30,
+      "maxTruePeakDbtp": -1
     }
   },
   "narratedMotionLayout": {

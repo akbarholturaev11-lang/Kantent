@@ -10,6 +10,7 @@ import { prepareSemanticRender } from "./semantic-review-integration.mjs";
 import { validateProductionDuration } from "./duration-policy.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { assertLessonArtReviewed } from "./review-lesson-art.mjs";
+import { assertMeaningVisualsCovered } from "./meaning-visual-preflight.mjs";
 import { compileMotionDesignTimeline } from "./motion-design-plan.mjs";
 import { compileCueTimeline } from "./compile-cue-timeline.mjs";
 import { groupTimedCaptions } from "./caption-utils.mjs";
@@ -29,6 +30,7 @@ import {
   writeJson,
 } from "./lib.mjs";
 import { verifyPlatformVideo } from "./render-platform-videos.mjs";
+import { renderVideoCover } from "./video-cover.mjs";
 
 const id = process.argv[2];
 if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id ?? "")) {
@@ -43,6 +45,7 @@ const visualSystem = await readJson(path.join(PROJECT_ROOT, "content", "visual-s
 validateLessonPresentation(episode, visualSystem.lessonPresentation);
 // Lesson-art review service: current frames must pass before any render.
 await assertLessonArtReviewed(episode);
+await assertMeaningVisualsCovered(episode);
 const lab = await readCtaLab();
 const platformCta = getPlatformCtaStatus(lab, "tiktok");
 if (!platformCta.readyForDraft || !platformCta.publishingAuthorized) {
@@ -149,6 +152,7 @@ await fs.writeFile(
 );
 await fs.rm(propsPath, { force: true });
 const videoSha256 = createHash("sha256").update(await fs.readFile(videoPath)).digest("hex");
+const cover = await renderVideoCover({ episode, video: videoPath, output: path.join(folder, "cover.jpg") });
 await writeJson(path.join(folder, "status.json"), {
   stage: "rendered-pending-owner-approval",
   sourceRevision,
@@ -159,6 +163,7 @@ await writeJson(path.join(folder, "status.json"), {
   ctaRuleVersion: ctaValidation.ruleVersion,
   contentHash: episodeContentHash(episode),
   videoSha256,
+  ...cover,
   durationSec: Number((totalFrames / 30).toFixed(2)),
   durationValidation,
   voiceProfileId: voiceProfile.profileId,
@@ -181,6 +186,7 @@ rootStatus.platformPackages = {
     ctaCopyHash: episode.ctaExperiment.copyHash,
     ctaRuleVersion: ctaValidation.ruleVersion,
     videoSha256,
+    ...cover,
   },
 };
 await writeStatus(id, rootStatus);

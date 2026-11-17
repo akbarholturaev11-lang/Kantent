@@ -38,6 +38,19 @@ type CaptionVariant = {
   boxShadow: string;
 };
 
+/**
+ * Measured start time of every displayed word on a page, taken from the
+ * imported word cues (a multi-word cue gives all its words the cue's own
+ * start: no timestamp is invented). Null when the displayed words are not
+ * exactly the cue words, so the subtitle falls back to plain words.
+ */
+function karaokeStarts(captions: TimedCaption[], page: { startMs: number; endMs: number }, words: string[]) {
+  const timed = captions.filter((caption) => caption.startMs >= page.startMs && caption.startMs < page.endMs && caption.text.trim())
+    .flatMap((caption) => caption.text.trim().split(/\s+/).map((word) => ({ word, startMs: caption.startMs })));
+  if (timed.length !== words.length || timed.some((item, index) => item.word !== words[index])) return null;
+  return timed.map((item) => item.startMs);
+}
+
 export const CaptionOverlay: React.FC<{
   captions: TimedCaption[];
   sceneSections: CaptionSceneSection[];
@@ -45,7 +58,9 @@ export const CaptionOverlay: React.FC<{
   plainMotionDesign?: boolean;
   alwaysShowActionSubtitle?: boolean;
   actionCaptionScenes?: ActionCaptionScene[];
-}> = ({ captions, sceneSections, motionDesign = false, plainMotionDesign = false, alwaysShowActionSubtitle = false, actionCaptionScenes = [] }) => {
+  /** Professional motion: karaoke words, and the slide slot while a motion slide is on screen. */
+  proSubtitles?: { slides: { from: number; to: number }[] };
+}> = ({ captions, sceneSections, motionDesign = false, plainMotionDesign = false, alwaysShowActionSubtitle = false, actionCaptionScenes = [], proSubtitles }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const pages = useMemo(
@@ -92,7 +107,15 @@ export const CaptionOverlay: React.FC<{
     if (!alwaysShowActionSubtitle && spokenLetters.length >= 4 && letters(String(actionText.model?.meaning ?? "")).includes(spokenLetters)) return null;
     const words = displayText.split(/\s+/).filter(Boolean);
     const illustration = (actionText.model as {illustration?: unknown} | undefined)?.illustration;
-    const slot = illustration ? subtitleSlotFor(illustration) : null;
+    const onSlide = Boolean(proSubtitles?.slides.some((range) => frame >= range.from && frame < range.to));
+    // A motion slide already shows the spoken Chinese line large; do not repeat it as a subtitle.
+    if (onSlide && spokenHan && !/[^\p{Script=Han}\p{P}\p{Z}]/u.test(displayText) &&
+        han(String(actionText.model?.hanzi ?? "")).includes(spokenHan)) return null;
+    const slot = onSlide ? { left: 80, right: 1000, top: visualSystem.proMotion.slide.subtitleTopPx }
+      : illustration ? subtitleSlotFor(illustration) : null;
+    const karaoke = proSubtitles && visualSystem.proMotion.karaoke.enabled ? karaokeStarts(captions, page, words) : null;
+    const activeWord = karaoke ? karaoke.filter((start) => start <= timeMs).length - 1 : -1;
+    const K = visualSystem.proMotion.karaoke;
     return (
       <AbsoluteFill style={{ pointerEvents: "none", zIndex: 20 }}>
         <div data-subtitle-block style={{ position: "absolute", left: slot ? slot.left : 80, right: slot ? 1080 - slot.right : 80,
@@ -104,8 +127,16 @@ export const CaptionOverlay: React.FC<{
           <span data-subtitle-text style={{ display: "contents" }}>{words.map((word, index) => {
             const p = interpolate(entryFrame, [index * G.wordStaggerFrames, index * G.wordStaggerFrames + G.wordEntryFrames], [0, 1], ease);
             const han = /\p{Script=Han}/u.test(word);
-            return <span key={index} style={{ display: "inline-block", opacity: p, filter: `blur(${(1 - p) * 8}px)`,
-              translate: `0 ${(1 - p) * 10}px`, color: han ? visualSystem.colors.brandGold : undefined,
+            // Karaoke (measured word starts only): the spoken word lifts, the
+            // words still to come wait dimmed.
+            const isActive = karaoke !== null && index === activeWord;
+            const upcoming = karaoke !== null && index > activeWord;
+            const lift = isActive ? interpolate(timeMs - karaoke[index], [0, 90], [0, 1], ease) : 0;
+            return <span key={index} data-karaoke={karaoke ? (isActive ? "active" : upcoming ? "upcoming" : "spoken") : undefined}
+              style={{ display: "inline-block", opacity: p * (upcoming ? K.upcomingOpacity : 1), filter: `blur(${(1 - p) * 8}px)`,
+              translate: `0 ${(1 - p) * 10 - lift * 4}px`, scale: `${1 + (K.activeScale - 1) * lift}`,
+              color: han ? visualSystem.colors.brandGold : undefined,
+              textShadow: isActive ? `0 2px 3px rgba(0,0,0,.95), 0 0 ${K.activeGlowPx}px rgba(255,255,255,${.45 * lift})` : undefined,
               fontFamily: han ? G.hanziFontFamily : undefined }}>{word}</span>;
           })}</span>
           {presentation.pinyin && <span data-subtitle-pinyin style={{ fontSize: Math.round(G.subtitleFontPx * .62),

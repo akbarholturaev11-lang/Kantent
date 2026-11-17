@@ -273,7 +273,10 @@ export async function transcribeOpenRouter({
     throw new TranscriptionResponseError("OpenRouter transcription returned malformed JSON.", { retryable: true });
   }
   if (!Array.isArray(result?.words) || result.words.length === 0) {
-    throw new TranscriptionResponseError("OpenRouter transcription returned no provider word timestamps; retry STT before captions.", { retryable: true });
+    // `emptyResult`: the provider answered and heard no words (as Direct's empty
+    // annotation list). Whole-take callers still fail; clip recovery treats it as
+    // "nothing heard in this clip" and moves on to its wider context clip.
+    throw Object.assign(new TranscriptionResponseError("OpenRouter transcription returned no provider word timestamps; retry STT before captions.", { retryable: true }), { emptyResult: true });
   }
   const wordAnnotations = result.words.flatMap((item, index) => {
     const text = item?.word ?? item?.text;

@@ -47,9 +47,9 @@
           "explains": "Нишон додани миз пеш аз пайдо шудани китоб.",
           "visual": {
             "title": "Ҷойи холӣ",
-            "hanzi": "桌子上有一本书。",
-            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
-            "meaning": "Дар рӯи миз як китоб ҳаст.",
+            "hanzi": "",
+            "pinyin": "",
+            "meaning": "",
             "graphic": {
               "width": 820,
               "height": 400,
@@ -145,10 +145,10 @@
               ],
               "anchors": {
                 "a": {
-                  "x": 0.15,
-                  "y": 0.4,
-                  "w": 0.7,
-                  "h": 0.5
+                  "x": 0.03,
+                  "y": 0.08,
+                  "w": 0.94,
+                  "h": 0.72
                 }
               },
               "focus": "a",
@@ -159,15 +159,134 @@
                   "x": 0.78,
                   "y": 0.88,
                   "h": 0.3
+                }
+              ],
+              "zoom": 1.14
+            }
+          }
+        },
+        {
+          "id": "hook-empty-state",
+          "kind": "graphic",
+          "cueText": "ҷой холӣ",
+          "explains": "Таваҷҷуҳро ба мизи холӣ дар ҳамон бозори шомгоҳӣ мебарад.",
+          "visual": {
+            "title": "Аввалин вазъият",
+            "hanzi": "",
+            "pinyin": "",
+            "meaning": "",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
                 },
                 {
-                  "id": "monkey",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 34
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 34
+                    },
+                    {
+                      "atMs": 320,
+                      "value": 0
+                    }
+                  ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "night-market-bookstall"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.08,
+                  "y": 0.58,
+                  "w": 0.84,
+                  "h": 0.34
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                }
+              ],
+              "zoom": 1.27
             }
           }
         },
@@ -178,9 +297,9 @@
           "explains": "Китоб ба рӯи миз мефарояд.",
           "visual": {
             "title": "Ашёи нав",
-            "hanzi": "桌子上有一本书。",
-            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
-            "meaning": "Дар рӯи миз як китоб ҳаст.",
+            "hanzi": "",
+            "pinyin": "",
+            "meaning": "",
             "graphic": {
               "width": 820,
               "height": 400,
@@ -300,14 +419,14 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "night-market-bookstall"
+                "night-market-one-book"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.15,
-                  "y": 0.4,
-                  "w": 0.7,
-                  "h": 0.5
+                  "x": 0.19,
+                  "y": 0.62,
+                  "w": 0.62,
+                  "h": 0.31
                 }
               },
               "focus": "a",
@@ -318,15 +437,182 @@
                   "x": 0.78,
                   "y": 0.88,
                   "h": 0.3
+                }
+              ],
+              "zoom": 1.38
+            }
+          }
+        },
+        {
+          "id": "hook-question-focus",
+          "kind": "graphic",
+          "cueText": "Чӣ тавр мегӯем",
+          "explains": "Китоби пайдошударо дар кадр нигоҳ медорад, то саволи сохтани ҷумла шунида шавад.",
+          "visual": {
+            "title": "Тарзи гуфтан",
+            "hanzi": "",
+            "pinyin": "",
+            "meaning": "",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
                 },
                 {
-                  "id": "monkey",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -24
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -24
+                    },
+                    {
+                      "atMs": 320,
+                      "value": 0
+                    }
+                  ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "night-market-one-book"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.19,
+                  "y": 0.62,
+                  "w": 0.62,
+                  "h": 0.31
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                }
+              ],
+              "zoom": 1.32
             }
           }
         },
@@ -479,34 +765,55 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "night-market-bookstall"
+                "night-market-one-book"
               ],
               "anchors": {
                 "a": {
-                  "x": 0.15,
-                  "y": 0.4,
-                  "w": 0.7,
-                  "h": 0.5
+                  "x": 0.19,
+                  "y": 0.62,
+                  "w": 0.62,
+                  "h": 0.31
                 }
               },
               "focus": "a",
               "cast": [
                 {
                   "id": "panda",
-                  "mood": "correct",
+                  "mood": "proud",
                   "x": 0.78,
                   "y": 0.88,
                   "h": 0.3
-                },
-                {
-                  "id": "monkey",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
                 }
-              ]
-            }
+              ],
+              "zoom": 1.34
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "桌子",
+                "pinyin": "Zhuōzi"
+              },
+              {
+                "hanzi": "上",
+                "pinyin": "shang"
+              },
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "一",
+                "pinyin": "yì"
+              },
+              {
+                "hanzi": "本",
+                "pinyin": "běn"
+              },
+              {
+                "hanzi": "书",
+                "pinyin": "shū"
+              }
+            ],
+            "focus": "桌子上有一本书。"
           }
         }
       ]
@@ -655,7 +962,7 @@
             "illustration": {
               "layout": "board",
               "images": [
-                "empty-book-table"
+                "single-book-table"
               ],
               "parts": [
                 "桌子上",
@@ -665,610 +972,58 @@
               "cast": [
                 {
                   "id": "panda",
-                  "mood": "talk",
+                  "mood": "proud",
                   "x": 0.78,
                   "y": 0.88,
                   "h": 0.3
-                },
-                {
-                  "id": "monkey",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
                 }
-              ]
-            }
+              ],
+              "zoom": 1.34,
+              "anchors": {
+                "a": {
+                  "x": 0.2,
+                  "y": 0.59,
+                  "w": 0.6,
+                  "h": 0.34
+                }
+              },
+              "focus": "a"
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "桌子",
+                "pinyin": "Zhuōzi"
+              },
+              {
+                "hanzi": "上",
+                "pinyin": "shang"
+              },
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "一",
+                "pinyin": "yì"
+              },
+              {
+                "hanzi": "本",
+                "pinyin": "běn"
+              },
+              {
+                "hanzi": "书",
+                "pinyin": "shū"
+              }
+            ]
           }
         },
         {
-          "id": "structure-action-2",
+          "id": "structure-location-focus",
           "kind": "graphic",
-          "cueText": "Аввал ҷой",
-          "explains": "Аввал мизро ҳамчун ҷой нишон додан.",
+          "cueText": "дар рӯи миз",
+          "explains": "Китоб дар рӯи миз мемонад ва ҳалқа ҷойро нишон медиҳад.",
           "visual": {
-            "title": "Мавқеи оғоз",
-            "hanzi": "桌子上有一本书。",
-            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
-            "meaning": "Дар рӯи миз як китоб ҳаст.",
-            "graphic": {
-              "width": 820,
-              "height": 400,
-              "nodes": [
-                {
-                  "id": "table",
-                  "type": "g",
-                  "attrs": {}
-                },
-                {
-                  "id": "tabletop",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 220,
-                    "y": 219,
-                    "width": 390,
-                    "height": 25,
-                    "rx": 12,
-                    "fill": "secondary",
-                    "stroke": "foreground",
-                    "strokeWidth": 3
-                  }
-                },
-                {
-                  "id": "left-leg",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 248,
-                    "y": 243,
-                    "width": 22,
-                    "height": 116,
-                    "rx": 6,
-                    "fill": "muted"
-                  }
-                },
-                {
-                  "id": "right-leg",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 561,
-                    "y": 243,
-                    "width": 22,
-                    "height": 116,
-                    "rx": 6,
-                    "fill": "muted"
-                  }
-                },
-                {
-                  "id": "focus",
-                  "type": "g",
-                  "attrs": {},
-                  "x": -65
-                },
-                {
-                  "id": "table-ring",
-                  "parentId": "focus",
-                  "type": "ellipse",
-                  "attrs": {
-                    "cx": 415,
-                    "cy": 230,
-                    "rx": 208,
-                    "ry": 47,
-                    "fill": "none",
-                    "stroke": "teal",
-                    "strokeWidth": 6
-                  }
-                }
-              ],
-              "tracks": [
-                {
-                  "nodeId": "focus",
-                  "property": "x",
-                  "keyframes": [
-                    {
-                      "atMs": 0,
-                      "value": -65
-                    },
-                    {
-                      "atMs": 620,
-                      "value": 0
-                    }
-                  ]
-                }
-              ]
-            },
-            "illustration": {
-              "layout": "board",
-              "images": [
-                "empty-book-table"
-              ],
-              "parts": [
-                "桌子上",
-                "有",
-                "一本书"
-              ],
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "monkey",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
-              ]
-            }
-          }
-        },
-        {
-          "id": "structure-action-3",
-          "kind": "graphic",
-          "cueText": "чизи нав",
-          "explains": "Пайдо шудани чизи нав баъд аз ҷой.",
-          "visual": {
-            "title": "Нишон додани ашё",
-            "hanzi": "桌子上有一本书。",
-            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
-            "meaning": "Дар рӯи миз як китоб ҳаст.",
-            "graphic": {
-              "width": 820,
-              "height": 400,
-              "nodes": [
-                {
-                  "id": "table",
-                  "type": "g",
-                  "attrs": {}
-                },
-                {
-                  "id": "tabletop",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 220,
-                    "y": 219,
-                    "width": 390,
-                    "height": 25,
-                    "rx": 12,
-                    "fill": "secondary",
-                    "stroke": "foreground",
-                    "strokeWidth": 3
-                  }
-                },
-                {
-                  "id": "left-leg",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 248,
-                    "y": 243,
-                    "width": 22,
-                    "height": 116,
-                    "rx": 6,
-                    "fill": "muted"
-                  }
-                },
-                {
-                  "id": "right-leg",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 561,
-                    "y": 243,
-                    "width": 22,
-                    "height": 116,
-                    "rx": 6,
-                    "fill": "muted"
-                  }
-                },
-                {
-                  "id": "book",
-                  "type": "g",
-                  "attrs": {},
-                  "x": 0,
-                  "y": -125
-                },
-                {
-                  "id": "book-cover",
-                  "parentId": "book",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 350,
-                    "y": 156,
-                    "width": 126,
-                    "height": 61,
-                    "rx": 7,
-                    "fill": "gold",
-                    "stroke": "foreground",
-                    "strokeWidth": 4
-                  }
-                },
-                {
-                  "id": "book-spine",
-                  "parentId": "book",
-                  "type": "line",
-                  "attrs": {
-                    "x1": 368,
-                    "y1": 159,
-                    "x2": 368,
-                    "y2": 213,
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
-                  "id": "book-pages",
-                  "parentId": "book",
-                  "type": "line",
-                  "attrs": {
-                    "x1": 385,
-                    "y1": 203,
-                    "x2": 457,
-                    "y2": 203,
-                    "stroke": "secondary",
-                    "strokeWidth": 5
-                  }
-                }
-              ],
-              "tracks": [
-                {
-                  "nodeId": "book",
-                  "property": "y",
-                  "keyframes": [
-                    {
-                      "atMs": 0,
-                      "value": -125
-                    },
-                    {
-                      "atMs": 720,
-                      "value": 0
-                    }
-                  ]
-                }
-              ]
-            },
-            "illustration": {
-              "layout": "board",
-              "images": [
-                "empty-book-table"
-              ],
-              "parts": [
-                "桌子上",
-                "有",
-                "一本书"
-              ],
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "monkey",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": "word-order",
-      "kind": "context",
-      "durationSec": 12,
-      "headline": "АВВАЛ ҶОЙ",
-      "narration": "Аввал ҷойро номбар кун: 桌子上. Баъд 有一本书-ро илова кун. Ҳамин тавр мефаҳмонӣ, ки дар он ҷо китоб ҳаст.",
-      "cards": [
-        {
-          "hanzi": "桌子上有一本书。",
-          "pinyin": "Zhuōzi shang yǒu yì běn shū.",
-          "meaning": "Дар рӯи миз як китоб ҳаст."
-        }
-      ],
-      "captionStyleId": "highlight",
-      "motionBeats": [
-        {
-          "id": "word-order-action-1",
-          "kind": "graphic",
-          "cueText": "Аввал ҷойро",
-          "explains": "Миз аввал нишон дода мешавад.",
-          "visual": {
-            "title": "Саҳнаи ҷойгиршавӣ",
-            "hanzi": "桌子上有一本书。",
-            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
-            "meaning": "Дар рӯи миз як китоб ҳаст.",
-            "graphic": {
-              "width": 820,
-              "height": 400,
-              "nodes": [
-                {
-                  "id": "table",
-                  "type": "g",
-                  "attrs": {}
-                },
-                {
-                  "id": "tabletop",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 220,
-                    "y": 219,
-                    "width": 390,
-                    "height": 25,
-                    "rx": 12,
-                    "fill": "secondary",
-                    "stroke": "foreground",
-                    "strokeWidth": 3
-                  }
-                },
-                {
-                  "id": "left-leg",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 248,
-                    "y": 243,
-                    "width": 22,
-                    "height": 116,
-                    "rx": 6,
-                    "fill": "muted"
-                  }
-                },
-                {
-                  "id": "right-leg",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 561,
-                    "y": 243,
-                    "width": 22,
-                    "height": 116,
-                    "rx": 6,
-                    "fill": "muted"
-                  }
-                },
-                {
-                  "id": "focus",
-                  "type": "g",
-                  "attrs": {},
-                  "x": -65
-                },
-                {
-                  "id": "table-ring",
-                  "parentId": "focus",
-                  "type": "ellipse",
-                  "attrs": {
-                    "cx": 415,
-                    "cy": 230,
-                    "rx": 208,
-                    "ry": 47,
-                    "fill": "none",
-                    "stroke": "teal",
-                    "strokeWidth": 6
-                  }
-                }
-              ],
-              "tracks": [
-                {
-                  "nodeId": "focus",
-                  "property": "x",
-                  "keyframes": [
-                    {
-                      "atMs": 0,
-                      "value": -65
-                    },
-                    {
-                      "atMs": 620,
-                      "value": 0
-                    }
-                  ]
-                }
-              ]
-            },
-            "illustration": {
-              "layout": "board",
-              "images": [
-                "empty-book-table"
-              ],
-              "parts": [
-                "桌子上",
-                "有",
-                "一本书"
-              ],
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "talk",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "monkey",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
-              ]
-            }
-          }
-        },
-        {
-          "id": "word-order-action-2",
-          "kind": "graphic",
-          "cueText": "Баъд 有一本书",
-          "explains": "Китоб баъд аз ҷой пайдо мешавад.",
-          "visual": {
-            "title": "Қолаби мавҷудият",
-            "hanzi": "桌子上有一本书。",
-            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
-            "meaning": "Дар рӯи миз як китоб ҳаст.",
-            "graphic": {
-              "width": 820,
-              "height": 400,
-              "nodes": [
-                {
-                  "id": "table",
-                  "type": "g",
-                  "attrs": {}
-                },
-                {
-                  "id": "tabletop",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 220,
-                    "y": 219,
-                    "width": 390,
-                    "height": 25,
-                    "rx": 12,
-                    "fill": "secondary",
-                    "stroke": "foreground",
-                    "strokeWidth": 3
-                  }
-                },
-                {
-                  "id": "left-leg",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 248,
-                    "y": 243,
-                    "width": 22,
-                    "height": 116,
-                    "rx": 6,
-                    "fill": "muted"
-                  }
-                },
-                {
-                  "id": "right-leg",
-                  "parentId": "table",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 561,
-                    "y": 243,
-                    "width": 22,
-                    "height": 116,
-                    "rx": 6,
-                    "fill": "muted"
-                  }
-                },
-                {
-                  "id": "book",
-                  "type": "g",
-                  "attrs": {},
-                  "x": 0,
-                  "y": -125
-                },
-                {
-                  "id": "book-cover",
-                  "parentId": "book",
-                  "type": "rect",
-                  "attrs": {
-                    "x": 350,
-                    "y": 156,
-                    "width": 126,
-                    "height": 61,
-                    "rx": 7,
-                    "fill": "gold",
-                    "stroke": "foreground",
-                    "strokeWidth": 4
-                  }
-                },
-                {
-                  "id": "book-spine",
-                  "parentId": "book",
-                  "type": "line",
-                  "attrs": {
-                    "x1": 368,
-                    "y1": 159,
-                    "x2": 368,
-                    "y2": 213,
-                    "stroke": "foreground",
-                    "strokeWidth": 5
-                  }
-                },
-                {
-                  "id": "book-pages",
-                  "parentId": "book",
-                  "type": "line",
-                  "attrs": {
-                    "x1": 385,
-                    "y1": 203,
-                    "x2": 457,
-                    "y2": 203,
-                    "stroke": "secondary",
-                    "strokeWidth": 5
-                  }
-                }
-              ],
-              "tracks": [
-                {
-                  "nodeId": "book",
-                  "property": "y",
-                  "keyframes": [
-                    {
-                      "atMs": 0,
-                      "value": -125
-                    },
-                    {
-                      "atMs": 720,
-                      "value": 0
-                    }
-                  ]
-                }
-              ]
-            },
-            "illustration": {
-              "layout": "board",
-              "images": [
-                "empty-book-table"
-              ],
-              "parts": [
-                "桌子上",
-                "有",
-                "一本书"
-              ],
-              "cast": [
-                {
-                  "id": "panda",
-                  "mood": "correct",
-                  "x": 0.78,
-                  "y": 0.88,
-                  "h": 0.3
-                },
-                {
-                  "id": "monkey",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
-                }
-              ]
-            }
-          }
-        },
-        {
-          "id": "word-order-action-3",
-          "kind": "graphic",
-          "cueText": "китоб ҳаст",
-          "explains": "Миз ва китоб якҷо нишон дода мешаванд.",
-          "visual": {
-            "title": "Натиҷаи ҷумла",
+            "title": "Ҷойгиршавӣ",
             "hanzi": "桌子上有一本书。",
             "pinyin": "Zhuōzi shang yǒu yì běn shū.",
             "meaning": "Дар рӯи миз як китоб ҳаст.",
@@ -1411,6 +1166,162 @@
             "illustration": {
               "layout": "board",
               "images": [
+                "single-book-table"
+              ],
+              "parts": [
+                "桌子上",
+                "有",
+                "一本书"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                }
+              ],
+              "zoom": 1.42,
+              "anchors": {
+                "a": {
+                  "x": 0.08,
+                  "y": 0.52,
+                  "w": 0.84,
+                  "h": 0.4
+                }
+              },
+              "focus": "a"
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "桌子",
+                "pinyin": "Zhuōzi"
+              },
+              {
+                "hanzi": "上",
+                "pinyin": "shang"
+              },
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "一",
+                "pinyin": "yì"
+              },
+              {
+                "hanzi": "本",
+                "pinyin": "běn"
+              },
+              {
+                "hanzi": "书",
+                "pinyin": "shū"
+              }
+            ]
+          }
+        },
+        {
+          "id": "structure-action-2",
+          "kind": "graphic",
+          "cueText": "Аввал ҷой",
+          "explains": "Аввал мизро ҳамчун ҷой нишон додан.",
+          "visual": {
+            "title": "Мавқеи оғоз",
+            "hanzi": "桌子上有一本书。",
+            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+            "meaning": "Дар рӯи миз як китоб ҳаст.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -65
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -65
+                    },
+                    {
+                      "atMs": 620,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
                 "empty-book-table"
               ],
               "parts": [
@@ -1421,19 +1332,869 @@
               "cast": [
                 {
                   "id": "panda",
-                  "mood": "correct",
+                  "mood": "talk",
                   "x": 0.78,
                   "y": 0.88,
                   "h": 0.3
+                }
+              ],
+              "zoom": 1.2,
+              "anchors": {
+                "a": {
+                  "x": 0.08,
+                  "y": 0.55,
+                  "w": 0.84,
+                  "h": 0.38
+                }
+              },
+              "focus": "a"
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "桌子",
+                "pinyin": "Zhuōzi"
+              },
+              {
+                "hanzi": "上",
+                "pinyin": "shang"
+              },
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "一",
+                "pinyin": "yì"
+              },
+              {
+                "hanzi": "本",
+                "pinyin": "běn"
+              },
+              {
+                "hanzi": "书",
+                "pinyin": "shū"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "word-order",
+      "kind": "context",
+      "durationSec": 12,
+      "headline": "АВВАЛ ҶОЙ",
+      "narration": "Аввал ҷойро номбар кун: 桌子上. Баъд 有一本书-ро илова кун. Ҳамин тавр мефаҳмонӣ, ки дар он ҷо китоб ҳаст.",
+      "cards": [
+        {
+          "hanzi": "桌子上有一本书。",
+          "pinyin": "Zhuōzi shang yǒu yì běn shū.",
+          "meaning": "Дар рӯи миз як китоб ҳаст."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "word-order-action-1",
+          "kind": "graphic",
+          "cueText": "Аввал ҷойро",
+          "explains": "Миз аввал нишон дода мешавад.",
+          "visual": {
+            "title": "Саҳнаи ҷойгиршавӣ",
+            "hanzi": "",
+            "pinyin": "",
+            "meaning": "",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
                 },
                 {
-                  "id": "monkey",
-                  "mood": "talk",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -65
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -65
+                    },
+                    {
+                      "atMs": 620,
+                      "value": 0
+                    }
+                  ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "empty-book-table"
+              ],
+              "parts": [
+                "桌子上",
+                "有",
+                "一本书"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                }
+              ],
+              "zoom": 1.18,
+              "anchors": {
+                "a": {
+                  "x": 0.08,
+                  "y": 0.55,
+                  "w": 0.84,
+                  "h": 0.38
+                }
+              },
+              "focus": "a"
+            }
+          }
+        },
+        {
+          "id": "word-order-location-part",
+          "kind": "graphic",
+          "cueText": "桌子上",
+          "explains": "Ҷойро ҳамчун қисми якуми тартиб маҳз ҳангоми шунидани ибораи чинӣ нишон медиҳад.",
+          "visual": {
+            "title": "Қисми аввал",
+            "hanzi": "桌子上",
+            "pinyin": "Zhuōzi shang",
+            "meaning": "Дар рӯи миз",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -35
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -35
+                    },
+                    {
+                      "atMs": 320,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "empty-book-table"
+              ],
+              "parts": [
+                "桌子上",
+                "有",
+                "一本书"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                }
+              ],
+              "zoom": 1.3,
+              "anchors": {
+                "a": {
+                  "x": 0.08,
+                  "y": 0.55,
+                  "w": 0.84,
+                  "h": 0.38
+                }
+              },
+              "focus": "a"
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "桌子",
+                "pinyin": "Zhuōzi"
+              },
+              {
+                "hanzi": "上",
+                "pinyin": "shang"
+              }
+            ],
+            "focus": "桌子上"
+          }
+        },
+        {
+          "id": "word-order-action-2",
+          "kind": "graphic",
+          "cueText": "Баъд 有一本书",
+          "explains": "Китоб баъд аз ҷой пайдо мешавад.",
+          "visual": {
+            "title": "Қолаби мавҷудият",
+            "hanzi": "",
+            "pinyin": "",
+            "meaning": "",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": -125
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -125
+                    },
+                    {
+                      "atMs": 720,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "empty-book-table"
+              ],
+              "parts": [
+                "桌子上",
+                "有",
+                "一本书"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                }
+              ],
+              "zoom": 1.22,
+              "anchors": {
+                "a": {
+                  "x": 0.08,
+                  "y": 0.55,
+                  "w": 0.84,
+                  "h": 0.38
+                }
+              },
+              "focus": "a"
+            }
+          }
+        },
+        {
+          "id": "word-order-existence-part",
+          "kind": "graphic",
+          "cueText": "有一本书",
+          "explains": "Ибораи дуюм ва худи китобро аз лаҳзаи оғоз шудани талаффуз нишон медиҳад.",
+          "visual": {
+            "title": "Баъд предмет",
+            "hanzi": "有一本书",
+            "pinyin": "yǒu yì běn shū",
+            "meaning": "Як китоб ҳаст",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 26
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 26
+                    },
+                    {
+                      "atMs": 320,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "single-book-table"
+              ],
+              "parts": [
+                "桌子上",
+                "有",
+                "一本书"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "proud",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                }
+              ],
+              "zoom": 1.42,
+              "anchors": {
+                "a": {
+                  "x": 0.2,
+                  "y": 0.59,
+                  "w": 0.6,
+                  "h": 0.34
+                }
+              },
+              "focus": "a"
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "一",
+                "pinyin": "yì"
+              },
+              {
+                "hanzi": "本",
+                "pinyin": "běn"
+              },
+              {
+                "hanzi": "书",
+                "pinyin": "shū"
+              }
+            ],
+            "focus": "有一本书"
+          }
+        },
+        {
+          "id": "word-order-action-3",
+          "kind": "graphic",
+          "cueText": "китоб ҳаст",
+          "explains": "Миз ва китоб якҷо нишон дода мешаванд.",
+          "visual": {
+            "title": "Натиҷаи ҷумла",
+            "hanzi": "",
+            "pinyin": "",
+            "meaning": "",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -65
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -65
+                    },
+                    {
+                      "atMs": 620,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "board",
+              "images": [
+                "single-book-table"
+              ],
+              "parts": [
+                "桌子上",
+                "有",
+                "一本书"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "proud",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                }
+              ],
+              "zoom": 1.42,
+              "anchors": {
+                "a": {
+                  "x": 0.2,
+                  "y": 0.59,
+                  "w": 0.6,
+                  "h": 0.34
+                }
+              },
+              "focus": "a"
             }
           }
         }
@@ -1461,9 +2222,9 @@
           "explains": "Нишон додани ҷой.",
           "visual": {
             "title": "Ҷойи китоб",
-            "hanzi": "桌子上有一本书。",
-            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
-            "meaning": "Дар рӯи миз як китоб ҳаст.",
+            "hanzi": "",
+            "pinyin": "",
+            "meaning": "",
             "graphic": {
               "width": 820,
               "height": 400,
@@ -1559,29 +2320,23 @@
               ],
               "anchors": {
                 "a": {
-                  "x": 0.15,
-                  "y": 0.38,
-                  "w": 0.7,
-                  "h": 0.5
+                  "x": 0.08,
+                  "y": 0.52,
+                  "w": 0.84,
+                  "h": 0.4
                 }
               },
               "focus": "a",
               "cast": [
                 {
                   "id": "panda",
-                  "mood": "proud",
+                  "mood": "talk",
                   "x": 0.78,
                   "y": 0.88,
                   "h": 0.3
-                },
-                {
-                  "id": "monkey",
-                  "mood": "celebrate",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
                 }
-              ]
+              ],
+              "zoom": 1.23
             }
           }
         },
@@ -1592,9 +2347,9 @@
           "explains": "Пайдо шудани як китоб.",
           "visual": {
             "title": "Шумораи гурӯҳ",
-            "hanzi": "桌子上有一本书。",
-            "pinyin": "Zhuōzi shang yǒu yì běn shū.",
-            "meaning": "Дар рӯи миз як китоб ҳаст.",
+            "hanzi": "",
+            "pinyin": "",
+            "meaning": "",
             "graphic": {
               "width": 820,
               "height": 400,
@@ -1718,10 +2473,10 @@
               ],
               "anchors": {
                 "a": {
-                  "x": 0.15,
-                  "y": 0.38,
-                  "w": 0.7,
-                  "h": 0.5
+                  "x": 0.2,
+                  "y": 0.59,
+                  "w": 0.6,
+                  "h": 0.34
                 }
               },
               "focus": "a",
@@ -1732,15 +2487,182 @@
                   "x": 0.78,
                   "y": 0.88,
                   "h": 0.3
+                }
+              ],
+              "zoom": 1.43
+            }
+          }
+        },
+        {
+          "id": "recall-repeat-prompt",
+          "kind": "graphic",
+          "cueText": "Такрор кун",
+          "explains": "Коуч пеш аз такрори чинӣ хонандаро даъват мекунад; ибора то оғоз шудани талаффуз намоён намешавад.",
+          "visual": {
+            "title": "Ба ёд овардан",
+            "hanzi": "",
+            "pinyin": "",
+            "meaning": "",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "table",
+                  "type": "g",
+                  "attrs": {}
                 },
                 {
-                  "id": "monkey",
-                  "mood": "celebrate",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
+                  "id": "tabletop",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 220,
+                    "y": 219,
+                    "width": 390,
+                    "height": 25,
+                    "rx": 12,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 248,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "right-leg",
+                  "parentId": "table",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 561,
+                    "y": 243,
+                    "width": 22,
+                    "height": 116,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book",
+                  "type": "g",
+                  "attrs": {},
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "id": "book-cover",
+                  "parentId": "book",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 350,
+                    "y": 156,
+                    "width": 126,
+                    "height": 61,
+                    "rx": 7,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-spine",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 368,
+                    "y1": 159,
+                    "x2": 368,
+                    "y2": 213,
+                    "stroke": "foreground",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "book-pages",
+                  "parentId": "book",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 385,
+                    "y1": 203,
+                    "x2": 457,
+                    "y2": 203,
+                    "stroke": "secondary",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "g",
+                  "attrs": {},
+                  "x": -20
+                },
+                {
+                  "id": "table-ring",
+                  "parentId": "focus",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 415,
+                    "cy": 230,
+                    "rx": 208,
+                    "ry": 47,
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "focus",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -20
+                    },
+                    {
+                      "atMs": 320,
+                      "value": 0
+                    }
+                  ]
                 }
               ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "single-book-table"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.2,
+                  "y": 0.59,
+                  "w": 0.6,
+                  "h": 0.34
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.88,
+                  "h": 0.3
+                }
+              ],
+              "zoom": 1.4
             }
           }
         },
@@ -1897,10 +2819,10 @@
               ],
               "anchors": {
                 "a": {
-                  "x": 0.15,
-                  "y": 0.38,
-                  "w": 0.7,
-                  "h": 0.5
+                  "x": 0.2,
+                  "y": 0.59,
+                  "w": 0.6,
+                  "h": 0.34
                 }
               },
               "focus": "a",
@@ -1911,16 +2833,37 @@
                   "x": 0.78,
                   "y": 0.88,
                   "h": 0.3
-                },
-                {
-                  "id": "monkey",
-                  "mood": "celebrate",
-                  "x": 0.52,
-                  "y": 0.88,
-                  "h": 0.28
                 }
-              ]
-            }
+              ],
+              "zoom": 1.42
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "桌子",
+                "pinyin": "Zhuōzi"
+              },
+              {
+                "hanzi": "上",
+                "pinyin": "shang"
+              },
+              {
+                "hanzi": "有",
+                "pinyin": "yǒu"
+              },
+              {
+                "hanzi": "一",
+                "pinyin": "yì"
+              },
+              {
+                "hanzi": "本",
+                "pinyin": "běn"
+              },
+              {
+                "hanzi": "书",
+                "pinyin": "shū"
+              }
+            ],
+            "focus": "桌子上有一本书。"
           }
         }
       ]
@@ -1974,7 +2917,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "zhuozi-you-book-20261114",
-    "sourceHash": "0e436c107c97f1859725ee80594801fd8bb48782b354c77b01719bdf243efbde",
+    "sourceHash": "a22cabb765e10707a44caad66dbb238d69afe3ee3bcee779d90ddb1ce2d5d200",
     "authoredOn": "2026-11-10",
     "status": "draft-awaiting-audio-review"
   }

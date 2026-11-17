@@ -184,8 +184,10 @@ if (ctaCaptionEndMs > durationMs + 250) {
   throw new Error("Subtitr audio davomiyligidan keyin tugayapti.");
 }
 
+let tiktokBaseScenes = null;
 if (platform === "tiktok") {
   const baseEpisode = await readJson(path.join(reviewDir(id), "episode.json"));
+  tiktokBaseScenes = baseEpisode.scenes;
   if (baseEpisode.captionSource !== "gemini-word-timestamps" || !baseEpisode.captions?.length || !baseEpisode.audioSrc) {
     throw new Error("TikTok review needs the existing verified lesson audio and word cues.");
   }
@@ -343,6 +345,19 @@ for (const [index] of episode.scenes.entries()) {
     ? Math.min(targetStartFrame, Math.max(180, hookSpeechEndFrame))
     : targetStartFrame;
   sceneStartFrames.push(Math.max(previousStartFrame + 1, cueAlignedFrame));
+}
+
+// TikTok carries the verified base lesson unchanged: its lesson scenes keep the
+// base frames and its ending starts exactly at the base CTA boundary, where the
+// composed audio switches to the TikTok ending. (Real 2026-11-17 TG: a kept
+// TikTok ending whose first word starts 0.38 s into its recording pulled the
+// CTA 3 frames before the base boundary and failed the lesson-identity check.)
+if (tiktokBaseScenes) {
+  if (tiktokBaseScenes.length !== episode.scenes.length ||
+      tiktokBaseScenes.some((scene, index) => scene.id !== episode.scenes[index].id || !Number.isFinite(scene.startMs)))
+    throw new Error("TikTok review scenes no longer match the verified lesson; prepare the TikTok review again.");
+  for (const [index, scene] of tiktokBaseScenes.entries())
+    sceneStartFrames[index] = Math.round((scene.startMs / 1000) * FPS);
 }
 
 const finalSceneEndMs = Math.max(lastCaptionEndMs, effectiveDurationMs);

@@ -1,0 +1,14 @@
+{
+  "key": "166f999fd34a692395389bc9d6304782a28d8ce6acc4d37c0e0eaadb412cdeeb",
+  "audioSha256": "1e949b261e6ad4c8bee36b94775e2a1edfe87aa3ff64af18243bdfa4c10cb72c",
+  "wordsSha256": "179995885c3b3384de89eadb36b3c23d6d88d27b77324ec1a57df9b7e72b593a",
+  "source": {
+    "episodeId": "haishi-vs-huozhe-tea-20261113",
+    "startMs": 0,
+    "wavSha256": "b45a310e3f844a098095ce5d0bd7d7410189fd13331901dbdc655cbae48ffa42"
+  },
+  "captionsSha256": "b509ddabc9fdd5ca152fe119006d0c01026202b4e93fe186db22d1a4acb66f7f",
+  "text": "Попробуй HSK AI. Зайди в мой профиль и напиши мне в личные сообщения «HSK» — я пришлю ссылку, чтобы скачать HSK AI.",
+  "locale": "ru-RU",
+  "transport": "gemini-direct"
+}

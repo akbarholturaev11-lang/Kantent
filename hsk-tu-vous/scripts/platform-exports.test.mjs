@@ -291,7 +291,7 @@ test("preview and publishing bind YouTube to its exact export, registration and 
     for (const [platform, episode] of Object.entries(episodes)) {
       const files = platformPackagePaths(id, platform);
       await writeJson(files.episode, episode);
-      for (const file of [files.video, files.captions, files.post])
+      for (const file of [files.video, files.captions, files.post, files.cover])
         await fs.writeFile(file, platform);
       status.platformPackages[platform] = {
         ...files,
@@ -299,10 +299,11 @@ test("preview and publishing bind YouTube to its exact export, registration and 
         contentHash: episodeContentHash(episode),
         ctaExperimentId: episode.ctaExperiment.id,
         videoSha256: await videoHash(files.video),
+        coverSha256: await videoHash(files.cover),
       };
     }
     const selected = await requirePlatformPackage(base, status, "youtube", {
-      lab,
+      lab, requireCover: true,
     });
     assert.equal(selected.video, path.join(reviewDir(id), "youtube/video.mp4"));
     assert.equal(selected.ctaExperimentId, episodes.youtube.ctaExperiment.id);
@@ -311,6 +312,12 @@ test("preview and publishing bind YouTube to its exact export, registration and 
       platformPackages: { youtube: selected },
     };
     await requireApprovedPlatformPackages(base, status, approval, { lab });
+    await fs.writeFile(selected.cover, "swapped-cover");
+    await assert.rejects(requirePlatformPackage(base, status, "youtube", { lab }), /cover changed/);
+    status.platformPackages.youtube.coverSha256 = await videoHash(selected.cover);
+    await assert.rejects(requireApprovedPlatformPackages(base, status, approval, { lab }), /exact owner-approved/);
+    await fs.writeFile(selected.cover, "youtube");
+    status.platformPackages.youtube.coverSha256 = selected.coverSha256;
     approval.platformPackages.youtube = {
       ...selected,
       videoSha256: "different-video",

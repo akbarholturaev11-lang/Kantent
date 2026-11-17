@@ -12,6 +12,7 @@ import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
 import { requireSystemMediaTools } from "./media-duration.mjs";
 import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
 import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
+import { saveCtaVoice, extractCtaWav, findCtaVoiceForTake } from "./cta-voice-cache.mjs";
 import { offsetAnnotations, parseSilences, planSttWindows, windowsTouching } from "./stt-windows.mjs";
 import { redactCredentials, requireGeminiKeySlots, withGeminiKeyFailover } from "./video-credentials.mjs";
 import {
@@ -19,7 +20,8 @@ import {
   transcribeOpenRouter, transcribeUntilAligned, TranscriptionResponseError, openRouterLanguage,
   OPENROUTER_TTS_MAX_ATTEMPTS, STT_ATTEMPTS_PER_RUN,
 } from "./openrouter-voice.mjs";
-import { isPreConnectFailure, openRouterBackupKey, withOpenRouterBackup } from "./voice-transport-backup.mjs";
+import { isPreConnectFailure, isUnansweredRequest, openRouterBackupKey, resumedRecoveryTransport, withOpenRouterBackup } from "./voice-transport-backup.mjs";
+import { OWNER_SPAN_EXCEPTIONS_FILE, ownerSpanException, validateOwnerSpanExceptions } from "./owner-span-exception.mjs";
 import {
   alignSpokenTokens, buildErhuaBigrams, buildHanziReadings, collectHanziPinyinPairs, createSpokenMatcher,
   dropErhua, simplifiedHan,
@@ -65,6 +67,11 @@ let RESUME_FOLDER_NAME;
 // Explicit owner decision after listening: buy a new paid take even though a
 // saved take of the same narration exists. Never chosen automatically.
 let NEW_TAKE = false;
+// Explicit owner decision for one saved take: replace ONLY its separate ending
+// chunk with the kept, verified CTA of earlier videos (owner 2026-11-17, TG
+// "HSK AI-ро" voiced as "айро"). The saved lesson body is kept; the rejected
+// ending is preserved as evidence.
+let REPLACE_CTA_OWNER_WORDS;
 for (let index = 0; index < CLI_OPTIONS.length; index += 1) {
   const option = CLI_OPTIONS[index];
   if (option === "--platform" && !PLATFORM) {
@@ -73,11 +80,16 @@ for (let index = 0; index < CLI_OPTIONS.length; index += 1) {
     RESUME_FOLDER_NAME = CLI_OPTIONS[++index];
   } else if (option === "--new-take" && !NEW_TAKE) {
     NEW_TAKE = true;
+  } else if (option === "--replace-cta" && !REPLACE_CTA_OWNER_WORDS) {
+    REPLACE_CTA_OWNER_WORDS = CLI_OPTIONS[++index]?.trim();
+    if (!REPLACE_CTA_OWNER_WORDS) throw new Error("--replace-cta needs the owner's approval words.");
   } else {
-    throw new Error("Use [--platform tiktok] [--resume <generation-folder> | --new-take].");
+    throw new Error('Use [--platform tiktok] [--resume <generation-folder> [--replace-cta "<owner words>"] | --new-take].');
   }
 }
 if (NEW_TAKE && RESUME_FOLDER_NAME) throw new Error("--new-take and --resume are mutually exclusive.");
+if (REPLACE_CTA_OWNER_WORDS && (!RESUME_FOLDER_NAME || PLATFORM))
+  throw new Error("--replace-cta needs --resume <generation-folder> of a lesson take (not a platform ending).");
 
 function requireEpisodeId(value) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value ?? "")) {
@@ -291,7 +303,6 @@ function singleScriptParts(value) {
     // provider-measured interval, with no syllable times inferred.
     if (
       voiceProfile.locale === "tg-TJ" &&
-      EPISODE_ID === "youdianr-vs-yidianr-price-20261111" &&
       /^(?:айро|airo)$/u.test(normalized)
     ) {
       return ["ai", "ро"].map(locale);
@@ -880,7 +891,15 @@ async function transcribeDirectAudio(filePath, languageCodes, displayName, confi
         } },
       }) }, "Gemini word transcription");
   } finally {
-    await deleteGeminiFile(config.apiKey, uploaded.name);
+    // A failed cleanup must not discard a transcription that was already paid
+    // for (real 2026-11-16 RU run: the region flipped between the answer and
+    // the DELETE). Uploaded files expire on their own; a transcription error
+    // still propagates from the try block unchanged.
+    try {
+      await deleteGeminiFile(config.apiKey, uploaded.name);
+    } catch (cleanupError) {
+      console.warn("GEMINI_FILE_CLEANUP_SKIPPED " + JSON.stringify({ error: safeErrorMessage(cleanupError) }));
+    }
   }
   return getWordAnnotations(response.data).map((w) => ({
     text: w.text, startOffset: w.start_offset, endOffset: w.end_offset,
@@ -922,10 +941,21 @@ function measureSilences(sourcePath, ffmpegRuntime) {
  */
 async function transcribeSavedAudio(filePath, languageCodes, displayName, { stage, chunk, allowBackup = true }) {
   const openRouterHint = openRouterLanguage(languageCodes[0]);
-  const openRouter = async () => (await transcribeOpenRouter({
-    apiKey: openRouterKeyFor(config), model: config.transcribeModel, audioPath: filePath,
-    language: openRouterHint,
-  })).wordAnnotations;
+  // A clip in which OpenRouter heard no words is an empty answer, exactly like
+  // Direct's empty annotation list: callers already handle it (it is not cached,
+  // and a bare span moves on to its context clip). Real 2026-11-16 RU take: the
+  // 0.5 s "比" span threw here and its ±0.7 s context clip was never requested.
+  const openRouter = async () => {
+    try {
+      return (await transcribeOpenRouter({
+        apiKey: openRouterKeyFor(config), model: config.transcribeModel, audioPath: filePath,
+        language: openRouterHint,
+      })).wordAnnotations;
+    } catch (error) {
+      if (error instanceof TranscriptionResponseError && error.emptyResult === true) return [];
+      throw error;
+    }
+  };
   if (config.transcriptionTransport === "openrouter")
     return { annotations: await openRouter(), provider: "openrouter", languageCodes: openRouterHint ? [openRouterHint] : [] };
   let provider = "gemini-direct";
@@ -979,7 +1009,12 @@ async function cachedClipTranscription(cachePath, key, request) {
   try {
     result = await request({ allowBackup: !saved });
   } catch (error) {
-    if (saved) return saved;
+    if (saved) {
+      // Visible, so a failed re-ask is never mistaken for new evidence.
+      console.warn("GEMINI_CLIP_REASK_FAILED_KEPT_SAVED " + JSON.stringify({
+        key, savedProvider: saved.provider, error: safeErrorMessage(error) }));
+      return saved;
+    }
     throw error;
   }
   const record = { key, ...result, model: config.transcribeModel, savedAt: new Date().toISOString() };
@@ -1076,6 +1111,14 @@ async function recoverActualWordClips({
   }
   const recovered = [];
   const unconfirmed = [];
+  // Owner one-off exceptions for THIS take only (scripts/owner-span-exception.mjs).
+  let ownerExceptions = null;
+  try {
+    ownerExceptions = validateOwnerSpanExceptions(await readJson(path.join(outputDir, OWNER_SPAN_EXCEPTIONS_FILE)));
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
+  }
+  const chunkAudioSha256 = ownerExceptions ? sha256(await fs.readFile(audioPath)) : null;
   // Bounded: at most 8 independently bounded spans per STT window.
   if (plan.gaps.length > 8 * windows.length)
     throw new Error(`Recovery allows at most ${8 * windows.length} bounded missing speech spans; found ${plan.gaps.length}.`);
@@ -1310,14 +1353,25 @@ async function recoverActualWordClips({
       // Keep going: every other gap's evidence is saved now (a network error
       // on one clip re-requests only that clip next run), so one run shows
       // the complete list of words the provider did not confirm.
+      const excepted = ownerSpanException({ record: ownerExceptions, chunk, audioSha256: chunkAudioSha256, gap, gapBlocks });
+      if (excepted) {
+        recovered.push([excepted.block]);
+        metadata.ownerSpanExceptions ??= [];
+        if (!metadata.ownerSpanExceptions.some((item) => item.chunk === chunk && item.startMs === gap.startMs))
+          metadata.ownerSpanExceptions.push(excepted.applied);
+        console.warn("OWNER_SPAN_EXCEPTION_APPLIED " + JSON.stringify(excepted.applied));
+        continue;
+      }
       unconfirmed.push({ startMs: gap.startMs, endMs: gap.endMs, expected: gap.tokens.join(" "),
-        heard: gapBlocks.map((b) => b.text).join(" "), reason: safeErrorMessage(error) });
+        heard: gapBlocks.map((b) => b.text).join(" "), reason: safeErrorMessage(error),
+        ...(isUnansweredRequest(error) ? { unanswered: true } : {}) });
     }
   }
   if (unconfirmed.length) {
     await fs.writeFile(path.join(directory, "unconfirmed-gaps.json"), JSON.stringify(unconfirmed, null, 2) + "\n");
-    throw new Error(`Recovery could not confirm ${unconfirmed.length} of ${plan.gaps.length} spans: ` +
-      unconfirmed.map((u) => `${u.startMs}-${u.endMs} "${u.expected}" heard "${u.heard}"`).join("; "));
+    throw Object.assign(new Error(`Recovery could not confirm ${unconfirmed.length} of ${plan.gaps.length} spans: ` +
+      unconfirmed.map((u) => `${u.startMs}-${u.endMs} "${u.expected}" heard "${u.heard}"`).join("; ")),
+    { unansweredSpans: unconfirmed.filter((u) => u.unanswered).length });
   }
   await fs.rm(path.join(directory, "unconfirmed-gaps.json"), { force: true });
   const joined = mergeRecoveredBlocks(expected, blocks, plan, recovered);
@@ -1561,10 +1615,57 @@ await writeTargetStatus({
 const productionRoot = path.join(targetReviewDir, "gemini-production");
 const textHash = createHash("sha256").update(narration, "utf8").digest("hex");
 const ttsSource = PLATFORM ? { ...episode, scenes: [tiktokCtaScene] } : episode;
+const reusableCta = episode.scenes.at(-1)?.kind === "cta" ? episode.scenes.at(-1) : null;
+const ctaCacheRoot = path.join(PROJECT_ROOT, ".cta-voice-cache");
+// Preserve the existing generation plan for a previously saved episode.
+// Only a fresh generation may opt into the separate cached ending.
+const priorTakes = await fs.readdir(productionRoot).catch(error => {
+  if (error.code === "ENOENT") return [];
+  throw error;
+});
+const useCache = voiceProfile.status === "approved" && reusableCta && ONE_TAKE && !NEW_TAKE;
+// Owner 2026-11-17: every verified CTA voice and its subtitles are kept and
+// reused, never voiced again — also the recording kept on the other transport
+// ("oldingi yasalgan videolardan olib qo'yish"); the take's own one first.
+let cachedCta = useCache
+  ? await findCtaVoiceForTake(ctaCacheRoot, reusableCta.narration, voiceProfile, [], config.apiProvider)
+  : null;
+// A separately voiced TikTok ending can use a verified prior episode's
+// exact CTA even when this episode has a preserved, unaligned attempt.
+if (cachedCta && PLATFORM && !RESUME_FOLDER_NAME) {
+  const dir = await fs.mkdtemp(path.join(targetReviewDir, ".cached-cta-"));
+  try {
+    const wav = path.join(dir, "voice.wav");
+    const vtt = path.join(dir, "captions.vtt");
+    await fs.writeFile(wav, cachedCta.wav);
+    const { readMediaDurationMs } = await import("./media-duration.mjs");
+    const alignment = alignWords(reusableCta.narration, cachedCta.words, readMediaDurationMs(wav));
+    if (!alignment.captions?.length) throw new Error("Saved CTA word timings no longer match its text.");
+    await fs.writeFile(vtt, writeVtt(alignment.captions));
+    execFileSync(process.execPath, [
+      path.join(PROJECT_ROOT, "scripts", "import-voice.mjs"), EPISODE_ID, wav, vtt, "--platform", PLATFORM,
+    ], { cwd: PROJECT_ROOT, stdio: "inherit", env: languageEnvironment() });
+    await writeJson(path.join(targetReviewDir, "cta-voice-reuse.json"), { key: cachedCta.key, source: cachedCta.source });
+    console.log("Reused verified TikTok CTA; no TTS or STT calls.");
+  } finally { await fs.rm(dir, { recursive: true, force: true }); }
+  process.exit(0);
+}
+if (cachedCta && priorTakes.some(name => /^\d{4}-/u.test(name))) {
+  const plans = await Promise.all(priorTakes.filter(name => /^\d{4}-/u.test(name)).map(async name => {
+    try { return await readJson(path.join(productionRoot, name, "metadata.json")); }
+    catch (error) { if (error.code === "ENOENT") return null; throw error; }
+  }));
+  if (plans.some(plan => plan?.narrationTextHash === textHash &&
+      (RESUME_FOLDER_NAME ? !plan.reusedCtaVoiceKey : plan.reusedCtaVoiceKey !== cachedCta.key)))
+    cachedCta = null;
+}
 // "continuous-pilot" is the stored id of one-take audio since the pilot;
 // kept unchanged so saved takes stay resumable (checkpoints compare it).
-const ttsMode = ONE_TAKE ? "continuous-pilot" : "scene";
-const ttsChunks = ONE_TAKE
+const ttsMode = cachedCta ? "continuous-with-cached-cta" : (ONE_TAKE ? "continuous-pilot" : "scene");
+const ttsChunks = cachedCta
+  ? [...(PLATFORM ? [] : createContinuousTtsChunks({ ...episode, scenes: episode.scenes.slice(0, -1) })),
+      ...createContinuousTtsChunks({ ...episode, scenes: [reusableCta] })]
+  : ONE_TAKE
   ? createContinuousTtsChunks(ttsSource, { expectedNarration: narration })
   : createTtsChunks(ttsSource);
 if (!ttsChunks.length) throw new Error("No narration chunks were created.");
@@ -1682,9 +1783,15 @@ if (RESUME_FOLDER_NAME) {
     config.openRouterBackupKey,
   );
   if (retrySavedRecoveryOnly) {
-    config.transcriptionTransport = "openrouter";
-    metadata.transcriptionTransport = "openrouter";
-    console.log("RESUME_SAVED_CLIP_RECOVERY_ONLY: using the verified saved take and OpenRouter word timestamps.");
+    // Replaying a recovery that already failed on the backup would only reuse
+    // its saved clip responses. Retry those clips on the requested transport
+    // (Direct keeps the per-language hints); its own fallback rules still apply.
+    const recoveryTransport = resumedRecoveryTransport(
+      metadata.lastRecoveryTransport ?? metadata.transcriptionTransport, config.apiProvider,
+      metadata.lastRecoveryUnanswered === true);
+    config.transcriptionTransport = recoveryTransport;
+    metadata.transcriptionTransport = recoveryTransport;
+    console.log(`RESUME_SAVED_CLIP_RECOVERY_ONLY: using the verified saved take and ${recoveryTransport} word timestamps.`);
   }
   delete metadata.error;
   metadata.status = "starting";
@@ -1727,6 +1834,7 @@ if (RESUME_FOLDER_NAME && metadata.ttsChunkCount !== ttsChunks.length) {
 }
 config.ttsRequestCount = metadata.ttsRequestCount ?? 0;
 metadata.ttsGenerationMode = ttsMode;
+if (cachedCta) metadata.reusedCtaVoiceKey = cachedCta.key;
 metadata.ttsHttpAttemptLimitPerTake = config.apiProvider === "openrouter"
   ? OPENROUTER_TTS_MAX_ATTEMPTS : (ONE_TAKE ? 2 : 4);
 metadata.openRouterBackupHttpAttemptsPerChunk = config.openRouterBackupKey ? OPENROUTER_TTS_MAX_ATTEMPTS : 0;
@@ -1742,6 +1850,44 @@ metadata.chunkingStrategy = ONE_TAKE
 metadata.previousVoiceProvider = episode.voiceProvider ?? null;
 metadata.previousVoiceProfileId = episode.voiceProfileId ?? null;
 metadata.ttsChunks ??= [];
+if (REPLACE_CTA_OWNER_WORDS) {
+  const last = ttsChunks.length - 1;
+  const old = metadata.ttsChunks[last];
+  if (!cachedCta || last < 1 || !old || JSON.stringify(ttsChunks[last].sceneIds) !== JSON.stringify([reusableCta.id]))
+    throw new Error("--replace-cta needs a saved take whose ending is its own chunk and a kept, verified CTA.");
+  if (metadata.status === "imported" || (episode.audioSha256 && episode.audioSha256 === metadata.mp3Sha256))
+    throw new Error("--replace-cta refuses an imported take: its voice is already in the episode.");
+  const chunkNumber = String(last + 1).padStart(3, "0");
+  const rejectedName = `rejected-cta-${timestamp}`;
+  const rejectedDir = path.join(outputDir, rejectedName);
+  const moved = [];
+  const move = async (name) => {
+    try {
+      await fs.mkdir(path.dirname(path.join(rejectedDir, name)), { recursive: true });
+      await fs.rename(path.join(outputDir, name), path.join(rejectedDir, name));
+      moved.push(name);
+    } catch (error) { if (error?.code !== "ENOENT") throw error; }
+  };
+  // Everything made from the rejected ending moves; saved clip responses are
+  // keyed by span only, so they must never meet the new audio.
+  for (const name of await fs.readdir(outputDir))
+    if (name === `voice-part-${chunkNumber}.wav` || name.startsWith(`transcription-part-${chunkNumber}`)) await move(name);
+  for (const name of await fs.readdir(path.join(outputDir, "stt-windows")).catch(() => []))
+    if (name.startsWith(`part-${chunkNumber}-`)) await move(path.join("stt-windows", name));
+  for (const name of ["voice.wav", "voice.mp3", "audio-concat.txt", "transcription.json", "captions.vtt",
+    path.join("recovery-diagnostic", `chunk-${chunkNumber}`)]) await move(name);
+  metadata.rejectedCtaChunks = [...(metadata.rejectedCtaChunks ?? []), {
+    chunk: last + 1, ...old, rejectedAt: new Date().toISOString(), folder: rejectedName, moved,
+    reason: metadata.lastRecoveryError ?? metadata.error ?? null, ownerWords: REPLACE_CTA_OWNER_WORDS,
+  }];
+  metadata.ttsChunks = metadata.ttsChunks.slice(0, last);
+  if (Array.isArray(metadata.transcriptionAttempts)) metadata.transcriptionAttempts = metadata.transcriptionAttempts.slice(0, last);
+  if (Array.isArray(metadata.sttWindows)) metadata.sttWindows = metadata.sttWindows.slice(0, last);
+  for (const key of ["wavSha256", "mp3Sha256", "wavBytes", "mp3Bytes", "audioDurationMs", "chunkDurationsMs",
+    "completedTtsChunks", "lastTranscriptionError", "lastTranscriptionMismatch", "firstTranscriptMismatches",
+    "transcriptMismatchCount", "ctaVoicedOnTakeTransport"]) delete metadata[key];
+  console.log(`REPLACE_CTA: ending chunk ${last + 1} moved to ${rejectedName}; the kept verified CTA ${cachedCta.key.slice(0, 10)} (${cachedCta.transport}) takes its place.`);
+}
 const persistMetadata = () => atomicWriteJson(metadataPath, metadata);
 const persistCheckpoint = () => atomicWriteJson(checkpointPath, {
   schemaVersion: 1,
@@ -1808,6 +1954,23 @@ try {
       );
     }
     let chunkTransport = recordedChunk?.transport ?? config.ttsTransport;
+    const lessonChunkTransports = metadata.ttsChunks.slice(0, index).filter(Boolean).map(item => item.transport);
+    if (!chunkBytes && cachedCta && index === ttsChunks.length - 1) {
+      // Owner 2026-11-17: the kept, verified ending of earlier videos joins the
+      // take — the one kept on this take's transport when there is one, else
+      // the same voice profile's recording kept on the other transport.
+      cachedCta = await findCtaVoiceForTake(ctaCacheRoot, reusableCta.narration, voiceProfile,
+        lessonChunkTransports, config.ttsTransport) ?? cachedCta;
+      metadata.reusedCtaVoiceKey = cachedCta.key;
+      delete metadata.ctaVoicedOnTakeTransport;
+      chunkBytes = cachedCta.wav;
+      chunkTransport = cachedCta.transport;
+      await atomicWriteFile(chunkPath, chunkBytes);
+      await atomicWriteJson(path.join(outputDir, `transcription-part-${String(index + 1).padStart(3, "0")}.json`), {
+        wordAnnotations: cachedCta.words,
+      });
+      console.log(`Reusing the kept verified ${cachedCta.transport} CTA voice ${cachedCta.key.slice(0, 10)}; no TTS or STT for the ending.`);
+    }
     if (!chunkBytes) {
       // Backup is allowed only while no chunk of this take exists yet.
       config.completedTtsChunks = completedTtsChunks;
@@ -2237,6 +2400,10 @@ try {
           language:voiceProfile.locale,chunk:index+1,spans:clips.recoverySpans}));
       } catch(recoveryError) {
         metadata.lastRecoveryError=safeErrorMessage(recoveryError);
+        // Which transport this recovery used, and whether a clip got no answer
+        // at all: a resumed run retries such a clip on the same transport.
+        metadata.lastRecoveryTransport=config.transcriptionTransport;
+        metadata.lastRecoveryUnanswered=Boolean(recoveryError?.unansweredSpans);
         console.warn("GEMINI_CLIP_RECOVERY_BLOCKED "+JSON.stringify({
           language:voiceProfile.locale,chunk:index+1,
           reason:metadata.lastRecoveryError}));
@@ -2408,6 +2575,29 @@ try {
   );
   metadata.status = "imported";
   metadata.importedAt = new Date().toISOString();
+  if (useCache && (!cachedCta || metadata.ctaVoicedOnTakeTransport) && !verifiedSampleFallbackUsed) {
+    const imported = await readJson(episodePath);
+    const start = PLATFORM ? 0 : imported.scenes.at(-1).startMs;
+    const words = alignment.captions.filter(word => word.startMs >= start).map(word => ({
+      text: word.text,
+      start_offset: `${((word.startMs - start) / 1000).toFixed(3)}s`,
+      end_offset: `${((word.endMs - start) / 1000).toFixed(3)}s`,
+    }));
+    const checked = alignWords(reusableCta.narration, words, metadata.audioDurationMs - start);
+    if (checked.captions?.length && Number.isFinite(start) && start >= 0) {
+      const clip = path.join(outputDir, "verified-cta.wav");
+      try {
+        extractCtaWav(ffmpegRuntime.ffmpegPath, wavPath, clip, start, ffmpegRuntime.env);
+        metadata.savedCtaVoiceKey = await saveCtaVoice(ctaCacheRoot, {
+          text: reusableCta.narration, profile: voiceProfile, transport: config.ttsTransport,
+          wav: await fs.readFile(clip), words, source: { episodeId: EPISODE_ID, startMs: start, wavSha256: metadata.wavSha256 },
+        });
+      } catch (error) {
+        metadata.ctaCacheError = safeErrorMessage(error);
+        console.warn("Voice was imported, but CTA cache could not be written: " + metadata.ctaCacheError);
+      }
+    }
+  }
   if (!PLATFORM && voiceProfile.status === "pending-owner-approval" &&
       voiceProfile.sampleEpisodeId === EPISODE_ID) {
     metadata.sampleOnly = true;

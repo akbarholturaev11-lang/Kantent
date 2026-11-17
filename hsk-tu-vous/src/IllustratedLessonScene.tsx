@@ -6,16 +6,19 @@ import visual from "../content/visual-system.json";
 import {activeNarratedBeat} from "../scripts/narrated-beat-state.mjs";
 import {ILLUSTRATED_LAYOUT as LAY, cameraFor} from "../scripts/illustrated-layout.mjs";
 import characters from "../content/characters/hsk-ai-characters.json";
+import type {GraphicScene as GraphicPlan} from "../scripts/graphic-scene.mjs";
+import {GraphicScene as GraphicStage} from "./GraphicScene";
 
 /** One stable liquid-glass teaching card, one timed subtitle, and relevant art. */
 type Box={x:number;y:number;w:number;h:number};
 export type Illustration={
   layout:"scene"|"pair"|"board";
   images:string[];
+  zoom?:number;
   icons?:(string|null)[];
   anchors?:Record<string,Box>;
   focus?:string;
-  overlay?:"rise"|"marks"|"link"|"cross"|"drop"|"compare"|"adjective"|"stamp";
+  overlay?:"rise"|"marks"|"link"|"cross"|"drop"|"compare"|"adjective"|"stamp"|"both-accepted";
   label?:string;
   focusLabel?:string;
   parts?:string[];
@@ -30,6 +33,14 @@ const C=visual.colors;
 const W=1080, H=1920;
 const ease={extrapolateLeft:"clamp" as const,extrapolateRight:"clamp" as const,easing:Easing.bezier(.2,.8,.2,1)};
 const pop=(local:number,start=0,frames=10)=>interpolate(local,[start,start+frames],[0,1],ease);
+
+/** Transparent, cue-timed detail motion layered over reviewed scene art. */
+const GraphicOverlay:React.FC<{plan:GraphicPlan;frame:number}>=({plan,frame})=><div style={{
+  position:"absolute",left:LAY.graphicOverlaySideInsetPx,right:LAY.graphicOverlaySideInsetPx,
+  top:LAY.graphicOverlayTopPx,height:LAY.graphicOverlayHeightPx,pointerEvents:"none",
+}}>
+  <GraphicStage plan={plan} frame={frame} height={LAY.graphicOverlayHeightPx} look="glass"/>
+</div>;
 
 export const LiquidGlassDefs:React.FC=()=><svg width="0" height="0" style={{position:"absolute"}}>
   <filter id="liquid-glass" x="0" y="0" width="100%" height="100%">
@@ -49,14 +60,14 @@ export const LiquidGlass:React.FC<{children:React.ReactNode;style?:React.CSSProp
     <div style={{position:"relative"}}>{children}</div>
   </div>;
 
-const art=(episodeId:string,name:string)=>staticFile(`lesson-art/${episodeId}/${name}.jpg`);
-const svgUri=(id:string,mood:string)=>{
+export const art=(episodeId:string,name:string)=>staticFile(`lesson-art/${episodeId}/${name}.jpg`);
+export const svgUri=(id:string,mood:string)=>{
   const entry=characters.characters.find(c=>c.id===id);
   if(!entry) throw Error(`Unknown HSK AI character "${id}"`);
   const svg=(entry.svg as Record<string,string>)[mood]??entry.svg.idle;
   return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
 };
-const aspect=(id:string)=>{
+export const aspect=(id:string)=>{
   const entry=characters.characters.find(c=>c.id===id);
   const box=(entry?.svg.idle.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/)??[])as string[];
   return box.length?Number(box[1])/Number(box[2]):1;
@@ -92,14 +103,21 @@ const PairLayer:React.FC<{episodeId:string;ill:Illustration;local:number;frameAb
     <div style={{position:"absolute",left:60,right:60,top:LAY.pairTopPx,height:LAY.pairHeightPx,display:"flex",gap:40,justifyContent:"center"}}>
       {ill.images.slice(0,2).map((name,index)=>{
         const focused=index===focusIndex, dimmed=focusIndex>=0&&!focused;
+        const accepted=ill.overlay==="both-accepted";
+        const push=1+(focused?.045:.014)*pop(local,0,80);
         return <div key={name} style={{position:"relative",flex:1,opacity:dimmed?.55:1,scale:focused?1.04:1,
           translate:`0 ${(1-pop(local,index*3,12))*24}px`}}>
           <div style={{position:"absolute",inset:0,borderRadius:44,overflow:"hidden",
             border:`${focused?5:2}px solid ${focused?C.brandGold:"rgba(255,255,255,.45)"}`,
             boxShadow:"0 24px 58px rgba(0,0,0,.38)"}}>
-            <Img src={art(episodeId,name)} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+            <Img src={art(episodeId,name)} style={{width:"100%",height:"100%",objectFit:"cover",scale:push}}/>
             {ill.cast&&<Cast cast={ill.cast} frame={frameAbs} local={local} width={460} height={LAY.pairHeightPx} card={index}/>}
           </div>
+          {accepted&&<div style={{position:"absolute",right:19,top:19,width:60,height:60,borderRadius:"50%",
+            display:"grid",placeItems:"center",background:"#075440",border:"2px solid #CFFFE7",boxShadow:"0 6px 20px #001A13AA",
+            opacity:pop(local,index*2,8)}}><svg width="31" height="31" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+              <path d="m5 14 6 6L23 8" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg></div>}
         </div>;
       })}
     </div>
@@ -121,10 +139,10 @@ function distinctCardBeats(beats:ResolvedMotionBeat[],activeIndex:number){
     if(!key||seen.has(key)) continue;
     seen.add(key); result.push(beat);
   }
-  return (result.length?result:[beats[0]]).slice(-2);
+  return result.slice(-2);
 }
 
-export const IllustratedLessonScene:React.FC<{episodeId:string;frame:number;beats:ResolvedMotionBeat[];motionKitScene?:BoundArtMotionScene}>=({episodeId,frame,beats,motionKitScene})=>{
+export const IllustratedLessonScene:React.FC<{episodeId:string;frame:number;beats:ResolvedMotionBeat[];motionKitScene?:BoundArtMotionScene;showText?:boolean}>=({episodeId,frame,beats,motionKitScene,showText=true})=>{
   const active=activeNarratedBeat(beats,frame)??beats[0];
   if(!active?.visual) return <AbsoluteFill style={{background:"#08090B"}}/>;
   const ill=(active.visual as {illustration?:Illustration}).illustration;
@@ -132,12 +150,16 @@ export const IllustratedLessonScene:React.FC<{episodeId:string;frame:number;beat
   const index=Math.max(0,beats.indexOf(active));
   const previousBeat=index>0?beats[index-1]:undefined;
   const previousIll=(previousBeat?.visual as {illustration?:Illustration}|undefined)?.illustration;
+  const previousGraphic=(previousBeat?.visual as {graphic?:GraphicPlan}|undefined)?.graphic;
+  const graphic=(active.visual as {graphic?:GraphicPlan}).graphic;
   const local=Math.max(0,frame-active.localFrame);
   const from=previousIll?.layout===ill.layout?cameraFor(previousIll):cameraFor(ill);
   const to=cameraFor(ill);
   const cameraProgress=pop(local,0,16);
-  const drift=1+Math.min(local,240)*.00018;
+  const drift=1+Math.min(Math.max(frame,0),320)*.0002;
   const camera={scale:(from.scale+(to.scale-from.scale)*cameraProgress)*drift,cx:from.cx+(to.cx-from.cx)*cameraProgress,cy:from.cy+(to.cy-from.cy)*cameraProgress};
+  const previousBaseCamera=cameraFor(previousIll);
+  const previousCamera={...previousBaseCamera,scale:previousBaseCamera.scale*drift};
   const transition=previousIll?pop(local,0,visual.motion.beatCrossfadeFrames):1;
   const cardBeats=distinctCardBeats(beats,index);
   const latestCardBeat=cardBeats[cardBeats.length-1]??active;
@@ -146,10 +168,11 @@ export const IllustratedLessonScene:React.FC<{episodeId:string;frame:number;beat
 
   return <AbsoluteFill style={{background:"#08090B",color:"#FFFFFF",fontFamily:G.fontFamily,overflow:"hidden"}}>
     <LiquidGlassDefs/>
-    {previousIll&&previousBeat&&<div style={{position:"absolute",inset:0,opacity:1-transition}}>
-      {previousIll.layout==="scene"&&<SceneLayer episodeId={episodeId} ill={{...previousIll,cast:undefined}} beat={previousBeat} local={0} camera={from} frameAbs={frame}/>}
+    {transition<1&&previousIll&&previousBeat&&<div style={{position:"absolute",inset:0}}>
+      {previousIll.layout==="scene"&&<SceneLayer episodeId={episodeId} ill={{...previousIll,cast:undefined}} beat={previousBeat} local={0} camera={previousCamera} frameAbs={frame}/>}
       {previousIll.layout==="pair"&&<PairLayer episodeId={episodeId} ill={{...previousIll,cast:undefined}} local={0} frameAbs={frame}/>}
       {previousIll.layout==="board"&&<BoardLayer episodeId={episodeId} ill={previousIll} local={0}/>}
+      {previousGraphic&&previousIll.layout!=="pair"&&<GraphicOverlay plan={previousGraphic} frame={Math.max(0,frame-previousBeat.localFrame)}/>}
     </div>}
     {motionKitScene
       ? <CueBoundArtLayer scene={motionKitScene} beatId={active.id} frame={frame}>
@@ -157,21 +180,27 @@ export const IllustratedLessonScene:React.FC<{episodeId:string;frame:number;beat
             {ill.layout==="scene"&&<SceneLayer episodeId={episodeId} ill={ill} beat={active} local={local} camera={camera} frameAbs={frame}/>}
             {ill.layout==="pair"&&<PairLayer episodeId={episodeId} ill={ill} local={local} frameAbs={frame}/>}
             {ill.layout==="board"&&<BoardLayer episodeId={episodeId} ill={ill} local={local}/>}
+            {graphic&&ill.layout!=="pair"&&<GraphicOverlay plan={graphic} frame={local}/>}
           </div>
         </CueBoundArtLayer>
       : <div style={{position:"absolute",inset:0,opacity:transition}}>
           {ill.layout==="scene"&&<SceneLayer episodeId={episodeId} ill={ill} beat={active} local={local} camera={camera} frameAbs={frame}/>}
           {ill.layout==="pair"&&<PairLayer episodeId={episodeId} ill={ill} local={local} frameAbs={frame}/>}
           {ill.layout==="board"&&<BoardLayer episodeId={episodeId} ill={ill} local={local}/>}
+          {graphic&&ill.layout!=="pair"&&<GraphicOverlay plan={graphic} frame={local}/>}
         </div>}
     <div style={{position:"absolute",left:0,right:0,top:0,height:900,background:"linear-gradient(180deg, rgba(6,8,12,.5) 0%, rgba(6,8,12,.38) 40%, transparent 100%)"}}/>
     <div style={{position:"absolute",left:0,right:0,bottom:0,height:620,background:"linear-gradient(0deg, rgba(6,8,12,.72) 0%, rgba(6,8,12,.38) 44%, transparent 100%)"}}/>
-    <div style={{position:"absolute",top:LAY.brandTopPx-24,left:0,right:0,display:"flex",justifyContent:"center",alignItems:"center",gap:12,
+    {showText&&<><div style={{position:"absolute",top:LAY.brandTopPx,left:0,right:0,display:"flex",justifyContent:"center",
       color:"#FFFFFF",fontSize:30,fontWeight:900,letterSpacing:".04em",textShadow:"0 3px 12px rgba(0,0,0,.65)"}}>
-      <Img src={staticFile("branding/hsk-ai-logo-1024.png")} style={{width:42,height:42,borderRadius:12,filter:"drop-shadow(0 5px 14px rgba(0,0,0,.38))"}}/>
-      <span>HSK <span style={{color:C.brandGold,marginLeft:-6}}>AI</span></span>
+      <LiquidGlass radius={32} style={{padding:"9px 17px"}}>
+        <div style={{display:"flex",alignItems:"center",gap:11}}>
+          <Img src={staticFile("branding/hsk-ai-logo-1024.png")} style={{width:39,height:39,borderRadius:11}}/>
+          <span>HSK <span style={{color:C.brandGold}}>AI</span></span>
+        </div>
+      </LiquidGlass>
     </div>
-    <div style={{position:"absolute",top:LAY.chipTopPx,left:48,right:48,display:"flex",justifyContent:"center",opacity:cardOpacity}}>
+    {cardBeats.length>0&&<div style={{position:"absolute",top:LAY.chipTopPx,left:48,right:48,display:"flex",justifyContent:"center",opacity:cardOpacity}}>
       <LiquidGlass radius={42} style={{padding:cardBeats.length>1?"15px 28px":"17px 34px",maxWidth:960,width:"fit-content"}}>
         <div data-reference-chip data-card-rows={cardBeats.length} style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",rowGap:cardBeats.length>1?4:0,maxWidth:900}}>
           {cardBeats.map((beat,index)=>{
@@ -185,6 +214,6 @@ export const IllustratedLessonScene:React.FC<{episodeId:string;frame:number;beat
           })}
         </div>
       </LiquidGlass>
-    </div>
+    </div>}</>}
   </AbsoluteFill>;
 };

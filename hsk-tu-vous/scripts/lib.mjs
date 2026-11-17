@@ -155,6 +155,7 @@ export async function invalidateReviewArtifacts(
     "video.mp4",
     "captions.srt",
     "post.md",
+    "cover.jpg",
     "render-props.json",
     "visual-timeline.json",
     "motion-timeline.json",
@@ -449,7 +450,12 @@ export function validateEpisode(episode) {
   if (!hook || episode.scenes[0]?.kind !== "hook") {
     throw new Error("Birinchi sahna hook bo‘lishi kerak.");
   }
-  const hookFrames = hook.durationFrames ?? (hook.durationSec ?? 4) * FPS;
+  // Screen the authored hook length. Import can extend its scene boundary
+  // through the last verified word so the spoken hook is never cut short.
+  const hookFrames = episode.captionSource === "gemini-word-timestamps" &&
+    episode.audioSrc && episode.captions?.length && Number.isFinite(hook.durationSec)
+    ? hook.durationSec * FPS
+    : hook.durationFrames ?? (hook.durationSec ?? 4) * FPS;
   const maxHookFrames = episode.languageCode === "tg-TJ" ? 240 : 180;
   if (episode.kind!=="advertisement" && hookFrames > maxHookFrames) {
     throw new Error(

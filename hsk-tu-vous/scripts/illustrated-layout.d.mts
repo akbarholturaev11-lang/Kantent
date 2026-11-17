@@ -5,6 +5,7 @@ export declare const ILLUSTRATED_LAYOUT: {
   brandTopPx: number; headlineTopPx: number; chipTopPx: number; chipBottomPx: number;
   subtitleSlotsPx: number[]; subtitleHeightPx: number;
   pairTopPx: number; pairHeightPx: number; boardTopPx: number; boardHeightPx: number;
+  graphicOverlayTopPx: number; graphicOverlayHeightPx: number; graphicOverlaySideInsetPx: number;
   sceneImageHeightPx: number; sceneImageTopPx: number;
 };
 export declare function cameraFor(ill: Illustration | undefined): { scale: number; cx: number; cy: number };

@@ -1,0 +1,14 @@
+{
+  "key": "0eef581cf31d57b19cce3abe450444c75cccd4b48d7573904d4578b2be06ba21",
+  "audioSha256": "8646ccbcb131f4cbf1e6e01ec5e6b3a5b891072490a9faea76d27baded0e2ad6",
+  "wordsSha256": "b1cfcb6f2fb6cc558e9770716ddc4ffecff4b11221d1576aedf0e8e9e537870d",
+  "source": {
+    "episodeId": "zhuozi-you-book-20261114",
+    "startMs": 41133.333333333336,
+    "wavSha256": "ce87f62c6953ed2fdd6ebb5371a7d93bef9f35b43c79385637689948cd15d235"
+  },
+  "captionsSha256": "c9c9cd75a6981f566ba16a17f76acb4ce56edeb71177e2b8625179aa43c7d378",
+  "locale": "ru-RU",
+  "transport": "gemini-direct",
+  "text": "Подпишитесь, чтобы не пропустить вторую часть."
+}
