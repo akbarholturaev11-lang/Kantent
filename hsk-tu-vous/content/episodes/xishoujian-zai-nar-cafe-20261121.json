@@ -1,0 +1,1147 @@
+{
+  "id": "xishoujian-zai-nar-cafe-20261121",
+  "date": "2026-11-21",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "Где туалет? Панда потерялся в кафе — часть 1",
+  "level": "HSK 1–2",
+  "topic": "Вежливый вопрос о местонахождении: 请问，洗手间在哪儿？",
+  "durationTargetSec": 48,
+  "caption": "В китайском кафе панда учится спрашивать: 请问，洗手间在哪儿？ — «Извините, где туалет?» Первая часть истории.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1",
+    "#китайскийснуля"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "请问，洗手间在哪儿？ Qǐngwèn, xǐshǒujiān zài nǎr? — Извините, где туалет?",
+    "Вопрос о местонахождении: место + 在 + 哪儿, без 吗; вопросительное слово остаётся на месте ответа."
+  ],
+  "examples": [
+    "请问 qǐngwèn — извините, позвольте спросить",
+    "洗手间 xǐshǒujiān — туалет",
+    "在哪儿 zài nǎr — где находится",
+    "洗手间在哪儿？ Xǐshǒujiān zài nǎr? — Где туалет?"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 9,
+      "headline": "КАК СПРОСИТЬ ГДЕ?",
+      "narration": "Панда с обезьянкой зашли в китайское кафе. Панда спрашивает: 请问，洗手间在哪儿？ Это вежливый вопрос: «Извините, где туалет?»",
+      "cards": [
+        {
+          "hanzi": "请问，洗手间在哪儿？",
+          "pinyin": "Qǐngwèn, xǐshǒujiān zài nǎr?",
+          "meaning": "Извините, где туалет?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "Панда спрашивает",
+          "explains": "Показать на плане кафе смысл сцены hook: Извините, где туалет?; не использовать написанные указатели в фоне.",
+          "visual": {
+            "title": "Ситуация в кафе",
+            "hanzi": "请问，洗手间在哪儿？",
+            "pinyin": "Qǐngwèn, xǐshǒujiān zài nǎr?",
+            "meaning": "Извините, где туалет?",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "question-marker",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 410,
+                    "cy": 78,
+                    "r": 26,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-main-room"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.12
+            }
+          }
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "请问，洗手间在哪儿",
+          "explains": "Показать на плане кафе смысл сцены hook: Извините, где туалет?; не использовать написанные указатели в фоне.",
+          "visual": {
+            "title": "Точка поиска",
+            "hanzi": "请问，洗手间在哪儿？",
+            "pinyin": "Qǐngwèn, xǐshǒujiān zài nǎr?",
+            "meaning": "Извините, где туалет?",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 410,
+                    "cy": 235,
+                    "rx": 305,
+                    "ry": 135,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-side-corridor"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.24
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "structure",
+      "kind": "example",
+      "durationSec": 13,
+      "headline": "ПОРЯДОК ВОПРОСА",
+      "narration": "Смотри на порядок: 洗手间 — туалет, потом 在 — находится, и 哪儿 — где. Вместе: 洗手间在哪儿？ Вопросительное слово остаётся в конце.",
+      "cards": [
+        {
+          "hanzi": "洗手间在哪儿？",
+          "pinyin": "Xǐshǒujiān zài nǎr?",
+          "meaning": "Где туалет?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "structure-action-1",
+          "kind": "graphic",
+          "cueText": "洗手间 — туалет",
+          "explains": "Показать на плане кафе смысл сцены structure: Где туалет?; не использовать написанные указатели в фоне.",
+          "visual": {
+            "title": "Название места",
+            "hanzi": "洗手间在哪儿？",
+            "pinyin": "Xǐshǒujiān zài nǎr?",
+            "meaning": "Где туалет?",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 260,
+                    "cy": 235,
+                    "rx": 115,
+                    "ry": 125,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-side-corridor"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.12
+            }
+          }
+        },
+        {
+          "id": "structure-action-2",
+          "kind": "graphic",
+          "cueText": "哪儿 — где",
+          "explains": "Показать на плане кафе смысл сцены structure: Где туалет?; не использовать написанные указатели в фоне.",
+          "visual": {
+            "title": "Слово вопроса",
+            "hanzi": "洗手间在哪儿？",
+            "pinyin": "Xǐshǒujiān zài nǎr?",
+            "meaning": "Где туалет?",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "question-marker",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 410,
+                    "cy": 78,
+                    "r": 26,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-two-doors"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.24
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "direction",
+      "kind": "context",
+      "durationSec": 12,
+      "headline": "ПУТЬ НАЙДЕН",
+      "narration": "Обезьянка показывает в сторону коридора: 在那边 — вон там. Панда теперь знает, куда идти. Вопрос о месте сработал!",
+      "cards": [
+        {
+          "hanzi": "在那边。",
+          "pinyin": "Zài nàbiān.",
+          "meaning": "Вон там."
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "direction-action-1",
+          "kind": "graphic",
+          "cueText": "показывает в сторону коридора",
+          "explains": "Показать на плане кафе смысл сцены direction: Вон там.; не использовать написанные указатели в фоне.",
+          "visual": {
+            "title": "Указанный путь",
+            "hanzi": "在那边。",
+            "pinyin": "Zài nàbiān.",
+            "meaning": "Вон там.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "route-arrow",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "390,325 390,190 368,220 390,190 412,220",
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-side-corridor"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.12
+            }
+          }
+        },
+        {
+          "id": "direction-action-2",
+          "kind": "graphic",
+          "cueText": "在那边",
+          "explains": "Показать на плане кафе смысл сцены direction: Вон там.; не использовать написанные указатели в фоне.",
+          "visual": {
+            "title": "Направление поиска",
+            "hanzi": "在那边。",
+            "pinyin": "Zài nàbiān.",
+            "meaning": "Вон там.",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 260,
+                    "cy": 235,
+                    "rx": 115,
+                    "ry": 125,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-two-doors"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.24
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "recall",
+      "kind": "example",
+      "durationSec": 14,
+      "headline": "ПРОВЕРЬ СЕБЯ",
+      "narration": "Проверь себя: «Извините, где туалет?» — 请问，洗手间在哪儿？ Панда доходит до коридора. Но там две одинаковые двери — слева или справа? Во второй части он узнает ответ.",
+      "cards": [
+        {
+          "hanzi": "请问，洗手间在哪儿？",
+          "pinyin": "Qǐngwèn, xǐshǒujiān zài nǎr?",
+          "meaning": "Извините, где туалет?"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recall-action-1",
+          "kind": "graphic",
+          "cueText": "Проверь себя",
+          "explains": "Показать на плане кафе смысл сцены recall: Извините, где туалет?; не использовать написанные указатели в фоне.",
+          "visual": {
+            "title": "Повторение вопроса",
+            "hanzi": "请问，洗手间在哪儿？",
+            "pinyin": "Qǐngwèn, xǐshǒujiān zài nǎr?",
+            "meaning": "Извините, где туалет?",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus-ring",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 410,
+                    "cy": 235,
+                    "rx": 305,
+                    "ry": 135,
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-two-doors"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.12
+            }
+          }
+        },
+        {
+          "id": "recall-action-2",
+          "kind": "graphic",
+          "cueText": "请问，洗手间在哪儿",
+          "explains": "Показать на плане кафе смысл сцены recall: Извините, где туалет?; не использовать написанные указатели в фоне.",
+          "visual": {
+            "title": "Два выхода",
+            "hanzi": "请问，洗手间在哪儿？",
+            "pinyin": "Qǐngwèn, xǐshǒujiān zài nǎr?",
+            "meaning": "Извините, где туалет?",
+            "graphic": {
+              "width": 820,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "floor",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 95,
+                    "y": 90,
+                    "width": 630,
+                    "height": 260,
+                    "rx": 18,
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 3
+                  }
+                },
+                {
+                  "id": "left-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 180,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "right-door",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 480,
+                    "y": 145,
+                    "width": 160,
+                    "height": 184,
+                    "rx": 12,
+                    "fill": "gold",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "left-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 312,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "right-knob",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 612,
+                    "cy": 242,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "route-arrow",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "390,325 390,190 368,220 390,190 412,220",
+                    "fill": "none",
+                    "stroke": "red",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": []
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "cafe-side-corridor"
+              ],
+              "anchors": {
+                "a": {
+                  "x": 0.07,
+                  "y": 0.12,
+                  "w": 0.86,
+                  "h": 0.76
+                }
+              },
+              "focus": "a",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.8,
+                  "y": 0.87,
+                  "h": 0.28
+                },
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.53,
+                  "y": 0.9,
+                  "h": 0.26
+                }
+              ],
+              "zoom": 1.24
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "Elon.io — 哪儿 / 哪里 (Where)",
+      "url": "https://elon.io/grammar/chinese-mandarin/questions/nar-nali-where",
+      "checkedAt": "2026-11-17",
+      "supports": "Verifies 洗手间在哪儿？ (xǐshǒujiān zài nǎr), X + 在 + 哪儿 order and no redundant 吗."
+    },
+    {
+      "title": "LibreTexts — Placement of question words",
+      "url": "https://human.libretexts.org/Bookshelves/Languages/Chinese/Introductory_Chinese_Grammar_I_-_under_construction/02%3A_Grammatical_Structures/2.02%3A_Question_Forms/2.02%3A_Placement_of_question_words",
+      "checkedAt": "2026-11-17",
+      "supports": "Verifies the 哪儿/哪里 position stays where the location answer belongs."
+    }
+  ],
+  "hookExperiment": {
+    "id": "xishoujian-zai-nar-cafe-20261121-ru-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Реальная ситуация потери ориентации и быстрый вопрос о местонахождении удерживают внимание; результат ещё не проверен.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-17"
+  },
+  "audienceProblem": "Новичок в китайском кафе не умеет спросить, где туалет, и ставит «где» перед всей фразой.",
+  "learningOutcome": "Вежливо задать вопрос 请问，洗手间在哪儿？ и сохранить порядок место + 在 + 哪儿.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Китайское кафе, путь от стойки к коридору",
+      "learnerGoal": "Вежливо узнать, где туалет, и пройти по указанию.",
+      "obstacle": "Не знает порядка слова «где» в китайском вопросе."
+    },
+    "selectionReason": "Первый ответ звучит уже в начале, обе части имеют собственное завершённое учебное действие; связка опирается на реальный выбор двух дверей без искусственной интриги.",
+    "firstPayoff": {
+      "sceneId": "hook",
+      "cueText": "请问，洗手间在哪儿"
+    },
+    "reHooks": []
+  }
+}

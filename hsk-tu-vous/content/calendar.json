@@ -588,6 +588,64 @@
       "episodeFile": "episodes/ye-dou-placement-20261120.json",
       "status": "planned",
       "planningNote": "Moved from 2026-11-09 after the upload pause; updated to the active 2026-11-09 content rules."
+    },
+    {
+      "id": "xishoujian-zai-nar-cafe-20261121",
+      "date": "2026-11-21",
+      "week": 8,
+      "level": "HSK 1–2",
+      "pillar": "Ситуация и вопросы",
+      "topic": "В кафе: вежливо спросить «请问，洗手间在哪儿？»",
+      "format": "Двухчастная история: часть 1 — вежливо спросить о месте, получить понятный ответ и выйти к двум дверям.",
+      "targetItems": [
+        "请问 qǐngwèn",
+        "洗手间 xǐshǒujiān",
+        "在 zài",
+        "哪儿 nǎr",
+        "请问，洗手间在哪儿？"
+      ],
+      "referenceFacts": [
+        "请问，洗手间在哪儿？ — вежливый вопрос «Извините, где туалет?»",
+        "Вопрос о местонахождении: предмет/место + 在 + 哪儿, без 吗. Ответ «где» не скрывается ради второй части."
+      ],
+      "contentType": "series-part",
+      "episodeFile": "episodes/xishoujian-zai-nar-cafe-20261121.json",
+      "series": {
+        "id": "cafe-restroom-directions-20261121",
+        "part": 1,
+        "totalParts": 2
+      },
+      "status": "planned",
+      "planningNote": "One-time transition serial completing Nov 21–22 before new Sunday full-week reserve; both RU/TG scripts and illustrated art manifests authored and source-bound; no media or publishing approved."
+    },
+    {
+      "id": "xishoujian-zai-zuobian-20261122",
+      "date": "2026-11-22",
+      "week": 8,
+      "level": "HSK 1–2",
+      "pillar": "Место и направления",
+      "topic": "Две двери в кафе: 洗手间在左边 / 洗手间在右边",
+      "format": "Двухчастная история: часть 2 — найти нужную дверь по указанию «слева» и завершить сюжет.",
+      "targetItems": [
+        "左边 zuǒbian",
+        "右边 yòubian",
+        "在 zài",
+        "洗手间在左边。",
+        "洗手间在右边。"
+      ],
+      "referenceFacts": [
+        "洗手间在左边 — «Туалет слева»; 洗手间在右边 — «Туалет справа».",
+        "Схема: предмет/место + 在 + 左边 / 右边. Локализация стороны завершает подсказку о двух дверях из части 1."
+      ],
+      "contentType": "series-part",
+      "episodeFile": "episodes/xishoujian-zai-zuobian-20261122.json",
+      "series": {
+        "id": "cafe-restroom-directions-20261121",
+        "part": 2,
+        "totalParts": 2
+      },
+      "status": "planned",
+      "planningNote": "Second complete and final part of the Nov 21–22 one-time bridge; same locale-specific story and validated visual source plans; no video was created or published."
     }
   ],
   "planningBuffer": {
