@@ -1,0 +1,45 @@
+{
+  "episodeId": "xishoujian-zai-nar-cafe-20261121",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Polished semi-realistic original digital illustration for HSK AI vertical learning video, warm cinematic Chinese cafe lighting, soft cel shading, clean linework, high legibility and stable room geometry. Pure TEXT-FREE background images: absolutely no writing, signs, letters, numbers, characters, logo, watermark, people or animals. Only HSK AI app's original character vectors may be overlaid by the renderer.",
+  "assets": [
+    {
+      "name": "cafe-main-room",
+      "aspectRatio": "9:16",
+      "prompt": "Original cinematic Chinese cafe interior, elegant wood counter, warm lantern lights, seating, open walkway in the back. No people, animals, characters, text, letters, Chinese characters, digits, signage, logos or watermark."
+    },
+    {
+      "name": "cafe-side-corridor",
+      "aspectRatio": "9:16",
+      "references": [
+        "cafe-main-room"
+      ],
+      "prompt": "The same cafe interior from the first asset, following an uninterrupted walkway toward a quiet side corridor, wooden panelling and warm lighting. At the corridor end, exactly two similar closed doors side by side. No people, animals, characters, text, letters, numbers or logos."
+    },
+    {
+      "name": "cafe-two-doors",
+      "aspectRatio": "4:5",
+      "references": [
+        "cafe-side-corridor"
+      ],
+      "prompt": "Medium close view of the same two identical wooden corridor doors, left and right, with a neutral empty wall between them; no direction signs, no text or lettering. Maintain identical door appearance and stable geography. No people, animals or characters."
+    },
+    {
+      "name": "cafe-left-door-open",
+      "aspectRatio": "4:5",
+      "references": [
+        "cafe-two-doors"
+      ],
+      "prompt": "Precisely the same cafe corridor camera angle and doors as reference; the LEFT door is slightly open with warm light inside, the right door remains closed, left and right unchanged. No signage or text, no people, animals, characters, logos or watermark."
+    }
+  ],
+  "variety": {
+    "date": "2026-11-21",
+    "setting": "cafe",
+    "coach": "panda",
+    "supportingCharacter": "monkey",
+    "pattern": "dialogue",
+    "experiment": null,
+    "source": "Source-author visual plan for the paired cafe dialogue; paused visual-setting experiment preserved, not assigned."
+  }
+}
