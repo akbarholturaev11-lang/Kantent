@@ -79,6 +79,10 @@ const obs = (n, { comments, views = 1000, ageHours = 180, window = "lifetime", p
   platform, zernioPostId: `z${platform}${n}`, platformPostId: `n${n}`, accountUsername: "hskai.app", window,
   publishedAt: "2026-11-01T00:00:00.000Z", observedAt: new Date(Date.parse("2026-11-01T00:00:00Z") + ageHours * 3600000).toISOString(),
   content: { id: `l${n}`, type: "lesson", language: "ru" },
+  source: window === "7d" ? { provider: "Zernio", endpoint: "provider_exact_post_age_insights",
+    windowEvidence: { kind: "provider-exact-post-age", window: "7d",
+      startAt: "2026-11-01T00:00:00.000Z", endAt: "2026-11-08T00:00:00.000Z", providerRecordId: "verified-test-fixture" } }
+    : { provider: "Zernio", endpoint: "analytics_get_analytics" },
   metrics: { views, comments, saves: 10, shares: 2, avgWatchMs: 15000, durationSeconds: 30, reach: 800 } });
 const results = (publications, observations) => experimentResults(registry, exp, { publications, observations, goals, thresholds, asOf: "2026-11-20T00:00:00Z" });
 
@@ -93,19 +97,29 @@ test("missing or early data keeps the test running and is never filled in", () =
   const few = results([pub(1, "A"), pub(2, "B")], [obs(1, { comments: 2 }), obs(2, { comments: 9 })]);
   assert.equal(few.cohorts[0].verdict, "insufficient-evidence");
   assert.equal(few.recommendation, "keep-testing", "one post per arm never declares a weekly winner");
-  const small = results([pub(1, "A")], [obs(1, { comments: 2, views: 100 })]);
+  const small = results([pub(1, "A")], [obs(1, { comments: 2, views: 100, window: "7d" })]);
   assert.equal(small.posts[0].status, "below-minimum-views");
+  const near = results([pub(1, "A")], [obs(1, { comments: 3, ageHours: 180 })]);
+  assert.equal(near.posts[0].status, "directional-only");
+  assert.equal(near.posts[0].evidenceQuality, "directional-not-7d");
+  const after8d = results([pub(1, "A")], [obs(1, { comments: 3, ageHours: 193 })]);
+  assert.equal(after8d.posts[0].status, "no-first-week-snapshot", "day-8+ lifetime is too old for even directional first-week data");
+  const scheduled = results([{...pub(1, "A"), status: "scheduled", scheduledFor: "2026-11-18T00:00:00Z"}], []);
+  assert.equal(scheduled.posts[0].publishedAt, null, "scheduling must not start the seven-day clock");
 });
 
 test("a clear, guarded lift proposes promotion to the owner; never promotes by itself", () => {
   const publications = [1, 2, 3].map((n) => pub(n, "A")).concat([4, 5, 6].map((n) => pub(n, "B")));
-  const better = results(publications, [1, 2, 3].map((n) => obs(n, { comments: 2 })).concat([4, 5, 6].map((n) => obs(n, { comments: 4 }))));
+  const approximate = results(publications, [1, 2, 3].map((n) => obs(n, { comments: 2 })).concat([4, 5, 6].map((n) => obs(n, { comments: 4 }))));
+  assert.equal(approximate.recommendation, "keep-testing", "six near-week lifetime posts cannot promote a style");
+  assert.ok(approximate.posts.every((p) => p.status === "directional-only"));
+  const better = results(publications, [1, 2, 3].map((n) => obs(n, { comments: 2, window: "7d" })).concat([4, 5, 6].map((n) => obs(n, { comments: 4, window: "7d" }))));
   assert.equal(better.cohorts[0].verdict, "candidate-better");
   assert.equal(better.recommendation, "propose-promotion");
   assert.equal(registry.experiments[0].status, "active", "results never change the registry");
-  const worse = results(publications, [1, 2, 3].map((n) => obs(n, { comments: 4 })).concat([4, 5, 6].map((n) => obs(n, { comments: 2 }))));
+  const worse = results(publications, [1, 2, 3].map((n) => obs(n, { comments: 4, window: "7d" })).concat([4, 5, 6].map((n) => obs(n, { comments: 2, window: "7d" }))));
   assert.equal(worse.recommendation, "propose-keep-current");
-  const same = results(publications, [1, 2, 3, 4, 5, 6].map((n) => obs(n, { comments: 3 })));
+  const same = results(publications, [1, 2, 3, 4, 5, 6].map((n) => obs(n, { comments: 3, window: "7d" })));
   assert.equal(same.recommendation, "keep-testing");
   const exact = results([pub(1, "A")], [obs(1, { comments: 3, window: "7d", ageHours: 200 })]);
   assert.match(exact.posts[0].evidence, /provider-exact/u);

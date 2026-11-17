@@ -119,11 +119,78 @@ export function mergeLedger(registry, mappings) {
     if (!existing) { records.push(mapping); added.push(mapping.zernioPostId); continue; }
     if (JSON.stringify(existing.content) !== JSON.stringify(mapping.content) || existing.videoSha256 !== mapping.videoSha256)
       throw Error(`Zernio post ${mapping.zernioPostId} is recorded for different content or media; reconcile by hand.`);
-    const next = { ...existing, status: mapping.status, platformPostId: existing.platformPostId ?? mapping.platformPostId,
-      publishedAt: existing.publishedAt ?? mapping.publishedAt, verifiedAt: mapping.verifiedAt };
+    // Local receipts are an earlier snapshot. Replaying a scheduled receipt must
+    // never downgrade a live published post or erase a provider-resolved native ID.
+    if (existing.platformPostId && mapping.platformPostId && existing.platformPostId !== mapping.platformPostId)
+      throw Error(`Conflicting platform post ID for ${mapping.zernioPostId}`);
+    if (existing.publishedAt && mapping.publishedAt && existing.publishedAt !== mapping.publishedAt)
+      throw Error(`Conflicting publication timestamp for ${mapping.zernioPostId}`);
+    const next = {
+      ...existing,
+      status: existing.status === "published" ? "published" : mapping.status,
+      platformPostId: existing.platformPostId ?? mapping.platformPostId,
+      publishedAt: existing.publishedAt ?? mapping.publishedAt,
+      verifiedAt: existing.verifiedAt > mapping.verifiedAt ? existing.verifiedAt : mapping.verifiedAt,
+    };
     if (JSON.stringify(next) !== JSON.stringify(existing)) { Object.assign(existing, next); updated.push(mapping.zernioPostId); }
   }
   return { registry: { schemaVersion: 1, records }, added, updated };
+}
+
+/**
+ * Apply provider-verified follow-up readbacks to existing approved publications.
+ * The connected Feedback agent supplies these readbacks after a Zernio GET.
+ * No ID is derived from captions, dates or URLs. Missing native ID stays null.
+ * Replaying the same readback is a no-op; publication is irreversible.
+ */
+export function reconcileProviderReadbacks(registry, readbacks) {
+  if (!Array.isArray(readbacks)) throw Error("Provider readbacks must be an array.");
+  const records = (registry?.records ?? []).map((record) => ({ ...record }));
+  const updated = [], unchanged = [], seen = new Set();
+  for (const r of readbacks) {
+    const id = r?.zernioPostId;
+    if (typeof id !== "string" || seen.has(id)) throw Error("Missing or duplicate readback Zernio ID.");
+    seen.add(id);
+    const record = records.find((p) => p.zernioPostId === id);
+    if (!record) throw Error(`Unknown Zernio post ${id}: cannot create publication without an approved receipt.`);
+    if (record.accountId !== r.accountId || record.platform !== r.platform)
+      throw Error(`Provider account/platform mismatch for ${id}.`);
+    if (!["scheduled", "processing", "published"].includes(r.status))
+      throw Error(`Invalid provider status for ${id}.`);
+    if (r.status !== "published") { unchanged.push(id); continue; }
+    if (!Number.isFinite(Date.parse(r.publishedAt)) || !Number.isFinite(Date.parse(r.checkedAt)))
+      throw Error(`Verified publishedAt and checkedAt are required for ${id}.`);
+    if (Date.parse(r.checkedAt) < Date.parse(r.publishedAt))
+      throw Error(`Readback for ${id} predates publication.`);
+    if (typeof r.platformPostUrl !== "string" || !/^https:\/\/(www\.)?(instagram\.com|youtube\.com|tiktok\.com|facebook\.com)\//.test(r.platformPostUrl))
+      throw Error(`Verified native platform URL required for ${id}.`);
+    if (typeof r.providerEndpoint !== "string" || !r.providerEndpoint.trim())
+      throw Error(`Provider endpoint required for ${id}.`);
+    if (r.platformPostId != null && !/^[A-Za-z0-9_-]{6,100}$/.test(r.platformPostId))
+      throw Error(`Invalid provider native ID for ${id}.`);
+    if (record.platformPostId && r.platformPostId && record.platformPostId !== r.platformPostId)
+      throw Error(`Native post ID conflict for ${id}.`);
+    if (record.publishedAt && record.publishedAt !== r.publishedAt)
+      throw Error(`PublishedAt conflict for ${id}.`);
+    if (record.platformPostUrl && record.platformPostUrl !== r.platformPostUrl)
+      throw Error(`Native post URL conflict for ${id}.`);
+    const native = record.platformPostId ?? r.platformPostId ?? null;
+    const changed = record.status !== "published" || record.publishedAt == null ||
+      record.platformPostUrl == null || native !== record.platformPostId;
+    if (!changed) { unchanged.push(id); continue; }
+    Object.assign(record, {
+      status: "published", publishedAt: r.publishedAt, platformPostId: native,
+      platformPostUrl: r.platformPostUrl,
+      source: { ...record.source, lastReadback: {
+        provider: "Zernio", endpoint: r.providerEndpoint, verifiedAt: r.checkedAt,
+        accountId: r.accountId, zernioPostId: id,
+      } },
+    });
+    const errors = validatePublicationMapping(record);
+    if (errors.length) throw Error(`Invalid reconciled publication ${id}: ${errors.join("; ")}`);
+    updated.push(id);
+  }
+  return { registry: { schemaVersion: 1, records }, updated, unchanged };
 }
 
 export function readExperimentsFile(root = ROOT) {

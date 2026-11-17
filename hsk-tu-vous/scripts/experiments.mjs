@@ -166,15 +166,25 @@ export function draftExperimentErrors(registry, item, source) {
 }
 
 function eligibleObservation(observations, policy) {
-  const exact = observations.find((o) => o.window === "7d");
-  if (exact) return { observation: exact, kind: "provider-exact", ageHours: 168 };
-  const rule = policy.resultWindow.accepted.find((entry) => entry.kind === "cumulative-at-age");
-  const aged = observations
-    .filter((o) => o.window === "lifetime")
-    .map((o) => ({ observation: o, kind: "cumulative-at-age", ageHours: (Date.parse(o.observedAt) - Date.parse(o.publishedAt)) / HOUR }))
+  // A provider-fixed post-age 7d interval is the ONLY evidence eligible for
+  // an A/B promotion recommendation. A cumulative reading at 7d+ is directional.
+  const exact = observations.find((o) => {
+    const e = o.source?.windowEvidence;
+    const start = Date.parse(e?.startAt), end = Date.parse(e?.endAt);
+    return o.window === "7d" && e?.kind === "provider-exact-post-age" &&
+      e?.window === "7d" && typeof e.providerRecordId === "string" && e.providerRecordId.trim() &&
+      Number.isFinite(start) && Number.isFinite(end) &&
+      start === Date.parse(o.publishedAt) && end - start === 168 * HOUR &&
+      end <= Date.parse(o.observedAt);
+  });
+  if (exact) return { observation: exact, kind: "provider-exact", ageHours: 168, decisionEligible: true };
+  const rule = policy.resultWindow.directional;
+  const near = observations
+    .filter((o) => o.window === "lifetime" && Number.isFinite(Date.parse(o.publishedAt)))
+    .map((o) => ({ observation: o, kind: "near-week-cumulative", ageHours: (Date.parse(o.observedAt) - Date.parse(o.publishedAt)) / HOUR, decisionEligible: false }))
     .filter((entry) => rule && entry.ageHours >= rule.minAgeHours && entry.ageHours < rule.maxAgeHours)
     .sort((a, b) => a.ageHours - b.ageHours);
-  return aged[0] ?? null;
+  return near[0] ?? null;
 }
 
 const median = (values) => {
@@ -200,15 +210,18 @@ export function experimentResults(registry, exp, { publications = [], observatio
       (p.platformPostId && o.platformPostId === p.platformPostId && o.platform === p.platform));
     const pick = eligibleObservation(own, policy);
     const derived = pick ? deriveMetrics(pick.observation) : null;
-    const published = own[0]?.publishedAt ?? p.publishedAt ?? p.scheduledFor ?? null;
+    // Scheduled time is NOT publication time, and a scheduled receipt cannot start the 7-day clock.
+    const published = own[0]?.publishedAt ?? (p.status === "published" ? p.publishedAt : null);
     const ageDays = published ? (Date.parse(asOf) - Date.parse(published)) / (24 * HOUR) : null;
     return {
       contentId: p.content.id, language: p.content.language, platform: p.platform, arm: p.creative.arm, zernioPostId: p.zernioPostId,
-      publishedAt: published, evidence: pick ? `${pick.kind} at ${pick.ageHours.toFixed(0)}h` : null,
+      publishedAt: published, evidence: pick ? `${pick.kind} at ${pick.ageHours.toFixed(1)}h` : null,
+      evidenceQuality: pick ? (pick.decisionEligible ? "provider-exact-7d" : "directional-not-7d") : null,
       views: derived?.views ?? null, value: derived?.[metric] ?? null,
       guards: Object.fromEntries(guards.map((name) => [name, derived?.[name] ?? null])),
       status: !pick ? (ageDays != null && ageDays < 7 ? "waiting-for-day-7" : "no-first-week-snapshot")
-        : (derived.views ?? 0) < minViews ? "below-minimum-views" : derived[metric] == null ? "metric-not-reported" : "eligible",
+        : !pick.decisionEligible ? "directional-only"
+          : (derived.views ?? 0) < minViews ? "below-minimum-views" : derived[metric] == null ? "metric-not-reported" : "eligible",
     };
   });
   const cohorts = [];
@@ -241,7 +254,7 @@ export function experimentResults(registry, exp, { publications = [], observatio
     recommendation = "keep-testing";
     const need = cohorts.map((c) => `${c.platform}/${c.language}: A ${c.arms.A.eligible}/${minPosts}, B ${c.arms.B.eligible}/${minPosts}`).join("; ");
     reason = posts.length
-      ? `Not enough first-week evidence yet (eligible posts per arm — ${need}). The test continues; no weekly winner is forced.`
+      ? `Not enough provider-exact 7d evidence yet (eligible posts per arm — ${need}). Near-week cumulative snapshots are directional only; no weekly winner is forced.`
       : "No published video of this test yet. The test continues.";
   } else if (verdicts.includes("candidate-better") && !verdicts.includes("control-better")) {
     recommendation = "propose-promotion";

@@ -143,7 +143,7 @@ test("scheduled agents and publishing preview retain project-local Instagram ski
   assert.match(workflow, /ig-caption-quality/);
   assert.match(feedback, /ig-caption-quality/);
   assert.match(feedback, /ig-competitor-research/);
-  assert.match(feedback, /Monday \/ Wednesday \/ Friday/);
+  assert.match(feedback, /daily 08:00, Asia\/Shanghai; experiment review Monday/);
   assert.match(workflow, /direct `main` delivery/);
   assert.match(feedback, /ig-competitor-research.*independently sourced competitor observations/);
   assert.match(feedback, /no autonomous publishing/i);

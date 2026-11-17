@@ -37,11 +37,11 @@ Har test uchun quyidagilar ko'rinadi:
    Ko'rishlar soni yolg'iz o'zi hech qachon mezon emas.
 2. **Bir vaqtda bitta test, bitta o'zgaruvchi.** Haftasiga bitta yangi ssenariy yoki taqdimot uslubi hozirgi uslubga qarshi sinaladi. Mavzu, CTA, ovoz, dizayn, davomiylik va nashr vaqti o'zgarmaydi. `visual-variety.json` dagi fon-guruhi testi shu qoida sabab **pauza**da.
 3. **Arm qo'lda tanlanmaydi.** Muvozanatli almashinuv ishlatiladi: kam taqsimlangan arm navbatda turadi; teng bo'lsa, oxirgisining teskarisi olinadi. Taqsimot `experiments.json` da saqlanadi va o'zgarmaydi. Serialda ikkala qism bitta armda bo'ladi: bitta hikoyaning 1- va 2-qismi hech qachon A va B qilib solishtirilmaydi.
-4. **Natija oynasi — nashrdan keyingi birinchi 7 kun.** Ikki xil natija qabul qilinadi:
-   - provayderning aniq `7d` oynasi;
-   - post yoshi 7–10 kun bo'lganda olingan `lifetime` snapshot. Uning aniq yoshi yoziladi va u hech qachon "7d" deb qayta nomlanmaydi; 10 kunlik chegara Dushanba/Chorshanba/Juma Feedback ritmini qamraydi.
+4. **Natija oynasi — nashrdan keyingi aniq 7 kun.**
+   - **Qaror uchun:** faqat provayder aniq 168 soatlik post-yoshi oralig'ini tasdiqlagan `7d` dalili (`windowEvidence`) ishlatiladi.
+   - **Yo'nalish uchun:** kundalik Feedback post nashridan 168–192 soat o'tganda olingan birinchi `lifetime` snapshot'ni ham alohida ko'rsatadi; bu **7 kunlik aniq natija emas**, A/B g'olibini e'lon qilish yoki doimiy siyosatni almashtirishga asos bo'lmaydi.
+   - Zernio'ning kalendar-kunlik timeline yoki yig'ma lifetime ma'lumoti o'z-o'zidan aniq 168 soatlik 7d natijasi bo'lmaydi. Agar aniq manba mavjud bo'lmasa, holat `directional-only` yoki `insufficient-evidence`; test davom etadi.
 
-   Ma'lumot bo'lmasa, uydirilmaydi: holat `waiting-for-day-7`, `no-first-week-snapshot` yoki `insufficient-evidence` bo'lib qoladi.
 5. **Majburiy haftalik g'olib yo'q.** Har platforma/til guruhida har armda kamida `minimumPostsPerFormat` ta (hozir 3) mos post bo'lishi kerak, har biri kamida `minimumViewsPerPost` (500) ko'rish bilan. B asosiy metrikada kamida `minimumRelativeLiftPercent` (10%) yaxshi bo'lishi va yon metrikalar 10% dan ortiq yomonlashmasligi kerak. Shunda dvigatel **egasiga taklif qiladi**. Aks holda test davom etadi va hozirgi uslub saqlanadi.
 6. **Doimiy qoida faqat egasi tasdiqlaganda o'zgaradi.** Qaror egasining o'z so'zlari bilan yoziladi:
 
@@ -74,7 +74,7 @@ Ma'lum chalkashtiruvchi omillar `experiments.json#knownConfounders` da yozilgan.
   - MCP `get_content_experiments {date}`.
 
   Arm hali saqlanmagan bo'lsa, uni `experiments.json#…assignments` ga qo'shadi (`--assign <id> --write` yoki o'sha balans qoidasi bilan ulagich orqali). Keyin har tildagi manbaga `"experiment": {"id","arm","structure"}` blokini yozadi; `structure` arm qadamlarini sahna ID'lariga tartib bilan bog'laydi. `content:buffer` va `content:experiments -- --check` bu blokisiz qoralamani tayyor deb hisoblamaydi.
-- **Analitika (Feedback, Dushanba/Chorshanba/Juma).** Faol test postlari uchun 7–10 kunlik oynaga tushgan har kuzatuvni o'z yozuvi bilan saqlaydi. Har Dushanba quyidagi buyruqni ishga tushiradi va hisobotni `content/feedback/reports/` ga yozadi (faqat qo'shiladi, ustidan yozilmaydi):
+- **Analitika (Feedback, har kuni).** Har bir avval tasdiqlangan Zernio postini haqiqiy ID bo'yicha qayta tekshiradi; post `published` bo'lsa status, haqiqiy vaqt, platforma havolasi va faqat provayder tasdiqlagan native ID ni reyestrga yangilaydi. 168–192 soatlik dastlabki yaqin-haftalik kuzatuvni aniqligi bilan alohida saqlaydi. Faqat Dushanba quyidagi buyruqni ishga tushiradi va hisobotni `content/feedback/reports/` ga yozadi (faqat qo'shiladi, ustidan yozilmaydi):
 
   ```bash
   npm run content:experiments -- --review --write
@@ -88,3 +88,5 @@ Ma'lum chalkashtiruvchi omillar `experiments.json#knownConfounders` da yozilgan.
   ```
 
   Tasdiq qayd etilmagan eski kvitansiyalar o'tkazib yuboriladi va hech narsa taxmin qilinmaydi. Kuzatuvlar Zernio post ID orqali bog'lanadi, sana yoki sarlavha orqali emas.
+
+**Kundalik readback chegarasi:** kontentning avval tasdiqlangan video hash, ssenariy, source identity, CTA va ruxsat kvitansiyasi o'zgarmaydi. Faqat Zernio'dagi aynan shu ID/account/platform bo'yicha dalil bilan tasdiqlangan status, publish vaqti, URL, native post ID maydonlari yangilanadi; `scheduled` orqaga `published` ni qaytarmaydi. Bu readback yangi post yaratmaydi va video qayta yuklamaydi. Tizimdagi qayta ishlash funksiyasi: `scripts/publication-ledger.mjs#reconcileProviderReadbacks`. Feedback reyestrga faqat shu cheklangan o'zgartirishlarni yozishga vakolatli; qolgan fayl/qoida cheklovlari saqlanadi. Yetarli dalil bo'lmasa, yozmaydi.
