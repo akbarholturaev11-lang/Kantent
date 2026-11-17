@@ -13,12 +13,25 @@
     "resultWindow": {
       "days": 7,
       "accepted": [
-        { "kind": "provider-exact", "window": "7d" },
-        { "kind": "cumulative-at-age", "window": "lifetime", "minAgeHours": 168, "maxAgeHours": 240,
-          "note": "A provider lifetime snapshot taken 7 to 10 days after publication counts as the first-week result of that post and is reported with its exact age. It is never relabelled 7d (Hook Lab keeps its stricter rule). 10 days covers the Monday/Wednesday/Friday Feedback cadence." }
-      ]
+        {
+          "kind": "provider-exact",
+          "window": "7d",
+          "note": "Only provider-certified exact post-age 168h observations qualify for a promotion recommendation."
+        }
+      ],
+      "directional": {
+        "kind": "cumulative-at-age",
+        "window": "lifetime",
+        "minAgeHours": 168,
+        "maxAgeHours": 192,
+        "note": "Daily Feedback captures the earliest lifetime snapshot from 7d to under 8d post age, with exact age reported. This is NOT a 7d period and is NEVER counted as decision-eligible."
+      },
+      "note": "A lifetime snapshot after 7 days is not an exact 7d result. No automatic or unverified winner."
     },
-    "cohort": ["platform", "language"],
+    "cohort": [
+      "platform",
+      "language"
+    ],
     "missingData": "insufficient-evidence",
     "noForcedWeeklyWinner": true,
     "promotionRequiresOwnerApproval": true,
@@ -46,27 +59,55 @@
           "id": "A",
           "role": "control",
           "name": "Challenge → Answer → Practice",
-          "steps": ["challenge", "answer", "practice"],
+          "steps": [
+            "challenge",
+            "answer",
+            "practice"
+          ],
           "scriptBrief": "Arm A (current style). Open in the first 1-2 seconds with a quick challenge the viewer can try: one concrete beginner question about the lesson's Chinese point (choose, guess or complete). Give the truthful answer early (within the first 30%), then teach the point completely with the lesson's examples, and end the teaching body with a short practice the viewer can do aloud (recall or say the example). Do not open with a wrong form. Keep the topic, examples, CTA, voice, visual system and duration band as the lesson already requires."
         },
         {
           "id": "B",
           "role": "candidate",
           "name": "Mistake → Correction → Practice",
-          "steps": ["mistake", "correction", "practice"],
+          "steps": [
+            "mistake",
+            "correction",
+            "practice"
+          ],
           "scriptBrief": "Arm B (candidate). Open in the first 1-2 seconds with one real, common beginner mistake about the lesson's Chinese point, clearly marked as wrong (never present a wrong form as correct). Correct it right away with the right form and the reason (within the first 30%), then teach the point completely with the lesson's examples, and end the teaching body with a short practice the viewer can do aloud (recall or say the example). Do not open with a quiz question. Keep the topic, examples, CTA, voice, visual system and duration band as the lesson already requires."
         }
       ],
-      "constants": ["topic and examples from the calendar", "lesson CTA from cta-lab.json", "voice profile", "visual system and lesson-art rules", "duration band", "platform settings and publishing time"],
-      "assignment": { "method": "balanced-alternation", "note": "The arm with fewer assignments goes next; a tie takes the arm opposite the latest one. Assignments are stored here and never hand-picked by topic." },
+      "constants": [
+        "topic and examples from the calendar",
+        "lesson CTA from cta-lab.json",
+        "voice profile",
+        "visual system and lesson-art rules",
+        "duration band",
+        "platform settings and publishing time"
+      ],
+      "assignment": {
+        "method": "balanced-alternation",
+        "note": "The arm with fewer assignments goes next; a tie takes the arm opposite the latest one. Assignments are stored here and never hand-picked by topic."
+      },
       "knownConfounders": [
         "Lesson topic differs between videos.",
         "Weekday differs; alternation over three lessons a week rotates it.",
         "Setting: the two first videos were drawn before this test (office for A, metro for B). The visual setting-group test is paused, so later settings do not follow the arm."
       ],
       "assignments": [
-        { "contentId": "ji-vs-duoshao-books-price-20261118", "date": "2026-11-18", "arm": "A", "assignedAt": "2026-11-17" },
-        { "contentId": "ye-dou-placement-20261120", "date": "2026-11-20", "arm": "B", "assignedAt": "2026-11-17" }
+        {
+          "contentId": "ji-vs-duoshao-books-price-20261118",
+          "date": "2026-11-18",
+          "arm": "A",
+          "assignedAt": "2026-11-17"
+        },
+        {
+          "contentId": "ye-dou-placement-20261120",
+          "date": "2026-11-20",
+          "arm": "B",
+          "assignedAt": "2026-11-17"
+        }
       ],
       "decision": null
     },
@@ -83,19 +124,35 @@
           "id": "A",
           "role": "control",
           "name": "Current advertisement style",
-          "steps": ["situation", "benefit", "brand-ending"],
+          "steps": [
+            "situation",
+            "benefit",
+            "brand-ending"
+          ],
           "scriptBrief": "Arm A (current style). Follow content/PROMO_WORKFLOW.md as today: one recognisable life situation tied to one real product benefit, the brand cues early and again at the brand ending."
         },
         {
           "id": "B",
           "role": "candidate",
           "name": "Early brand + real product demo",
-          "steps": ["brand-open", "product-demo", "brand-ending"],
+          "steps": [
+            "brand-open",
+            "product-demo",
+            "brand-ending"
+          ],
           "scriptBrief": "Arm B (candidate). Say and show the HSK AI name and logo in the first two seconds, then show a real product demo from real product evidence (a real screen recording or capture of the HSK AI feature; never a fake or invented screenshot) solving the situation, then the unchanged brand ending."
         }
       ],
-      "constants": ["brand ending from cta-lab.json#contentTypeEndings", "voice profile", "visual system", "duration band", "publishing time"],
-      "assignment": { "method": "balanced-alternation" },
+      "constants": [
+        "brand ending from cta-lab.json#contentTypeEndings",
+        "voice profile",
+        "visual system",
+        "duration band",
+        "publishing time"
+      ],
+      "assignment": {
+        "method": "balanced-alternation"
+      },
       "assignments": [],
       "decision": null
     },
@@ -112,20 +169,33 @@
           "id": "A",
           "role": "control",
           "name": "Current two-part story",
-          "steps": ["part-1-teach-and-cue", "part-2-payoff-and-teach"],
+          "steps": [
+            "part-1-teach-and-cue",
+            "part-2-payoff-and-teach"
+          ],
           "scriptBrief": "Arm A (current style). Follow creative-formats.json#storytellingPolicy.seriesPartPolicy: one two-part story, resolved in part 2."
         },
         {
           "id": "B",
           "role": "candidate",
           "name": "Micro-Drama",
-          "steps": ["part-1-teach-and-cue", "part-2-payoff-and-teach"],
+          "steps": [
+            "part-1-teach-and-cue",
+            "part-2-payoff-and-teach"
+          ],
           "scriptBrief": "Arm B (candidate). One recurring HSK AI cast member is the hero of a continuing story across weekends; each part still teaches one complete Chinese point on its own and never withholds its answer; the honest teaser rules of seriesPartPolicy apply."
         }
       ],
       "rule": "Both parts of one story are always in the same arm; part 1 and part 2 of one story are never compared as A and B.",
-      "constants": ["series CTAs from cta-lab.json#contentTypeEndings", "voice profile", "visual system", "weekend calendar slots"],
-      "assignment": { "method": "balanced-alternation" },
+      "constants": [
+        "series CTAs from cta-lab.json#contentTypeEndings",
+        "voice profile",
+        "visual system",
+        "weekend calendar slots"
+      ],
+      "assignment": {
+        "method": "balanced-alternation"
+      },
       "assignments": [],
       "decision": null
     }
