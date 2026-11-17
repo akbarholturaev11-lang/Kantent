@@ -39,11 +39,27 @@ function parseFlags(args) {
   return result;
 }
 
+// Read-only GitHub calls are retried on transient network errors (owner VPN:
+// "TLS handshake timeout" on 2026-11-17 dropped a verified readback after the
+// post was already created). Dispatches and secret writes are never retried.
+const READ_ONLY_GH = (args) => (args[0] === "api" && !args.includes("--method")) ||
+  (args[0] === "run" && ["view", "list", "download"].includes(args[1]));
+const TRANSIENT_GH = /TLS handshake timeout|i\/o timeout|connection reset|EOF|timed out|ETIMEDOUT|ECONNRESET|HTTP 50[234]/i;
+
 function gh(args, options = {}) {
-  return execFileSync("gh", args, {
-    cwd: PROJECT_ROOT, encoding: "utf8", timeout: options.timeout ?? 30_000,
-    input: options.input, stdio: ["pipe", "pipe", "pipe"], maxBuffer: 3 * 1024 * 1024,
-  }).trim();
+  const attempts = READ_ONLY_GH(args) ? 4 : 1;
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return execFileSync("gh", args, {
+        cwd: PROJECT_ROOT, encoding: "utf8", timeout: options.timeout ?? 30_000,
+        input: options.input, stdio: ["pipe", "pipe", "pipe"], maxBuffer: 3 * 1024 * 1024,
+      }).trim();
+    } catch (error) {
+      const text = String(error?.stderr ?? "") + String(error?.message ?? "");
+      if (attempt >= attempts || !TRANSIENT_GH.test(text)) throw error;
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 3_000 * attempt);
+    }
+  }
 }
 
 function dispatchFields(values) {
@@ -107,7 +123,7 @@ async function assertNoDuplicatePublication(reviewDir, status, episodeId, platfo
   }
 }
 
-async function verifyLocalPackage(opts) {
+async function verifyLocalPackage(opts, { reconcileRequestId = null } = {}) {
   const language = opts.language;
   const platform = opts.platform;
   if (!["ru", "tg"].includes(language) || !PLATFORMS.has(platform))
@@ -152,7 +168,8 @@ async function verifyLocalPackage(opts) {
     throw Error("Local MP4 is missing, altered or outside the 8 KB–350 MB transfer limit.");
 
   const account = zernioTargetAccount(language, platform);
-  await assertNoDuplicatePublication(reviewDir, status, episode.id, platform, account.accountId, platformStatus.videoSha256);
+  if (!reconcileRequestId)
+    await assertNoDuplicatePublication(reviewDir, status, episode.id, platform, account.accountId, platformStatus.videoSha256);
   const postSha256 = sha256(postBytes);
   const postPreviewBase64 = postBytes.toString("base64");
   if (postPreviewBase64.length > 48_000)
@@ -367,6 +384,70 @@ async function savePublicationRecord(data, receipt) {
   return { status: nextStatus, publications };
 }
 
+/** Download the publish run's Zernio receipt and save the verified record (normal flow and --reconcile). */
+async function finishFromPublishRun({ data, state, localStatePath, requestId, tempRoot }) {
+  const publishRun = await waitForRun(requestId, "publish");
+  const receiptDir = path.join(tempRoot, "receipt");
+  await waitAndDownloadArtifact(publishRun.runId,
+    "codex-local-receipt-" + publishRun.runId, receiptDir);
+  const receipt = JSON.parse(await fs.readFile(path.join(receiptDir, "receipt.json"), "utf8"));
+  if (receipt.sourceType !== "codex-local" || receipt.localRequestId !== requestId ||
+      receipt.videoSha256 !== data.videoSha256 || receipt.postPreviewSha256 !== data.postSha256 ||
+      receipt.accountId !== data.accountId || receipt.language !== data.language ||
+      receipt.platform !== data.platform || !receipt.postId)
+    throw Error("Zernio audit receipt does not match this local video request.");
+  const saved = await savePublicationRecord(data, {
+    ...receipt,
+    publishRunId: publishRun.runId,
+    approvalRecordedAt: state.approvalRecordedAt,
+  });
+  Object.assign(state, {
+    status: receipt.state,
+    publishRunId: publishRun.runId,
+    postId: receipt.postId,
+    zernioPostId: receipt.zernioPostId ?? receipt.postId,
+    platformPostId: receipt.platformPostId ?? null,
+    platformPostUrl: receipt.platformPostUrl ?? null,
+    publishedAt: receipt.publishedAt ?? null,
+    resultVerifiedBy: receipt.resultVerifiedBy ?? "Zernio GET /v1/posts/{id}",
+    verifiedAt: receipt.updatedAt ?? new Date().toISOString(),
+    approvedCaptionSha256: receipt.approvedCaptionSha256 ?? data.approvedCaptionSha256,
+    approvedPlatformSettings: receipt.approvedPlatformSettings ?? data.approvedPlatformSettings,
+    finishedAt: new Date().toISOString(),
+  });
+  await writeLocalState(localStatePath, state);
+  console.log("Codex-local Zernio readback verified: " + data.language + "/" + data.platform +
+    " status=" + receipt.state + " postId=" + receipt.postId);
+  if (receipt.platformPostUrl) console.log(receipt.platformPostUrl);
+  console.log("Local publication status saved: " + saved.status.stage);
+  return receipt;
+}
+
+/**
+ * --reconcile <requestId>: a publish run was dispatched but the local readback
+ * failed (network). Never uploads or dispatches again: it only reads the
+ * existing run's audited receipt and records it.
+ */
+async function reconcileLocalPublication(opts) {
+  const requestId = safeRequestId(opts.reconcile);
+  const data = await verifyLocalPackage(opts, { reconcileRequestId: requestId });
+  const localStatePath = path.join(data.reviewDir, "codex-local-publication-" + requestId + ".json");
+  const state = JSON.parse(await fs.readFile(localStatePath, "utf8"));
+  if (state.status !== "post-dispatched-needs-reconciliation" || state.requestId !== requestId ||
+      state.platform !== data.platform || state.language !== data.language || state.accountId !== data.accountId ||
+      state.videoSha256 !== data.videoSha256 || state.postSha256 !== data.postSha256)
+    throw Error("Only a matching post-dispatched-needs-reconciliation state can be reconciled.");
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "hsk-codex-zernio-"));
+  try {
+    const receipt = await finishFromPublishRun({ data, state, localStatePath, requestId, tempRoot });
+    try { gh(["secret", "delete", localMediaSecretName(requestId), "--repo", REPOSITORY], { timeout: 30_000 }); }
+    catch { /* already removed */ }
+    return receipt;
+  } finally {
+    await fs.rm(tempRoot, { recursive: true, force: true });
+  }
+}
+
 async function runLocalPublication(opts) {
   await assertCurrentMainCode();
   const data = await verifyLocalPackage(opts);
@@ -468,41 +549,7 @@ async function runLocalPublication(opts) {
     state.publishDispatchedAt = new Date().toISOString();
     await writeLocalState(localStatePath, state);
 
-    const publishRun = await waitForRun(requestId, "publish");
-    const receiptDir = path.join(tempRoot, "receipt");
-    await waitAndDownloadArtifact(publishRun.runId,
-      "codex-local-receipt-" + publishRun.runId, receiptDir);
-    const receipt = JSON.parse(await fs.readFile(path.join(receiptDir, "receipt.json"), "utf8"));
-    if (receipt.sourceType !== "codex-local" || receipt.localRequestId !== requestId ||
-        receipt.videoSha256 !== data.videoSha256 || receipt.postPreviewSha256 !== data.postSha256 ||
-        receipt.accountId !== data.accountId || receipt.language !== data.language ||
-        receipt.platform !== data.platform || !receipt.postId)
-      throw Error("Zernio audit receipt does not match this local video request.");
-    const saved = await savePublicationRecord(data, {
-      ...receipt,
-      publishRunId: publishRun.runId,
-      approvalRecordedAt: state.approvalRecordedAt,
-    });
-    Object.assign(state, {
-      status: receipt.state,
-      publishRunId: publishRun.runId,
-      postId: receipt.postId,
-      zernioPostId: receipt.zernioPostId ?? receipt.postId,
-      platformPostId: receipt.platformPostId ?? null,
-      platformPostUrl: receipt.platformPostUrl ?? null,
-      publishedAt: receipt.publishedAt ?? null,
-      resultVerifiedBy: receipt.resultVerifiedBy ?? "Zernio GET /v1/posts/{id}",
-      verifiedAt: receipt.updatedAt ?? new Date().toISOString(),
-      approvedCaptionSha256: receipt.approvedCaptionSha256 ?? data.approvedCaptionSha256,
-      approvedPlatformSettings: receipt.approvedPlatformSettings ?? data.approvedPlatformSettings,
-      finishedAt: new Date().toISOString(),
-    });
-    await writeLocalState(localStatePath, state);
-    console.log("Codex-local Zernio readback verified: " + data.language + "/" + data.platform +
-      " status=" + receipt.state + " postId=" + receipt.postId);
-    if (receipt.platformPostUrl) console.log(receipt.platformPostUrl);
-    console.log("Local publication status saved: " + saved.status.stage);
-    return receipt;
+    return await finishFromPublishRun({ data, state, localStatePath, requestId, tempRoot });
   } catch (error) {
     state.status = postDispatched ? "post-dispatched-needs-reconciliation"
       : mediaUploaded ? "media-uploaded-post-not-yet-created" : "pre-transfer-failed-no-post";
@@ -523,7 +570,8 @@ async function main() {
   const opts = parseFlags(process.argv.slice(2));
   for (const required of ["review-dir", "language", "platform", "approved-post-json", "mode", "confirmation"])
     if (!opts[required]) throw Error("Missing required option --" + required + ".");
-  await runLocalPublication(opts);
+  if (opts.reconcile) await reconcileLocalPublication(opts);
+  else await runLocalPublication(opts);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

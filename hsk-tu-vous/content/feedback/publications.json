@@ -837,6 +837,45 @@
         }
       },
       "platformPostUrl": "https://www.youtube.com/watch?v=FQYfMw-A1z4"
+    },
+    {
+      "content": {
+        "id": "ji-vs-duoshao-books-price-20261118",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "b1cc4b464d9ef510fbba93a7b851dc96b74f9cc2b55678e840f20b26c86a1a8c"
+      },
+      "platform": "instagram",
+      "accountId": "6a411e989d9472faae10a430",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6afc246cd73ed4914daf08f2",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "d11da71914d608efd4e68a28381058eee955362bd5ac767d5eed1722b16a0750",
+      "approvedVideoSha256": "d11da71914d608efd4e68a28381058eee955362bd5ac767d5eed1722b16a0750",
+      "approvedAt": "2026-11-17T09:53:13.633Z",
+      "verifiedAt": "2026-11-17T09:54:54.300Z",
+      "scheduledFor": "2026-11-18T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "ji-vs-duoshao-books-price-20261118-ru-cta-v3",
+      "postPreviewSha256": "639f26c244b77235fdde6a0f6b1843d4e037b76e5135e7c232cc939e1baffa31",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "A",
+        "promptSha256": "ccd3a1eb350ab63c7a754ce81672e8c663ede7e48a4a7ec1fb92901786d6da10",
+        "hookId": "ji-vs-duoshao-books-price-20261118-ru-hook-v2",
+        "hookFormat": "question",
+        "hookText": "Попробуйте ответить: как спросить «Сколько книг?» и «Сколько стоит?» — одно слово или два? По-китайски два: 几 и 多少.",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "6765e1b2d0bc8a10a7a2ff389bc118090224aab1cccc81c1dfdca3f1d7e2e054"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "38779a5f6f64c5d9f2ff0437",
+        "sourceCommit": "4b88c4c8def92293c60cbdeb74bd009e469de344"
+      }
     }
   ]
 }
