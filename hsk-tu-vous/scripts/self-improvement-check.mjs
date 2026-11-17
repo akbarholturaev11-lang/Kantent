@@ -6,7 +6,7 @@ import { validateLessonPresentation } from './lesson-presentation-policy.mjs';
 import { validateArtManifest } from './generate-lesson-art.mjs';
 import { activeExperiment, armFor } from './visual-variety-plan.mjs';
 import { validateSeriesCalendar } from './series-plan.mjs';
-import {contentTypeOf,weeklyCoverage} from './content-schedule.mjs';
+import {contentTypeOf,weeklyCoverage,nextFullCalendarWeek} from './content-schedule.mjs';
 import {reviewPromoVariants} from './promo-plan.mjs';
 import { readLanguages, assertLocalizedLessonSource } from './language-context.mjs';
 import { draftExperimentErrors, readExperimentsIfPresent } from './experiments.mjs';
@@ -34,13 +34,24 @@ export function auditPlanningBuffer(calendar, { today, episodeIsReady = () => tr
     throw new Error('Invalid calendar.planningBuffer (expected 1 <= minimum <= target)');
   }
   if(calendar.weeklySchedule) {
-    const slots=weeklyCoverage(calendar,{today,count:target,itemIsReady:episodeIsReady});
+    // Weekly reserve is a fixed, complete NEXT Monday–Sunday, not a rolling
+    // seven-day horizon that slides forward between production runs.
+    const weeklyMode = calendar.planningBuffer?.mode === 'next-full-calendar-week';
+    if(weeklyMode && (target !== 7 || min !== 7))
+      throw Error('next-full-calendar-week requires exactly 7 target/minimum slots');
+    if(!weeklyMode && calendar.planningBuffer?.mode != null)
+      throw Error('Unsupported planningBuffer.mode');
+    const week = weeklyMode ? nextFullCalendarWeek(today) : null;
+    const slots=weeklyCoverage(calendar,{today:week?.anchorDate??today,count:target,itemIsReady:episodeIsReady});
+    if(week && (slots.length!==7 || slots[0].date!==week.startDate || slots[6].date!==week.endDate))
+      throw Error('Expected exactly the next complete Monday–Sunday content week');
     const ready=slots.filter(slot=>slot.ready).map(slot=>({date:slot.date,id:slot.item.id,contentType:slot.contentType,
       file:slot.item.episodeFile??slot.item.promoFile}));
     const missing=slots.filter(slot=>!slot.ready).map(({item,...slot})=>({...slot,id:item?.id,
       existing:Boolean(item),status:item?.status}));
     return {date:today,timezone:calendar.timezone,minimumFutureEpisodes:min,targetFutureEpisodes:target,
       expectedFutureSlots:slots.length,readyFutureEpisodes:ready.length,weeklyCoverage:true,
+      ...(week?{targetWeekStart:week.startDate,targetWeekEnd:week.endDate,planningMode:'next-full-calendar-week'}:{}),
       status:ready.length<min?'below-minimum':missing.length?'replenish':'healthy',
       shortfallToTarget:missing.length,ready,missing,
       note:'Read-only source coverage of the next content slots, including complete serial sets; distant lessons cannot hide an unplanned ad/weekend. No media or social posts were created.'};

@@ -591,8 +591,9 @@
     }
   ],
   "planningBuffer": {
-    "minimumFutureEpisodes": 3,
-    "targetFutureEpisodes": 4
+    "mode": "next-full-calendar-week",
+    "minimumFutureEpisodes": 7,
+    "targetFutureEpisodes": 7
   },
   "planningWeekdays": [
     "MO",

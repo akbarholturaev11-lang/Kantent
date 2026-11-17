@@ -12,6 +12,15 @@ export function addCalendarDays(value,days) {
 }
 export function calendarWeekday(value) {return WEEKDAYS[(dateValue(value).getUTCDay()+6)%7];}
 export function contentTypeOf(item) {return item.contentType??(item.series?'series-part':'lesson');}
+export function nextFullCalendarWeek(today) {
+  // Always return the complete Monday–Sunday AFTER the current calendar day.
+  // On a Sunday this means tomorrow through next Sunday; on a Monday it means
+  // the following Monday, never the already-started current week.
+  const delta = 7 - WEEKDAYS.indexOf(calendarWeekday(today));
+  const startDate = addCalendarDays(today, delta);
+  return { startDate, endDate: addCalendarDays(startDate, 6), anchorDate: addCalendarDays(startDate, -1) };
+}
+
 
 export function validateWeeklySchedule(calendar) {
   const policy=calendar?.weeklySchedule;

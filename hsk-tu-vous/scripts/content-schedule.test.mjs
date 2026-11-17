@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {validateScheduledContent,futureContentSlots,weeklyCoverage} from './content-schedule.mjs';
+import {validateScheduledContent,futureContentSlots,weeklyCoverage,nextFullCalendarWeek} from './content-schedule.mjs';
 import {auditPlanningBuffer} from './self-improvement-check.mjs';
 import {proposeSeries} from './series-plan.mjs';
 const calendar=()=>({timezone:'Asia/Shanghai',cadencePerWeek:7,planningWeekdays:['MO','TU','WE','TH','FR','SA','SU'],
@@ -33,4 +33,35 @@ test('weekly series must start Saturday; Sunday is the immediately following par
 });
 test('Sunday cannot invent a missing past first part',()=>{
  const r=weeklyCoverage(calendar(),{today:'2026-10-31',count:1});assert.equal(r[0].blocked,true);assert.match(r[0].reason,/past part/);
+});
+
+test('weekly reserve covers exactly next Monday through Sunday on Sunday morning',()=>{
+  const c=calendar();
+  c.planningBuffer={mode:'next-full-calendar-week',minimumFutureEpisodes:7,targetFutureEpisodes:7};
+  assert.deepEqual(nextFullCalendarWeek('2026-11-22'), {
+    startDate:'2026-11-23',endDate:'2026-11-29',anchorDate:'2026-11-22',
+  });
+  const r=auditPlanningBuffer(c,{today:'2026-11-22'});
+  assert.equal(r.expectedFutureSlots,7);
+  assert.deepEqual([r.targetWeekStart,r.targetWeekEnd,r.readyFutureEpisodes],['2026-11-23','2026-11-29',0]);
+  assert.deepEqual(r.missing.map(x=>[x.date,x.contentType,x.series?.part]),[
+    ['2026-11-23','lesson',undefined],
+    ['2026-11-24','advertisement',undefined],
+    ['2026-11-25','lesson',undefined],
+    ['2026-11-26','advertisement',undefined],
+    ['2026-11-27','lesson',undefined],
+    ['2026-11-28','series-part',1],
+    ['2026-11-29','series-part',2],
+  ]);
+});
+test('weekly reserve never becomes an 8-day rolling plan between runs',()=>{
+  const c=calendar();
+  c.planningBuffer={mode:'next-full-calendar-week',minimumFutureEpisodes:7,targetFutureEpisodes:7};
+  const monday=auditPlanningBuffer(c,{today:'2026-11-23'});
+  const thursday=auditPlanningBuffer(c,{today:'2026-11-26'});
+  assert.deepEqual([monday.targetWeekStart,monday.targetWeekEnd],['2026-11-30','2026-12-06']);
+  assert.deepEqual([thursday.targetWeekStart,thursday.targetWeekEnd],['2026-11-30','2026-12-06']);
+  assert.equal(monday.expectedFutureSlots,7);
+  c.planningBuffer.targetFutureEpisodes=4;
+  assert.throws(()=>auditPlanningBuffer(c,{today:'2026-11-22'}),/exactly 7/);
 });
