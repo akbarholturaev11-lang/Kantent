@@ -48,3 +48,21 @@ test("the file must carry the owner's approval and exact bindings", () => {
   for (const bad of [{ audioSha256: "x" }, { expected: "с 比" }, { timing: "estimated" }, { timing: "provider-heard", heard: "" }])
     assert.throws(() => validateOwnerSpanExceptions({ ...record, exceptions: [{ ...record.exceptions[1], ...bad }] }), /Invalid owner span/);
 });
+
+test("provider-heard-span (owner 2026-11-17): a listened multi-word gap keeps the provider's own first/last word edges", () => {
+  const span = validateOwnerSpanExceptions({ approvedBy: "owner", approvedAt: "2026-11-17", ownerWords: "тугри 2 ласихам",
+    exceptions: [{ chunk: 1, audioSha256: SHA, startMs: 24317, endMs: 26917, expected: "这 个 多 少 钱",
+      timing: "provider-heard-span", heard: "Этот сколько денег" }] });
+  const gap = { startMs: 24317, endMs: 26917, tokens: ["这", "个", "多", "少", "钱"] };
+  const blocks = [{ text: "так.", startMs: 24000, endMs: 24300 }, { text: "Этот", startMs: 24500, endMs: 24800 },
+    { text: "сколько", startMs: 24900, endMs: 25600 }, { text: "денег?", startMs: 25700, endMs: 26400 },
+    { text: "Этот", startMs: 24450, endMs: 24790 }];
+  const result = ownerSpanException({ record: span, chunk: 1, audioSha256: SHA, gap, gapBlocks: blocks });
+  assert.deepEqual(result.block, { text: "这个多少钱", tokens: ["这", "个", "多", "少", "钱"], startMs: 24450, endMs: 26400,
+    ownerException: "provider-heard-span" });
+  // a heard word missing from the gap → no timing is invented
+  assert.equal(ownerSpanException({ record: span, chunk: 1, audioSha256: SHA, gap, gapBlocks: blocks.slice(0, 3) }), null);
+  // different words in the gap → no match
+  assert.equal(ownerSpanException({ record: span, chunk: 1, audioSha256: SHA, gap: { ...gap, tokens: ["多", "少"] }, gapBlocks: blocks }), null);
+  assert.throws(() => validateOwnerSpanExceptions({ ...span, exceptions: [{ ...span.exceptions[0], heard: "" }] }), /Invalid owner span/);
+});
