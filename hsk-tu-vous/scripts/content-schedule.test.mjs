@@ -1,7 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {validateScheduledContent,futureContentSlots,weeklyCoverage,nextFullCalendarWeek} from './content-schedule.mjs';
-import {auditPlanningBuffer} from './self-improvement-check.mjs';
+import {auditPlanningBuffer,inspectDraftReadiness} from './self-improvement-check.mjs';
+import {validateActionLesson} from './action-design-plan.mjs';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 import {proposeSeries} from './series-plan.mjs';
 const calendar=()=>({timezone:'Asia/Shanghai',cadencePerWeek:7,planningWeekdays:['MO','TU','WE','TH','FR','SA','SU'],
  planningBuffer:{minimumFutureEpisodes:3,targetFutureEpisodes:4},seriesPolicy:{schemaVersion:1,continuationGapDays:1,allowContinuationOutsidePlanningWeekdays:true,requireCompleteDraftSet:true},
@@ -64,4 +68,36 @@ test('weekly reserve never becomes an 8-day rolling plan between runs',()=>{
   assert.equal(monday.expectedFutureSlots,7);
   c.planningBuffer.targetFutureEpisodes=4;
   assert.throws(()=>auditPlanningBuffer(c,{today:'2026-11-22'}),/exactly 7/);
+});
+
+test('Nov 21–22 transition serial is truly ready in RU/TG and has drawable distinct action scenes',()=>{
+  const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+  const c=JSON.parse(fs.readFileSync(path.join(root,'content/calendar.json'),'utf8'));
+  const dates=['2026-11-21','2026-11-22'];
+  const parts=dates.map(date=>c.items.find(item=>item.date===date));
+  assert.equal(parts.length,2);
+  assert.ok(parts.every(Boolean),'both calendar entries required');
+  assert.deepEqual(parts.map(p=>p.contentType),['series-part','series-part']);
+  assert.equal(parts[0].series.id,parts[1].series.id);
+  assert.deepEqual(parts.map(p=>p.series.part),[1,2]);
+  assert.deepEqual(validateScheduledContent(c),[]);
+  for(const item of parts){
+    const ready=inspectDraftReadiness(root,item);
+    assert.equal(ready.ready,true,JSON.stringify({date:item.date,readiness:ready}));
+    assert.equal(ready.languages.ru?.ready,true);
+    assert.equal(ready.languages.tg?.ready,true);
+    for(const prefix of ['content/','content/locales/tg/']){
+      const episode=JSON.parse(fs.readFileSync(path.join(root,prefix,item.episodeFile),'utf8'));
+      assert.equal(episode.scenes.length,4);
+      const validation=validateActionLesson(episode,{requireVisibleChange:true});
+      assert.equal(validation.actionCount,8);
+      assert.ok(!episode.cta && episode.scenes.every(s=>s.kind!=='cta'));
+    }
+  }
+  assert.ok(parts[0].date < parts[1].date);
+  const ru1=JSON.parse(fs.readFileSync(path.join(root,'content',parts[0].episodeFile),'utf8'));
+  const ru2=JSON.parse(fs.readFileSync(path.join(root,'content',parts[1].episodeFile),'utf8'));
+  assert.match(ru1.scenes.at(-1).narration,/две одинаковые двери/);
+  assert.match(ru2.scenes[0].narration,/две двери/);
+  assert.match(ru2.scenes.at(-1).narration,/История закончилась/);
 });
