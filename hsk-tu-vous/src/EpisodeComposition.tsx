@@ -1449,7 +1449,7 @@ const LessonVideo: React.FC<EpisodeProps> = ({ episode, cueTimeline, motionKitPl
       beats: cueTimeline.scenes.find((item) => item.sceneId === scene.id)?.motionBeats ?? [] }));
     const illustration = (beat?: { visual?: unknown }) => (beat?.visual as { illustration?: unknown } | undefined)?.illustration;
     const transitions = planSceneTransitions(scenes.map((scene) => ({ kind: scene.kind,
-      firstIll: illustration(scene.beats[0]), lastIll: illustration(scene.beats.at(-1)) })), PRO);
+      firstIll: illustration(scene.beats[0]), lastIll: illustration(scene.beats[scene.beats.length - 1]) })), PRO);
     const focus = lessonFocus(scenes.flatMap((scene) => scene.beats));
     return { transitions, focus, themes: planSlideThemes(scenes, PRO), slides: slideFrameRanges(scenes, focus),
       sfx: soundKitRenderPlan ? [] : planProSfx({ scenes, config: PRO }),
