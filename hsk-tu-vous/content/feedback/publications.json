@@ -177,6 +177,16 @@
           "verifiedAt": "2026-11-18T00:52:35.000Z",
           "zernioPostId": "6afbc565660b23b40d686cd7",
           "accountId": "6ae0f16205fd6f5357f8503d"
+        },
+        "urlIdentity": {
+          "kind": "instagram-reel-shortcode",
+          "value": "Df1x9J3DdEq",
+          "method": "instagram-reel-path-shortcode",
+          "sourcePostUrl": "https://www.instagram.com/reel/Df1x9J3DdEq/",
+          "provenance": "url-derived-not-provider-field",
+          "zernioPostId": "6afbc565660b23b40d686cd7",
+          "accountId": "6ae0f16205fd6f5357f8503d",
+          "providerStatus": "published"
         }
       },
       "platformPostUrl": "https://www.instagram.com/reel/Df1x9J3DdEq/"
@@ -192,7 +202,7 @@
       "accountId": "6ae160123787e4c71b522d64",
       "accountUsername": "hskai.app-tj",
       "zernioPostId": "6afbc5bfd0ac7be2b45a693d",
-      "platformPostId": null,
+      "platformPostId": "tVJ4wQdmcqY",
       "status": "published",
       "videoSha256": "2c5243fc3bbf20fa9fe7784b72c772cf67a7ae3ce21c840fd63cbdf4534a5c9d",
       "approvedVideoSha256": "2c5243fc3bbf20fa9fe7784b72c772cf67a7ae3ce21c840fd63cbdf4534a5c9d",
@@ -224,6 +234,16 @@
           "verifiedAt": "2026-11-18T00:52:35.000Z",
           "zernioPostId": "6afbc5bfd0ac7be2b45a693d",
           "accountId": "6ae160123787e4c71b522d64"
+        },
+        "urlIdentity": {
+          "kind": "youtube-video-id",
+          "value": "tVJ4wQdmcqY",
+          "method": "canonical-youtube-watch-v",
+          "sourcePostUrl": "https://www.youtube.com/watch?v=tVJ4wQdmcqY",
+          "provenance": "url-derived-not-provider-field",
+          "zernioPostId": "6afbc5bfd0ac7be2b45a693d",
+          "accountId": "6ae160123787e4c71b522d64",
+          "providerStatus": "published"
         }
       },
       "platformPostUrl": "https://www.youtube.com/watch?v=tVJ4wQdmcqY"
