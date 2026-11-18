@@ -12,14 +12,14 @@
       "accountId": "6a411e989d9472faae10a430",
       "accountUsername": "hskai.app",
       "zernioPostId": "6afbc4294a8ecfab59d2fdd2",
-      "platformPostId": null,
-      "status": "scheduled",
+      "platformPostId": "17992260648088162",
+      "status": "published",
       "videoSha256": "a74356dbd523a601c073cef9bc56ba1d7a8182d793b2d98da72c7128dff4028f",
       "approvedVideoSha256": "a74356dbd523a601c073cef9bc56ba1d7a8182d793b2d98da72c7128dff4028f",
       "approvedAt": "2026-11-17T03:02:59.573Z",
       "verifiedAt": "2026-11-17T03:04:11.249Z",
       "scheduledFor": "2026-11-17T21:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-17T13:03:46.850Z",
       "ctaExperimentId": "bi-comparison-height-20261116-ru-cta-v2",
       "postPreviewSha256": "7c251d7bf1bb6f152f31419fa577130ce3cf3af71c29a5ca94788ffdb52e2826",
       "creative": {
@@ -37,8 +37,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "ffb8946980d10be91f5b1f44",
-        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06"
-      }
+        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio_RU analytics_get_analytics",
+          "verifiedAt": "2026-11-18T00:52:35.000Z",
+          "zernioPostId": "6afbc4294a8ecfab59d2fdd2",
+          "accountId": "6a411e989d9472faae10a430"
+        }
+      },
+      "platformPostUrl": "https://www.instagram.com/reel/Df1_heCD5im/"
     },
     {
       "content": {
@@ -51,14 +59,14 @@
       "accountId": "6ac96e053f8f4ffc10b0655f",
       "accountUsername": "hskai_app",
       "zernioPostId": "6afbc4ae86f07caca87ae669",
-      "platformPostId": null,
-      "status": "scheduled",
+      "platformPostId": "MAiXTVtGlbg",
+      "status": "published",
       "videoSha256": "3cf6a7ab142ada7ead74b11244a91a500f7ef8fa34609dbbb4cf9455e360dda9",
       "approvedVideoSha256": "3cf6a7ab142ada7ead74b11244a91a500f7ef8fa34609dbbb4cf9455e360dda9",
       "approvedAt": "2026-11-17T03:05:00.480Z",
       "verifiedAt": "2026-11-17T03:06:23.611Z",
       "scheduledFor": "2026-11-17T21:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-17T13:00:00.000Z",
       "ctaExperimentId": "bi-comparison-height-20261116-youtube-cta-v1",
       "postPreviewSha256": "f79272e97124ef5affa44fec75426f0db903bf7e21362155cbd67ef1f51c4d92",
       "creative": {
@@ -76,8 +84,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "d1929cc0f416c2894a7bc586",
-        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06"
-      }
+        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio_RU analytics_get_analytics",
+          "verifiedAt": "2026-11-18T00:52:35.000Z",
+          "zernioPostId": "6afbc4ae86f07caca87ae669",
+          "accountId": "6ac96e053f8f4ffc10b0655f"
+        }
+      },
+      "platformPostUrl": "https://www.youtube.com/watch?v=MAiXTVtGlbg"
     },
     {
       "content": {
@@ -130,13 +146,13 @@
       "accountUsername": "hskai.apptj",
       "zernioPostId": "6afbc565660b23b40d686cd7",
       "platformPostId": null,
-      "status": "scheduled",
+      "status": "published",
       "videoSha256": "ec76269e27429269dee5b2f4fef711d88929f9f34bfb9ca4e9dde1976764596c",
       "approvedVideoSha256": "ec76269e27429269dee5b2f4fef711d88929f9f34bfb9ca4e9dde1976764596c",
       "approvedAt": "2026-11-17T03:08:09.178Z",
       "verifiedAt": "2026-11-17T03:09:27.210Z",
       "scheduledFor": "2026-11-17T19:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-17T11:05:04.767Z",
       "ctaExperimentId": "bi-comparison-height-20261116-tg-cta-v2",
       "postPreviewSha256": "76071b8715426585817f4a973cbe456240e1a30a4f7a9cd7ce34e229734ee0db",
       "creative": {
@@ -154,8 +170,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "8693aaa10acf0e2a4b75f279",
-        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06"
-      }
+        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio get_post",
+          "verifiedAt": "2026-11-18T00:52:35.000Z",
+          "zernioPostId": "6afbc565660b23b40d686cd7",
+          "accountId": "6ae0f16205fd6f5357f8503d"
+        }
+      },
+      "platformPostUrl": "https://www.instagram.com/reel/Df1x9J3DdEq/"
     },
     {
       "content": {
@@ -169,13 +193,13 @@
       "accountUsername": "hskai.app-tj",
       "zernioPostId": "6afbc5bfd0ac7be2b45a693d",
       "platformPostId": null,
-      "status": "scheduled",
+      "status": "published",
       "videoSha256": "2c5243fc3bbf20fa9fe7784b72c772cf67a7ae3ce21c840fd63cbdf4534a5c9d",
       "approvedVideoSha256": "2c5243fc3bbf20fa9fe7784b72c772cf67a7ae3ce21c840fd63cbdf4534a5c9d",
       "approvedAt": "2026-11-17T03:09:44.034Z",
       "verifiedAt": "2026-11-17T03:10:56.627Z",
       "scheduledFor": "2026-11-17T19:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-17T11:00:00.000Z",
       "ctaExperimentId": "bi-comparison-height-20261116-youtube-cta-v1",
       "postPreviewSha256": "1bfd0bbb85062afb25557f26bc6698dd0d25ae970b350e7714d0cbd349756060",
       "creative": {
@@ -193,8 +217,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "5ac41881382d11f196182919",
-        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06"
-      }
+        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio get_post",
+          "verifiedAt": "2026-11-18T00:52:35.000Z",
+          "zernioPostId": "6afbc5bfd0ac7be2b45a693d",
+          "accountId": "6ae160123787e4c71b522d64"
+        }
+      },
+      "platformPostUrl": "https://www.youtube.com/watch?v=tVJ4wQdmcqY"
     },
     {
       "content": {
