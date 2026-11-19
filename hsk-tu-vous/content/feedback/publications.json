@@ -299,13 +299,13 @@
       "accountUsername": "Akbarholturaev",
       "zernioPostId": "6afbc675d7ef3259fe0634a1",
       "platformPostId": null,
-      "status": "scheduled",
+      "status": "published",
       "videoSha256": "21a4dc5b5463bd9c1bdde742181c84dc25a9d2bba0d6e4db493f6a2b9a910333",
       "approvedVideoSha256": "21a4dc5b5463bd9c1bdde742181c84dc25a9d2bba0d6e4db493f6a2b9a910333",
       "approvedAt": "2026-11-17T03:12:53.596Z",
       "verifiedAt": "2026-11-17T03:13:58.442Z",
       "scheduledFor": "2026-11-17T19:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-17T11:03:46.008Z",
       "ctaExperimentId": "bi-comparison-height-20261116-facebook-cta-v1",
       "postPreviewSha256": "64c07ba531a0b1702b84e112c69be18315d25f87e678fc3d40ab8ca47366f740",
       "creative": {
@@ -323,8 +323,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "5736759e8343377e8b2d9912",
-        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06"
-      }
+        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio get_post",
+          "verifiedAt": "2026-11-19T00:05:17.000Z",
+          "zernioPostId": "6afbc675d7ef3259fe0634a1",
+          "accountId": "6ae161de384955d3b3ff194b"
+        }
+      },
+      "platformPostUrl": "https://www.facebook.com/watch/?v=1549258953675986"
     },
     {
       "content": {
@@ -478,7 +486,7 @@
       "accountId": "6ae160123787e4c71b522d64",
       "accountUsername": "hskai.app-tj",
       "zernioPostId": "6af7e15d5d1234aaabf1ec4a",
-      "platformPostId": null,
+      "platformPostId": "u5KMuA1VmeE",
       "status": "published",
       "videoSha256": "6a67e495fa4913b1f9b03d538bcefea7e901c1591fed1d6f3a3724f3aa71c1f8",
       "approvedVideoSha256": "6a67e495fa4913b1f9b03d538bcefea7e901c1591fed1d6f3a3724f3aa71c1f8",
@@ -507,9 +515,19 @@
         "lastReadback": {
           "provider": "Zernio",
           "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-17T07:50:39.210Z",
+          "verifiedAt": "2026-11-19T00:05:17.000Z",
           "zernioPostId": "6af7e15d5d1234aaabf1ec4a",
           "accountId": "6ae160123787e4c71b522d64"
+        },
+        "urlIdentity": {
+          "kind": "youtube-video-id",
+          "value": "u5KMuA1VmeE",
+          "method": "canonical-youtube-watch-v",
+          "sourcePostUrl": "https://www.youtube.com/watch?v=u5KMuA1VmeE",
+          "provenance": "url-derived-not-provider-field",
+          "zernioPostId": "6af7e15d5d1234aaabf1ec4a",
+          "accountId": "6ae160123787e4c71b522d64",
+          "providerStatus": "published"
         }
       },
       "platformPostUrl": "https://www.youtube.com/watch?v=u5KMuA1VmeE"
@@ -901,14 +919,14 @@
       "accountId": "6a411e989d9472faae10a430",
       "accountUsername": "hskai.app",
       "zernioPostId": "6afc246cd73ed4914daf08f2",
-      "platformPostId": null,
-      "status": "scheduled",
+      "platformPostId": "18081360110734201",
+      "status": "published",
       "videoSha256": "d11da71914d608efd4e68a28381058eee955362bd5ac767d5eed1722b16a0750",
       "approvedVideoSha256": "d11da71914d608efd4e68a28381058eee955362bd5ac767d5eed1722b16a0750",
       "approvedAt": "2026-11-17T09:53:13.633Z",
       "verifiedAt": "2026-11-17T09:54:54.300Z",
       "scheduledFor": "2026-11-18T21:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-18T13:04:50.000Z",
       "ctaExperimentId": "ji-vs-duoshao-books-price-20261118-ru-cta-v3",
       "postPreviewSha256": "639f26c244b77235fdde6a0f6b1843d4e037b76e5135e7c232cc939e1baffa31",
       "creative": {
@@ -926,8 +944,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "38779a5f6f64c5d9f2ff0437",
-        "sourceCommit": "4b88c4c8def92293c60cbdeb74bd009e469de344"
-      }
+        "sourceCommit": "4b88c4c8def92293c60cbdeb74bd009e469de344",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio_RU analytics_get_analytics",
+          "verifiedAt": "2026-11-18T23:32:32.468Z",
+          "zernioPostId": "6afc246cd73ed4914daf08f2",
+          "accountId": "6a411e989d9472faae10a430"
+        }
+      },
+      "platformPostUrl": "https://www.instagram.com/reel/Df4kcNhDQkj/"
     },
     {
       "content": {
@@ -940,14 +966,14 @@
       "accountId": "6ac96e053f8f4ffc10b0655f",
       "accountUsername": "hskai_app",
       "zernioPostId": "6afc24fe17fc71d17cf0fdb4",
-      "platformPostId": null,
-      "status": "scheduled",
+      "platformPostId": "lbplNF-gkEU",
+      "status": "published",
       "videoSha256": "97b596acbfecf9bb0f52dba98f25a929b53977bfe535d5ac3b08ec513f734fb5",
       "approvedVideoSha256": "97b596acbfecf9bb0f52dba98f25a929b53977bfe535d5ac3b08ec513f734fb5",
       "approvedAt": "2026-11-17T09:55:38.804Z",
       "verifiedAt": "2026-11-17T09:57:19.840Z",
       "scheduledFor": "2026-11-18T21:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-18T13:00:09.000Z",
       "ctaExperimentId": "ji-vs-duoshao-books-price-20261118-youtube-cta-v1",
       "postPreviewSha256": "7b11ea9f64a64cf0bd1253101b73210c1dd6aa5e62f7b68c1d2d400c06b3f481",
       "creative": {
@@ -965,8 +991,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "56b7828fd60e3b77fb410657",
-        "sourceCommit": "4b88c4c8def92293c60cbdeb74bd009e469de344"
-      }
+        "sourceCommit": "4b88c4c8def92293c60cbdeb74bd009e469de344",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio_RU analytics_get_analytics",
+          "verifiedAt": "2026-11-18T23:32:32.468Z",
+          "zernioPostId": "6afc24fe17fc71d17cf0fdb4",
+          "accountId": "6ac96e053f8f4ffc10b0655f"
+        }
+      },
+      "platformPostUrl": "https://www.youtube.com/watch?v=lbplNF-gkEU"
     },
     {
       "content": {
