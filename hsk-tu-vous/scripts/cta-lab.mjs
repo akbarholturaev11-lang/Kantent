@@ -359,7 +359,7 @@ export function validateCtaEpisode(
     if (experiment && experiment.formatId !== "tiktok-ai-install")
       errors.push("New TikTok CTA must register as tiktok-ai-install.");
     if (!/hskai\.app/iu.test(spoken) || !/HSK\s+AI/u.test(spoken) ||
-        !(tajik ? /зеҳни сунъ/iu : /\bИИ\b/u).test(spoken))
+        !(tajik ? /зеҳни сунъ/iu : /(?:^|[^\p{L}])ИИ(?:$|[^\p{L}])/u).test(spoken))
       errors.push("TikTok CTA must name the site, app and viewer's AI assistant.");
   } else if (!ending) for (const [field, text] of [
     ["cta", snapshot.cta],
