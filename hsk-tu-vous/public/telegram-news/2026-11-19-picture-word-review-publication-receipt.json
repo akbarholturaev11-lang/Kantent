@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "newsFingerprint": "2026-11-19:lesson-picture-word-review:3700fcc53e35485d31f3bd7106f63064d02b1924:5bbbf707ad5874284d1a509561abb54ceee48055",
+  "event": "HSK AI course picture-word pronunciation review, up to 10 studied-word cards, separate from adaptive mistake review",
+  "evidence": {
+    "productRepository": "akbarholturaev11-lang/HSK-AI-Bot",
+    "productMainSha": "5bbbf707ad5874284d1a509561abb54ceee48055",
+    "relatedFeatureCommitShas": [
+      "3700fcc53e35485d31f3bd7106f63064d02b1924",
+      "f313b3058f47b6426f52923490e0d0b4a1c2fbb6",
+      "f1a65786b8f91daac3a36c180733dcc5c31e3677",
+      "5bbbf707ad5874284d1a509561abb54ceee48055"
+    ],
+    "railway": {
+      "productionEnvironment": "production",
+      "serviceName": "HSK AI 🇨🇳",
+      "deploymentId": "209ea4fb-4784-434d-b499-c15dd59a2805",
+      "deploymentStatus": "SUCCESS",
+      "commitHash": "5bbbf707ad5874284d1a509561abb54ceee48055",
+      "createdAt": "2026-11-18T02:09:01.176Z",
+      "productionDomain": "hskai.app",
+      "featureFlagVariableNames": [
+        "COURSE_ADAPTIVE_ENABLED",
+        "COURSE_LESSON_PLAN_ENABLED"
+      ],
+      "featureFlagValuesReadable": false
+    },
+    "activationConfirmation": "Owner said features already enabled in this conversation; Railway connector redacted values. Do not claim all-user rollout verified or Android Play release."
+  },
+  "media": {
+    "sourceMainSha": "58aae7358bcca93b093c7ebbd47011a0cabede80",
+    "branch": "media/telegram-news-20261119-picture-review-5bbbf707",
+    "imageCommitSha": "698ae3b5e9494221741bc3c3bf85c18c3e2ba8e6",
+    "blobSha": "2d9725a1f4cb62075f0dd14eecc0044f74ae8794",
+    "url": "https://raw.githubusercontent.com/akbarholturaev11-lang/Kantent/698ae3b5e9494221741bc3c3bf85c18c3e2ba8e6/hsk-tu-vous/public/telegram-news/2026-11-19-picture-word-review-5bbbf707.jpg",
+    "mime": "image/jpeg",
+    "width": 1448,
+    "height": 1086,
+    "sizeBytes": 355883,
+    "validation": "Zernio_RU validate_media valid true; all four post validations passed; original text-free, no mascot generated"
+  },
+  "posts": [
+    {
+      "platform": "telegram",
+      "language": "tg",
+      "account": "@hskaiapp",
+      "accountId": "6ae1661bf80a20df8f31158e",
+      "postId": "6afeceea7044ff70fbd22cd6",
+      "status": "published",
+      "url": "https://t.me/hskaiapp/38"
+    },
+    {
+      "platform": "instagram",
+      "language": "ru",
+      "account": "@hskai.app",
+      "accountId": "6a411e989d9472faae10a430",
+      "postId": "6afececf39f2f809086856f4",
+      "status": "published",
+      "url": null,
+      "note": "Zernio_RU posts_get confirmed published; did not expose direct platform URL"
+    },
+    {
+      "platform": "instagram",
+      "language": "tg",
+      "account": "@hskai.apptj",
+      "accountId": "6ae0f16205fd6f5357f8503d",
+      "postId": "6afeced71e859f843ad68826",
+      "status": "published",
+      "url": "https://www.instagram.com/p/Df63PbYDJbb/"
+    },
+    {
+      "platform": "facebook",
+      "language": "tg",
+      "account": "Akbarholturaev",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "postId": "6afecee02f0ee1106d403dea",
+      "status": "published",
+      "url": "https://www.facebook.com/1159152280609531_122123229285319062"
+    }
+  ]
+}
