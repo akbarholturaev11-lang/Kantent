@@ -348,7 +348,20 @@ export function validateCtaEpisode(
         errors.push(`${ending.kind} CTA must be registered with formatId ${ending.formatId}.`);
     }
   }
-  if (!ending) for (const [field, text] of [
+  if (!ending && episode.ctaPlatform === "tiktok") {
+    const variant = lab.platformVariants?.tiktok;
+    if (variant?.deliveryMode !== "ai-install-guide" ||
+        snapshot.cta !== clean(variant?.canonicalRussian) ||
+        clean(spoken) !== clean(variant?.canonicalRussian))
+      errors.push("TikTok CTA must use the selected language's approved AI-install-help wording.");
+    if (stable(snapshot.scenes[0]?.visualBeats ?? []) !== stable(variant?.sceneTemplate?.visualBeats ?? []))
+      errors.push("TikTok CTA visuals must use the approved cue-linked template.");
+    if (experiment && experiment.formatId !== "tiktok-ai-install")
+      errors.push("New TikTok CTA must register as tiktok-ai-install.");
+    if (!/hskai\.app/iu.test(spoken) || !/HSK\s+AI/u.test(spoken) ||
+        !(tajik ? /зеҳни сунъ/iu : /\bИИ\b/u).test(spoken))
+      errors.push("TikTok CTA must name the site, app and viewer's AI assistant.");
+  } else if (!ending) for (const [field, text] of [
     ["cta", snapshot.cta],
     ["CTA narration", spoken],
   ]) {
@@ -375,11 +388,7 @@ export function validateCtaEpisode(
         `${field}: remove unverified automation, speed, guarantee, or free-offer claims.`,
       );
   }
-  const approvedTikTokManualDm = episode.ctaPlatform === "tiktok" &&
-    lab.platformVariants?.tiktok?.status === "approved" &&
-    lab.platformVariants?.tiktok?.deliveryMode === "manual-dm";
-  if (!approvedTikTokManualDm &&
-      (tajik ? /шарҳ\s+навис|директ|паём[иӣ]?\s+шахс|пайванд.*мефирист/iu : /(коммент|директ|личн.*сообщ|пришл.*ссылк|отправл.*ссылк)/iu).test(spoken))
+  if ((tajik ? /шарҳ\s+навис|директ|паём[иӣ]?\s+шахс|пайванд.*мефирист/iu : /(коммент|директ|личн.*сообщ|пришл.*ссылк|отправл.*ссылк)/iu).test(spoken))
     errors.push("CTA narration: remove the superseded comment/DM route.");
   if (!ending && active.some((item) => item.id === "cta-correction-0008")) {
     const screenshots = snapshot.scenes[0]?.visualBeats
@@ -451,7 +460,7 @@ export function validateCtaEpisode(
     "Text checks do not prove visual/audio sync. Review each active owner correction against the actual narration and rendered frames.",
   );
   warnings.push(episode.ctaPlatform === "tiktok"
-    ? "TikTok's manual-DM CTA does not prove a DM was sent or verify the download link; publishing is limited to the language-matched account in content/publication-destinations.json and requires exact-preview approval."
+    ? "TikTok asks viewers to ask their AI how to install HSK AI from hskai.app; no successful AI answer or installation is guaranteed. Exact-preview approval and language-matched account verification remain required."
     : "The CTA directs viewers to the profile link and website; text checks do not verify current site availability or actual downloads.");
   return {
     valid: errors.length === 0,
