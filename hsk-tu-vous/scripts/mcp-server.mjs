@@ -1177,7 +1177,7 @@ export const createServer = () => {
     {
       title: "Inspect platform-specific CTA readiness",
       description:
-        "Read the selected language's canonical CTA Lab for Instagram, TikTok, YouTube and Facebook. Reports each variant's copy/scene readiness separately from publication authorization. Route only to the exact language-matched accounts in content/publication-destinations.json. TikTok uses its separate manual-DM CTA; Facebook reuses the language-approved offer with cue-synced visuals. Telegram is text-update-only and is not a video target. Never sends a DM or publishes.",
+        "Read the selected language's canonical CTA Lab for Instagram, TikTok, YouTube and Facebook. Reports each variant's copy/scene readiness separately from publication authorization. Route only to the exact language-matched accounts in content/publication-destinations.json. TikTok uses its own language-specific AI-install-help CTA for every new video type; Facebook reuses the language-approved offer with cue-synced visuals. Telegram is text-update-only and is not a video target. Never sends a DM or publishes.",
       inputSchema: z.object({
         platform: z.enum(CTA_PLATFORMS).optional(),
       }),
@@ -1190,7 +1190,7 @@ export const createServer = () => {
           variants: (platform ? [platform] : CTA_PLATFORMS).map(
             (name) => getPlatformCtaStatus(lab, name),
           ),
-          note: "The normal render produces every authorized language-matched destination package: shared-voice platforms reuse one lesson render and receive cue-synced CTA endings; TikTok keeps its dedicated spoken manual-DM ending. Each destination is bound to its exact exported file, CTA registration and owner-approved preview. Telegram receives text updates only.",
+          note: "The normal render produces every authorized language-matched destination package: shared-voice platforms reuse one lesson render and receive cue-synced CTA endings; TikTok keeps its dedicated spoken AI-install-help ending with hskai.app on every new video type. Each destination is bound to its exact exported file, CTA registration and owner-approved preview. Telegram receives text updates only.",
         };
       }),
   );

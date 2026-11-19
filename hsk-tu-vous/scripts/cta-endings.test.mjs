@@ -35,7 +35,7 @@ test("the content type picks the ending; a serial part 1 of 2 promises part 2, t
   assert.throws(() => ctaEndingFor(broken, { contentType: "advertisement" }), /brand ending/);
 });
 
-test("lessons keep the platform CTA; ads and serial parts get their ending on every platform", () => {
+test("new TikTok videos use AI install CTA for every content type while other platforms keep their endings", () => {
   for (const [language, lab] of Object.entries(labs)) {
     const lesson = composeLessonCta(lessons[language], lab);
     assert.equal(lesson.cta, lab.offer.canonicalRussian);
@@ -51,11 +51,20 @@ test("lessons keep the platform CTA; ads and serial parts get their ending on ev
       assert.equal(episode.scenes.at(-1).narration, ending.copy);
       const check = validateCtaEpisode(episode, lab, { requireRegistration: false });
       assert.equal(check.valid, true, check.errors.join("\n"));
-      for (const platform of ["youtube", "facebook", "tiktok"]) {
+      for (const platform of ["youtube", "facebook"]) {
         const draft = preparePlatformCtaDraft(episode, lab, platform);
         assert.equal(draft.ctaPlatform, platform);
-        assert.equal(draft.scenes.at(-1).narration, ending.copy, "the spoken ending and its voice are shared");
+        assert.equal(draft.scenes.at(-1).narration, ending.copy, "goal ending stays shared on these platforms");
       }
+      const tiktok = preparePlatformCtaDraft(episode, lab, "tiktok");
+      assert.equal(tiktok.ctaPlatform, "tiktok");
+      assert.equal(tiktok.ctaEnding, undefined);
+      assert.equal(tiktok.cta, lab.platformVariants.tiktok.canonicalRussian);
+      assert.equal(tiktok.scenes.at(-1).narration, tiktok.cta);
+      assert.equal(validateCtaEpisode(tiktok, lab, { requireRegistration: false }).valid, true);
+      const direct = composeLessonCta(lessons[language], lab, { platform: "tiktok", contentType, series });
+      assert.equal(direct.cta, lab.platformVariants.tiktok.canonicalRussian);
+      assert.equal(direct.ctaEnding, undefined);
       const tampered = structuredClone(episode);
       tampered.cta = tampered.scenes.at(-1).narration = lab.offer.canonicalRussian;
       assert.equal(validateCtaEpisode(tampered, lab, { requireRegistration: false }).valid, false);

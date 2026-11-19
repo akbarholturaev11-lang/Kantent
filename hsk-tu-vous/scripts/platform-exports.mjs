@@ -17,7 +17,7 @@ import { APPROVED_PUBLICATION_PLATFORMS } from "./publication-policy.mjs";
 import { verifyVideoCover } from "./video-cover.mjs";
 
 // These destinations reuse the lesson's spoken CTA. TikTok has a separate
-// spoken manual-DM CTA and is rendered by its dedicated voice workflow.
+// spoken AI-install-help CTA for all new video types, rendered by its own voice workflow.
 const SHARED_VOICE_PLATFORMS = Object.freeze([
   "instagram", "youtube", "facebook",
 ]);

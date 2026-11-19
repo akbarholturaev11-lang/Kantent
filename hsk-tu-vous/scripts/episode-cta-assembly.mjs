@@ -44,11 +44,11 @@ export function composeLessonCta(baseEpisode, lab, { platform = "instagram", con
   const status = getPlatformCtaStatus(lab, platform);
   if (!status.readyForDraft)
     throw new Error(platform + " CTA is not approved: " + status.missing.join(", "));
-  // Owner rule 2026-11-09: advertisements and serial parts end with their own
-  // goal's ending (brand recall / follow); lessons keep the platform CTA.
+  // Other platforms retain type-specific endings; TikTok has one owner-approved
+  // AI-install-help CTA across all new video types.
   const type = contentType ?? baseEpisode.contentIdentity?.type ??
     (baseEpisode.kind === "advertisement" ? "advertisement" : "lesson");
-  const ending = ctaEndingFor(lab, { contentType: type, series: series ?? baseEpisode.contentIdentity?.series, date: baseEpisode.date });
+  const ending = platform === "tiktok" ? null : ctaEndingFor(lab, { contentType: type, series: series ?? baseEpisode.contentIdentity?.series, date: baseEpisode.date });
   const template = ending ? ending.sceneTemplate : lab.platformVariants[platform].sceneTemplate;
   const copy = ending ? ending.copy : status.copy;
   if (!template || template.kind !== "cta" || template.id !== "cta" ||

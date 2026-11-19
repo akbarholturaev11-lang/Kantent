@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 91,
+  "revision": 92,
   "languageCode": "tg-TJ",
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
@@ -53,6 +53,21 @@
       "rule": "For the closing CTA cue, keep only the HSK AI mark/wordmark beside the single timed subtitle. The full spoken Tajik benefit stays in the subtitle and must not be repeated as a separate static tagline, headline or second text layer. Keep audio and word timings intact on Instagram, YouTube and Facebook.",
       "scope": {
         "type": "series"
+      },
+      "supersedes": [],
+      "effect": "mandatory-owner-policy",
+      "performanceEvidence": "not-a-performance-result"
+    },
+    {
+      "id": "cta-correction-0002",
+      "ruleVersion": "cta-policy-v2",
+      "createdAt": "2026-11-19T07:43:44.840Z",
+      "source": "owner-correction",
+      "ownerWording": "Кантент репазитоиясида тик ток учун СТА ни узгартирмохчиман. масалан бундай Проста спрасите АИ каторый вы ползуйтест как установит hskai.app приложение?  хозир авал эскисини олип ташлаб буни тугрилаб лубой кеинги нашр килинадигон  видеога мос тшадигон килиш керак",
+      "rule": "Дар ҳамаи наворҳои нави TikTok даъвати тоҷикӣ аз platformVariants.tiktok истифода шавад: аз AI-и истифодашаванда тарзи насби HSK AI аз hskai.app-ро пурсидан. Бе паёми шахсӣ, HSK, фиристодани пайванд ё даъвои насби анҷомшуда.",
+      "scope": {
+        "type": "format",
+        "formatId": "tiktok-ai-install"
       },
       "supersedes": [],
       "effect": "mandatory-owner-policy",
@@ -10252,8 +10267,8 @@
   },
   "localization": {
     "source": "content/cta-lab.json",
-    "sourceHash": "294b1353ae7e4945d19db50f6a6147695b4939564e05f283e427ab6cef1c1df5",
-    "authoredOn": "2026-10-28"
+    "sourceHash": "f64344a4d2d1ada85976c102cfd2d25adaaadf92d47e5e3dcce9b98cc9cd1e58",
+    "authoredOn": "2026-11-19"
   },
   "platformVariants": {
     "instagram": {
@@ -10423,50 +10438,48 @@
       "status": "approved",
       "copySource": "platform",
       "publishingAuthorized": true,
-      "canonicalRussian": "HSK AI-ро санҷ. Ба профили ман даро ва дар паёми хусусӣ «HSK» навис — ман пайванди боргирии HSK AI-ро дастӣ мефиристам.",
-      "keyword": "HSK",
-      "deliveryMode": "manual-dm",
+      "canonicalRussian": "Танҳо аз зеҳни сунъие, ки истифода мебаред, пурсед: «Чӣ тавр барномаи HSK AI-ро аз сайти hskai.app насб кунам?»",
+      "keyword": null,
+      "deliveryMode": "ai-install-guide",
       "destinationVerified": false,
       "automationVerified": false,
-      "notes": "Owner requested a Tajik TikTok localization of the existing Russian manual-DM CTA on 2026-10-28. Route Tajik content only to the mapped @hskai.ru TikTok account. The owner sends the link manually; no automated DM, simulated sent message or independently verified app/link is claimed. Exact video/caption/settings/time approval and live account verification are still required before publishing.",
+      "notes": "Owner-approved Tajik TikTok install-help CTA. Do not use HSK/DM; no promised AI answer, automated install or verified external service. Publish only to the exact Tajik TikTok account with exact-preview owner approval.",
       "sceneTemplate": {
         "id": "cta",
         "kind": "cta",
         "captionStyleId": "pill",
         "durationSec": 11,
-        "headline": "ПРОФИЛ • ПАЁМИ ХУСУСӢ",
-        "screenCaption": "HSK навис — пайвандро дастӣ мефиристам",
-        "editPlan": "Use one central CTA stage and only the normal single subtitle line. Show one large cue-linked focus detail at a time; do not repeat the spoken phrase in a second headline, add a second CTA strip, duplicate the HSK AI wordmark, or use a moving focus marker. At санҷ, reveal the single HSK AI mark. At даро, show ПРОФИЛ. At паёми, show ПАЁМИ ХУСУСӢ. At HSK, show the keyword HSK. At пайванди, reveal ПАЙВАНДИ БОРГИРӢ and hold it through the final spoken word. Use restrained brand-colored transitions, no screenshots and no simulated DM/message or completed download. The spoken offer says the owner will send the link manually; do not imply automation or independent link verification.",
+        "headline": "НАСБИ HSK AI",
+        "screenCaption": "hskai.app",
+        "editPlan": "Як саҳнаи марказӣ, як субтитри синхронӣ. Дар «пурсед» — савол, дар «зеҳни» — рамзи AI бе интерфейси сохта, дар «насб» — HSK AI ва нишонаи насб, дар «сайти» — hskai.app-и равшан. На DM, на калимаи HSK, на ҷавоби сохтаи AI ё насби анҷомёфта.",
         "visualBeats": [
           {
-            "hero": "HSK AI",
-            "brandLogo": true,
+            "hero": "САВОЛ ДИҲЕД",
             "motion": "reveal",
-            "syncCueText": "санҷ",
+            "syncCueText": "пурсед",
             "transitionStyle": "type-reveal"
           },
           {
-            "hero": "ПРОФИЛ",
+            "hero": "AI",
+            "meaning": "ЗЕҲНИ СУНЪӢ",
             "motion": "slide",
-            "syncCueText": "даро",
+            "syncCueText": "зеҳни",
             "transitionStyle": "slide-match"
           },
           {
-            "hero": "ПАЁМИ ХУСУСӢ",
+            "hero": "HSK AI",
+            "meaning": "НАСБИ БАРНОМА",
+            "brandLogo": true,
+            "actionIcon": "app-download",
             "motion": "reveal",
-            "syncCueText": "паёми",
+            "syncCueText": "насб",
             "transitionStyle": "type-reveal"
           },
           {
-            "hero": "HSK",
-            "motion": "pop",
-            "syncCueText": "HSK",
-            "transitionStyle": "mask-reveal"
-          },
-          {
-            "hero": "ПАЙВАНДИ БОРГИРӢ",
+            "hero": "hskai.app",
+            "meaning": "СУРОҒАИ САЙТ",
             "motion": "slide",
-            "syncCueText": "пайванди",
+            "syncCueText": "сайти",
             "transitionStyle": "slide-match"
           }
         ]
@@ -10530,7 +10543,7 @@
     "decidedOn": "2026-11-09",
     "effectiveFromDate": "2026-11-09",
     "goalSource": "content/creative-formats.json#contentGoals",
-    "rule": "Owner rule 2026-11-09: lessons keep the platform CTA (offer / platformVariants). Advertisements end with the brand ending; serial parts end with a follow invitation — the next-part copy before the last part, the weekend copy on the last part. One ending copy is shared by every platform of the language; each platform still has its own registration and exact-preview approval. Items dated before effectiveFromDate keep the CTA they were prepared and registered with.",
+    "rule": "Instagram/YouTube/Facebook retain their type-specific lesson, brand or series endings. Owner override 2026-11-19: all newly produced TikTok lessons, advertisements and serial parts instead use platformVariants.tiktok AI-install-help copy in the selected language. Approved/published/scheduled video history is immutable; a replacement needs fresh voice, render, checks and exact approval.",
     "endings": {
       "advertisement": {
         "contentType": "advertisement",

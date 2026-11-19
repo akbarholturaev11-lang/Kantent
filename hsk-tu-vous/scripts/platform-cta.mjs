@@ -128,9 +128,9 @@ export function preparePlatformCtaDraft(baseEpisode, lab, platform) {
   const scene = source.scenes.find((item) => item.kind === "cta");
   if (!scene || source.scenes.filter((item) => item.kind === "cta").length !== 1)
     throw new Error("Exactly one CTA scene is required");
-  if (source.ctaEnding !== undefined) {
-    // Content-type endings are one copy per language for every platform: the
-    // spoken script and timing stay identical, so voice and cues are reused.
+  if (source.ctaEnding !== undefined && platform !== "tiktok") {
+    // The ad/serial ending remains shared on Instagram/YouTube/Facebook.
+    // TikTok has a separately voiced universal install-help CTA.
     const ending = ctaEndingByKind(lab, source.ctaEnding);
     if (!ending || source.cta !== ending.copy || scene.narration !== ending.copy)
       throw new Error(`${source.ctaEnding} ending does not match the approved contentTypeEndings copy. Re-materialize the working copy.`);
@@ -140,6 +140,7 @@ export function preparePlatformCtaDraft(baseEpisode, lab, platform) {
     source.publishingStatus = "pending-owner-review";
     return source;
   }
+  if (platform === "tiktok") delete source.ctaEnding;
   if (platform === "instagram") {
     if (source.cta !== status.copy || scene.narration !== status.copy)
       throw new Error("Instagram episode CTA does not match the canonical approved offer. Register a new version in the working copy before rendering.");

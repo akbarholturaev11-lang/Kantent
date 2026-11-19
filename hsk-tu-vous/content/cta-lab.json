@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 186,
+  "revision": 187,
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
     "id": "hsk-ai-profile-link-download-v1",
@@ -293,6 +293,54 @@
       "supersedes": [
         "cta-correction-0010"
       ],
+      "effect": "mandatory-owner-policy",
+      "performanceEvidence": "not-a-performance-result"
+    },
+    {
+      "id": "cta-correction-0018",
+      "ruleVersion": "cta-policy-v18",
+      "createdAt": "2026-11-19T07:43:44.840Z",
+      "source": "owner-correction",
+      "ownerWording": "Кантент репазитоиясида тик ток учун СТА ни узгартирмохчиман. масалан бундай Проста спрасите АИ каторый вы ползуйтест как установит hskai.app приложение?  хозир авал эскисини олип ташлаб буни тугрилаб лубой кеинги нашр килинадигон  видеога мос тшадигон килиш керак",
+      "rule": "All NEW TikTok videos use the selected language's universal platform CTA inviting the viewer to ask their current AI assistant how to install HSK AI from hskai.app. This overrides manual-HSK/DM and TikTok ad/serial endings. Other platforms retain their own content-type endings. Preserve immutable previously approved/published/scheduled packages; no fake AI answer, guaranteed install or duplicate CTA text.",
+      "scope": {
+        "type": "series"
+      },
+      "supersedes": [
+        "cta-correction-0015"
+      ],
+      "effect": "mandatory-owner-policy",
+      "performanceEvidence": "not-a-performance-result"
+    },
+    {
+      "id": "cta-correction-0019",
+      "ruleVersion": "cta-policy-v19",
+      "createdAt": "2026-11-19T07:43:44.840Z",
+      "source": "owner-correction",
+      "ownerWording": "Кантент репазитоиясида тик ток учун СТА ни узгартирмохчиман. масалан бундай Проста спрасите АИ каторый вы ползуйтест как установит hskai.app приложение?  хозир авал эскисини олип ташлаб буни тугрилаб лубой кеинги нашр килинадигон  видеога мос тшадигон килиш керак",
+      "rule": "Retire tiktok-manual-dm for every new TikTok video. Preserve old experiments/readbacks as history; never use keyword HSK or send links in new CTA.",
+      "scope": {
+        "type": "format",
+        "formatId": "tiktok-manual-dm"
+      },
+      "supersedes": [
+        "cta-correction-0016"
+      ],
+      "effect": "mandatory-owner-policy",
+      "performanceEvidence": "not-a-performance-result"
+    },
+    {
+      "id": "cta-correction-0020",
+      "ruleVersion": "cta-policy-v20",
+      "createdAt": "2026-11-19T07:43:44.840Z",
+      "source": "owner-correction",
+      "ownerWording": "Кантент репазитоиясида тик ток учун СТА ни узгартирмохчиман. масалан бундай Проста спрасите АИ каторый вы ползуйтест как установит hskai.app приложение?  хозир авал эскисини олип ташлаб буни тугрилаб лубой кеинги нашр килинадигон  видеога мос тшадигон килиш керак",
+      "rule": "Apply exactly the new language-specific AI-install-help CTA and its cue-synced typography for every new TikTok video, independently of content type; register version tiktok-ai-install and use separately verified matching voice and subtitles. No DM, comment, fake AI response or claimed installation.",
+      "scope": {
+        "type": "format",
+        "formatId": "tiktok-ai-install"
+      },
+      "supersedes": [],
       "effect": "mandatory-owner-policy",
       "performanceEvidence": "not-a-performance-result"
     }
@@ -23407,60 +23455,53 @@
     "tiktok": {
       "status": "approved",
       "copySource": "platform",
-      "canonicalRussian": "Попробуй HSK AI. Зайди в мой профиль и напиши мне в личные сообщения «HSK» — я пришлю ссылку, чтобы скачать HSK AI.",
-      "deliveryMode": "manual-dm",
+      "canonicalRussian": "Просто спросите у ИИ, которым пользуетесь: «Как установить приложение HSK AI с сайта hskai.app?»",
+      "deliveryMode": "ai-install-guide",
       "destinationVerified": false,
       "automationVerified": false,
       "publishingAuthorized": true,
-      "notes": "Owner-authorized TikTok destination for the exact language-matched account in content/publication-destinations.json. TikTok direct posting still requires live account verification and exact-preview approval. The owner sends download links manually; no automated DM, real sent-message simulation, or verified link is implied.",
+      "notes": "Owner-approved universal new-video TikTok install-help CTA: ask the AI assistant the viewer already uses how to install HSK AI from hskai.app. No HSK/DM, fake AI response, or promised installation. Publication requires exact-preview owner approval.",
       "sceneTemplate": {
         "id": "cta",
         "kind": "cta",
         "captionStyleId": "pill",
         "durationSec": 11,
-        "headline": "ПРОФИЛЬ • HSK В ЛИЧНЫЕ",
-        "screenCaption": "Напиши HSK — пришлю ссылку",
-        "editPlan": "One central stage and one visible HSK AI wordmark at a time. Remove repeated hero/logo/tagline layers and the moving focus marker; use a quiet, distinctive brand gradient. On “Попробуй” reveal HSK AI; on “Зайди” show ПРОФИЛЬ; on “напиши” show ЛИЧНЫЕ СООБЩЕНИЯ; on “HSK” show the keyword; on “пришлю” reveal ПРИШЛЮ ССЫЛКУ and hold it through “скачать HSK AI”. Start each beat at the phrase onset and keep the complete message readable through that spoken phrase. No screenshots, simulated sent DM, automated DM, or completed download.",
+        "headline": "УСТАНОВКА HSK AI",
+        "screenCaption": "hskai.app",
+        "editPlan": "One central brand stage, one word-timed subtitle. On \"спросите\" show the question action, on \"ИИ\" a neutral AI symbol without copied UI/branding, on \"установить\" the HSK AI mark and install cue, and on \"сайта\" show readable hskai.app. No competing overlays, fake AI answer, fake DM, installation guarantee or completed-install animation.",
         "visualBeats": [
           {
-            "hero": "HSK AI",
-            "meaning": "ПОПРОБУЙ",
-            "brandLogo": true,
+            "hero": "СПРОСИТЕ У ИИ",
             "motion": "reveal",
-            "syncCueText": "Попробуй",
+            "syncCueText": "спросите",
             "transitionStyle": "type-reveal"
           },
           {
-            "hero": "ПРОФИЛЬ",
-            "meaning": "ЗАЙДИ В МОЙ ПРОФИЛЬ",
+            "hero": "AI",
+            "meaning": "ВАШ ИИ",
             "motion": "slide",
-            "syncCueText": "Зайди",
+            "syncCueText": "ИИ",
             "transitionStyle": "slide-match"
           },
           {
-            "hero": "ЛИЧНЫЕ СООБЩЕНИЯ",
-            "meaning": "НАПИШИ МНЕ",
+            "hero": "HSK AI",
+            "meaning": "УСТАНОВИТЬ ПРИЛОЖЕНИЕ",
+            "brandLogo": true,
+            "actionIcon": "app-download",
             "motion": "reveal",
-            "syncCueText": "напиши",
+            "syncCueText": "установить",
             "transitionStyle": "type-reveal"
           },
           {
-            "hero": "HSK",
-            "meaning": "В ЛИЧНЫЕ СООБЩЕНИЯ",
-            "motion": "pop",
-            "syncCueText": "HSK",
-            "transitionStyle": "mask-reveal"
-          },
-          {
-            "hero": "ПРИШЛЮ ССЫЛКУ",
-            "meaning": "ДЛЯ СКАЧИВАНИЯ HSK AI",
+            "hero": "hskai.app",
+            "meaning": "АДРЕС САЙТА",
             "motion": "slide",
-            "syncCueText": "пришлю",
+            "syncCueText": "сайта",
             "transitionStyle": "slide-match"
           }
         ]
       },
-      "keyword": "HSK"
+      "keyword": null
     },
     "youtube": {
       "status": "approved",
@@ -23605,7 +23646,7 @@
     "decidedOn": "2026-11-09",
     "effectiveFromDate": "2026-11-09",
     "goalSource": "content/creative-formats.json#contentGoals",
-    "rule": "Owner rule 2026-11-09: lessons keep the platform CTA (offer / platformVariants). Advertisements end with the brand ending; serial parts end with a follow invitation — the next-part copy before the last part, the weekend copy on the last part. One ending copy is shared by every platform of the language; each platform still has its own registration and exact-preview approval. Items dated before effectiveFromDate keep the CTA they were prepared and registered with.",
+    "rule": "Instagram/YouTube/Facebook retain their type-specific lesson, brand or series endings. Owner override 2026-11-19: all newly produced TikTok lessons, advertisements and serial parts instead use platformVariants.tiktok AI-install-help copy in the selected language. Approved/published/scheduled video history is immutable; a replacement needs fresh voice, render, checks and exact approval.",
     "endings": {
       "advertisement": {
         "contentType": "advertisement",

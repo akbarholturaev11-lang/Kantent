@@ -245,9 +245,9 @@
         "summary": "Bring the viewer straight into HSK AI and make them a user.",
         "viewerAction": "Act now: request the link with the comment keyword / open HSK AI.",
         "authoring": "Solve one real HSK problem early and completely so the viewer feels how HSK AI helps; the teaching body stays CTA-free and hands off to the central lesson CTA.",
-        "closing": "The language and platform lesson CTA from cta-lab.json offer / platformVariants (HSK AI benefit, profile link, download; TikTok manual DM).",
+        "closing": "Instagram/YouTube/Facebook retain their content-type CTA. Every NEW TikTok lesson instead closes with the selected language's universal platformVariants.tiktok AI-install-help CTA (hskai.app).",
         "primaryMetric": "commentsPer1000Views",
-        "primaryMetricNote": "Comments are the CTA link requests. Sourced link clicks, DMs or sign-ups replace it when the provider or the app reports them; never inferred from views.",
+        "primaryMetricNote": "Comments measured historical CTA link requests. The new TikTok CTA requests no comment or DM. Measure verified TikTok-attributed site visits, installs or activations only when separately available; else unmeasured, never inferred from views.",
         "supportingMetrics": [
           "averageWatchRatio",
           "savesPer1000Views"
@@ -262,7 +262,7 @@
         "summary": "Make HSK AI remembered, and recalled when the viewer later needs Chinese.",
         "viewerAction": "Remember the name HSK AI, its look and the one situation where it helps.",
         "authoring": "One recognisable life situation tied to one real product benefit (content/PROMO_WORKFLOW.md). The same brand cues every time: the spoken name HSK AI, the logo, the brand colours and the HSK AI panda; the brand appears early and again at the end. No hard sell, fake urgency or invented claims.",
-        "closing": "Brand ending from each language's cta-lab.json#contentTypeEndings.endings.advertisement (owner-approved 2026-11-09): HSK AI name and logo with the one benefit line, on every platform.",
+        "closing": "Brand ending from each language's contentTypeEndings on Instagram/YouTube/Facebook. Every NEW TikTok advertisement uses the universal AI-install-help CTA from platformVariants.tiktok instead, per owner decision 2026-11-19.",
         "primaryMetric": "reach",
         "primaryMetricNote": "Recall itself is not measured: reach (unique people who saw the brand) and averageWatchRatio (did they reach the brand ending) are proxies. Never claim a recall uplift.",
         "supportingMetrics": [
@@ -280,7 +280,7 @@
         "summary": "Grow followers/subscribers on each social account.",
         "viewerAction": "Follow/subscribe so the next part is not missed.",
         "authoring": "Follow storytellingPolicy.seriesPartPolicy for connected two-part stories, the specific part-1 teaser and part-2 payoff. Each part still teaches a complete useful point; never withhold the current answer to force a follow.",
-        "closing": "Follow invitation from each language's cta-lab.json#contentTypeEndings (owner-approved 2026-11-09): series-next-part before the last part (names the next part), series-final-part on the last part (new story every weekend).",
+        "closing": "Follow invitation from each language's contentTypeEndings on Instagram/YouTube/Facebook. Every NEW TikTok serial video uses the universal AI-install-help CTA; keep the next-part teaser in the CTA-free story body.",
         "primaryMetric": "followsPer1000Views",
         "primaryMetricNote": "Uses the provider-reported follows from the post (observation metrics.follows) when available; otherwise partContinuationRatio = next-part views / previous-part views on the same account, language and fixed window, reported as descriptive only.",
         "supportingMetrics": [

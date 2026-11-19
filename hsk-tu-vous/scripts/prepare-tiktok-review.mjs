@@ -11,7 +11,6 @@ import {
   writeCtaLab,
 } from "./cta-lab.mjs";
 import { getPlatformCtaStatus, preparePlatformCtaDraft } from "./platform-cta.mjs";
-import { ctaEndingByKind } from "./cta-endings.mjs";
 import {
   readJson,
   reviewDir,
@@ -47,9 +46,8 @@ try {
 }
 
 const episode = preparePlatformCtaDraft(base, lab, "tiktok");
-// Advertisements and serial parts keep their content-type ending on TikTok too.
-const ending = episode.ctaEnding ? ctaEndingByKind(lab, episode.ctaEnding) : null;
-const formatId = ending?.formatId ?? "tiktok-manual-dm";
+// All newly produced TikTok video types use the universal AI-install-help ending.
+const formatId = "tiktok-ai-install";
 const active = getActiveCtaCorrections(lab, {
   episodeId: episode.id,
   formatId,
@@ -63,11 +61,9 @@ const registration = createCtaExperiment({
   episode,
   id: `${id}-tiktok-cta-v${version}`,
   formatId,
-  comparisonGroupId: ending ? `${ending.formatId}-v1` : "tiktok-profile-manual-dm-v1",
-  keyword: ending ? null : "HSK",
-  hypothesis: ending
-    ? `Bind the owner-approved ${ending.kind} ending to this TikTok review; performance remains unmeasured.`
-    : "Bind the owner-approved TikTok manual-DM CTA and cue-synced kinetic typography to this reviewed lesson; performance remains unmeasured.",
+  comparisonGroupId: "tiktok-ai-install-v1",
+  keyword: null,
+  hypothesis: "Bind the owner-approved TikTok AI-install-help CTA and cue-synced typography to this reviewed video; performance remains unmeasured.",
   changedVariable: "baseline",
   acknowledgedCorrectionIds: active.map((item) => item.id),
 });

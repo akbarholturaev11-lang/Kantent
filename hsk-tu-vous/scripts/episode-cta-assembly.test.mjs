@@ -84,7 +84,7 @@ test("approved TikTok local draft stays separate with owner-authorized destinati
   const tiktok = composeLessonCta(source, lab, { platform: "tiktok" });
   assert.equal(tiktok.ctaPlatform, "tiktok");
   assert.equal(tiktok.cta, lab.platformVariants.tiktok.canonicalRussian);
-  assert.notEqual(tiktok.cta, lab.offer.canonicalRussian, "TikTok manual-DM copy must not inherit Instagram CTA");
+  assert.notEqual(tiktok.cta, lab.offer.canonicalRussian, "TikTok AI-install copy must not inherit Instagram CTA");
   assert.deepEqual(tiktok.scenes.at(-1).visualBeats,
     lab.platformVariants.tiktok.sceneTemplate.visualBeats);
   assert.equal(lab.platformVariants.tiktok.publishingAuthorized, true,
