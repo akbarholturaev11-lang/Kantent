@@ -36,10 +36,10 @@ test("four video platform entries expose safe CTA states", () => {
   assert.equal(getPlatformCtaStatus(lab, "instagram").readyForRendering, true);
   const tiktok = getPlatformCtaStatus(lab, "tiktok");
   assert.equal(tiktok.status, "approved");
-  assert.equal(tiktok.readyForDraft, true, "Owner-approved manual-DM CTA may be previewed locally");
+  assert.equal(tiktok.readyForDraft, true, "Owner-approved AI-install-help CTA may be previewed locally");
   assert.equal(tiktok.readyForRendering, true, "Owner authorization permits a language-specific TikTok CTA render");
   assert.equal(tiktok.copy, lab.platformVariants.tiktok.canonicalRussian);
-  assert.equal(tiktok.deliveryMode, "manual-dm");
+  assert.equal(tiktok.deliveryMode, "ai-install-guide");
   assert.deepEqual(tiktok.missing, []);
   assert.equal(tiktok.publishingAuthorized, true);
   const youtube = getPlatformCtaStatus(lab, "youtube");
@@ -61,7 +61,7 @@ test("Tajik TikTok uses only its translated CTA source and the current rule chai
   const state = getPlatformCtaStatus(tajikLab, "tiktok");
   assert.equal(
     state.copy,
-    "HSK AI-ро санҷ. Ба профили ман даро ва дар паёми хусусӣ «HSK» навис — ман пайванди боргирии HSK AI-ро дастӣ мефиристам.",
+    "Танҳо аз зеҳни сунъие, ки истифода мебаред, пурсед: «Чӣ тавр барномаи HSK AI-ро аз сайти hskai.app насб кунам?»",
   );
   assert.notEqual(state.copy, getPlatformCtaStatus(lab, "tiktok").copy);
   assert.equal(
@@ -70,14 +70,16 @@ test("Tajik TikTok uses only its translated CTA source and the current rule chai
   );
   assert.equal(state.readyForRendering, true);
   const activeIds = new Set(
-    getActiveCtaCorrections(lab, { formatId: "tiktok-manual-dm" })
+    getActiveCtaCorrections(lab, { formatId: "tiktok-ai-install" })
       .map(({ id }) => id),
   );
   assert.equal(activeIds.has("cta-correction-0012"), false);
   assert.equal(activeIds.has("cta-correction-0013"), false);
   assert.equal(activeIds.has("cta-correction-0014"), false);
-  assert.equal(activeIds.has("cta-correction-0015"), true);
-  assert.equal(activeIds.has("cta-correction-0016"), true);
+  assert.equal(activeIds.has("cta-correction-0015"), false);
+  assert.equal(activeIds.has("cta-correction-0016"), false);
+  assert.equal(activeIds.has("cta-correction-0018"), true);
+  assert.equal(activeIds.has("cta-correction-0020"), true);
 });
 
 test("Instagram CTA copy is centrally read from offer and not duplicated", () => {
