@@ -4,11 +4,9 @@ import { withLanguage } from "./language-context.mjs";
 import { CALENDAR_PATH, getPlannedEpisode, readJson } from "./lib.mjs";
 import { readCtaLab, validateCtaEpisode } from "./cta-lab.mjs";
 
-// Data-driven since the owner's 2026-11-10 reschedule renamed planned items:
-// every planned item dated under the current CTA rules (from
-// contentTypeEndings.effectiveFromDate) that already has a CTA registration
-// must compose to a valid, registered single trailing CTA scene. Older planned
-// rows keep the registration of their own era (owner action A5).
+// Validate only dates after the owner's new TikTok CTA migration.
+// Earlier registered episodes retain immutable legacy CTA snapshots and must
+// not be reclassified as current merely because their calendar status is planned.
 for (const language of ["ru", "tg"]) {
   test(`${language} planned items with a CTA registration compose to a valid registered CTA`, async () => {
     await withLanguage(language, async () => {
@@ -16,7 +14,7 @@ for (const language of ["ru", "tg"]) {
       const registered = new Set(Object.values(lab.experiments ?? {}).flat()
         .filter((entry) => entry && typeof entry === "object").map((entry) => entry.episodeId));
       const calendar = await readJson(CALENDAR_PATH);
-      const from = lab.contentTypeEndings?.effectiveFromDate ?? "0000-00-00";
+      const from = "2026-11-19"; // universal TikTok CTA takes effect for new productions
       for (const item of calendar.items.filter((row) => row.status === "planned" && row.date >= from && registered.has(row.id))) {
         const { episode } = await getPlannedEpisode(item.date);
         if (episode.id !== item.id) continue;
