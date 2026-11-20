@@ -260,13 +260,13 @@
       "accountUsername": "hskai.ru",
       "zernioPostId": "6afbc62333311ee0092215d3",
       "platformPostId": null,
-      "status": "scheduled",
+      "status": "published",
       "videoSha256": "3c40d107dac3e340423d7fb354606357d7d7716a738d1fb922530e41e1517722",
       "approvedVideoSha256": "3c40d107dac3e340423d7fb354606357d7d7716a738d1fb922530e41e1517722",
       "approvedAt": "2026-11-17T03:11:12.971Z",
       "verifiedAt": "2026-11-17T03:12:36.972Z",
       "scheduledFor": "2026-11-17T19:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-17T11:05:00.981Z",
       "ctaExperimentId": "bi-comparison-height-20261116-tiktok-cta-v1",
       "postPreviewSha256": "3b70ed4af6e0a21872afe7c5544018393470fc0f0805f6545ca4b0c640420128",
       "creative": {
@@ -284,8 +284,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "a0dc3535f29388398711a81f",
-        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06"
-      }
+        "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio get_post",
+          "verifiedAt": "2026-11-20T00:39:32.000Z",
+          "zernioPostId": "6afbc62333311ee0092215d3",
+          "accountId": "6ae16064ecf91092adba7d68"
+        }
+      },
+      "platformPostUrl": "https://www.tiktok.com/@hskai.ru/video/7709094376042990862"
     },
     {
       "content": {
@@ -872,7 +880,7 @@
       "accountId": "6ae160123787e4c71b522d64",
       "accountUsername": "hskai.app-tj",
       "zernioPostId": "6af558a1bf539e81acb2fd60",
-      "platformPostId": null,
+      "platformPostId": "FQYfMw-A1z4",
       "status": "published",
       "videoSha256": "c53e75b5feb141415b27b3d01077e99a26f64340d07085232cfd57d14844f6fe",
       "approvedVideoSha256": "c53e75b5feb141415b27b3d01077e99a26f64340d07085232cfd57d14844f6fe",
@@ -901,9 +909,19 @@
         "lastReadback": {
           "provider": "Zernio",
           "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-17T07:50:39.210Z",
+          "verifiedAt": "2026-11-20T00:39:32.000Z",
           "zernioPostId": "6af558a1bf539e81acb2fd60",
           "accountId": "6ae160123787e4c71b522d64"
+        },
+        "urlIdentity": {
+          "kind": "youtube-video-id",
+          "value": "FQYfMw-A1z4",
+          "method": "canonical-youtube-watch-v",
+          "sourcePostUrl": "https://www.youtube.com/watch?v=FQYfMw-A1z4",
+          "provenance": "url-derived-not-provider-field",
+          "zernioPostId": "6af558a1bf539e81acb2fd60",
+          "accountId": "6ae160123787e4c71b522d64",
+          "providerStatus": "published"
         }
       },
       "platformPostUrl": "https://www.youtube.com/watch?v=FQYfMw-A1z4"
