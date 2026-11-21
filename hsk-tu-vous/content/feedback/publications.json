@@ -479,6 +479,16 @@
           "verifiedAt": "2026-11-17T07:50:39.210Z",
           "zernioPostId": "6af7e061109932a603fe34c2",
           "accountId": "6ae0f16205fd6f5357f8503d"
+        },
+        "urlIdentity": {
+          "kind": "instagram-reel-shortcode",
+          "value": "DfuHw23Agve",
+          "method": "instagram-reel-path-shortcode",
+          "sourcePostUrl": "https://www.instagram.com/reel/DfuHw23Agve/",
+          "provenance": "url-derived-not-provider-field",
+          "zernioPostId": "6af7e061109932a603fe34c2",
+          "accountId": "6ae0f16205fd6f5357f8503d",
+          "providerStatus": "published"
         }
       },
       "platformPostUrl": "https://www.instagram.com/reel/DfuHw23Agve/"
@@ -771,6 +781,16 @@
           "verifiedAt": "2026-11-17T07:50:39.210Z",
           "zernioPostId": "6af5197ab7bcb7089973e1a2",
           "accountId": "6ae0f16205fd6f5357f8503d"
+        },
+        "urlIdentity": {
+          "kind": "instagram-reel-shortcode",
+          "value": "Dfo5o2QFLLO",
+          "method": "instagram-reel-path-shortcode",
+          "sourcePostUrl": "https://www.instagram.com/reel/Dfo5o2QFLLO/",
+          "provenance": "url-derived-not-provider-field",
+          "zernioPostId": "6af5197ab7bcb7089973e1a2",
+          "accountId": "6ae0f16205fd6f5357f8503d",
+          "providerStatus": "published"
         }
       },
       "platformPostUrl": "https://www.instagram.com/reel/Dfo5o2QFLLO/"
