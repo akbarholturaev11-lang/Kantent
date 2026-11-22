@@ -31,8 +31,8 @@
     "setting": "night-market",
     "coach": "panda",
     "supportingCharacter": "monkey",
-    "pattern": "dialogue",
+    "pattern": "before-after-cards",
     "experiment": null,
-    "source": "Manual replay of current scripts/visual-variety-plan.mjs against historical art manifests; the setting-group experiment is paused."
+    "source": "Recomputed with scripts/visual-variety-plan.mjs keyword ranking and updated Nov 27–28 art history; paused setting-group test remains unassigned."
   }
 }
