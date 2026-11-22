@@ -1,0 +1,133 @@
+{
+  "episodeId": "show-start-jidian-20261129",
+  "assets": {
+    "market-stage": {
+      "file": "market-stage.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "ae594a0f65fa13e4d29302ccafe222b4eb442eff67af9486b5d11198f9639601",
+      "characters": [],
+      "references": [],
+      "sha256": "153454cc97ea52f70a0eff1ac9e37423dcdf10eb253a3a852edc5ac7d02631a2",
+      "rawSha256": "a2833cf83b24e7ac7f7ce708c3268ac88d43f73fba11bb0b90e5b7a0f01c2121",
+      "generationId": "gen-1795328188-wEnFqJlu33sMIp2fPEis",
+      "usage": {
+        "prompt_tokens": 218,
+        "completion_tokens": 1680,
+        "total_tokens": 1898,
+        "cost": 0.100909,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.100909,
+          "upstream_inference_prompt_cost": 0.000109,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T06:16:49.211Z",
+      "visual": {
+        "by": "Looked: night market with lanterns, empty stage, blank ticket on stand; stall signboards blank, no readable characters/digits; no people",
+        "sha256": "153454cc97ea52f70a0eff1ac9e37423dcdf10eb253a3a852edc5ac7d02631a2",
+        "at": "2026-11-22T06:21:16.758Z"
+      }
+    },
+    "stage-clock": {
+      "file": "stage-clock.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "de283e892ca18fe8d5e85af1a2f921440e8cc780a46e9d06191f3ff1e579ae61",
+      "characters": [],
+      "references": [
+        "market-stage"
+      ],
+      "sha256": "884f288f9337751934f6a68593db809d8ea289276b1c993b64ae897b2299fd1c",
+      "rawSha256": "2919be6b12d55eeb7fd8fe37fcfdfed5fad86425a24f18708ef2f045501196be",
+      "generationId": "gen-1795334924-BGa1pS7DnhWxBkBbj1Ku",
+      "usage": {
+        "prompt_tokens": 1345,
+        "completion_tokens": 1680,
+        "total_tokens": 3025,
+        "cost": 0.1014725,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1014725,
+          "upstream_inference_prompt_cost": 0.0006725,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T08:09:06.690Z",
+      "visual": {
+        "by": "Night-market stage with a large analogue clock dial that has hour ticks but no hands and no numerals (time not yet known), blank ticket on a stand; no people, no text",
+        "sha256": "884f288f9337751934f6a68593db809d8ea289276b1c993b64ae897b2299fd1c",
+        "at": "2026-11-22T08:11:31.316Z"
+      }
+    },
+    "audience-gate": {
+      "file": "audience-gate.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "b6316ecea21f08fe3a48b5d28834208f5983526d6f5dfe111666d394eace0556",
+      "characters": [],
+      "references": [
+        "market-stage",
+        "stage-clock"
+      ],
+      "sha256": "cb22e2c01a7481d1e099cd111468f33201a50b94bda6625f111df40825d5c7b9",
+      "rawSha256": "6ce3952779f414224fe3491a2be217ad4a34f8f6a916fe3a76ec46194b15a258",
+      "generationId": "gen-1795328233-Rr7Aa3s5VogM0ucJaitv",
+      "usage": {
+        "prompt_tokens": 2448,
+        "completion_tokens": 1680,
+        "total_tokens": 4128,
+        "cost": 0.102024,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.102024,
+          "upstream_inference_prompt_cost": 0.001224,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T06:17:35.343Z",
+      "visual": {
+        "by": "Looked: same market/stage, blank ticket on foreground stand, clear path to stage; banners carry abstract swirls only, no readable characters; no people",
+        "sha256": "cb22e2c01a7481d1e099cd111468f33201a50b94bda6625f111df40825d5c7b9",
+        "at": "2026-11-22T06:21:17.236Z"
+      }
+    }
+  }
+}

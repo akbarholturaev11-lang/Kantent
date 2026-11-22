@@ -282,8 +282,8 @@
         "backgroundToken": "foreground",
         "assetPath": "public/promo-captures/hsk-dictionary-20261126.png",
         "provenance": "genuine-product-capture",
-        "uiLanguage": "tg-TJ",
-        "limitations": "SOURCE BLOCKER — capture missing: public/promo-captures/hsk-dictionary-20261126.png does not exist. Do not render/publish or claim this is genuine until capturing the actual current HSK AI dictionary in this exact language, checking privacy and claims."
+        "uiLanguage": "ru-RU",
+        "limitations": "BLOCKED for TG: only a Russian-UI capture exists (owner screenshot 2026-11-22). A genuine Tajik-UI capture, a language-neutral crop or an owner sharedUiOwnerApproval is required before rendering or publishing this TG ad."
       },
       "claimIds": [
         "dictionary-search"
@@ -401,8 +401,8 @@
         "backgroundToken": "foreground",
         "assetPath": "public/promo-captures/hsk-dictionary-20261126.png",
         "provenance": "genuine-product-capture",
-        "uiLanguage": "tg-TJ",
-        "limitations": "SOURCE BLOCKER — capture missing: public/promo-captures/hsk-dictionary-20261126.png does not exist. Do not render/publish or claim this is genuine until capturing the actual current HSK AI dictionary in this exact language, checking privacy and claims."
+        "uiLanguage": "ru-RU",
+        "limitations": "BLOCKED for TG: only a Russian-UI capture exists (owner screenshot 2026-11-22). A genuine Tajik-UI capture, a language-neutral crop or an owner sharedUiOwnerApproval is required before rendering or publishing this TG ad."
       },
       "claimIds": [
         "dictionary-result-rows"
@@ -525,7 +525,7 @@
   "localization": {
     "language": "tg",
     "sourcePromoId": "dorm-laundry-voice-20261126",
-    "sourceHash": "c5900d604bec9be42d4cb4e4b991bda1119ccc93408091062fa3c6f92c13b442",
+    "sourceHash": "64051ab93874efc807280c6674fe4258517e60398e5091783a7e2fbfc63b5060",
     "authoredOn": "2026-11-22",
     "status": "draft"
   }

@@ -1,0 +1,133 @@
+{
+  "episodeId": "ticket-counter-zhang-20261128",
+  "assets": {
+    "classroom-tickets": {
+      "file": "classroom-tickets.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "4cb16f9b5ab2934931ad34a471af968e346eeb62f0f3f354057f8b97b13480c7",
+      "characters": [],
+      "references": [],
+      "sha256": "b1e7a3251f849236e29474ebc93c7ee65d905f8876609d2e323e1f5942ca05f7",
+      "rawSha256": "6a29bb15961b0cba1f0072c3298135efab179d03acbc02bd8b9ba092d1959307",
+      "generationId": "gen-1795328097-T1e13Gv5UjyzCko5uoic",
+      "usage": {
+        "prompt_tokens": 212,
+        "completion_tokens": 1680,
+        "total_tokens": 1892,
+        "cost": 0.100906,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.100906,
+          "upstream_inference_prompt_cost": 0.000106,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T06:15:22.492Z",
+      "visual": {
+        "by": "Looked: bright classroom, blank whiteboard, plants, tray with two blank tickets on desk; wall clock has no numerals; no text/people/characters",
+        "sha256": "b1e7a3251f849236e29474ebc93c7ee65d905f8876609d2e323e1f5942ca05f7",
+        "at": "2026-11-22T06:21:15.825Z"
+      }
+    },
+    "ticket-close": {
+      "file": "ticket-close.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "30c24ce52fa4bc03791350569bc08f2e01bbaa4f67e1bf36f42504b5d83fe9ce",
+      "characters": [],
+      "references": [
+        "classroom-tickets"
+      ],
+      "sha256": "579ea1b3c49af2d84f0845c92204514a661a701066435dd2395c4029ddabf575",
+      "rawSha256": "4aaa38919da3cd863fa599f9a6b9ddd3163f8f11be2a3eb987ec7280348e46a7",
+      "generationId": "gen-1795328129-pj8qfCYk6Wi6W5k7LqwT",
+      "usage": {
+        "prompt_tokens": 1330,
+        "completion_tokens": 1680,
+        "total_tokens": 3010,
+        "cost": 0.101465,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.101465,
+          "upstream_inference_prompt_cost": 0.000665,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T06:15:55.834Z",
+      "visual": {
+        "by": "Looked: close-up of exactly one blank ticket with tear stub in the same tray/desk; no text/people; same light",
+        "sha256": "579ea1b3c49af2d84f0845c92204514a661a701066435dd2395c4029ddabf575",
+        "at": "2026-11-22T06:21:16.493Z"
+      }
+    },
+    "ticket-count": {
+      "file": "ticket-count.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "d3df5806ebb82647bfeb0f809c33e597a743a8f8bc9c55443485033bdfa4ca49",
+      "characters": [],
+      "references": [
+        "classroom-tickets",
+        "ticket-close"
+      ],
+      "sha256": "5c5b59728372885f44075a40f013595c83d35bd3dc76bb48e43b2505b90d641a",
+      "rawSha256": "f998d71736694c2d048432445283a6f209de62bf678ed3e83a51bcef2064a0a9",
+      "generationId": "gen-1795334896-JBc6wehH58LTRcpeO3vN",
+      "usage": {
+        "prompt_tokens": 2457,
+        "completion_tokens": 1680,
+        "total_tokens": 4137,
+        "cost": 0.1020285,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1020285,
+          "upstream_inference_prompt_cost": 0.0012285,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T08:08:38.933Z",
+      "visual": {
+        "by": "Exactly one blank paper admission ticket with tear-off stub alone on the classroom desk, matching 一张票; no other tickets, no people, no text",
+        "sha256": "5c5b59728372885f44075a40f013595c83d35bd3dc76bb48e43b2505b90d641a",
+        "at": "2026-11-22T08:11:31.077Z"
+      }
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "episodeId": "zhengzai-reading-20261127",
+  "assets": {
+    "campus-bench": {
+      "file": "campus-bench.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "cb11a738107da49b1c6e2e7a878dc067209f2f409ecd6ed372ad2cc54882e136",
+      "characters": [],
+      "references": [],
+      "sha256": "c22b646001914d36bf6fc5101811cd10f7299ae853c1f9c649686a3f7c7dc1a0",
+      "rawSha256": "293290fe8e4c682bda5b385abdb22668534f74e1e76bc797333fa06f59ce8630",
+      "generationId": "gen-1795328030-tJsihQXixjAfiZbUm28A",
+      "usage": {
+        "prompt_tokens": 202,
+        "completion_tokens": 1680,
+        "total_tokens": 1882,
+        "cost": 0.100901,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.100901,
+          "upstream_inference_prompt_cost": 0.000101,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T06:14:09.615Z",
+      "visual": {
+        "by": "Looked: campus gate, tree-lined path, bench with one closed blank-cover book; no text, people or characters; soft afternoon light; room for cast",
+        "sha256": "c22b646001914d36bf6fc5101811cd10f7299ae853c1f9c649686a3f7c7dc1a0",
+        "at": "2026-11-22T06:21:14.749Z"
+      }
+    },
+    "reading-close": {
+      "file": "reading-close.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "366bbca03d69056fe0a484000da257af3dd99274178e8bd768364aa0ae222c7a",
+      "characters": [],
+      "references": [
+        "campus-bench"
+      ],
+      "sha256": "8a181e00138f1550e6f0e351debe2df9795b1dae7280be089a3fda1c1c0936d6",
+      "rawSha256": "db83731ffa122ede3a9a5942193d412e01da344b369e80a45cfa45c1168d6ffa",
+      "generationId": "gen-1795328055-juMvt7yxbGET9uYVajbU",
+      "usage": {
+        "prompt_tokens": 1322,
+        "completion_tokens": 1680,
+        "total_tokens": 3002,
+        "cost": 0.101461,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.101461,
+          "upstream_inference_prompt_cost": 0.000661,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T06:14:34.827Z",
+      "visual": {
+        "by": "Looked: same bench/gate, open book with two blank facing pages and visible binding; no text/people; consistent light",
+        "sha256": "8a181e00138f1550e6f0e351debe2df9795b1dae7280be089a3fda1c1c0936d6",
+        "at": "2026-11-22T06:21:15.153Z"
+      }
+    },
+    "reading-progress": {
+      "file": "reading-progress.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "d13357e7df461b3a51f716134273e82ff729fa169a2cc0178e7a6235f4b93c79",
+      "characters": [],
+      "references": [
+        "campus-bench",
+        "reading-close"
+      ],
+      "sha256": "00c254e370520d6c8a7ccf002005d273b1cf88f42ba49e5ea230b495fd257aec",
+      "rawSha256": "7ce3a92271d531b7c7380e9d2782652b89e7590ae7ae1ac15a3f6cb29cdd30bc",
+      "generationId": "gen-1795328076-AIvV9XysShq7ZjspiItJ",
+      "usage": {
+        "prompt_tokens": 2439,
+        "completion_tokens": 1680,
+        "total_tokens": 4119,
+        "cost": 0.1020195,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1020195,
+          "upstream_inference_prompt_cost": 0.0012195,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T06:14:55.727Z",
+      "visual": {
+        "by": "Looked: same open book with one page visibly mid-turn (reading in progress); same bench/background; no text/people",
+        "sha256": "00c254e370520d6c8a7ccf002005d273b1cf88f42ba49e5ea230b495fd257aec",
+        "at": "2026-11-22T06:21:15.618Z"
+      }
+    }
+  }
+}

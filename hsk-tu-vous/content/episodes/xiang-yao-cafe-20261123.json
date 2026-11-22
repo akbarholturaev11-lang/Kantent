@@ -29,9 +29,9 @@
     {
       "id": "hook",
       "kind": "hook",
-      "durationSec": 5,
+      "durationSec": 3,
       "headline": "ВЫБОР У ЧАЙНОЙ СТОЙКИ",
-      "narration": "Вы у уличной чайной стойки. Как попросить чай мягче — 想 или 要? Сначала попробуйте выбрать слово.",
+      "narration": "Как попросить чай мягче: 想 или 要?",
       "screenCaption": "ВЫБОР У ЧАЙНОЙ СТОЙКИ",
       "cards": [
         {
@@ -352,7 +352,7 @@
       "kind": "example",
       "durationSec": 11,
       "headline": "МЯГКО ИЛИ ПРЯМО",
-      "narration": "Мягкое желание: 我想喝茶 — я хотел бы выпить чай. 想 стоит перед 喝. А прямой заказ: 我要一杯茶 — мне одну чашку чая.",
+      "narration": "我想喝茶 — мягкое желание: я хотел бы выпить чай. 想 стоит перед 喝. А прямой заказ: 我要一杯茶 — мне одну чашку чая.",
       "screenCaption": "МЯГКО ИЛИ ПРЯМО",
       "cards": [
         {
@@ -493,6 +493,116 @@
                     {
                       "atMs": 0,
                       "value": 17
+                    },
+                    {
+                      "atMs": 600,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "tea-counter"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.77,
+                  "y": 0.84,
+                  "h": 0.28
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "answer-action-order",
+          "kind": "graphic",
+          "cueText": "想 стоит перед 喝",
+          "explains": "Порядок слов: 想 ставится перед глаголом 喝.",
+          "visual": {
+            "title": "Порядок слов",
+            "hanzi": "想喝",
+            "pinyin": "xiǎng hē",
+            "meaning": "хотеть выпить",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "slot-xiang",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 90,
+                    "y": 150,
+                    "width": 150,
+                    "height": 110,
+                    "rx": 16,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "arrow",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 262,
+                    "y1": 205,
+                    "x2": 338,
+                    "y2": 205,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "arrow-head",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "318,185 340,205 318,225",
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "id": "slot-he",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 360,
+                    "y": 150,
+                    "width": 150,
+                    "height": 110,
+                    "rx": 16,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "base",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 60,
+                    "y": 300,
+                    "width": 480,
+                    "height": 18,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "slot-he",
+                  "property": "x",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 40
                     },
                     {
                       "atMs": 600,
@@ -963,6 +1073,127 @@
                 {
                   "id": "rabbit",
                   "mood": "correct",
+                  "x": 0.77,
+                  "y": 0.84,
+                  "h": 0.28
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "practice-action-rule",
+          "kind": "graphic",
+          "cueText": "Запомните",
+          "explains": "Итоговое правило: 想 звучит мягче, 要 — прямее.",
+          "visual": {
+            "title": "Мягче и прямее",
+            "hanzi": "想 · 要",
+            "pinyin": "xiǎng · yào",
+            "meaning": "мягче · прямее",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "soft-cup",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 120,
+                    "y": 190,
+                    "width": 110,
+                    "height": 90,
+                    "rx": 30,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "soft-wave",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "130,160 155,145 180,160 205,145 230,160",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 6,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "direct-cup",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 370,
+                    "y": 190,
+                    "width": 110,
+                    "height": 90,
+                    "rx": 4,
+                    "fill": "red"
+                  }
+                },
+                {
+                  "id": "direct-arrow",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 425,
+                    "y1": 110,
+                    "x2": 425,
+                    "y2": 170,
+                    "stroke": "red",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "divider",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 130,
+                    "x2": 300,
+                    "y2": 290,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "base",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 60,
+                    "y": 300,
+                    "width": 480,
+                    "height": 18,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "direct-arrow",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -20
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "tea-order"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
                   "x": 0.77,
                   "y": 0.84,
                   "h": 0.28

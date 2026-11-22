@@ -23,7 +23,7 @@
         "classroom-tickets",
         "ticket-close"
       ],
-      "prompt": "Same classroom desk with one matching paper admission ticket next to two matching stacked tickets, clear difference of one and two physical tickets. No letters, numbers, writing, people or watermarks."
+      "prompt": "Same classroom desk with exactly ONE single blank paper admission ticket lying alone in the centre, clearly just one ticket and nothing stacked beside it, tear-off stub visible, same light and furniture. No other tickets, letters, numbers, writing, people or watermarks."
     }
   ],
   "variety": {

@@ -28,9 +28,9 @@
     {
       "id": "hook",
       "kind": "hook",
-      "durationSec": 5,
+      "durationSec": 3,
       "headline": "АМАЛИ ҲОЗИРА",
-      "narration": "Назди кампус китоб мехонӣ. Чӣ тавр мегӯӣ «ман айнан ҳозир китоб мехонам»? 正在 пеш аз 看 ё баъд? Тартибро интихоб кун.",
+      "narration": "«Ман айнан ҳозир китоб мехонам»: 正在 пеш аз 看 ё баъд?",
       "screenCaption": "АМАЛИ ҲОЗИРА",
       "cards": [
         {
@@ -271,7 +271,7 @@
       "kind": "example",
       "durationSec": 11,
       "headline": "ПЕШ АЗ ФЕЪЛ",
-      "narration": "Дуруст: 我正在看书 — ман ҳозир китоб мехонам. 正在 пеш аз 看 меояд ва давом доштани амалро нишон медиҳад. Метавонӣ бигӯӣ 我在看书.",
+      "narration": "我正在看书 — дуруст: ман ҳозир китоб мехонам. 正在 пеш аз 看 меояд ва давом доштани амалро нишон медиҳад. Метавонӣ бигӯӣ 我在看书.",
       "screenCaption": "ПЕШ АЗ ФЕЪЛ",
       "cards": [
         {
@@ -369,6 +369,128 @@
                     },
                     {
                       "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "reading-close"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "answer-action-process",
+          "kind": "graphic",
+          "cueText": "正在 пеш аз 看 меояд",
+          "explains": "正在 пеш аз феъли 看 меояд ва амали давомдорро нишон медиҳад.",
+          "visual": {
+            "title": "Амал давом дорад",
+            "hanzi": "正在看",
+            "pinyin": "zhèngzài kàn",
+            "meaning": "ҳозир мехонам (дар ҷараён)",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "slot-zhengzai",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 80,
+                    "y": 150,
+                    "width": 170,
+                    "height": 110,
+                    "rx": 16,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "arrow",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 270,
+                    "y1": 205,
+                    "x2": 340,
+                    "y2": 205,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "arrow-head",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "320,185 342,205 320,225",
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "id": "slot-kan",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 360,
+                    "y": 150,
+                    "width": 160,
+                    "height": 110,
+                    "rx": 16,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "progress-track",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 80,
+                    "y": 300,
+                    "width": 440,
+                    "height": 20,
+                    "rx": 10,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "progress-fill",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 80,
+                    "y": 300,
+                    "width": 260,
+                    "height": 20,
+                    "rx": 10,
+                    "fill": "gold"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "progress-fill",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.3
+                    },
+                    {
+                      "atMs": 900,
                       "value": 1
                     }
                   ]
@@ -504,7 +626,7 @@
       "kind": "example",
       "durationSec": 10,
       "headline": "МАШҚИ ЯК ҶУМЛА",
-      "narration": "Такрор кун: 我正在看书. Агар дӯстат пурсад, чӣ кор мекунӣ, ҷавоб деҳ 我在看书. Имрӯз муҳим: 正在 пеш аз феъл аст.",
+      "narration": "Такрор кун: 我正在看书. Агар дӯстат пурсад, чӣ кор мекунӣ, ҷавоб деҳ 我在看书. Қоидаи асосӣ: 正在 пеш аз феъл меояд.",
       "screenCaption": "МАШҚИ ЯК ҶУМЛА",
       "cards": [
         {
@@ -729,6 +851,116 @@
               ]
             }
           }
+        },
+        {
+          "id": "practice-action-rule",
+          "kind": "graphic",
+          "cueText": "Қоидаи асосӣ",
+          "explains": "Хулоса: 正在 ҳамеша пеш аз феъл меояд.",
+          "visual": {
+            "title": "Ҷой дар ҷумла",
+            "hanzi": "正在 + 看",
+            "pinyin": "zhèngzài + kàn",
+            "meaning": "正在 пеш аз феъл",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "slot-zhengzai",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 80,
+                    "y": 150,
+                    "width": 170,
+                    "height": 110,
+                    "rx": 16,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "slot-verb",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 360,
+                    "y": 150,
+                    "width": 160,
+                    "height": 110,
+                    "rx": 16,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "arrow",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 270,
+                    "y1": 205,
+                    "x2": 340,
+                    "y2": 205,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "arrow-head",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "320,185 342,205 320,225",
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "id": "check",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "250,310 285,340 350,280",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "check",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "reading-progress"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
         }
       ]
     }
@@ -790,7 +1022,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "zhengzai-reading-20261127",
-    "sourceHash": "fa55be08079ad046f1a4b704c7a640a28662f8298c4669c56b60374b521a13b6",
+    "sourceHash": "f3f6651ee5ed61b4a5bb9ae458e7c1a70f3607a7d4359faf5d57b9bc3226cf30",
     "authoredOn": "2026-11-22",
     "status": "draft"
   }

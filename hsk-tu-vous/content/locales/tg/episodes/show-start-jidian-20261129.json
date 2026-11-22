@@ -28,9 +28,9 @@
     {
       "id": "hook",
       "kind": "hook",
-      "durationSec": 9,
+      "durationSec": 7,
       "headline": "САВОЛИ НАЗДИ САҲНА",
-      "narration": "Панда бо билети қисми аввал ба саҳнаи шом меояд. Мепурсад: 几点开始？ — соати чанд сар мешавад? Ҷавоб: 八点开始 — соати ҳашт.",
+      "narration": "Панда назди саҳна мепурсад: 几点开始？ — соати чанд сар мешавад? Ҷавоб: 八点开始 — соати ҳашт.",
       "screenCaption": "САВОЛИ НАЗДИ САҲНА",
       "cards": [
         {
@@ -907,7 +907,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "show-start-jidian-20261129",
-    "sourceHash": "343fa63d3dbc03c24457e1296ae89e7270f853a8a0ac4895eda20cb5ca12e682",
+    "sourceHash": "5a7a5b8356da45b69fa9d7880a6a4caa640c80c572f27094dd949039afe63cb0",
     "authoredOn": "2026-11-22",
     "status": "draft"
   }

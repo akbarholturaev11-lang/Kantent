@@ -76,7 +76,7 @@
     "家": "house", "学校": "school", "学生": "student", "老师": "board", "医生": "medic",
     "车": "car", "汽车": "car", "出租车": "car", "飞机": "plane", "猫": "cat", "狗": "dog",
     "雨": "rain", "下雨": "rain", "太阳": "sun", "天气": "sun",
-    "游泳": "swim", "吃": "bowl", "喝": "cup", "看": "eye", "看书": "book", "读": "book", "写": "pencil", "学": "pencil", "学习": "pencil",
+    "游泳": "swim", "吃": "bowl", "喝": "cup", "看": "eye", "看书": "book", "开始": "clock", "读": "book", "写": "pencil", "学": "pencil", "学习": "pencil",
     "说": "speech", "说话": "speech", "讲": "speech", "汉语": "speech", "中文": "speech", "叫": "speech",
     "去": "go", "来": "come", "走": "go", "回": "come", "买": "cart", "卖": "cart",
     "睡觉": "sleep", "工作": "work", "开车": "car", "打电话": "phone", "听": "ear", "唱歌": "music", "跳舞": "music",
@@ -107,5 +107,5 @@
   "inclusion": { "也": "also", "都": "all" },
   "adverbs": ["很", "更", "还", "非常", "太", "最", "真", "特别"],
   "times": { "今天": "day", "昨天": "day", "明天": "day", "每天": "day", "周末": "day", "星期": "day", "现在": "clock", "刚才": "clock", "以后": "clock", "以前": "clock",
-    "早上": "sun", "上午": "sun", "中午": "sun", "下午": "sun", "晚上": "moon" }
+    "早上": "sun", "上午": "sun", "中午": "sun", "下午": "sun", "晚上": "moon", "八点": "clock" }
 }

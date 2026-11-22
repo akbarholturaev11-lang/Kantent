@@ -28,9 +28,9 @@
     {
       "id": "mistake",
       "kind": "hook",
-      "durationSec": 5,
+      "durationSec": 3,
       "headline": "ҲИССАЧАИ ЗИЁДӢ",
-      "narration": "Дирӯз назди дӯкони китоб чизе нахаридӣ. Хато: 我没买了两本书. Баъд аз 没 дар ин ҷо 了 намегузорем.",
+      "narration": "Хато: 我没买了两本书. Баъд аз 没 了 намегузорем.",
       "screenCaption": "ҲИССАЧАИ ЗИЁДӢ",
       "cards": [
         {
@@ -311,7 +311,7 @@
       "kind": "example",
       "durationSec": 11,
       "headline": "ХАРИД Ё НАБУДИ ОН",
-      "narration": "Агар харид анҷом ёфт, бигӯ: 我买了两本书 — ман ду китоб харидам. Аммо агар нахаридӣ: 我没买书. Дар инкор 了 нест.",
+      "narration": "我买了两本书 — агар харид анҷом ёфт: ман ду китоб харидам. Аммо агар нахаридӣ: 我没买书. Дар инкор 了 нест.",
       "screenCaption": "ХАРИД Ё НАБУДИ ОН",
       "cards": [
         {
@@ -910,7 +910,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "le-buy-books-20261125",
-    "sourceHash": "89f26729f0d34558fda2a193ba11ae25ca7f2ea3389a1c0785ddaa6f84b04fe7",
+    "sourceHash": "d948bb88909f80b3f2899c21e36737eda7412655aa2f9aad22d3e9d7ad059a78",
     "authoredOn": "2026-11-22",
     "status": "draft"
   }

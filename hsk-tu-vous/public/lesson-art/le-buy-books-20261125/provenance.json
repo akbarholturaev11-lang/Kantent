@@ -1,0 +1,133 @@
+{
+  "episodeId": "le-buy-books-20261125",
+  "assets": {
+    "lake-bookstall": {
+      "file": "lake-bookstall.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "13e83e8de311b6cd049ebf805e641d350d89463245a8fc4bc309020663547c28",
+      "characters": [],
+      "references": [],
+      "sha256": "c9ed3196d5398de158d83f3d744c80fa4f8e8c0117f5dc109076d87400acc0bc",
+      "rawSha256": "d8c116d9654caece72d95aa30cd6e10731662ec83714ff2eb613ea0254c04c39",
+      "generationId": "gen-1795328263-QrXLsgb1l8qDKL9YgTyN",
+      "usage": {
+        "prompt_tokens": 208,
+        "completion_tokens": 1680,
+        "total_tokens": 1888,
+        "cost": 0.100904,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.100904,
+          "upstream_inference_prompt_cost": 0.000104,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T06:18:50.893Z",
+      "visual": {
+        "by": "Looked: lakeside park with willows and stone bridge, small book stall with blank-cover books; no text/people",
+        "sha256": "c9ed3196d5398de158d83f3d744c80fa4f8e8c0117f5dc109076d87400acc0bc",
+        "at": "2026-11-22T06:21:17.409Z"
+      }
+    },
+    "books-close": {
+      "file": "books-close.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "829a9b077d29975ee50bdb4dec4dfc9b18e5ca25ce9a1ee183b434ead3d65aa0",
+      "characters": [],
+      "references": [
+        "lake-bookstall"
+      ],
+      "sha256": "3489957d285187fcfccdfb5c1123fefc453ef89bf5eb414e96126b3329a4262a",
+      "rawSha256": "5ab79fdc6bea7e9136da70384bf431e16bbe34abf3f3c64f46cee1cad09bf628",
+      "generationId": "gen-1795328333-fUN4SSXtSdbjaaLcWF5Z",
+      "usage": {
+        "prompt_tokens": 1322,
+        "completion_tokens": 1680,
+        "total_tokens": 3002,
+        "cost": 0.101461,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.101461,
+          "upstream_inference_prompt_cost": 0.000661,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T06:19:53.768Z",
+      "visual": {
+        "by": "Looked: two plain closed books stacked on wooden table with blank receipt slip, willows/bridge behind; no text/people",
+        "sha256": "3489957d285187fcfccdfb5c1123fefc453ef89bf5eb414e96126b3329a4262a",
+        "at": "2026-11-22T06:21:17.731Z"
+      }
+    },
+    "book-result": {
+      "file": "book-result.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "19341fe736b49e87d740b5949c0ab3a425a7f9cd4547ad0f8e916ee3b76d7a4e",
+      "characters": [],
+      "references": [
+        "lake-bookstall",
+        "books-close"
+      ],
+      "sha256": "e3e2e68cb2e529f81de822a4cee62d43c8ac3c5b69aedff34952ea1716d541f1",
+      "rawSha256": "eb401112b4df681a615d5d3751431e4457d828779e92abfe5c50e08c8c9b0cc0",
+      "generationId": "gen-1795335005-MM1CXJdV2bIYkTJO28J6",
+      "usage": {
+        "prompt_tokens": 2457,
+        "completion_tokens": 1680,
+        "total_tokens": 4137,
+        "cost": 0.1020285,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1020285,
+          "upstream_inference_prompt_cost": 0.0012285,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T08:10:28.230Z",
+      "visual": {
+        "by": "Two closed books (blue and green) packed in a cloth tote bag on the lakeside stall counter, stone bridge and willows behind; completed purchase, no people, no text",
+        "sha256": "e3e2e68cb2e529f81de822a4cee62d43c8ac3c5b69aedff34952ea1716d541f1",
+        "at": "2026-11-22T08:11:30.776Z"
+      }
+    }
+  }
+}

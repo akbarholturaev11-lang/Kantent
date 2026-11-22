@@ -1,0 +1,133 @@
+{
+  "episodeId": "xiang-yao-cafe-20261123",
+  "assets": {
+    "hutong-tea": {
+      "file": "hutong-tea.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "88557a37272f3f7f3a2ef1b2f66266bdca7a2e38226bff9c149e481553d999d9",
+      "characters": [],
+      "references": [],
+      "sha256": "035e58e2389d5fd448ce2f1ab5137454f4f21bc4103fdb2a649acca5316efc00",
+      "rawSha256": "a2a5fdc05646021f38cb7829b4ea90592cf92bc5e172a6f81df30d0b0b5c3666",
+      "generationId": "gen-1795327644-mJoAneKkHAUa015pViS4",
+      "usage": {
+        "prompt_tokens": 206,
+        "completion_tokens": 1680,
+        "total_tokens": 1886,
+        "cost": 0.100903,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.100903,
+          "upstream_inference_prompt_cost": 0.000103,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T06:08:41.148Z",
+      "visual": {
+        "by": "Looked: Beijing hutong lane, grey brick, wooden doors, tea counter with teapot and cups foreground; blank hanging plaque and tin labels carry no text; no people/characters; afternoon warm light; sharp, room for cast",
+        "sha256": "035e58e2389d5fd448ce2f1ab5137454f4f21bc4103fdb2a649acca5316efc00",
+        "at": "2026-11-22T06:11:17.067Z"
+      }
+    },
+    "tea-counter": {
+      "file": "tea-counter.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "4c0cd2ec06241ce3d6133521056f54b3bb928b1930ed1b6e444b1006cbc61ca1",
+      "characters": [],
+      "references": [
+        "hutong-tea"
+      ],
+      "sha256": "fd3991f704a80480a94e7a4446dbb305cc7a901f2672c22337bb713563bc41eb",
+      "rawSha256": "38e782fa463890245b8dc04649ada594a01c0585d9383dec566e43c0c0af9fd6",
+      "generationId": "gen-1795327724-pq49zblbTIg03jkTbaB5",
+      "usage": {
+        "prompt_tokens": 1320,
+        "completion_tokens": 1680,
+        "total_tokens": 3000,
+        "cost": 0.10146,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.10146,
+          "upstream_inference_prompt_cost": 0.00066,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T06:09:49.538Z",
+      "visual": {
+        "by": "Looked: closer view of same counter/brick wall/door, clay teapot and two plain cups; tin labels blank, no text, no people/characters; matching palette; clean composition",
+        "sha256": "fd3991f704a80480a94e7a4446dbb305cc7a901f2672c22337bb713563bc41eb",
+        "at": "2026-11-22T06:11:27.982Z"
+      }
+    },
+    "tea-order": {
+      "file": "tea-order.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "985a4649347fc3a1c4b55cc4d81ac75330ca7d7a8d2a71e727807976220d6ce3",
+      "characters": [],
+      "references": [
+        "hutong-tea",
+        "tea-counter"
+      ],
+      "sha256": "cd3a030facdcebc8502dd7f1ffd29b10ccde7926cbf7b109cc2d36d93f55ec92",
+      "rawSha256": "9e4e4dcb177bcb03f77ca79db2c8b40099d2b3ba45d851808f64105a19bc219d",
+      "generationId": "gen-1795327791-6TBerSUOSMMEMbtckh7r",
+      "usage": {
+        "prompt_tokens": 2446,
+        "completion_tokens": 1680,
+        "total_tokens": 4126,
+        "cost": 0.102023,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.102023,
+          "upstream_inference_prompt_cost": 0.001223,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T06:10:56.647Z",
+      "visual": {
+        "by": "Looked: same counter and hutong, exactly one filled cup centered, other cups stacked aside; no text, no people/characters; matching warm light; clear one-cup order meaning",
+        "sha256": "cd3a030facdcebc8502dd7f1ffd29b10ccde7926cbf7b109cc2d36d93f55ec92",
+        "at": "2026-11-22T06:11:28.363Z"
+      }
+    }
+  }
+}

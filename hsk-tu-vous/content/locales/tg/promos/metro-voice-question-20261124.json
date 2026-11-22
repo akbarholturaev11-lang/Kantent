@@ -320,10 +320,10 @@
         "continuityKey": "metro-hanzi-attention",
         "cueText": "машқи шинохти иероглифҳо",
         "backgroundToken": "foreground",
-        "assetPath": "public/promo-captures/hanzi-recognition-20261124-tg.png",
+        "assetPath": "public/promo-captures/hanzi-recognition-20261124-ru.png",
         "provenance": "genuine-product-capture",
-        "uiLanguage": "tg-TJ",
-        "limitations": "BLOCKED: this real language-specific HSK AI recognition-practice capture has NOT been captured or committed. Do not render or publish until the actual app screen is captured, authenticity checked, privacy cleared and current text/answers verified. No invented quiz/result UI is permitted."
+        "uiLanguage": "ru-RU",
+        "limitations": "BLOCKED for TG: only a Russian-UI capture exists (owner screenshot 2026-11-22). A genuine Tajik-UI capture, a language-neutral crop or an owner sharedUiOwnerApproval is required before rendering or publishing this TG ad."
       },
       "claimIds": [
         "hanzi-recognition-practice"
@@ -427,10 +427,10 @@
         "continuityKey": "metro-hanzi-attention",
         "cueText": "дуруст ё нодуруст будани ҷавобро мебинӣ",
         "backgroundToken": "foreground",
-        "assetPath": "public/promo-captures/hanzi-recognition-20261124-tg.png",
+        "assetPath": "public/promo-captures/hanzi-recognition-20261124-ru.png",
         "provenance": "genuine-product-capture",
-        "uiLanguage": "tg-TJ",
-        "limitations": "BLOCKED: this real language-specific HSK AI recognition-practice capture has NOT been captured or committed. Do not render or publish until the actual app screen is captured, authenticity checked, privacy cleared and current text/answers verified. No invented quiz/result UI is permitted."
+        "uiLanguage": "ru-RU",
+        "limitations": "BLOCKED for TG: only a Russian-UI capture exists (owner screenshot 2026-11-22). A genuine Tajik-UI capture, a language-neutral crop or an owner sharedUiOwnerApproval is required before rendering or publishing this TG ad."
       },
       "claimIds": [
         "hanzi-answer-feedback"
@@ -579,7 +579,7 @@
   "localization": {
     "language": "tg",
     "sourcePromoId": "metro-voice-question-20261124",
-    "sourceHash": "f7839e7666b5d1e07c2e7ffc17778b7d829c4bb07427690ff2da53190f81d927",
+    "sourceHash": "bc3da08b2e08e2f5cba7eccaa0f13b89ae05cce05294a50046e6444ebad7a64e",
     "authoredOn": "2026-11-22",
     "status": "draft"
   }

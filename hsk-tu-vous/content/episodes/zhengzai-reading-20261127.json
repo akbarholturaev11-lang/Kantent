@@ -28,9 +28,9 @@
     {
       "id": "hook",
       "kind": "hook",
-      "durationSec": 5,
+      "durationSec": 3,
       "headline": "ЧТО ПРОИСХОДИТ СЕЙЧАС",
-      "narration": "У кампуса ты читаешь книгу. Как сказать «я прямо сейчас читаю»? 正在 до 看 или после? Выбери порядок.",
+      "narration": "«Я прямо сейчас читаю»: 正在 до 看 или после?",
       "screenCaption": "ЧТО ПРОИСХОДИТ СЕЙЧАС",
       "cards": [
         {
@@ -271,7 +271,7 @@
       "kind": "example",
       "durationSec": 11,
       "headline": "ПОСТАВЬ ПЕРЕД ГЛАГОЛОМ",
-      "narration": "Правильно: 我正在看书 — я сейчас читаю книгу. 正在 стоит перед 看 и выделяет процесс. Ещё можно сказать 我在看书.",
+      "narration": "我正在看书 — правильно: я сейчас читаю книгу. 正在 стоит перед 看 и выделяет процесс. Ещё можно сказать 我在看书.",
       "screenCaption": "ПОСТАВЬ ПЕРЕД ГЛАГОЛОМ",
       "cards": [
         {
@@ -369,6 +369,128 @@
                     },
                     {
                       "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "reading-close"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "answer-action-process",
+          "kind": "graphic",
+          "cueText": "正在 стоит перед 看",
+          "explains": "正在 ставится перед глаголом 看 и показывает действие в процессе.",
+          "visual": {
+            "title": "Действие идёт",
+            "hanzi": "正在看",
+            "pinyin": "zhèngzài kàn",
+            "meaning": "сейчас читаю (в процессе)",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "slot-zhengzai",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 80,
+                    "y": 150,
+                    "width": 170,
+                    "height": 110,
+                    "rx": 16,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "arrow",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 270,
+                    "y1": 205,
+                    "x2": 340,
+                    "y2": 205,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "arrow-head",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "320,185 342,205 320,225",
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "id": "slot-kan",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 360,
+                    "y": 150,
+                    "width": 160,
+                    "height": 110,
+                    "rx": 16,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "progress-track",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 80,
+                    "y": 300,
+                    "width": 440,
+                    "height": 20,
+                    "rx": 10,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "progress-fill",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 80,
+                    "y": 300,
+                    "width": 260,
+                    "height": 20,
+                    "rx": 10,
+                    "fill": "gold"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "progress-fill",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.3
+                    },
+                    {
+                      "atMs": 900,
                       "value": 1
                     }
                   ]
@@ -504,7 +626,7 @@
       "kind": "example",
       "durationSec": 10,
       "headline": "СКАЖИ ПРО СВОЙ ДЕНЬ",
-      "narration": "Повтори: 我正在看书. Если друг спросит, что делаешь, ответь 我在看书. Сегодня важно одно: 正在 перед глаголом.",
+      "narration": "Повтори: 我正在看书. Когда друг спрашивает, что ты делаешь, ответь 我在看书. Главное правило: 正在 перед глаголом.",
       "screenCaption": "СКАЖИ ПРО СВОЙ ДЕНЬ",
       "cards": [
         {
@@ -722,6 +844,116 @@
                 {
                   "id": "monkey",
                   "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "practice-action-rule",
+          "kind": "graphic",
+          "cueText": "Главное правило",
+          "explains": "Итог: 正在 всегда стоит перед глаголом.",
+          "visual": {
+            "title": "Место в предложении",
+            "hanzi": "正在 + 看",
+            "pinyin": "zhèngzài + kàn",
+            "meaning": "正在 перед глаголом",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "slot-zhengzai",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 80,
+                    "y": 150,
+                    "width": 170,
+                    "height": 110,
+                    "rx": 16,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "slot-verb",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 360,
+                    "y": 150,
+                    "width": 160,
+                    "height": 110,
+                    "rx": 16,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "arrow",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 270,
+                    "y1": 205,
+                    "x2": 340,
+                    "y2": 205,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "arrow-head",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "320,185 342,205 320,225",
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "id": "check",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "250,310 285,340 350,280",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "check",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "reading-progress"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
                   "x": 0.78,
                   "y": 0.86,
                   "h": 0.29
