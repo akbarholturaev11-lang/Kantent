@@ -1078,6 +1078,201 @@
         "localRequestId": "2c11a721459d648eb01ddf77",
         "sourceCommit": "0e96de40f86ae8647462c344ed0ef5d72385191f"
       }
+    },
+    {
+      "content": {
+        "id": "xiang-yao-cafe-20261123",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "2ee8c8d65a706ac9794da8244847ea513d397f92f11bd09c78aa0ee787df5e4e"
+      },
+      "platform": "instagram",
+      "accountId": "6a411e989d9472faae10a430",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6b02d541ce7c17eb705a3843",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "94f50fcb15dad06edd9ab9831361f11efbfe738709d434671e7a98b0d1d4475e",
+      "approvedVideoSha256": "94f50fcb15dad06edd9ab9831361f11efbfe738709d434671e7a98b0d1d4475e",
+      "approvedAt": "2026-11-22T11:37:59.271Z",
+      "verifiedAt": "2026-11-22T11:42:58.739Z",
+      "scheduledFor": "2026-11-23T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "xiang-yao-cafe-20261123-baseline-v3-20261122",
+      "postPreviewSha256": "fb5b05b6fab686450745ec4b8bc87444b507eb0a234748e5078b6f6497ba6b82",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "A",
+        "promptSha256": "ccd3a1eb350ab63c7a754ce81672e8c663ede7e48a4a7ec1fb92901786d6da10",
+        "hookId": "xiang-yao-cafe-20261123-ru-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Как попросить чай мягче: 想 или 要?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "018f84ca225834fe700a328f7df08f7112e1255a4b7dc1cefd8ad35cf1601122"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "cf4cf24314d12d0600b664c7",
+        "sourceCommit": "3d5c8ddf701bd2506673c90ed7664e995dc3c2ab"
+      }
+    },
+    {
+      "content": {
+        "id": "xiang-yao-cafe-20261123",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "2ee8c8d65a706ac9794da8244847ea513d397f92f11bd09c78aa0ee787df5e4e"
+      },
+      "platform": "youtube",
+      "accountId": "6ac96e053f8f4ffc10b0655f",
+      "accountUsername": "hskai_app",
+      "zernioPostId": "6b02d70df2e81344204f9500",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "4d85b5dea8d46845b0bbdd9681a79d569759ccf7e8a94167edd3051640925445",
+      "approvedVideoSha256": "4d85b5dea8d46845b0bbdd9681a79d569759ccf7e8a94167edd3051640925445",
+      "approvedAt": "2026-11-22T11:49:16.209Z",
+      "verifiedAt": "2026-11-22T11:50:39.750Z",
+      "scheduledFor": "2026-11-23T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "xiang-yao-cafe-20261123-youtube-cta-v1",
+      "postPreviewSha256": "31339155684a6153ccf1dd3aa5399b993dbc260ff414ec70a1b446d0bf78076b",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "A",
+        "promptSha256": "ccd3a1eb350ab63c7a754ce81672e8c663ede7e48a4a7ec1fb92901786d6da10",
+        "hookId": "xiang-yao-cafe-20261123-ru-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Как попросить чай мягче: 想 или 要?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "018f84ca225834fe700a328f7df08f7112e1255a4b7dc1cefd8ad35cf1601122"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "4f44f5500e9e81d7bd088067",
+        "sourceCommit": "3d5c8ddf701bd2506673c90ed7664e995dc3c2ab"
+      }
+    },
+    {
+      "content": {
+        "id": "xiang-yao-cafe-20261123",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "2ee8c8d65a706ac9794da8244847ea513d397f92f11bd09c78aa0ee787df5e4e"
+      },
+      "platform": "tiktok",
+      "accountId": "6ae16327a2845fbdb07e5ccb",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6b02d8d5ffb09735bbb07255",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "1dfd55132055b086efa0a4e55b0080e9823a4e7df9874d300e06cd17587da540",
+      "approvedVideoSha256": "1dfd55132055b086efa0a4e55b0080e9823a4e7df9874d300e06cd17587da540",
+      "approvedAt": "2026-11-22T11:56:47.670Z",
+      "verifiedAt": "2026-11-22T11:58:14.640Z",
+      "scheduledFor": "2026-11-23T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "xiang-yao-cafe-20261123-tiktok-cta-v1",
+      "postPreviewSha256": "5f8545ec4d80887c58fd7826381b91c7298e80b4ea68993483ed83236e91d46a",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "A",
+        "promptSha256": "ccd3a1eb350ab63c7a754ce81672e8c663ede7e48a4a7ec1fb92901786d6da10",
+        "hookId": "xiang-yao-cafe-20261123-ru-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Как попросить чай мягче: 想 или 要?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "eab9cb832af85392a158e9085a6724a7647c3900fdbcfd14e55b1aeec752d034"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "edd30a3116cf3d2f53c1d746",
+        "sourceCommit": "3d5c8ddf701bd2506673c90ed7664e995dc3c2ab"
+      }
+    },
+    {
+      "content": {
+        "id": "xiang-yao-cafe-20261123",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "08eaedf050fa4160ae60991e396b3bf9925dc46af3671df6cba6585620fb4363"
+      },
+      "platform": "facebook",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "accountUsername": "Akbarholturaev",
+      "zernioPostId": "6b02dfb582db9cf4e6be37e6",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "31d1c9c5cdfe561674a2e566a29e95d19c737d8093ca8e016803bf2b406bad2d",
+      "approvedVideoSha256": "31d1c9c5cdfe561674a2e566a29e95d19c737d8093ca8e016803bf2b406bad2d",
+      "approvedAt": "2026-11-22T12:24:53.896Z",
+      "verifiedAt": "2026-11-22T12:27:36.868Z",
+      "scheduledFor": "2026-11-23T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "xiang-yao-cafe-20261123-facebook-cta-v1",
+      "postPreviewSha256": "6ee5633c82f3b3b2615695ff5bbf8af2707e147b408d1cfd6504f11b0396f302",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "A",
+        "promptSha256": "ccd3a1eb350ab63c7a754ce81672e8c663ede7e48a4a7ec1fb92901786d6da10",
+        "hookId": "xiang-yao-cafe-20261123-tg-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Дар дӯкони чой нармтар чӣ мегӯӣ: 想 ё 要?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "36d31b6f860e085618cc9f9ab328b614cbef0e9cd3310f0ebd5fc2278b97f8fb"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "0175ede53834ac975a2b6cc0",
+        "sourceCommit": "3d5c8ddf701bd2506673c90ed7664e995dc3c2ab"
+      }
+    },
+    {
+      "content": {
+        "id": "xiang-yao-cafe-20261123",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "08eaedf050fa4160ae60991e396b3bf9925dc46af3671df6cba6585620fb4363"
+      },
+      "platform": "youtube",
+      "accountId": "6ae160123787e4c71b522d64",
+      "accountUsername": "hskai.app-tj",
+      "zernioPostId": "6b02e16064182e5c1184edfb",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "a6d1f57c23f7a8a3cadaaafc28114dd2f781e8f40b6d1937ad8eca063b28b2cb",
+      "approvedVideoSha256": "a6d1f57c23f7a8a3cadaaafc28114dd2f781e8f40b6d1937ad8eca063b28b2cb",
+      "approvedAt": "2026-11-22T12:32:42.642Z",
+      "verifiedAt": "2026-11-22T12:34:41.402Z",
+      "scheduledFor": "2026-11-23T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "xiang-yao-cafe-20261123-youtube-cta-v1",
+      "postPreviewSha256": "b593b6ad67a6a7f64b5faeb68129cb468a81cc9c81cea65c409595e656ab3eef",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "A",
+        "promptSha256": "ccd3a1eb350ab63c7a754ce81672e8c663ede7e48a4a7ec1fb92901786d6da10",
+        "hookId": "xiang-yao-cafe-20261123-tg-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Дар дӯкони чой нармтар чӣ мегӯӣ: 想 ё 要?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "36d31b6f860e085618cc9f9ab328b614cbef0e9cd3310f0ebd5fc2278b97f8fb"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "f3323098c7a34393fc7a7d87",
+        "sourceCommit": "3d5c8ddf701bd2506673c90ed7664e995dc3c2ab"
+      }
     }
   ]
 }
