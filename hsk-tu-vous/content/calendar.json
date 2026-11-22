@@ -661,7 +661,8 @@
       "status": "planned",
       "contentType": "advertisement",
       "promoFile": "promos/metro-voice-question-20261124.json",
-      "planningNote": "CTA-free RU/TG AI Voice product ad with genuine UI capture evidence; no TTS/render/publication approval."
+      "planningNote": "CTA-free RU/TG draft changed from AI Voice to Hanzi recognition practice. Claims corroborated by the real HSK AI recognition component (source evidence: content/promos/evidence/hanzi-recognition-20261122.md). The genuine RU and TG recognition product screenshots are NOT YET captured or committed, so media/source readiness is BLOCKED; capture and review the live product UI before claiming a valid product-demo. No audio, MP4, owner approval, or publishing authorized.",
+      "topic": "В метро: распознавание похожих иероглифов в HSK AI"
     },
     {
       "date": "2026-11-25",
