@@ -3,41 +3,41 @@
   "id": "dorm-laundry-voice-20261126",
   "kind": "advertisement",
   "status": "draft",
-  "title": "Как задать вопрос в прачечной: HSK AI перед разговором",
+  "title": "Незнакомый иероглиф в прачечной: словарь HSK AI",
   "language": "ru",
   "languageCode": "ru-RU",
   "styleId": "minimal-story-v1",
   "formatId": "life-friction-demo",
-  "benefit": "Практика собственной китайской фразы перед вопросом у стиральной машины",
+  "benefit": "Проверка китайского слова в словаре по иероглифу, пиньиню или значению",
   "situation": {
-    "setting": "Общая прачечная общежития",
-    "learnerGoal": "Спросить другого студента, свободна ли стиральная машина",
-    "friction": "Вопрос сформулирован в голове, но произнести его незнакомому студенту непросто"
+    "setting": "Общая прачечная в общежитии",
+    "learnerGoal": "Разобраться, как проверить непонятный китайский иероглиф на бытовой технике",
+    "friction": "На панели виден знак, но его произношение и смысл не очевидны"
   },
   "storyType": "illustrative",
   "storyDisclosure": "Представь",
   "evidence": [
     {
-      "id": "verified-ai-voice-ui-20261122",
+      "id": "verified-dictionary-search-code-20261122",
       "kind": "product-source",
-      "sourcePath": "public/promo-captures/ai-voice-original.png",
+      "sourcePath": "content/promos/evidence/dictionary-search-20261122.md",
       "checkedAt": "2026-11-22",
-      "supports": "Existing genuine AI Voice screenshot at GitHub blob 81f7be1cbadeca7a820cc5877c893fc91e65f267; current HSK-AI-Bot main app/static/course-v3.html blob aacb025655196ef6c48e21beffc64b63da90dbef checked 2026-11-22 contains VOICE_HTML, vc-root, vc-mic microphone button. Supports interface existence and microphone; no claim of response quality or results. Source: https://github.com/akbarholturaev11-lang/HSK-AI-Bot/blob/main/app/static/course-v3.html"
+      "supports": "HSK-AI-Bot main app/static/hsk-lugat.html verified blob ce1d9a884be543de5f81d4caa63ee880aed05a82: renderList(query) filters Hanzi w.h, normalized pinyin w._p, meaning w._m; dictRowHtml(w) renders w.h, w.p and localized meaning text(w.m). No verified genuine dictionary screenshot yet, see receipt and required capture gate."
     }
   ],
   "claims": [
     {
-      "id": "voice-practice",
-      "text": "В HSK AI есть AI Voice для разговорной практики.",
+      "id": "dictionary-search",
+      "text": "В HSK AI есть словарь с поиском по иероглифам, пиньиню и значению.",
       "evidenceIds": [
-        "verified-ai-voice-ui-20261122"
+        "verified-dictionary-search-code-20261122"
       ]
     },
     {
-      "id": "microphone-control",
-      "text": "В этом режиме есть кнопка микрофона.",
+      "id": "dictionary-result-rows",
+      "text": "В списке слов отображаются иероглифы, пиньинь и перевод.",
       "evidenceIds": [
-        "verified-ai-voice-ui-20261122"
+        "verified-dictionary-search-code-20261122"
       ]
     }
   ],
@@ -45,15 +45,15 @@
     {
       "id": "opening",
       "role": "situation",
-      "narration": "Представь: в общежитии заняты стиральные машины, и ты хочешь спросить, какая свободна. Перед вопросом открываешь HSK AI.",
+      "narration": "Представь: в прачечной общежития на панели машины видишь иероглиф 水. Вспоминаешь HSK AI: хочется понять знак, а не гадать.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Dormitory washer and pending question",
-        "action": "Показать две стиральные машины у стены, не превращать во фиктивный интерфейс.",
-        "continuityKey": "laundry-practice",
-        "cueText": "стиральные машины",
+        "focalSubject": "Стиральная машина и знак",
+        "action": "Показать стиральную машину и отдельный символ воды без нарисованного интерфейса.",
+        "continuityKey": "laundry-dictionary",
+        "cueText": "иероглиф 水",
         "backgroundToken": "foreground",
-        "drawingBrief": "Показать две стиральные машины у стены, не превращать во фиктивный интерфейс.",
+        "drawingBrief": "Показать стиральную машину и отдельный символ воды без нарисованного интерфейса.",
         "graphic": {
           "width": 600,
           "height": 400,
@@ -62,10 +62,10 @@
               "id": "washer",
               "type": "rect",
               "attrs": {
-                "x": 137,
-                "y": 76,
-                "width": 322,
-                "height": 245,
+                "x": 100,
+                "y": 95,
+                "width": 350,
+                "height": 240,
                 "rx": 22,
                 "fill": "secondary",
                 "stroke": "foreground",
@@ -76,31 +76,33 @@
               "id": "drum",
               "type": "circle",
               "attrs": {
-                "cx": 298,
-                "cy": 217,
-                "r": 79,
+                "cx": 272,
+                "cy": 218,
+                "r": 80,
                 "fill": "poolWater",
                 "stroke": "teal",
-                "strokeWidth": 14
+                "strokeWidth": 12
               }
             },
             {
               "id": "drum-inner",
               "type": "circle",
               "attrs": {
-                "cx": 298,
-                "cy": 217,
+                "cx": 272,
+                "cy": 218,
                 "r": 49,
                 "fill": "teal"
               }
             },
             {
               "id": "control",
-              "type": "circle",
+              "type": "rect",
               "attrs": {
-                "cx": 176,
-                "cy": 114,
-                "r": 12,
+                "x": 343,
+                "y": 110,
+                "width": 77,
+                "height": 31,
+                "rx": 7,
                 "fill": "gold"
               }
             },
@@ -108,24 +110,22 @@
               "id": "floor",
               "type": "rect",
               "attrs": {
-                "x": 70,
-                "y": 322,
-                "width": 460,
-                "height": 17,
-                "rx": 7,
+                "x": 60,
+                "y": 346,
+                "width": 470,
+                "height": 16,
+                "rx": 5,
                 "fill": "muted"
               }
             },
             {
-              "id": "attention",
-              "type": "line",
+              "id": "water-drop",
+              "type": "path",
               "attrs": {
-                "x1": 110,
-                "y1": 45,
-                "x2": 489,
-                "y2": 45,
-                "stroke": "gold",
-                "strokeWidth": 7
+                "d": "M 474 149 C 464 174 447 191 447 209 C 447 225 457 237 474 237 C 491 237 501 225 501 209 C 501 191 484 174 474 149 Z",
+                "fill": "teal",
+                "stroke": "foreground",
+                "strokeWidth": 3
               }
             }
           ],
@@ -136,10 +136,10 @@
               "keyframes": [
                 {
                   "atMs": 0,
-                  "value": 0.7
+                  "value": 0.65
                 },
                 {
-                  "atMs": 420,
+                  "atMs": 500,
                   "value": 1
                 }
               ]
@@ -151,15 +151,15 @@
     {
       "id": "friction",
       "role": "complication",
-      "narration": "Машина рядом, но короткая китайская фраза не сразу приходит на язык.",
+      "narration": "Знак на панели маленький. Ты не уверен, как он читается и что обозначает.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Dormitory washer and pending question",
-        "action": "Рука с бельём около круглого люка, не изображать ответ соседа.",
-        "continuityKey": "laundry-practice",
-        "cueText": "китайская фраза",
+        "focalSubject": "Неизвестный символ",
+        "action": "Сфокусироваться на физической панели, поверх неё увеличительное стекло как метафора поиска.",
+        "continuityKey": "laundry-dictionary",
+        "cueText": "как он читается",
         "backgroundToken": "foreground",
-        "drawingBrief": "Рука с бельём около круглого люка, не изображать ответ соседа.",
+        "drawingBrief": "Сфокусироваться на физической панели, поверх неё увеличительное стекло как метафора поиска.",
         "graphic": {
           "width": 600,
           "height": 400,
@@ -168,10 +168,10 @@
               "id": "washer",
               "type": "rect",
               "attrs": {
-                "x": 137,
-                "y": 76,
-                "width": 322,
-                "height": 245,
+                "x": 100,
+                "y": 95,
+                "width": 350,
+                "height": 240,
                 "rx": 22,
                 "fill": "secondary",
                 "stroke": "foreground",
@@ -182,31 +182,33 @@
               "id": "drum",
               "type": "circle",
               "attrs": {
-                "cx": 298,
-                "cy": 217,
-                "r": 79,
+                "cx": 272,
+                "cy": 218,
+                "r": 80,
                 "fill": "poolWater",
                 "stroke": "teal",
-                "strokeWidth": 14
+                "strokeWidth": 12
               }
             },
             {
               "id": "drum-inner",
               "type": "circle",
               "attrs": {
-                "cx": 298,
-                "cy": 217,
+                "cx": 272,
+                "cy": 218,
                 "r": 49,
                 "fill": "teal"
               }
             },
             {
               "id": "control",
-              "type": "circle",
+              "type": "rect",
               "attrs": {
-                "cx": 176,
-                "cy": 114,
-                "r": 12,
+                "x": 343,
+                "y": 110,
+                "width": 77,
+                "height": 31,
+                "rx": 7,
                 "fill": "gold"
               }
             },
@@ -214,24 +216,37 @@
               "id": "floor",
               "type": "rect",
               "attrs": {
-                "x": 70,
-                "y": 322,
-                "width": 460,
-                "height": 17,
-                "rx": 7,
+                "x": 60,
+                "y": 346,
+                "width": 470,
+                "height": 16,
+                "rx": 5,
                 "fill": "muted"
               }
             },
             {
-              "id": "focal-ring",
+              "id": "ring",
               "type": "circle",
               "attrs": {
-                "cx": 298,
-                "cy": 217,
-                "r": 104,
+                "cx": 279,
+                "cy": 179,
+                "r": 74,
                 "fill": "none",
-                "stroke": "gold",
-                "strokeWidth": 6
+                "stroke": "teal",
+                "strokeWidth": 13
+              }
+            },
+            {
+              "id": "handle",
+              "type": "line",
+              "attrs": {
+                "x1": 333,
+                "y1": 233,
+                "x2": 397,
+                "y2": 302,
+                "stroke": "foreground",
+                "strokeWidth": 16,
+                "strokeLinecap": "round"
               }
             }
           ],
@@ -242,10 +257,10 @@
               "keyframes": [
                 {
                   "atMs": 0,
-                  "value": 0.7
+                  "value": 0.65
                 },
                 {
-                  "atMs": 420,
+                  "atMs": 500,
                   "value": 1
                 }
               ]
@@ -255,133 +270,116 @@
       }
     },
     {
-      "id": "voice-demo",
+      "id": "dictionary-demo",
       "role": "product-demo",
-      "narration": "В HSK AI есть AI Voice для разговорной практики. На экране виден настоящий режим.",
+      "narration": "В HSK AI есть словарь с поиском по иероглифам, пиньиню и значению. Здесь нужен настоящий экран поиска, без выдуманных результатов.",
       "visual": {
         "type": "product-capture",
-        "focalSubject": "Genuine HSK AI AI Voice screen",
-        "action": "Reveal the existing voice screen capture, never fabricate a reply",
-        "continuityKey": "laundry-practice",
-        "cueText": "AI Voice",
+        "focalSubject": "Подлинный экран словаря",
+        "action": "Показать только реальный захват экрана поиска HSK AI, без перерисовки.",
+        "continuityKey": "laundry-dictionary",
+        "cueText": "словарь с поиском",
         "backgroundToken": "foreground",
-        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "assetPath": "public/promo-captures/hsk-dictionary-20261126.png",
         "provenance": "genuine-product-capture",
-        "uiLanguage": "zxx",
-        "languageNeutralCrop": true,
-        "sourceUiLanguage": "tg-TJ",
-        "crop": {
-          "x": 285,
-          "y": 580,
-          "width": 600,
-          "height": 540,
-          "sourceWidth": 1179,
-          "sourceHeight": 2556
-        },
-        "limitations": "Before rendering, inspect the real source capture for visible UI text, privacy and current-product parity; no fabricated translated UI."
+        "uiLanguage": "ru-RU",
+        "limitations": "SOURCE BLOCKER — capture missing: public/promo-captures/hsk-dictionary-20261126.png does not exist. Do not render/publish or claim this is genuine until capturing the actual current HSK AI dictionary in this exact language, checking privacy and claims."
       },
       "claimIds": [
-        "voice-practice"
+        "dictionary-search"
       ]
     },
     {
-      "id": "try-question",
+      "id": "try-search",
       "role": "attempt",
-      "narration": "Отходишь от работающей машины и спокойно произносишь свой вопрос для тренировки.",
+      "narration": "Пробуешь ввести иероглиф в поиск. Сначала ищешь написание, а не пытаешься угадать звук.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Dormitory washer and pending question",
-        "action": "Телефон на фоне прачечной, без вымышленных сообщений.",
-        "continuityKey": "laundry-practice",
-        "cueText": "произносишь свой вопрос",
+        "focalSubject": "Поиск по написанию",
+        "action": "Телефон с пустым экраном как условный силуэт и увеличительное стекло; НЕ выдавать рисунок за интерфейс HSK AI.",
+        "continuityKey": "laundry-dictionary",
+        "cueText": "ввести иероглиф",
         "backgroundToken": "foreground",
-        "drawingBrief": "Телефон на фоне прачечной, без вымышленных сообщений.",
+        "drawingBrief": "Телефон с пустым экраном как условный силуэт и увеличительное стекло; НЕ выдавать рисунок за интерфейс HSK AI.",
         "graphic": {
           "width": 600,
           "height": 400,
           "nodes": [
             {
-              "id": "washer",
+              "id": "phone",
               "type": "rect",
               "attrs": {
-                "x": 137,
-                "y": 76,
-                "width": 322,
-                "height": 245,
-                "rx": 22,
+                "x": 170,
+                "y": 68,
+                "width": 230,
+                "height": 270,
+                "rx": 29,
                 "fill": "secondary",
                 "stroke": "foreground",
-                "strokeWidth": 5
+                "strokeWidth": 7
               }
             },
             {
-              "id": "drum",
-              "type": "circle",
-              "attrs": {
-                "cx": 298,
-                "cy": 217,
-                "r": 79,
-                "fill": "poolWater",
-                "stroke": "teal",
-                "strokeWidth": 14
-              }
-            },
-            {
-              "id": "drum-inner",
-              "type": "circle",
-              "attrs": {
-                "cx": 298,
-                "cy": 217,
-                "r": 49,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "control",
-              "type": "circle",
-              "attrs": {
-                "cx": 176,
-                "cy": 114,
-                "r": 12,
-                "fill": "gold"
-              }
-            },
-            {
-              "id": "floor",
+              "id": "blank-phone",
               "type": "rect",
               "attrs": {
-                "x": 70,
-                "y": 322,
-                "width": 460,
-                "height": 17,
+                "x": 191,
+                "y": 104,
+                "width": 188,
+                "height": 185,
                 "rx": 7,
-                "fill": "muted"
+                "fill": "poolWater"
               }
             },
             {
-              "id": "focal-ring",
+              "id": "ring",
               "type": "circle",
               "attrs": {
-                "cx": 298,
-                "cy": 217,
-                "r": 104,
+                "cx": 279,
+                "cy": 179,
+                "r": 74,
                 "fill": "none",
-                "stroke": "gold",
+                "stroke": "teal",
+                "strokeWidth": 13
+              }
+            },
+            {
+              "id": "handle",
+              "type": "line",
+              "attrs": {
+                "x1": 333,
+                "y1": 233,
+                "x2": 397,
+                "y2": 302,
+                "stroke": "foreground",
+                "strokeWidth": 16,
+                "strokeLinecap": "round"
+              }
+            },
+            {
+              "id": "phone-base",
+              "type": "line",
+              "attrs": {
+                "x1": 260,
+                "y1": 317,
+                "x2": 309,
+                "y2": 317,
+                "stroke": "muted",
                 "strokeWidth": 6
               }
             }
           ],
           "tracks": [
             {
-              "nodeId": "washer",
+              "nodeId": "ring",
               "property": "opacity",
               "keyframes": [
                 {
                   "atMs": 0,
-                  "value": 0.7
+                  "value": 0.65
                 },
                 {
-                  "atMs": 420,
+                  "atMs": 500,
                   "value": 1
                 }
               ]
@@ -391,47 +389,37 @@
       }
     },
     {
-      "id": "microphone",
+      "id": "results-demo",
       "role": "product-demo",
-      "narration": "В этом режиме есть кнопка микрофона. Её можно использовать, чтобы попробовать вопрос голосом.",
+      "narration": "В списке слов отображаются иероглифы, пиньинь и перевод. Так можно сопоставить написание и чтение.",
       "visual": {
         "type": "product-capture",
-        "focalSubject": "Genuine HSK AI microphone control",
-        "action": "Crop to the microphone button in the genuine capture",
-        "continuityKey": "laundry-practice",
-        "cueText": "кнопка микрофона",
+        "focalSubject": "Подлинный список слов",
+        "action": "Показать подлинный список результата словаря HSK AI, не рисовать слова или перевод самостоятельно.",
+        "continuityKey": "laundry-dictionary",
+        "cueText": "иероглифы, пиньинь и перевод",
         "backgroundToken": "foreground",
-        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "assetPath": "public/promo-captures/hsk-dictionary-20261126.png",
         "provenance": "genuine-product-capture",
-        "uiLanguage": "zxx",
-        "languageNeutralCrop": true,
-        "sourceUiLanguage": "tg-TJ",
-        "crop": {
-          "x": 440,
-          "y": 2180,
-          "width": 290,
-          "height": 245,
-          "sourceWidth": 1179,
-          "sourceHeight": 2556
-        },
-        "limitations": "Before rendering, inspect the real source capture for visible UI text, privacy and current-product parity; no fabricated translated UI."
+        "uiLanguage": "ru-RU",
+        "limitations": "SOURCE BLOCKER — capture missing: public/promo-captures/hsk-dictionary-20261126.png does not exist. Do not render/publish or claim this is genuine until capturing the actual current HSK AI dictionary in this exact language, checking privacy and claims."
       },
       "claimIds": [
-        "microphone-control"
+        "dictionary-result-rows"
       ]
     },
     {
-      "id": "back-to-life",
+      "id": "resolution",
       "role": "resolution",
-      "narration": "Теперь возвращаешься к машинам и задаёшь вопрос сам. HSK AI помогает выделить момент для речевой практики.",
+      "narration": "Теперь возвращаешься к машинке: когда снова встретишь незнакомое слово, знаешь, где его проверять. HSK AI — словарь для китайского в обычной жизни.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Dormitory washer and pending question",
-        "action": "Показать те же машины; не инсценировать ответ или успех.",
-        "continuityKey": "laundry-practice",
-        "cueText": "возвращаешься к машинам",
+        "focalSubject": "Назад к бытовой задаче",
+        "action": "Та же машинка и сложенная одежда; не инсценировать неподтверждённую работу приложения.",
+        "continuityKey": "laundry-dictionary",
+        "cueText": "возвращаешься к машинке",
         "backgroundToken": "foreground",
-        "drawingBrief": "Показать те же машины; не инсценировать ответ или успех.",
+        "drawingBrief": "Та же машинка и сложенная одежда; не инсценировать неподтверждённую работу приложения.",
         "graphic": {
           "width": 600,
           "height": 400,
@@ -440,10 +428,10 @@
               "id": "washer",
               "type": "rect",
               "attrs": {
-                "x": 137,
-                "y": 76,
-                "width": 322,
-                "height": 245,
+                "x": 100,
+                "y": 95,
+                "width": 350,
+                "height": 240,
                 "rx": 22,
                 "fill": "secondary",
                 "stroke": "foreground",
@@ -454,31 +442,33 @@
               "id": "drum",
               "type": "circle",
               "attrs": {
-                "cx": 298,
-                "cy": 217,
-                "r": 79,
+                "cx": 272,
+                "cy": 218,
+                "r": 80,
                 "fill": "poolWater",
                 "stroke": "teal",
-                "strokeWidth": 14
+                "strokeWidth": 12
               }
             },
             {
               "id": "drum-inner",
               "type": "circle",
               "attrs": {
-                "cx": 298,
-                "cy": 217,
+                "cx": 272,
+                "cy": 218,
                 "r": 49,
                 "fill": "teal"
               }
             },
             {
               "id": "control",
-              "type": "circle",
+              "type": "rect",
               "attrs": {
-                "cx": 176,
-                "cy": 114,
-                "r": 12,
+                "x": 343,
+                "y": 110,
+                "width": 77,
+                "height": 31,
+                "rx": 7,
                 "fill": "gold"
               }
             },
@@ -486,24 +476,22 @@
               "id": "floor",
               "type": "rect",
               "attrs": {
-                "x": 70,
-                "y": 322,
-                "width": 460,
-                "height": 17,
-                "rx": 7,
+                "x": 60,
+                "y": 346,
+                "width": 470,
+                "height": 16,
+                "rx": 5,
                 "fill": "muted"
               }
             },
             {
-              "id": "focal-ring",
-              "type": "circle",
+              "id": "folded-shirt",
+              "type": "polygon",
               "attrs": {
-                "cx": 298,
-                "cy": 217,
-                "r": 104,
-                "fill": "none",
-                "stroke": "gold",
-                "strokeWidth": 6
+                "points": "420,190 468,167 515,210 495,263 432,265 411,220",
+                "fill": "gold",
+                "stroke": "foreground",
+                "strokeWidth": 4
               }
             }
           ],
@@ -514,10 +502,10 @@
               "keyframes": [
                 {
                   "atMs": 0,
-                  "value": 0.7
+                  "value": 0.65
                 },
                 {
-                  "atMs": 420,
+                  "atMs": 500,
                   "value": 1
                 }
               ]
@@ -527,11 +515,11 @@
       }
     }
   ],
-  "caption": "Как задать вопрос в прачечной: HSK AI перед разговором",
+  "caption": "Незнакомый иероглиф в прачечной: словарь HSK AI",
   "hashtags": [
     "#HSKAI",
     "#китайскийязык",
-    "#AIvoice"
+    "#китайскийсловарь"
   ],
-  "durationTargetSec": 34
+  "durationTargetSec": 36
 }
