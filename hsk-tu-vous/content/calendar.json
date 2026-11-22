@@ -646,6 +646,72 @@
       },
       "status": "planned",
       "planningNote": "Second complete and final part of the Nov 21–22 one-time bridge; same locale-specific story and validated visual source plans; no video was created or published."
+    },
+    {
+      "date": "2026-11-23",
+      "id": "xiang-yao-cafe-20261123",
+      "status": "planned",
+      "contentType": "lesson",
+      "episodeFile": "episodes/xiang-yao-cafe-20261123.json",
+      "planningNote": "CTA-free RU/TG sources and illustrated art manifest prepared 2026-11-22; lesson-opening-v1 balanced arm A. No media or publication approval."
+    },
+    {
+      "date": "2026-11-24",
+      "id": "metro-voice-question-20261124",
+      "status": "planned",
+      "contentType": "advertisement",
+      "promoFile": "promos/metro-voice-question-20261124.json",
+      "planningNote": "CTA-free RU/TG AI Voice product ad with genuine UI capture evidence; no TTS/render/publication approval."
+    },
+    {
+      "date": "2026-11-25",
+      "id": "le-buy-books-20261125",
+      "status": "planned",
+      "contentType": "lesson",
+      "episodeFile": "episodes/le-buy-books-20261125.json",
+      "planningNote": "CTA-free RU/TG action lessons and art manifest; lesson-opening-v1 balanced arm B. No media or publication approval."
+    },
+    {
+      "date": "2026-11-26",
+      "id": "dorm-laundry-voice-20261126",
+      "status": "planned",
+      "contentType": "advertisement",
+      "promoFile": "promos/dorm-laundry-voice-20261126.json",
+      "planningNote": "CTA-free RU/TG AI Voice product ad with real capture and checked claim receipt; no media or publication approval."
+    },
+    {
+      "date": "2026-11-27",
+      "id": "zhengzai-reading-20261127",
+      "status": "planned",
+      "contentType": "lesson",
+      "episodeFile": "episodes/zhengzai-reading-20261127.json",
+      "planningNote": "CTA-free RU/TG lessons and illustrated art plan; lesson-opening-v1 balanced arm A. No media or publication approval."
+    },
+    {
+      "date": "2026-11-28",
+      "id": "ticket-counter-zhang-20261128",
+      "status": "planned",
+      "contentType": "series-part",
+      "episodeFile": "episodes/ticket-counter-zhang-20261128.json",
+      "series": {
+        "id": "class-tickets-night-show-20261128",
+        "part": 1,
+        "totalParts": 2
+      },
+      "planningNote": "Saturday part 1 of a complete verified bilingual illustrated two-part fictional ticket/show-time story. No media or publication approval."
+    },
+    {
+      "date": "2026-11-29",
+      "id": "show-start-jidian-20261129",
+      "status": "planned",
+      "contentType": "series-part",
+      "episodeFile": "episodes/show-start-jidian-20261129.json",
+      "series": {
+        "id": "class-tickets-night-show-20261128",
+        "part": 2,
+        "totalParts": 2
+      },
+      "planningNote": "Sunday part 2 pays off the ticket/show-time story; CTA-free RU/TG and art files prepared. No media or publication approval."
     }
   ],
   "planningBuffer": {
