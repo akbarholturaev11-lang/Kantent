@@ -107,6 +107,12 @@
           "date": "2026-11-20",
           "arm": "B",
           "assignedAt": "2026-11-17"
+        },
+        {
+          "contentId": "xiang-yao-cafe-20261123",
+          "date": "2026-11-23",
+          "arm": "A",
+          "assignedAt": "2026-11-22"
         }
       ],
       "decision": null
