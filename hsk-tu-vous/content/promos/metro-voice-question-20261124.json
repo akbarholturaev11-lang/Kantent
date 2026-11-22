@@ -3,41 +3,41 @@
   "id": "metro-voice-question-20261124",
   "kind": "advertisement",
   "status": "draft",
-  "title": "Перед вопросом в метро: репетиция с HSK AI",
+  "title": "Похожие иероглифы в метро — тренировка HSK AI",
   "language": "ru",
   "languageCode": "ru-RU",
   "styleId": "minimal-story-v1",
   "formatId": "life-friction-demo",
-  "benefit": "Речевая репетиция перед живым вопросом о платформе метро",
+  "benefit": "Тренировка различения похожих китайских иероглифов по пиньиню и значению",
   "situation": {
-    "setting": "Станция метро перед входом на платформу",
-    "learnerGoal": "Подготовить короткий вопрос на китайском о нужной платформе",
-    "friction": "Неуверенность перед живым вопросом незнакомому человеку"
+    "setting": "Переход между платформами в китайском метро",
+    "learnerGoal": "Научиться внимательнее различать похожие иероглифы",
+    "friction": "При чтении непривычных знаков на ходу легко пропустить различающую черту"
   },
   "storyType": "illustrative",
   "storyDisclosure": "Представь",
   "evidence": [
     {
-      "id": "verified-ai-voice-ui-20261122",
+      "id": "verified-hanzi-recognition-code-20261122",
       "kind": "product-source",
-      "sourcePath": "public/promo-captures/ai-voice-original.png",
+      "sourcePath": "content/promos/evidence/hanzi-recognition-20261122.md",
       "checkedAt": "2026-11-22",
-      "supports": "Existing genuine AI Voice screenshot at GitHub blob 81f7be1cbadeca7a820cc5877c893fc91e65f267; current HSK-AI-Bot main app/static/course-v3.html blob aacb025655196ef6c48e21beffc64b63da90dbef checked 2026-11-22 contains VOICE_HTML, vc-root, vc-mic microphone button. Supports interface existence and microphone; no claim of response quality or results. Source: https://github.com/akbarholturaev11-lang/HSK-AI-Bot/blob/main/app/static/course-v3.html"
+      "supports": "HSK-AI-Bot current main app/static/course_v3_recognition.html blob e901a3c3e25427f908fbda3ae52cdc393d015c5c: q.py/q.mn and answer tiles q.opts shown; pick(k) marks ok/bad and records selected correctness. app/static/course-v3.html blob aacb025655196ef6c48e21beffc64b63da90dbef links recognition practice. Genuine RU/TG captures missing; code verification does not prove actual media render or guaranteed outcome."
     }
   ],
   "claims": [
     {
-      "id": "voice-practice",
-      "text": "В HSK AI есть AI Voice для разговорной практики.",
+      "id": "hanzi-recognition-practice",
+      "text": "В HSK AI есть тренировка распознавания иероглифов.",
       "evidenceIds": [
-        "verified-ai-voice-ui-20261122"
+        "verified-hanzi-recognition-code-20261122"
       ]
     },
     {
-      "id": "microphone-control",
-      "text": "В этом режиме есть кнопка микрофона.",
+      "id": "hanzi-answer-feedback",
+      "text": "В упражнении выбираешь подходящий иероглиф из вариантов, а после ответа видишь, верен ли выбор.",
       "evidenceIds": [
-        "verified-ai-voice-ui-20261122"
+        "verified-hanzi-recognition-code-20261122"
       ]
     }
   ],
@@ -45,15 +45,15 @@
     {
       "id": "opening",
       "role": "situation",
-      "narration": "Представь: ты в метро и хочешь спросить, где нужная платформа. Перед разговором можно открыть HSK AI.",
+      "narration": "Представь: в китайском метро видишь две похожие надписи и начинаешь путать иероглифы. Вспоминаешь HSK AI: отличать знаки можно потренироваться.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Station platform and passenger's next decision",
-        "action": "Один пассажир стоит у схемы двух платформ; указать место вопроса.",
-        "continuityKey": "metro-practice",
-        "cueText": "нужная платформа",
+        "focalSubject": "Две похожие таблички",
+        "action": "Показать две условные таблички на стене станции с визуально близкими штрихами, не утверждая, что это реальный знак.",
+        "continuityKey": "metro-hanzi-attention",
+        "cueText": "две похожие надписи",
         "backgroundToken": "foreground",
-        "drawingBrief": "Один пассажир стоит у схемы двух платформ; указать место вопроса.",
+        "drawingBrief": "Показать две условные таблички на стене станции с визуально близкими штрихами, не утверждая, что это реальный знак.",
         "graphic": {
           "width": 600,
           "height": 400,
@@ -62,98 +62,99 @@
               "id": "floor",
               "type": "rect",
               "attrs": {
-                "x": 55,
-                "y": 300,
-                "width": 490,
-                "height": 22,
-                "rx": 8,
+                "x": 50,
+                "y": 328,
+                "width": 500,
+                "height": 18,
+                "rx": 5,
                 "fill": "muted"
               }
             },
             {
-              "id": "train",
+              "id": "route-wall",
               "type": "rect",
               "attrs": {
-                "x": 95,
-                "y": 100,
-                "width": 410,
-                "height": 186,
-                "rx": 22,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "window-left",
-              "type": "rect",
-              "attrs": {
-                "x": 134,
-                "y": 141,
-                "width": 112,
-                "height": 78,
-                "rx": 9,
-                "fill": "poolWater"
-              }
-            },
-            {
-              "id": "window-right",
-              "type": "rect",
-              "attrs": {
-                "x": 350,
-                "y": 141,
-                "width": 112,
-                "height": 78,
-                "rx": 9,
-                "fill": "poolWater"
-              }
-            },
-            {
-              "id": "train-door",
-              "type": "rect",
-              "attrs": {
-                "x": 257,
-                "y": 131,
-                "width": 82,
-                "height": 155,
-                "rx": 7,
-                "fill": "secondary"
-              }
-            },
-            {
-              "id": "door-split",
-              "type": "line",
-              "attrs": {
-                "x1": 298,
-                "y1": 133,
-                "x2": 298,
-                "y2": 285,
+                "x": 80,
+                "y": 61,
+                "width": 440,
+                "height": 239,
+                "rx": 18,
+                "fill": "secondary",
                 "stroke": "foreground",
                 "strokeWidth": 5
               }
             },
             {
-              "id": "attention",
+              "id": "notice-left",
+              "type": "rect",
+              "attrs": {
+                "x": 126,
+                "y": 117,
+                "width": 149,
+                "height": 128,
+                "rx": 11,
+                "fill": "teal"
+              }
+            },
+            {
+              "id": "notice-right",
+              "type": "rect",
+              "attrs": {
+                "x": 319,
+                "y": 117,
+                "width": 149,
+                "height": 128,
+                "rx": 11,
+                "fill": "poolWater"
+              }
+            },
+            {
+              "id": "sign-left",
+              "type": "polyline",
+              "attrs": {
+                "points": "166,156 166,210 240,210",
+                "fill": "none",
+                "stroke": "foreground",
+                "strokeWidth": 9,
+                "strokeLinecap": "round"
+              }
+            },
+            {
+              "id": "sign-right",
+              "type": "polyline",
+              "attrs": {
+                "points": "353,156 353,210 428,210",
+                "fill": "none",
+                "stroke": "foreground",
+                "strokeWidth": 9,
+                "strokeLinecap": "round"
+              }
+            },
+            {
+              "id": "sign-difference",
               "type": "line",
               "attrs": {
-                "x1": 110,
-                "y1": 45,
-                "x2": 489,
-                "y2": 45,
+                "x1": 359,
+                "y1": 167,
+                "x2": 418,
+                "y2": 167,
                 "stroke": "gold",
-                "strokeWidth": 7
+                "strokeWidth": 8,
+                "strokeLinecap": "round"
               }
             }
           ],
           "tracks": [
             {
-              "nodeId": "train",
+              "nodeId": "route-wall",
               "property": "opacity",
               "keyframes": [
                 {
                   "atMs": 0,
-                  "value": 0.7
+                  "value": 0.66
                 },
                 {
-                  "atMs": 420,
+                  "atMs": 500,
                   "value": 1
                 }
               ]
@@ -165,15 +166,15 @@
     {
       "id": "friction",
       "role": "complication",
-      "narration": "Переход виден, но быстро произнести вопрос по-китайски пока трудно.",
+      "narration": "Разница может быть всего в одной черте. Пока спешишь на платформу, остановиться и спокойно сравнить знаки трудно.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Station platform and passenger's next decision",
-        "action": "Платформа и поезд рядом, пассажир колеблется у указателей без текста.",
-        "continuityKey": "metro-practice",
-        "cueText": "произнести вопрос",
+        "focalSubject": "Одна отличающая черта",
+        "action": "Увеличить отличие двух абстрактных знаков. Не заменять ими реальные китайские иероглифы.",
+        "continuityKey": "metro-hanzi-attention",
+        "cueText": "одной черте",
         "backgroundToken": "foreground",
-        "drawingBrief": "Платформа и поезд рядом, пассажир колеблется у указателей без текста.",
+        "drawingBrief": "Увеличить отличие двух абстрактных знаков. Не заменять ими реальные китайские иероглифы.",
         "graphic": {
           "width": 600,
           "height": 400,
@@ -182,98 +183,124 @@
               "id": "floor",
               "type": "rect",
               "attrs": {
-                "x": 55,
-                "y": 300,
-                "width": 490,
-                "height": 22,
-                "rx": 8,
+                "x": 50,
+                "y": 328,
+                "width": 500,
+                "height": 18,
+                "rx": 5,
                 "fill": "muted"
               }
             },
             {
-              "id": "train",
+              "id": "route-wall",
               "type": "rect",
               "attrs": {
-                "x": 95,
-                "y": 100,
-                "width": 410,
-                "height": 186,
-                "rx": 22,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "window-left",
-              "type": "rect",
-              "attrs": {
-                "x": 134,
-                "y": 141,
-                "width": 112,
-                "height": 78,
-                "rx": 9,
-                "fill": "poolWater"
-              }
-            },
-            {
-              "id": "window-right",
-              "type": "rect",
-              "attrs": {
-                "x": 350,
-                "y": 141,
-                "width": 112,
-                "height": 78,
-                "rx": 9,
-                "fill": "poolWater"
-              }
-            },
-            {
-              "id": "train-door",
-              "type": "rect",
-              "attrs": {
-                "x": 257,
-                "y": 131,
-                "width": 82,
-                "height": 155,
-                "rx": 7,
-                "fill": "secondary"
-              }
-            },
-            {
-              "id": "door-split",
-              "type": "line",
-              "attrs": {
-                "x1": 298,
-                "y1": 133,
-                "x2": 298,
-                "y2": 285,
+                "x": 80,
+                "y": 61,
+                "width": 440,
+                "height": 239,
+                "rx": 18,
+                "fill": "secondary",
                 "stroke": "foreground",
                 "strokeWidth": 5
               }
             },
             {
-              "id": "focal-ring",
+              "id": "notice-left",
+              "type": "rect",
+              "attrs": {
+                "x": 126,
+                "y": 117,
+                "width": 149,
+                "height": 128,
+                "rx": 11,
+                "fill": "teal"
+              }
+            },
+            {
+              "id": "notice-right",
+              "type": "rect",
+              "attrs": {
+                "x": 319,
+                "y": 117,
+                "width": 149,
+                "height": 128,
+                "rx": 11,
+                "fill": "poolWater"
+              }
+            },
+            {
+              "id": "sign-left",
+              "type": "polyline",
+              "attrs": {
+                "points": "166,156 166,210 240,210",
+                "fill": "none",
+                "stroke": "foreground",
+                "strokeWidth": 9,
+                "strokeLinecap": "round"
+              }
+            },
+            {
+              "id": "sign-right",
+              "type": "polyline",
+              "attrs": {
+                "points": "353,156 353,210 428,210",
+                "fill": "none",
+                "stroke": "foreground",
+                "strokeWidth": 9,
+                "strokeLinecap": "round"
+              }
+            },
+            {
+              "id": "sign-difference",
+              "type": "line",
+              "attrs": {
+                "x1": 359,
+                "y1": 167,
+                "x2": 418,
+                "y2": 167,
+                "stroke": "gold",
+                "strokeWidth": 8,
+                "strokeLinecap": "round"
+              }
+            },
+            {
+              "id": "magnify-ring",
               "type": "circle",
               "attrs": {
-                "cx": 298,
-                "cy": 226,
-                "r": 88,
+                "cx": 386,
+                "cy": 181,
+                "r": 62,
                 "fill": "none",
                 "stroke": "gold",
-                "strokeWidth": 6
+                "strokeWidth": 7
+              }
+            },
+            {
+              "id": "magnify-handle",
+              "type": "line",
+              "attrs": {
+                "x1": 429,
+                "y1": 228,
+                "x2": 485,
+                "y2": 276,
+                "stroke": "foreground",
+                "strokeWidth": 9,
+                "strokeLinecap": "round"
               }
             }
           ],
           "tracks": [
             {
-              "nodeId": "train",
+              "nodeId": "route-wall",
               "property": "opacity",
               "keyframes": [
                 {
                   "atMs": 0,
-                  "value": 0.7
+                  "value": 0.66
                 },
                 {
-                  "atMs": 420,
+                  "atMs": 500,
                   "value": 1
                 }
               ]
@@ -283,147 +310,104 @@
       }
     },
     {
-      "id": "voice-demo",
+      "id": "recognition-demo",
       "role": "product-demo",
-      "narration": "В HSK AI есть AI Voice для разговорной практики. Это настоящий экран режима.",
+      "narration": "В HSK AI есть тренировка распознавания иероглифов. Её экран нужно показать без выдуманных вариантов.",
       "visual": {
         "type": "product-capture",
-        "focalSubject": "Genuine HSK AI AI Voice screen",
-        "action": "Reveal the existing voice screen capture, never fabricate a reply",
-        "continuityKey": "metro-practice",
-        "cueText": "AI Voice",
+        "focalSubject": "Подлинная тренировка HSK AI",
+        "action": "Только подлинный RU-скриншот раздела распознавания с текущими вариантами, без имитации интерфейса.",
+        "continuityKey": "metro-hanzi-attention",
+        "cueText": "тренировка распознавания иероглифов",
         "backgroundToken": "foreground",
-        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "assetPath": "public/promo-captures/hanzi-recognition-20261124-ru.png",
         "provenance": "genuine-product-capture",
-        "uiLanguage": "zxx",
-        "languageNeutralCrop": true,
-        "sourceUiLanguage": "tg-TJ",
-        "crop": {
-          "x": 285,
-          "y": 580,
-          "width": 600,
-          "height": 540,
-          "sourceWidth": 1179,
-          "sourceHeight": 2556
-        },
-        "limitations": "Before rendering, inspect the real source capture for visible UI text, privacy and current-product parity; no fabricated translated UI."
+        "uiLanguage": "ru-RU",
+        "limitations": "BLOCKED: this real language-specific HSK AI recognition-practice capture has NOT been captured or committed. Do not render or publish until the actual app screen is captured, authenticity checked, privacy cleared and current text/answers verified. No invented quiz/result UI is permitted."
       },
       "claimIds": [
-        "voice-practice"
+        "hanzi-recognition-practice"
       ]
     },
     {
-      "id": "try-question",
+      "id": "choose-answer",
       "role": "attempt",
-      "narration": "Уходишь от шумного перехода на шаг и пробуешь свою фразу в спокойном месте.",
+      "narration": "В задании смотришь пиньинь и значение, затем сравниваешь варианты китайских знаков и выбираешь один ответ.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Station platform and passenger's next decision",
-        "action": "Показать вокзальную стену, телефон в руке, без текста на экране.",
-        "continuityKey": "metro-practice",
-        "cueText": "пробуешь свою фразу",
+        "focalSubject": "Внимательное сравнение",
+        "action": "Телефон с пустой плоскостью и крупным выделенным кругом как символ проверки; не представлять рисунок как продуктовый UI.",
+        "continuityKey": "metro-hanzi-attention",
+        "cueText": "сравниваешь варианты",
         "backgroundToken": "foreground",
-        "drawingBrief": "Показать вокзальную стену, телефон в руке, без текста на экране.",
+        "drawingBrief": "Телефон с пустой плоскостью и крупным выделенным кругом как символ проверки; не представлять рисунок как продуктовый UI.",
         "graphic": {
           "width": 600,
           "height": 400,
           "nodes": [
             {
-              "id": "floor",
+              "id": "phone",
               "type": "rect",
               "attrs": {
-                "x": 55,
-                "y": 300,
-                "width": 490,
-                "height": 22,
-                "rx": 8,
-                "fill": "muted"
-              }
-            },
-            {
-              "id": "train",
-              "type": "rect",
-              "attrs": {
-                "x": 95,
-                "y": 100,
-                "width": 410,
-                "height": 186,
-                "rx": 22,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "window-left",
-              "type": "rect",
-              "attrs": {
-                "x": 134,
-                "y": 141,
-                "width": 112,
-                "height": 78,
-                "rx": 9,
-                "fill": "poolWater"
-              }
-            },
-            {
-              "id": "window-right",
-              "type": "rect",
-              "attrs": {
-                "x": 350,
-                "y": 141,
-                "width": 112,
-                "height": 78,
-                "rx": 9,
-                "fill": "poolWater"
-              }
-            },
-            {
-              "id": "train-door",
-              "type": "rect",
-              "attrs": {
-                "x": 257,
-                "y": 131,
-                "width": 82,
-                "height": 155,
-                "rx": 7,
-                "fill": "secondary"
-              }
-            },
-            {
-              "id": "door-split",
-              "type": "line",
-              "attrs": {
-                "x1": 298,
-                "y1": 133,
-                "x2": 298,
-                "y2": 285,
+                "x": 174,
+                "y": 53,
+                "width": 252,
+                "height": 292,
+                "rx": 34,
+                "fill": "secondary",
                 "stroke": "foreground",
-                "strokeWidth": 5
+                "strokeWidth": 8
               }
             },
             {
-              "id": "focal-ring",
+              "id": "phone-blank",
+              "type": "rect",
+              "attrs": {
+                "x": 198,
+                "y": 98,
+                "width": 204,
+                "height": 205,
+                "rx": 13,
+                "fill": "poolWater"
+              }
+            },
+            {
+              "id": "phone-circle",
               "type": "circle",
               "attrs": {
-                "cx": 298,
-                "cy": 226,
-                "r": 88,
+                "cx": 300,
+                "cy": 202,
+                "r": 50,
                 "fill": "none",
                 "stroke": "gold",
-                "strokeWidth": 6
+                "strokeWidth": 8
+              }
+            },
+            {
+              "id": "phone-choice",
+              "type": "line",
+              "attrs": {
+                "x1": 259,
+                "y1": 205,
+                "x2": 340,
+                "y2": 205,
+                "stroke": "teal",
+                "strokeWidth": 8,
+                "strokeLinecap": "round"
               }
             }
           ],
           "tracks": [
             {
-              "nodeId": "train",
+              "nodeId": "phone",
               "property": "opacity",
               "keyframes": [
                 {
                   "atMs": 0,
-                  "value": 0.7
+                  "value": 0.66
                 },
                 {
-                  "atMs": 420,
+                  "atMs": 500,
                   "value": 1
                 }
               ]
@@ -433,47 +417,37 @@
       }
     },
     {
-      "id": "microphone",
+      "id": "answer-feedback",
       "role": "product-demo",
-      "narration": "В этом режиме есть кнопка микрофона. Можно попробовать произнести вопрос голосом.",
+      "narration": "В упражнении выбираешь подходящий иероглиф из вариантов, а после ответа видишь, верен ли выбор. Показываем лишь настоящий ответ приложения.",
       "visual": {
         "type": "product-capture",
-        "focalSubject": "Genuine HSK AI microphone control",
-        "action": "Crop to the microphone button in the genuine capture",
-        "continuityKey": "metro-practice",
-        "cueText": "кнопка микрофона",
+        "focalSubject": "Подлинная проверка ответа",
+        "action": "Только реальная RU-запись выбора и ответа в HSK AI; нельзя придумывать счёт или результат.",
+        "continuityKey": "metro-hanzi-attention",
+        "cueText": "после ответа видишь",
         "backgroundToken": "foreground",
-        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "assetPath": "public/promo-captures/hanzi-recognition-20261124-ru.png",
         "provenance": "genuine-product-capture",
-        "uiLanguage": "zxx",
-        "languageNeutralCrop": true,
-        "sourceUiLanguage": "tg-TJ",
-        "crop": {
-          "x": 440,
-          "y": 2180,
-          "width": 290,
-          "height": 245,
-          "sourceWidth": 1179,
-          "sourceHeight": 2556
-        },
-        "limitations": "Before rendering, inspect the real source capture for visible UI text, privacy and current-product parity; no fabricated translated UI."
+        "uiLanguage": "ru-RU",
+        "limitations": "BLOCKED: this real language-specific HSK AI recognition-practice capture has NOT been captured or committed. Do not render or publish until the actual app screen is captured, authenticity checked, privacy cleared and current text/answers verified. No invented quiz/result UI is permitted."
       },
       "claimIds": [
-        "microphone-control"
+        "hanzi-answer-feedback"
       ]
     },
     {
       "id": "back-to-life",
       "role": "resolution",
-      "narration": "Потом возвращаешься к маршруту и спрашиваешь дорогу сам. HSK AI — место для репетиции перед встречей.",
+      "narration": "В метро реальные указатели всё равно читаешь сам. А HSK AI — место, где можно тренировать внимание к похожим иероглифам перед следующей поездкой.",
       "visual": {
         "type": "illustration",
-        "focalSubject": "Station platform and passenger's next decision",
-        "action": "Пассажир снова у перехода; никаких выдуманных ответов и гарантий.",
-        "continuityKey": "metro-practice",
-        "cueText": "возвращаешься к маршруту",
+        "focalSubject": "Снова к дороге",
+        "action": "Вернуться к той же станции, показать маршрут и отличающиеся абстрактные знаки, без обещания правильного чтения с первого раза.",
+        "continuityKey": "metro-hanzi-attention",
+        "cueText": "реальные указатели",
         "backgroundToken": "foreground",
-        "drawingBrief": "Пассажир снова у перехода; никаких выдуманных ответов и гарантий.",
+        "drawingBrief": "Вернуться к той же станции, показать маршрут и отличающиеся абстрактные знаки, без обещания правильного чтения с первого раза.",
         "graphic": {
           "width": 600,
           "height": 400,
@@ -482,98 +456,110 @@
               "id": "floor",
               "type": "rect",
               "attrs": {
-                "x": 55,
-                "y": 300,
-                "width": 490,
-                "height": 22,
-                "rx": 8,
+                "x": 50,
+                "y": 328,
+                "width": 500,
+                "height": 18,
+                "rx": 5,
                 "fill": "muted"
               }
             },
             {
-              "id": "train",
+              "id": "route-wall",
               "type": "rect",
               "attrs": {
-                "x": 95,
-                "y": 100,
-                "width": 410,
-                "height": 186,
-                "rx": 22,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "window-left",
-              "type": "rect",
-              "attrs": {
-                "x": 134,
-                "y": 141,
-                "width": 112,
-                "height": 78,
-                "rx": 9,
-                "fill": "poolWater"
-              }
-            },
-            {
-              "id": "window-right",
-              "type": "rect",
-              "attrs": {
-                "x": 350,
-                "y": 141,
-                "width": 112,
-                "height": 78,
-                "rx": 9,
-                "fill": "poolWater"
-              }
-            },
-            {
-              "id": "train-door",
-              "type": "rect",
-              "attrs": {
-                "x": 257,
-                "y": 131,
-                "width": 82,
-                "height": 155,
-                "rx": 7,
-                "fill": "secondary"
-              }
-            },
-            {
-              "id": "door-split",
-              "type": "line",
-              "attrs": {
-                "x1": 298,
-                "y1": 133,
-                "x2": 298,
-                "y2": 285,
+                "x": 80,
+                "y": 61,
+                "width": 440,
+                "height": 239,
+                "rx": 18,
+                "fill": "secondary",
                 "stroke": "foreground",
                 "strokeWidth": 5
               }
             },
             {
-              "id": "focal-ring",
-              "type": "circle",
+              "id": "notice-left",
+              "type": "rect",
               "attrs": {
-                "cx": 298,
-                "cy": 226,
-                "r": 88,
+                "x": 126,
+                "y": 117,
+                "width": 149,
+                "height": 128,
+                "rx": 11,
+                "fill": "teal"
+              }
+            },
+            {
+              "id": "notice-right",
+              "type": "rect",
+              "attrs": {
+                "x": 319,
+                "y": 117,
+                "width": 149,
+                "height": 128,
+                "rx": 11,
+                "fill": "poolWater"
+              }
+            },
+            {
+              "id": "sign-left",
+              "type": "polyline",
+              "attrs": {
+                "points": "166,156 166,210 240,210",
+                "fill": "none",
+                "stroke": "foreground",
+                "strokeWidth": 9,
+                "strokeLinecap": "round"
+              }
+            },
+            {
+              "id": "sign-right",
+              "type": "polyline",
+              "attrs": {
+                "points": "353,156 353,210 428,210",
+                "fill": "none",
+                "stroke": "foreground",
+                "strokeWidth": 9,
+                "strokeLinecap": "round"
+              }
+            },
+            {
+              "id": "sign-difference",
+              "type": "line",
+              "attrs": {
+                "x1": 359,
+                "y1": 167,
+                "x2": 418,
+                "y2": 167,
+                "stroke": "gold",
+                "strokeWidth": 8,
+                "strokeLinecap": "round"
+              }
+            },
+            {
+              "id": "direction-mark",
+              "type": "polyline",
+              "attrs": {
+                "points": "199,283 300,307 399,283",
                 "fill": "none",
                 "stroke": "gold",
-                "strokeWidth": 6
+                "strokeWidth": 10,
+                "strokeLinecap": "round"
               }
             }
           ],
           "tracks": [
             {
-              "nodeId": "train",
+              "nodeId": "route-wall",
               "property": "opacity",
               "keyframes": [
                 {
                   "atMs": 0,
-                  "value": 0.7
+                  "value": 0.66
                 },
                 {
-                  "atMs": 420,
+                  "atMs": 500,
                   "value": 1
                 }
               ]
@@ -583,11 +569,11 @@
       }
     }
   ],
-  "caption": "Перед вопросом в метро: репетиция с HSK AI",
+  "caption": "Похожие иероглифы в метро — тренировка HSK AI",
   "hashtags": [
     "#HSKAI",
     "#китайскийязык",
-    "#AIvoice"
+    "#иероглифы"
   ],
-  "durationTargetSec": 34
+  "durationTargetSec": 36
 }
