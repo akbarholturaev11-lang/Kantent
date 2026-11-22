@@ -253,7 +253,7 @@
               "overlay": "compare",
               "cast": [
                 {
-                  "id": "dragon",
+                  "id": "monkey",
                   "mood": "correct",
                   "x": 0.5,
                   "y": 0.84,
@@ -487,7 +487,7 @@
               ],
               "cast": [
                 {
-                  "id": "dragon",
+                  "id": "monkey",
                   "mood": "correct",
                   "x": 0.78,
                   "y": 0.86,
@@ -720,7 +720,7 @@
               ],
               "cast": [
                 {
-                  "id": "dragon",
+                  "id": "monkey",
                   "mood": "correct",
                   "x": 0.78,
                   "y": 0.86,
@@ -790,7 +790,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "zhengzai-reading-20261127",
-    "sourceHash": "0e232d23df989670cb3f6b1d5e1f0740b9abe5f256e252a7f2a6a44e245cb287",
+    "sourceHash": "fa55be08079ad046f1a4b704c7a640a28662f8298c4669c56b60374b521a13b6",
     "authoredOn": "2026-11-22",
     "status": "draft"
   }
