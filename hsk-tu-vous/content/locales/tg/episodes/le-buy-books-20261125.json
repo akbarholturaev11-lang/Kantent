@@ -1,0 +1,917 @@
+{
+  "id": "le-buy-books-20261125",
+  "date": "2026-11-25",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "tg-TJ",
+  "title": "Харид кардам ё на? 了 ва 没",
+  "level": "HSK 2",
+  "topic": "Харид кардам ё на? 了 ва 没",
+  "durationTargetSec": 26,
+  "caption": "Чаро баъд аз 没 ҳиссачаи 了 намеояд: ду китоб.",
+  "hashtags": [
+    "#HSKAI",
+    "#забоничинӣ",
+    "#HSK2"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "了 (le) пас аз феъл иҷро шудани амалро нишон медиҳад: 我买了两本书 — «Ман ду китоб харидам».",
+    "Барои инкори амал 没 пеш аз феъл меояд ва 了 намегузорем: 我没买书 — «Ман китоб нахаридам».",
+    "了 танҳо аломати замони гузашта нест; дар ин ҷумла ба анҷом расидани амалро нишон медиҳад."
+  ],
+  "examples": [
+    "了 le — амали анҷомёфта",
+    "我买了两本书。 Wǒ mǎi le liǎng běn shū. — Ман ду китоб харидам.",
+    "我没买书。 Wǒ méi mǎi shū. — Ман китоб нахаридам."
+  ],
+  "scenes": [
+    {
+      "id": "mistake",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "ҲИССАЧАИ ЗИЁДӢ",
+      "narration": "Дирӯз назди дӯкони китоб чизе нахаридӣ. Хато: 我没买了两本书. Баъд аз 没 дар ин ҷо 了 намегузорем.",
+      "screenCaption": "ҲИССАЧАИ ЗИЁДӢ",
+      "cards": [
+        {
+          "hanzi": "没买",
+          "pinyin": "méi mǎi",
+          "meaning": "нахаридам"
+        },
+        {
+          "hanzi": "了",
+          "pinyin": "le",
+          "meaning": "амали анҷомёфта"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "mistake-action-1",
+          "kind": "graphic",
+          "cueText": "Хато",
+          "explains": "Дуруст бигӯяд, ду китоб харидааст ё не: показать исходную ситуацию и объект.",
+          "visual": {
+            "title": "Инкори нодуруст",
+            "hanzi": "没买了",
+            "pinyin": "méi mǎi le",
+            "meaning": "шакли хато",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "pointer",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "110,86 200,118 222,103",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-two",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "lake-bookstall",
+                "books-close"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.84,
+                  "h": 0.3,
+                  "card": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "mistake-action-2",
+          "kind": "graphic",
+          "cueText": "我没买了两本书",
+          "explains": "Дуруст бигӯяд, ду китоб харидааст ё не: показать изменённое состояние и верную китайскую форму.",
+          "visual": {
+            "title": "Қисми зиёдатӣ",
+            "hanzi": "没买",
+            "pinyin": "méi mǎi",
+            "meaning": "нахаридам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "highlight",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 208,
+                    "r": 107,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-two",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "lake-bookstall",
+                "books-close"
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.84,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "correction",
+      "kind": "example",
+      "durationSec": 11,
+      "headline": "ХАРИД Ё НАБУДИ ОН",
+      "narration": "Агар харид анҷом ёфт, бигӯ: 我买了两本书 — ман ду китоб харидам. Аммо агар нахаридӣ: 我没买书. Дар инкор 了 нест.",
+      "screenCaption": "ХАРИД Ё НАБУДИ ОН",
+      "cards": [
+        {
+          "hanzi": "我买了两本书",
+          "pinyin": "Wǒ mǎi le liǎng běn shū",
+          "meaning": "Ман ду китоб харидам"
+        },
+        {
+          "hanzi": "我没买书",
+          "pinyin": "Wǒ méi mǎi shū",
+          "meaning": "Ман китоб нахаридам"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "correction-action-1",
+          "kind": "graphic",
+          "cueText": "我买了两本书",
+          "explains": "Дуруст бигӯяд, ду китоб харидааст ё не: показать исходную ситуацию и объект.",
+          "visual": {
+            "title": "Хариди анҷомёфта",
+            "hanzi": "我买了两本书",
+            "pinyin": "Wǒ mǎi le liǎng běn shū",
+            "meaning": "Ман ду китоб харидам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "pointer",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "110,86 200,118 222,103",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-two",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "books-close"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "correction-action-2",
+          "kind": "graphic",
+          "cueText": "我没买书",
+          "explains": "Дуруст бигӯяд, ду китоб харидааст ё не: показать изменённое состояние и верную китайскую форму.",
+          "visual": {
+            "title": "Инкор бе ҳиссача",
+            "hanzi": "我没买书",
+            "pinyin": "Wǒ méi mǎi shū",
+            "meaning": "Ман китоб нахаридам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "highlight",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 208,
+                    "r": 107,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-two",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "books-close"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "kind": "example",
+      "durationSec": 10,
+      "headline": "ДУ ҶАВОБРО САНҶ",
+      "narration": "Такрор кун: 我买了两本书 — ду китоб харидӣ. Агар нахарида бошӣ, бигӯ 我没买书. Дар ин ҷо 了 лозим нест.",
+      "screenCaption": "ДУ ҶАВОБРО САНҶ",
+      "cards": [
+        {
+          "hanzi": "买了",
+          "pinyin": "mǎi le",
+          "meaning": "харид"
+        },
+        {
+          "hanzi": "没买",
+          "pinyin": "méi mǎi",
+          "meaning": "нахарид"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "practice-action-1",
+          "kind": "graphic",
+          "cueText": "Такрор кун",
+          "explains": "Дуруст бигӯяд, ду китоб харидааст ё не: показать исходную ситуацию и объект.",
+          "visual": {
+            "title": "Амали анҷомёфта",
+            "hanzi": "买了",
+            "pinyin": "mǎi le",
+            "meaning": "харид",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "pointer",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "110,86 200,118 222,103",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-two",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "book-result"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "practice-action-2",
+          "kind": "graphic",
+          "cueText": "我没买书",
+          "explains": "Дуруст бигӯяд, ду китоб харидааст ё не: показать изменённое состояние и верную китайскую форму.",
+          "visual": {
+            "title": "Амал набуд",
+            "hanzi": "没买",
+            "pinyin": "méi mǎi",
+            "meaning": "нахарид",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "highlight",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 208,
+                    "r": 107,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-two",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "book-result"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "tg-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "Oxford CTCFL — aspect marker 了",
+      "url": "https://www.ctcfl.ox.ac.uk/materials_chinese_lessons_14_grammar_notes/",
+      "checkedAt": "2026-11-22",
+      "supports": "了 after the verb indicates completed action; negative uses 没 without 了."
+    },
+    {
+      "title": "WordSwing HSK — 了 completed actions",
+      "url": "https://hsk.wordswing.com/grammar/le-completed/",
+      "checkedAt": "2026-11-22",
+      "supports": "我买了两本书; verb + 了 + quantified object; not a simple past tense."
+    }
+  ],
+  "hookExperiment": {
+    "id": "le-buy-books-20261125-tg-hook-v1",
+    "formatId": "contrast",
+    "hypothesis": "Хатои воқеии 没…了 дар назди дӯкони китоб дар аввал ислоҳи равшан медиҳад; натиҷа ҳоло санҷида нашудааст.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-22"
+  },
+  "audienceProblem": "Ҳатто баъд аз 没 ҳиссачаи 了 мегузоранд, чун онро танҳо замони гузашта мешуморанд.",
+  "learningOutcome": "Харидро бо 买了 ва набудани харидро бо 没买 бе 了 гуфтан.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Дӯкони китоб назди кӯли боғи чинӣ",
+      "learnerGoal": "Дуруст бигӯяд, ду китоб харидааст ё не",
+      "obstacle": "Якҷоя истифода кардани 没 ва 了 дар феъли инкорӣ"
+    },
+    "selectionReason": "Варианти B: хато → ислоҳи дуруст → машқ, бе омехтани ҳиссача бо замони гузашта.",
+    "firstPayoff": {
+      "sceneId": "correction",
+      "cueText": "我买了两本书"
+    },
+    "reHooks": []
+  },
+  "experiment": {
+    "id": "lesson-opening-v1",
+    "arm": "B",
+    "structure": {
+      "mistake": "mistake",
+      "correction": "correction",
+      "practice": "practice"
+    }
+  },
+  "localization": {
+    "language": "tg",
+    "sourceEpisodeId": "le-buy-books-20261125",
+    "sourceHash": "89f26729f0d34558fda2a193ba11ae25ca7f2ea3389a1c0785ddaa6f84b04fe7",
+    "authoredOn": "2026-11-22",
+    "status": "draft"
+  }
+}
