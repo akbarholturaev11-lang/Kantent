@@ -1,0 +1,910 @@
+{
+  "id": "le-buy-books-20261125",
+  "date": "2026-11-25",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "Купил или не купил? 了 и 没",
+  "level": "HSK 2",
+  "topic": "Купил или не купил? 了 и 没",
+  "durationTargetSec": 26,
+  "caption": "Почему 了 исчезает после 没: пример с двумя книгами.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK2"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "После глагола 了 (le) обозначает завершённое действие: 我买了两本书 — «Я купил две книги».",
+    "При отрицании совершённого действия используют 没 перед глаголом, без 了: 我没买书 — «Я не покупал книги».",
+    "了 не эквивалентно прошедшему времени вообще; здесь речь именно о завершении действия."
+  ],
+  "examples": [
+    "了 le — действие завершилось",
+    "我买了两本书。 Wǒ mǎi le liǎng běn shū. — Я купил две книги.",
+    "我没买书。 Wǒ méi mǎi shū. — Я не покупал книги."
+  ],
+  "scenes": [
+    {
+      "id": "mistake",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "ЛИШНЯЯ ЧАСТИЦА",
+      "narration": "Вчера у книжного лотка ты не купил книги. Ошибка: 我没买了两本书. После 没 здесь нельзя ставить 了.",
+      "screenCaption": "ЛИШНЯЯ ЧАСТИЦА",
+      "cards": [
+        {
+          "hanzi": "没买",
+          "pinyin": "méi mǎi",
+          "meaning": "не купил"
+        },
+        {
+          "hanzi": "了",
+          "pinyin": "le",
+          "meaning": "завершённое действие"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "mistake-action-1",
+          "kind": "graphic",
+          "cueText": "Ошибка",
+          "explains": "Правильно сказать, куплены ли две книги: показать исходную ситуацию и объект.",
+          "visual": {
+            "title": "Неверное отрицание",
+            "hanzi": "没买了",
+            "pinyin": "méi mǎi le",
+            "meaning": "так не говорят",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "pointer",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "110,86 200,118 222,103",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-two",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "lake-bookstall",
+                "books-close"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.84,
+                  "h": 0.3,
+                  "card": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "mistake-action-2",
+          "kind": "graphic",
+          "cueText": "我没买了两本书",
+          "explains": "Правильно сказать, куплены ли две книги: показать изменённое состояние и верную китайскую форму.",
+          "visual": {
+            "title": "Убери лишнюю часть",
+            "hanzi": "没买",
+            "pinyin": "méi mǎi",
+            "meaning": "не купил",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "highlight",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 208,
+                    "r": 107,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-two",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "lake-bookstall",
+                "books-close"
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.84,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "correction",
+      "kind": "example",
+      "durationSec": 11,
+      "headline": "КУПИЛ ИЛИ НЕТ",
+      "narration": "Если покупка завершилась, скажи: 我买了两本书 — я купил две книги. Но если не купил: 我没买书. В отрицании 了 нет.",
+      "screenCaption": "КУПИЛ ИЛИ НЕТ",
+      "cards": [
+        {
+          "hanzi": "我买了两本书",
+          "pinyin": "Wǒ mǎi le liǎng běn shū",
+          "meaning": "Я купил две книги"
+        },
+        {
+          "hanzi": "我没买书",
+          "pinyin": "Wǒ méi mǎi shū",
+          "meaning": "Я не покупал книги"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "correction-action-1",
+          "kind": "graphic",
+          "cueText": "我买了两本书",
+          "explains": "Правильно сказать, куплены ли две книги: показать исходную ситуацию и объект.",
+          "visual": {
+            "title": "Завершённая покупка",
+            "hanzi": "我买了两本书",
+            "pinyin": "Wǒ mǎi le liǎng běn shū",
+            "meaning": "Я купил две книги",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "pointer",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "110,86 200,118 222,103",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-two",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "books-close"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "correction-action-2",
+          "kind": "graphic",
+          "cueText": "我没买书",
+          "explains": "Правильно сказать, куплены ли две книги: показать изменённое состояние и верную китайскую форму.",
+          "visual": {
+            "title": "Отрицание без частицы",
+            "hanzi": "我没买书",
+            "pinyin": "Wǒ méi mǎi shū",
+            "meaning": "Я не покупал книги",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "highlight",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 208,
+                    "r": 107,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-two",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "books-close"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "kind": "example",
+      "durationSec": 10,
+      "headline": "ПРОВЕРЬ ДВА ОТВЕТА",
+      "narration": "Повтори: 我买了两本书 — две книги куплены. А если покупки не было, скажи 我没买书. Здесь 了 не нужно.",
+      "screenCaption": "ПРОВЕРЬ ДВА ОТВЕТА",
+      "cards": [
+        {
+          "hanzi": "买了",
+          "pinyin": "mǎi le",
+          "meaning": "купил"
+        },
+        {
+          "hanzi": "没买",
+          "pinyin": "méi mǎi",
+          "meaning": "не купил"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "practice-action-1",
+          "kind": "graphic",
+          "cueText": "Повтори",
+          "explains": "Правильно сказать, куплены ли две книги: показать исходную ситуацию и объект.",
+          "visual": {
+            "title": "Действие сделано",
+            "hanzi": "买了",
+            "pinyin": "mǎi le",
+            "meaning": "купил",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "pointer",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "110,86 200,118 222,103",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-two",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "book-result"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "practice-action-2",
+          "kind": "graphic",
+          "cueText": "我没买书",
+          "explains": "Правильно сказать, куплены ли две книги: показать изменённое состояние и верную китайскую форму.",
+          "visual": {
+            "title": "Действия не было",
+            "hanzi": "没买",
+            "pinyin": "méi mǎi",
+            "meaning": "не купил",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "highlight",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 208,
+                    "r": 107,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-two",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "book-result"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "Oxford CTCFL — aspect marker 了",
+      "url": "https://www.ctcfl.ox.ac.uk/materials_chinese_lessons_14_grammar_notes/",
+      "checkedAt": "2026-11-22",
+      "supports": "了 after the verb indicates completed action; negative uses 没 without 了."
+    },
+    {
+      "title": "WordSwing HSK — 了 completed actions",
+      "url": "https://hsk.wordswing.com/grammar/le-completed/",
+      "checkedAt": "2026-11-22",
+      "supports": "我买了两本书; verb + 了 + quantified object; not a simple past tense."
+    }
+  ],
+  "hookExperiment": {
+    "id": "le-buy-books-20261125-ru-hook-v1",
+    "formatId": "contrast",
+    "hypothesis": "Реальная ошибка с 没…了 у книжного лотка даёт явное исправление в начале, без выдуманных грамматических исключений.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-22"
+  },
+  "audienceProblem": "Ставят 了 после глагола даже с 没, ошибочно считая 了 обязательным прошедшим временем.",
+  "learningOutcome": "Сказать о покупке с 买了 и отрицать её с 没买 без 了.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Книжный лоток у озера в китайском парке",
+      "learnerGoal": "Правильно сказать, куплены ли две книги",
+      "obstacle": "Ошибочное сочетание 没 и 了 в одной глагольной форме"
+    },
+    "selectionReason": "Вариант B: ошибочная фраза → корректная форма → практика; отрицание не смешивается с общим прошедшим временем.",
+    "firstPayoff": {
+      "sceneId": "correction",
+      "cueText": "我买了两本书"
+    },
+    "reHooks": []
+  },
+  "experiment": {
+    "id": "lesson-opening-v1",
+    "arm": "B",
+    "structure": {
+      "mistake": "mistake",
+      "correction": "correction",
+      "practice": "practice"
+    }
+  }
+}
