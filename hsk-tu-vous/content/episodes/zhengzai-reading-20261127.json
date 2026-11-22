@@ -253,7 +253,7 @@
               "overlay": "compare",
               "cast": [
                 {
-                  "id": "dragon",
+                  "id": "monkey",
                   "mood": "correct",
                   "x": 0.5,
                   "y": 0.84,
@@ -487,7 +487,7 @@
               ],
               "cast": [
                 {
-                  "id": "dragon",
+                  "id": "monkey",
                   "mood": "correct",
                   "x": 0.78,
                   "y": 0.86,
@@ -720,7 +720,7 @@
               ],
               "cast": [
                 {
-                  "id": "dragon",
+                  "id": "monkey",
                   "mood": "correct",
                   "x": 0.78,
                   "y": 0.86,
