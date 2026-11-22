@@ -1,0 +1,797 @@
+{
+  "id": "zhengzai-reading-20261127",
+  "date": "2026-11-27",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "tg-TJ",
+  "title": "Ҳозир китоб мехонам: 正在",
+  "level": "HSK 2",
+  "topic": "Ҳозир китоб мехонам: 正在",
+  "durationTargetSec": 26,
+  "caption": "Амали ҳозира: 正在 пеш аз 看 меояд.",
+  "hashtags": [
+    "#HSKAI",
+    "#забоничинӣ",
+    "#HSK2"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "正在 (zhèngzài) пеш аз феъл меояд ва амали ҳоло идомаёбандаро нишон медиҳад: 我正在看书.",
+    "在 (zài) пеш аз феъл ҳам равандро нишон медиҳад: 我在看书 — «Ман китоб мехонам».",
+    "在 пеш аз феълро бо 在 пеш аз номи ҷой омехта накун."
+  ],
+  "examples": [
+    "正在 zhèngzài — айнан ҳоло, дар ҷараён",
+    "我正在看书。 Wǒ zhèngzài kàn shū. — Ман ҳозир китоб мехонам.",
+    "我在看书。 Wǒ zài kàn shū. — Ман китоб мехонам."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "АМАЛИ ҲОЗИРА",
+      "narration": "Назди кампус китоб мехонӣ. Чӣ тавр мегӯӣ «ман айнан ҳозир китоб мехонам»? 正在 пеш аз 看 ё баъд? Тартибро интихоб кун.",
+      "screenCaption": "АМАЛИ ҲОЗИРА",
+      "cards": [
+        {
+          "hanzi": "正在",
+          "pinyin": "zhèngzài",
+          "meaning": "айнан ҳоло"
+        },
+        {
+          "hanzi": "看书",
+          "pinyin": "kàn shū",
+          "meaning": "китоб хондан"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "айнан ҳозир китоб мехонам",
+          "explains": "Бигӯяд, ки маҳз ҳоло китоб мехонад: показать исходную ситуацию и объект.",
+          "visual": {
+            "title": "Лаҳзаи ҳозира",
+            "hanzi": "正在",
+            "pinyin": "zhèngzài",
+            "meaning": "дар ҷараён",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "pointer",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "110,86 200,118 222,103",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-right",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "campus-bench",
+                "reading-close"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.84,
+                  "h": 0.3,
+                  "card": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "正在 пеш аз 看",
+          "explains": "Бигӯяд, ки маҳз ҳоло китоб мехонад: показать изменённое состояние и верную китайскую форму.",
+          "visual": {
+            "title": "Ҷойи калима",
+            "hanzi": "看书",
+            "pinyin": "kàn shū",
+            "meaning": "китоб хондан",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "highlight",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 208,
+                    "r": 107,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-right",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "campus-bench",
+                "reading-close"
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "dragon",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.84,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "answer",
+      "kind": "example",
+      "durationSec": 11,
+      "headline": "ПЕШ АЗ ФЕЪЛ",
+      "narration": "Дуруст: 我正在看书 — ман ҳозир китоб мехонам. 正在 пеш аз 看 меояд ва давом доштани амалро нишон медиҳад. Метавонӣ бигӯӣ 我在看书.",
+      "screenCaption": "ПЕШ АЗ ФЕЪЛ",
+      "cards": [
+        {
+          "hanzi": "我正在看书",
+          "pinyin": "Wǒ zhèngzài kàn shū",
+          "meaning": "Ман ҳозир китоб мехонам"
+        },
+        {
+          "hanzi": "我在看书",
+          "pinyin": "Wǒ zài kàn shū",
+          "meaning": "Ман китоб мехонам"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "answer-action-1",
+          "kind": "graphic",
+          "cueText": "我正在看书",
+          "explains": "Бигӯяд, ки маҳз ҳоло китоб мехонад: показать исходную ситуацию и объект.",
+          "visual": {
+            "title": "Амали давомдор",
+            "hanzi": "我正在看书",
+            "pinyin": "Wǒ zhèngzài kàn shū",
+            "meaning": "Ман ҳозир китоб мехонам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "pointer",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "110,86 200,118 222,103",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-right",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "reading-close"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "answer-action-2",
+          "kind": "graphic",
+          "cueText": "我在看书",
+          "explains": "Бигӯяд, ки маҳз ҳоло китоб мехонад: показать изменённое состояние и верную китайскую форму.",
+          "visual": {
+            "title": "Шакли кӯтоҳ",
+            "hanzi": "我在看书",
+            "pinyin": "Wǒ zài kàn shū",
+            "meaning": "Ман китоб мехонам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "highlight",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 208,
+                    "r": 107,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-right",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "reading-close"
+              ],
+              "cast": [
+                {
+                  "id": "dragon",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "kind": "example",
+      "durationSec": 10,
+      "headline": "МАШҚИ ЯК ҶУМЛА",
+      "narration": "Такрор кун: 我正在看书. Агар дӯстат пурсад, чӣ кор мекунӣ, ҷавоб деҳ 我在看书. Имрӯз муҳим: 正在 пеш аз феъл аст.",
+      "screenCaption": "МАШҚИ ЯК ҶУМЛА",
+      "cards": [
+        {
+          "hanzi": "正在",
+          "pinyin": "zhèngzài",
+          "meaning": "дар ҷараён"
+        },
+        {
+          "hanzi": "我在看书",
+          "pinyin": "Wǒ zài kàn shū",
+          "meaning": "Ман китоб мехонам"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "practice-action-1",
+          "kind": "graphic",
+          "cueText": "Такрор кун",
+          "explains": "Бигӯяд, ки маҳз ҳоло китоб мехонад: показать исходную ситуацию и объект.",
+          "visual": {
+            "title": "Машқи гуфтор",
+            "hanzi": "我正在看书",
+            "pinyin": "Wǒ zhèngzài kàn shū",
+            "meaning": "Ман ҳозир китоб мехонам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "pointer",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "110,86 200,118 222,103",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-right",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "reading-progress"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "practice-action-2",
+          "kind": "graphic",
+          "cueText": "我在看书",
+          "explains": "Бигӯяд, ки маҳз ҳоло китоб мехонад: показать изменённое состояние и верную китайскую форму.",
+          "visual": {
+            "title": "Ҷавоб ба дӯст",
+            "hanzi": "我在看书",
+            "pinyin": "Wǒ zài kàn shū",
+            "meaning": "Ман китоб мехонам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "highlight",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 208,
+                    "r": 107,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-right",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "reading-progress"
+              ],
+              "cast": [
+                {
+                  "id": "dragon",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "tg-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "WordSwing — 在 / 正在 for ongoing actions",
+      "url": "https://hsk.wordswing.com/grammar/zai-progressive/",
+      "checkedAt": "2026-11-22",
+      "supports": "Subject + 正在 + verb for action in progress; 我在看书呢 and 在看书."
+    },
+    {
+      "title": "Hanzistack — 在、正在 actions in progress",
+      "url": "https://char.hanzistack.com/grammar/zai-zhengzai-actions-in-progress",
+      "checkedAt": "2026-11-22",
+      "supports": "正在 before verb phrase highlights the action in progress; distinct from location 在 + place."
+    }
+  ],
+  "hookExperiment": {
+    "id": "zhengzai-reading-20261127-tg-hook-v1",
+    "formatId": "question",
+    "hypothesis": "Саволи воқеӣ дар бораи китобхонии ҳозира ҷавоби зуд ва ҷойи 正在-ро мефаҳмонад; таъсир ҳоло чен нашудааст.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-22"
+  },
+  "audienceProblem": "正在-ро баъд аз феъл мегузоранд ё онро бо 在 барои ҷой омехта мекунанд.",
+  "learningOutcome": "Ҷумлаи 我正在看书-ро дуруст гӯяд ва 正在-ро пеш аз 看 гузорад.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Нишастгоҳ назди дарвозаи кампуси чинӣ",
+      "learnerGoal": "Бигӯяд, ки маҳз ҳоло китоб мехонад",
+      "obstacle": "Ҷои дурусти 正在 нисбат ба феъл маълум нест"
+    },
+    "selectionReason": "Варианти A: савол, ҷавоби барвақт ва машқи шахсӣ.",
+    "firstPayoff": {
+      "sceneId": "answer",
+      "cueText": "我正在看书"
+    },
+    "reHooks": []
+  },
+  "experiment": {
+    "id": "lesson-opening-v1",
+    "arm": "A",
+    "structure": {
+      "challenge": "hook",
+      "answer": "answer",
+      "practice": "practice"
+    }
+  },
+  "localization": {
+    "language": "tg",
+    "sourceEpisodeId": "zhengzai-reading-20261127",
+    "sourceHash": "0e232d23df989670cb3f6b1d5e1f0740b9abe5f256e252a7f2a6a44e245cb287",
+    "authoredOn": "2026-11-22",
+    "status": "draft"
+  }
+}
