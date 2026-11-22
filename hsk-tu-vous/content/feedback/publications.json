@@ -1273,6 +1273,123 @@
         "localRequestId": "f3323098c7a34393fc7a7d87",
         "sourceCommit": "3d5c8ddf701bd2506673c90ed7664e995dc3c2ab"
       }
+    },
+    {
+      "content": {
+        "id": "metro-voice-question-20261124",
+        "type": "advertisement",
+        "language": "ru",
+        "sourceHash": "d179b19a59c493574eeecfd8ff292f7fc29563e7e3623941348e49fdd33e6175"
+      },
+      "platform": "instagram",
+      "accountId": "6a411e989d9472faae10a430",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6b037d2a417cde33e16f8d91",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "8beccb26f2280966e082ffb237b45885de7572679834a49671f0c3a9edc80a9f",
+      "approvedVideoSha256": "8beccb26f2280966e082ffb237b45885de7572679834a49671f0c3a9edc80a9f",
+      "approvedAt": "2026-11-22T23:38:07.815Z",
+      "verifiedAt": "2026-11-22T23:39:24.141Z",
+      "scheduledFor": "2026-11-24T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "metro-voice-question-20261124-ad-v5-20261123",
+      "postPreviewSha256": "66551a9724c83a35b62c2810337130cb13d2e0a0ed3e434b45ee8af8cbf53e55",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": null,
+        "hookFormat": null,
+        "hookText": "Представь: в китайском метро видишь две похожие надписи и начинаешь путать иероглифы. Вспоминаешь HSK AI: отличать знаки можно потренироваться.",
+        "storytellingPattern": null,
+        "visualStyle": "minimalist-promo-v1",
+        "scriptSha256": "47969fb276ef8bb1cd2458c6e15000b8616b7d4e7f4f5899592caf78ba4ec10d"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "d2d934274aac4c962f17bbfd",
+        "sourceCommit": "99bf5781149a5e6d0537759d6efe2cff1e4074ce"
+      }
+    },
+    {
+      "content": {
+        "id": "metro-voice-question-20261124",
+        "type": "advertisement",
+        "language": "ru",
+        "sourceHash": "d179b19a59c493574eeecfd8ff292f7fc29563e7e3623941348e49fdd33e6175"
+      },
+      "platform": "youtube",
+      "accountId": "6ac96e053f8f4ffc10b0655f",
+      "accountUsername": "hskai_app",
+      "zernioPostId": "6b037d8ea8efbf563fd76016",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "8beccb26f2280966e082ffb237b45885de7572679834a49671f0c3a9edc80a9f",
+      "approvedVideoSha256": "8beccb26f2280966e082ffb237b45885de7572679834a49671f0c3a9edc80a9f",
+      "approvedAt": "2026-11-22T23:39:53.898Z",
+      "verifiedAt": "2026-11-22T23:41:03.716Z",
+      "scheduledFor": "2026-11-24T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "metro-voice-question-20261124-ad-v5-20261123",
+      "postPreviewSha256": "fdc291647837ba1c6d69758721ff2ff06e6d26a62c6c2af1c8d9a8526807ff77",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": null,
+        "hookFormat": null,
+        "hookText": "Представь: в китайском метро видишь две похожие надписи и начинаешь путать иероглифы. Вспоминаешь HSK AI: отличать знаки можно потренироваться.",
+        "storytellingPattern": null,
+        "visualStyle": "minimalist-promo-v1",
+        "scriptSha256": "47969fb276ef8bb1cd2458c6e15000b8616b7d4e7f4f5899592caf78ba4ec10d"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "54da5b859296863377dfa3cb",
+        "sourceCommit": "99bf5781149a5e6d0537759d6efe2cff1e4074ce"
+      }
+    },
+    {
+      "content": {
+        "id": "metro-voice-question-20261124",
+        "type": "advertisement",
+        "language": "ru",
+        "sourceHash": "d179b19a59c493574eeecfd8ff292f7fc29563e7e3623941348e49fdd33e6175"
+      },
+      "platform": "tiktok",
+      "accountId": "6ae16327a2845fbdb07e5ccb",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6b037df9b6165f00d763dd3d",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "c79cfcbe2e208fafac4be65233bd0c39bfd3b60c859b3847d9184f771462b737",
+      "approvedVideoSha256": "c79cfcbe2e208fafac4be65233bd0c39bfd3b60c859b3847d9184f771462b737",
+      "approvedAt": "2026-11-22T23:41:26.422Z",
+      "verifiedAt": "2026-11-22T23:42:51.857Z",
+      "scheduledFor": "2026-11-24T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "metro-voice-question-20261124-tiktok-cta-v4",
+      "postPreviewSha256": "f03c4f6bce82d31e1d90e66a32e5f2cc6e3e46cf8fd52de497101d2b9dde69f0",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": null,
+        "hookFormat": null,
+        "hookText": "Представь: в китайском метро видишь две похожие надписи и начинаешь путать иероглифы. Вспоминаешь HSK AI: отличать знаки можно потренироваться.",
+        "storytellingPattern": null,
+        "visualStyle": "minimalist-promo-v1",
+        "scriptSha256": "9849d0cd6a1424744de06faf31720d1f54747991a4685f623a73833b4c0e929e"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "1e4aa29bebc8259ce9d5e1cd",
+        "sourceCommit": "99bf5781149a5e6d0537759d6efe2cff1e4074ce"
+      }
     }
   ]
 }
