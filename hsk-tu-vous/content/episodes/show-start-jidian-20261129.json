@@ -1,0 +1,907 @@
+{
+  "id": "show-start-jidian-20261129",
+  "date": "2026-11-29",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "Во сколько начинается? 几点开始",
+  "level": "HSK 1–2",
+  "topic": "Во сколько начинается? 几点开始",
+  "durationTargetSec": 32,
+  "caption": "Вторая часть: Панда узнаёт час начала шоу у вечерней сцены.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "几点 (jǐ diǎn) спрашивает точный час: 几点开始？ — «Во сколько начинается?».",
+    "八点 (bā diǎn) означает восемь часов. В ответе 八点开始 — «Начинается в восемь».",
+    "Вопросительное 几点 не требует 吗; время стоит перед 开始."
+  ],
+  "examples": [
+    "几点 jǐ diǎn — во сколько часов",
+    "几点开始？ Jǐ diǎn kāishǐ? — Во сколько начинается?",
+    "八点开始。 Bā diǎn kāishǐ. — Начинается в восемь."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 9,
+      "headline": "ВОПРОС У СЦЕНЫ",
+      "narration": "Панда с вчерашним билетом приходит к вечерней сцене. Он спрашивает: 几点开始？ — во сколько начинается? Ответ: 八点开始 — в восемь часов.",
+      "screenCaption": "ВОПРОС У СЦЕНЫ",
+      "cards": [
+        {
+          "hanzi": "几点开始",
+          "pinyin": "Jǐ diǎn kāishǐ",
+          "meaning": "Во сколько начинается?"
+        },
+        {
+          "hanzi": "八点开始",
+          "pinyin": "Bā diǎn kāishǐ",
+          "meaning": "В восемь начинается"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "几点开始",
+          "explains": "По уже полученному билету спросить время начала: показать предмет и ситуацию.",
+          "visual": {
+            "title": "Время неизвестно",
+            "hanzi": "几点开始",
+            "pinyin": "Jǐ diǎn kāishǐ",
+            "meaning": "Во сколько начинается?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "clock-dial",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 133,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 11
+                  }
+                },
+                {
+                  "id": "clock-hub",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 11,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "top-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 88,
+                    "x2": 300,
+                    "y2": 116,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "left-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 183,
+                    "y1": 204,
+                    "x2": 210,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "right-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 390,
+                    "y1": 204,
+                    "x2": 418,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "unknown-time",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 47,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "clock-dial",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "market-stage",
+                "stage-clock"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.87,
+                  "h": 0.3,
+                  "card": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "八点开始",
+          "explains": "По уже полученному билету спросить время начала: показать изменение состояния и китайский ответ.",
+          "visual": {
+            "title": "Ответ найден",
+            "hanzi": "八点开始",
+            "pinyin": "Bā diǎn kāishǐ",
+            "meaning": "Начинается в восемь",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "clock-dial",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 133,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 11
+                  }
+                },
+                {
+                  "id": "clock-hub",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 11,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "top-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 88,
+                    "x2": 300,
+                    "y2": 116,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "left-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 183,
+                    "y1": 204,
+                    "x2": 210,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "right-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 390,
+                    "y1": 204,
+                    "x2": 418,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "hour-hand",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 204,
+                    "x2": 234,
+                    "y2": 239,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "minute-hand",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 204,
+                    "x2": 300,
+                    "y2": 119,
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "clock-dial",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "market-stage",
+                "stage-clock"
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.87,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "time",
+      "kind": "example",
+      "durationSec": 12,
+      "headline": "СХЕМА ВОПРОСА",
+      "narration": "几点 значит «в котором часу», 开始 — «начинается». Поэтому 几点开始？ В ответе число перед 点: 八点开始. Частица 吗 не нужна.",
+      "screenCaption": "СХЕМА ВОПРОСА",
+      "cards": [
+        {
+          "hanzi": "几点",
+          "pinyin": "jǐ diǎn",
+          "meaning": "во сколько"
+        },
+        {
+          "hanzi": "八点",
+          "pinyin": "bā diǎn",
+          "meaning": "восемь часов"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "time-action-1",
+          "kind": "graphic",
+          "cueText": "几点 значит",
+          "explains": "По уже полученному билету спросить время начала: показать предмет и ситуацию.",
+          "visual": {
+            "title": "Час спрашиваем",
+            "hanzi": "几点",
+            "pinyin": "jǐ diǎn",
+            "meaning": "во сколько",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "clock-dial",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 133,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 11
+                  }
+                },
+                {
+                  "id": "clock-hub",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 11,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "top-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 88,
+                    "x2": 300,
+                    "y2": 116,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "left-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 183,
+                    "y1": 204,
+                    "x2": 210,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "right-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 390,
+                    "y1": 204,
+                    "x2": 418,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "unknown-time",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 47,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "clock-dial",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "stage-clock"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "time-action-2",
+          "kind": "graphic",
+          "cueText": "八点开始",
+          "explains": "По уже полученному билету спросить время начала: показать изменение состояния и китайский ответ.",
+          "visual": {
+            "title": "Конкретное время",
+            "hanzi": "八点开始",
+            "pinyin": "Bā diǎn kāishǐ",
+            "meaning": "Начинается в восемь",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "clock-dial",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 133,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 11
+                  }
+                },
+                {
+                  "id": "clock-hub",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 11,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "top-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 88,
+                    "x2": 300,
+                    "y2": 116,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "left-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 183,
+                    "y1": 204,
+                    "x2": 210,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "right-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 390,
+                    "y1": 204,
+                    "x2": 418,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "hour-hand",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 204,
+                    "x2": 234,
+                    "y2": 239,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "minute-hand",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 204,
+                    "x2": 300,
+                    "y2": 119,
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "clock-dial",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "stage-clock"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "example",
+      "durationSec": 11,
+      "headline": "ИСТОРИЯ ЗАВЕРШЕНА",
+      "narration": "Проверь себя: спроси 几点开始？ Ответь 八点开始. Панда знает время и идёт к сцене с билетом. Теперь и билет, и время понятны: история закончилась.",
+      "screenCaption": "ИСТОРИЯ ЗАВЕРШЕНА",
+      "cards": [
+        {
+          "hanzi": "几点开始",
+          "pinyin": "Jǐ diǎn kāishǐ",
+          "meaning": "Во сколько начинается?"
+        },
+        {
+          "hanzi": "八点开始",
+          "pinyin": "Bā diǎn kāishǐ",
+          "meaning": "В восемь"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recap-action-1",
+          "kind": "graphic",
+          "cueText": "спроси 几点开始",
+          "explains": "По уже полученному билету спросить время начала: показать предмет и ситуацию.",
+          "visual": {
+            "title": "Вопрос повторён",
+            "hanzi": "几点开始",
+            "pinyin": "Jǐ diǎn kāishǐ",
+            "meaning": "Во сколько начинается?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "clock-dial",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 133,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 11
+                  }
+                },
+                {
+                  "id": "clock-hub",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 11,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "top-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 88,
+                    "x2": 300,
+                    "y2": 116,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "left-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 183,
+                    "y1": 204,
+                    "x2": 210,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "right-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 390,
+                    "y1": 204,
+                    "x2": 418,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "unknown-time",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 47,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "clock-dial",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "audience-gate"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "recap-action-2",
+          "kind": "graphic",
+          "cueText": "Ответь 八点开始",
+          "explains": "По уже полученному билету спросить время начала: показать изменение состояния и китайский ответ.",
+          "visual": {
+            "title": "Завершение маршрута",
+            "hanzi": "八点开始",
+            "pinyin": "Bā diǎn kāishǐ",
+            "meaning": "В восемь",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "clock-dial",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 133,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 11
+                  }
+                },
+                {
+                  "id": "clock-hub",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 11,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "top-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 88,
+                    "x2": 300,
+                    "y2": 116,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "left-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 183,
+                    "y1": 204,
+                    "x2": 210,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "right-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 390,
+                    "y1": 204,
+                    "x2": 418,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "hour-hand",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 204,
+                    "x2": 234,
+                    "y2": 239,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "minute-hand",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 204,
+                    "x2": 300,
+                    "y2": 119,
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "clock-dial",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "audience-gate"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "Time expressions in Mandarin Chinese — 几点开始",
+      "url": "https://www.settemilalingue.com/en/languages/zh/grammar/time-expressions",
+      "checkedAt": "2026-11-22",
+      "supports": "电影几点开始? question, 电影九点开始. exact clock-hour time before 开始."
+    },
+    {
+      "title": "Hanzistack — hours 点 / 半",
+      "url": "https://char.hanzistack.com/grammar/dian-ban-hours-and-half-hours",
+      "checkedAt": "2026-11-22",
+      "supports": "八点 (bā diǎn) is 8:00; time phrase before verb 开始, e.g. 会议下午三点开始."
+    }
+  ],
+  "hookExperiment": {
+    "id": "show-start-jidian-20261129-ru-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Разрешение вопроса о времени из первой части начинается с полезного вопроса и немедленного ответа.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-22"
+  },
+  "audienceProblem": "Уже получил билет на вечернее шоу, но не знает, как уточнить время начала.",
+  "learningOutcome": "Спросить 几点开始 и понять ответ 八点开始.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Вечерняя сцена вымышленного шоу на китайском ночном рынке",
+      "learnerGoal": "По уже полученному билету спросить время начала",
+      "obstacle": "Отличить вопрос 几点 и указание точного часа 八点"
+    },
+    "selectionReason": "Прямое завершение двухчастной истории: вопрос и ответ немедленно, затем структура и самостоятельная проверка.",
+    "firstPayoff": {
+      "sceneId": "hook",
+      "cueText": "几点开始"
+    },
+    "reHooks": []
+  }
+}
