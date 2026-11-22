@@ -1,0 +1,38 @@
+{
+  "episodeId": "show-start-jidian-20261129",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "HSK AI premium semi-realistic digital lesson illustration, restrained liquid-glass-friendly warm cinematic lighting, clean linework, believable everyday Chinese scenery, readable large focal objects. Text-free backdrop only: no words, lettering, numbers, Chinese characters, watermarks, logos, people or newly invented characters. Preserve continuity among reference frames.",
+  "assets": [
+    {
+      "name": "market-stage",
+      "aspectRatio": "9:16",
+      "prompt": "Evening Chinese night market with warm lanterns and a small performance stage at one end, no audience in image, clear path and a plain paper admission ticket on a nearby stand; no readable shop signs. No people, Chinese characters, writing, digits, logos or watermarks."
+    },
+    {
+      "name": "stage-clock",
+      "aspectRatio": "4:5",
+      "references": [
+        "market-stage"
+      ],
+      "prompt": "The same night market performance stage with a large analogue clock face with no numbers or markings and a blank paper admission ticket on a stand; soft lantern light and clear clock silhouette. No text, logos, people, numbers or watermarks."
+    },
+    {
+      "name": "audience-gate",
+      "aspectRatio": "4:5",
+      "references": [
+        "market-stage",
+        "stage-clock"
+      ],
+      "prompt": "The same fictional night market show entrance, lantern stage in focus, one blank paper ticket in foreground and a clear walkable path towards the stage. No people, writing, letters, numerals, signs, logos or watermarks."
+    }
+  ],
+  "variety": {
+    "date": "2026-11-29",
+    "setting": "night-market",
+    "coach": "panda",
+    "supportingCharacter": "monkey",
+    "pattern": "dialogue",
+    "experiment": null,
+    "source": "Manual replay of current scripts/visual-variety-plan.mjs against historical art manifests; the setting-group experiment is paused."
+  }
+}
