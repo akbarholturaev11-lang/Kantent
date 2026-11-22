@@ -48,7 +48,7 @@
           "cueText": "муаллим барои намоиши шом билет медиҳад",
           "explains": "Як билет пурсад ва шуморакунандаи 张-ро бифаҳмад: показать предмет и ситуацию.",
           "visual": {
-            "title": "Билет пеш аз сафар",
+            "title": "Оғози воқеа",
             "hanzi": "一张票",
             "pinyin": "yì zhāng piào",
             "meaning": "як билет",
@@ -952,7 +952,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "ticket-counter-zhang-20261128",
-    "sourceHash": "fd26aa34fbc708ac1fe5cee9584bbdb26d49b89b146b8cb955285b2fca5b4e7f",
+    "sourceHash": "57cde428490ccea8f40f52062abca578a9fa718b1bd11f14ae1be537c8be7bd2",
     "authoredOn": "2026-11-22",
     "status": "draft"
   }
