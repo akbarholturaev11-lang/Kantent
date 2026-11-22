@@ -1,0 +1,959 @@
+{
+  "id": "ticket-counter-zhang-20261128",
+  "date": "2026-11-28",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "tg-TJ",
+  "title": "Билет ба намоиши шом: 一张票",
+  "level": "HSK 1–2",
+  "topic": "Билет ба намоиши шом: 一张票",
+  "durationTargetSec": 32,
+  "caption": "Қисми аввал: Панда билет мегирад ва 张-ро истифода мебарад.",
+  "hashtags": [
+    "#HSKAI",
+    "#забоничинӣ",
+    "#HSK1"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "Барои билет калимаи шуморакунандаи 张 (zhāng) меояд: 一张票 (yì zhāng piào) — «як билет».",
+    "Ду билет — 两张票 (liǎng zhāng piào); пеш аз шуморакунанда одатан 两 меояд.",
+    "Ҷумлаи 我要一张票 талаби мустақими як билет аст; ба ҷойи 张 калимаи 个-ро истифода накун."
+  ],
+  "examples": [
+    "张 zhāng — шуморакунандаи билет",
+    "一张票 yì zhāng piào — як билет",
+    "两张票 liǎng zhāng piào — ду билет",
+    "我要一张票。 Wǒ yào yì zhāng piào. — Ба ман як билет лозим."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 8,
+      "headline": "ЯК БИЛЕТ БАРОИ ШОМ",
+      "narration": "Тасаввур кун: дар синф муаллим барои намоиши шом билет медиҳад. Панда мегӯяд: 我要一张票 — ба ман як билет. Барои билет 张 лозим аст.",
+      "screenCaption": "ЯК БИЛЕТ БАРОИ ШОМ",
+      "cards": [
+        {
+          "hanzi": "一张票",
+          "pinyin": "yì zhāng piào",
+          "meaning": "як билет"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "муаллим барои намоиши шом билет медиҳад",
+          "explains": "Як билет пурсад ва шуморакунандаи 张-ро бифаҳмад: показать предмет и ситуацию.",
+          "visual": {
+            "title": "Билет пеш аз сафар",
+            "hanzi": "一张票",
+            "pinyin": "yì zhāng piào",
+            "meaning": "як билет",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "desk",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 50,
+                    "y": 302,
+                    "width": 500,
+                    "height": 20,
+                    "rx": 7,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "ticket-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 173,
+                    "y": 140,
+                    "width": 256,
+                    "height": 135,
+                    "rx": 14,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "stub",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 359,
+                    "y1": 145,
+                    "x2": 359,
+                    "y2": 268,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "hole-one",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 163,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-two",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 188,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-three",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 213,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 133,
+                    "y1": 107,
+                    "x2": 469,
+                    "y2": 107,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "ticket-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "classroom-tickets",
+                "ticket-close"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.87,
+                  "h": 0.3,
+                  "card": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "我要一张票",
+          "explains": "Як билет пурсад ва шуморакунандаи 张-ро бифаҳмад: показать изменение состояния и китайский ответ.",
+          "visual": {
+            "title": "Як билети интихобшуда",
+            "hanzi": "我要一张票",
+            "pinyin": "Wǒ yào yì zhāng piào",
+            "meaning": "Ба ман як билет",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "desk",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 50,
+                    "y": 302,
+                    "width": 500,
+                    "height": 20,
+                    "rx": 7,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "ticket-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 173,
+                    "y": 140,
+                    "width": 256,
+                    "height": 135,
+                    "rx": 14,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "stub",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 359,
+                    "y1": 145,
+                    "x2": 359,
+                    "y2": 268,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "hole-one",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 163,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-two",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 188,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-three",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 213,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "ticket-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 83,
+                    "y": 91,
+                    "width": 69,
+                    "height": 130,
+                    "rx": 7,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "count-mark",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 205,
+                    "r": 99,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "ticket-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "classroom-tickets",
+                "ticket-close"
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.87,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "count",
+      "kind": "example",
+      "durationSec": 12,
+      "headline": "ШУМОРАИ БИЛЕТҲО",
+      "narration": "张 шуморакунандаи билет аст. 一张票 — як билет, 两张票 — ду билет. Ҳангоми шумурдани билет ба ҷойи 张 калимаи 个 нагӯ.",
+      "screenCaption": "ШУМОРАИ БИЛЕТҲО",
+      "cards": [
+        {
+          "hanzi": "一张票",
+          "pinyin": "yì zhāng piào",
+          "meaning": "як билет"
+        },
+        {
+          "hanzi": "两张票",
+          "pinyin": "liǎng zhāng piào",
+          "meaning": "ду билет"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "count-action-1",
+          "kind": "graphic",
+          "cueText": "一张票",
+          "explains": "Як билет пурсад ва шуморакунандаи 张-ро бифаҳмад: показать предмет и ситуацию.",
+          "visual": {
+            "title": "Як адад",
+            "hanzi": "一张票",
+            "pinyin": "yì zhāng piào",
+            "meaning": "як билет",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "desk",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 50,
+                    "y": 302,
+                    "width": 500,
+                    "height": 20,
+                    "rx": 7,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "ticket-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 173,
+                    "y": 140,
+                    "width": 256,
+                    "height": 135,
+                    "rx": 14,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "stub",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 359,
+                    "y1": 145,
+                    "x2": 359,
+                    "y2": 268,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "hole-one",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 163,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-two",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 188,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-three",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 213,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 133,
+                    "y1": 107,
+                    "x2": 469,
+                    "y2": 107,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "ticket-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "ticket-close"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "count-action-2",
+          "kind": "graphic",
+          "cueText": "两张票",
+          "explains": "Як билет пурсад ва шуморакунандаи 张-ро бифаҳмад: показать изменение состояния и китайский ответ.",
+          "visual": {
+            "title": "Ду адад",
+            "hanzi": "两张票",
+            "pinyin": "liǎng zhāng piào",
+            "meaning": "ду билет",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "desk",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 50,
+                    "y": 302,
+                    "width": 500,
+                    "height": 20,
+                    "rx": 7,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "ticket-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 173,
+                    "y": 140,
+                    "width": 256,
+                    "height": 135,
+                    "rx": 14,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "stub",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 359,
+                    "y1": 145,
+                    "x2": 359,
+                    "y2": 268,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "hole-one",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 163,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-two",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 188,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-three",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 213,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "ticket-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 83,
+                    "y": 91,
+                    "width": 69,
+                    "height": 130,
+                    "rx": 7,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "count-mark",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 205,
+                    "r": 99,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "ticket-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "ticket-close"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "example",
+      "durationSec": 12,
+      "headline": "БИЛЕТ ДАР ДАСТ",
+      "narration": "Панда 我要一张票-ро такрор мекунад ва билет мегирад. Санҷ: «як билет» — 一张票. Дар билет вақти намоиш нишон дода шудааст. Дар қисми дуюм Панда мепурсад, намоиш соати чанд оғоз меёбад.",
+      "screenCaption": "БИЛЕТ ДАР ДАСТ",
+      "cards": [
+        {
+          "hanzi": "我要一张票",
+          "pinyin": "Wǒ yào yì zhāng piào",
+          "meaning": "Ба ман як билет"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recap-action-1",
+          "kind": "graphic",
+          "cueText": "билет мегирад",
+          "explains": "Як билет пурсад ва шуморакунандаи 张-ро бифаҳмад: показать предмет и ситуацию.",
+          "visual": {
+            "title": "Масъала ҳал шуд",
+            "hanzi": "我要一张票",
+            "pinyin": "Wǒ yào yì zhāng piào",
+            "meaning": "Ба ман як билет",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "desk",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 50,
+                    "y": 302,
+                    "width": 500,
+                    "height": 20,
+                    "rx": 7,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "ticket-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 173,
+                    "y": 140,
+                    "width": 256,
+                    "height": 135,
+                    "rx": 14,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "stub",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 359,
+                    "y1": 145,
+                    "x2": 359,
+                    "y2": 268,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "hole-one",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 163,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-two",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 188,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-three",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 213,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 133,
+                    "y1": 107,
+                    "x2": 469,
+                    "y2": 107,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "ticket-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "ticket-count"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "recap-action-2",
+          "kind": "graphic",
+          "cueText": "як билет",
+          "explains": "Як билет пурсад ва шуморакунандаи 张-ро бифаҳмад: показать изменение состояния и китайский ответ.",
+          "visual": {
+            "title": "Такрори шумора",
+            "hanzi": "一张票",
+            "pinyin": "yì zhāng piào",
+            "meaning": "як билет",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "desk",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 50,
+                    "y": 302,
+                    "width": 500,
+                    "height": 20,
+                    "rx": 7,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "ticket-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 173,
+                    "y": 140,
+                    "width": 256,
+                    "height": 135,
+                    "rx": 14,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "stub",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 359,
+                    "y1": 145,
+                    "x2": 359,
+                    "y2": 268,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "hole-one",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 163,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-two",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 188,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-three",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 213,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "ticket-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 83,
+                    "y": 91,
+                    "width": 69,
+                    "height": 130,
+                    "rx": 7,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "count-mark",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 205,
+                    "r": 99,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "ticket-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "ticket-count"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "tg-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "HanziGuru — classifiers 张 for tickets",
+      "url": "https://hanziguru.com/classifiers",
+      "checkedAt": "2026-11-22",
+      "supports": "张 is the classifier for tickets and flat papers, 一张票 and 两张票."
+    },
+    {
+      "title": "Mandarin for Travel — buying tickets",
+      "url": "https://mandarinfortravel.com/mandarin-phrases/sightseeing/buying-tickets/",
+      "checkedAt": "2026-11-22",
+      "supports": "一张票 and 两张票 are valid ticket counting phrases; 想买… is a natural polite request."
+    }
+  ],
+  "hookExperiment": {
+    "id": "ticket-counter-zhang-20261128-tg-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Қиссаи гирифтани билет пеш аз намоиши шом масъала ва ибораи дурустро барвақт равшан мекунад.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-22"
+  },
+  "audienceProblem": "Омӯзанда дар синф ба намоиш меравад, вале калимаи шуморакунандаи билетро намедонад.",
+  "learningOutcome": "Ҷумлаи 我要一张票-ро гӯяд ва 一张票 ва 两张票-ро фарқ кунад.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Синф пеш аз намоиши хаёлии шом дар бозори шабона",
+      "learnerGoal": "Як билет пурсад ва шуморакунандаи 张-ро бифаҳмад",
+      "obstacle": "Ба ҷойи 张 калимаи умумии 个-ро гузоштан"
+    },
+    "selectionReason": "Қиссаи мустақим: як талаби равшан, шуморакунандаи дуруст ва такрор; қисми 2 дар бораи соат хоҳад буд.",
+    "firstPayoff": {
+      "sceneId": "hook",
+      "cueText": "我要一张票"
+    },
+    "reHooks": []
+  },
+  "localization": {
+    "language": "tg",
+    "sourceEpisodeId": "ticket-counter-zhang-20261128",
+    "sourceHash": "fd26aa34fbc708ac1fe5cee9584bbdb26d49b89b146b8cb955285b2fca5b4e7f",
+    "authoredOn": "2026-11-22",
+    "status": "draft"
+  }
+}
