@@ -30,9 +30,9 @@
     "date": "2026-11-27",
     "setting": "campus-gate",
     "coach": "panda",
-    "supportingCharacter": "dragon",
-    "pattern": "before-after-cards",
+    "supportingCharacter": "monkey",
+    "pattern": "dialogue",
     "experiment": null,
-    "source": "scripts/visual-variety-plan.mjs manual deterministic replay from latest registered lessons; visual-setting A/B paused on 2026-11-17."
+    "source": "Recomputed using current scripts/visual-variety-plan.mjs keyword scores and preceding dated manifests; paused setting-group test has no assignment."
   }
 }
