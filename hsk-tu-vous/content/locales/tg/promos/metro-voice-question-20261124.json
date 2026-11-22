@@ -312,7 +312,7 @@
     {
       "id": "recognition-demo",
       "role": "product-demo",
-      "narration": "Дар HSK AI машқи шинохти иероглифҳо ҳаст. Ин ҷо танҳо экрани аслии машқро нишон додан лозим.",
+      "narration": "Дар HSK AI машқи шинохти иероглифҳо ҳаст. Аломати лозимиро аз байни монандҳо меёбӣ.",
       "visual": {
         "type": "product-capture",
         "focalSubject": "Машқи аслии HSK AI",
@@ -419,7 +419,7 @@
     {
       "id": "answer-feedback",
       "role": "product-demo",
-      "narration": "Дар машқ аз байни вариантҳо иероглифи мувофиқро интихоб мекунӣ ва баъд дуруст ё нодуруст будани ҷавобро мебинӣ. Танҳо ҷавоби аслии барномаро нишон медиҳем.",
+      "narration": "Дар машқ аз байни вариантҳо иероглифи мувофиқро интихоб мекунӣ ва баъд дуруст ё нодуруст будани ҷавобро мебинӣ.",
       "visual": {
         "type": "product-capture",
         "focalSubject": "Санҷиши аслии ҷавоб",
@@ -579,7 +579,7 @@
   "localization": {
     "language": "tg",
     "sourcePromoId": "metro-voice-question-20261124",
-    "sourceHash": "bc3da08b2e08e2f5cba7eccaa0f13b89ae05cce05294a50046e6444ebad7a64e",
+    "sourceHash": "23ca5503dec7d2ef9940e83f284b6e8e9836580c6acf1437061497e313f3fac3",
     "authoredOn": "2026-11-22",
     "status": "draft"
   }

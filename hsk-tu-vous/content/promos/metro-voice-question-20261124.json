@@ -312,7 +312,7 @@
     {
       "id": "recognition-demo",
       "role": "product-demo",
-      "narration": "В HSK AI есть тренировка распознавания иероглифов. Её экран нужно показать без выдуманных вариантов.",
+      "narration": "В HSK AI есть тренировка распознавания иероглифов. Нужный знак ищешь среди похожих.",
       "visual": {
         "type": "product-capture",
         "focalSubject": "Подлинная тренировка HSK AI",
@@ -323,7 +323,15 @@
         "assetPath": "public/promo-captures/hanzi-recognition-20261124-ru.png",
         "provenance": "genuine-product-capture",
         "uiLanguage": "ru-RU",
-        "limitations": "Owner-supplied genuine RU-UI iPhone screenshot of HSK AI Распознавание иероглифов (Найдите нужный среди похожих), received 2026-11-22; full-screen 1179x2556, no personal data. Use only this real screen; no invented quiz/result UI."
+        "screenImage": "promo-captures/hanzi-recognition-20261124-ru.png",
+        "crop": {
+          "x": 0,
+          "y": 380,
+          "width": 1179,
+          "height": 1474,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        }
       },
       "claimIds": [
         "hanzi-recognition-practice"
@@ -419,18 +427,26 @@
     {
       "id": "answer-feedback",
       "role": "product-demo",
-      "narration": "В упражнении выбираешь подходящий иероглиф из вариантов, а после ответа видишь, верен ли выбор. Показываем лишь настоящий ответ приложения.",
+      "narration": "В упражнении выбираешь подходящий иероглиф из вариантов, а после ответа видишь, верен ли выбор.",
       "visual": {
         "type": "product-capture",
-        "focalSubject": "Подлинная проверка ответа",
-        "action": "Только реальная RU-запись выбора и ответа в HSK AI; нельзя придумывать счёт или результат.",
+        "focalSubject": "Подлинный экран с отмеченным верным ответом",
+        "action": "Показать настоящий экран HSK AI после ответа: выбранный иероглиф 哭 отмечен зелёным как верный.",
         "continuityKey": "metro-hanzi-attention",
         "cueText": "после ответа видишь",
         "backgroundToken": "foreground",
-        "assetPath": "public/promo-captures/hanzi-recognition-20261124-ru.png",
+        "assetPath": "public/promo-captures/hanzi-recognition-20261124-ru-answer.png",
         "provenance": "genuine-product-capture",
         "uiLanguage": "ru-RU",
-        "limitations": "Owner-supplied genuine RU-UI iPhone screenshot of HSK AI Распознавание иероглифов (Найдите нужный среди похожих), received 2026-11-22; full-screen 1179x2556, no personal data. Use only this real screen; no invented quiz/result UI."
+        "screenImage": "promo-captures/hanzi-recognition-20261124-ru-answer.png",
+        "crop": {
+          "x": 0,
+          "y": 380,
+          "width": 1179,
+          "height": 1474,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        }
       },
       "claimIds": [
         "hanzi-answer-feedback"
