@@ -1,0 +1,38 @@
+{
+  "episodeId": "le-buy-books-20261125",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Premium HSK AI semi-realistic illustrated glass teaching background, precise phone-size focal objects, warm cinematic daylight, softly cel-shaded geometry, readable foreground against contrasting background. NO words, Chinese characters, numbers, lettering, logos, signage, watermarks, people or invented characters. Preserve exact scene continuity between references.",
+  "assets": [
+    {
+      "name": "lake-bookstall",
+      "aspectRatio": "9:16",
+      "prompt": "Peaceful Chinese park by a lake, willows and stone bridge in the distance; a modest small book stall with blank-cover books near the shore in the foreground. No people or writing, logos, letters, numbers or watermarks."
+    },
+    {
+      "name": "books-close",
+      "aspectRatio": "4:5",
+      "references": [
+        "lake-bookstall"
+      ],
+      "prompt": "At the same park lakeside book stall, two plain closed books on a wooden table with a small blank receipt slip; soft willow trees behind, same light. No writing, symbols, characters, people or logos."
+    },
+    {
+      "name": "book-result",
+      "aspectRatio": "4:5",
+      "references": [
+        "lake-bookstall",
+        "books-close"
+      ],
+      "prompt": "The same two books at the lakeside book stall now stacked together beside a simple bag, clearly showing the completed purchase; preserve the exact books and lighting. No words, numbers, people, signage or logos."
+    }
+  ],
+  "variety": {
+    "date": "2026-11-25",
+    "setting": "park-lake",
+    "coach": "panda",
+    "supportingCharacter": "monkey",
+    "pattern": "before-after-cards",
+    "experiment": null,
+    "source": "scripts/visual-variety-plan.mjs manual deterministic replay from latest registered lessons; visual-setting A/B paused on 2026-11-17."
+  }
+}
