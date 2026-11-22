@@ -1,0 +1,38 @@
+{
+  "episodeId": "ticket-counter-zhang-20261128",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "HSK AI premium semi-realistic digital lesson illustration, restrained liquid-glass-friendly warm cinematic lighting, clean linework, believable everyday Chinese scenery, readable large focal objects. Text-free backdrop only: no words, lettering, numbers, Chinese characters, watermarks, logos, people or newly invented characters. Preserve continuity among reference frames.",
+  "assets": [
+    {
+      "name": "classroom-tickets",
+      "aspectRatio": "9:16",
+      "prompt": "Bright Chinese school classroom with a clean empty desk, blank whiteboard and plants. A small tray of two plain paper admission tickets with blank faces sits on the desk. No people, mascot, writing, signs, numbers, logos or watermarks."
+    },
+    {
+      "name": "ticket-close",
+      "aspectRatio": "4:5",
+      "references": [
+        "classroom-tickets"
+      ],
+      "prompt": "Close-up of exactly one blank paper admission ticket on the same classroom desk, visibly rectangular with tear-off stub, paper shadow, same light and furniture. No letters, digits, people, text, logos or watermarks."
+    },
+    {
+      "name": "ticket-count",
+      "aspectRatio": "4:5",
+      "references": [
+        "classroom-tickets",
+        "ticket-close"
+      ],
+      "prompt": "Same classroom desk with one matching paper admission ticket next to two matching stacked tickets, clear difference of one and two physical tickets. No letters, numbers, writing, people or watermarks."
+    }
+  ],
+  "variety": {
+    "date": "2026-11-28",
+    "setting": "classroom",
+    "coach": "panda",
+    "supportingCharacter": "monkey",
+    "pattern": "dialogue",
+    "experiment": null,
+    "source": "Manual replay of current scripts/visual-variety-plan.mjs against historical art manifests; the setting-group experiment is paused."
+  }
+}
