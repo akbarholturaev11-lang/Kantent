@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {validateGraphicScene} from './graphic-scene.mjs';
+import {promoArtFrame,promoNeedsRealisticArt} from './promo-production.mjs';
 import {readLanguages,lessonSourceHash} from './language-context.mjs';
 
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
@@ -161,8 +162,10 @@ export function reviewPromoPlan(id,{root=ROOT,language}={}) {
   for(const item of plan.evidence)containedFile(root,item.sourcePath);
   for(const beat of plan.beats) {
     for (const asset of [beat.visual.type==='illustration' ? beat.visual.assetPath : undefined, beat.visual.backdropPath, beat.visual.screenMotion?.leadInPath]) {
-      if(asset!==undefined && (typeof asset!=='string' || !/^public\/promo-art\/[a-z0-9/-]+\.(?:jpg|png)$/u.test(asset)))
-        throw Error(beat.id+': original artwork must live under public/promo-art');
+      // Realistic reviewed frames of this ad live with lesson art (owner 2026-11-23, visual-system.json#promoPresentation).
+      if(asset!==undefined && (typeof asset!=='string' || !(/^public\/promo-art\/[a-z0-9/-]+\.(?:jpg|png)$/u.test(asset) ||
+        asset.startsWith(`public/lesson-art/${id}/`) && /^public\/lesson-art\/[a-z0-9-]+\/[a-z][a-z0-9-]{1,40}\.jpg$/u.test(asset))))
+        throw Error(beat.id+': original artwork must live under public/promo-art or public/lesson-art/'+id);
     }
     if(beat.visual.assetPath)containedFile(root,beat.visual.assetPath);
     if(beat.visual.backdropPath)containedFile(root,beat.visual.backdropPath);
@@ -177,6 +180,9 @@ export function reviewPromoPlan(id,{root=ROOT,language}={}) {
     requiredBeforeMedia:[
       ...plan.beats.filter(beat=>beat.visual.type==='illustration' && !beat.visual.assetPath && !beat.visual.graphic)
         .map(beat=>`${beat.id}: build and inspect the original drawing; a prose brief is not a rendered frame`),
+      ...(promoNeedsRealisticArt(plan.date?plan:{date:id.match(/(\d{4})(\d{2})(\d{2})$/)?.slice(1).join('-')??''})?plan.beats.filter(beat=>
+        !promoArtFrame(id,beat.visual.type==='illustration'?beat.visual.assetPath:beat.visual.backdropPath??(beat.visual.screenMotion?.kind==='entry'?beat.visual.screenMotion.leadInPath:undefined)))
+        .map(beat=>`${beat.id}: realistic ad frame required — generate it from content/lesson-art/${id}.json into public/lesson-art/${id}/ (owner 2026-11-23)`):[]),
       ...plan.beats.filter(beat=>beat.visual.limitations).map(beat=>`${beat.id}: ${beat.visual.limitations}`),
       'Independently verify claim accuracy, current capture language/privacy and the truth of the story; file existence is not semantic verification.',
       'Append the current central CTA, generate approved matching voice and exact word cues, then render and inspect the complete MP4.',

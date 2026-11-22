@@ -2,6 +2,12 @@ import {validateGraphicScene} from './graphic-scene.mjs';
 import {resolvePromoCue} from './promo-visual.mjs';
 import {contentIdentity} from './content-attribution.mjs';
 import {promoCaptureLanguageMatches} from './promo-plan.mjs';
+import fs from 'node:fs';
+const visualSystem=JSON.parse(fs.readFileSync(new URL('../content/visual-system.json',import.meta.url),'utf8'));
+/** A reviewed realistic frame of this ad (same generator/review gate as lesson art). */
+export const promoArtFrame=(id,value)=>{const m=new RegExp('^public/lesson-art/'+id+'/([a-z][a-z0-9-]{1,40})\\.jpg$','u').exec(value??'');return m?m[1]:null;};
+/** Owner 2026-11-23: new ads use realistic generated frames, as lessons do (visual-system.json#promoPresentation.realisticArtFromDate). */
+export const promoNeedsRealisticArt=(episode,policy=visualSystem.promoPresentation)=>Boolean(policy?.realisticArtFromDate&&episode.date>=policy.realisticArtFromDate);
 const validCrop = (crop) => Boolean(crop && ['x','y','width','height','sourceWidth','sourceHeight'].every(key=>Number.isFinite(crop[key])) &&
  crop.width>0 && crop.height>0 && crop.x>=0 && crop.y>=0 && crop.x+crop.width<=crop.sourceWidth && crop.y+crop.height<=crop.sourceHeight);
 /** Convert an authored ad to the existing approved voice/caption/CTA renderer contract. */
@@ -19,15 +25,22 @@ export function materializePromo(item,plan,{voiceProfile,ctaLab,composeCta}) {
  validatePromoMedia(ready);
  return ready;
 }
-export function validatePromoMedia(episode) {
+export function validatePromoMedia(episode,policy=visualSystem.promoPresentation) {
  if(episode.kind!=='advertisement'||episode.motionDesignStyle!=='minimalist-promo-v1')throw Error('Explicit promo media style required');
+ const realistic=promoNeedsRealisticArt(episode,policy);
  for(const scene of episode.scenes.filter(s=>s.kind!=='cta')) {
   const visual=scene.promoVisual;
   if(!visual||!scene.narration.includes(visual.cueText)||visual.limitations?.trim())throw Error(scene.id+': resolve promo artwork/capture limitations before voice/render');
+  if(realistic) {
+   const frame=visual.type==='illustration'?promoArtFrame(episode.id,visual.assetPath)
+    :promoArtFrame(episode.id,visual.backdropPath)??(visual.screenMotion?.kind==='entry'?promoArtFrame(episode.id,visual.screenMotion.leadInPath):null);
+   if(!frame)throw Error(scene.id+': realistic ad frames are required (owner 2026-11-23) — '+(visual.type==='illustration'?'assetPath':'backdropPath or screenMotion entry leadInPath')+
+    ' must be public/lesson-art/'+episode.id+'/<name>.jpg from content/lesson-art/'+episode.id+'.json; vector-only graphic drawings are not accepted. See content/PROMO_WORKFLOW.md.');
+  }
   if(visual.type==='illustration') {
    if(visual.assetPath) {
-    if(!/^public\/promo-art\/[a-z0-9/-]+\.(?:jpg|png)$/u.test(visual.assetPath))
-     throw Error(scene.id+': expected original artwork under public/promo-art');
+    if(!/^public\/promo-art\/[a-z0-9/-]+\.(?:jpg|png)$/u.test(visual.assetPath)&&!promoArtFrame(episode.id,visual.assetPath))
+     throw Error(scene.id+': expected original artwork under public/promo-art or public/lesson-art/'+episode.id);
    } else {
     validateGraphicScene(visual.graphic);
     if(!visual.graphic.tracks.length)throw Error(scene.id+': author the meaningful drawing movement');

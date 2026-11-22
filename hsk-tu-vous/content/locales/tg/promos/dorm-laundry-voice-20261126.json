@@ -53,99 +53,17 @@
         "continuityKey": "laundry-dictionary",
         "cueText": "иероглифи 水",
         "backgroundToken": "foreground",
-        "drawingBrief": "Мошини ҷомашӯӣ ва аломати об, бе тасвири сохтаи барнома.",
-        "graphic": {
-          "width": 600,
-          "height": 400,
-          "nodes": [
-            {
-              "id": "washer",
-              "type": "rect",
-              "attrs": {
-                "x": 100,
-                "y": 95,
-                "width": 350,
-                "height": 240,
-                "rx": 22,
-                "fill": "secondary",
-                "stroke": "foreground",
-                "strokeWidth": 5
-              }
-            },
-            {
-              "id": "drum",
-              "type": "circle",
-              "attrs": {
-                "cx": 272,
-                "cy": 218,
-                "r": 80,
-                "fill": "poolWater",
-                "stroke": "teal",
-                "strokeWidth": 12
-              }
-            },
-            {
-              "id": "drum-inner",
-              "type": "circle",
-              "attrs": {
-                "cx": 272,
-                "cy": 218,
-                "r": 49,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "control",
-              "type": "rect",
-              "attrs": {
-                "x": 343,
-                "y": 110,
-                "width": 77,
-                "height": 31,
-                "rx": 7,
-                "fill": "gold"
-              }
-            },
-            {
-              "id": "floor",
-              "type": "rect",
-              "attrs": {
-                "x": 60,
-                "y": 346,
-                "width": 470,
-                "height": 16,
-                "rx": 5,
-                "fill": "muted"
-              }
-            },
-            {
-              "id": "water-drop",
-              "type": "path",
-              "attrs": {
-                "d": "M 474 149 C 464 174 447 191 447 209 C 447 225 457 237 474 237 C 491 237 501 225 501 209 C 501 191 484 174 474 149 Z",
-                "fill": "teal",
-                "stroke": "foreground",
-                "strokeWidth": 3
-              }
-            }
-          ],
-          "tracks": [
-            {
-              "nodeId": "washer",
-              "property": "opacity",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 0.65
-                },
-                {
-                  "atMs": 500,
-                  "value": 1
-                }
-              ]
-            }
-          ]
-        }
+        "drawingBrief": "Realistic frame laundry-room: dorm laundry room, washing machines with pictogram buttons; the panda stands by the machines.",
+        "assetPath": "public/lesson-art/dorm-laundry-voice-20261126/laundry-room.jpg",
+        "cast": [
+          {
+            "id": "panda",
+            "mood": "idle",
+            "x": 0.25,
+            "y": 0.73,
+            "h": 0.22
+          }
+        ]
       }
     },
     {
@@ -159,120 +77,23 @@
         "continuityKey": "laundry-dictionary",
         "cueText": "чӣ хел хонда мешавад",
         "backgroundToken": "foreground",
-        "drawingBrief": "Намоиши панели воқеии дастгоҳ бо лупа ҳамчун рамзи ҷустуҷӯ.",
-        "graphic": {
-          "width": 600,
-          "height": 400,
-          "nodes": [
-            {
-              "id": "washer",
-              "type": "rect",
-              "attrs": {
-                "x": 100,
-                "y": 95,
-                "width": 350,
-                "height": 240,
-                "rx": 22,
-                "fill": "secondary",
-                "stroke": "foreground",
-                "strokeWidth": 5
-              }
-            },
-            {
-              "id": "drum",
-              "type": "circle",
-              "attrs": {
-                "cx": 272,
-                "cy": 218,
-                "r": 80,
-                "fill": "poolWater",
-                "stroke": "teal",
-                "strokeWidth": 12
-              }
-            },
-            {
-              "id": "drum-inner",
-              "type": "circle",
-              "attrs": {
-                "cx": 272,
-                "cy": 218,
-                "r": 49,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "control",
-              "type": "rect",
-              "attrs": {
-                "x": 343,
-                "y": 110,
-                "width": 77,
-                "height": 31,
-                "rx": 7,
-                "fill": "gold"
-              }
-            },
-            {
-              "id": "floor",
-              "type": "rect",
-              "attrs": {
-                "x": 60,
-                "y": 346,
-                "width": 470,
-                "height": 16,
-                "rx": 5,
-                "fill": "muted"
-              }
-            },
-            {
-              "id": "ring",
-              "type": "circle",
-              "attrs": {
-                "cx": 279,
-                "cy": 179,
-                "r": 74,
-                "fill": "none",
-                "stroke": "teal",
-                "strokeWidth": 13
-              }
-            },
-            {
-              "id": "handle",
-              "type": "line",
-              "attrs": {
-                "x1": 333,
-                "y1": 233,
-                "x2": 397,
-                "y2": 302,
-                "stroke": "foreground",
-                "strokeWidth": 16,
-                "strokeLinecap": "round"
-              }
-            }
-          ],
-          "tracks": [
-            {
-              "nodeId": "washer",
-              "property": "opacity",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 0.65
-                },
-                {
-                  "atMs": 500,
-                  "value": 1
-                }
-              ]
-            }
-          ]
-        }
+        "drawingBrief": "Realistic frame panel-close: the small water-drop button under a magnifying glass; the panda is unsure.",
+        "assetPath": "public/lesson-art/dorm-laundry-voice-20261126/panel-close.jpg",
+        "cast": [
+          {
+            "id": "panda",
+            "mood": "loading",
+            "x": 0.72,
+            "y": 0.73,
+            "h": 0.22
+          }
+        ]
       }
     },
     {
       "id": "dictionary-demo",
       "role": "product-demo",
-      "narration": "Дар HSK AI луғат ҳаст: бо иероглиф, пинйин ё маъно ҷустуҷӯ кардан мумкин аст. Барои ин ҷо танҳо акси аслии экран лозим аст.",
+      "narration": "Дар HSK AI луғат ҳаст: бо иероглиф, пинйин ё маъно ҷустуҷӯ кардан мумкин аст.",
       "visual": {
         "type": "product-capture",
         "focalSubject": "Экрани ҳақиқии луғат",
@@ -283,7 +104,12 @@
         "assetPath": "public/promo-captures/hsk-dictionary-20261126.png",
         "provenance": "genuine-product-capture",
         "uiLanguage": "ru-RU",
-        "limitations": "BLOCKED for TG: only a Russian-UI capture exists (owner screenshot 2026-11-22). A genuine Tajik-UI capture, a language-neutral crop or an owner sharedUiOwnerApproval is required before rendering or publishing this TG ad."
+        "limitations": "BLOCKED for TG: only a Russian-UI capture exists (owner screenshot 2026-11-22). A genuine Tajik-UI capture, a language-neutral crop or an owner sharedUiOwnerApproval is required before rendering or publishing this TG ad.",
+        "backdropPath": "public/lesson-art/dorm-laundry-voice-20261126/bench-phone.jpg",
+        "screenMotion": {
+          "kind": "entry",
+          "leadInPath": "public/lesson-art/dorm-laundry-voice-20261126/bench-phone.jpg"
+        }
       },
       "claimIds": [
         "dictionary-search"
@@ -300,92 +126,17 @@
         "continuityKey": "laundry-dictionary",
         "cueText": "ба ҷустуҷӯ нависӣ",
         "backgroundToken": "foreground",
-        "drawingBrief": "Телефони бо экрани холӣ ва лупа танҳо рамзанд; онро интерфейси воқеӣ номидан мумкин нест.",
-        "graphic": {
-          "width": 600,
-          "height": 400,
-          "nodes": [
-            {
-              "id": "phone",
-              "type": "rect",
-              "attrs": {
-                "x": 170,
-                "y": 68,
-                "width": 230,
-                "height": 270,
-                "rx": 29,
-                "fill": "secondary",
-                "stroke": "foreground",
-                "strokeWidth": 7
-              }
-            },
-            {
-              "id": "blank-phone",
-              "type": "rect",
-              "attrs": {
-                "x": 191,
-                "y": 104,
-                "width": 188,
-                "height": 185,
-                "rx": 7,
-                "fill": "poolWater"
-              }
-            },
-            {
-              "id": "ring",
-              "type": "circle",
-              "attrs": {
-                "cx": 279,
-                "cy": 179,
-                "r": 74,
-                "fill": "none",
-                "stroke": "teal",
-                "strokeWidth": 13
-              }
-            },
-            {
-              "id": "handle",
-              "type": "line",
-              "attrs": {
-                "x1": 333,
-                "y1": 233,
-                "x2": 397,
-                "y2": 302,
-                "stroke": "foreground",
-                "strokeWidth": 16,
-                "strokeLinecap": "round"
-              }
-            },
-            {
-              "id": "phone-base",
-              "type": "line",
-              "attrs": {
-                "x1": 260,
-                "y1": 317,
-                "x2": 309,
-                "y2": 317,
-                "stroke": "muted",
-                "strokeWidth": 6
-              }
-            }
-          ],
-          "tracks": [
-            {
-              "nodeId": "ring",
-              "property": "opacity",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 0.65
-                },
-                {
-                  "atMs": 500,
-                  "value": 1
-                }
-              ]
-            }
-          ]
-        }
+        "drawingBrief": "Realistic frame bench-phone: the panda by the table with the phone, about to search by the written form.",
+        "assetPath": "public/lesson-art/dorm-laundry-voice-20261126/bench-phone.jpg",
+        "cast": [
+          {
+            "id": "panda",
+            "mood": "talk",
+            "x": 0.2,
+            "y": 0.73,
+            "h": 0.22
+          }
+        ]
       }
     },
     {
@@ -402,7 +153,8 @@
         "assetPath": "public/promo-captures/hsk-dictionary-20261126.png",
         "provenance": "genuine-product-capture",
         "uiLanguage": "ru-RU",
-        "limitations": "BLOCKED for TG: only a Russian-UI capture exists (owner screenshot 2026-11-22). A genuine Tajik-UI capture, a language-neutral crop or an owner sharedUiOwnerApproval is required before rendering or publishing this TG ad."
+        "limitations": "BLOCKED for TG: only a Russian-UI capture exists (owner screenshot 2026-11-22). A genuine Tajik-UI capture, a language-neutral crop or an owner sharedUiOwnerApproval is required before rendering or publishing this TG ad.",
+        "backdropPath": "public/lesson-art/dorm-laundry-voice-20261126/bench-phone.jpg"
       },
       "claimIds": [
         "dictionary-result-rows"
@@ -419,99 +171,17 @@
         "continuityKey": "laundry-dictionary",
         "cueText": "назди мошин бармегардӣ",
         "backgroundToken": "foreground",
-        "drawingBrief": "Ҳамон мошин ва либоси қатшуда, бе ваъдаи натиҷаи тасдиқнашуда.",
-        "graphic": {
-          "width": 600,
-          "height": 400,
-          "nodes": [
-            {
-              "id": "washer",
-              "type": "rect",
-              "attrs": {
-                "x": 100,
-                "y": 95,
-                "width": 350,
-                "height": 240,
-                "rx": 22,
-                "fill": "secondary",
-                "stroke": "foreground",
-                "strokeWidth": 5
-              }
-            },
-            {
-              "id": "drum",
-              "type": "circle",
-              "attrs": {
-                "cx": 272,
-                "cy": 218,
-                "r": 80,
-                "fill": "poolWater",
-                "stroke": "teal",
-                "strokeWidth": 12
-              }
-            },
-            {
-              "id": "drum-inner",
-              "type": "circle",
-              "attrs": {
-                "cx": 272,
-                "cy": 218,
-                "r": 49,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "control",
-              "type": "rect",
-              "attrs": {
-                "x": 343,
-                "y": 110,
-                "width": 77,
-                "height": 31,
-                "rx": 7,
-                "fill": "gold"
-              }
-            },
-            {
-              "id": "floor",
-              "type": "rect",
-              "attrs": {
-                "x": 60,
-                "y": 346,
-                "width": 470,
-                "height": 16,
-                "rx": 5,
-                "fill": "muted"
-              }
-            },
-            {
-              "id": "folded-shirt",
-              "type": "polygon",
-              "attrs": {
-                "points": "420,190 468,167 515,210 495,263 432,265 411,220",
-                "fill": "gold",
-                "stroke": "foreground",
-                "strokeWidth": 4
-              }
-            }
-          ],
-          "tracks": [
-            {
-              "nodeId": "washer",
-              "property": "opacity",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 0.65
-                },
-                {
-                  "atMs": 500,
-                  "value": 1
-                }
-              ]
-            }
-          ]
-        }
+        "drawingBrief": "Realistic frame folded-clothes: the same machine, folded laundry, task done; the panda is pleased.",
+        "assetPath": "public/lesson-art/dorm-laundry-voice-20261126/folded-clothes.jpg",
+        "cast": [
+          {
+            "id": "panda",
+            "mood": "celebrate",
+            "x": 0.25,
+            "y": 0.73,
+            "h": 0.22
+          }
+        ]
       }
     }
   ],
@@ -525,7 +195,7 @@
   "localization": {
     "language": "tg",
     "sourcePromoId": "dorm-laundry-voice-20261126",
-    "sourceHash": "64051ab93874efc807280c6674fe4258517e60398e5091783a7e2fbfc63b5060",
+    "sourceHash": "5ff2d81dd297433d493e995f5ec2489fecd9222620755a8058fbeb359de50a67",
     "authoredOn": "2026-11-22",
     "status": "draft"
   }

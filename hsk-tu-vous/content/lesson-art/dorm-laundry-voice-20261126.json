@@ -1,0 +1,30 @@
+{
+  "episodeId": "dorm-laundry-voice-20261126",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Premium HSK AI semi-realistic illustrated glass advertisement background, precise phone-size focal objects, warm cinematic light, softly cel-shaded geometry, readable foreground against contrasting background, room in the lower half for a character drawn later. NO words, Chinese characters, numbers, lettering, logos, signage text, watermarks, people or invented characters. Preserve exact scene continuity between references.",
+  "assets": [
+    {
+      "name": "laundry-room",
+      "aspectRatio": "9:16",
+      "prompt": "University dormitory laundry room in the evening: a row of white front-loading washing machines along the wall, each with a small control panel of round buttons marked only by simple pictograms such as a water drop, a plastic laundry basket on the floor, warm ceiling light. Open tiled floor space in the lower left foreground. No people, no writing, no letters, numbers or logos."
+    },
+    {
+      "name": "panel-close",
+      "aspectRatio": "9:16",
+      "references": ["laundry-room"],
+      "prompt": "Extreme close-up of the control panel of the same white washing machine: a few round buttons with simple pictograms, one small button with a water-drop pictogram in the centre, and a round magnifying glass resting on the panel over that button. The panel fills most of the frame, the room is softly blurred behind. No writing, letters, numbers or logos. No people."
+    },
+    {
+      "name": "bench-phone",
+      "aspectRatio": "9:16",
+      "references": ["laundry-room"],
+      "prompt": "In the same dormitory laundry room, a smartphone lies face-up on a wooden folding table next to a stack of folded towels, its screen dark and blank; washing machines softly blurred behind, same warm light. Free space on the left side of the table and floor for a character drawn later. No people, no writing, no letters, numbers or logos."
+    },
+    {
+      "name": "folded-clothes",
+      "aspectRatio": "9:16",
+      "references": ["laundry-room"],
+      "prompt": "The same washing machine in the dormitory laundry room with its round door open, a laundry basket of neatly folded clothes on top, a calm finished feeling, warm light. Open floor in the lower left foreground. No people, no writing, no letters, numbers or logos."
+    }
+  ]
+}

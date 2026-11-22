@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 203,
+  "revision": 207,
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
     "id": "hsk-ai-profile-link-download-v1",
@@ -24955,6 +24955,352 @@
         "voiceProfileId": "ru-gemini-kore-v1",
         "voiceProvider": "gemini-api",
         "nonCtaContentHash": "f9ab8d33138ec937eb4dbf125b7244f5b3112746867469811c77fd9be6197f69"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "metro-voice-question-20261124-ad-v4-20261123",
+      "episodeId": "metro-voice-question-20261124",
+      "date": "2026-11-24",
+      "formatId": "brand-recall-ending",
+      "ruleVersion": "cta-policy-v20",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Use the existing approved closing for this content type and establish its baseline response.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "hsk-profile-link-download-v1",
+      "registeredAt": "2026-11-22T23:17:09.685Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0017",
+        "cta-correction-0018"
+      ],
+      "supersedes": "metro-voice-question-20261124-ad-v3-20261122",
+      "copyHash": "55e2dec2523a2c5e530757c2f085ec5bb65bbe2069c6ae43de7e4cf80c567cb5",
+      "copySnapshot": {
+        "cta": "HSK AI — китайский, когда он нужен.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "HSK AI — китайский, когда он нужен.",
+            "headline": "HSK AI",
+            "screenCaption": "HSK AI — китайский, когда он нужен",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "HSK",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "КИТАЙСКИЙ, КОГДА ОН НУЖЕН",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "китайский",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "Brand ending for brand recall: one central stage, one HSK AI wordmark at a time. On «HSK» reveal the HSK AI logo; on «китайский» keep the logo and add the single line «китайский, когда он нужен». No download card, profile, link, follow request, screenshot or claim; the spoken line stays in one synced subtitle."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 6,
+            "precedingSceneIds": [
+              "opening",
+              "friction",
+              "recognition-demo",
+              "choose-answer",
+              "answer-feedback",
+              "back-to-life"
+            ],
+            "durationSec": 4,
+            "plannedStartSec": 24
+          }
+        ]
+      },
+      "placementHash": "2d69213e7e075a41dd38189dc46450f8362f394cc2cb4493f0433b99273f9297",
+      "contextSnapshot": {
+        "level": null,
+        "topic": "Тренировка различения похожих китайских иероглифов по пиньиню и значению",
+        "hookFormatId": null,
+        "voiceProfileId": "ru-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "3c2d47626618be616fae567caefe3761c9ae2ffb8b5909019cf264919c0bc727"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "metro-voice-question-20261124-tiktok-cta-v3",
+      "episodeId": "metro-voice-question-20261124",
+      "date": "2026-11-24",
+      "formatId": "tiktok-ai-install",
+      "ruleVersion": "cta-policy-v20",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Bind the owner-approved TikTok AI-install-help CTA and cue-synced typography to this reviewed video; performance remains unmeasured.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "tiktok-ai-install-v1",
+      "registeredAt": "2026-11-22T23:29:40.861Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0017",
+        "cta-correction-0018",
+        "cta-correction-0020"
+      ],
+      "supersedes": null,
+      "copyHash": "e1f291c50a2bd991aceb35342ef6ae14ada18f377d73856c01107e8e932db3dc",
+      "copySnapshot": {
+        "cta": "Просто спросите у ИИ, которым пользуетесь: «Как установить приложение HSK AI с сайта hskai.app?»",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Просто спросите у ИИ, которым пользуетесь: «Как установить приложение HSK AI с сайта hskai.app?»",
+            "headline": "УСТАНОВКА HSK AI",
+            "screenCaption": "hskai.app",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "СПРОСИТЕ У ИИ",
+                "motion": "reveal",
+                "syncCueText": "спросите",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "AI",
+                "meaning": "ВАШ ИИ",
+                "motion": "slide",
+                "syncCueText": "ИИ",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "УСТАНОВИТЬ ПРИЛОЖЕНИЕ",
+                "brandLogo": true,
+                "actionIcon": "app-download",
+                "motion": "reveal",
+                "syncCueText": "установить",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "hskai.app",
+                "meaning": "АДРЕС САЙТА",
+                "motion": "slide",
+                "syncCueText": "сайта",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "One central brand stage, one word-timed subtitle. On \"спросите\" show the question action, on \"ИИ\" a neutral AI symbol without copied UI/branding, on \"установить\" the HSK AI mark and install cue, and on \"сайта\" show readable hskai.app. No competing overlays, fake AI answer, fake DM, installation guarantee or completed-install animation."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 6,
+            "precedingSceneIds": [
+              "opening",
+              "friction",
+              "recognition-demo",
+              "choose-answer",
+              "answer-feedback",
+              "back-to-life"
+            ],
+            "durationSec": 4,
+            "plannedStartSec": 24
+          }
+        ]
+      },
+      "placementHash": "2d69213e7e075a41dd38189dc46450f8362f394cc2cb4493f0433b99273f9297",
+      "contextSnapshot": {
+        "level": null,
+        "topic": "Тренировка различения похожих китайских иероглифов по пиньиню и значению",
+        "hookFormatId": null,
+        "voiceProfileId": "ru-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "3c2d47626618be616fae567caefe3761c9ae2ffb8b5909019cf264919c0bc727"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "metro-voice-question-20261124-ad-v5-20261123",
+      "episodeId": "metro-voice-question-20261124",
+      "date": "2026-11-24",
+      "formatId": "brand-recall-ending",
+      "ruleVersion": "cta-policy-v20",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Use the existing approved closing for this content type and establish its baseline response.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "hsk-profile-link-download-v1",
+      "registeredAt": "2026-11-22T23:31:49.903Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0017",
+        "cta-correction-0018"
+      ],
+      "supersedes": "metro-voice-question-20261124-ad-v4-20261123",
+      "copyHash": "55e2dec2523a2c5e530757c2f085ec5bb65bbe2069c6ae43de7e4cf80c567cb5",
+      "copySnapshot": {
+        "cta": "HSK AI — китайский, когда он нужен.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "HSK AI — китайский, когда он нужен.",
+            "headline": "HSK AI",
+            "screenCaption": "HSK AI — китайский, когда он нужен",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "HSK",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "КИТАЙСКИЙ, КОГДА ОН НУЖЕН",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "китайский",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "Brand ending for brand recall: one central stage, one HSK AI wordmark at a time. On «HSK» reveal the HSK AI logo; on «китайский» keep the logo and add the single line «китайский, когда он нужен». No download card, profile, link, follow request, screenshot or claim; the spoken line stays in one synced subtitle."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 6,
+            "precedingSceneIds": [
+              "opening",
+              "friction",
+              "recognition-demo",
+              "choose-answer",
+              "answer-feedback",
+              "back-to-life"
+            ],
+            "durationSec": 4,
+            "plannedStartSec": 24
+          }
+        ]
+      },
+      "placementHash": "2d69213e7e075a41dd38189dc46450f8362f394cc2cb4493f0433b99273f9297",
+      "contextSnapshot": {
+        "level": null,
+        "topic": "Тренировка различения похожих китайских иероглифов по пиньиню и значению",
+        "hookFormatId": null,
+        "voiceProfileId": "ru-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "2a9dc2191cbc6a7c91a30db14ff738cb9dea470187a8307b07cb1f2abd357ac6"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "metro-voice-question-20261124-tiktok-cta-v4",
+      "episodeId": "metro-voice-question-20261124",
+      "date": "2026-11-24",
+      "formatId": "tiktok-ai-install",
+      "ruleVersion": "cta-policy-v20",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Bind the owner-approved TikTok AI-install-help CTA and cue-synced typography to this reviewed video; performance remains unmeasured.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "tiktok-ai-install-v1",
+      "registeredAt": "2026-11-22T23:35:35.390Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0017",
+        "cta-correction-0018",
+        "cta-correction-0020"
+      ],
+      "supersedes": null,
+      "copyHash": "e1f291c50a2bd991aceb35342ef6ae14ada18f377d73856c01107e8e932db3dc",
+      "copySnapshot": {
+        "cta": "Просто спросите у ИИ, которым пользуетесь: «Как установить приложение HSK AI с сайта hskai.app?»",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Просто спросите у ИИ, которым пользуетесь: «Как установить приложение HSK AI с сайта hskai.app?»",
+            "headline": "УСТАНОВКА HSK AI",
+            "screenCaption": "hskai.app",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "СПРОСИТЕ У ИИ",
+                "motion": "reveal",
+                "syncCueText": "спросите",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "AI",
+                "meaning": "ВАШ ИИ",
+                "motion": "slide",
+                "syncCueText": "ИИ",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "УСТАНОВИТЬ ПРИЛОЖЕНИЕ",
+                "brandLogo": true,
+                "actionIcon": "app-download",
+                "motion": "reveal",
+                "syncCueText": "установить",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "hskai.app",
+                "meaning": "АДРЕС САЙТА",
+                "motion": "slide",
+                "syncCueText": "сайта",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "One central brand stage, one word-timed subtitle. On \"спросите\" show the question action, on \"ИИ\" a neutral AI symbol without copied UI/branding, on \"установить\" the HSK AI mark and install cue, and on \"сайта\" show readable hskai.app. No competing overlays, fake AI answer, fake DM, installation guarantee or completed-install animation."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 6,
+            "precedingSceneIds": [
+              "opening",
+              "friction",
+              "recognition-demo",
+              "choose-answer",
+              "answer-feedback",
+              "back-to-life"
+            ],
+            "durationSec": 4,
+            "plannedStartSec": 24
+          }
+        ]
+      },
+      "placementHash": "2d69213e7e075a41dd38189dc46450f8362f394cc2cb4493f0433b99273f9297",
+      "contextSnapshot": {
+        "level": null,
+        "topic": "Тренировка различения похожих китайских иероглифов по пиньиню и значению",
+        "hookFormatId": null,
+        "voiceProfileId": "ru-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "2a9dc2191cbc6a7c91a30db14ff738cb9dea470187a8307b07cb1f2abd357ac6"
       },
       "primaryMetric": "profile-link-clickers-per-1000-views",
       "evidenceStatus": "unmeasured"

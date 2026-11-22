@@ -25,3 +25,17 @@ test('changed promo artwork invalidates CTA context registration',()=>{
  const a=draft(),b=draft();b.scenes[0].promoVisual.graphic.nodes[1].x=30;
  assert.notEqual(ctaContextSnapshot(a).nonCtaContentHash,ctaContextSnapshot(b).nonCtaContentHash);
 });
+test('owner 2026-11-23: new ads need realistic reviewed frames, earlier ads keep their vector look',()=>{
+ const policy={realisticArtFromDate:'2026-11-23'};
+ const old=draft();assert.equal(validatePromoMedia(old,policy),true);
+ const vector=draft();vector.date='2026-11-24';
+ assert.throws(()=>validatePromoMedia(vector,policy),/realistic ad frames are required/);
+ const real=draft();real.date='2026-11-24';
+ for(const scene of real.scenes.filter(s=>s.kind!=='cta')){
+  const v=scene.promoVisual,frame=`public/lesson-art/${real.id}/scene-${scene.id}.jpg`;
+  if(v.type==='illustration'){delete v.graphic;v.assetPath=frame;}else v.backdropPath=frame;
+ }
+ assert.equal(validatePromoMedia(real,policy),true);
+ real.scenes[0].promoVisual.assetPath='public/lesson-art/other-ad-20261124/x.jpg';
+ assert.throws(()=>validatePromoMedia(real,policy),/realistic ad frames are required/);
+});

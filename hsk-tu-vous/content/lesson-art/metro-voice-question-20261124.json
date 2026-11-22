@@ -1,0 +1,36 @@
+{
+  "episodeId": "metro-voice-question-20261124",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Premium HSK AI semi-realistic illustrated glass advertisement background, precise phone-size focal objects, cinematic light, softly cel-shaded geometry, readable foreground against contrasting background, room in the lower half for a character drawn later. NO words, Chinese characters, numbers, lettering, logos, signage text, watermarks, people or invented characters. Preserve exact scene continuity between references.",
+  "assets": [
+    {
+      "name": "metro-hall",
+      "aspectRatio": "9:16",
+      "prompt": "Modern Chinese metro station concourse in the evening, clean tiled floor, escalator down to the platform in the background. High on the wall hang two nearly identical glowing wayfinding panels side by side, each showing only a plain arrow pictogram, no writing at all. Open floor space in the lower left foreground. No people, no letters, no numbers, no logos."
+    },
+    {
+      "name": "panels-close",
+      "aspectRatio": "9:16",
+      "references": [
+        "metro-hall"
+      ],
+      "prompt": "Extreme close-up, camera right under the two glowing wayfinding panels from the reference metro hall: the two dark panels fill most of the frame side by side, each with one large white downward arrow pictogram; the right arrow has one short extra horizontal stroke on its shaft, the only difference. Ceiling lights and the edge of the wall visible, everything else out of frame. Panels carry only the arrow shapes, no writing, letters, numbers or logos. No people."
+    },
+    {
+      "name": "carriage-phone",
+      "aspectRatio": "9:16",
+      "references": [
+        "metro-hall"
+      ],
+      "prompt": "Inside the same city's metro carriage, close view of a smartphone resting on a dark seat cushion, its screen dark and blank, warm carriage lights and blurred windows behind. Same palette and light as the reference. No people, no writing, no letters, numbers or logos."
+    },
+    {
+      "name": "station-exit",
+      "aspectRatio": "9:16",
+      "references": [
+        "metro-hall"
+      ],
+      "prompt": "Exit corridor of the same metro station leading to wide stairs with soft daylight at the top, a few dark wayfinding panels on the walls showing only white arrow pictograms, clean tiled floor with open space in the lower left foreground. No phone, no device, no screen, no people, no writing, no letters, numbers, brand marks or logos anywhere."
+    }
+  ]
+}

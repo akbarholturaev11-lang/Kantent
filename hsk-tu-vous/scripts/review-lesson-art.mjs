@@ -25,6 +25,7 @@ import { PROJECT_ROOT } from "./lib.mjs";
 import { framePrompt, validateArtManifest, writeCodexBrief } from "./generate-lesson-art.mjs";
 import { validateIllustration } from "./action-design-plan.mjs";
 import { blockedBoxes, subtitleSlotFor } from "./illustrated-layout.mjs";
+import { promoArtFrame } from "./promo-production.mjs";
 
 export const VISUAL_CHECKS = [
   "text-free: no letters, numbers, signs with writing, logos or watermarks",
@@ -103,6 +104,22 @@ export async function reviewLessonArt(episodeId, { episode = null, confirmVisual
       if (covered) failures.push("no subtitle slot is free of faces/cards/formula");
       beats.push({ id: beat.id, failures });
     }
+    // Ads (owner 2026-11-23): realistic frames referenced by promoVisual paths.
+    for (const scene of episode.kind === "advertisement" ? episode.scenes ?? [] : []) {
+      const visual = scene.promoVisual;
+      if (!visual) continue;
+      const failures = [];
+      for (const value of promoFramePaths(visual)) {
+        const name = promoArtFrame(episode.id, value);
+        if (name && !names.has(name)) failures.push(`uses ${name}, which is not in the lesson-art manifest`);
+      }
+      for (const member of visual.cast ?? []) {
+        if (member.y - member.h < 0 || member.x < 0 || member.x > 1) failures.push(`${member.id} is placed outside the frame`);
+        // The ad's narration caption sits at ~74-80% of the frame height (measured on the 2026-11-23 render): keep the character's face clear of it.
+        if (member.y > PROMO_CAPTION_BAND[0] && member.y - member.h < PROMO_CAPTION_BAND[1]) failures.push(`${member.id} overlaps the subtitle band (keep its feet at y ≤ ${PROMO_CAPTION_BAND[0]})`);
+      }
+      beats.push({ id: scene.id, failures });
+    }
   }
   if (provenanceChanged) await fs.writeFile(path.join(dir, "provenance.json"), JSON.stringify(provenance, null, 2) + "\n");
   const automatedPass = frames.every((f) => !f.failures.length) && beats.every((b) => !b.failures.length);
@@ -114,7 +131,10 @@ export async function reviewLessonArt(episodeId, { episode = null, confirmVisual
   return result;
 }
 
-const usesIllustration = (episode) => (episode?.scenes ?? []).some((s) => (s.motionBeats ?? []).some((b) => b.visual?.illustration));
+const PROMO_CAPTION_BAND = [0.74, 0.8];
+const promoFramePaths = (visual) => [visual.type === "illustration" ? visual.assetPath : undefined, visual.backdropPath, visual.screenMotion?.leadInPath].filter(Boolean);
+const usesIllustration = (episode) => (episode?.scenes ?? []).some((s) => (s.motionBeats ?? []).some((b) => b.visual?.illustration) ||
+  (episode.kind === "advertisement" && s.promoVisual && promoFramePaths(s.promoVisual).some((value) => promoArtFrame(episode.id, value))));
 
 /**
  * Production preflight, run BEFORE paid voice: an illustrated lesson needs its
@@ -163,7 +183,7 @@ async function main() {
     else throw new Error("Unknown option " + options[i]);
   }
   let episode = null;
-  for (const file of [path.join(PROJECT_ROOT, "review", episodeId, "episode.json"), path.join(PROJECT_ROOT, "content", "episodes", episodeId + ".json")]) {
+  for (const file of [path.join(PROJECT_ROOT, "review", episodeId, "episode.json"), path.join(PROJECT_ROOT, "review", "promos", episodeId, "ru", "episode.json"), path.join(PROJECT_ROOT, "content", "episodes", episodeId + ".json")]) {
     try { episode = JSON.parse(await fs.readFile(file, "utf8")); break; } catch { /* next */ }
   }
   const result = await reviewLessonArt(episodeId, { episode, confirmVisual: confirm });

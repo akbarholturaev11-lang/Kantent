@@ -409,6 +409,8 @@
   "promoPresentation": {
     "styleId": "minimal-story-v1",
     "scope": "New standalone advertisements, independent of the dated lesson presentation",
+    "realisticArtFromDate": "2026-11-23",
+    "realisticArt": "Owner 2026-11-23: advertisements and series parts render in the same realistic, high-quality generated frames as lessons. From realisticArtFromDate every non-CTA ad beat sits on a reviewed lesson-art frame (content/lesson-art/<promo-id>.json -> public/lesson-art/<promo-id>/<name>.jpg, same generator, provenance and review gate as lessons): an illustration beat uses it as assetPath (with the HSK AI cast drawn by the renderer when a character acts), a product-capture beat uses it as backdropPath or rises from it via screenMotion entry. Vector-only visual.graphic drawings are no longer accepted for new ads. Earlier ads keep their historical look.",
     "maximumFocalSubjects": 1,
     "maximumNarrativeTextLayers": 1,
     "backgroundTokens": [
@@ -419,7 +421,7 @@
     "colorSource": "colors",
     "layoutSource": "shape.safeMarginPx",
     "captionSource": "Existing language-specific narration and verified word-timed caption styling",
-    "direction": "One open composition with intentional negative space, one meaningful subject/action large enough to read on a phone, and one or two story-specific context details. Empty canvas is not a focal image. Use original simple vector or cutout-like objects and restrained depth. Keep the hero clearly separated from the background; use crisp brand accents sparingly. A genuine product crop replaces the narrative object when its function is spoken.",
+    "direction": "One clear composition: a realistic, story-specific generated frame (place, time, objects) with one meaningful subject/action large enough to read on a phone. Empty canvas is not a focal image. Keep the hero clearly separated from the background; use crisp brand accents sparingly. A genuine product screen replaces the narrative object when its function is spoken.",
     "motion": "Preserve object continuity between beats. Move, reveal, crop or reframe only to explain the spoken action; transitions follow the actual voice cues. No decorative motion loops, busy collages, flashing backgrounds or title-only slides.",
     "text": "One narration-synced text layer. No parallel headline, duplicate sentence or extra teaching stack. Text intrinsic to a genuine captured product UI is source evidence, not another authored headline.",
     "background": "Choose a quiet light or dark brand background only after checking the hero against it at phone size. Put pale objects on a dark background and dark objects on a light background; a pale cup/face/object on ivory or white is a failed pairing. Use an existing dark token for pale heroes, and retain a clearly visible red, teal or gold accent when it supports the story. Avoid pale-on-pale or mostly empty washed-out frames. Do not rotate colors on a timer or copy a reference palette."

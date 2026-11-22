@@ -1,0 +1,216 @@
+{
+  "episodeId": "metro-voice-question-20261124",
+  "assets": {
+    "metro-hall": {
+      "file": "metro-hall.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "5f4208b6ad1e87e82311ea25a209b0f9d28f87e2694074570b7554b75d973a8f",
+      "characters": [],
+      "references": [],
+      "sha256": "a72adbfb84091cdffc6c20ed558d36ff7229c01f2a991613671baba86fd5fa99",
+      "rawSha256": "bb3946db99b50237b602aa63a34b8d66b61a84374879a3ab583f2f72d6a918ef",
+      "generationId": "gen-1795365046-SP69qLZnyxCjj48jyGh4",
+      "usage": {
+        "prompt_tokens": 244,
+        "completion_tokens": 1680,
+        "total_tokens": 1924,
+        "cost": 0.100922,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.100922,
+          "upstream_inference_prompt_cost": 0.000122,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T16:31:12.504Z",
+      "visual": {
+        "by": "Looked: metro concourse, two near-identical arrow-only panels, no text/people/characters, open lower-left floor",
+        "sha256": "a72adbfb84091cdffc6c20ed558d36ff7229c01f2a991613671baba86fd5fa99",
+        "at": "2026-11-22T23:16:49.581Z"
+      }
+    },
+    "panels-close": {
+      "file": "panels-close.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "5958bb68241ba6ceee9ee04746df8b8bd63c1300ae023401a7f1e8c5fe77ac64",
+      "characters": [],
+      "references": [
+        "metro-hall"
+      ],
+      "sha256": "882af445ed5e46f70e878153287355cbbb0cf18ad5d85d73dcf3da30d1292c63",
+      "rawSha256": "2b66fa88aa42ab4f84ed660fcd2d437038d4d752c4acd0e589a45a8f69dc9019",
+      "generationId": "gen-1795365249-hh5xjjSbhUaFHLNCT4OW",
+      "usage": {
+        "prompt_tokens": 1385,
+        "completion_tokens": 1680,
+        "total_tokens": 3065,
+        "cost": 0.1014925,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1014925,
+          "upstream_inference_prompt_cost": 0.0006925,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T16:34:42.026Z",
+      "visual": {
+        "by": "Looked: close-up of two arrow panels, extra stroke on right arrow is the only difference, no text/people",
+        "sha256": "882af445ed5e46f70e878153287355cbbb0cf18ad5d85d73dcf3da30d1292c63",
+        "at": "2026-11-22T23:16:49.651Z"
+      }
+    },
+    "carriage-phone": {
+      "file": "carriage-phone.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "97d72eb40b3ca2333cdffe521fdd891e2201bfded31491a947718b2e01a08bd5",
+      "characters": [],
+      "references": [
+        "metro-hall"
+      ],
+      "sha256": "0a44295fe0f50861739e29b7e23d7774b374fb2ed948a91dedbd2a76ee12f3bf",
+      "rawSha256": "48c3dd418165ab69d18a35ec205241057ec6bfc06bd2f925f90f6bc7867a5e43",
+      "generationId": "gen-1795365118-8jfjgkxvG121sDmfXp9g",
+      "usage": {
+        "prompt_tokens": 1347,
+        "completion_tokens": 1680,
+        "total_tokens": 3027,
+        "cost": 0.1014735,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1014735,
+          "upstream_inference_prompt_cost": 0.0006735,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T16:32:22.016Z",
+      "visual": {
+        "by": "Looked: metro carriage seat with blank dark phone; route map at top-left is blurred with no legible writing; no people/characters",
+        "sha256": "0a44295fe0f50861739e29b7e23d7774b374fb2ed948a91dedbd2a76ee12f3bf",
+        "at": "2026-11-22T23:16:49.716Z"
+      }
+    },
+    "station-exit": {
+      "file": "station-exit.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "275400e8838fcfb3acea191bbb08cc2543ebdd93c0e9345d790aa22d23fff6eb",
+      "characters": [],
+      "references": [
+        "metro-hall"
+      ],
+      "sha256": "aeab9777e937108614d7b249fbae50a7bd03924cf1cc14a14971ed11c5ea0f8b",
+      "rawSha256": "7d51995c929da87bc4d2f03a8c77aa9babc8f66c76d8fc6b28a21178bdfb68cc",
+      "generationId": "gen-1795365306-iUEwOuOemqaOh6HoU4pv",
+      "usage": {
+        "prompt_tokens": 1363,
+        "completion_tokens": 1680,
+        "total_tokens": 3043,
+        "cost": 0.1014815,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1014815,
+          "upstream_inference_prompt_cost": 0.0006815,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T16:35:26.583Z",
+      "visual": {
+        "by": "Looked: exit corridor to daylit stairs, arrow-only panels, no device/logo/text/people",
+        "sha256": "aeab9777e937108614d7b249fbae50a7bd03924cf1cc14a14971ed11c5ea0f8b",
+        "at": "2026-11-22T23:16:49.777Z"
+      }
+    }
+  },
+  "removed": {
+    "carriage-seat": {
+      "file": "carriage-seat.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "dc139e7866099e6d0ea529e1cd76ee254364471b127a3d6243f70c71ccca1d48",
+      "characters": [],
+      "references": [
+        "carriage-phone"
+      ],
+      "sha256": "b2e2d6ae563c5c2389128e9b9d7b5f7c97bc7b3725d02c1c690f1a0822ac4274",
+      "rawSha256": "88302b8f9146750cba0a7c499421ff0360d09dd40fd44a1b7a80376b597a14e2",
+      "generationId": "gen-1795365283-1JnOZPBuTxzGlankC5tW",
+      "usage": {
+        "prompt_tokens": 1389,
+        "completion_tokens": 1680,
+        "total_tokens": 3069,
+        "cost": 0.1014945,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1014945,
+          "upstream_inference_prompt_cost": 0.0006945,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T16:35:03.601Z",
+      "reason": "duplicated carriage-phone composition; not used"
+    }
+  }
+}

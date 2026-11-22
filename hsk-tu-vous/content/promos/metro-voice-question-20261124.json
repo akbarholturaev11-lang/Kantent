@@ -53,114 +53,17 @@
         "continuityKey": "metro-hanzi-attention",
         "cueText": "две похожие надписи",
         "backgroundToken": "foreground",
-        "drawingBrief": "Показать две условные таблички на стене станции с визуально близкими штрихами, не утверждая, что это реальный знак.",
-        "graphic": {
-          "width": 600,
-          "height": 400,
-          "nodes": [
-            {
-              "id": "floor",
-              "type": "rect",
-              "attrs": {
-                "x": 50,
-                "y": 328,
-                "width": 500,
-                "height": 18,
-                "rx": 5,
-                "fill": "muted"
-              }
-            },
-            {
-              "id": "route-wall",
-              "type": "rect",
-              "attrs": {
-                "x": 80,
-                "y": 61,
-                "width": 440,
-                "height": 239,
-                "rx": 18,
-                "fill": "secondary",
-                "stroke": "foreground",
-                "strokeWidth": 5
-              }
-            },
-            {
-              "id": "notice-left",
-              "type": "rect",
-              "attrs": {
-                "x": 126,
-                "y": 117,
-                "width": 149,
-                "height": 128,
-                "rx": 11,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "notice-right",
-              "type": "rect",
-              "attrs": {
-                "x": 319,
-                "y": 117,
-                "width": 149,
-                "height": 128,
-                "rx": 11,
-                "fill": "poolWater"
-              }
-            },
-            {
-              "id": "sign-left",
-              "type": "polyline",
-              "attrs": {
-                "points": "166,156 166,210 240,210",
-                "fill": "none",
-                "stroke": "foreground",
-                "strokeWidth": 9,
-                "strokeLinecap": "round"
-              }
-            },
-            {
-              "id": "sign-right",
-              "type": "polyline",
-              "attrs": {
-                "points": "353,156 353,210 428,210",
-                "fill": "none",
-                "stroke": "foreground",
-                "strokeWidth": 9,
-                "strokeLinecap": "round"
-              }
-            },
-            {
-              "id": "sign-difference",
-              "type": "line",
-              "attrs": {
-                "x1": 359,
-                "y1": 167,
-                "x2": 418,
-                "y2": 167,
-                "stroke": "gold",
-                "strokeWidth": 8,
-                "strokeLinecap": "round"
-              }
-            }
-          ],
-          "tracks": [
-            {
-              "nodeId": "route-wall",
-              "property": "opacity",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 0.66
-                },
-                {
-                  "atMs": 500,
-                  "value": 1
-                }
-              ]
-            }
-          ]
-        }
+        "drawingBrief": "Realistic frame metro-hall: station concourse with two nearly identical wayfinding panels; the HSK AI panda looks up at them.",
+        "assetPath": "public/lesson-art/metro-voice-question-20261124/metro-hall.jpg",
+        "cast": [
+          {
+            "id": "panda",
+            "mood": "idle",
+            "x": 0.28,
+            "y": 0.73,
+            "h": 0.22
+          }
+        ]
       }
     },
     {
@@ -174,139 +77,17 @@
         "continuityKey": "metro-hanzi-attention",
         "cueText": "одной черте",
         "backgroundToken": "foreground",
-        "drawingBrief": "Увеличить отличие двух абстрактных знаков. Не заменять ими реальные китайские иероглифы.",
-        "graphic": {
-          "width": 600,
-          "height": 400,
-          "nodes": [
-            {
-              "id": "floor",
-              "type": "rect",
-              "attrs": {
-                "x": 50,
-                "y": 328,
-                "width": 500,
-                "height": 18,
-                "rx": 5,
-                "fill": "muted"
-              }
-            },
-            {
-              "id": "route-wall",
-              "type": "rect",
-              "attrs": {
-                "x": 80,
-                "y": 61,
-                "width": 440,
-                "height": 239,
-                "rx": 18,
-                "fill": "secondary",
-                "stroke": "foreground",
-                "strokeWidth": 5
-              }
-            },
-            {
-              "id": "notice-left",
-              "type": "rect",
-              "attrs": {
-                "x": 126,
-                "y": 117,
-                "width": 149,
-                "height": 128,
-                "rx": 11,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "notice-right",
-              "type": "rect",
-              "attrs": {
-                "x": 319,
-                "y": 117,
-                "width": 149,
-                "height": 128,
-                "rx": 11,
-                "fill": "poolWater"
-              }
-            },
-            {
-              "id": "sign-left",
-              "type": "polyline",
-              "attrs": {
-                "points": "166,156 166,210 240,210",
-                "fill": "none",
-                "stroke": "foreground",
-                "strokeWidth": 9,
-                "strokeLinecap": "round"
-              }
-            },
-            {
-              "id": "sign-right",
-              "type": "polyline",
-              "attrs": {
-                "points": "353,156 353,210 428,210",
-                "fill": "none",
-                "stroke": "foreground",
-                "strokeWidth": 9,
-                "strokeLinecap": "round"
-              }
-            },
-            {
-              "id": "sign-difference",
-              "type": "line",
-              "attrs": {
-                "x1": 359,
-                "y1": 167,
-                "x2": 418,
-                "y2": 167,
-                "stroke": "gold",
-                "strokeWidth": 8,
-                "strokeLinecap": "round"
-              }
-            },
-            {
-              "id": "magnify-ring",
-              "type": "circle",
-              "attrs": {
-                "cx": 386,
-                "cy": 181,
-                "r": 62,
-                "fill": "none",
-                "stroke": "gold",
-                "strokeWidth": 7
-              }
-            },
-            {
-              "id": "magnify-handle",
-              "type": "line",
-              "attrs": {
-                "x1": 429,
-                "y1": 228,
-                "x2": 485,
-                "y2": 276,
-                "stroke": "foreground",
-                "strokeWidth": 9,
-                "strokeLinecap": "round"
-              }
-            }
-          ],
-          "tracks": [
-            {
-              "nodeId": "route-wall",
-              "property": "opacity",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 0.66
-                },
-                {
-                  "atMs": 500,
-                  "value": 1
-                }
-              ]
-            }
-          ]
-        }
+        "drawingBrief": "Realistic frame panels-close: the two panels close up, one extra stroke is the only difference; the panda hesitates.",
+        "assetPath": "public/lesson-art/metro-voice-question-20261124/panels-close.jpg",
+        "cast": [
+          {
+            "id": "panda",
+            "mood": "loading",
+            "x": 0.7,
+            "y": 0.73,
+            "h": 0.22
+          }
+        ]
       }
     },
     {
@@ -331,6 +112,11 @@
           "height": 1474,
           "sourceWidth": 1179,
           "sourceHeight": 2556
+        },
+        "backdropPath": "public/lesson-art/metro-voice-question-20261124/carriage-phone.jpg",
+        "screenMotion": {
+          "kind": "entry",
+          "leadInPath": "public/lesson-art/metro-voice-question-20261124/carriage-phone.jpg"
         }
       },
       "claimIds": [
@@ -348,80 +134,17 @@
         "continuityKey": "metro-hanzi-attention",
         "cueText": "сравниваешь варианты",
         "backgroundToken": "foreground",
-        "drawingBrief": "Телефон с пустой плоскостью и крупным выделенным кругом как символ проверки; не представлять рисунок как продуктовый UI.",
-        "graphic": {
-          "width": 600,
-          "height": 400,
-          "nodes": [
-            {
-              "id": "phone",
-              "type": "rect",
-              "attrs": {
-                "x": 174,
-                "y": 53,
-                "width": 252,
-                "height": 292,
-                "rx": 34,
-                "fill": "secondary",
-                "stroke": "foreground",
-                "strokeWidth": 8
-              }
-            },
-            {
-              "id": "phone-blank",
-              "type": "rect",
-              "attrs": {
-                "x": 198,
-                "y": 98,
-                "width": 204,
-                "height": 205,
-                "rx": 13,
-                "fill": "poolWater"
-              }
-            },
-            {
-              "id": "phone-circle",
-              "type": "circle",
-              "attrs": {
-                "cx": 300,
-                "cy": 202,
-                "r": 50,
-                "fill": "none",
-                "stroke": "gold",
-                "strokeWidth": 8
-              }
-            },
-            {
-              "id": "phone-choice",
-              "type": "line",
-              "attrs": {
-                "x1": 259,
-                "y1": 205,
-                "x2": 340,
-                "y2": 205,
-                "stroke": "teal",
-                "strokeWidth": 8,
-                "strokeLinecap": "round"
-              }
-            }
-          ],
-          "tracks": [
-            {
-              "nodeId": "phone",
-              "property": "opacity",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 0.66
-                },
-                {
-                  "atMs": 500,
-                  "value": 1
-                }
-              ]
-            }
-          ]
-        }
+        "drawingBrief": "Realistic frame carriage-phone: in the metro carriage the panda thinks over the options next to the phone.",
+        "assetPath": "public/lesson-art/metro-voice-question-20261124/carriage-phone.jpg",
+        "cast": [
+          {
+            "id": "panda",
+            "mood": "loading",
+            "x": 0.22,
+            "y": 0.73,
+            "h": 0.22
+          }
+        ]
       }
     },
     {
@@ -446,7 +169,8 @@
           "height": 1474,
           "sourceWidth": 1179,
           "sourceHeight": 2556
-        }
+        },
+        "backdropPath": "public/lesson-art/metro-voice-question-20261124/carriage-phone.jpg"
       },
       "claimIds": [
         "hanzi-answer-feedback"
@@ -463,125 +187,17 @@
         "continuityKey": "metro-hanzi-attention",
         "cueText": "реальные указатели",
         "backgroundToken": "foreground",
-        "drawingBrief": "Вернуться к той же станции, показать маршрут и отличающиеся абстрактные знаки, без обещания правильного чтения с первого раза.",
-        "graphic": {
-          "width": 600,
-          "height": 400,
-          "nodes": [
-            {
-              "id": "floor",
-              "type": "rect",
-              "attrs": {
-                "x": 50,
-                "y": 328,
-                "width": 500,
-                "height": 18,
-                "rx": 5,
-                "fill": "muted"
-              }
-            },
-            {
-              "id": "route-wall",
-              "type": "rect",
-              "attrs": {
-                "x": 80,
-                "y": 61,
-                "width": 440,
-                "height": 239,
-                "rx": 18,
-                "fill": "secondary",
-                "stroke": "foreground",
-                "strokeWidth": 5
-              }
-            },
-            {
-              "id": "notice-left",
-              "type": "rect",
-              "attrs": {
-                "x": 126,
-                "y": 117,
-                "width": 149,
-                "height": 128,
-                "rx": 11,
-                "fill": "teal"
-              }
-            },
-            {
-              "id": "notice-right",
-              "type": "rect",
-              "attrs": {
-                "x": 319,
-                "y": 117,
-                "width": 149,
-                "height": 128,
-                "rx": 11,
-                "fill": "poolWater"
-              }
-            },
-            {
-              "id": "sign-left",
-              "type": "polyline",
-              "attrs": {
-                "points": "166,156 166,210 240,210",
-                "fill": "none",
-                "stroke": "foreground",
-                "strokeWidth": 9,
-                "strokeLinecap": "round"
-              }
-            },
-            {
-              "id": "sign-right",
-              "type": "polyline",
-              "attrs": {
-                "points": "353,156 353,210 428,210",
-                "fill": "none",
-                "stroke": "foreground",
-                "strokeWidth": 9,
-                "strokeLinecap": "round"
-              }
-            },
-            {
-              "id": "sign-difference",
-              "type": "line",
-              "attrs": {
-                "x1": 359,
-                "y1": 167,
-                "x2": 418,
-                "y2": 167,
-                "stroke": "gold",
-                "strokeWidth": 8,
-                "strokeLinecap": "round"
-              }
-            },
-            {
-              "id": "direction-mark",
-              "type": "polyline",
-              "attrs": {
-                "points": "199,283 300,307 399,283",
-                "fill": "none",
-                "stroke": "gold",
-                "strokeWidth": 10,
-                "strokeLinecap": "round"
-              }
-            }
-          ],
-          "tracks": [
-            {
-              "nodeId": "route-wall",
-              "property": "opacity",
-              "keyframes": [
-                {
-                  "atMs": 0,
-                  "value": 0.66
-                },
-                {
-                  "atMs": 500,
-                  "value": 1
-                }
-              ]
-            }
-          ]
-        }
+        "drawingBrief": "Realistic frame station-exit: the panda heads to the exit stairs past real arrow panels.",
+        "assetPath": "public/lesson-art/metro-voice-question-20261124/station-exit.jpg",
+        "cast": [
+          {
+            "id": "panda",
+            "mood": "celebrate",
+            "x": 0.3,
+            "y": 0.73,
+            "h": 0.22
+          }
+        ]
       }
     }
   ],

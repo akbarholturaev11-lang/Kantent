@@ -1,0 +1,175 @@
+{
+  "episodeId": "dorm-laundry-voice-20261126",
+  "assets": {
+    "laundry-room": {
+      "file": "laundry-room.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "124d526981ebd35f3a46a0576bad59661ea7516c2f7c67c4d416a82c270cfe46",
+      "characters": [],
+      "references": [],
+      "sha256": "a8c88118343af72e7d0b565861d6385e78ad5dfc509f17af51d7d6903a236ebd",
+      "rawSha256": "c74897be3cd82d17920576aeb54cbe82ed1be90fecd36854a12886e4bd1a6dcf",
+      "generationId": "gen-1795389867-bRJIFfxoUxBqIvKI5TnD",
+      "usage": {
+        "prompt_tokens": 249,
+        "completion_tokens": 1680,
+        "total_tokens": 1929,
+        "cost": 0.1009245,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1009245,
+          "upstream_inference_prompt_cost": 0.0001245,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T23:24:44.347Z",
+      "visual": {
+        "by": "Looked: dorm laundry room, machines with pictogram-only buttons, basket, open floor; no text/people/characters",
+        "sha256": "a8c88118343af72e7d0b565861d6385e78ad5dfc509f17af51d7d6903a236ebd",
+        "at": "2026-11-22T23:26:47.611Z"
+      }
+    },
+    "panel-close": {
+      "file": "panel-close.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "573c7ce3a2d1c1739c6dccefcc4e620d73a122136a4aa39278ec6a3cdf0a45dc",
+      "characters": [],
+      "references": [
+        "laundry-room"
+      ],
+      "sha256": "5ffc6ef32d0aedb796ef6ee8f815e291b85fb3d42f94d69c235db19ac881a97d",
+      "rawSha256": "c465afb3d1616bdf99cab528ee9f7c845ebd98028e0b9f22ec5aa9e7b48fafb8",
+      "generationId": "gen-1795389886-tnU7tLhInauojvoGPVod",
+      "usage": {
+        "prompt_tokens": 1369,
+        "completion_tokens": 1680,
+        "total_tokens": 3049,
+        "cost": 0.1014845,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.1014845,
+          "upstream_inference_prompt_cost": 0.0006845,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T23:25:07.215Z",
+      "visual": {
+        "by": "Looked: close-up control panel, water-drop button under magnifier, only pictograms, no text/people",
+        "sha256": "5ffc6ef32d0aedb796ef6ee8f815e291b85fb3d42f94d69c235db19ac881a97d",
+        "at": "2026-11-22T23:26:47.684Z"
+      }
+    },
+    "bench-phone": {
+      "file": "bench-phone.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "7ee55785ff776b407bf30cf0c7188b9a4ef9be7dcdccaaa7f56a128cdc6fd2a5",
+      "characters": [],
+      "references": [
+        "laundry-room"
+      ],
+      "sha256": "3a8e769715ea4a3f7da33702206e0e0b7ffa7d2904e9024db4230d3964ff8b3e",
+      "rawSha256": "618eceea2be7ccfd618de708ae458561d1ee3a7222b9f31e3636316123fbec72",
+      "generationId": "gen-1795389908-KYGQY6eAYWrmUwnF9mYX",
+      "usage": {
+        "prompt_tokens": 1364,
+        "completion_tokens": 1680,
+        "total_tokens": 3044,
+        "cost": 0.101482,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.101482,
+          "upstream_inference_prompt_cost": 0.000682,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T23:25:23.845Z",
+      "visual": {
+        "by": "Looked: folding table with blank dark phone and towels in the same laundry room, free left space; no text/people",
+        "sha256": "3a8e769715ea4a3f7da33702206e0e0b7ffa7d2904e9024db4230d3964ff8b3e",
+        "at": "2026-11-22T23:26:47.791Z"
+      }
+    },
+    "folded-clothes": {
+      "file": "folded-clothes.jpg",
+      "provider": "openrouter",
+      "model": "google/gemini-3.1-flash-image",
+      "format": "png",
+      "promptSha256": "60ed5a2a01025f58470c43b32dbe20bf02f5031dbfd23aa7c1bd0beaba667767",
+      "characters": [],
+      "references": [
+        "laundry-room"
+      ],
+      "sha256": "52afee56f0e421bd3ffa0ac8fd04d7173074e9bb4c9f035e9cc63ce21d1c8c70",
+      "rawSha256": "f8d0e3d41091c9a3208f41655ac9ecd5d80a259d25a0234374351ef3e3f5e68e",
+      "generationId": "gen-1795389924-FHG3ZFP2M05Rn9sQMppZ",
+      "usage": {
+        "prompt_tokens": 1346,
+        "completion_tokens": 1680,
+        "total_tokens": 3026,
+        "cost": 0.101473,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.101473,
+          "upstream_inference_prompt_cost": 0.000673,
+          "upstream_inference_completions_cost": 0.1008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1680,
+          "audio_tokens": 0
+        }
+      },
+      "generatedAt": "2026-11-22T23:25:40.498Z",
+      "visual": {
+        "by": "Looked: same machine with open door and folded laundry basket, no text/people/characters",
+        "sha256": "52afee56f0e421bd3ffa0ac8fd04d7173074e9bb4c9f035e9cc63ce21d1c8c70",
+        "at": "2026-11-22T23:26:47.868Z"
+      }
+    }
+  }
+}
