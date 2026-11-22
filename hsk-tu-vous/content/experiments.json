@@ -119,6 +119,12 @@
           "date": "2026-11-25",
           "arm": "B",
           "assignedAt": "2026-11-22"
+        },
+        {
+          "contentId": "zhengzai-reading-20261127",
+          "date": "2026-11-27",
+          "arm": "A",
+          "assignedAt": "2026-11-22"
         }
       ],
       "decision": null
