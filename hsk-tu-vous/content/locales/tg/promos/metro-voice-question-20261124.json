@@ -1,0 +1,600 @@
+{
+  "schemaVersion": 1,
+  "id": "metro-voice-question-20261124",
+  "kind": "advertisement",
+  "status": "draft",
+  "title": "Пеш аз савол дар метро: машқ бо HSK AI",
+  "language": "tg",
+  "languageCode": "tg-TJ",
+  "styleId": "minimal-story-v1",
+  "formatId": "life-friction-demo",
+  "benefit": "Машқи гуфтор пеш аз саволи воқеӣ дар метро",
+  "situation": {
+    "setting": "Истгоҳи метро, назди роҳи гузаштан ба платформа",
+    "learnerGoal": "Саволи кӯтоҳ ба чинӣ барои ёфтани платформа омода кунад",
+    "friction": "Аз пурсидани шахси ношинос ба забони чинӣ дудила мешавад"
+  },
+  "storyType": "illustrative",
+  "storyDisclosure": "Тасаввур кун",
+  "evidence": [
+    {
+      "id": "verified-ai-voice-ui-20261122",
+      "kind": "product-source",
+      "sourcePath": "public/promo-captures/ai-voice-original.png",
+      "checkedAt": "2026-11-22",
+      "supports": "Existing genuine AI Voice screenshot at GitHub blob 81f7be1cbadeca7a820cc5877c893fc91e65f267; current HSK-AI-Bot main app/static/course-v3.html blob aacb025655196ef6c48e21beffc64b63da90dbef checked 2026-11-22 contains VOICE_HTML, vc-root, vc-mic microphone button. Supports interface existence and microphone; no claim of response quality or results. Source: https://github.com/akbarholturaev11-lang/HSK-AI-Bot/blob/main/app/static/course-v3.html"
+    }
+  ],
+  "claims": [
+    {
+      "id": "voice-practice",
+      "text": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст.",
+      "evidenceIds": [
+        "verified-ai-voice-ui-20261122"
+      ]
+    },
+    {
+      "id": "microphone-control",
+      "text": "Дар ин режим тугмаи микрофон ҳаст.",
+      "evidenceIds": [
+        "verified-ai-voice-ui-20261122"
+      ]
+    }
+  ],
+  "beats": [
+    {
+      "id": "opening",
+      "role": "situation",
+      "narration": "Тасаввур кун: ту дар метро ҳастӣ ва мехоҳӣ пурсӣ, платформаи лозим дар куҷост. Пеш аз гуфтугӯ HSK AI-ро кушода метавонӣ.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Station platform and passenger's next decision",
+        "action": "Мусофир назди роҳҳои истгоҳ истодааст ва ҳанӯз намедонад ба куҷо равад.",
+        "continuityKey": "metro-practice",
+        "cueText": "платформаи лозим",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Мусофир назди роҳҳои истгоҳ истодааст ва ҳанӯз намедонад ба куҷо равад.",
+        "graphic": {
+          "width": 600,
+          "height": 400,
+          "nodes": [
+            {
+              "id": "floor",
+              "type": "rect",
+              "attrs": {
+                "x": 55,
+                "y": 300,
+                "width": 490,
+                "height": 22,
+                "rx": 8,
+                "fill": "muted"
+              }
+            },
+            {
+              "id": "train",
+              "type": "rect",
+              "attrs": {
+                "x": 95,
+                "y": 100,
+                "width": 410,
+                "height": 186,
+                "rx": 22,
+                "fill": "teal"
+              }
+            },
+            {
+              "id": "window-left",
+              "type": "rect",
+              "attrs": {
+                "x": 134,
+                "y": 141,
+                "width": 112,
+                "height": 78,
+                "rx": 9,
+                "fill": "poolWater"
+              }
+            },
+            {
+              "id": "window-right",
+              "type": "rect",
+              "attrs": {
+                "x": 350,
+                "y": 141,
+                "width": 112,
+                "height": 78,
+                "rx": 9,
+                "fill": "poolWater"
+              }
+            },
+            {
+              "id": "train-door",
+              "type": "rect",
+              "attrs": {
+                "x": 257,
+                "y": 131,
+                "width": 82,
+                "height": 155,
+                "rx": 7,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "door-split",
+              "type": "line",
+              "attrs": {
+                "x1": 298,
+                "y1": 133,
+                "x2": 298,
+                "y2": 285,
+                "stroke": "foreground",
+                "strokeWidth": 5
+              }
+            },
+            {
+              "id": "attention",
+              "type": "line",
+              "attrs": {
+                "x1": 110,
+                "y1": 45,
+                "x2": 489,
+                "y2": 45,
+                "stroke": "gold",
+                "strokeWidth": 7
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "train",
+              "property": "opacity",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0.7
+                },
+                {
+                  "atMs": 420,
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "friction",
+      "role": "complication",
+      "narration": "Роҳҳо пеши чашманд, вале саволро ба чинӣ зуд гуфтан ҳоло душвор аст.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Station platform and passenger's next decision",
+        "action": "Роҳи поезд намоён, мусофир дар назди гузаргоҳ дудила аст.",
+        "continuityKey": "metro-practice",
+        "cueText": "саволро ба чинӣ",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Роҳи поезд намоён, мусофир дар назди гузаргоҳ дудила аст.",
+        "graphic": {
+          "width": 600,
+          "height": 400,
+          "nodes": [
+            {
+              "id": "floor",
+              "type": "rect",
+              "attrs": {
+                "x": 55,
+                "y": 300,
+                "width": 490,
+                "height": 22,
+                "rx": 8,
+                "fill": "muted"
+              }
+            },
+            {
+              "id": "train",
+              "type": "rect",
+              "attrs": {
+                "x": 95,
+                "y": 100,
+                "width": 410,
+                "height": 186,
+                "rx": 22,
+                "fill": "teal"
+              }
+            },
+            {
+              "id": "window-left",
+              "type": "rect",
+              "attrs": {
+                "x": 134,
+                "y": 141,
+                "width": 112,
+                "height": 78,
+                "rx": 9,
+                "fill": "poolWater"
+              }
+            },
+            {
+              "id": "window-right",
+              "type": "rect",
+              "attrs": {
+                "x": 350,
+                "y": 141,
+                "width": 112,
+                "height": 78,
+                "rx": 9,
+                "fill": "poolWater"
+              }
+            },
+            {
+              "id": "train-door",
+              "type": "rect",
+              "attrs": {
+                "x": 257,
+                "y": 131,
+                "width": 82,
+                "height": 155,
+                "rx": 7,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "door-split",
+              "type": "line",
+              "attrs": {
+                "x1": 298,
+                "y1": 133,
+                "x2": 298,
+                "y2": 285,
+                "stroke": "foreground",
+                "strokeWidth": 5
+              }
+            },
+            {
+              "id": "focal-ring",
+              "type": "circle",
+              "attrs": {
+                "cx": 298,
+                "cy": 226,
+                "r": 88,
+                "fill": "none",
+                "stroke": "gold",
+                "strokeWidth": 6
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "train",
+              "property": "opacity",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0.7
+                },
+                {
+                  "atMs": 420,
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "voice-demo",
+      "role": "product-demo",
+      "narration": "Дар HSK AI барои машқи гуфтугӯ AI Voice ҳаст. Ин тасвири аслии экран аст.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Genuine HSK AI AI Voice screen",
+        "action": "Reveal the existing voice screen capture, never fabricate a reply",
+        "continuityKey": "metro-practice",
+        "cueText": "AI Voice",
+        "backgroundToken": "foreground",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "zxx",
+        "languageNeutralCrop": true,
+        "sourceUiLanguage": "tg-TJ",
+        "crop": {
+          "x": 285,
+          "y": 580,
+          "width": 600,
+          "height": 540,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        },
+        "limitations": "Before rendering, inspect the real source capture for visible UI text, privacy and current-product parity; no fabricated translated UI."
+      },
+      "claimIds": [
+        "voice-practice"
+      ]
+    },
+    {
+      "id": "try-question",
+      "role": "attempt",
+      "narration": "Як қадам аз ҷои серғавғо дур мешавӣ ва ҷумлаи худро оромона машқ мекунӣ.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Station platform and passenger's next decision",
+        "action": "Мусофир назди девори метро бо телефон, бе матни сохта.",
+        "continuityKey": "metro-practice",
+        "cueText": "ҷумлаи худро",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Мусофир назди девори метро бо телефон, бе матни сохта.",
+        "graphic": {
+          "width": 600,
+          "height": 400,
+          "nodes": [
+            {
+              "id": "floor",
+              "type": "rect",
+              "attrs": {
+                "x": 55,
+                "y": 300,
+                "width": 490,
+                "height": 22,
+                "rx": 8,
+                "fill": "muted"
+              }
+            },
+            {
+              "id": "train",
+              "type": "rect",
+              "attrs": {
+                "x": 95,
+                "y": 100,
+                "width": 410,
+                "height": 186,
+                "rx": 22,
+                "fill": "teal"
+              }
+            },
+            {
+              "id": "window-left",
+              "type": "rect",
+              "attrs": {
+                "x": 134,
+                "y": 141,
+                "width": 112,
+                "height": 78,
+                "rx": 9,
+                "fill": "poolWater"
+              }
+            },
+            {
+              "id": "window-right",
+              "type": "rect",
+              "attrs": {
+                "x": 350,
+                "y": 141,
+                "width": 112,
+                "height": 78,
+                "rx": 9,
+                "fill": "poolWater"
+              }
+            },
+            {
+              "id": "train-door",
+              "type": "rect",
+              "attrs": {
+                "x": 257,
+                "y": 131,
+                "width": 82,
+                "height": 155,
+                "rx": 7,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "door-split",
+              "type": "line",
+              "attrs": {
+                "x1": 298,
+                "y1": 133,
+                "x2": 298,
+                "y2": 285,
+                "stroke": "foreground",
+                "strokeWidth": 5
+              }
+            },
+            {
+              "id": "focal-ring",
+              "type": "circle",
+              "attrs": {
+                "cx": 298,
+                "cy": 226,
+                "r": 88,
+                "fill": "none",
+                "stroke": "gold",
+                "strokeWidth": 6
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "train",
+              "property": "opacity",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0.7
+                },
+                {
+                  "atMs": 420,
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "microphone",
+      "role": "product-demo",
+      "narration": "Дар ин режим тугмаи микрофон ҳаст. Метавонӣ саволатро бо овоз санҷӣ.",
+      "visual": {
+        "type": "product-capture",
+        "focalSubject": "Genuine HSK AI microphone control",
+        "action": "Crop to the microphone button in the genuine capture",
+        "continuityKey": "metro-practice",
+        "cueText": "тугмаи микрофон",
+        "backgroundToken": "foreground",
+        "assetPath": "public/promo-captures/ai-voice-original.png",
+        "provenance": "genuine-product-capture",
+        "uiLanguage": "zxx",
+        "languageNeutralCrop": true,
+        "sourceUiLanguage": "tg-TJ",
+        "crop": {
+          "x": 440,
+          "y": 2180,
+          "width": 290,
+          "height": 245,
+          "sourceWidth": 1179,
+          "sourceHeight": 2556
+        },
+        "limitations": "Before rendering, inspect the real source capture for visible UI text, privacy and current-product parity; no fabricated translated UI."
+      },
+      "claimIds": [
+        "microphone-control"
+      ]
+    },
+    {
+      "id": "back-to-life",
+      "role": "resolution",
+      "narration": "Баъд ба роҳ бармегардӣ ва худат савол медиҳӣ. HSK AI — машқ пеш аз гуфтугӯи воқеӣ.",
+      "visual": {
+        "type": "illustration",
+        "focalSubject": "Station platform and passenger's next decision",
+        "action": "Мусофир ба истгоҳ бармегардад, бе ҷавоби сохта ва ваъдаи натиҷа.",
+        "continuityKey": "metro-practice",
+        "cueText": "ба роҳ бармегардӣ",
+        "backgroundToken": "foreground",
+        "drawingBrief": "Мусофир ба истгоҳ бармегардад, бе ҷавоби сохта ва ваъдаи натиҷа.",
+        "graphic": {
+          "width": 600,
+          "height": 400,
+          "nodes": [
+            {
+              "id": "floor",
+              "type": "rect",
+              "attrs": {
+                "x": 55,
+                "y": 300,
+                "width": 490,
+                "height": 22,
+                "rx": 8,
+                "fill": "muted"
+              }
+            },
+            {
+              "id": "train",
+              "type": "rect",
+              "attrs": {
+                "x": 95,
+                "y": 100,
+                "width": 410,
+                "height": 186,
+                "rx": 22,
+                "fill": "teal"
+              }
+            },
+            {
+              "id": "window-left",
+              "type": "rect",
+              "attrs": {
+                "x": 134,
+                "y": 141,
+                "width": 112,
+                "height": 78,
+                "rx": 9,
+                "fill": "poolWater"
+              }
+            },
+            {
+              "id": "window-right",
+              "type": "rect",
+              "attrs": {
+                "x": 350,
+                "y": 141,
+                "width": 112,
+                "height": 78,
+                "rx": 9,
+                "fill": "poolWater"
+              }
+            },
+            {
+              "id": "train-door",
+              "type": "rect",
+              "attrs": {
+                "x": 257,
+                "y": 131,
+                "width": 82,
+                "height": 155,
+                "rx": 7,
+                "fill": "secondary"
+              }
+            },
+            {
+              "id": "door-split",
+              "type": "line",
+              "attrs": {
+                "x1": 298,
+                "y1": 133,
+                "x2": 298,
+                "y2": 285,
+                "stroke": "foreground",
+                "strokeWidth": 5
+              }
+            },
+            {
+              "id": "focal-ring",
+              "type": "circle",
+              "attrs": {
+                "cx": 298,
+                "cy": 226,
+                "r": 88,
+                "fill": "none",
+                "stroke": "gold",
+                "strokeWidth": 6
+              }
+            }
+          ],
+          "tracks": [
+            {
+              "nodeId": "train",
+              "property": "opacity",
+              "keyframes": [
+                {
+                  "atMs": 0,
+                  "value": 0.7
+                },
+                {
+                  "atMs": 420,
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "caption": "Пеш аз савол дар метро: машқ бо HSK AI",
+  "hashtags": [
+    "#HSKAI",
+    "#забоничинӣ",
+    "#AIvoice"
+  ],
+  "durationTargetSec": 34,
+  "localization": {
+    "language": "tg",
+    "sourcePromoId": "metro-voice-question-20261124",
+    "sourceHash": "302bac6596f7f6133a72d20d9bf7002327a612c1c56c9b11f484f3d5606038d6",
+    "authoredOn": "2026-11-22",
+    "status": "draft"
+  }
+}
