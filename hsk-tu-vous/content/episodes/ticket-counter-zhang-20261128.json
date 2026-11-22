@@ -1,0 +1,952 @@
+{
+  "id": "ticket-counter-zhang-20261128",
+  "date": "2026-11-28",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "Билет на вечернее шоу: 一张票",
+  "level": "HSK 1–2",
+  "topic": "Билет на вечернее шоу: 一张票",
+  "durationTargetSec": 32,
+  "caption": "В первой части Панда получает билет: почему 一张票, а не 一个票.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK1"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "Для билетов используют счётное слово 张 (zhāng): 一张票 (yì zhāng piào) — «один билет».",
+    "Два билета — 两张票 (liǎng zhāng piào); для количества «два» перед счётным словом употребляется 两.",
+    "Фраза 我要一张票 — прямой запрос одного билета; не подставлять 个 вместо 张."
+  ],
+  "examples": [
+    "张 zhāng — счётное слово для билета",
+    "一张票 yì zhāng piào — один билет",
+    "两张票 liǎng zhāng piào — два билета",
+    "我要一张票。 Wǒ yào yì zhāng piào. — Мне нужен один билет."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 8,
+      "headline": "ОДИН БИЛЕТ НА ШОУ",
+      "narration": "Представь: в классе учитель раздаёт билеты на вечернее представление. Панда просит: 我要一张票 — мне один билет. Для билета нужно 张.",
+      "screenCaption": "ОДИН БИЛЕТ НА ШОУ",
+      "cards": [
+        {
+          "hanzi": "一张票",
+          "pinyin": "yì zhāng piào",
+          "meaning": "один билет"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "учитель раздаёт билеты",
+          "explains": "Попросить один билет и понять счётное слово 张: показать предмет и ситуацию.",
+          "visual": {
+            "title": "Билеты перед поездкой",
+            "hanzi": "一张票",
+            "pinyin": "yì zhāng piào",
+            "meaning": "один билет",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "desk",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 50,
+                    "y": 302,
+                    "width": 500,
+                    "height": 20,
+                    "rx": 7,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "ticket-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 173,
+                    "y": 140,
+                    "width": 256,
+                    "height": 135,
+                    "rx": 14,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "stub",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 359,
+                    "y1": 145,
+                    "x2": 359,
+                    "y2": 268,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "hole-one",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 163,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-two",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 188,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-three",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 213,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 133,
+                    "y1": 107,
+                    "x2": 469,
+                    "y2": 107,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "ticket-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "classroom-tickets",
+                "ticket-close"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.87,
+                  "h": 0.3,
+                  "card": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "我要一张票",
+          "explains": "Попросить один билет и понять счётное слово 张: показать изменение состояния и китайский ответ.",
+          "visual": {
+            "title": "Один выбранный билет",
+            "hanzi": "我要一张票",
+            "pinyin": "Wǒ yào yì zhāng piào",
+            "meaning": "Мне один билет",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "desk",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 50,
+                    "y": 302,
+                    "width": 500,
+                    "height": 20,
+                    "rx": 7,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "ticket-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 173,
+                    "y": 140,
+                    "width": 256,
+                    "height": 135,
+                    "rx": 14,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "stub",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 359,
+                    "y1": 145,
+                    "x2": 359,
+                    "y2": 268,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "hole-one",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 163,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-two",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 188,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-three",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 213,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "ticket-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 83,
+                    "y": 91,
+                    "width": 69,
+                    "height": 130,
+                    "rx": 7,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "count-mark",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 205,
+                    "r": 99,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "ticket-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "classroom-tickets",
+                "ticket-close"
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.87,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "count",
+      "kind": "example",
+      "durationSec": 12,
+      "headline": "СЧИТАЕМ БИЛЕТЫ",
+      "narration": "张 — счётное слово для билета. 一张票 — один билет, 两张票 — два билета. Не говори 一个票, когда считаешь билеты.",
+      "screenCaption": "СЧИТАЕМ БИЛЕТЫ",
+      "cards": [
+        {
+          "hanzi": "一张票",
+          "pinyin": "yì zhāng piào",
+          "meaning": "один билет"
+        },
+        {
+          "hanzi": "两张票",
+          "pinyin": "liǎng zhāng piào",
+          "meaning": "два билета"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "count-action-1",
+          "kind": "graphic",
+          "cueText": "一张票",
+          "explains": "Попросить один билет и понять счётное слово 张: показать предмет и ситуацию.",
+          "visual": {
+            "title": "Один экземпляр",
+            "hanzi": "一张票",
+            "pinyin": "yì zhāng piào",
+            "meaning": "один билет",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "desk",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 50,
+                    "y": 302,
+                    "width": 500,
+                    "height": 20,
+                    "rx": 7,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "ticket-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 173,
+                    "y": 140,
+                    "width": 256,
+                    "height": 135,
+                    "rx": 14,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "stub",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 359,
+                    "y1": 145,
+                    "x2": 359,
+                    "y2": 268,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "hole-one",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 163,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-two",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 188,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-three",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 213,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 133,
+                    "y1": 107,
+                    "x2": 469,
+                    "y2": 107,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "ticket-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "ticket-close"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "count-action-2",
+          "kind": "graphic",
+          "cueText": "两张票",
+          "explains": "Попросить один билет и понять счётное слово 张: показать изменение состояния и китайский ответ.",
+          "visual": {
+            "title": "Два экземпляра",
+            "hanzi": "两张票",
+            "pinyin": "liǎng zhāng piào",
+            "meaning": "два билета",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "desk",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 50,
+                    "y": 302,
+                    "width": 500,
+                    "height": 20,
+                    "rx": 7,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "ticket-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 173,
+                    "y": 140,
+                    "width": 256,
+                    "height": 135,
+                    "rx": 14,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "stub",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 359,
+                    "y1": 145,
+                    "x2": 359,
+                    "y2": 268,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "hole-one",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 163,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-two",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 188,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-three",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 213,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "ticket-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 83,
+                    "y": 91,
+                    "width": 69,
+                    "height": 130,
+                    "rx": 7,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "count-mark",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 205,
+                    "r": 99,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "ticket-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "ticket-close"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "example",
+      "durationSec": 12,
+      "headline": "БИЛЕТ ПОЛУЧЕН",
+      "narration": "Панда повторяет 我要一张票 и получает билет. Проверь: «один билет» — 一张票. На билете обозначено время шоу. В следующей части Панда спросит, во сколько оно начинается.",
+      "screenCaption": "БИЛЕТ ПОЛУЧЕН",
+      "cards": [
+        {
+          "hanzi": "我要一张票",
+          "pinyin": "Wǒ yào yì zhāng piào",
+          "meaning": "Мне один билет"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recap-action-1",
+          "kind": "graphic",
+          "cueText": "получает билет",
+          "explains": "Попросить один билет и понять счётное слово 张: показать предмет и ситуацию.",
+          "visual": {
+            "title": "Задача решена",
+            "hanzi": "我要一张票",
+            "pinyin": "Wǒ yào yì zhāng piào",
+            "meaning": "Мне один билет",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "desk",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 50,
+                    "y": 302,
+                    "width": 500,
+                    "height": 20,
+                    "rx": 7,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "ticket-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 173,
+                    "y": 140,
+                    "width": 256,
+                    "height": 135,
+                    "rx": 14,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "stub",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 359,
+                    "y1": 145,
+                    "x2": 359,
+                    "y2": 268,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "hole-one",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 163,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-two",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 188,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-three",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 213,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "focus",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 133,
+                    "y1": 107,
+                    "x2": 469,
+                    "y2": 107,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "ticket-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "ticket-count"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "recap-action-2",
+          "kind": "graphic",
+          "cueText": "один билет",
+          "explains": "Попросить один билет и понять счётное слово 张: показать изменение состояния и китайский ответ.",
+          "visual": {
+            "title": "Повторение счёта",
+            "hanzi": "一张票",
+            "pinyin": "yì zhāng piào",
+            "meaning": "один билет",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "desk",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 50,
+                    "y": 302,
+                    "width": 500,
+                    "height": 20,
+                    "rx": 7,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "ticket-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 173,
+                    "y": 140,
+                    "width": 256,
+                    "height": 135,
+                    "rx": 14,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "stub",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 359,
+                    "y1": 145,
+                    "x2": 359,
+                    "y2": 268,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "hole-one",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 163,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-two",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 188,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "hole-three",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 359,
+                    "cy": 213,
+                    "r": 8,
+                    "fill": "foreground"
+                  }
+                },
+                {
+                  "id": "ticket-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 83,
+                    "y": 91,
+                    "width": 69,
+                    "height": 130,
+                    "rx": 7,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "count-mark",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 298,
+                    "cy": 205,
+                    "r": 99,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "ticket-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "ticket-count"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "HanziGuru — classifiers 张 for tickets",
+      "url": "https://hanziguru.com/classifiers",
+      "checkedAt": "2026-11-22",
+      "supports": "张 is the classifier for tickets and flat papers, 一张票 and 两张票."
+    },
+    {
+      "title": "Mandarin for Travel — buying tickets",
+      "url": "https://mandarinfortravel.com/mandarin-phrases/sightseeing/buying-tickets/",
+      "checkedAt": "2026-11-22",
+      "supports": "一张票 and 两张票 are valid ticket counting phrases; 想买… is a natural polite request."
+    }
+  ],
+  "hookExperiment": {
+    "id": "ticket-counter-zhang-20261128-ru-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "История о выдаче билета перед вечерним шоу даёт конкретную цель и правильную фразу уже в начале.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-22"
+  },
+  "audienceProblem": "Новичок в классе собирается на представление и не знает счётное слово для билета.",
+  "learningOutcome": "Сказать 我要一张票 и отличить 一张票 от 两张票.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "В классе перед вымышленным вечерним представлением на ночном рынке",
+      "learnerGoal": "Попросить один билет и понять счётное слово 张",
+      "obstacle": "Перенос общего 个 на билет вместо 张"
+    },
+    "selectionReason": "Прямой рассказ: одна просьба, корректное счётное слово и репетиция; связь с частью 2 касается только времени шоу.",
+    "firstPayoff": {
+      "sceneId": "hook",
+      "cueText": "我要一张票"
+    },
+    "reHooks": []
+  }
+}
