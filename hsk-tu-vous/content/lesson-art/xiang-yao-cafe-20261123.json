@@ -1,0 +1,38 @@
+{
+  "episodeId": "xiang-yao-cafe-20261123",
+  "model": "google/gemini-3.1-flash-image",
+  "style": "Polished HSK AI semi-realistic warm digital illustration with crisp silhouettes, gentle cinematic depth, soft cel shading, clean linework, natural outdoor China afternoon colours. Absolutely no words, characters, numbers, signage, subtitles, logos or watermarks in any background image. Scene: calm Beijing hutong tea stand.",
+  "assets": [
+    {
+      "name": "hutong-tea",
+      "aspectRatio": "9:16",
+      "prompt": "Calm Beijing hutong lane with grey brick walls and wooden doors; a street tea counter in the foreground, handmade teapot and empty serving surface. No people or mascots, no text, signs, numbers, logos or watermarks."
+    },
+    {
+      "name": "tea-counter",
+      "aspectRatio": "4:5",
+      "references": [
+        "hutong-tea"
+      ],
+      "prompt": "Closer view of the same hutong tea counter, two plain ceramic cups beside a small unmarked teapot; preserve lighting and wall details. No people, characters, writing, symbols, logos or watermarks."
+    },
+    {
+      "name": "tea-order",
+      "aspectRatio": "4:5",
+      "references": [
+        "hutong-tea",
+        "tea-counter"
+      ],
+      "prompt": "Exactly one filled ceramic cup on the same tea counter, other cup set aside, matching background and warm lighting; clear visual of one cup ordered. No people or mascots, no text, signs, numbers, logos or watermarks."
+    }
+  ],
+  "variety": {
+    "date": "2026-11-23",
+    "setting": "hutong-street",
+    "coach": "panda",
+    "supportingCharacter": "rabbit",
+    "pattern": "dialogue",
+    "experiment": null,
+    "source": "Manually reproduced scripts/visual-variety-plan.mjs against Nov 11–22 registered lesson-art choices; paused background experiment not assigned."
+  }
+}
