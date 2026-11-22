@@ -1,0 +1,914 @@
+{
+  "id": "show-start-jidian-20261129",
+  "date": "2026-11-29",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "tg-TJ",
+  "title": "Соати чанд сар мешавад? 几点开始",
+  "level": "HSK 1–2",
+  "topic": "Соати чанд сар мешавад? 几点开始",
+  "durationTargetSec": 32,
+  "caption": "Қисми дуюм: Панда соати оғози намоишро мефаҳмад.",
+  "hashtags": [
+    "#HSKAI",
+    "#забоничинӣ",
+    "#HSK1"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "几点 (jǐ diǎn) соати аниқро мепурсад: 几点开始？ — «Соати чанд сар мешавад?».",
+    "八点 (bā diǎn) соати ҳашт аст. Ҷавоб: 八点开始 — «Соати ҳашт сар мешавад».",
+    "Дар савол бо 几点 ҳиссачаи 吗 лозим нест; вақт пеш аз 开始 меояд."
+  ],
+  "examples": [
+    "几点 jǐ diǎn — соати чанд",
+    "几点开始？ Jǐ diǎn kāishǐ? — Соати чанд сар мешавад?",
+    "八点开始。 Bā diǎn kāishǐ. — Соати ҳашт сар мешавад."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 9,
+      "headline": "САВОЛИ НАЗДИ САҲНА",
+      "narration": "Панда бо билети қисми аввал ба саҳнаи шом меояд. Мепурсад: 几点开始？ — соати чанд сар мешавад? Ҷавоб: 八点开始 — соати ҳашт.",
+      "screenCaption": "САВОЛИ НАЗДИ САҲНА",
+      "cards": [
+        {
+          "hanzi": "几点开始",
+          "pinyin": "Jǐ diǎn kāishǐ",
+          "meaning": "Соати чанд сар мешавад?"
+        },
+        {
+          "hanzi": "八点开始",
+          "pinyin": "Bā diǎn kāishǐ",
+          "meaning": "Соати ҳашт сар мешавад"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "几点开始",
+          "explains": "Соати оғози намоишро аз рӯи билети гирифтааш бипурсад: показать предмет и ситуацию.",
+          "visual": {
+            "title": "Вақти номаълум",
+            "hanzi": "几点开始",
+            "pinyin": "Jǐ diǎn kāishǐ",
+            "meaning": "Соати чанд сар мешавад?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "clock-dial",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 133,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 11
+                  }
+                },
+                {
+                  "id": "clock-hub",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 11,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "top-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 88,
+                    "x2": 300,
+                    "y2": 116,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "left-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 183,
+                    "y1": 204,
+                    "x2": 210,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "right-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 390,
+                    "y1": 204,
+                    "x2": 418,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "unknown-time",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 47,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "clock-dial",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "market-stage",
+                "stage-clock"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.87,
+                  "h": 0.3,
+                  "card": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "八点开始",
+          "explains": "Соати оғози намоишро аз рӯи билети гирифтааш бипурсад: показать изменение состояния и китайский ответ.",
+          "visual": {
+            "title": "Ҷавоб пайдо шуд",
+            "hanzi": "八点开始",
+            "pinyin": "Bā diǎn kāishǐ",
+            "meaning": "Соати ҳашт",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "clock-dial",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 133,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 11
+                  }
+                },
+                {
+                  "id": "clock-hub",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 11,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "top-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 88,
+                    "x2": 300,
+                    "y2": 116,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "left-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 183,
+                    "y1": 204,
+                    "x2": 210,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "right-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 390,
+                    "y1": 204,
+                    "x2": 418,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "hour-hand",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 204,
+                    "x2": 234,
+                    "y2": 239,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "minute-hand",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 204,
+                    "x2": 300,
+                    "y2": 119,
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "clock-dial",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "market-stage",
+                "stage-clock"
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.87,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "time",
+      "kind": "example",
+      "durationSec": 12,
+      "headline": "СОХТИ САВОЛ",
+      "narration": "几点 маънои «соати чанд», 开始 — «сар мешавад»-ро дорад. Барои ҳамин 几点开始？ Ҷавоб бо рақам меояд: 八点开始. Дар ин савол 吗 лозим нест.",
+      "screenCaption": "СОХТИ САВОЛ",
+      "cards": [
+        {
+          "hanzi": "几点",
+          "pinyin": "jǐ diǎn",
+          "meaning": "соати чанд"
+        },
+        {
+          "hanzi": "八点",
+          "pinyin": "bā diǎn",
+          "meaning": "соати ҳашт"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "time-action-1",
+          "kind": "graphic",
+          "cueText": "几点 маънои",
+          "explains": "Соати оғози намоишро аз рӯи билети гирифтааш бипурсад: показать предмет и ситуацию.",
+          "visual": {
+            "title": "Саволи соат",
+            "hanzi": "几点",
+            "pinyin": "jǐ diǎn",
+            "meaning": "соати чанд",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "clock-dial",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 133,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 11
+                  }
+                },
+                {
+                  "id": "clock-hub",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 11,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "top-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 88,
+                    "x2": 300,
+                    "y2": 116,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "left-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 183,
+                    "y1": 204,
+                    "x2": 210,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "right-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 390,
+                    "y1": 204,
+                    "x2": 418,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "unknown-time",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 47,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "clock-dial",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "stage-clock"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "time-action-2",
+          "kind": "graphic",
+          "cueText": "八点开始",
+          "explains": "Соати оғози намоишро аз рӯи билети гирифтааш бипурсад: показать изменение состояния и китайский ответ.",
+          "visual": {
+            "title": "Вақти дақиқ",
+            "hanzi": "八点开始",
+            "pinyin": "Bā diǎn kāishǐ",
+            "meaning": "Соати ҳашт сар мешавад",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "clock-dial",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 133,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 11
+                  }
+                },
+                {
+                  "id": "clock-hub",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 11,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "top-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 88,
+                    "x2": 300,
+                    "y2": 116,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "left-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 183,
+                    "y1": 204,
+                    "x2": 210,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "right-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 390,
+                    "y1": 204,
+                    "x2": 418,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "hour-hand",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 204,
+                    "x2": 234,
+                    "y2": 239,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "minute-hand",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 204,
+                    "x2": 300,
+                    "y2": 119,
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "clock-dial",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "stage-clock"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "example",
+      "durationSec": 11,
+      "headline": "ҚИССА АНҶОМ ЁФТ",
+      "narration": "Худат санҷ: пурс, 几点开始？ Ҷавоб деҳ 八点开始. Панда вақти оғозро фаҳмид ва бо билет ба саҳна меравад. Қисса анҷом ёфт.",
+      "screenCaption": "ҚИССА АНҶОМ ЁФТ",
+      "cards": [
+        {
+          "hanzi": "几点开始",
+          "pinyin": "Jǐ diǎn kāishǐ",
+          "meaning": "Соати чанд сар мешавад?"
+        },
+        {
+          "hanzi": "八点开始",
+          "pinyin": "Bā diǎn kāishǐ",
+          "meaning": "Соати ҳашт"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "recap-action-1",
+          "kind": "graphic",
+          "cueText": "几点开始",
+          "explains": "Соати оғози намоишро аз рӯи билети гирифтааш бипурсад: показать предмет и ситуацию.",
+          "visual": {
+            "title": "Саволро такрор кун",
+            "hanzi": "几点开始",
+            "pinyin": "Jǐ diǎn kāishǐ",
+            "meaning": "Соати чанд сар мешавад?",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "clock-dial",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 133,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 11
+                  }
+                },
+                {
+                  "id": "clock-hub",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 11,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "top-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 88,
+                    "x2": 300,
+                    "y2": 116,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "left-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 183,
+                    "y1": 204,
+                    "x2": 210,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "right-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 390,
+                    "y1": 204,
+                    "x2": 418,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "unknown-time",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 47,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "clock-dial",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "audience-gate"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "recap-action-2",
+          "kind": "graphic",
+          "cueText": "Ҷавоб деҳ 八点开始",
+          "explains": "Соати оғози намоишро аз рӯи билети гирифтааш бипурсад: показать изменение состояния и китайский ответ.",
+          "visual": {
+            "title": "Охири сафар",
+            "hanzi": "八点开始",
+            "pinyin": "Bā diǎn kāishǐ",
+            "meaning": "Соати ҳашт",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "clock-dial",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 133,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 11
+                  }
+                },
+                {
+                  "id": "clock-hub",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 204,
+                    "r": 11,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "top-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 88,
+                    "x2": 300,
+                    "y2": 116,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "left-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 183,
+                    "y1": 204,
+                    "x2": 210,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "right-tick",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 390,
+                    "y1": 204,
+                    "x2": 418,
+                    "y2": 204,
+                    "stroke": "foreground",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "hour-hand",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 204,
+                    "x2": 234,
+                    "y2": 239,
+                    "stroke": "red",
+                    "strokeWidth": 10,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "minute-hand",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 204,
+                    "x2": 300,
+                    "y2": 119,
+                    "stroke": "gold",
+                    "strokeWidth": 8,
+                    "strokeLinecap": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "clock-dial",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "audience-gate"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "tg-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "Time expressions in Mandarin Chinese — 几点开始",
+      "url": "https://www.settemilalingue.com/en/languages/zh/grammar/time-expressions",
+      "checkedAt": "2026-11-22",
+      "supports": "电影几点开始? question, 电影九点开始. exact clock-hour time before 开始."
+    },
+    {
+      "title": "Hanzistack — hours 点 / 半",
+      "url": "https://char.hanzistack.com/grammar/dian-ban-hours-and-half-hours",
+      "checkedAt": "2026-11-22",
+      "supports": "八点 (bā diǎn) is 8:00; time phrase before verb 开始, e.g. 会议下午三点开始."
+    }
+  ],
+  "hookExperiment": {
+    "id": "show-start-jidian-20261129-tg-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Савол дар бораи соат аз қисми якум фавран ҷавоби фоиданок мегирад ва қиссаро анҷом медиҳад.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-22"
+  },
+  "audienceProblem": "Билет ба намоиши шомро дорад, аммо тарзи пурсидани соати оғозро намедонад.",
+  "learningOutcome": "Саволи 几点开始-ро гӯяд ва ҷавоби 八点开始-ро фаҳмад.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Саҳнаи намоиши хаёлӣ дар бозори шабонаи чинӣ",
+      "learnerGoal": "Соати оғози намоишро аз рӯи билети гирифтааш бипурсад",
+      "obstacle": "Фарқи 几点 (савол) ва 八点 (ҷавоби аниқ) маълум нест"
+    },
+    "selectionReason": "Анҷоми мустақими қисса: савол ва ҷавоби барвақт, баъд шарҳ ва машқи худсанҷӣ.",
+    "firstPayoff": {
+      "sceneId": "hook",
+      "cueText": "几点开始"
+    },
+    "reHooks": []
+  },
+  "localization": {
+    "language": "tg",
+    "sourceEpisodeId": "show-start-jidian-20261129",
+    "sourceHash": "343fa63d3dbc03c24457e1296ae89e7270f853a8a0ac4895eda20cb5ca12e682",
+    "authoredOn": "2026-11-22",
+    "status": "draft"
+  }
+}
