@@ -1,0 +1,1038 @@
+{
+  "id": "xiang-yao-cafe-20261123",
+  "date": "2026-11-23",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "tg-TJ",
+  "title": "Чой хостан: 想 ё 要",
+  "level": "HSK 2",
+  "topic": "Чой хостан: 想 ё 要",
+  "durationTargetSec": 26,
+  "caption": "Хоҳиши мулоим ва фармоиши мустақими чой: 想 ва 要.",
+  "hashtags": [
+    "#HSKAI",
+    "#забоничинӣ",
+    "#HSK2"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "想 (xiǎng) пеш аз феъл хоҳишро мулоимтар мегӯяд: 我想喝茶 — «Мехоҳам чой нӯшам».",
+    "要 (yào) метавонад хоҳиш ё фармоиши мустақимтарро ифода кунад: 我要一杯茶 — «Ба ман як пиёла чой».",
+    "Ҳар ду шакл мумкинанд; фарқ дар оҳанги хоҳиш аст, на дар дуруст ё нодуруст будани яке."
+  ],
+  "examples": [
+    "想 xiǎng — мехостам, хоҳиш доштан",
+    "要 yào — мехоҳам, лозим",
+    "我想喝茶。 Wǒ xiǎng hē chá. — Мехоҳам чой нӯшам.",
+    "我要一杯茶。 Wǒ yào yì bēi chá. — Ба ман як пиёла чой."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "ИНТИХОБИ ИБОРА",
+      "narration": "Ту назди дӯкони чой ҳастӣ. Барои нармтар гуфтани хоҳиш 想 ё 要? Аввал якеро интихоб кун.",
+      "screenCaption": "ИНТИХОБИ ИБОРА",
+      "cards": [
+        {
+          "hanzi": "想",
+          "pinyin": "xiǎng",
+          "meaning": "мехостам"
+        },
+        {
+          "hanzi": "要",
+          "pinyin": "yào",
+          "meaning": "мехоҳам, лозим"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "дӯкони чой",
+          "explains": "Хоҳиши худро мулоим гӯяд ё як пиёла чой фармоиш диҳад: сопоставить видимый выбор до ответа.",
+          "visual": {
+            "title": "Вазъияти харид",
+            "hanzi": "想",
+            "pinyin": "xiǎng",
+            "meaning": "мехостам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "counter",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 60,
+                    "y": 285,
+                    "width": 480,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "tea-group",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tea-cup",
+                  "parentId": "tea-group",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 138,
+                    "y": 176,
+                    "width": 105,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "tea-top",
+                  "parentId": "tea-group",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 176,
+                    "rx": 52,
+                    "ry": 13,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "tea-handle",
+                  "parentId": "tea-group",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 240,
+                    "cy": 215,
+                    "r": 19,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "other-cup",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 355,
+                    "y": 180,
+                    "width": 98,
+                    "height": 90,
+                    "rx": 12,
+                    "fill": "red"
+                  }
+                },
+                {
+                  "id": "other-top",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 404,
+                    "cy": 180,
+                    "rx": 49,
+                    "ry": 12,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "compare-line",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 158,
+                    "x2": 300,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "tea-group",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 17
+                    },
+                    {
+                      "atMs": 600,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "hutong-tea",
+                "tea-counter"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.85,
+                  "h": 0.28,
+                  "card": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "想 ё 要",
+          "explains": "Хоҳиши худро мулоим гӯяд ё як пиёла чой фармоиш диҳад: показать изменение выбора и завершённую реплику.",
+          "visual": {
+            "title": "Ду тарзи хоҳиш",
+            "hanzi": "要",
+            "pinyin": "yào",
+            "meaning": "мехоҳам, лозим",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "counter",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 60,
+                    "y": 285,
+                    "width": 480,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "tea-group",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tea-cup",
+                  "parentId": "tea-group",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 138,
+                    "y": 176,
+                    "width": 105,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "tea-top",
+                  "parentId": "tea-group",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 176,
+                    "rx": 52,
+                    "ry": 13,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "tea-handle",
+                  "parentId": "tea-group",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 240,
+                    "cy": 215,
+                    "r": 19,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "other-cup",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 355,
+                    "y": 180,
+                    "width": 98,
+                    "height": 90,
+                    "rx": 12,
+                    "fill": "red"
+                  }
+                },
+                {
+                  "id": "other-top",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 404,
+                    "cy": 180,
+                    "rx": 49,
+                    "ry": 12,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "chosen",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 192,
+                    "cy": 223,
+                    "r": 72,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "check",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "162,226 184,247 227,196",
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "tea-group",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 17
+                    },
+                    {
+                      "atMs": 600,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "hutong-tea",
+                "tea-counter"
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "rabbit",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.85,
+                  "h": 0.28,
+                  "card": 1
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "answer",
+      "kind": "example",
+      "durationSec": 11,
+      "headline": "ХОҲИШ ВА ФАРМОИШ",
+      "narration": "Барои хоҳиши мулоим бигӯ: 我想喝茶 — мехоҳам чой нӯшам. 想 пеш аз 喝 меояд. Аммо 我要一杯茶 — ба ман як пиёла чой, фармоиши мустақимтар аст.",
+      "screenCaption": "ХОҲИШ ВА ФАРМОИШ",
+      "cards": [
+        {
+          "hanzi": "我想喝茶",
+          "pinyin": "Wǒ xiǎng hē chá",
+          "meaning": "Мехоҳам чой нӯшам"
+        },
+        {
+          "hanzi": "我要一杯茶",
+          "pinyin": "Wǒ yào yì bēi chá",
+          "meaning": "Ба ман як пиёла чой"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "answer-action-1",
+          "kind": "graphic",
+          "cueText": "我想喝茶",
+          "explains": "Хоҳиши худро мулоим гӯяд ё як пиёла чой фармоиш диҳад: сопоставить видимый выбор до ответа.",
+          "visual": {
+            "title": "Хоҳиши мулоим",
+            "hanzi": "我想喝茶",
+            "pinyin": "Wǒ xiǎng hē chá",
+            "meaning": "Мехоҳам чой нӯшам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "counter",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 60,
+                    "y": 285,
+                    "width": 480,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "tea-group",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tea-cup",
+                  "parentId": "tea-group",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 138,
+                    "y": 176,
+                    "width": 105,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "tea-top",
+                  "parentId": "tea-group",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 176,
+                    "rx": 52,
+                    "ry": 13,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "tea-handle",
+                  "parentId": "tea-group",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 240,
+                    "cy": 215,
+                    "r": 19,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "other-cup",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 355,
+                    "y": 180,
+                    "width": 98,
+                    "height": 90,
+                    "rx": 12,
+                    "fill": "red"
+                  }
+                },
+                {
+                  "id": "other-top",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 404,
+                    "cy": 180,
+                    "rx": 49,
+                    "ry": 12,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "chosen",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 192,
+                    "cy": 223,
+                    "r": 72,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "check",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "162,226 184,247 227,196",
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "tea-group",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 17
+                    },
+                    {
+                      "atMs": 600,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "tea-counter"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.77,
+                  "y": 0.84,
+                  "h": 0.28
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "answer-action-2",
+          "kind": "graphic",
+          "cueText": "我要一杯茶",
+          "explains": "Хоҳиши худро мулоим гӯяд ё як пиёла чой фармоиш диҳад: показать изменение выбора и завершённую реплику.",
+          "visual": {
+            "title": "Фармоиши равшан",
+            "hanzi": "我要一杯茶",
+            "pinyin": "Wǒ yào yì bēi chá",
+            "meaning": "Ба ман як пиёла чой",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "counter",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 60,
+                    "y": 285,
+                    "width": 480,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "tea-group",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tea-cup",
+                  "parentId": "tea-group",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 138,
+                    "y": 176,
+                    "width": 105,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "tea-top",
+                  "parentId": "tea-group",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 176,
+                    "rx": 52,
+                    "ry": 13,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "tea-handle",
+                  "parentId": "tea-group",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 240,
+                    "cy": 215,
+                    "r": 19,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "other-cup",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 355,
+                    "y": 180,
+                    "width": 98,
+                    "height": 90,
+                    "rx": 12,
+                    "fill": "red"
+                  }
+                },
+                {
+                  "id": "other-top",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 404,
+                    "cy": 180,
+                    "rx": 49,
+                    "ry": 12,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "compare-line",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 158,
+                    "x2": 300,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "tea-group",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 17
+                    },
+                    {
+                      "atMs": 600,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "tea-counter"
+              ],
+              "cast": [
+                {
+                  "id": "rabbit",
+                  "mood": "correct",
+                  "x": 0.77,
+                  "y": 0.84,
+                  "h": 0.28
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "kind": "example",
+      "durationSec": 10,
+      "headline": "МАШҚИ ДУ ИБОРА",
+      "narration": "Баланд бигӯ: 我想喝茶. Агар як пиёлаи муайян фармоиш диҳӣ, бигӯ 我要一杯茶. Дар хотир дор: 想 мулоимтар, 要 мустақимтар.",
+      "screenCaption": "МАШҚИ ДУ ИБОРА",
+      "cards": [
+        {
+          "hanzi": "我想喝茶",
+          "pinyin": "Wǒ xiǎng hē chá",
+          "meaning": "Мехоҳам чой нӯшам"
+        },
+        {
+          "hanzi": "我要一杯茶",
+          "pinyin": "Wǒ yào yì bēi chá",
+          "meaning": "Ба ман як пиёла чой"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "practice-action-1",
+          "kind": "graphic",
+          "cueText": "Баланд бигӯ",
+          "explains": "Хоҳиши худро мулоим гӯяд ё як пиёла чой фармоиш диҳад: сопоставить видимый выбор до ответа.",
+          "visual": {
+            "title": "Такрори хоҳиш",
+            "hanzi": "我想喝茶",
+            "pinyin": "Wǒ xiǎng hē chá",
+            "meaning": "Мехоҳам чой нӯшам",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "counter",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 60,
+                    "y": 285,
+                    "width": 480,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "tea-group",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tea-cup",
+                  "parentId": "tea-group",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 138,
+                    "y": 176,
+                    "width": 105,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "tea-top",
+                  "parentId": "tea-group",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 176,
+                    "rx": 52,
+                    "ry": 13,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "tea-handle",
+                  "parentId": "tea-group",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 240,
+                    "cy": 215,
+                    "r": 19,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "other-cup",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 355,
+                    "y": 180,
+                    "width": 98,
+                    "height": 90,
+                    "rx": 12,
+                    "fill": "red"
+                  }
+                },
+                {
+                  "id": "other-top",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 404,
+                    "cy": 180,
+                    "rx": 49,
+                    "ry": 12,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "compare-line",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 300,
+                    "y1": 158,
+                    "x2": 300,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "tea-group",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 17
+                    },
+                    {
+                      "atMs": 600,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "tea-order"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.77,
+                  "y": 0.84,
+                  "h": 0.28
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "practice-action-2",
+          "kind": "graphic",
+          "cueText": "як пиёлаи муайян",
+          "explains": "Хоҳиши худро мулоим гӯяд ё як пиёла чой фармоиш диҳад: показать изменение выбора и завершённую реплику.",
+          "visual": {
+            "title": "Миқдори дақиқ",
+            "hanzi": "我要一杯茶",
+            "pinyin": "Wǒ yào yì bēi chá",
+            "meaning": "Ба ман як пиёла чой",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "counter",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 60,
+                    "y": 285,
+                    "width": 480,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "tea-group",
+                  "type": "g",
+                  "attrs": {}
+                },
+                {
+                  "id": "tea-cup",
+                  "parentId": "tea-group",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 138,
+                    "y": 176,
+                    "width": 105,
+                    "height": 94,
+                    "rx": 12,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "tea-top",
+                  "parentId": "tea-group",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 190,
+                    "cy": 176,
+                    "rx": 52,
+                    "ry": 13,
+                    "fill": "secondary"
+                  }
+                },
+                {
+                  "id": "tea-handle",
+                  "parentId": "tea-group",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 240,
+                    "cy": 215,
+                    "r": 19,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "other-cup",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 355,
+                    "y": 180,
+                    "width": 98,
+                    "height": 90,
+                    "rx": 12,
+                    "fill": "red"
+                  }
+                },
+                {
+                  "id": "other-top",
+                  "type": "ellipse",
+                  "attrs": {
+                    "cx": 404,
+                    "cy": 180,
+                    "rx": 49,
+                    "ry": 12,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "chosen",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 192,
+                    "cy": 223,
+                    "r": 72,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "check",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "162,226 184,247 227,196",
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "tea-group",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 17
+                    },
+                    {
+                      "atMs": 600,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "tea-order"
+              ],
+              "cast": [
+                {
+                  "id": "rabbit",
+                  "mood": "correct",
+                  "x": 0.77,
+                  "y": 0.84,
+                  "h": 0.28
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "tg-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "HSK Grammar: 想 and 要",
+      "url": "https://hsk.wordswing.com/grammar/modal-xiang-yao/",
+      "checkedAt": "2026-11-22",
+      "supports": "想 + verb softer desire; 要 + noun direct request; 我想喝茶 and 我要这个 are both valid."
+    },
+    {
+      "title": "SenMandarin HSK 2 comparison",
+      "url": "https://www.senmandarin.com/grammar/hsk-2-0/level-2/072-comparing-yao-and-xiang/",
+      "checkedAt": "2026-11-22",
+      "supports": "Independent comparison: 我想喝茶 softer; 我要一杯茶 more direct for ordering tea."
+    }
+  ],
+  "hookExperiment": {
+    "id": "xiang-yao-cafe-20261123-tg-hook-v1",
+    "formatId": "scenario",
+    "hypothesis": "Интихоби 想 ё 要 дар назди дӯкони чой таваҷҷуҳро пеш аз шарҳ меафзояд; таъсири воқеӣ ҳоло чен нашудааст.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-22"
+  },
+  "audienceProblem": "Дар фармоиши чой калимаи «мехоҳам»-ро яксон тарҷума мекунанд ва лаҳни нарм ё мустақимро фаромӯш мекунанд.",
+  "learningOutcome": "Фарқи хоҳиши мулоими 我想喝茶 ва фармоиши мустақими 我要一杯茶-ро фаҳмад.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Дӯкони чой дар кӯчаи хутуни чинӣ",
+      "learnerGoal": "Хоҳиши худро мулоим гӯяд ё як пиёла чой фармоиш диҳад",
+      "obstacle": "Ду калимаи чинӣ маънои «мехоҳам» доранд, вале лаҳнашон фарқ мекунад"
+    },
+    "selectionReason": "Варианти A: аввал интихоб, баъд ҷавоби дуруст ва такрор; саволи зиёдатӣ лозим нест.",
+    "firstPayoff": {
+      "sceneId": "answer",
+      "cueText": "我想喝茶"
+    },
+    "reHooks": []
+  },
+  "experiment": {
+    "id": "lesson-opening-v1",
+    "arm": "A",
+    "structure": {
+      "challenge": "hook",
+      "answer": "answer",
+      "practice": "practice"
+    }
+  },
+  "localization": {
+    "language": "tg",
+    "sourceEpisodeId": "xiang-yao-cafe-20261123",
+    "sourceHash": "07c24dab88ed78863a7c98550144a1af741b1ba95973eb1d69e901ebaf757814",
+    "authoredOn": "2026-11-22",
+    "status": "draft"
+  }
+}
