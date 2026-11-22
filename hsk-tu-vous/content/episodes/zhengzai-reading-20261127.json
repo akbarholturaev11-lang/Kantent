@@ -1,0 +1,790 @@
+{
+  "id": "zhengzai-reading-20261127",
+  "date": "2026-11-27",
+  "timezone": "Asia/Shanghai",
+  "languageCode": "ru-RU",
+  "title": "Я читаю прямо сейчас: 正在",
+  "level": "HSK 2",
+  "topic": "Я читаю прямо сейчас: 正在",
+  "durationTargetSec": 26,
+  "caption": "Действие прямо сейчас: 正在 стоит перед 看.",
+  "hashtags": [
+    "#HSKAI",
+    "#китайскийязык",
+    "#HSK2"
+  ],
+  "voiceProvider": "gemini-api",
+  "learningFacts": [
+    "正在 (zhèngzài) стоит перед глаголом и подчёркивает действие, которое происходит сейчас: 我正在看书.",
+    "在 (zài) перед глаголом также показывает процесс: 我在看书 — «Я читаю».",
+    "Не путайте 在 + глагол (действие в процессе) с 在 + местом (нахожусь где-то)."
+  ],
+  "examples": [
+    "正在 zhèngzài — прямо сейчас, в процессе",
+    "我正在看书。 Wǒ zhèngzài kàn shū. — Я сейчас читаю книгу.",
+    "我在看书。 Wǒ zài kàn shū. — Я читаю книгу."
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "kind": "hook",
+      "durationSec": 5,
+      "headline": "ЧТО ПРОИСХОДИТ СЕЙЧАС",
+      "narration": "У кампуса ты читаешь книгу. Как сказать «я прямо сейчас читаю»? 正在 до 看 или после? Выбери порядок.",
+      "screenCaption": "ЧТО ПРОИСХОДИТ СЕЙЧАС",
+      "cards": [
+        {
+          "hanzi": "正在",
+          "pinyin": "zhèngzài",
+          "meaning": "прямо сейчас"
+        },
+        {
+          "hanzi": "看书",
+          "pinyin": "kàn shū",
+          "meaning": "читать книгу"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "hook-action-1",
+          "kind": "graphic",
+          "cueText": "прямо сейчас читаю",
+          "explains": "Ответить, что прямо сейчас читаешь книгу: показать исходную ситуацию и объект.",
+          "visual": {
+            "title": "Действие в моменте",
+            "hanzi": "正在",
+            "pinyin": "zhèngzài",
+            "meaning": "сейчас в процессе",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "pointer",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "110,86 200,118 222,103",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-right",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "campus-bench",
+                "reading-close"
+              ],
+              "focus": "left",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.5,
+                  "y": 0.84,
+                  "h": 0.3,
+                  "card": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "hook-action-2",
+          "kind": "graphic",
+          "cueText": "正在 до 看",
+          "explains": "Ответить, что прямо сейчас читаешь книгу: показать изменённое состояние и верную китайскую форму.",
+          "visual": {
+            "title": "Место служебного слова",
+            "hanzi": "看书",
+            "pinyin": "kàn shū",
+            "meaning": "читать книгу",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "highlight",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 208,
+                    "r": 107,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-right",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "pair",
+              "images": [
+                "campus-bench",
+                "reading-close"
+              ],
+              "focus": "right",
+              "overlay": "compare",
+              "cast": [
+                {
+                  "id": "dragon",
+                  "mood": "correct",
+                  "x": 0.5,
+                  "y": 0.84,
+                  "h": 0.3,
+                  "card": 1
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "answer",
+      "kind": "example",
+      "durationSec": 11,
+      "headline": "ПОСТАВЬ ПЕРЕД ГЛАГОЛОМ",
+      "narration": "Правильно: 我正在看书 — я сейчас читаю книгу. 正在 стоит перед 看 и выделяет процесс. Ещё можно сказать 我在看书.",
+      "screenCaption": "ПОСТАВЬ ПЕРЕД ГЛАГОЛОМ",
+      "cards": [
+        {
+          "hanzi": "我正在看书",
+          "pinyin": "Wǒ zhèngzài kàn shū",
+          "meaning": "Я сейчас читаю книгу"
+        },
+        {
+          "hanzi": "我在看书",
+          "pinyin": "Wǒ zài kàn shū",
+          "meaning": "Я читаю книгу"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "answer-action-1",
+          "kind": "graphic",
+          "cueText": "我正在看书",
+          "explains": "Ответить, что прямо сейчас читаешь книгу: показать исходную ситуацию и объект.",
+          "visual": {
+            "title": "Процесс идёт",
+            "hanzi": "我正在看书",
+            "pinyin": "Wǒ zhèngzài kàn shū",
+            "meaning": "Я сейчас читаю книгу",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "pointer",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "110,86 200,118 222,103",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-right",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "reading-close"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "answer-action-2",
+          "kind": "graphic",
+          "cueText": "我在看书",
+          "explains": "Ответить, что прямо сейчас читаешь книгу: показать изменённое состояние и верную китайскую форму.",
+          "visual": {
+            "title": "Короткий вариант",
+            "hanzi": "我在看书",
+            "pinyin": "Wǒ zài kàn shū",
+            "meaning": "Я читаю книгу",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "highlight",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 208,
+                    "r": 107,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-right",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "reading-close"
+              ],
+              "cast": [
+                {
+                  "id": "dragon",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "kind": "example",
+      "durationSec": 10,
+      "headline": "СКАЖИ ПРО СВОЙ ДЕНЬ",
+      "narration": "Повтори: 我正在看书. Если друг спросит, что делаешь, ответь 我在看书. Сегодня важно одно: 正在 перед глаголом.",
+      "screenCaption": "СКАЖИ ПРО СВОЙ ДЕНЬ",
+      "cards": [
+        {
+          "hanzi": "正在",
+          "pinyin": "zhèngzài",
+          "meaning": "в процессе"
+        },
+        {
+          "hanzi": "我在看书",
+          "pinyin": "Wǒ zài kàn shū",
+          "meaning": "Я читаю"
+        }
+      ],
+      "captionStyleId": "highlight",
+      "motionBeats": [
+        {
+          "id": "practice-action-1",
+          "kind": "graphic",
+          "cueText": "Повтори",
+          "explains": "Ответить, что прямо сейчас читаешь книгу: показать исходную ситуацию и объект.",
+          "visual": {
+            "title": "Речевая тренировка",
+            "hanzi": "我正在看书",
+            "pinyin": "Wǒ zhèngzài kàn shū",
+            "meaning": "Я сейчас читаю",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "pointer",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "110,86 200,118 222,103",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-right",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "reading-progress"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "practice-action-2",
+          "kind": "graphic",
+          "cueText": "我在看书",
+          "explains": "Ответить, что прямо сейчас читаешь книгу: показать изменённое состояние и верную китайскую форму.",
+          "visual": {
+            "title": "Ответ другу",
+            "hanzi": "我在看书",
+            "pinyin": "Wǒ zài kàn shū",
+            "meaning": "Я читаю",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "highlight",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 208,
+                    "r": 107,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-right",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "reading-progress"
+              ],
+              "cast": [
+                {
+                  "id": "dragon",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "captions": [],
+  "captionSource": "pending-gemini-generation",
+  "publishingStatus": "pending-owner-review",
+  "voiceProfileId": "ru-gemini-kore-v1",
+  "learningFactSources": [
+    {
+      "title": "WordSwing — 在 / 正在 for ongoing actions",
+      "url": "https://hsk.wordswing.com/grammar/zai-progressive/",
+      "checkedAt": "2026-11-22",
+      "supports": "Subject + 正在 + verb for action in progress; 我在看书呢 and 在看书."
+    },
+    {
+      "title": "Hanzistack — 在、正在 actions in progress",
+      "url": "https://char.hanzistack.com/grammar/zai-zhengzai-actions-in-progress",
+      "checkedAt": "2026-11-22",
+      "supports": "正在 before verb phrase highlights the action in progress; distinct from location 在 + place."
+    }
+  ],
+  "hookExperiment": {
+    "id": "zhengzai-reading-20261127-ru-hook-v1",
+    "formatId": "question",
+    "hypothesis": "Прямая задача о текущем чтении у кампуса с ранним ответом покажет порядок 正在 + глагол; влияние на метрики не заявляется.",
+    "primaryMetric": "three-second-hold-rate",
+    "fallbackMetric": "average-watch-ratio",
+    "registeredAt": "2026-11-22"
+  },
+  "audienceProblem": "Пытаются поставить 正在 после глагола или путают его с 在 перед местом.",
+  "learningOutcome": "Сказать 我正在看书 и понять место 正在 перед 看.",
+  "motionDesign": true,
+  "motionDesignStyle": "explain-actions-v1",
+  "storytelling": {
+    "schemaVersion": 1,
+    "pattern": "direct",
+    "situation": {
+      "setting": "Скамейка у ворот китайского кампуса",
+      "learnerGoal": "Ответить, что прямо сейчас читаешь книгу",
+      "obstacle": "Непонятно, где поставить 正在 в предложении"
+    },
+    "selectionReason": "Вариант A: вопрос о порядке слов, быстрый правильный ответ, затем самостоятельная репетиция.",
+    "firstPayoff": {
+      "sceneId": "answer",
+      "cueText": "我正在看书"
+    },
+    "reHooks": []
+  },
+  "experiment": {
+    "id": "lesson-opening-v1",
+    "arm": "A",
+    "structure": {
+      "challenge": "hook",
+      "answer": "answer",
+      "practice": "practice"
+    }
+  }
+}
