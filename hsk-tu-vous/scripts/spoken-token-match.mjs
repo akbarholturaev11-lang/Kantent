@@ -160,17 +160,32 @@ export function collectHanziPinyinPairs(value, pairs = []) {
   return pairs;
 }
 
+const tajikSpellingFold = (text) => foldLocaleToken(text, "tg-TJ").replaceAll("ъ", "").replace(/й$/u, "и");
+
 export function createSpokenMatcher({ locale, readings = new Map() }) {
   return (expected, recognized) => {
     if (expected === recognized) return true;
     if (foldLocaleToken(expected, locale) === foldLocaleToken(recognized, locale)) return true;
     const heard = String(recognized);
+    // Real OpenRouter TG run 2026-11-23: "баъд" written "бад", "бигӯӣ" written
+    // "бигӯй" — the same spoken word (ъ is only a glottal mark, final ӣ/й is a
+    // spelling variant). Tajik only, same position, whole word.
+    if (locale === "tg-TJ" && /^[\p{Script=Cyrillic}]+$/u.test(expected) && /^[\p{Script=Cyrillic}]+$/u.test(heard) &&
+        tajikSpellingFold(expected) === tajikSpellingFold(heard)) return true;
+    // A locale transcription alias of a Hanzi (我 → "во") heard as the Hanzi
+    // itself: accept when that character's verified reading spells the alias.
+    if (/^\p{Script=Han}$/u.test(heard) && readings.has(heard) &&
+        [...readings.get(heard)].some((syllable) => pinyinCyrillicCandidates(syllable).has(phoneticFold(expected)))) return true;
     const letter = String(expected).toLocaleLowerCase("und");
     if (LETTER_NAMES[letter]?.includes(phoneticFold(heard))) return true;
     if (!/^\p{Script=Han}$/u.test(expected) || !readings.has(expected)) return false;
     for (const syllable of readings.get(expected)) {
       if (/^[a-z]$/iu.test(heard) && LETTER_AS_SYLLABLE[heard.toLowerCase()] === syllable) return true;
       if (/^[a-zÀ-ɏ]+$/iu.test(heard) && tonelessPinyin(heard) === syllable) return true;
+      // Real OpenRouter RU run 2026-11-23: 看 kàn written as English-style "can".
+      // Only the hard c before a/o/u folds to k; the syllable must still equal
+      // the verified reading.
+      if (/^c[aou][a-z]*$/iu.test(heard) && tonelessPinyin("k" + heard.slice(1)) === syllable) return true;
       if (pinyinCyrillicCandidates(syllable).has(phoneticFold(heard))) return true;
     }
     return false;

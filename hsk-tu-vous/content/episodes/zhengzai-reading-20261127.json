@@ -748,6 +748,111 @@
           }
         },
         {
+          "id": "practice-action-friend",
+          "kind": "graphic",
+          "cueText": "друг спрашивает",
+          "explains": "Друг подходит к скамейке и спрашивает, что ты делаешь: короткий ответ строится с 在.",
+          "visual": {
+            "title": "Вопрос друга",
+            "hanzi": "在",
+            "pinyin": "zài",
+            "meaning": "сейчас, в процессе",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "question",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "470,70 510,95 470,120",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "question",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "campus-bench"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
           "id": "practice-action-2",
           "kind": "graphic",
           "cueText": "我在看书",
@@ -959,7 +1064,17 @@
                   "h": 0.29
                 }
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "正在",
+                "pinyin": "zhèngzài"
+              },
+              {
+                "hanzi": "看",
+                "pinyin": "kàn"
+              }
+            ]
           }
         }
       ]

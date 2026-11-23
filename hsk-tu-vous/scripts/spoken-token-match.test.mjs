@@ -144,3 +144,17 @@ test("real RU recovery clip: 便宜一点儿 heard as 便宜一点(一点) is co
   assert.throws(() => selectRecoveredBlocks(tokens, heard.filter((b) => b.text !== "宜"), { match }), /did not exactly transcribe/,
     "a missing syllable still fails closed");
 });
+
+test("real OpenRouter 2026-11-23 takes: same-word spellings align, different words still fail", () => {
+  const readings = buildHanziReadings([{ hanzi: "看", pinyin: "kàn" }, { hanzi: "我", pinyin: "wǒ" }]);
+  const ru = createSpokenMatcher({ locale: "ru-RU", readings });
+  const tg = createSpokenMatcher({ locale: "tg-TJ", readings });
+  assert.equal(ru("看", "can"), true, "English-style spelling of kàn");
+  assert.equal(ru("看", "cat"), false);
+  assert.equal(tg("баъд", "бад"), true, "ъ is only a glottal mark");
+  assert.equal(tg("бигӯӣ", "бигӯй"), true, "final ӣ/й spelling variant");
+  assert.equal(tg("баъд", "бод"), false);
+  assert.equal(ru("баъд", "бад"), false, "Tajik-only fold");
+  assert.equal(tg("во", "我"), true, "alias of 我 heard as the Hanzi");
+  assert.equal(tg("во", "看"), false);
+});

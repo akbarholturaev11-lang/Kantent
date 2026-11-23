@@ -1338,8 +1338,18 @@ async function recoverActualWordClips({
             .flatMap((annotations) => timedBlocks(annotations, record.actualClipDurationMs ?? (contextEnd - contextStart)))
             .map((b) => ({ ...b, startMs: b.startMs + contextStart, endMs: b.endMs + contextStart }))
             // Provider times are kept as returned; only words lying inside the
-            // span (±120 ms tolerance) may fill it.
-            .filter((b) => b.startMs >= gap.startMs - 120 && b.endMs <= gap.endMs + 120);
+            // span (±120 ms tolerance) may fill it. A word that overlaps the span
+            // by ≥60 ms but starts/ends past the tolerance (real OpenRouter RU
+            // 2026-11-23: "до 看 или", 看 heard "кан" 3.2–3.6 s in the context
+            // pass while the verified "до" ends at 3.5 s) is kept at the
+            // INTERSECTION of its provider span and the verified gap: both
+            // bounds are provider-measured, nothing is estimated.
+            .flatMap((b) => {
+              if (b.startMs >= gap.startMs - 120 && b.endMs <= gap.endMs + 120) return [b];
+              const startMs = Math.max(b.startMs, gap.startMs);
+              const endMs = Math.min(b.endMs, gap.endMs);
+              return endMs - startMs >= 60 ? [{ ...b, startMs, endMs, clampedToVerifiedGap: true }] : [];
+            });
           gapBlocks.push(...inside);
           try {
             selected = selectRecoveredBlocks(gap.tokens, inside, { match });

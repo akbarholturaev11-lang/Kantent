@@ -515,6 +515,167 @@
           }
         },
         {
+          "id": "answer-action-continuing",
+          "kind": "graphic",
+          "cueText": "давом доштани амалро",
+          "explains": "Саҳифа варақ хӯрдааст: хондан давом дорад — 正在 маҳз ҳаминро нишон медиҳад.",
+          "visual": {
+            "title": "Раванди хондан",
+            "hanzi": "正在",
+            "pinyin": "zhèngzài",
+            "meaning": "ҳоло, дар раванд",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "slot-zhengzai",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 80,
+                    "y": 150,
+                    "width": 170,
+                    "height": 110,
+                    "rx": 16,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "arrow",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 270,
+                    "y1": 205,
+                    "x2": 340,
+                    "y2": 205,
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "arrow-head",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "320,185 342,205 320,225",
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                },
+                {
+                  "id": "slot-kan",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 360,
+                    "y": 150,
+                    "width": 160,
+                    "height": 110,
+                    "rx": 16,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "progress-track",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 80,
+                    "y": 300,
+                    "width": 440,
+                    "height": 20,
+                    "rx": 10,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "progress-fill",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 80,
+                    "y": 300,
+                    "width": 260,
+                    "height": 20,
+                    "rx": 10,
+                    "fill": "gold"
+                  }
+                },
+                {
+                  "id": "continue-arrow",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 120,
+                    "y1": 340,
+                    "x2": 470,
+                    "y2": 340,
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round"
+                  }
+                },
+                {
+                  "id": "continue-head",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "450,320 475,340 450,360",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "continue-arrow",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 600,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "continue-head",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 700,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "reading-progress"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
           "id": "answer-action-2",
           "kind": "graphic",
           "cueText": "我在看书",
@@ -748,6 +909,111 @@
           }
         },
         {
+          "id": "practice-action-friend",
+          "kind": "graphic",
+          "cueText": "дӯстат пурсад",
+          "explains": "Дӯст ба курсӣ меояд ва мепурсад, ки чӣ кор мекунӣ: ҷавоби кӯтоҳ бо 在 сохта мешавад.",
+          "visual": {
+            "title": "Саволи дӯст",
+            "hanzi": "在",
+            "pinyin": "zài",
+            "meaning": "ҳозир, дар раванд",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bench",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 85,
+                    "y": 286,
+                    "width": 435,
+                    "height": 23,
+                    "rx": 8,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-left",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "116,160 290,192 290,275 116,245",
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-right",
+                  "type": "polygon",
+                  "attrs": {
+                    "points": "290,192 473,160 473,245 290,275",
+                    "fill": "secondary",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "binding",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 290,
+                    "y1": 193,
+                    "x2": 290,
+                    "y2": 273,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "question",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "470,70 510,95 470,120",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "question",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "campus-bench"
+              ],
+              "cast": [
+                {
+                  "id": "monkey",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
           "id": "practice-action-2",
           "kind": "graphic",
           "cueText": "我在看书",
@@ -959,7 +1225,17 @@
                   "h": 0.29
                 }
               ]
-            }
+            },
+            "pinyinSegments": [
+              {
+                "hanzi": "正在",
+                "pinyin": "zhèngzài"
+              },
+              {
+                "hanzi": "看",
+                "pinyin": "kàn"
+              }
+            ]
           }
         }
       ]
@@ -1022,7 +1298,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "zhengzai-reading-20261127",
-    "sourceHash": "f3f6651ee5ed61b4a5bb9ae458e7c1a70f3607a7d4359faf5d57b9bc3226cf30",
+    "sourceHash": "fadda22339886fa6674e78ca91b4c4aa55e7de95cc9f7ff741ea6a9ae1bf5f21",
     "authoredOn": "2026-11-22",
     "status": "draft"
   }
