@@ -1507,6 +1507,123 @@
         "localRequestId": "020c8a577f74f37e53fa186a",
         "sourceCommit": "d58b547e906e028d99243433aafb38269e4d94ff"
       }
+    },
+    {
+      "content": {
+        "id": "dorm-laundry-voice-20261126",
+        "type": "advertisement",
+        "language": "ru",
+        "sourceHash": "5ff2d81dd297433d493e995f5ec2489fecd9222620755a8058fbeb359de50a67"
+      },
+      "platform": "instagram",
+      "accountId": "6a411e989d9472faae10a430",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6b0405bc13d92d3981fe607d",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "293230e0f7270ffbf74da82d00828d3f454c751a0a7c973cf171b0a5efa2a2c2",
+      "approvedVideoSha256": "293230e0f7270ffbf74da82d00828d3f454c751a0a7c973cf171b0a5efa2a2c2",
+      "approvedAt": "2026-11-23T09:20:44.019Z",
+      "verifiedAt": "2026-11-23T09:22:05.468Z",
+      "scheduledFor": "2026-11-26T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "dorm-laundry-voice-20261126-ad-v1-20261123",
+      "postPreviewSha256": "494c3243a0f3ce558dad37e3b136efd2542255a08bedef746fa4806666b8cee2",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": null,
+        "hookFormat": null,
+        "hookText": "Представь: в прачечной общежития на панели машины видишь иероглиф 水. Вспоминаешь HSK AI: хочется понять знак, а не гадать.",
+        "storytellingPattern": null,
+        "visualStyle": "minimalist-promo-v1",
+        "scriptSha256": "9b7a2dfbdaae8ea9f9aa0194bf3043c66314775ff1ace748a43d14ced5a1bc82"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "98a3f2470f7933d4d2d885d6",
+        "sourceCommit": "566c793cf2bfb5e9889858cc8141c1791ba91d52"
+      }
+    },
+    {
+      "content": {
+        "id": "dorm-laundry-voice-20261126",
+        "type": "advertisement",
+        "language": "ru",
+        "sourceHash": "5ff2d81dd297433d493e995f5ec2489fecd9222620755a8058fbeb359de50a67"
+      },
+      "platform": "youtube",
+      "accountId": "6ac96e053f8f4ffc10b0655f",
+      "accountUsername": "hskai_app",
+      "zernioPostId": "6b040665265b0923985aa8d9",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "293230e0f7270ffbf74da82d00828d3f454c751a0a7c973cf171b0a5efa2a2c2",
+      "approvedVideoSha256": "293230e0f7270ffbf74da82d00828d3f454c751a0a7c973cf171b0a5efa2a2c2",
+      "approvedAt": "2026-11-23T09:23:25.311Z",
+      "verifiedAt": "2026-11-23T09:24:54.633Z",
+      "scheduledFor": "2026-11-26T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "dorm-laundry-voice-20261126-ad-v1-20261123",
+      "postPreviewSha256": "5f30d9593aca78421f24f0cf9437fdc019b1e316d0b1c0526734f2436ded1736",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": null,
+        "hookFormat": null,
+        "hookText": "Представь: в прачечной общежития на панели машины видишь иероглиф 水. Вспоминаешь HSK AI: хочется понять знак, а не гадать.",
+        "storytellingPattern": null,
+        "visualStyle": "minimalist-promo-v1",
+        "scriptSha256": "9b7a2dfbdaae8ea9f9aa0194bf3043c66314775ff1ace748a43d14ced5a1bc82"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "20167fb6eeb108c1b0701fc6",
+        "sourceCommit": "566c793cf2bfb5e9889858cc8141c1791ba91d52"
+      }
+    },
+    {
+      "content": {
+        "id": "dorm-laundry-voice-20261126",
+        "type": "advertisement",
+        "language": "ru",
+        "sourceHash": "5ff2d81dd297433d493e995f5ec2489fecd9222620755a8058fbeb359de50a67"
+      },
+      "platform": "tiktok",
+      "accountId": "6ae16327a2845fbdb07e5ccb",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6b0406dd590187fe2c16ff7b",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "30cfe5acac2eb3696a7d7fe0f8a3f5c43c83a4fc8c2b333f2329f712ac5b1989",
+      "approvedVideoSha256": "30cfe5acac2eb3696a7d7fe0f8a3f5c43c83a4fc8c2b333f2329f712ac5b1989",
+      "approvedAt": "2026-11-23T09:25:24.289Z",
+      "verifiedAt": "2026-11-23T09:26:55.405Z",
+      "scheduledFor": "2026-11-26T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "dorm-laundry-voice-20261126-tiktok-cta-v1",
+      "postPreviewSha256": "0bf3aae70dd20c4640a010e66ea0aed8bea75426688c92baafd3d3447561fcd4",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": null,
+        "hookFormat": null,
+        "hookText": "Представь: в прачечной общежития на панели машины видишь иероглиф 水. Вспоминаешь HSK AI: хочется понять знак, а не гадать.",
+        "storytellingPattern": null,
+        "visualStyle": "minimalist-promo-v1",
+        "scriptSha256": "24dc3ac7f1b9ad7128b30501862159e68145309768ea56a19639567104cc6c37"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "40a6744761a6063460f21e5d",
+        "sourceCommit": "566c793cf2bfb5e9889858cc8141c1791ba91d52"
+      }
     }
   ]
 }
