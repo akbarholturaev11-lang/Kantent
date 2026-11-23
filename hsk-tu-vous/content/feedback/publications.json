@@ -1390,6 +1390,123 @@
         "localRequestId": "1e4aa29bebc8259ce9d5e1cd",
         "sourceCommit": "99bf5781149a5e6d0537759d6efe2cff1e4074ce"
       }
+    },
+    {
+      "content": {
+        "id": "le-buy-books-20261125",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "dc7538620963b34ba1cb2e4498515e4cff9214d3a22f0d71d5a221e33ffab36f"
+      },
+      "platform": "instagram",
+      "accountId": "6a411e989d9472faae10a430",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6b040045a75d451889def446",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "658df1d1184cbb3c54ce28df4253495447ddd9f22edca530871ee25e1bfe9a6d",
+      "approvedVideoSha256": "658df1d1184cbb3c54ce28df4253495447ddd9f22edca530871ee25e1bfe9a6d",
+      "approvedAt": "2026-11-23T08:57:27.664Z",
+      "verifiedAt": "2026-11-23T08:58:47.375Z",
+      "scheduledFor": "2026-11-25T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "le-buy-books-20261125-baseline-v4-20261123",
+      "postPreviewSha256": "a6ba659b7b071e10503c02dcdcde2acf4b38a3424913054be612a8043f396242",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "B",
+        "promptSha256": "4fb7621f46673a1d241a8ad5b2a6c58b92a271e7d69f9bb65b009be5fcecf60a",
+        "hookId": "le-buy-books-20261125-ru-hook-v1",
+        "hookFormat": "contrast",
+        "hookText": "Ошибка: 我没买了两本书. После 没 了 не ставят.",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "24bc82734fb57e695226cb627ca1c69a173a5d2b0639f581be638e4f67dcd46c"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "7318077aea740bbf3b4bc3bc",
+        "sourceCommit": "d58b547e906e028d99243433aafb38269e4d94ff"
+      }
+    },
+    {
+      "content": {
+        "id": "le-buy-books-20261125",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "dc7538620963b34ba1cb2e4498515e4cff9214d3a22f0d71d5a221e33ffab36f"
+      },
+      "platform": "youtube",
+      "accountId": "6ac96e053f8f4ffc10b0655f",
+      "accountUsername": "hskai_app",
+      "zernioPostId": "6b0400c10579980b78379745",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "64f554ae1c92c47266795cb2a0bcf5b4f211d523c8e4b233db7d6974bf7691d6",
+      "approvedVideoSha256": "64f554ae1c92c47266795cb2a0bcf5b4f211d523c8e4b233db7d6974bf7691d6",
+      "approvedAt": "2026-11-23T08:59:13.421Z",
+      "verifiedAt": "2026-11-23T09:00:51.568Z",
+      "scheduledFor": "2026-11-25T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "le-buy-books-20261125-youtube-cta-v1",
+      "postPreviewSha256": "ca8de32f4bc705d542b7c6f9b55fff8426621d434bf5f2e1f3e1d88247bf3faf",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "B",
+        "promptSha256": "4fb7621f46673a1d241a8ad5b2a6c58b92a271e7d69f9bb65b009be5fcecf60a",
+        "hookId": "le-buy-books-20261125-ru-hook-v1",
+        "hookFormat": "contrast",
+        "hookText": "Ошибка: 我没买了两本书. После 没 了 не ставят.",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "24bc82734fb57e695226cb627ca1c69a173a5d2b0639f581be638e4f67dcd46c"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "bbd40c14a6665f210869a161",
+        "sourceCommit": "d58b547e906e028d99243433aafb38269e4d94ff"
+      }
+    },
+    {
+      "content": {
+        "id": "le-buy-books-20261125",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "dc7538620963b34ba1cb2e4498515e4cff9214d3a22f0d71d5a221e33ffab36f"
+      },
+      "platform": "tiktok",
+      "accountId": "6ae16327a2845fbdb07e5ccb",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6b0401387ac821a16ac57a90",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "1ece3abf62aa423937910acf6d6d6be566edbc70007121e5f80a7b95a97591fd",
+      "approvedVideoSha256": "1ece3abf62aa423937910acf6d6d6be566edbc70007121e5f80a7b95a97591fd",
+      "approvedAt": "2026-11-23T09:01:17.667Z",
+      "verifiedAt": "2026-11-23T09:02:49.979Z",
+      "scheduledFor": "2026-11-25T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "le-buy-books-20261125-tiktok-cta-v1",
+      "postPreviewSha256": "52a830a4b7e92ce01650c4932740cd036183a0c96c3b446dc1a6eca1cdcdb841",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "B",
+        "promptSha256": "4fb7621f46673a1d241a8ad5b2a6c58b92a271e7d69f9bb65b009be5fcecf60a",
+        "hookId": "le-buy-books-20261125-ru-hook-v1",
+        "hookFormat": "contrast",
+        "hookText": "Ошибка: 我没买了两本书. После 没 了 не ставят.",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "310f6f788fb3a61b0dfd1f373fa9c18d6177289f93d828cb0926b638d3205aaf"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "020c8a577f74f37e53fa186a",
+        "sourceCommit": "d58b547e906e028d99243433aafb38269e4d94ff"
+      }
     }
   ]
 }
