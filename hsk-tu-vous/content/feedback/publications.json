@@ -1624,6 +1624,240 @@
         "localRequestId": "40a6744761a6063460f21e5d",
         "sourceCommit": "566c793cf2bfb5e9889858cc8141c1791ba91d52"
       }
+    },
+    {
+      "content": {
+        "id": "zhengzai-reading-20261127",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "fadda22339886fa6674e78ca91b4c4aa55e7de95cc9f7ff741ea6a9ae1bf5f21"
+      },
+      "platform": "youtube",
+      "accountId": "6ac96e053f8f4ffc10b0655f",
+      "accountUsername": "hskai_app",
+      "zernioPostId": "6b041209fffbe13daab7648b",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "b192d4c4a4130abebfc11ea0d5c172e75f84f83f4bfb69294ffff90a7cd00b00",
+      "approvedVideoSha256": "b192d4c4a4130abebfc11ea0d5c172e75f84f83f4bfb69294ffff90a7cd00b00",
+      "approvedAt": "2026-11-23T10:13:15.598Z",
+      "verifiedAt": "2026-11-23T10:14:35.187Z",
+      "scheduledFor": "2026-11-27T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "zhengzai-reading-20261127-youtube-cta-v1",
+      "postPreviewSha256": "223d0b3670ca7b2a0cbadb9da45e8d0d74b807bd437e3262baba1eafcb3f7a94",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "A",
+        "promptSha256": "ccd3a1eb350ab63c7a754ce81672e8c663ede7e48a4a7ec1fb92901786d6da10",
+        "hookId": "zhengzai-reading-20261127-ru-hook-v1",
+        "hookFormat": "question",
+        "hookText": "«Я прямо сейчас читаю»: 正在 до 看 или после?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "c2f49ad5929b6008fbac46e4a3448ff845427c3c8eaa97f917a263ccbbb321e2"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "23b9b00941c8374d6f6d9a75",
+        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e"
+      }
+    },
+    {
+      "content": {
+        "id": "zhengzai-reading-20261127",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "fadda22339886fa6674e78ca91b4c4aa55e7de95cc9f7ff741ea6a9ae1bf5f21"
+      },
+      "platform": "tiktok",
+      "accountId": "6ae16327a2845fbdb07e5ccb",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6b04127bdaa125a24873e239",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "656912f1040ab2221f4e56e9438fa14caf0b03f1d348e8b4d76e6ee982917830",
+      "approvedVideoSha256": "656912f1040ab2221f4e56e9438fa14caf0b03f1d348e8b4d76e6ee982917830",
+      "approvedAt": "2026-11-23T10:14:54.475Z",
+      "verifiedAt": "2026-11-23T10:16:30.314Z",
+      "scheduledFor": "2026-11-27T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "zhengzai-reading-20261127-tiktok-cta-v1",
+      "postPreviewSha256": "4f634d2c780016d496d7dbc8dd917eecb4bf261edc829a3022901bb32edd0e67",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "A",
+        "promptSha256": "ccd3a1eb350ab63c7a754ce81672e8c663ede7e48a4a7ec1fb92901786d6da10",
+        "hookId": "zhengzai-reading-20261127-ru-hook-v1",
+        "hookFormat": "question",
+        "hookText": "«Я прямо сейчас читаю»: 正在 до 看 или после?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "76cd45d46b0702220532b0524abb94a5e68fc6af5499edfa4ef13a48b7ca2ed3"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "a98ff42b2dd30967e10ee91a",
+        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e"
+      }
+    },
+    {
+      "content": {
+        "id": "zhengzai-reading-20261127",
+        "type": "lesson",
+        "language": "ru",
+        "sourceHash": "fadda22339886fa6674e78ca91b4c4aa55e7de95cc9f7ff741ea6a9ae1bf5f21"
+      },
+      "platform": "instagram",
+      "accountId": "6a411e989d9472faae10a430",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6b04130e545cfe050e428861",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "a0f008ea14180356c5294019eeb522ac20c6341afea904f4501565fe6688a44e",
+      "approvedVideoSha256": "a0f008ea14180356c5294019eeb522ac20c6341afea904f4501565fe6688a44e",
+      "approvedAt": "2026-11-23T10:17:24.987Z",
+      "verifiedAt": "2026-11-23T10:18:55.932Z",
+      "scheduledFor": "2026-11-27T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "zhengzai-reading-20261127-baseline-v5-20261123",
+      "postPreviewSha256": "ea643b96907cef99d987f8d58abbea17efccd53f3093ea0090df9d77d967f436",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "A",
+        "promptSha256": "ccd3a1eb350ab63c7a754ce81672e8c663ede7e48a4a7ec1fb92901786d6da10",
+        "hookId": "zhengzai-reading-20261127-ru-hook-v1",
+        "hookFormat": "question",
+        "hookText": "«Я прямо сейчас читаю»: 正在 до 看 или после?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "c2f49ad5929b6008fbac46e4a3448ff845427c3c8eaa97f917a263ccbbb321e2"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "8de5142eef9905a069a7d14e",
+        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e"
+      }
+    },
+    {
+      "content": {
+        "id": "zhengzai-reading-20261127",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "d0377d013690afe548d3d60d11a4aa3fc48d151f43217fdaa00a208b551aba66"
+      },
+      "platform": "instagram",
+      "accountId": "6ae0f16205fd6f5357f8503d",
+      "accountUsername": "hskai.apptj",
+      "zernioPostId": "6b0413882cd9bd9f0ea05630",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "26668298108b382830ddf9c1123bc0017e673a0db5c5a315c1648afe7429335f",
+      "approvedVideoSha256": "26668298108b382830ddf9c1123bc0017e673a0db5c5a315c1648afe7429335f",
+      "approvedAt": "2026-11-23T10:19:30.023Z",
+      "verifiedAt": "2026-11-23T10:20:58.856Z",
+      "scheduledFor": "2026-11-27T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "zhengzai-reading-20261127-baseline-v9-20261123",
+      "postPreviewSha256": "eb8a18b63737d85830ff2e62028624cf533bb5fa36b54fc1ec77f90ed31317eb",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "A",
+        "promptSha256": "ccd3a1eb350ab63c7a754ce81672e8c663ede7e48a4a7ec1fb92901786d6da10",
+        "hookId": "zhengzai-reading-20261127-tg-hook-v1",
+        "hookFormat": "question",
+        "hookText": "«Ман айнан ҳозир китоб мехонам»: 正在 пеш аз 看 ё баъд?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "fe27ee2b1a4d2a6ad93e4a232f69160f779d59bf961a2eb7c139f5ba009cae35"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "8f56db2588d02a7f63ea0584",
+        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e"
+      }
+    },
+    {
+      "content": {
+        "id": "zhengzai-reading-20261127",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "d0377d013690afe548d3d60d11a4aa3fc48d151f43217fdaa00a208b551aba66"
+      },
+      "platform": "youtube",
+      "accountId": "6ae160123787e4c71b522d64",
+      "accountUsername": "hskai.app-tj",
+      "zernioPostId": "6b04141079426541785ecc15",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "af52210ccf1eb3396ba369b29e22709409c427a57eb864eda289fc4d63c2c770",
+      "approvedVideoSha256": "af52210ccf1eb3396ba369b29e22709409c427a57eb864eda289fc4d63c2c770",
+      "approvedAt": "2026-11-23T10:21:36.067Z",
+      "verifiedAt": "2026-11-23T10:23:14.303Z",
+      "scheduledFor": "2026-11-27T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "zhengzai-reading-20261127-youtube-cta-v1",
+      "postPreviewSha256": "76e7bad01a976f85c096eb3acfef0b3b84162fa6e22d20ac015b04389079e45e",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "A",
+        "promptSha256": "ccd3a1eb350ab63c7a754ce81672e8c663ede7e48a4a7ec1fb92901786d6da10",
+        "hookId": "zhengzai-reading-20261127-tg-hook-v1",
+        "hookFormat": "question",
+        "hookText": "«Ман айнан ҳозир китоб мехонам»: 正在 пеш аз 看 ё баъд?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "fe27ee2b1a4d2a6ad93e4a232f69160f779d59bf961a2eb7c139f5ba009cae35"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "ebc90233e20498f31be2466a",
+        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e"
+      }
+    },
+    {
+      "content": {
+        "id": "zhengzai-reading-20261127",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "d0377d013690afe548d3d60d11a4aa3fc48d151f43217fdaa00a208b551aba66"
+      },
+      "platform": "facebook",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "accountUsername": "Akbarholturaev",
+      "zernioPostId": "6b0414b0bd3d5fc60be348b0",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "5c881c43c2d03a88108f9243966eaf2cc0d0de4c6826e1d5c5c2c449716e5462",
+      "approvedVideoSha256": "5c881c43c2d03a88108f9243966eaf2cc0d0de4c6826e1d5c5c2c449716e5462",
+      "approvedAt": "2026-11-23T10:23:29.742Z",
+      "verifiedAt": "2026-11-23T10:25:53.806Z",
+      "scheduledFor": "2026-11-27T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "zhengzai-reading-20261127-facebook-cta-v1",
+      "postPreviewSha256": "c158aae0e0567c30edf544d54bd736b24bff0ff16f63f9748e2510f71989c916",
+      "creative": {
+        "experimentId": "lesson-opening-v1",
+        "arm": "A",
+        "promptSha256": "ccd3a1eb350ab63c7a754ce81672e8c663ede7e48a4a7ec1fb92901786d6da10",
+        "hookId": "zhengzai-reading-20261127-tg-hook-v1",
+        "hookFormat": "question",
+        "hookText": "«Ман айнан ҳозир китоб мехонам»: 正在 пеш аз 看 ё баъд?",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "fe27ee2b1a4d2a6ad93e4a232f69160f779d59bf961a2eb7c139f5ba009cae35"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "09a2a3a2fc861ac663f9f80f",
+        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e"
+      }
     }
   ]
 }
