@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 213,
+  "revision": 215,
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
     "id": "hsk-ai-profile-link-download-v1",
@@ -25957,6 +25957,179 @@
         "nonCtaContentHash": "ae1b521db9c45a61c089e622b0c88b8bd1a6aae425102013ddbf2d8c61d536aa",
         "motionDesign": true,
         "motionDesignStyle": "explain-actions-v1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "dorm-laundry-voice-20261126-ad-v1-20261123",
+      "episodeId": "dorm-laundry-voice-20261126",
+      "date": "2026-11-26",
+      "formatId": "brand-recall-ending",
+      "ruleVersion": "cta-policy-v20",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Use the existing approved closing for this content type and establish its baseline response.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "hsk-profile-link-download-v1",
+      "registeredAt": "2026-11-23T09:10:44.883Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0017",
+        "cta-correction-0018"
+      ],
+      "supersedes": null,
+      "copyHash": "51debbe379951a416f9333348fd3454ca5111b131ddbedbdbad8250d1f1afb61",
+      "copySnapshot": {
+        "cta": "HSK AI — китайский, когда он нужен.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "HSK AI — китайский, когда он нужен.",
+            "headline": "HSK AI",
+            "screenCaption": "HSK AI — китайский, когда он нужен",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "HSK",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "КИТАЙСКИЙ, КОГДА ОН НУЖЕН",
+                "brandLogo": true,
+                "motion": "reveal",
+                "syncCueText": "китайский",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "Brand ending for brand recall: one central stage, one HSK AI wordmark at a time. On «HSK» reveal the HSK AI logo; on «китайский» keep the logo and add the single line «китайский, когда он нужен». No download card, profile, link, follow request, screenshot or claim; the spoken line stays in one synced subtitle."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 6,
+            "precedingSceneIds": [
+              "opening",
+              "friction",
+              "dictionary-demo",
+              "try-search",
+              "results-demo",
+              "resolution"
+            ],
+            "durationSec": 4,
+            "plannedStartSec": 24
+          }
+        ]
+      },
+      "placementHash": "70055d3038383a30c48e437394b09e49546d44af9d32f20756e52b772ca8534a",
+      "contextSnapshot": {
+        "level": null,
+        "topic": "Проверка китайского слова в словаре по иероглифу, пиньиню или значению",
+        "hookFormatId": null,
+        "voiceProfileId": "ru-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "4501004f4cd913d92f870ad5e1e32eb8f621ec16c078a36b4a4e8c4fa6154cdc"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "dorm-laundry-voice-20261126-tiktok-cta-v1",
+      "episodeId": "dorm-laundry-voice-20261126",
+      "date": "2026-11-26",
+      "formatId": "tiktok-ai-install",
+      "ruleVersion": "cta-policy-v20",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Bind the owner-approved TikTok AI-install-help CTA and cue-synced typography to this reviewed video; performance remains unmeasured.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "tiktok-ai-install-v1",
+      "registeredAt": "2026-11-23T09:17:24.097Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0017",
+        "cta-correction-0018",
+        "cta-correction-0020"
+      ],
+      "supersedes": null,
+      "copyHash": "5d6e983366042420bad572c13be276182c6dda9e4589c003e65b7014f4bc3fbb",
+      "copySnapshot": {
+        "cta": "Просто спросите у ИИ, которым пользуетесь: «Как установить приложение HSK AI с сайта hskai.app?»",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Просто спросите у ИИ, которым пользуетесь: «Как установить приложение HSK AI с сайта hskai.app?»",
+            "headline": "УСТАНОВКА HSK AI",
+            "screenCaption": "hskai.app",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "СПРОСИТЕ У ИИ",
+                "motion": "reveal",
+                "syncCueText": "спросите",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "AI",
+                "meaning": "ВАШ ИИ",
+                "motion": "slide",
+                "syncCueText": "ИИ",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "УСТАНОВИТЬ ПРИЛОЖЕНИЕ",
+                "brandLogo": true,
+                "actionIcon": "app-download",
+                "motion": "reveal",
+                "syncCueText": "установить",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "hskai.app",
+                "meaning": "АДРЕС САЙТА",
+                "motion": "slide",
+                "syncCueText": "сайта",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "One central brand stage, one word-timed subtitle. On \"спросите\" show the question action, on \"ИИ\" a neutral AI symbol without copied UI/branding, on \"установить\" the HSK AI mark and install cue, and on \"сайта\" show readable hskai.app. No competing overlays, fake AI answer, fake DM, installation guarantee or completed-install animation."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 6,
+            "precedingSceneIds": [
+              "opening",
+              "friction",
+              "dictionary-demo",
+              "try-search",
+              "results-demo",
+              "resolution"
+            ],
+            "durationSec": 4,
+            "plannedStartSec": 24
+          }
+        ]
+      },
+      "placementHash": "70055d3038383a30c48e437394b09e49546d44af9d32f20756e52b772ca8534a",
+      "contextSnapshot": {
+        "level": null,
+        "topic": "Проверка китайского слова в словаре по иероглифу, пиньиню или значению",
+        "hookFormatId": null,
+        "voiceProfileId": "ru-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "4501004f4cd913d92f870ad5e1e32eb8f621ec16c078a36b4a4e8c4fa6154cdc"
       },
       "primaryMetric": "profile-link-clickers-per-1000-views",
       "evidenceStatus": "unmeasured"
