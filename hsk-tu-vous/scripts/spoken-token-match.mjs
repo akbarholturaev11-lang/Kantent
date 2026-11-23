@@ -89,6 +89,12 @@ export function pinyinCyrillicCandidates(syllable) {
     if (!finals) return new Set();
     spellings = INITIALS[initial].flatMap((head) => finals.map((tail) => head + tail));
   }
+  // Neutral-tone particle 了 le is a reduced schwa; real OpenRouter TG STT
+  // 2026-11-23 writes it "ла" (the zh pass of the same clip hears "le").
+  if (plain === "le") spellings = [...spellings, "ла"];
+  // Real OpenRouter TG 2026-11-23: 张 zhāng written "ҷанг" — the -ng coda
+  // spelled out as "нг" instead of Palladius "н".
+  if (plain.endsWith("ng")) spellings = [...spellings, ...spellings.filter((value) => value.endsWith("н")).map((value) => value + "г")];
   return new Set(spellings.map(phoneticFold));
 }
 
@@ -162,6 +168,33 @@ export function collectHanziPinyinPairs(value, pairs = []) {
 
 const tajikSpellingFold = (text) => foldLocaleToken(text, "tg-TJ").replaceAll("ъ", "").replace(/й$/u, "и");
 
+// Real OpenRouter runs 2026-11-23: under the single "zh" hint the recognizer
+// sometimes writes a Mandarin syllable in Hangul (张票 -> 장 표, 一 -> 이) or a
+// numeral as a digit (八点 -> "8:00"). Hangul is phonetic: compare its
+// algorithmic romanization with the VERIFIED pinyin reading by initial class,
+// final vowel letter and nasal coda. Digits map only to their Hanzi numeral.
+const HANGUL_L = ["k","k","n","t","t","l","m","p","p","s","s","","j","j","j","k","t","p","h"];
+const HANGUL_V = ["a","ae","ya","yae","eo","e","yeo","ye","o","wa","wae","oe","yo","u","wo","we","wi","yu","eu","ui","i"];
+const HANGUL_T = ["","","","","n","n","n","","","","","","","","","","m","","","","","ng","","","","","",""];
+const PINYIN_CLASS = [["zh","j"],["ch","j"],["sh","s"],["j","j"],["q","j"],["x","s"],["z","j"],["c","j"],["s","s"],
+  ["b","p"],["p","p"],["d","t"],["t","t"],["g","k"],["k","k"],["h","h"],["f","h"],["m","m"],["n","n"],["l","l"],["r","l"],
+  ["y",""],["w",""]];
+function hangulKey(syllable) {
+  const code = syllable.codePointAt(0) - 0xac00;
+  if (syllable.length !== 1 || code < 0 || code > 11171) return null;
+  const vowel = HANGUL_V[Math.floor((code % 588) / 28)];
+  return HANGUL_L[Math.floor(code / 588)] + "|" + vowel.at(-1) + "|" + HANGUL_T[code % 28];
+}
+function pinyinKey(syllable) {
+  const plain = tonelessPinyin(syllable);
+  const [head, cls] = PINYIN_CLASS.find(([prefix]) => plain.startsWith(prefix)) ?? ["", ""];
+  let rest = plain.slice(head.length);
+  const coda = rest.endsWith("ng") ? "ng" : rest.endsWith("n") ? "n" : "";
+  rest = rest.slice(0, rest.length - coda.length);
+  return rest ? cls + "|" + rest.at(-1).replace("v", "u") + "|" + coda : null;
+}
+const DIGIT_HANZI = { 0: ["零"], 1: ["一"], 2: ["二", "两"], 3: ["三"], 4: ["四"], 5: ["五"], 6: ["六"], 7: ["七"], 8: ["八"], 9: ["九"], 10: ["十"] };
+
 export function createSpokenMatcher({ locale, readings = new Map() }) {
   return (expected, recognized) => {
     if (expected === recognized) return true;
@@ -176,10 +209,18 @@ export function createSpokenMatcher({ locale, readings = new Map() }) {
     // itself: accept when that character's verified reading spells the alias.
     if (/^\p{Script=Han}$/u.test(heard) && readings.has(heard) &&
         [...readings.get(heard)].some((syllable) => pinyinCyrillicCandidates(syllable).has(phoneticFold(expected)))) return true;
+    // The same alias heard as Hangul (一 alias "и" heard 이): some verified
+    // reading must both spell the alias and match the Hangul syllable.
+    if (/^\p{Script=Hangul}$/u.test(heard) && hangulKey(heard) &&
+        [...readings.values()].some((set) => [...set].some((syllable) =>
+          pinyinCyrillicCandidates(syllable).has(phoneticFold(expected)) && pinyinKey(syllable) === hangulKey(heard)))) return true;
     const letter = String(expected).toLocaleLowerCase("und");
     if (LETTER_NAMES[letter]?.includes(phoneticFold(heard))) return true;
     if (!/^\p{Script=Han}$/u.test(expected) || !readings.has(expected)) return false;
+    const digits = /^(\d{1,2})(?::00)?$/u.exec(heard);
+    if (digits && DIGIT_HANZI[Number(digits[1])]?.includes(expected)) return true;
     for (const syllable of readings.get(expected)) {
+      if (/^\p{Script=Hangul}$/u.test(heard) && hangulKey(heard) && hangulKey(heard) === pinyinKey(syllable)) return true;
       if (/^[a-z]$/iu.test(heard) && LETTER_AS_SYLLABLE[heard.toLowerCase()] === syllable) return true;
       if (/^[a-zÀ-ɏ]+$/iu.test(heard) && tonelessPinyin(heard) === syllable) return true;
       // Real OpenRouter RU run 2026-11-23: 看 kàn written as English-style "can".

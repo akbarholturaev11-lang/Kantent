@@ -10,7 +10,7 @@ import {
 import { assertNotPreviouslyPublished } from "./published-evidence.mjs";
 import { hasCurrentImportedVoice } from "./voice-import-state.mjs";
 import { requireSystemMediaTools } from "./media-duration.mjs";
-import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks } from "./gemini-word-recovery.mjs";
+import { buildRecoveryPlan, selectRecoveredBlocks, mergeRecoveredBlocks, dedupeSameWordBlocks, selectTimedSubstitution } from "./gemini-word-recovery.mjs";
 import { createContinuousTtsChunks } from "./continuous-tts-plan.mjs";
 import { saveCtaVoice, extractCtaWav, findCtaVoiceForTake } from "./cta-voice-cache.mjs";
 import { offsetAnnotations, parseSilences, planSttWindows, windowsTouching } from "./stt-windows.mjs";
@@ -291,6 +291,9 @@ function singleScriptParts(value) {
           // “-ро” was rendered as Arabic “را” by OpenRouter; keep the alias
           // scoped to this episode and preserve the provider's actual timing.
           ...(EPISODE_ID === "youdianr-vs-yidianr-price-20261111" ? { "را": "ро" } : {}),
+          // Both spellings of "counting" are standard Tajik; OpenRouter STT
+          // (2026-11-23) consistently writes "шумордани". Scoped to this lesson.
+          ...(EPISODE_ID === "ticket-counter-zhang-20261128" ? { шумурдани: "шумордани" } : {}),
         }
       : {}),
   };
@@ -1071,6 +1074,7 @@ async function recoverActualWordClips({
       languageCodes: record.languageCodes ?? [], clipStartMs, clipEndMs, wordCount: focused.length });
   }
   blocks.sort(byTime);
+  blocks.splice(0, blocks.length, ...dedupeSameWordBlocks(blocks));
   let plan = buildRecoveryPlan(expected, blocks, durationMs, { match });
   // X-10 (real 2026-11-08 runs): a mixed-hint pass drops one language — RU
   // lost every Mandarin sentence, TG chunk 2 kept only the Mandarin. One
@@ -1107,6 +1111,7 @@ async function recoverActualWordClips({
     await fs.writeFile(path.join(directory, "language-passes.json"),
       JSON.stringify({ sourceAudio: path.basename(audioPath), windows, languagePasses }, null, 2) + "\n");
     blocks.sort(byTime);
+    blocks.splice(0, blocks.length, ...dedupeSameWordBlocks(blocks));
     plan = buildRecoveryPlan(expected, blocks, durationMs, { match });
   }
   const recovered = [];
@@ -1144,6 +1149,7 @@ async function recoverActualWordClips({
     const gapBlocks = [];
     const gapBlocksByHint = new Map();
     const gapBlockGroupsByHint = new Map();
+    const substitutionGroups = [];
     const timedClipBlocks = (annotations, clipDurationMs, clipStartMs) =>
       timedBlocks(annotations, clipDurationMs).map((block) => ({
         ...block,
@@ -1188,6 +1194,7 @@ async function recoverActualWordClips({
         const passGroups = [record.annotations, ...(record.alternates ?? [])]
           .map((annotations) => timedClipBlocks(annotations, clipMs, gap.startMs));
         const passBlocks = passGroups.flat();
+        substitutionGroups.push(...passGroups);
         gapBlocks.push(...passBlocks);
         if (hints.length === 1) {
           const code = hints[0];
@@ -1202,6 +1209,7 @@ async function recoverActualWordClips({
         const inside = group.blocks.filter((block) =>
           block.startMs >= gap.startMs - 120 && block.endMs <= gap.endMs + 120);
         if (!inside.length) continue;
+        substitutionGroups.push(inside);
         gapBlocks.push(...inside);
         gapBlocksByHint.set(group.code, [...(gapBlocksByHint.get(group.code) ?? []), ...inside]);
         const prior = gapBlockGroupsByHint.get(group.code) ?? [];
@@ -1271,8 +1279,37 @@ async function recoverActualWordClips({
             try { run.selected = selectRecoveredBlocks(run.tokens, runBlocks, { match }); }
             catch { /* Keep the gate closed if this focused pass is still wrong. */ }
           }
-          if (runs.every((run) => run.selected))
+          // Owner rule 2026-11-23 per script run: a run still unconfirmed may
+          // take the bounded timed near-miss substitution from one pass, inside
+          // the provider-measured edges of its verified neighbouring runs.
+          for (let runIndex = 0; runIndex < runs.length; runIndex += 1) {
+            const run = runs[runIndex];
+            if (run.selected) continue;
+            const before = runs.slice(0, runIndex).reverse().find((item) => item.selected);
+            const after = runs.slice(runIndex + 1).find((item) => item.selected);
+            const window = { startMs: before?.selected.at(-1).endMs ?? gap.startMs, endMs: after?.selected[0].startMs ?? gap.endMs };
+            let best = null;
+            for (const group of [...substitutionGroups, ...[...gapBlockGroupsByHint.values()].flat()]) {
+              const candidate = selectTimedSubstitution(run.tokens, dedupeSameWordBlocks(group), { match, gap: window });
+              const exact = candidate?.pairs.filter((p) => p.kind === "exact").length ?? -1;
+              if (candidate && (!best || exact > best.exact)) best = { ...candidate, exact };
+            }
+            if (best) {
+              run.selected = best.blocks;
+              run.substitutedPairs = best.pairs.filter((p) => p.kind !== "exact");
+            }
+          }
+          if (runs.every((run) => run.selected)) {
             selected = runs.flatMap((run) => run.selected);
+            const pairs = runs.flatMap((run) => run.substitutedPairs ?? []);
+            if (pairs.length) {
+              metadata.ownerTimedSubstitutions ??= [];
+              if (!metadata.ownerTimedSubstitutions.some((item) => item.chunk === chunk && item.startMs === gap.startMs))
+                metadata.ownerTimedSubstitutions.push({ chunk, startMs: gap.startMs, endMs: gap.endMs,
+                  rule: "owner-2026-11-23-timed-near-miss", pairs });
+              console.warn("OWNER_TIMED_SUBSTITUTION " + JSON.stringify(pairs));
+            }
+          }
         }
 
         // A single-script clip may contain an exact prefix followed by dropped
@@ -1322,41 +1359,75 @@ async function recoverActualWordClips({
         // bare 1 s clip loses context (real RU one-take: "HSK AI" → "HSGKAI").
         // Neighbour words are extras the strict selection discards; the
         // missing words must still be heard exactly, inside the span.
-        if (!selected) {
-          const contextStart = Math.max(0, gap.startMs - 700);
-          const contextEnd = Math.min(durationMs, gap.endMs + 700);
+        // Wider windows (~1.5 s, then ~2.5 s each side) are tried only when the
+        // first one fails: identical audio returns an identical transcript, and
+        // a different neighbourhood is what lets the recognizer hear the word.
+        for (const padMs of [700, 1500, 2500]) {
+          if (selected) break;
+          const contextStart = Math.max(0, gap.startMs - padMs);
+          const contextEnd = Math.min(durationMs, gap.endMs + padMs);
           const contextName = `context-${contextStart}-${contextEnd}`;
           const contextPath = path.join(directory, contextName + ".wav");
-          const record = await cachedClipTranscription(path.join(directory, `${contextName}-${hintSets[0].join("+") || "nohint"}.json`),
-            `${contextStart}-${contextEnd}-${hintSets[0].join("+") || "nohint"}`, async ({ allowBackup }) => {
-              const actualMs = cutWavClip(audioPath, contextStart, contextEnd, contextPath, ffmpegRuntime);
-              return { ...(await transcribeSavedAudio(contextPath, hintSets[0].length ? hintSets[0] : transcriptionLanguages,
-                `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${contextName}`, { stage: "stt-recovery", chunk, allowBackup })),
-              clipStartMs: contextStart, clipEndMs: contextEnd, actualClipDurationMs: actualMs };
-            });
-          const inside = [record.annotations, ...(record.alternates ?? [])]
-            .flatMap((annotations) => timedBlocks(annotations, record.actualClipDurationMs ?? (contextEnd - contextStart)))
-            .map((b) => ({ ...b, startMs: b.startMs + contextStart, endMs: b.endMs + contextStart }))
-            // Provider times are kept as returned; only words lying inside the
-            // span (±120 ms tolerance) may fill it. A word that overlaps the span
-            // by ≥60 ms but starts/ends past the tolerance (real OpenRouter RU
-            // 2026-11-23: "до 看 или", 看 heard "кан" 3.2–3.6 s in the context
-            // pass while the verified "до" ends at 3.5 s) is kept at the
-            // INTERSECTION of its provider span and the verified gap: both
-            // bounds are provider-measured, nothing is estimated.
-            .flatMap((b) => {
-              if (b.startMs >= gap.startMs - 120 && b.endMs <= gap.endMs + 120) return [b];
-              const startMs = Math.max(b.startMs, gap.startMs);
-              const endMs = Math.min(b.endMs, gap.endMs);
-              return endMs - startMs >= 60 ? [{ ...b, startMs, endMs, clampedToVerifiedGap: true }] : [];
-            });
-          gapBlocks.push(...inside);
-          try {
-            selected = selectRecoveredBlocks(gap.tokens, inside, { match });
-          } catch {
-            throw firstError;
+          // Owner 2026-11-23 (OpenRouter, one ISO hint per request): a Mandarin
+          // word inside Tajik/Russian speech is often heard only under the
+          // OTHER hint ("Дар инкор 了" -> zh "in kor", tg "ин кор ла"). Try the
+          // gap's own hint first, then each other production language.
+          const contextHints = [hintSets[0], ...transcriptionLanguages.map((code) => [code])
+            .filter((hints) => hints.join("+") !== hintSets[0].join("+"))];
+          for (const hints of contextHints) {
+            const label = hints.join("+") || "nohint";
+            const record = await cachedClipTranscription(path.join(directory, `${contextName}-${label}.json`),
+              `${contextStart}-${contextEnd}-${label}`, async ({ allowBackup }) => {
+                const actualMs = cutWavClip(audioPath, contextStart, contextEnd, contextPath, ffmpegRuntime);
+                return { ...(await transcribeSavedAudio(contextPath, hints.length ? hints : transcriptionLanguages,
+                  `hsk-recovery-${EPISODE_ID}-${chunkNumber}-${contextName}-${label}`, { stage: "stt-recovery", chunk, allowBackup })),
+                clipStartMs: contextStart, clipEndMs: contextEnd, actualClipDurationMs: actualMs };
+              });
+            const inside = [record.annotations, ...(record.alternates ?? [])]
+              .map((annotations) => timedBlocks(annotations, record.actualClipDurationMs ?? (contextEnd - contextStart)))
+              .flatMap((group) => { substitutionGroups.push(group.map((b) => ({ ...b, startMs: b.startMs + contextStart, endMs: b.endMs + contextStart }))); return group; })
+              .map((b) => ({ ...b, startMs: b.startMs + contextStart, endMs: b.endMs + contextStart }))
+              // Provider times are kept as returned; only words lying inside the
+              // span (±120 ms tolerance) may fill it. A word that overlaps the span
+              // by ≥60 ms but starts/ends past the tolerance (real OpenRouter RU
+              // 2026-11-23: "до 看 или", 看 heard "кан" 3.2–3.6 s in the context
+              // pass while the verified "до" ends at 3.5 s) is kept at the
+              // INTERSECTION of its provider span and the verified gap: both
+              // bounds are provider-measured, nothing is estimated.
+              .flatMap((b) => {
+                if (b.startMs >= gap.startMs - 120 && b.endMs <= gap.endMs + 120) return [b];
+                const startMs = Math.max(b.startMs, gap.startMs);
+                const endMs = Math.min(b.endMs, gap.endMs);
+                return endMs - startMs >= 60 ? [{ ...b, startMs, endMs, clampedToVerifiedGap: true }] : [];
+              });
+            gapBlocks.push(...inside);
+            try {
+              selected = selectRecoveredBlocks(gap.tokens, inside, { match });
+              break;
+            } catch { /* Try the next language hint. */ }
           }
         }
+        // Owner rule 2026-11-23: a word timed at its exact place but written
+        // as a translation or with one trivial letter wrong takes the
+        // script's correct form at that provider slot (bounded; see
+        // selectTimedSubstitution). Prefer the pass with most exact words.
+        if (!selected) {
+          let best = null;
+          for (const group of substitutionGroups) {
+            const candidate = selectTimedSubstitution(gap.tokens, dedupeSameWordBlocks(group), { match, gap });
+            const exact = candidate?.pairs.filter((p) => p.kind === "exact").length ?? -1;
+            if (candidate && (!best || exact > best.exact)) best = { ...candidate, exact };
+          }
+          if (best) {
+            selected = best.blocks;
+            metadata.ownerTimedSubstitutions ??= [];
+            if (!metadata.ownerTimedSubstitutions.some((item) => item.chunk === chunk && item.startMs === gap.startMs))
+              metadata.ownerTimedSubstitutions.push({ chunk, startMs: gap.startMs, endMs: gap.endMs,
+                rule: "owner-2026-11-23-timed-near-miss", pairs: best.pairs.filter((p) => p.kind !== "exact") });
+            console.warn("OWNER_TIMED_SUBSTITUTION " + JSON.stringify(best.pairs.filter((p) => p.kind !== "exact")));
+          }
+        }
+        if (!selected) throw firstError;
       }
       recovered.push(selected);
     } catch (error) {

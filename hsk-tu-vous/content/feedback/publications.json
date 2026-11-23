@@ -1858,6 +1858,270 @@
         "localRequestId": "09a2a3a2fc861ac663f9f80f",
         "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e"
       }
+    },
+    {
+      "content": {
+        "id": "ticket-counter-zhang-20261128",
+        "type": "series-part",
+        "language": "ru",
+        "sourceHash": "77660baa307571d8c212e3faf5a7a31ed0bafa7c261e6518d233b9af66326f40",
+        "series": {
+          "id": "class-tickets-night-show-20261128",
+          "part": 1,
+          "totalParts": 2
+        }
+      },
+      "platform": "instagram",
+      "accountId": "6a411e989d9472faae10a430",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6b045d763a57833aa1ca940e",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "7c332abfbd1afa7ff5b28f247d9580e23fcfb77270728153f51ccc2871c20614",
+      "approvedVideoSha256": "7c332abfbd1afa7ff5b28f247d9580e23fcfb77270728153f51ccc2871c20614",
+      "approvedAt": "2026-11-23T15:34:45.775Z",
+      "verifiedAt": "2026-11-23T15:36:24.726Z",
+      "scheduledFor": "2026-11-28T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "ticket-counter-zhang-20261128-series-v5-20261123",
+      "postPreviewSha256": "335fdb0d46ef318a61dea93a623370c158ea40267d437650d8497ecd1ae69173",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "ticket-counter-zhang-20261128-ru-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Представь: учитель раздаёт билеты на вечернее шоу. Панда просит: 我要一张票 — мне один билет.",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "e5d63df343ccabcc21badd03dc49446f4976a431b7649c634a53f64b61278132"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "65d690859152f390badc3dfa",
+        "sourceCommit": "664f21af2b812b9beae66fcd208ae676914fee49"
+      }
+    },
+    {
+      "content": {
+        "id": "ticket-counter-zhang-20261128",
+        "type": "series-part",
+        "language": "ru",
+        "sourceHash": "77660baa307571d8c212e3faf5a7a31ed0bafa7c261e6518d233b9af66326f40",
+        "series": {
+          "id": "class-tickets-night-show-20261128",
+          "part": 1,
+          "totalParts": 2
+        }
+      },
+      "platform": "youtube",
+      "accountId": "6ac96e053f8f4ffc10b0655f",
+      "accountUsername": "hskai_app",
+      "zernioPostId": "6b045eaeefbe825193358a97",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "7c332abfbd1afa7ff5b28f247d9580e23fcfb77270728153f51ccc2871c20614",
+      "approvedVideoSha256": "7c332abfbd1afa7ff5b28f247d9580e23fcfb77270728153f51ccc2871c20614",
+      "approvedAt": "2026-11-23T15:38:24.015Z",
+      "verifiedAt": "2026-11-23T15:41:36.992Z",
+      "scheduledFor": "2026-11-28T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "ticket-counter-zhang-20261128-series-v5-20261123",
+      "postPreviewSha256": "a33bcae5b1f7f7590c383eda916db9f40f5e2c996e39d41a152857b6d792aba1",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "ticket-counter-zhang-20261128-ru-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Представь: учитель раздаёт билеты на вечернее шоу. Панда просит: 我要一张票 — мне один билет.",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "e5d63df343ccabcc21badd03dc49446f4976a431b7649c634a53f64b61278132"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "9fa4a75629d4127619b5e547",
+        "sourceCommit": "664f21af2b812b9beae66fcd208ae676914fee49"
+      }
+    },
+    {
+      "content": {
+        "id": "ticket-counter-zhang-20261128",
+        "type": "series-part",
+        "language": "ru",
+        "sourceHash": "77660baa307571d8c212e3faf5a7a31ed0bafa7c261e6518d233b9af66326f40",
+        "series": {
+          "id": "class-tickets-night-show-20261128",
+          "part": 1,
+          "totalParts": 2
+        }
+      },
+      "platform": "tiktok",
+      "accountId": "6ae16327a2845fbdb07e5ccb",
+      "accountUsername": "hskai.app",
+      "zernioPostId": "6b045f6d364baba7bb94c0d1",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "bfa27605b555569087cdf823821300ddd872024c5a0d7ee88ffa575119d0a5ac",
+      "approvedVideoSha256": "bfa27605b555569087cdf823821300ddd872024c5a0d7ee88ffa575119d0a5ac",
+      "approvedAt": "2026-11-23T15:42:20.946Z",
+      "verifiedAt": "2026-11-23T15:44:48.078Z",
+      "scheduledFor": "2026-11-28T21:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "ticket-counter-zhang-20261128-tiktok-cta-v1",
+      "postPreviewSha256": "17b2846db6cd6c67f73fa3fda66e24ba0f9961bbaea141ec90be5bf34fc49934",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "ticket-counter-zhang-20261128-ru-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Представь: учитель раздаёт билеты на вечернее шоу. Панда просит: 我要一张票 — мне один билет.",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "3f9dd11fb066ec93edabcfa8c14ae3d19816720f5ee7a28640c662c39fe6a3d9"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "480199b8252edee6b64370be",
+        "sourceCommit": "664f21af2b812b9beae66fcd208ae676914fee49"
+      }
+    },
+    {
+      "content": {
+        "id": "ticket-counter-zhang-20261128",
+        "type": "series-part",
+        "language": "tg",
+        "sourceHash": "47f756babb43fa65f5a9d462a4d19e905abc0c2b0e361a3a3dec3a04752b6198",
+        "series": {
+          "id": "class-tickets-night-show-20261128",
+          "part": 1,
+          "totalParts": 2
+        }
+      },
+      "platform": "youtube",
+      "accountId": "6ae160123787e4c71b522d64",
+      "accountUsername": "hskai.app-tj",
+      "zernioPostId": "6b046227e870282f3fa3f526",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "79c40a52957668284875e34b24a97d0a8366d1233253cc4a4fd6f8a9c1f6a9d0",
+      "approvedVideoSha256": "79c40a52957668284875e34b24a97d0a8366d1233253cc4a4fd6f8a9c1f6a9d0",
+      "approvedAt": "2026-11-23T15:54:39.885Z",
+      "verifiedAt": "2026-11-23T15:56:25.825Z",
+      "scheduledFor": "2026-11-28T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "ticket-counter-zhang-20261128-series-v2-20261123",
+      "postPreviewSha256": "74df8936eac88da1597559a355ca16e8dc58dfb38b16a0dfa88270611e6d8ff9",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "ticket-counter-zhang-20261128-tg-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Тасаввур кун: дар синф муаллим барои намоиши шом билет медиҳад. Панда мегӯяд: 我要一张票 — ба ман як билет. Барои билет 张 лозим аст.",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "49b149e871f2cf6bb95afa57fd37c3ce5f405b70c436a81ce56aaf2365b4f752"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "0262aa16d7535c4d0a60fb1b",
+        "sourceCommit": "664f21af2b812b9beae66fcd208ae676914fee49"
+      }
+    },
+    {
+      "content": {
+        "id": "ticket-counter-zhang-20261128",
+        "type": "series-part",
+        "language": "tg",
+        "sourceHash": "47f756babb43fa65f5a9d462a4d19e905abc0c2b0e361a3a3dec3a04752b6198",
+        "series": {
+          "id": "class-tickets-night-show-20261128",
+          "part": 1,
+          "totalParts": 2
+        }
+      },
+      "platform": "facebook",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "accountUsername": "Akbarholturaev",
+      "zernioPostId": "6b0462af2322b2998be79fcc",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "79c40a52957668284875e34b24a97d0a8366d1233253cc4a4fd6f8a9c1f6a9d0",
+      "approvedVideoSha256": "79c40a52957668284875e34b24a97d0a8366d1233253cc4a4fd6f8a9c1f6a9d0",
+      "approvedAt": "2026-11-23T15:57:01.438Z",
+      "verifiedAt": "2026-11-23T15:58:41.163Z",
+      "scheduledFor": "2026-11-28T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "ticket-counter-zhang-20261128-series-v2-20261123",
+      "postPreviewSha256": "da66ee945f263cd9d8979f30c3edcb72d78acc74dff7634e910092c4ce4285ba",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "ticket-counter-zhang-20261128-tg-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Тасаввур кун: дар синф муаллим барои намоиши шом билет медиҳад. Панда мегӯяд: 我要一张票 — ба ман як билет. Барои билет 张 лозим аст.",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "49b149e871f2cf6bb95afa57fd37c3ce5f405b70c436a81ce56aaf2365b4f752"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "74c5c8b81a4f336e9c67fb55",
+        "sourceCommit": "664f21af2b812b9beae66fcd208ae676914fee49"
+      }
+    },
+    {
+      "content": {
+        "id": "ticket-counter-zhang-20261128",
+        "type": "series-part",
+        "language": "tg",
+        "sourceHash": "47f756babb43fa65f5a9d462a4d19e905abc0c2b0e361a3a3dec3a04752b6198",
+        "series": {
+          "id": "class-tickets-night-show-20261128",
+          "part": 1,
+          "totalParts": 2
+        }
+      },
+      "platform": "instagram",
+      "accountId": "6ae0f16205fd6f5357f8503d",
+      "accountUsername": "hskai.apptj",
+      "zernioPostId": "6b04639b2322b2998be7a2c0",
+      "platformPostId": null,
+      "status": "scheduled",
+      "videoSha256": "79c40a52957668284875e34b24a97d0a8366d1233253cc4a4fd6f8a9c1f6a9d0",
+      "approvedVideoSha256": "79c40a52957668284875e34b24a97d0a8366d1233253cc4a4fd6f8a9c1f6a9d0",
+      "approvedAt": "2026-11-23T16:00:45.890Z",
+      "verifiedAt": "2026-11-23T16:02:40.571Z",
+      "scheduledFor": "2026-11-28T19:00:00+08:00",
+      "publishedAt": null,
+      "ctaExperimentId": "ticket-counter-zhang-20261128-series-v2-20261123",
+      "postPreviewSha256": "0e77b3beebecbace0478034942f9954c37f6920519d7815f717f41ff4de9d82d",
+      "creative": {
+        "experimentId": null,
+        "arm": null,
+        "promptSha256": null,
+        "hookId": "ticket-counter-zhang-20261128-tg-hook-v1",
+        "hookFormat": "scenario",
+        "hookText": "Тасаввур кун: дар синф муаллим барои намоиши шом билет медиҳад. Панда мегӯяд: 我要一张票 — ба ман як билет. Барои билет 张 лозим аст.",
+        "storytellingPattern": "direct",
+        "visualStyle": "explain-actions-v1",
+        "scriptSha256": "49b149e871f2cf6bb95afa57fd37c3ce5f405b70c436a81ce56aaf2365b4f752"
+      },
+      "source": {
+        "provider": "Zernio",
+        "endpoint": "Zernio GET /v1/posts/{id}",
+        "localRequestId": "c0c80e31edc47511db5295de",
+        "sourceCommit": "664f21af2b812b9beae66fcd208ae676914fee49"
+      }
     }
   ]
 }

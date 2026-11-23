@@ -612,6 +612,119 @@
               ]
             }
           }
+        },
+        {
+          "id": "count-wrong",
+          "kind": "graphic",
+          "cueText": "калимаи 个 нагӯ",
+          "explains": "Хатои маъмулро нишон додан: бо билет калимаи шумории 个 истифода намешавад.",
+          "visual": {
+            "title": "Хатои маъмул",
+            "hanzi": "一个票",
+            "pinyin": "yí gè piào",
+            "meaning": "барои билет нодуруст",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "desk",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 50,
+                    "y": 302,
+                    "width": 500,
+                    "height": 20,
+                    "rx": 7,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "ticket-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 173,
+                    "y": 140,
+                    "width": 256,
+                    "height": 135,
+                    "rx": 14,
+                    "fill": "secondary",
+                    "stroke": "muted",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "cross-a",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 200,
+                    "y1": 120,
+                    "x2": 400,
+                    "y2": 295,
+                    "stroke": "red",
+                    "strokeWidth": 12
+                  }
+                },
+                {
+                  "id": "cross-b",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 400,
+                    "y1": 120,
+                    "x2": 200,
+                    "y2": 295,
+                    "stroke": "red",
+                    "strokeWidth": 12
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "cross-a",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 350,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "cross-b",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 500,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "ticket-close"
+              ],
+              "cast": [
+                {
+                  "id": "rabbit",
+                  "mood": "wrong",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
         }
       ]
     },
@@ -631,6 +744,107 @@
       ],
       "captionStyleId": "highlight",
       "motionBeats": [
+        {
+          "id": "recap-repeat-request",
+          "kind": "graphic",
+          "cueText": "такрор мекунад",
+          "explains": "Панда хоҳиши билетро пурра бори дигар мегӯяд.",
+          "visual": {
+            "title": "Хоҳиш дар касса",
+            "hanzi": "我要一张票",
+            "pinyin": "Wǒ yào yì zhāng piào",
+            "meaning": "ба ман як билет",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "bubble",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 90,
+                    "y": 90,
+                    "width": 420,
+                    "height": 170,
+                    "rx": 40,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 8
+                  }
+                },
+                {
+                  "id": "tail",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 200,
+                    "y1": 258,
+                    "x2": 160,
+                    "y2": 320,
+                    "stroke": "teal",
+                    "strokeWidth": 8
+                  }
+                },
+                {
+                  "id": "ticket-mini",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 230,
+                    "y": 135,
+                    "width": 140,
+                    "height": 80,
+                    "rx": 10,
+                    "fill": "gold"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "bubble",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.4
+                    },
+                    {
+                      "atMs": 400,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "ticket-mini",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 550,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom-tickets"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
         {
           "id": "recap-action-1",
           "kind": "graphic",
@@ -900,6 +1114,250 @@
               ]
             }
           }
+        },
+        {
+          "id": "recap-show-time",
+          "kind": "graphic",
+          "cueText": "вақти намоиш",
+          "explains": "Дар билет соати оғоз нишон дода шудааст: омодагӣ ба қисми дуюм.",
+          "visual": {
+            "title": "Ҷадвал",
+            "hanzi": "",
+            "pinyin": "",
+            "meaning": "",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "ticket",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 110,
+                    "y": 110,
+                    "width": 380,
+                    "height": 190,
+                    "rx": 16,
+                    "fill": "secondary",
+                    "stroke": "teal",
+                    "strokeWidth": 7
+                  }
+                },
+                {
+                  "id": "stub",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 400,
+                    "y1": 116,
+                    "x2": 400,
+                    "y2": 294,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "clock",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 255,
+                    "cy": 205,
+                    "r": 62,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 8
+                  }
+                },
+                {
+                  "id": "hand-hour",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 255,
+                    "y1": 205,
+                    "x2": 255,
+                    "y2": 168,
+                    "stroke": "foreground",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "hand-minute",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 255,
+                    "y1": 205,
+                    "x2": 292,
+                    "y2": 205,
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "clock",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.3
+                    },
+                    {
+                      "atMs": 400,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "hand-minute",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 600,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "ticket-close"
+              ],
+              "cast": [
+                {
+                  "id": "crane",
+                  "mood": "talk",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "recap-next-question",
+          "kind": "graphic",
+          "cueText": "соати чанд",
+          "explains": "Омодагӣ ба қисми дуюм: Панда соати оғозро мепурсад.",
+          "visual": {
+            "title": "Идома",
+            "hanzi": "",
+            "pinyin": "",
+            "meaning": "",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "clock",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 230,
+                    "cy": 210,
+                    "r": 95,
+                    "fill": "none",
+                    "stroke": "foreground",
+                    "strokeWidth": 9
+                  }
+                },
+                {
+                  "id": "hand-hour",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 230,
+                    "y1": 210,
+                    "x2": 230,
+                    "y2": 150,
+                    "stroke": "foreground",
+                    "strokeWidth": 10
+                  }
+                },
+                {
+                  "id": "hand-minute",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 230,
+                    "y1": 210,
+                    "x2": 290,
+                    "y2": 240,
+                    "stroke": "gold",
+                    "strokeWidth": 8
+                  }
+                },
+                {
+                  "id": "ask-dot",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 430,
+                    "cy": 290,
+                    "r": 14,
+                    "fill": "teal"
+                  }
+                },
+                {
+                  "id": "ask-arc",
+                  "type": "path",
+                  "attrs": {
+                    "d": "M395 150 Q395 100 435 100 Q475 100 475 140 Q475 175 435 195 L435 245",
+                    "fill": "none",
+                    "stroke": "teal",
+                    "strokeWidth": 14
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "ask-arc",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 450,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "ask-dot",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0
+                    },
+                    {
+                      "atMs": 600,
+                      "value": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "classroom-tickets"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "idle",
+                  "x": 0.78,
+                  "y": 0.84,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
         }
       ]
     }
@@ -952,7 +1410,7 @@
   "localization": {
     "language": "tg",
     "sourceEpisodeId": "ticket-counter-zhang-20261128",
-    "sourceHash": "a8746584412455b238a080712da6025197a8ead90482ab5981f0236836e772d1",
+    "sourceHash": "77660baa307571d8c212e3faf5a7a31ed0bafa7c261e6518d233b9af66326f40",
     "authoredOn": "2026-11-22",
     "status": "draft"
   }

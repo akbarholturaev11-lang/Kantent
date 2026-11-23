@@ -112,7 +112,7 @@ The implementation is opt-in and experimental until real MP4/phone-size review a
 
 ## Russian captions
 
-- Use the exact narration and Gemini Transcribe word timings produced through the approved provider in `content/voice-profile.json`. The import step must confirm a normalized exact-token match; do not move timings by hand to fit a changed script.
+- Use the exact narration and Gemini Transcribe word timings produced through the approved provider in `content/voice-profile.json`. The import step must confirm a normalized exact-token match (or the bounded timed near-miss substitution in `AI_RULES.md`, owner 2026-11-23); do not move timings by hand to fit a changed script.
 - Group adjacent word cues into readable phrases using the current limits and hold timings in `content/visual-system.json`. Never stretch captions across unrelated speech.
 - Keep captions as high-contrast ink text without backing shapes. Use the caption safe areas, variants and positions from `content/visual-system.json`, including the CTA-specific placement to avoid covering screenshots.
 - Keep one or two short lines on screen at a time. Do not cover Hanzi, pinyin, Russian meaning, the HSK AI logo, or the final CTA. If the available timed cues cannot fit clearly, stop and ask for a cleaner export; do not shrink text below the configured size.

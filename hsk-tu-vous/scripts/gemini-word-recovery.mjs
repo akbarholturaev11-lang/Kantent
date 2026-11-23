@@ -82,6 +82,26 @@ export function selectExactBlocks(expected, blocks, match = (wanted, heard) => w
   return matches;
 }
 
+/**
+ * Real OpenRouter RU 2026-11-28 take: the same spoken "и" came back from two
+ * passes (24.754–24.954 s and 24.85–24.95 s); the planner used one copy for
+ * the 一 alias and the other for the conjunction, leaving 张票 an impossible
+ * negative gap. Keep one block per spoken word: a later block with the same
+ * text that overlaps an earlier kept one by more than half of the shorter is
+ * the same provider word, not a second one. Times are never changed.
+ */
+export function dedupeSameWordBlocks(blocks) {
+  const kept = [];
+  const norm = (b) => (b.tokens ?? [b.text]).join(" ").toLocaleLowerCase("und");
+  for (const block of [...blocks].sort((a, b) => a.startMs - b.startMs || a.endMs - b.endMs)) {
+    const same = kept.find((k) => norm(k) === norm(block) &&
+      Math.min(k.endMs, block.endMs) - Math.max(k.startMs, block.startMs) >
+        0.5 * Math.min(k.endMs - k.startMs, block.endMs - block.startMs));
+    if (!same) kept.push(block);
+  }
+  return kept;
+}
+
 export function buildRecoveryPlan(expected, blocks, durationMs, { match } = {}) {
   if (!Number.isFinite(durationMs) || durationMs <= 0) throw Error("Exact source audio duration required.");
   for (const b of blocks) {
@@ -181,4 +201,62 @@ export function mergeRecoveredBlocks(expected,original,plan,recovered) {
     if((block.tokens??[]).join("")===spoken.join(""))return block;
     return {...block,text:spoken.join(" "),tokens:spoken,covers:to-from};
   });
+}
+
+/**
+ * Owner rule 2026-11-23: when the recognizer times a word at its exact place
+ * but writes a translation/transliteration (other script: 个 → "г") or a
+ * trivially misspelt form (one letter: "харидӣ" → "хариде"), the script's
+ * correct form may take that provider-measured slot. Bounds: one provider
+ * pass, words strictly inside the verified gap, the heard token count equals
+ * the expected count (one-to-one, in time order), every pair is exact OR a
+ * cross-script / one-edit near miss, and at most half (min 1) are substitutes.
+ * Provider times are kept as returned; nothing is estimated.
+ */
+const scriptOf = (text) => /\p{Script=Han}/u.test(text) ? "han" : /\p{Script=Hangul}/u.test(text) ? "hangul"
+  : /\p{Script=Cyrillic}/u.test(text) ? "cyrl" : /\p{Script=Latin}/u.test(text) ? "latn" : "other";
+const plainWord = (text) => text.normalize("NFKD").replace(/\p{M}/gu, "").toLocaleLowerCase("und")
+  .replace(/[^\p{L}\p{N}]/gu, "").replaceAll("ё", "е");
+function editDistance(a, b) {
+  const row = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    let diagonal = row[0];
+    row[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      const next = row[j];
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, diagonal + (a[i - 1] === b[j - 1] ? 0 : 1));
+      diagonal = next;
+    }
+  }
+  return row[b.length];
+}
+export function timedNearMiss(wanted, heard) {
+  const a = plainWord(wanted), b = plainWord(heard);
+  if (!a || !b) return null;
+  if (scriptOf(a) !== scriptOf(b)) return "translation";
+  if (a.length >= 3 && editDistance(a, b) <= 1) return "letter";
+  return null;
+}
+export function selectTimedSubstitution(tokens, blocks, { match = (a, b) => a === b, gap } = {}) {
+  const inside = [...blocks].filter((b) => !gap || (b.startMs >= gap.startMs - 120 && b.endMs <= gap.endMs + 120))
+    .sort((a, b) => a.startMs - b.startMs);
+  const heard = inside.flatMap((b) => (b.tokens ?? [b.text]).length === 1 ? [b] : []);
+  if (heard.length !== inside.length || heard.length !== tokens.length || !tokens.length) return null;
+  const pairs = [];
+  let lastEnd = -Infinity;
+  for (let i = 0; i < tokens.length; i++) {
+    const block = heard[i], said = (block.tokens ?? [block.text])[0];
+    if (block.endMs - block.startMs < 60 || block.startMs < lastEnd - 40) return null;
+    lastEnd = block.endMs;
+    const kind = match(tokens[i], said) ? "exact" : timedNearMiss(tokens[i], said);
+    if (!kind) return null;
+    pairs.push({ expected: tokens[i], heard: said, kind, startMs: block.startMs, endMs: block.endMs });
+  }
+  const substituted = pairs.filter((p) => p.kind !== "exact").length;
+  if (!substituted || substituted > Math.max(1, Math.floor(tokens.length / 2))) return null;
+  return {
+    blocks: heard.map((block, i) => pairs[i].kind === "exact" ? block
+      : { ...block, text: tokens[i], tokens: [tokens[i]], heardText: pairs[i].heard, ownerTimedSubstitution: pairs[i].kind }),
+    pairs,
+  };
 }

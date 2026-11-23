@@ -158,3 +158,36 @@ test("real OpenRouter 2026-11-23 takes: same-word spellings align, different wor
   assert.equal(tg("во", "我"), true, "alias of 我 heard as the Hanzi");
   assert.equal(tg("во", "看"), false);
 });
+
+test("neutral 了 le heard as Tajik-spelled \"ла\"; other e-finals keep their vowel", () => {
+  const readings = buildHanziReadings([{ hanzi: "了", pinyin: "le" }, { hanzi: "的", pinyin: "de" }]);
+  const tg = createSpokenMatcher({ locale: "tg-TJ", readings });
+  assert.equal(tg("了", "ла"), true);
+  assert.equal(tg("的", "да"), false);
+});
+
+test("OpenRouter zh-hint spellings: Hangul syllables and digits for verified readings only", () => {
+  const readings = buildHanziReadings([{ hanzi: "张", pinyin: "zhāng" }, { hanzi: "票", pinyin: "piào" },
+    { hanzi: "一", pinyin: "yī" }, { hanzi: "八", pinyin: "bā" }, { hanzi: "几", pinyin: "jǐ" }]);
+  const m = createSpokenMatcher({ locale: "ru-RU", readings });
+  assert.equal(m("张", "장"), true);
+  assert.equal(m("票", "표"), true);
+  assert.equal(m("一", "이"), true);
+  assert.equal(m("几", "지"), true);
+  assert.equal(m("张", "표"), false);
+  assert.equal(m("票", "장"), false);
+  assert.equal(m("几", "지진"), false, "two syllables are not one");
+  assert.equal(m("八", "8"), true);
+  assert.equal(m("八", "8:00"), true);
+  assert.equal(m("八", "9"), false);
+});
+
+test("Tajik -ng spelled \"нг\" and a Hanzi alias heard as Hangul", () => {
+  const readings = buildHanziReadings([{ hanzi: "张", pinyin: "zhāng" }, { hanzi: "一", pinyin: "yī" }]);
+  const tg = createSpokenMatcher({ locale: "tg-TJ", readings });
+  assert.equal(tg("张", "ҷанг"), true);
+  assert.equal(tg("张", "ҷан"), true);
+  assert.equal(tg("张", "ҷанго"), false);
+  assert.equal(tg("и", "이"), true);
+  assert.equal(tg("и", "장"), false);
+});

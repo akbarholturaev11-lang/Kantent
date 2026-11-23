@@ -132,3 +132,38 @@ test("a boundary shifted between two adjacent locale words keeps its measured sp
   assert.deepEqual(merged[1].tokens,["чинӣ","чӣ"],"source token boundaries are restored for the whole-narration alignment");
   assert.equal(merged[1].endMs,1100);
 });
+
+test("the same spoken word from two passes is one block (real RU 2026-11-28 negative gap)", async () => {
+  const { dedupeSameWordBlocks } = await import("./gemini-word-recovery.mjs");
+  const blocks = [
+    { text: "и", tokens: ["и"], startMs: 24754, endMs: 24954 },
+    { text: "и", tokens: ["и"], startMs: 24850, endMs: 24950 },
+    { text: "получает", tokens: ["получает"], startMs: 24954, endMs: 25454 },
+    { text: "и", tokens: ["и"], startMs: 30000, endMs: 30100 },
+  ];
+  const kept = dedupeSameWordBlocks(blocks);
+  assert.deepEqual(kept.map((b) => b.startMs), [24754, 24954, 30000]);
+});
+
+test("owner 2026-11-23: timed translation or one-letter miss takes the script form at the provider slot", async () => {
+  const { selectTimedSubstitution, timedNearMiss } = await import("./gemini-word-recovery.mjs");
+  assert.equal(timedNearMiss("个", "г"), "translation");
+  assert.equal(timedNearMiss("харидӣ", "хариде"), "letter");
+  assert.equal(timedNearMiss("и", "в"), null);
+  assert.equal(timedNearMiss("купить", "продать"), null);
+  const gap = { startMs: 1000, endMs: 2000 };
+  const blocks = [
+    { text: "калимаи", tokens: ["калимаи"], startMs: 1000, endMs: 1400 },
+    { text: "г", tokens: ["г"], startMs: 1420, endMs: 1600 },
+    { text: "нагӯ", tokens: ["нагӯ"], startMs: 1620, endMs: 1990 },
+  ];
+  const result = selectTimedSubstitution(["калимаи", "个", "нагӯ"], blocks, { gap });
+  assert.deepEqual(result.blocks.map((b) => [b.text, b.startMs, b.endMs]),
+    [["калимаи", 1000, 1400], ["个", 1420, 1600], ["нагӯ", 1620, 1990]]);
+  assert.equal(result.blocks[1].ownerTimedSubstitution, "translation");
+  // Count mismatch, too many substitutions, or an unrelated word stay blockers.
+  assert.equal(selectTimedSubstitution(["калимаи", "个", "нагӯ"], blocks.slice(0, 2), { gap }), null);
+  assert.equal(selectTimedSubstitution(["a", "个", "b"], blocks, { gap }), null);
+  assert.equal(selectTimedSubstitution(["калимаи", "个", "бигӯ"], blocks, { gap }), null);
+  assert.equal(selectTimedSubstitution(["калимаи", "个", "нагӯ"], blocks, { gap: { startMs: 1500, endMs: 2000 } }), null);
+});

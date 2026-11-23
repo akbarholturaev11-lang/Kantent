@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 221,
+  "revision": 226,
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
     "id": "hsk-ai-profile-link-download-v1",
@@ -26784,6 +26784,407 @@
         "voiceProfileId": "ru-gemini-kore-v1",
         "voiceProvider": "gemini-api",
         "nonCtaContentHash": "57fc308856befe07d2721510bb765c6da122492db11cb7db13767de74908aeba",
+        "motionDesign": true,
+        "motionDesignStyle": "explain-actions-v1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "ticket-counter-zhang-20261128-series-v2-20261123",
+      "episodeId": "ticket-counter-zhang-20261128",
+      "date": "2026-11-28",
+      "formatId": "series-follow-next-part",
+      "ruleVersion": "cta-policy-v20",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Use the owner-approved serial ending for this part and establish its baseline response.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "series-follow-next-part-v1",
+      "registeredAt": "2026-11-23T14:56:54.460Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0017",
+        "cta-correction-0018"
+      ],
+      "supersedes": "ticket-counter-zhang-20261128-series-20261122",
+      "copyHash": "f27e6328431e82237dd1bc7a4f456b8706265cb11995231e5ea26ff206ab6a12",
+      "copySnapshot": {
+        "cta": "Подпишитесь, чтобы не пропустить вторую часть.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Подпишитесь, чтобы не пропустить вторую часть.",
+            "headline": "ПОДПИШИТЕСЬ",
+            "screenCaption": "Подпишитесь — вторая часть впереди",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "ПОДПИШИТЕСЬ",
+                "brandLogo": true,
+                "motion": "pop",
+                "syncCueText": "Подпишитесь",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ВТОРАЯ ЧАСТЬ",
+                "motion": "slide",
+                "syncCueText": "вторую",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "Follow ending for a serial part before the last: on «Подпишитесь» show the HSK AI logo with ПОДПИШИТЕСЬ; on «вторую» show ВТОРАЯ ЧАСТЬ and hold it to the end. Mention only the existing, registered next part; no date promise, download, link, fake follow button or simulated tap."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 3,
+            "precedingSceneIds": [
+              "hook",
+              "count",
+              "recap"
+            ],
+            "durationSec": 4,
+            "plannedStartSec": 29
+          }
+        ]
+      },
+      "placementHash": "d9c37205fa90091d3ad7c4f487ff01b4e02f6b387169d6ccf017c39662dde140",
+      "contextSnapshot": {
+        "level": "HSK 1–2",
+        "topic": "Билет на вечернее шоу: 一张票",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "ru-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "2adc1aafc8cad45722197b106649c50bbb9a6bc7a2e894b3a5a09eca2114c943",
+        "motionDesign": true,
+        "motionDesignStyle": "explain-actions-v1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "ticket-counter-zhang-20261128-series-v3-20261123",
+      "episodeId": "ticket-counter-zhang-20261128",
+      "date": "2026-11-28",
+      "formatId": "series-follow-next-part",
+      "ruleVersion": "cta-policy-v20",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Use the owner-approved serial ending for this part and establish its baseline response.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "series-follow-next-part-v1",
+      "registeredAt": "2026-11-23T14:58:24.865Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0017",
+        "cta-correction-0018"
+      ],
+      "supersedes": "ticket-counter-zhang-20261128-series-v2-20261123",
+      "copyHash": "f27e6328431e82237dd1bc7a4f456b8706265cb11995231e5ea26ff206ab6a12",
+      "copySnapshot": {
+        "cta": "Подпишитесь, чтобы не пропустить вторую часть.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Подпишитесь, чтобы не пропустить вторую часть.",
+            "headline": "ПОДПИШИТЕСЬ",
+            "screenCaption": "Подпишитесь — вторая часть впереди",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "ПОДПИШИТЕСЬ",
+                "brandLogo": true,
+                "motion": "pop",
+                "syncCueText": "Подпишитесь",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ВТОРАЯ ЧАСТЬ",
+                "motion": "slide",
+                "syncCueText": "вторую",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "Follow ending for a serial part before the last: on «Подпишитесь» show the HSK AI logo with ПОДПИШИТЕСЬ; on «вторую» show ВТОРАЯ ЧАСТЬ and hold it to the end. Mention only the existing, registered next part; no date promise, download, link, fake follow button or simulated tap."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 3,
+            "precedingSceneIds": [
+              "hook",
+              "count",
+              "recap"
+            ],
+            "durationSec": 4,
+            "plannedStartSec": 29
+          }
+        ]
+      },
+      "placementHash": "d9c37205fa90091d3ad7c4f487ff01b4e02f6b387169d6ccf017c39662dde140",
+      "contextSnapshot": {
+        "level": "HSK 1–2",
+        "topic": "Билет на вечернее шоу: 一张票",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "ru-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "5e6453e159789c2d930f5edf5370440a106c8f17f11d6180a818d1cd299af951",
+        "motionDesign": true,
+        "motionDesignStyle": "explain-actions-v1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "ticket-counter-zhang-20261128-series-v4-20261123",
+      "episodeId": "ticket-counter-zhang-20261128",
+      "date": "2026-11-28",
+      "formatId": "series-follow-next-part",
+      "ruleVersion": "cta-policy-v20",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Use the owner-approved serial ending for this part and establish its baseline response.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "series-follow-next-part-v1",
+      "registeredAt": "2026-11-23T14:59:07.006Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0017",
+        "cta-correction-0018"
+      ],
+      "supersedes": "ticket-counter-zhang-20261128-series-v3-20261123",
+      "copyHash": "f27e6328431e82237dd1bc7a4f456b8706265cb11995231e5ea26ff206ab6a12",
+      "copySnapshot": {
+        "cta": "Подпишитесь, чтобы не пропустить вторую часть.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Подпишитесь, чтобы не пропустить вторую часть.",
+            "headline": "ПОДПИШИТЕСЬ",
+            "screenCaption": "Подпишитесь — вторая часть впереди",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "ПОДПИШИТЕСЬ",
+                "brandLogo": true,
+                "motion": "pop",
+                "syncCueText": "Подпишитесь",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ВТОРАЯ ЧАСТЬ",
+                "motion": "slide",
+                "syncCueText": "вторую",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "Follow ending for a serial part before the last: on «Подпишитесь» show the HSK AI logo with ПОДПИШИТЕСЬ; on «вторую» show ВТОРАЯ ЧАСТЬ and hold it to the end. Mention only the existing, registered next part; no date promise, download, link, fake follow button or simulated tap."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 3,
+            "precedingSceneIds": [
+              "hook",
+              "count",
+              "recap"
+            ],
+            "durationSec": 4,
+            "plannedStartSec": 29
+          }
+        ]
+      },
+      "placementHash": "d9c37205fa90091d3ad7c4f487ff01b4e02f6b387169d6ccf017c39662dde140",
+      "contextSnapshot": {
+        "level": "HSK 1–2",
+        "topic": "Билет на вечернее шоу: 一张票",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "ru-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "3872dc05f2351ab1373663a2f8f4a5e204167cdbcf65e622d48ddb1d4e0bd968",
+        "motionDesign": true,
+        "motionDesignStyle": "explain-actions-v1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "ticket-counter-zhang-20261128-series-v5-20261123",
+      "episodeId": "ticket-counter-zhang-20261128",
+      "date": "2026-11-28",
+      "formatId": "series-follow-next-part",
+      "ruleVersion": "cta-policy-v20",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Use the owner-approved serial ending for this part and establish its baseline response.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "series-follow-next-part-v1",
+      "registeredAt": "2026-11-23T15:00:06.534Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0017",
+        "cta-correction-0018"
+      ],
+      "supersedes": "ticket-counter-zhang-20261128-series-v4-20261123",
+      "copyHash": "f27e6328431e82237dd1bc7a4f456b8706265cb11995231e5ea26ff206ab6a12",
+      "copySnapshot": {
+        "cta": "Подпишитесь, чтобы не пропустить вторую часть.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Подпишитесь, чтобы не пропустить вторую часть.",
+            "headline": "ПОДПИШИТЕСЬ",
+            "screenCaption": "Подпишитесь — вторая часть впереди",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "ПОДПИШИТЕСЬ",
+                "brandLogo": true,
+                "motion": "pop",
+                "syncCueText": "Подпишитесь",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ВТОРАЯ ЧАСТЬ",
+                "motion": "slide",
+                "syncCueText": "вторую",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "Follow ending for a serial part before the last: on «Подпишитесь» show the HSK AI logo with ПОДПИШИТЕСЬ; on «вторую» show ВТОРАЯ ЧАСТЬ and hold it to the end. Mention only the existing, registered next part; no date promise, download, link, fake follow button or simulated tap."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 3,
+            "precedingSceneIds": [
+              "hook",
+              "count",
+              "recap"
+            ],
+            "durationSec": 4,
+            "plannedStartSec": 29
+          }
+        ]
+      },
+      "placementHash": "d9c37205fa90091d3ad7c4f487ff01b4e02f6b387169d6ccf017c39662dde140",
+      "contextSnapshot": {
+        "level": "HSK 1–2",
+        "topic": "Билет на вечернее шоу: 一张票",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "ru-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "2b0e8b53e3466a327797cab6f622c67062cb0c5f70d988c802cacd5ef101c151",
+        "motionDesign": true,
+        "motionDesignStyle": "explain-actions-v1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "ticket-counter-zhang-20261128-tiktok-cta-v1",
+      "episodeId": "ticket-counter-zhang-20261128",
+      "date": "2026-11-28",
+      "formatId": "tiktok-ai-install",
+      "ruleVersion": "cta-policy-v20",
+      "offerId": "hsk-ai-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Bind the owner-approved TikTok AI-install-help CTA and cue-synced typography to this reviewed video; performance remains unmeasured.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "tiktok-ai-install-v1",
+      "registeredAt": "2026-11-23T15:27:16.435Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0004",
+        "cta-correction-0005",
+        "cta-correction-0006",
+        "cta-correction-0017",
+        "cta-correction-0018",
+        "cta-correction-0020"
+      ],
+      "supersedes": null,
+      "copyHash": "71f11ab477089e44545b98b017a882e9e18aad5e358339e226f8b90f563652d3",
+      "copySnapshot": {
+        "cta": "Просто спросите у ИИ, которым пользуетесь: «Как установить приложение HSK AI с сайта hskai.app?»",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Просто спросите у ИИ, которым пользуетесь: «Как установить приложение HSK AI с сайта hskai.app?»",
+            "headline": "УСТАНОВКА HSK AI",
+            "screenCaption": "hskai.app",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "СПРОСИТЕ У ИИ",
+                "motion": "reveal",
+                "syncCueText": "спросите",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "AI",
+                "meaning": "ВАШ ИИ",
+                "motion": "slide",
+                "syncCueText": "ИИ",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "УСТАНОВИТЬ ПРИЛОЖЕНИЕ",
+                "brandLogo": true,
+                "actionIcon": "app-download",
+                "motion": "reveal",
+                "syncCueText": "установить",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "hskai.app",
+                "meaning": "АДРЕС САЙТА",
+                "motion": "slide",
+                "syncCueText": "сайта",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "One central brand stage, one word-timed subtitle. On \"спросите\" show the question action, on \"ИИ\" a neutral AI symbol without copied UI/branding, on \"установить\" the HSK AI mark and install cue, and on \"сайта\" show readable hskai.app. No competing overlays, fake AI answer, fake DM, installation guarantee or completed-install animation."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 3,
+            "precedingSceneIds": [
+              "hook",
+              "count",
+              "recap"
+            ],
+            "durationSec": 4,
+            "plannedStartSec": 29
+          }
+        ]
+      },
+      "placementHash": "d9c37205fa90091d3ad7c4f487ff01b4e02f6b387169d6ccf017c39662dde140",
+      "contextSnapshot": {
+        "level": "HSK 1–2",
+        "topic": "Билет на вечернее шоу: 一张票",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "ru-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "2b0e8b53e3466a327797cab6f622c67062cb0c5f70d988c802cacd5ef101c151",
         "motionDesign": true,
         "motionDesignStyle": "explain-actions-v1"
       },

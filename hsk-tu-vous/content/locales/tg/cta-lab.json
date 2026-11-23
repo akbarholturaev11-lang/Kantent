@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "revision": 117,
+  "revision": 119,
   "languageCode": "tg-TJ",
   "baselineFormatId": "benefit-profile-link-download",
   "offer": {
@@ -12872,6 +12872,168 @@
         "voiceProfileId": "tg-gemini-kore-v1",
         "voiceProvider": "gemini-api",
         "nonCtaContentHash": "8724334a5242395bc914769ad851b3e03f439b76d70fb429dd81beb92019bf42",
+        "motionDesign": true,
+        "motionDesignStyle": "explain-actions-v1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "ticket-counter-zhang-20261128-series-v2-20261123",
+      "episodeId": "ticket-counter-zhang-20261128",
+      "date": "2026-11-28",
+      "formatId": "series-follow-next-part",
+      "ruleVersion": "cta-policy-v2",
+      "offerId": "hsk-ai-tg-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Use the owner-approved serial ending for this part and establish its baseline response.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "series-follow-next-part-v1",
+      "registeredAt": "2026-11-23T15:45:20.002Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0001"
+      ],
+      "supersedes": "ticket-counter-zhang-20261128-series-20261122",
+      "copyHash": "821eaddd2ed39acb6b610c97be122028e4d81835c2a96b1f7b9c8c192c0a4d60",
+      "copySnapshot": {
+        "cta": "Обуна шавед, то қисми дуюмро аз даст надиҳед.",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Обуна шавед, то қисми дуюмро аз даст надиҳед.",
+            "headline": "ОБУНА ШАВЕД",
+            "screenCaption": "Обуна шавед — қисми дуюм дар пеш аст",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "HSK AI",
+                "meaning": "ОБУНА ШАВЕД",
+                "brandLogo": true,
+                "motion": "pop",
+                "syncCueText": "Обуна",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "ҚИСМИ ДУЮМ",
+                "motion": "slide",
+                "syncCueText": "дуюмро",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "Follow ending for a serial part before the last: on «Обуна» show the HSK AI logo with ОБУНА ШАВЕД; on «дуюмро» show ҚИСМИ ДУЮМ and hold it to the end. Mention only the existing, registered next part; no date promise, download, link, fake follow button or simulated tap."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 3,
+            "precedingSceneIds": [
+              "hook",
+              "count",
+              "recap"
+            ],
+            "durationSec": 4,
+            "plannedStartSec": 32
+          }
+        ]
+      },
+      "placementHash": "c53f0420f849647dc8689694506796713d259021ec967755da33690be7972df2",
+      "contextSnapshot": {
+        "level": "HSK 1–2",
+        "topic": "Билет ба намоиши шом: 一张票",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "tg-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "593f03a8cb794cb7b27553371d02703fa995d057dde96365de7e511b0490d339",
+        "motionDesign": true,
+        "motionDesignStyle": "explain-actions-v1"
+      },
+      "primaryMetric": "profile-link-clickers-per-1000-views",
+      "evidenceStatus": "unmeasured"
+    },
+    {
+      "id": "ticket-counter-zhang-20261128-tiktok-cta-v1",
+      "episodeId": "ticket-counter-zhang-20261128",
+      "date": "2026-11-28",
+      "formatId": "tiktok-ai-install",
+      "ruleVersion": "cta-policy-v2",
+      "offerId": "hsk-ai-tg-profile-link-download-v1",
+      "keyword": null,
+      "hypothesis": "Bind the owner-approved TikTok AI-install-help CTA and cue-synced typography to this reviewed video; performance remains unmeasured.",
+      "changedVariable": "baseline",
+      "comparisonGroupId": "tiktok-ai-install-v1",
+      "registeredAt": "2026-11-23T15:50:30.704Z",
+      "acknowledgedCorrectionIds": [
+        "cta-correction-0001",
+        "cta-correction-0002"
+      ],
+      "supersedes": null,
+      "copyHash": "535aae83bba8c70fe7a18abdeb6ac9a41a3bfbad228c5bdcd774d13b7cda1f26",
+      "copySnapshot": {
+        "cta": "Танҳо аз зеҳни сунъие, ки истифода мебаред, пурсед: «Чӣ тавр барномаи HSK AI-ро аз сайти hskai.app насб кунам?»",
+        "scenes": [
+          {
+            "id": "cta",
+            "narration": "Танҳо аз зеҳни сунъие, ки истифода мебаред, пурсед: «Чӣ тавр барномаи HSK AI-ро аз сайти hskai.app насб кунам?»",
+            "headline": "НАСБИ HSK AI",
+            "screenCaption": "hskai.app",
+            "captionStyleId": "pill",
+            "visualBeats": [
+              {
+                "hero": "САВОЛ ДИҲЕД",
+                "motion": "reveal",
+                "syncCueText": "пурсед",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "AI",
+                "meaning": "ЗЕҲНИ СУНЪӢ",
+                "motion": "slide",
+                "syncCueText": "зеҳни",
+                "transitionStyle": "slide-match"
+              },
+              {
+                "hero": "HSK AI",
+                "meaning": "НАСБИ БАРНОМА",
+                "brandLogo": true,
+                "actionIcon": "app-download",
+                "motion": "reveal",
+                "syncCueText": "насб",
+                "transitionStyle": "type-reveal"
+              },
+              {
+                "hero": "hskai.app",
+                "meaning": "СУРОҒАИ САЙТ",
+                "motion": "slide",
+                "syncCueText": "сайти",
+                "transitionStyle": "slide-match"
+              }
+            ],
+            "editPlan": "Як саҳнаи марказӣ, як субтитри синхронӣ. Дар «пурсед» — савол, дар «зеҳни» — рамзи AI бе интерфейси сохта, дар «насб» — HSK AI ва нишонаи насб, дар «сайти» — hskai.app-и равшан. На DM, на калимаи HSK, на ҷавоби сохтаи AI ё насби анҷомёфта."
+          }
+        ],
+        "placement": [
+          {
+            "sceneId": "cta",
+            "sceneIndex": 3,
+            "precedingSceneIds": [
+              "hook",
+              "count",
+              "recap"
+            ],
+            "durationSec": 4,
+            "plannedStartSec": 32
+          }
+        ]
+      },
+      "placementHash": "c53f0420f849647dc8689694506796713d259021ec967755da33690be7972df2",
+      "contextSnapshot": {
+        "level": "HSK 1–2",
+        "topic": "Билет ба намоиши шом: 一张票",
+        "hookFormatId": "scenario",
+        "voiceProfileId": "tg-gemini-kore-v1",
+        "voiceProvider": "gemini-api",
+        "nonCtaContentHash": "593f03a8cb794cb7b27553371d02703fa995d057dde96365de7e511b0490d339",
         "motionDesign": true,
         "motionDesignStyle": "explain-actions-v1"
       },
