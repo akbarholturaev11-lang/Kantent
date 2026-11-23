@@ -453,6 +453,145 @@
           }
         },
         {
+          "id": "correction-action-result",
+          "kind": "graphic",
+          "cueText": "купил две книги",
+          "explains": "Покупка завершилась: обе книги уже в сумке — это и выражает 了.",
+          "visual": {
+            "title": "Результат сделки",
+            "hanzi": "我买了两本书",
+            "pinyin": "Wǒ mǎi le liǎng běn shū",
+            "meaning": "Я купил две книги",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "pointer",
+                  "type": "polyline",
+                  "attrs": {
+                    "points": "110,86 200,118 222,103",
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 9,
+                    "strokeLinecap": "round",
+                    "strokeLinejoin": "round"
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 0.75
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "nodeId": "pointer",
+                  "property": "y",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": -12
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "book-result"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "correct",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
           "id": "correction-action-2",
           "kind": "graphic",
           "cueText": "我没买书",
@@ -726,6 +865,131 @@
           }
         },
         {
+          "id": "practice-action-no-purchase",
+          "kind": "graphic",
+          "cueText": "покупки не было",
+          "explains": "Книги остались на прилавке: покупки не было, поэтому дальше отрицание без 了.",
+          "visual": {
+            "title": "Без сделки",
+            "hanzi": "没买",
+            "pinyin": "méi mǎi",
+            "meaning": "не купил",
+            "graphic": {
+              "width": 600,
+              "height": 400,
+              "nodes": [
+                {
+                  "id": "stall",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 66,
+                    "y": 280,
+                    "width": 468,
+                    "height": 25,
+                    "rx": 6,
+                    "fill": "muted"
+                  }
+                },
+                {
+                  "id": "book-one",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 165,
+                    "y": 139,
+                    "width": 96,
+                    "height": 133,
+                    "rx": 7,
+                    "fill": "teal",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "book-two",
+                  "type": "rect",
+                  "attrs": {
+                    "x": 280,
+                    "y": 125,
+                    "width": 96,
+                    "height": 147,
+                    "rx": 7,
+                    "fill": "red",
+                    "stroke": "foreground",
+                    "strokeWidth": 4
+                  }
+                },
+                {
+                  "id": "spine-one",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 184,
+                    "y1": 149,
+                    "x2": 184,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "spine-two",
+                  "type": "line",
+                  "attrs": {
+                    "x1": 299,
+                    "y1": 136,
+                    "x2": 299,
+                    "y2": 259,
+                    "stroke": "gold",
+                    "strokeWidth": 5
+                  }
+                },
+                {
+                  "id": "highlight",
+                  "type": "circle",
+                  "attrs": {
+                    "cx": 300,
+                    "cy": 208,
+                    "r": 107,
+                    "fill": "none",
+                    "stroke": "gold",
+                    "strokeWidth": 7
+                  }
+                }
+              ],
+              "tracks": [
+                {
+                  "nodeId": "book-one",
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "atMs": 0,
+                      "value": 1
+                    },
+                    {
+                      "atMs": 520,
+                      "value": 0.55
+                    }
+                  ]
+                }
+              ]
+            },
+            "illustration": {
+              "layout": "scene",
+              "images": [
+                "books-close"
+              ],
+              "cast": [
+                {
+                  "id": "panda",
+                  "mood": "loading",
+                  "x": 0.78,
+                  "y": 0.86,
+                  "h": 0.29
+                }
+              ]
+            }
+          }
+        },
+        {
           "id": "practice-action-2",
           "kind": "graphic",
           "cueText": "我没买书",
@@ -836,7 +1100,7 @@
             "illustration": {
               "layout": "scene",
               "images": [
-                "book-result"
+                "books-close"
               ],
               "cast": [
                 {
@@ -893,8 +1157,8 @@
     },
     "selectionReason": "Вариант B: ошибочная фраза → корректная форма → практика; отрицание не смешивается с общим прошедшим временем.",
     "firstPayoff": {
-      "sceneId": "correction",
-      "cueText": "我买了两本书"
+      "sceneId": "mistake",
+      "cueText": "не ставят"
     },
     "reHooks": []
   },
