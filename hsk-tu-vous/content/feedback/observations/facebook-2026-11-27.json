@@ -1,0 +1,414 @@
+{
+  "schemaVersion": 1,
+  "description": "Verified facebook video lifetime observations; MP4 receipt and independent native account video proof.",
+  "collection": {
+    "collectedAt": "2026-11-27T03:28:54.000Z",
+    "baselineMain": "3f35601d8ffc10381e10d64cf188de9358dcb0b9",
+    "connector": "Zernio"
+  },
+  "observations": [
+    {
+      "platform": "facebook",
+      "platformPostId": "1159152280609531_122123597643319062",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "accountUsername": "Akbarholturaev",
+      "locale": "tg",
+      "publishedAt": "2026-11-23T11:03:40.810Z",
+      "observedAt": "2026-11-27T03:28:54.000Z",
+      "collectedAt": "2026-11-27T03:28:54.000Z",
+      "window": "lifetime",
+      "postUrl": "https://www.facebook.com/reel/2233309560953060/",
+      "episodeId": "xiang-yao-cafe-20261123",
+      "contentType": "lesson",
+      "content": {
+        "id": "xiang-yao-cafe-20261123",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "08eaedf050fa4160ae60991e396b3bf9925dc46af3671df6cba6585620fb4363"
+      },
+      "videoSha256": "31d1c9c5cdfe561674a2e566a29e95d19c737d8093ca8e016803bf2b406bad2d",
+      "series": null,
+      "hookFormat": "scenario",
+      "hskLevel": null,
+      "effectStyle": "explain-actions-v1",
+      "creativeFormatId": null,
+      "storytellingPattern": null,
+      "zernioPostId": "6b02dfb582db9cf4e6be37e6",
+      "providerRecordId": null,
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "follows": "count",
+        "avgWatchMs": "milliseconds",
+        "skipRatePercent": "percent",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 107,
+        "reach": 100,
+        "likes": 2,
+        "comments": 0,
+        "saves": 0,
+        "shares": 0,
+        "follows": null,
+        "avgWatchMs": null,
+        "skipRatePercent": null,
+        "durationSeconds": null
+      },
+      "source": {
+        "provider": "Zernio",
+        "connector": "Zernio",
+        "endpoint": "get_post_analytics + list_posts + accounts_get_account_posts",
+        "accountId": "6ae161de384955d3b3ff194b",
+        "syncedAt": "2026-11-27T02:31:15.307Z",
+        "syncedAtScope": "platform dashboard dataAsOf; not per-post update timestamp",
+        "providerMetricUpdatedAt": null,
+        "syncStatus": "synced",
+        "providerRecordId": null,
+        "sourceUrl": "https://www.facebook.com/reel/2233309560953060/",
+        "windowEvidence": null,
+        "refresh": {
+          "dashboardDataAsOf": "2026-11-27T02:31:15.307Z",
+          "postRefreshAt": null
+        },
+        "nativeIdentity": {
+          "endpoint": "accounts_get_account_posts",
+          "id": "1159152280609531_122123597643319062",
+          "verifiedPermalink": "https://www.facebook.com/reel/2233309560953060/"
+        },
+        "attribution": {
+          "kind": "approved-ledger-exact-zernio-native-account",
+          "approvedVideoSha256": "31d1c9c5cdfe561674a2e566a29e95d19c737d8093ca8e016803bf2b406bad2d",
+          "sourceHash": "08eaedf050fa4160ae60991e396b3bf9925dc46af3671df6cba6585620fb4363",
+          "ledgerHead": "3f35601d8ffc10381e10d64cf188de9358dcb0b9"
+        }
+      },
+      "metricCaveat": "Provider cumulative lifetime. Observation collection time is not metric refresh time. Unsupported fields and ambiguous reach zeros remain null. No inferred conversions or brand recall; TikTok install-help CTA comments are not link-request conversion."
+    },
+    {
+      "platform": "facebook",
+      "platformPostId": "1159152280609531_122123027949319062",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "accountUsername": "Akbarholturaev",
+      "locale": "tg",
+      "publishedAt": "2026-11-17T11:03:46.008Z",
+      "observedAt": "2026-11-27T03:28:54.000Z",
+      "collectedAt": "2026-11-27T03:28:54.000Z",
+      "window": "lifetime",
+      "postUrl": "https://www.facebook.com/reel/1549258953675986/",
+      "episodeId": "bi-comparison-height-20261116",
+      "contentType": "lesson",
+      "content": {
+        "id": "bi-comparison-height-20261116",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "366ed91502617e9e204f1d83432b739c16d9ac68c5cf6f8c56e640ed0bc40931"
+      },
+      "videoSha256": "21a4dc5b5463bd9c1bdde742181c84dc25a9d2bba0d6e4db493f6a2b9a910333",
+      "series": null,
+      "hookFormat": "question",
+      "hskLevel": null,
+      "effectStyle": "explain-actions-v1",
+      "creativeFormatId": null,
+      "storytellingPattern": null,
+      "zernioPostId": "6afbc675d7ef3259fe0634a1",
+      "providerRecordId": null,
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "follows": "count",
+        "avgWatchMs": "milliseconds",
+        "skipRatePercent": "percent",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 30,
+        "reach": 29,
+        "likes": 1,
+        "comments": 0,
+        "saves": 0,
+        "shares": 0,
+        "follows": null,
+        "avgWatchMs": null,
+        "skipRatePercent": null,
+        "durationSeconds": null
+      },
+      "source": {
+        "provider": "Zernio",
+        "connector": "Zernio",
+        "endpoint": "get_post_analytics + list_posts + accounts_get_account_posts",
+        "accountId": "6ae161de384955d3b3ff194b",
+        "syncedAt": "2026-11-27T02:31:15.307Z",
+        "syncedAtScope": "platform dashboard dataAsOf; not per-post update timestamp",
+        "providerMetricUpdatedAt": null,
+        "syncStatus": "synced",
+        "providerRecordId": null,
+        "sourceUrl": "https://www.facebook.com/reel/1549258953675986/",
+        "windowEvidence": null,
+        "refresh": {
+          "dashboardDataAsOf": "2026-11-27T02:31:15.307Z",
+          "postRefreshAt": null
+        },
+        "nativeIdentity": {
+          "endpoint": "accounts_get_account_posts",
+          "id": "1159152280609531_122123027949319062",
+          "verifiedPermalink": "https://www.facebook.com/reel/1549258953675986/"
+        },
+        "attribution": {
+          "kind": "approved-ledger-exact-zernio-native-account",
+          "approvedVideoSha256": "21a4dc5b5463bd9c1bdde742181c84dc25a9d2bba0d6e4db493f6a2b9a910333",
+          "sourceHash": "366ed91502617e9e204f1d83432b739c16d9ac68c5cf6f8c56e640ed0bc40931",
+          "ledgerHead": "3f35601d8ffc10381e10d64cf188de9358dcb0b9"
+        }
+      },
+      "metricCaveat": "Provider cumulative lifetime. Observation collection time is not metric refresh time. Unsupported fields and ambiguous reach zeros remain null. No inferred conversions or brand recall; TikTok install-help CTA comments are not link-request conversion."
+    },
+    {
+      "platform": "facebook",
+      "platformPostId": "1159152280609531_122122739571319062",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "accountUsername": "Akbarholturaev",
+      "locale": null,
+      "publishedAt": "2026-11-14T15:30:36.620Z",
+      "observedAt": "2026-11-27T03:28:54.000Z",
+      "collectedAt": "2026-11-27T03:28:54.000Z",
+      "window": "lifetime",
+      "postUrl": "https://www.facebook.com/reel/1855392532126864/",
+      "episodeId": null,
+      "contentType": null,
+      "series": null,
+      "hookFormat": null,
+      "hskLevel": null,
+      "effectStyle": null,
+      "creativeFormatId": null,
+      "storytellingPattern": null,
+      "zernioPostId": "6af87e8f0c99a67ccc9641de",
+      "providerRecordId": null,
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "follows": "count",
+        "avgWatchMs": "milliseconds",
+        "skipRatePercent": "percent",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 15,
+        "reach": 13,
+        "likes": 1,
+        "comments": 0,
+        "saves": 0,
+        "shares": 0,
+        "follows": null,
+        "avgWatchMs": null,
+        "skipRatePercent": null,
+        "durationSeconds": null
+      },
+      "source": {
+        "provider": "Zernio",
+        "connector": "Zernio",
+        "endpoint": "get_post_analytics + list_posts + accounts_get_account_posts",
+        "accountId": "6ae161de384955d3b3ff194b",
+        "syncedAt": "2026-11-27T02:31:15.307Z",
+        "syncedAtScope": "platform dashboard dataAsOf; not per-post update timestamp",
+        "providerMetricUpdatedAt": null,
+        "syncStatus": "synced",
+        "providerRecordId": null,
+        "sourceUrl": "https://www.facebook.com/reel/1855392532126864/",
+        "windowEvidence": null,
+        "refresh": {
+          "dashboardDataAsOf": "2026-11-27T02:31:15.307Z",
+          "postRefreshAt": null
+        },
+        "nativeIdentity": {
+          "endpoint": "accounts_get_account_posts",
+          "id": "1159152280609531_122122739571319062",
+          "verifiedPermalink": "https://www.facebook.com/reel/1855392532126864/"
+        },
+        "attribution": null
+      },
+      "metricCaveat": "Provider cumulative lifetime. Observation collection time is not metric refresh time. Unsupported fields and ambiguous reach zeros remain null. No inferred conversions or brand recall; TikTok install-help CTA comments are not link-request conversion."
+    },
+    {
+      "platform": "facebook",
+      "platformPostId": "1159152280609531_122122718781319062",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "accountUsername": "Akbarholturaev",
+      "locale": "tg",
+      "publishedAt": "2026-11-14T11:40:51.862Z",
+      "observedAt": "2026-11-27T03:28:54.000Z",
+      "collectedAt": "2026-11-27T03:28:54.000Z",
+      "window": "lifetime",
+      "postUrl": "https://www.facebook.com/reel/1428431543688745/",
+      "episodeId": "haishi-vs-huozhe-tea-20261113",
+      "contentType": "lesson",
+      "content": {
+        "id": "haishi-vs-huozhe-tea-20261113",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "ed4660c160f9050ff85109ddb2084b487144929df8f03feabe256e15615cbfb9"
+      },
+      "videoSha256": "2ae5c1b629298140bb3e92c8b8dcdc52950aad94c421f83fe2eb957817a42f7a",
+      "series": null,
+      "hookFormat": "contrast",
+      "hskLevel": null,
+      "effectStyle": "explain-actions-v1",
+      "creativeFormatId": null,
+      "storytellingPattern": null,
+      "zernioPostId": "6af7e1ccbb09bc1e9ffe63e5",
+      "providerRecordId": null,
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "follows": "count",
+        "avgWatchMs": "milliseconds",
+        "skipRatePercent": "percent",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 53,
+        "reach": 46,
+        "likes": 1,
+        "comments": 0,
+        "saves": 0,
+        "shares": 0,
+        "follows": null,
+        "avgWatchMs": null,
+        "skipRatePercent": null,
+        "durationSeconds": null
+      },
+      "source": {
+        "provider": "Zernio",
+        "connector": "Zernio",
+        "endpoint": "get_post_analytics + list_posts + accounts_get_account_posts",
+        "accountId": "6ae161de384955d3b3ff194b",
+        "syncedAt": "2026-11-27T02:31:15.307Z",
+        "syncedAtScope": "platform dashboard dataAsOf; not per-post update timestamp",
+        "providerMetricUpdatedAt": null,
+        "syncStatus": "synced",
+        "providerRecordId": null,
+        "sourceUrl": "https://www.facebook.com/reel/1428431543688745/",
+        "windowEvidence": null,
+        "refresh": {
+          "dashboardDataAsOf": "2026-11-27T02:31:15.307Z",
+          "postRefreshAt": null
+        },
+        "nativeIdentity": {
+          "endpoint": "accounts_get_account_posts",
+          "id": "1159152280609531_122122718781319062",
+          "verifiedPermalink": "https://www.facebook.com/reel/1428431543688745/"
+        },
+        "attribution": {
+          "kind": "approved-ledger-exact-zernio-native-account",
+          "approvedVideoSha256": "2ae5c1b629298140bb3e92c8b8dcdc52950aad94c421f83fe2eb957817a42f7a",
+          "sourceHash": "ed4660c160f9050ff85109ddb2084b487144929df8f03feabe256e15615cbfb9",
+          "ledgerHead": "3f35601d8ffc10381e10d64cf188de9358dcb0b9"
+        }
+      },
+      "metricCaveat": "Provider cumulative lifetime. Observation collection time is not metric refresh time. Unsupported fields and ambiguous reach zeros remain null. No inferred conversions or brand recall; TikTok install-help CTA comments are not link-request conversion."
+    },
+    {
+      "platform": "facebook",
+      "platformPostId": "1159152280609531_122122509843319062",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "accountUsername": "Akbarholturaev",
+      "locale": "tg",
+      "publishedAt": "2026-11-12T11:02:13.344Z",
+      "observedAt": "2026-11-27T03:28:54.000Z",
+      "collectedAt": "2026-11-27T03:28:54.000Z",
+      "window": "lifetime",
+      "postUrl": "https://www.facebook.com/reel/1663442675428780/",
+      "episodeId": "youdianr-vs-yidianr-price-20261111",
+      "contentType": "lesson",
+      "content": {
+        "id": "youdianr-vs-yidianr-price-20261111",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "8ac1f6402a3e84b8ae939f6e4d5b6f7fef4356e2c7875565793f582b37f80652"
+      },
+      "videoSha256": "c8ab30bf290a6c69bdff360558d45c1128f9f4f357e00967403a8009c9b04ad3",
+      "series": null,
+      "hookFormat": "scenario",
+      "hskLevel": null,
+      "effectStyle": "explain-actions-v1",
+      "creativeFormatId": null,
+      "storytellingPattern": null,
+      "zernioPostId": "6af556fdbf6b40867fb23aeb",
+      "providerRecordId": null,
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "follows": "count",
+        "avgWatchMs": "milliseconds",
+        "skipRatePercent": "percent",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 163,
+        "reach": 152,
+        "likes": 0,
+        "comments": 0,
+        "saves": 0,
+        "shares": 0,
+        "follows": null,
+        "avgWatchMs": null,
+        "skipRatePercent": null,
+        "durationSeconds": null
+      },
+      "source": {
+        "provider": "Zernio",
+        "connector": "Zernio",
+        "endpoint": "get_post_analytics + list_posts + accounts_get_account_posts",
+        "accountId": "6ae161de384955d3b3ff194b",
+        "syncedAt": "2026-11-27T02:31:15.307Z",
+        "syncedAtScope": "platform dashboard dataAsOf; not per-post update timestamp",
+        "providerMetricUpdatedAt": null,
+        "syncStatus": "synced",
+        "providerRecordId": null,
+        "sourceUrl": "https://www.facebook.com/reel/1663442675428780/",
+        "windowEvidence": null,
+        "refresh": {
+          "dashboardDataAsOf": "2026-11-27T02:31:15.307Z",
+          "postRefreshAt": null
+        },
+        "nativeIdentity": {
+          "endpoint": "accounts_get_account_posts",
+          "id": "1159152280609531_122122509843319062",
+          "verifiedPermalink": "https://www.facebook.com/reel/1663442675428780/"
+        },
+        "attribution": {
+          "kind": "approved-ledger-exact-zernio-native-account",
+          "approvedVideoSha256": "c8ab30bf290a6c69bdff360558d45c1128f9f4f357e00967403a8009c9b04ad3",
+          "sourceHash": "8ac1f6402a3e84b8ae939f6e4d5b6f7fef4356e2c7875565793f582b37f80652",
+          "ledgerHead": "3f35601d8ffc10381e10d64cf188de9358dcb0b9"
+        }
+      },
+      "metricCaveat": "Provider cumulative lifetime. Observation collection time is not metric refresh time. Unsupported fields and ambiguous reach zeros remain null. No inferred conversions or brand recall; TikTok install-help CTA comments are not link-request conversion."
+    }
+  ]
+}
