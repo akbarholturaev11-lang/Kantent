@@ -314,7 +314,7 @@
       "accountId": "6ae161de384955d3b3ff194b",
       "accountUsername": "Akbarholturaev",
       "zernioPostId": "6afbc675d7ef3259fe0634a1",
-      "platformPostId": null,
+      "platformPostId": "1159152280609531_122123027949319062",
       "status": "published",
       "videoSha256": "21a4dc5b5463bd9c1bdde742181c84dc25a9d2bba0d6e4db493f6a2b9a910333",
       "approvedVideoSha256": "21a4dc5b5463bd9c1bdde742181c84dc25a9d2bba0d6e4db493f6a2b9a910333",
@@ -342,10 +342,10 @@
         "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-19T00:05:17.000Z",
-          "zernioPostId": "6afbc675d7ef3259fe0634a1",
-          "accountId": "6ae161de384955d3b3ff194b"
+          "endpoint": "Zernio get_post + get_post_analytics + accounts_get_account_posts (exact analytics permalink and explicit native ID; original receipt URL retained)",
+          "verifiedAt": "2026-11-27T03:27:22.460Z",
+          "accountId": "6ae161de384955d3b3ff194b",
+          "zernioPostId": "6afbc675d7ef3259fe0634a1"
         }
       },
       "platformPostUrl": "https://www.facebook.com/watch/?v=1549258953675986"
@@ -569,7 +569,7 @@
       "accountId": "6ae161de384955d3b3ff194b",
       "accountUsername": "Akbarholturaev",
       "zernioPostId": "6af7e1ccbb09bc1e9ffe63e5",
-      "platformPostId": null,
+      "platformPostId": "1159152280609531_122122718781319062",
       "status": "published",
       "videoSha256": "2ae5c1b629298140bb3e92c8b8dcdc52950aad94c421f83fe2eb957817a42f7a",
       "approvedVideoSha256": "2ae5c1b629298140bb3e92c8b8dcdc52950aad94c421f83fe2eb957817a42f7a",
@@ -597,10 +597,10 @@
         "sourceCommit": "68df7ad2c1111a8d40f4b3d347100c86c9482e59",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-17T07:50:39.210Z",
-          "zernioPostId": "6af7e1ccbb09bc1e9ffe63e5",
-          "accountId": "6ae161de384955d3b3ff194b"
+          "endpoint": "Zernio get_post + get_post_analytics + accounts_get_account_posts (exact analytics permalink and explicit native ID; original receipt URL retained)",
+          "verifiedAt": "2026-11-27T03:27:22.460Z",
+          "accountId": "6ae161de384955d3b3ff194b",
+          "zernioPostId": "6af7e1ccbb09bc1e9ffe63e5"
         }
       },
       "platformPostUrl": "https://www.facebook.com/watch/?v=1428431543688745"
@@ -861,7 +861,7 @@
       "accountId": "6ae161de384955d3b3ff194b",
       "accountUsername": "Akbarholturaev",
       "zernioPostId": "6af556fdbf6b40867fb23aeb",
-      "platformPostId": null,
+      "platformPostId": "1159152280609531_122122509843319062",
       "status": "published",
       "videoSha256": "c8ab30bf290a6c69bdff360558d45c1128f9f4f357e00967403a8009c9b04ad3",
       "approvedVideoSha256": "c8ab30bf290a6c69bdff360558d45c1128f9f4f357e00967403a8009c9b04ad3",
@@ -889,10 +889,10 @@
         "sourceCommit": "e33b2d5d1debe5b28ef73c49eab7ad25a4981c03",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-17T07:50:39.210Z",
-          "zernioPostId": "6af556fdbf6b40867fb23aeb",
-          "accountId": "6ae161de384955d3b3ff194b"
+          "endpoint": "Zernio get_post + get_post_analytics + accounts_get_account_posts (exact analytics permalink and explicit native ID; original receipt URL retained)",
+          "verifiedAt": "2026-11-27T03:27:22.460Z",
+          "accountId": "6ae161de384955d3b3ff194b",
+          "zernioPostId": "6af556fdbf6b40867fb23aeb"
         }
       },
       "platformPostUrl": "https://www.facebook.com/watch/?v=1663442675428780"
@@ -1247,7 +1247,7 @@
       "accountId": "6ae161de384955d3b3ff194b",
       "accountUsername": "Akbarholturaev",
       "zernioPostId": "6b02dfb582db9cf4e6be37e6",
-      "platformPostId": null,
+      "platformPostId": "1159152280609531_122123597643319062",
       "status": "published",
       "videoSha256": "31d1c9c5cdfe561674a2e566a29e95d19c737d8093ca8e016803bf2b406bad2d",
       "approvedVideoSha256": "31d1c9c5cdfe561674a2e566a29e95d19c737d8093ca8e016803bf2b406bad2d",
@@ -1275,8 +1275,8 @@
         "sourceCommit": "3d5c8ddf701bd2506673c90ed7664e995dc3c2ab",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-27T03:24:35.000Z",
+          "endpoint": "Zernio get_post + get_post_analytics + accounts_get_account_posts (exact analytics permalink and explicit native ID; original receipt URL retained)",
+          "verifiedAt": "2026-11-27T03:27:22.460Z",
           "accountId": "6ae161de384955d3b3ff194b",
           "zernioPostId": "6b02dfb582db9cf4e6be37e6"
         }
