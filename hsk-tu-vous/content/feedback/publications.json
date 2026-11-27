@@ -106,7 +106,7 @@
       "accountId": "6ae16327a2845fbdb07e5ccb",
       "accountUsername": "hskai.app",
       "zernioPostId": "6afbc506660b23b40d686be9",
-      "platformPostId": null,
+      "platformPostId": "7709124663032483093",
       "status": "published",
       "videoSha256": "1f84927d6f7377b44fc3ab4d98ed644e71336c53ef2183bc0326155652939772",
       "approvedVideoSha256": "1f84927d6f7377b44fc3ab4d98ed644e71336c53ef2183bc0326155652939772",
@@ -134,8 +134,8 @@
         "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-27T03:24:35.000Z",
+          "endpoint": "Zernio get_post + accounts_get_account_posts (explicit native ID; same permalink ignoring tracking query)",
+          "verifiedAt": "2026-11-27T03:26:44.594Z",
           "accountId": "6ae16327a2845fbdb07e5ccb",
           "zernioPostId": "6afbc506660b23b40d686be9"
         }
@@ -267,7 +267,7 @@
       "accountId": "6ae16064ecf91092adba7d68",
       "accountUsername": "hskai.ru",
       "zernioPostId": "6afbc62333311ee0092215d3",
-      "platformPostId": null,
+      "platformPostId": "7709094376042990862",
       "status": "published",
       "videoSha256": "3c40d107dac3e340423d7fb354606357d7d7716a738d1fb922530e41e1517722",
       "approvedVideoSha256": "3c40d107dac3e340423d7fb354606357d7d7716a738d1fb922530e41e1517722",
@@ -295,10 +295,10 @@
         "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-20T00:39:32.000Z",
-          "zernioPostId": "6afbc62333311ee0092215d3",
-          "accountId": "6ae16064ecf91092adba7d68"
+          "endpoint": "Zernio get_post + accounts_get_account_posts (explicit native ID; same permalink ignoring tracking query)",
+          "verifiedAt": "2026-11-27T03:26:44.651Z",
+          "accountId": "6ae16064ecf91092adba7d68",
+          "zernioPostId": "6afbc62333311ee0092215d3"
         }
       },
       "platformPostUrl": "https://www.tiktok.com/@hskai.ru/video/7709094376042990862"
@@ -710,7 +710,7 @@
       "accountId": "6ae16327a2845fbdb07e5ccb",
       "accountUsername": "hskai.app",
       "zernioPostId": "6af5191f459a0acd35c90c3d",
-      "platformPostId": null,
+      "platformPostId": "7707238501716102418",
       "status": "published",
       "videoSha256": "825abb94667712ea2fc19398d85fd4f815795632a8355b8532f18056ef78a41e",
       "approvedVideoSha256": "825abb94667712ea2fc19398d85fd4f815795632a8355b8532f18056ef78a41e",
@@ -738,10 +738,10 @@
         "sourceCommit": "e33b2d5d1debe5b28ef73c49eab7ad25a4981c03",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-17T07:50:39.210Z",
-          "zernioPostId": "6af5191f459a0acd35c90c3d",
-          "accountId": "6ae16327a2845fbdb07e5ccb"
+          "endpoint": "Zernio get_post + accounts_get_account_posts (explicit native ID; same permalink ignoring tracking query)",
+          "verifiedAt": "2026-11-27T03:26:44.594Z",
+          "accountId": "6ae16327a2845fbdb07e5ccb",
+          "zernioPostId": "6af5191f459a0acd35c90c3d"
         }
       },
       "platformPostUrl": "https://www.tiktok.com/@hskai.app/video/7707238501716102418"
@@ -814,7 +814,7 @@
       "accountId": "6ae16064ecf91092adba7d68",
       "accountUsername": "hskai.ru",
       "zernioPostId": "6af556a31ae295872e7fe5a9",
-      "platformPostId": null,
+      "platformPostId": "7707238341879532831",
       "status": "published",
       "videoSha256": "a362e13e339cc4d97f44f28dbe8b85d6c61dfd57f26746e7b8aed06d3ee3ba07",
       "approvedVideoSha256": "a362e13e339cc4d97f44f28dbe8b85d6c61dfd57f26746e7b8aed06d3ee3ba07",
@@ -842,10 +842,10 @@
         "sourceCommit": "e33b2d5d1debe5b28ef73c49eab7ad25a4981c03",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-17T07:50:39.210Z",
-          "zernioPostId": "6af556a31ae295872e7fe5a9",
-          "accountId": "6ae16064ecf91092adba7d68"
+          "endpoint": "Zernio get_post + accounts_get_account_posts (explicit native ID; same permalink ignoring tracking query)",
+          "verifiedAt": "2026-11-27T03:26:44.651Z",
+          "accountId": "6ae16064ecf91092adba7d68",
+          "zernioPostId": "6af556a31ae295872e7fe5a9"
         }
       },
       "platformPostUrl": "https://www.tiktok.com/@hskai.ru/video/7707238341879532831"
@@ -1059,7 +1059,7 @@
       "accountId": "6ae16327a2845fbdb07e5ccb",
       "accountUsername": "hskai.app",
       "zernioPostId": "6afc268af0cc776129e75d5c",
-      "platformPostId": null,
+      "platformPostId": "7709496320603573512",
       "status": "published",
       "videoSha256": "b2c3d8b9ddd967a545778e1c18fcd59e63bed6ab7d461d2797e5a861bed17ba7",
       "approvedVideoSha256": "b2c3d8b9ddd967a545778e1c18fcd59e63bed6ab7d461d2797e5a861bed17ba7",
@@ -1087,8 +1087,8 @@
         "sourceCommit": "0e96de40f86ae8647462c344ed0ef5d72385191f",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-27T03:24:35.000Z",
+          "endpoint": "Zernio get_post + accounts_get_account_posts (explicit native ID; same permalink ignoring tracking query)",
+          "verifiedAt": "2026-11-27T03:26:44.594Z",
           "accountId": "6ae16327a2845fbdb07e5ccb",
           "zernioPostId": "6afc268af0cc776129e75d5c"
         }
@@ -1200,7 +1200,7 @@
       "accountId": "6ae16327a2845fbdb07e5ccb",
       "accountUsername": "hskai.app",
       "zernioPostId": "6b02d8d5ffb09735bbb07255",
-      "platformPostId": null,
+      "platformPostId": "7711351165082029364",
       "status": "published",
       "videoSha256": "1dfd55132055b086efa0a4e55b0080e9823a4e7df9874d300e06cd17587da540",
       "approvedVideoSha256": "1dfd55132055b086efa0a4e55b0080e9823a4e7df9874d300e06cd17587da540",
@@ -1228,8 +1228,8 @@
         "sourceCommit": "3d5c8ddf701bd2506673c90ed7664e995dc3c2ab",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-27T03:24:35.000Z",
+          "endpoint": "Zernio get_post + accounts_get_account_posts (explicit native ID; same permalink ignoring tracking query)",
+          "verifiedAt": "2026-11-27T03:26:44.594Z",
           "accountId": "6ae16327a2845fbdb07e5ccb",
           "zernioPostId": "6b02d8d5ffb09735bbb07255"
         }
@@ -1445,7 +1445,7 @@
       "accountId": "6ae16327a2845fbdb07e5ccb",
       "accountUsername": "hskai.app",
       "zernioPostId": "6b037df9b6165f00d763dd3d",
-      "platformPostId": null,
+      "platformPostId": "7711722623641652501",
       "status": "published",
       "videoSha256": "c79cfcbe2e208fafac4be65233bd0c39bfd3b60c859b3847d9184f771462b737",
       "approvedVideoSha256": "c79cfcbe2e208fafac4be65233bd0c39bfd3b60c859b3847d9184f771462b737",
@@ -1473,8 +1473,8 @@
         "sourceCommit": "99bf5781149a5e6d0537759d6efe2cff1e4074ce",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-27T03:24:35.000Z",
+          "endpoint": "Zernio get_post + accounts_get_account_posts (explicit native ID; same permalink ignoring tracking query)",
+          "verifiedAt": "2026-11-27T03:26:44.594Z",
           "accountId": "6ae16327a2845fbdb07e5ccb",
           "zernioPostId": "6b037df9b6165f00d763dd3d"
         }
@@ -1586,7 +1586,7 @@
       "accountId": "6ae16327a2845fbdb07e5ccb",
       "accountUsername": "hskai.app",
       "zernioPostId": "6b0401387ac821a16ac57a90",
-      "platformPostId": null,
+      "platformPostId": "7712093384931904820",
       "status": "published",
       "videoSha256": "1ece3abf62aa423937910acf6d6d6be566edbc70007121e5f80a7b95a97591fd",
       "approvedVideoSha256": "1ece3abf62aa423937910acf6d6d6be566edbc70007121e5f80a7b95a97591fd",
@@ -1614,8 +1614,8 @@
         "sourceCommit": "d58b547e906e028d99243433aafb38269e4d94ff",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-27T03:24:35.000Z",
+          "endpoint": "Zernio get_post + accounts_get_account_posts (explicit native ID; same permalink ignoring tracking query)",
+          "verifiedAt": "2026-11-27T03:26:44.594Z",
           "accountId": "6ae16327a2845fbdb07e5ccb",
           "zernioPostId": "6b0401387ac821a16ac57a90"
         }
@@ -1727,7 +1727,7 @@
       "accountId": "6ae16327a2845fbdb07e5ccb",
       "accountUsername": "hskai.app",
       "zernioPostId": "6b0406dd590187fe2c16ff7b",
-      "platformPostId": null,
+      "platformPostId": "7712464465249176833",
       "status": "published",
       "videoSha256": "30cfe5acac2eb3696a7d7fe0f8a3f5c43c83a4fc8c2b333f2329f712ac5b1989",
       "approvedVideoSha256": "30cfe5acac2eb3696a7d7fe0f8a3f5c43c83a4fc8c2b333f2329f712ac5b1989",
@@ -1755,8 +1755,8 @@
         "sourceCommit": "566c793cf2bfb5e9889858cc8141c1791ba91d52",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-27T03:24:35.000Z",
+          "endpoint": "Zernio get_post + accounts_get_account_posts (explicit native ID; same permalink ignoring tracking query)",
+          "verifiedAt": "2026-11-27T03:26:44.594Z",
           "accountId": "6ae16327a2845fbdb07e5ccb",
           "zernioPostId": "6b0406dd590187fe2c16ff7b"
         }
