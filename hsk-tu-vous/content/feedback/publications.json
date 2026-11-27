@@ -153,7 +153,7 @@
       "accountId": "6ae0f16205fd6f5357f8503d",
       "accountUsername": "hskai.apptj",
       "zernioPostId": "6afbc565660b23b40d686cd7",
-      "platformPostId": null,
+      "platformPostId": "18135545563767203",
       "status": "published",
       "videoSha256": "ec76269e27429269dee5b2f4fef711d88929f9f34bfb9ca4e9dde1976764596c",
       "approvedVideoSha256": "ec76269e27429269dee5b2f4fef711d88929f9f34bfb9ca4e9dde1976764596c",
@@ -181,10 +181,10 @@
         "sourceCommit": "f3d96847f32ccf17106cd6cf1e5bc1fe08681d06",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-18T00:52:35.000Z",
-          "zernioPostId": "6afbc565660b23b40d686cd7",
-          "accountId": "6ae0f16205fd6f5357f8503d"
+          "endpoint": "Zernio get_post + accounts_get_account_posts (exact permalink, verified account, explicit native ID)",
+          "verifiedAt": "2026-11-27T03:25:42.531Z",
+          "accountId": "6ae0f16205fd6f5357f8503d",
+          "zernioPostId": "6afbc565660b23b40d686cd7"
         },
         "urlIdentity": {
           "kind": "instagram-reel-shortcode",
@@ -455,7 +455,7 @@
       "accountId": "6ae0f16205fd6f5357f8503d",
       "accountUsername": "hskai.apptj",
       "zernioPostId": "6af7e061109932a603fe34c2",
-      "platformPostId": null,
+      "platformPostId": "18118763447152262",
       "status": "published",
       "videoSha256": "071284564c38ffee419cbb6c09eec1dc5db896dfe3e95bc57c54d044e50a75c5",
       "approvedVideoSha256": "071284564c38ffee419cbb6c09eec1dc5db896dfe3e95bc57c54d044e50a75c5",
@@ -483,10 +483,10 @@
         "sourceCommit": "68df7ad2c1111a8d40f4b3d347100c86c9482e59",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-17T07:50:39.210Z",
-          "zernioPostId": "6af7e061109932a603fe34c2",
-          "accountId": "6ae0f16205fd6f5357f8503d"
+          "endpoint": "Zernio get_post + accounts_get_account_posts (exact permalink, verified account, explicit native ID)",
+          "verifiedAt": "2026-11-27T03:25:42.531Z",
+          "accountId": "6ae0f16205fd6f5357f8503d",
+          "zernioPostId": "6af7e061109932a603fe34c2"
         },
         "urlIdentity": {
           "kind": "instagram-reel-shortcode",
@@ -757,7 +757,7 @@
       "accountId": "6ae0f16205fd6f5357f8503d",
       "accountUsername": "hskai.apptj",
       "zernioPostId": "6af5197ab7bcb7089973e1a2",
-      "platformPostId": null,
+      "platformPostId": "18084912983713569",
       "status": "published",
       "videoSha256": "b60a1b8d5bceb52a3aad57bd57d73f21c876cd9f16c9ecc8f6a072b7a03aaa89",
       "approvedVideoSha256": "b60a1b8d5bceb52a3aad57bd57d73f21c876cd9f16c9ecc8f6a072b7a03aaa89",
@@ -785,10 +785,10 @@
         "sourceCommit": "e33b2d5d1debe5b28ef73c49eab7ad25a4981c03",
         "lastReadback": {
           "provider": "Zernio",
-          "endpoint": "Zernio get_post",
-          "verifiedAt": "2026-11-17T07:50:39.210Z",
-          "zernioPostId": "6af5197ab7bcb7089973e1a2",
-          "accountId": "6ae0f16205fd6f5357f8503d"
+          "endpoint": "Zernio get_post + accounts_get_account_posts (exact permalink, verified account, explicit native ID)",
+          "verifiedAt": "2026-11-27T03:25:42.531Z",
+          "accountId": "6ae0f16205fd6f5357f8503d",
+          "zernioPostId": "6af5197ab7bcb7089973e1a2"
         },
         "urlIdentity": {
           "kind": "instagram-reel-shortcode",
