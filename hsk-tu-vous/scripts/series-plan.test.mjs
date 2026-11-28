@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import {validateSeriesCalendar, proposeSeries, validateSerialArc, serialReadbacks} from './series-plan.mjs';
+import {validateSeriesCalendar, proposeSeries, validateSerialArc, serialReadbacks, serialPlanningBrief} from './series-plan.mjs';
 import {runCli} from './scenario-buffer-plan.mjs';
 import {auditPlanningBuffer} from './self-improvement-check.mjs';
 
@@ -131,4 +131,12 @@ test('series readbacks use matching-age verified posts, never turn missing follo
  assert.equal(x.partContinuationRatio,.7);assert.equal(x.firstPartFollowsPer1000Views,5);assert.equal(x.parts[2].near.follows,null);
  assert.equal(run([obs(a,5000,25),{...obs(b,3500,null),accountId:'other'}]).partContinuationRatio,null);
  assert.equal(run([obs(a,5000,null)]).firstPartFollowsPer1000Views,null);
+});
+
+test('serial candidate brief favors actual repeat follower evidence and otherwise explores',()=>{
+ const policy={...arcPolicy,goal:'audience-growth',families:[{id:'fresh'},{id:'mystery-clue'},{id:'other'}]};
+ const row=(id,account='ig')=>({familyId:'mystery-clue',seriesId:id,language:'ru',platform:'instagram',accountId:account,parts:{1:{near:{window:'lifetime-72-to-96h',views:1500,followsPer1000Views:3}}}});
+ assert.equal(serialPlanningBrief(policy,[row('s1'),row('s2')],'2026-12-07').candidateOrder[0],'mystery-clue');
+ assert.equal(serialPlanningBrief(policy,[row('s1'),row('s2','different')],'2026-12-07').candidateOrder[0],'fresh');
+ assert.equal(serialPlanningBrief(policy,[],'2026-11-23'),null);
 });

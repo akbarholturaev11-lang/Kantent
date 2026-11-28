@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { analyzeObservations, loadObservations } from './feedback-analyzer.mjs';
-import { serialReadbacks } from './series-plan.mjs';
+import { serialReadbacks, serialPlanningBrief } from './series-plan.mjs';
 import { evaluateDiscovery, discoveryWeekCutoff, planDiscoveryWeek, makeDiscoveryFreezeRecord, freezeDiscoveryCalendar, validateDiscoveryCalendar } from './viral-discovery.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -132,18 +132,19 @@ export function readDiscoveryWeek({ projectRoot=root, calendar, today, now=new D
   const publications=readJson(path.join(projectRoot,'content/feedback/publications.json')).records;
   const destinations=readJson(path.join(projectRoot,'content/publication-destinations.json'));
   const week=discoveryWeekCutoff(today,now);
+  const observations=loadObservations(path.join(projectRoot,'content/feedback/observations'),{applyMappings:false});
+  const serialBrief=serialPlanningBrief(registry.storytellingPolicy?.seriesPartPolicy?.narrativeDiscovery,serialReadbacks({publications,observations,asOf:week.cutoff}),week.startDate);
   const frozen=(calendar.discoveryWeeks??[]).find(w=>w.weekStart===week.startDate);
   if(frozen){
     validateDiscoveryCalendar(calendar,registry);
-    return {...frozen,mode:'active',status:'frozen',freezeRecord:frozen,slots:frozen.slots.map(s=>({...s,brief:registry.discoveryFamilies.find(f=>f.id===s.discoveryFormatId)?.brief??null})),assignmentAuthorized:true,publicationAuthorized:false};
+    return {...frozen,serialBrief,mode:'active',status:'frozen',freezeRecord:frozen,slots:frozen.slots.map(s=>({...s,brief:registry.discoveryFamilies.find(f=>f.id===s.discoveryFormatId)?.brief??null})),assignmentAuthorized:true,publicationAuthorized:false};
   }
-  const observations=loadObservations(path.join(projectRoot,'content/feedback/observations'),{applyMappings:false});
   const cutoff=week.cutoff;
   const discovery=evaluateDiscovery({observations,publications,destinations,policy,asOf:cutoff});
   const plan=planDiscoveryWeek({calendar,registry,discovery,publications,today,now});
   const active=policy.mode==='active'&&plan.weekStart>=policy.activeFrom;
   const freezeRecord=makeDiscoveryFreezeRecord(plan,{calendar,registry,policy,now});
-  return {...plan,mode:active?'active':'shadow-read-only',status:freezeRecord?'ready-to-freeze':active?'preview-or-needs-family':'historical-preview',freezeRecord,assignmentAuthorized:!!freezeRecord};
+  return {...plan,serialBrief,mode:active?'active':'shadow-read-only',status:freezeRecord?'ready-to-freeze':active?'preview-or-needs-family':'historical-preview',freezeRecord,assignmentAuthorized:!!freezeRecord};
 }
 
 export function runCli(args = process.argv.slice(2), { now = new Date() } = {}) {

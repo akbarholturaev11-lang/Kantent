@@ -115,3 +115,9 @@ test("new publication records preserve prospectively authored discovery identity
  assert.equal(record.discoveryFormatId,"common-mistake");assert.equal(record.hskLevel,"HSK 2");assert.equal(record.creativeFormatId,"problem-fix");
  assert.equal(creativeRecord(episode).discoveryFormatId,undefined);
 });
+
+
+test('serial receipt captures prospectively authored family without guessing history',()=>{
+ const tagged={...episode,storytelling:{...episode.storytelling,serialArc:{familyId:'mystery-clue'}}};
+ assert.equal(creativeRecord(tagged).serialFamilyId,'mystery-clue');assert.equal(creativeRecord(episode).serialFamilyId,undefined);
+});

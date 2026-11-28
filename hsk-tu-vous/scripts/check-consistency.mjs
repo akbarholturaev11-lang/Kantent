@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { validatePlatformCtaConfig } from "./platform-cta.mjs";
 import { readLanguages, lessonSourceHash, ctaSourceHash } from "./language-context.mjs";
-import { validateSeriesCalendar } from "./series-plan.mjs";
+import { validateSeriesCalendar, readSerialArcErrors } from "./series-plan.mjs";
 import { auditPlanningBuffer, inspectDraftReadiness, dateInTimezone } from "./self-improvement-check.mjs";
 import { readPromoRules, reviewPromoPlan, reviewPromoVariants } from "./promo-plan.mjs";
 import {contentTypeOf,validateScheduledContent} from "./content-schedule.mjs";
@@ -264,6 +264,7 @@ export function validateConsistency(root = projectRoot) {
         } else {
           const planned = readJson(root, path.posix.join("content", filename), errors);
           if(planned&&discovery)errors.push(...discoveryDraftErrors(discovery,item,planned));
+          if(planned&&item.series)try{errors.push(...readSerialArcErrors(root,item,planned,'content',planned));}catch(error){errors.push(item.id+': '+error.message);}
           if (planned && cta?.sourcePolicy?.ctaFreeFromDate &&
               item.date >= cta.sourcePolicy.ctaFreeFromDate &&
               (Object.hasOwn(planned, "cta") ||

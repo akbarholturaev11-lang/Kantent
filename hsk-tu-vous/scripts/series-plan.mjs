@@ -122,14 +122,14 @@ export function validateSerialArc(item,episode,policy,peer){
  if(!b||a.familyId!==b.familyId||a.premise!==b.premise||a.stakes!==b.stakes||a.unresolvedQuestion!==b.unresolvedQuestion||a.payoffPlan!==b.payoffPlan)errors.push(label+'both parts must share the same planned narrative in this language');
  if(cue(a.opening)!==0)errors.push(label+'opening must refer to an exact first-scene narration cue');
  const progress=cue(a.progress);
- if(progress<0)errors.push(label+'progress must reference real narration');
+ if(progress<0||a.progress?.cueText===a.opening?.cueText)errors.push(label+'progress must reference a distinct real narration cue');
  if(item.series.part===1){
    const cliff=cue(a.cliffhanger);
-   if(cliff!==scenes.length-1||!scenes.at(-1)?.narration?.trim().endsWith(a.cliffhanger?.cueText?.trim()??'INVALID')||cliff<progress)errors.push(label+'specific cliffhanger must be the final non-CTA narration cue after progress');
+   if(cliff!==scenes.length-1||!scenes.at(-1)?.narration?.trim().endsWith(a.cliffhanger?.cueText?.trim()??'INVALID')||cliff<progress||a.cliffhanger?.cueText===a.progress?.cueText||a.cliffhanger?.cueText===a.opening?.cueText)errors.push(label+'specific cliffhanger must be the final non-CTA narration cue after progress');
    if(a.resolution!=null)errors.push(label+'part 1 must not claim the final resolution');
  }else if(item.series.part===2){
    const resolution=cue(a.resolution);
-   if(resolution<0||resolution<progress)errors.push(label+'part 2 needs a real resolution cue after progress');
+   if(resolution<0||resolution<progress||a.resolution?.cueText===a.progress?.cueText)errors.push(label+'part 2 needs a real resolution cue after progress');
    if(a.cliffhanger!=null)errors.push(label+'part 2 must finish the story, not tease a third part');
  }
  return errors;
@@ -166,7 +166,7 @@ export function serialReadbacks({publications,observations,asOf=new Date()}){
   const exact=rows.filter(x=>x.o.window==='7d').sort((a,b)=>Date.parse(a.o.observedAt)-Date.parse(b.o.observedAt))[0];
   const near=rows.filter(x=>x.o.window==='lifetime'&&x.age>=72&&x.age<96).sort((a,b)=>a.age-b.age)[0];
   const extract=(x,window)=>x?{window,ageHours:x.age,views:x.o.metrics.views,
-    follows:x.o.metrics.follows??null,profileVisits:x.o.metrics.profileVisits??null,
+    follows:x.o.metrics.follows??null,profileVisits:Number.isSafeInteger(x.o.metrics.profileVisits)&&x.o.metrics.profileVisits>=0&&x.o.source.profileVisitsScope==='post-attributed'?x.o.metrics.profileVisits:null,
     followsPer1000Views:x.o.metrics.follows==null||!x.o.metrics.views?null:1000*x.o.metrics.follows/x.o.metrics.views,
     observedAt:x.o.observedAt}:null;
   const key=JSON.stringify([p.content.series.id,p.content.language,p.platform,p.accountId]);
@@ -185,4 +185,29 @@ export function serialReadbacks({publications,observations,asOf=new Date()}){
    partContinuationRatio:comparable?second.views/first.views:null,
    comparisonWindow:comparable?first.window:null,interpretation:'Descriptive reach continuation, not returning viewers or a causal winner.'};
  });
+}
+
+/** Candidate order, not a winner score. Prefer repeat follower evidence within
+ * one account/locale/window; otherwise expose novel families for exploration. */
+export function serialPlanningBrief(policy,readbacks,weekStart){
+ if(!policy?.families?.length||weekStart<policy.effectiveFromDate)return null;
+ const families=policy.families.map(f=>{
+  const rows=readbacks.filter(r=>r.familyId===f.id&&!r.conflict);
+  const cohorts=new Map();
+  for(const r of rows){
+   const first=r.parts[1]?.exact??r.parts[1]?.near;
+   if(!first||first.followsPer1000Views==null||first.views<500)continue;
+   const k=JSON.stringify([r.language,r.platform,r.accountId,first.window]);
+   if(!cohorts.has(k))cohorts.set(k,[]);
+   cohorts.get(k).push({seriesId:r.seriesId,followsPer1000Views:first.followsPer1000Views,views:first.views});
+  }
+  const repeatEvidence=[...cohorts.entries()].filter(([,x])=>x.filter(row=>row.followsPer1000Views>0).length>=2)
+   .map(([cohort,rows])=>({cohort:JSON.parse(cohort),rows}));
+  return {...f,observedStories:new Set(rows.map(r=>r.seriesId)).size,repeatEvidence};
+ });
+ const proven=families.filter(f=>f.repeatEvidence.length);
+ const fresh=families.filter(f=>!f.observedStories);
+ return {goal:policy.goal,mode:'editorial-candidates',candidateOrder:[...proven,...fresh,...families.filter(f=>!proven.includes(f)&&!fresh.includes(f))].map(f=>f.id),
+ families,selection:policy.selection,beats:policy.beats,editorialCheck:policy.editorialCheck,
+ note:'Pitch three distinct plot concepts. Repeat follower evidence is descriptive and not causal proof; do not compare follower rates across different cohorts. New families and missing evidence never delay the pair.'};
 }
