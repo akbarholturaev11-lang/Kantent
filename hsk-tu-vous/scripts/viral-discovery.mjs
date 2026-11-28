@@ -156,6 +156,10 @@ export function planDiscoveryWeek({calendar,registry,discovery,publications=[],t
     return {f,groups,canRetry,canRepeat,pending,peak,rank};
   };
   const entries=families.map(classify);
+  // Historical reports before the typed calendar remain valid; never invent slots.
+  if(calendar.weeklySchedule&&week.startDate<calendar.weeklySchedule.effectiveFromDate)return {
+    mode:'shadow-read-only',weekStart:week.startDate,weekEnd:week.endDate,cutoff:week.cutoff.toISOString(),slots:[],
+    status:'before-typed-calendar',assignmentAuthorized:false,publicationAuthorized:false};
   const slots=Array.from({length:7},(_,i)=>expectedContentSlot(calendar,addCalendarDays(week.startDate,i)));
   if(slots.some(s=>!s))throw Error('Weekly discovery requires the canonical typed schedule');
   const sortWins=(a,b)=>b.rank-a.rank||b.peak-a.peak||a.f.id.localeCompare(b.f.id);

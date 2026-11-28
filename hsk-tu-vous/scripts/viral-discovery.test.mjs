@@ -98,3 +98,9 @@ test('a Sunday plan cannot use future evidence and a Saturday preview cannot see
  assert.throws(()=>planDiscoveryWeek({calendar,registry,discovery:{families:[],asOf:'2026-11-08T01:00:00Z'},today,now}),/cutoff/);
  assert.equal(discoveryWeekCutoff('2026-11-07',new Date('2026-11-07T12:00:00Z')).cutoff.toISOString(),'2026-11-07T12:00:00.000Z');
 });
+
+
+test('historical reports before the typed calendar do not invent a weekly schedule',()=>{
+ const p=weekly({families:[]},{calendar:{...calendar,weeklySchedule:{...calendar.weeklySchedule,effectiveFromDate:'2026-12-01'}}});
+ assert.equal(p.status,'before-typed-calendar');assert.equal(p.slots.length,0);
+});
