@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "description": "Verified facebook video lifetime observations, new or changed readings only.",
+  "collection": {
+    "collectedAt": "2026-11-28T00:17:39.000Z",
+    "baselineMain": "06e3a7500c14b64d7859dcdd31006e59b48ad662",
+    "connector": "Zernio",
+    "duplicates": 5
+  },
+  "observations": [
+    {
+      "platform": "facebook",
+      "platformPostId": "1159152280609531_122123972883319062",
+      "accountId": "6ae161de384955d3b3ff194b",
+      "accountUsername": "Akbarholturaev",
+      "locale": "tg",
+      "publishedAt": "2026-11-27T11:01:22.323Z",
+      "observedAt": "2026-11-28T00:17:39.000Z",
+      "collectedAt": "2026-11-28T00:17:39.000Z",
+      "window": "lifetime",
+      "postUrl": "https://www.facebook.com/reel/2033621497299256/",
+      "episodeId": "zhengzai-reading-20261127",
+      "contentType": "lesson",
+      "content": {
+        "id": "zhengzai-reading-20261127",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "d0377d013690afe548d3d60d11a4aa3fc48d151f43217fdaa00a208b551aba66"
+      },
+      "videoSha256": "5c881c43c2d03a88108f9243966eaf2cc0d0de4c6826e1d5c5c2c449716e5462",
+      "series": null,
+      "hookFormat": "question",
+      "hskLevel": null,
+      "effectStyle": "explain-actions-v1",
+      "creativeFormatId": null,
+      "storytellingPattern": null,
+      "zernioPostId": "6b0414b0bd3d5fc60be348b0",
+      "providerRecordId": null,
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "follows": "count",
+        "avgWatchMs": "milliseconds",
+        "skipRatePercent": "percent",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 40,
+        "reach": 38,
+        "likes": 0,
+        "comments": 0,
+        "saves": 0,
+        "shares": 0,
+        "follows": null,
+        "avgWatchMs": null,
+        "skipRatePercent": null,
+        "durationSeconds": null
+      },
+      "source": {
+        "provider": "Zernio",
+        "connector": "Zernio",
+        "endpoint": "get_post_analytics + list_posts + accounts_get_account_posts",
+        "accountId": "6ae161de384955d3b3ff194b",
+        "syncedAt": "2026-11-27T22:28:10.836Z",
+        "syncedAtScope": "platform dashboard dataAsOf; not per-post update timestamp",
+        "providerMetricUpdatedAt": null,
+        "syncStatus": "synced",
+        "providerRecordId": null,
+        "sourceUrl": "https://www.facebook.com/reel/2033621497299256/",
+        "windowEvidence": null,
+        "refresh": {
+          "dashboardDataAsOf": "2026-11-27T22:28:10.836Z",
+          "postRefreshAt": null
+        },
+        "nativeIdentity": {
+          "endpoint": "accounts_get_account_posts",
+          "id": "1159152280609531_122123972883319062",
+          "verifiedPermalink": "https://www.facebook.com/reel/2033621497299256/"
+        },
+        "attribution": {
+          "kind": "approved-ledger-exact-zernio-native-account",
+          "approvedVideoSha256": "5c881c43c2d03a88108f9243966eaf2cc0d0de4c6826e1d5c5c2c449716e5462",
+          "sourceHash": "d0377d013690afe548d3d60d11a4aa3fc48d151f43217fdaa00a208b551aba66",
+          "ledgerHead": "06e3a7500c14b64d7859dcdd31006e59b48ad662"
+        }
+      },
+      "metricCaveat": "Provider cumulative lifetime. Collection time is not metric refresh time. Unsupported fields and ambiguous reach zeros remain null. No inferred conversions or recall."
+    }
+  ]
+}
