@@ -217,3 +217,7 @@ Owner requested the threshold discovery system. See [Viral Discovery rollout](VI
 Same draft PR #78: added weekly shadow proposal and prospective receipt fields; fixed two existing fixture failures (see rollout). Production rules and main unchanged. Next: verify CI, real-data report, then migrate lesson A/B and persist/validate weekly authoring assignments together.
 
 - Shared weekly shadow proposal wired into the existing reserve CLI/MCP and autopilot plan. Existing rule remains in effect until the active-policy migration. No new external task or publish action.
+
+
+## 2026-11-28 — Phase 3 cutover candidate
+Both CI runs on b9d4910 passed. New branch commits implement calendar freeze, prospective family validation and archive legacy lesson A/B for new dates. Main unchanged; check new CI and agent readback before merge. See rollout notes.

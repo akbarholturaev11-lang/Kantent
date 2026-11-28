@@ -27,7 +27,11 @@ Har test uchun quyidagilar ko'rinadi:
 - Tavsiya va uning sababi.
 - **Keyingi qaror**.
 
-## Asosiy qoidalar
+## Yangi darslar: Viral Discovery
+
+2026-11-30 dan yangi oddiy darslar uchun eski lesson A/B to‘xtatilgan, tarix saqlanadi. `content/hook-lab.json#policy.discoveryPilot` va `content/WORKFLOW.md` dagi haftalik Discovery qoidasi qo‘llanadi. Haqiqiy ko‘rishlar bo‘yicha saralash — ssenariy tanlash, biznes maqsadi yoki sababiy A/B g‘olibi emas. Reklama/serial maqsadlari va alohida test qoidalari o‘zgarmaydi. Quyidagi A/B qoidalari tarixiy yoki boshqa faol testlargagina tegishli.
+
+## Asosiy A/B qoidalari
 
 1. **Har tur faqat o'z maqsadi bilan baholanadi**:
    - dars: HSK AI'ga foydalanuvchi olib kelish, ya'ni havola so'rovlari (`commentsPer1000Views`); manbali click yoki sign-up bo'lsa, ular ishlatiladi;
@@ -46,7 +50,7 @@ Har test uchun quyidagilar ko'rinadi:
 6. **Doimiy qoida faqat egasi tasdiqlaganda o'zgaradi.** Qaror egasining o'z so'zlari bilan yoziladi:
 
    ```bash
-   npm run content:experiments -- --decide lesson-opening-v1 --decision promote --owner-words "…" --write
+   npm run content:experiments -- --decide <active-test-id> --decision promote --owner-words "…" --write
    ```
 
    Keyin navbatdagi test keyingi Dushanbadan avtomatik boshlanadi. `promote` bo'lsa, B uslubi kanonik siyosatga yoziladi: darsda `HOOK_LAB.md`/`creative-formats.json`, reklamada `PROMO_WORKFLOW.md`. So'ng `npm run check:consistency` ishga tushiriladi.
@@ -56,8 +60,8 @@ Har test uchun quyidagilar ko'rinadi:
 
 | # | Test | Tur | A (hozirgi) | B (yangi) | Holat |
 |---|---|---|---|---|---|
-| 1 | `lesson-opening-v1` | dars | Challenge → Answer → Practice | Mistake → Correction → Practice | **faol**, 2026-11-18 dan |
-| 2 | `ad-brand-demo-v1` | reklama | hozirgi reklama uslubi | birinchi 2 soniyada brend + haqiqiy mahsulot demosi | navbatda (1-test baholangach) |
+| 1 | `lesson-opening-v1` | dars | Challenge → Answer → Practice | Mistake → Correction → Practice | **arxiv (stopped)**, 2026-11-30 dan yangi darsga qo‘llanmaydi |
+| 2 | `ad-brand-demo-v1` | reklama | hozirgi reklama uslubi | birinchi 2 soniyada brend + haqiqiy mahsulot demosi | navbatda (egasining alohida qarori; Discovery o'tishi avtomatik boshlamaydi) |
 | 3 | `serial-micro-drama-v1` | serial | hozirgi ikki qismli hikoya | Micro-Drama: takrorlanuvchi qahramon, davom etuvchi hikoya; har qism o'zi dars beradi | navbatda (2-testdan keyin) |
 
 Ikkala dars armi ham to'liq foydali dars bo'ladi; faqat ochilish farq qiladi. Birinchi videolar:

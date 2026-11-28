@@ -1,7 +1,7 @@
 # Viral Discovery rollout — 2026-11-28
 
 Scope: owner-requested 3,000 views / two attempts, with Sunday batch production unchanged.
-This branch is **phase 1 shadow only**, not an active policy migration.
+Current branch includes the phase 3 active-policy candidate; main is unchanged until reviewed and merged. Prior phase descriptions below are historical.
 Canonical trial threshold proposal: `content/hook-lab.json#policy.discoveryPilot`.
 The existing fixed-window A/B policy remains active until phase 2 is complete.
 
@@ -29,3 +29,8 @@ The existing fixed-window A/B policy remains active until phase 2 is complete.
 
 ## Phase 2 integration readback
 - The existing reserve CLI, MCP weekly plan and Hafta Rejachisi plan now expose the same shared `readDiscoveryWeek` proposal. It is read-only, leaves the 7-slot source plan/production untouched and has no new scheduler. The existing authoring gate still requires the active A/B arm until migration; frozen decision persistence and actual activation remain outstanding. The existing CI test entry includes a real-calendar weekly proposal test.
+
+## Phase 3 — active policy candidate
+- Previous head b9d4910: both CI runs 46152966249 and 46152966226 passed. New branch changes switch new standalone lessons from old A/B to Discovery at 2026-11-30; old assignments and queued ad/serial tests are retained. Reserve and weekly autopilot share one immutable seven-slot freeze record in the existing calendar, with dry-run/explicit write support and RU/TG draft checks. No actual weekly sources, render, publishing or main changes were made.
+- Weekly competitor research is a permitted hypothesis source; original public evidence sample and 30-day prospective results remain outstanding. The highest lifetime peak and hit tiers are preserved separately from the first decision observation.
+- New CI, exact receipt capture from a prospectively tagged real publication, and weekly agent live run are not yet verified. Keep PR draft until code checks pass; do not claim real viral lift.

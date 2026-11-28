@@ -128,5 +128,5 @@ Each language writes its own review root: the original at `review/<id>/`, and th
 - Source receipts may be added through MCP plan edits. They do not replace a human check of the claims.
 
 
-### Viral Discovery (shadow pilot)
-The optional `hookExperiment.discoveryFormatId` identifies a prospectively authored reusable family from `content/creative-formats.json#discoveryFamilies`; it does not replace `formatId`. The new publication ledger copies it, actual HSK level and explicitly selected creative format from the exact package source. Historical receipts are immutable. Shadow weekly suggestions do not assign calendar items or authorize changing any already prepared sources. See `docs/audits/VIRAL_DISCOVERY_ROLLOUT.md`.
+### Viral Discovery (new standalone lessons)
+For new standalone lessons covered by the active discovery policy, the required `hookExperiment.discoveryFormatId` identifies a prospectively authored reusable family from `content/creative-formats.json#discoveryFamilies`; it does not replace `formatId`. The new publication ledger copies it, actual HSK level and explicitly selected creative format from the exact package source. Historical receipts are immutable. The frozen `calendar.json#discoveryWeeks` slot owns assignment; both language versions must match it. Already prepared sources and historical receipts are not rewritten. See `docs/audits/VIRAL_DISCOVERY_ROLLOUT.md`.

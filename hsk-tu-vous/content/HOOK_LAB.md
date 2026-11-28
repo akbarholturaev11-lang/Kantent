@@ -55,7 +55,7 @@ Epizod JSON’ida `hookExperiment` bo‘lsin:
 - `primaryMetric` va `fallbackMetric`: `three-second-hold-rate`, `average-watch-ratio` yoki YouTube Shorts uchun `chose-to-view-rate`.
 - `registeredAt`: video natijasi ko‘rinishidan oldingi ISO sana.
 
-Hook birinchi 1–2 soniyada darsdagi haqiqiy savol, xato yoki vaziyatni ko‘rsatsin. Va’da ssenariyda tezda bajarilsin. Bitta videoda bir paytning o‘zida hook, thumbnail, ovoz, CTA va davomiylikni tajriba sifatida o‘zgartirmang; aks holda qaysi o‘zgarish natija bergani noma’lum bo‘ladi. Til qoidalarini soddalashtirib noto‘g‘ri ko‘rsatish mumkin emas.
+Hook birinchi 1–2 soniyada darsdagi haqiqiy savol, xato yoki vaziyatni ko‘rsatsin. Va’da ssenariyda tezda bajarilsin. Sababiy A/B testida bitta o‘zgaruvchini ajrating. Discovery esa butun kontent tuzilmasini qidiradi; natijani aynan Hook sabab bo‘lgan deb e’lon qilmang. Ovoz, CTA va ishlab chiqarish qoidalari o‘zgarmaydi. Til qoidalarini soddalashtirib noto‘g‘ri ko‘rsatish mumkin emas.
 
 Har renderdan oldingi tahririy tekshiruv: quyidagi 5 banddan kamida 4 tasi “ha” bo‘lsin va aniqlik bandida hech qachon xato bo‘lmasin:
 
@@ -67,7 +67,11 @@ Har renderdan oldingi tahririy tekshiruv: quyidagi 5 banddan kamida 4 tasi “ha
 
 Matnning sodda va telefon ekranida o‘qilishi shu besh banddan tashqari majburiy tekshiruvdir. Xitoy tili aniqligi ham hard requirement bo‘lib qoladi. Ball faqat chiqarishdan oldingi sifat filtri; u ko‘rish statistikasi o‘rnini bosmaydi.
 
-## 30 kunlik o‘rganish oynasi
+## Viral Discovery — yangi oddiy darslar
+
+Kanonik chegaralar: `content/hook-lab.json#policy.discoveryPilot`. Har til/platforma bo‘yicha alohida, kamida belgilangan yoshdagi birinchi haqiqiy yig‘ma lifetime kuzatuvi (aniq 72h oyna emas); ikki turli mavzudagi muvaffaqiyatsiz urinishdan so‘ng format rotatsiyadan chiqadi, bitta platformada hit bo‘lsa ikkinchi imkoniyat. Kechki hit qayta faollashtiradi. Bir platforma/til ichida takroriy hit kuchliroq dalil; yuqori view tier ham keyingi tanlovga ta’sir qiladi. Yetishmagan ma’lumot — xato emas. Yakshanba kuni `calendar.json#discoveryWeeks` muzlatiladi; keyin tayyor videolar o‘zgarmaydi. `content/WORKFLOW.md` dagi mualliflik tartibiga qarang. Quyidagi 24h/7d qoidalar legacy A/B, retention taqqosi va doimiy siyosat qarorlariga tegishli, Discovery rotatsiyasini bloklamaydi.
+
+## 30 kunlik A/B o‘rganish oynasi
 
 Joriy vaqt qoidalarining **yagona manbasi**: `content/hook-lab.json#policy`. AI qaror uchun faqat tahlil vaqtiga nisbatan **oxirgi 30 × 24 soat ichida nashr qilingan** videolarni tanlaydi (`publishedAt` bo‘yicha, statistika yig‘ilgan sana bo‘yicha emas). Oldingi snapshotlar tarixda o‘chirilmaydi, lekin hozirgi taqqoslash guruhiga qo‘shilmaydi.
 
