@@ -42,12 +42,13 @@
       "design and visual-system rules",
       "owner approval of every exact final video before publication",
       "CTA Lab wording, voice profile and approved/published history"
-    ]
+    ],
+    "lessonDiscoverySource": "content/hook-lab.json#policy.discoveryPilot"
   },
   "experiments": [
     {
       "id": "lesson-opening-v1",
-      "status": "active",
+      "status": "stopped",
       "contentType": "lesson",
       "unit": "video",
       "variable": "opening-structure",
@@ -127,7 +128,14 @@
           "assignedAt": "2026-11-22"
         }
       ],
-      "decision": null
+      "decision": {
+        "decision": "stop",
+        "decidedOn": "2026-11-28",
+        "ownerWords": "3000 дан кам прасмотр олса хоокни яна бирмарта бита видеода синаймиз ухам кам олса ... бошкасини синаймиз",
+        "promotedArm": null,
+        "note": "Replaced by the owner-requested threshold discovery policy; no A/B winner declared. Prior assignments retained."
+      },
+      "supersededFrom": "2026-11-30"
     },
     {
       "id": "ad-brand-demo-v1",
@@ -172,7 +180,8 @@
         "method": "balanced-alternation"
       },
       "assignments": [],
-      "decision": null
+      "decision": null,
+      "queueNote": "Queued for separate owner decision; not automatically activated by the lesson Discovery cutover."
     },
     {
       "id": "serial-micro-drama-v1",

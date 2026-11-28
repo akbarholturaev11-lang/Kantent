@@ -107,3 +107,17 @@ test("scheduled provider response leaves ledger unchanged; native ID stays unkno
   assert.equal(live.registry.records[0].status,"published");
   assert.equal(live.registry.records[0].platformPostId,null,"never invent native IDs");
 });
+
+
+test("new publication records preserve prospectively authored discovery identity, level and creative format",()=>{
+ const tagged={...episode,level:"HSK 2",creativeFormatId:"problem-fix",hookExperiment:{...episode.hookExperiment,discoveryFormatId:"common-mistake"}};
+ const record=creativeRecord(tagged);
+ assert.equal(record.discoveryFormatId,"common-mistake");assert.equal(record.hskLevel,"HSK 2");assert.equal(record.creativeFormatId,"problem-fix");
+ assert.equal(creativeRecord(episode).discoveryFormatId,undefined);
+});
+
+
+test('serial receipt captures prospectively authored family without guessing history',()=>{
+ const tagged={...episode,storytelling:{...episode.storytelling,serialArc:{familyId:'mystery-clue'}}};
+ assert.equal(creativeRecord(tagged).serialFamilyId,'mystery-clue');assert.equal(creativeRecord(episode).serialFamilyId,undefined);
+});

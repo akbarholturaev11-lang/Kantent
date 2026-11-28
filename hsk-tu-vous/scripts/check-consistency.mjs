@@ -4,11 +4,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { validatePlatformCtaConfig } from "./platform-cta.mjs";
 import { readLanguages, lessonSourceHash, ctaSourceHash } from "./language-context.mjs";
-import { validateSeriesCalendar } from "./series-plan.mjs";
+import { validateSeriesCalendar, readSerialArcErrors } from "./series-plan.mjs";
 import { auditPlanningBuffer, inspectDraftReadiness, dateInTimezone } from "./self-improvement-check.mjs";
 import { readPromoRules, reviewPromoPlan, reviewPromoVariants } from "./promo-plan.mjs";
 import {contentTypeOf,validateScheduledContent} from "./content-schedule.mjs";
 import { EXPERIMENTS_FILE, validateExperiments } from "./experiments.mjs";
+import {readDiscoveryRules,validateDiscoveryCalendar,discoveryDraftErrors} from "./viral-discovery.mjs";
 
 export const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -172,6 +173,8 @@ export function validateConsistency(root = projectRoot) {
     } catch(error){errors.push('content/feedback/publications.json: '+error.message);}
   }
   const calendar = readJson(root, "content/calendar.json", errors);
+  let discovery=null;
+  try{discovery=readDiscoveryRules(root);if(discovery)validateDiscoveryCalendar(calendar,discovery.registry);}catch(error){errors.push("Discovery: "+error.message);}
   // Owner rule 2026-11-17: one valid experiments registry, one active test (content/EXPERIMENTS.md).
   if (fs.existsSync(asPath(root, EXPERIMENTS_FILE))) {
     const registry = readJson(root, EXPERIMENTS_FILE, errors);
@@ -260,6 +263,8 @@ export function validateConsistency(root = projectRoot) {
           errors.push(`content/calendar.json: invalid episode path for ${item.id}`);
         } else {
           const planned = readJson(root, path.posix.join("content", filename), errors);
+          if(planned&&discovery)errors.push(...discoveryDraftErrors(discovery,item,planned));
+          if(planned&&item.series)try{errors.push(...readSerialArcErrors(root,item,planned,'content',planned));}catch(error){errors.push(item.id+': '+error.message);}
           if (planned && cta?.sourcePolicy?.ctaFreeFromDate &&
               item.date >= cta.sourcePolicy.ctaFreeFromDate &&
               (Object.hasOwn(planned, "cta") ||

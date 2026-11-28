@@ -198,12 +198,13 @@ export function analyzeObservations(observations,policy={}, {asOf = new Date()} 
       'Keep CTA, approved/published snapshots and publishing owner-approval gates unchanged.']
   };
 }
-export function loadObservations(dir=path.join(root,'content/feedback/observations')){
+export function loadObservations(dir=path.join(root,'content/feedback/observations'),{applyMappings=true}={}){
   if(!fs.existsSync(dir)) return [];
   const results=[];
   for(const f of fs.readdirSync(dir).filter(v=>v.endsWith('.json')).sort()){
     results.push(...validateDataset(JSON.parse(fs.readFileSync(path.join(dir,f),'utf8'))));
   }
+  if(!applyMappings)return results;
   const receipt=path.join(dir,'../publications.json');
   if(!fs.existsSync(receipt))return results;
   const registry=JSON.parse(fs.readFileSync(receipt,'utf8'));

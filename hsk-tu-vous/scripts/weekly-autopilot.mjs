@@ -16,6 +16,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { addCalendarDays, calendarWeekday, contentTypeOf } from "./content-schedule.mjs";
 import { inspectDraftReadiness } from "./self-improvement-check.mjs";
 import { assignmentFor, readExperimentsIfPresent } from "./experiments.mjs";
+import { readDiscoveryWeek } from "./viral-plan.mjs";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const readJson = (file) => JSON.parse(fs.readFileSync(file, "utf8"));
@@ -53,7 +54,7 @@ export function packageDir(root, id, language, platform) {
   return path.join(root, "review", id, ...(language === "ru" ? [] : [language]), ...(platform === "instagram" ? [] : [platform]));
 }
 
-export function weekPlan({ root = ROOT, weekStart }) {
+export function weekPlan({ root = ROOT, weekStart, now=new Date() }) {
   const calendar = readJson(path.join(root, "content", "calendar.json"));
   const autopilot = readJson(path.join(root, "content", "weekly-autopilot.json"));
   const destinations = readJson(path.join(root, "content", "publication-destinations.json")).videoDestinations;
@@ -83,7 +84,8 @@ export function weekPlan({ root = ROOT, weekStart }) {
         })) };
     }) };
   });
-  return { weekStart, weekEnd: dates[6], days };
+  const discoveryWeek=readDiscoveryWeek({projectRoot:root,calendar,today:addCalendarDays(weekStart,-1),now});
+  return { weekStart, weekEnd: dates[6], days, ...(discoveryWeek?{discoveryWeek}:{}) };
 }
 
 /** The exact post JSON for the local Zernio publisher (caption = post.md up to its metadata footer). */
@@ -120,6 +122,7 @@ function printPlan(plan) {
   console.log(fallback.fallbackEnabled && fallback.openRouterKey
     ? "Voice: Gemini first, OpenRouter fallback on quota (429) is configured."
     : "WARNING: OpenRouter voice fallback is NOT configured (HSK_AI_OPENROUTER_FALLBACK_ENABLED=true + OPENROUTER_API_KEY) — a Gemini quota stop will wait for the reset.");
+  for(const slot of plan.discoveryWeek?.slots??[])if(slot.contentType==='lesson')console.log('Discovery ('+plan.discoveryWeek.mode+') '+slot.date+': '+slot.action+' '+(slot.discoveryFormatId??''));
   for (const day of plan.days) {
     if (day.missing) { console.log(`${day.date} ${day.weekday}: NO calendar item (expected ${day.expected?.contentType ?? "?"}) — author it first`); continue; }
     for (const item of day.items) {

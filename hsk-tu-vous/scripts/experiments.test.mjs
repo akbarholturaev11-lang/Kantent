@@ -12,7 +12,9 @@ const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (rel) => JSON.parse(fs.readFileSync(path.join(ROOT, rel), "utf8"));
 const goals = read("content/creative-formats.json").contentGoals.byContentType;
 const thresholds = read("content/hook-lab.json").policy;
-const registry = readExperiments(ROOT);
+const canonical = readExperiments(ROOT);
+const registry=structuredClone(canonical);
+Object.assign(registry.experiments[0],{status:'active',decision:null});delete registry.experiments[0].supersededFrom;
 const lesson = (id, date) => ({ id, date, contentType: "lesson" });
 
 test("the canonical registry is valid: one active test, goals from contentGoals, the visual test paused", () => {
@@ -30,9 +32,11 @@ test("the canonical registry is valid: one active test, goals from contentGoals,
 
 test("arms are balanced, stored once and never hand-picked; stories keep both parts in one arm", () => {
   assert.deepEqual(assignmentFor(registry, lesson("ji-vs-duoshao-books-price-20261118", "2026-11-18")), { experimentId: "lesson-opening-v1", arm: "A", stored: true });
-  const next = assignmentFor(registry, lesson("new-lesson-20261123", "2026-11-23"));
+  const fixture = structuredClone(registry);
+  fixture.experiments[0].assignments = fixture.experiments[0].assignments.filter(a=>a.date<= "2026-11-20");
+  const next = assignmentFor(fixture, lesson("new-lesson-20261123", "2026-11-23"));
   assert.deepEqual(next, { experimentId: "lesson-opening-v1", arm: "A", stored: false }, "tie → opposite of the latest (B)");
-  const { registry: after } = assignItem(registry, lesson("new-lesson-20261123", "2026-11-23"), { today: "2026-11-17" });
+  const { registry: after } = assignItem(fixture, lesson("new-lesson-20261123", "2026-11-23"), { today: "2026-11-17" });
   assert.equal(assignmentFor(after, lesson("new-lesson-20261125", "2026-11-25")).arm, "B", "fewer B → B");
   assert.throws(() => assignItem(registry, lesson("old-20261101", "2026-11-19"), { today: "2026-11-20" }), /past/u);
 
@@ -135,4 +139,13 @@ test("only the owner's recorded words decide; the next queued test then starts t
   assert.equal(adTest.status, "active");
   assert.equal(adTest.startDate, "2026-12-14", "2026-12-10 is a Thursday → Monday 14th");
   assert.deepEqual(validateExperiments(next, { goals }), []);
+});
+
+
+test('canonical cutover archives the lesson A/B without erasing old assignments',()=>{
+ assert.deepEqual(validateExperiments(canonical,{goals,variety:read('content/visual-variety.json')}),[]);
+ assert.equal(canonical.experiments[0].status,'stopped');
+ assert.equal(activeExperimentFor(canonical,'lesson','2026-11-27').id,'lesson-opening-v1');
+ assert.equal(activeExperimentFor(canonical,'lesson','2026-11-30'),null);
+ assert.equal(canonical.experiments[1].status,'queued');
 });

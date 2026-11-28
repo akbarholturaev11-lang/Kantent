@@ -5,11 +5,12 @@ import { validateStorytellingEpisode } from './storytelling-plan.mjs';
 import { validateLessonPresentation } from './lesson-presentation-policy.mjs';
 import { validateArtManifest } from './generate-lesson-art.mjs';
 import { activeExperiment, armFor } from './visual-variety-plan.mjs';
-import { validateSeriesCalendar } from './series-plan.mjs';
+import { validateSeriesCalendar, readSerialArcErrors } from './series-plan.mjs';
 import {contentTypeOf,weeklyCoverage,nextFullCalendarWeek} from './content-schedule.mjs';
 import {reviewPromoVariants} from './promo-plan.mjs';
 import { readLanguages, assertLocalizedLessonSource } from './language-context.mjs';
 import { draftExperimentErrors, readExperimentsIfPresent } from './experiments.mjs';
+import {readDiscoveryRules,discoveryDraftErrors} from './viral-discovery.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -192,8 +193,10 @@ export function inspectDraftReadiness(rootDirectory, item) {
         if (language !== 'ru') assertLocalizedLessonSource(episode, canonical, language);
         checkLessonSource(episode, item, settings.languageCode, visualSystem, { localized: language !== 'ru' });
         checkLessonArtSource(rootDirectory, episode, visualSystem);
+        const serialErrors=readSerialArcErrors(rootDirectory,item,episode,settings.contentRoot,canonical);
+        if(serialErrors.length)throw Error(serialErrors.join('; '));
         // Owner rule 2026-11-17: a draft of the active test carries its stored arm (content/EXPERIMENTS.md).
-        const experimentErrors = draftExperimentErrors(readExperimentsIfPresent(rootDirectory), item, episode);
+        const experimentErrors = [...draftExperimentErrors(readExperimentsIfPresent(rootDirectory), item, episode),...discoveryDraftErrors(readDiscoveryRules(rootDirectory),item,episode)];
         if (experimentErrors.length) throw Error(experimentErrors.join('; '));
         languages[language] = { ready: true };
       } catch (error) {
@@ -218,6 +221,7 @@ export function isCanonicalDraftReady(rootDirectory, item) {
     const episode = JSON.parse(fs.readFileSync(path.join(rootDirectory, 'content', item.episodeFile), 'utf8'));
     const visual = JSON.parse(fs.readFileSync(path.join(rootDirectory, 'content/visual-system.json'), 'utf8'));
     checkLessonSource(episode, item, 'ru-RU', visual);
+    if(discoveryDraftErrors(readDiscoveryRules(rootDirectory),item,episode).length)return false;
     return true;
   } catch { return false; }
 }

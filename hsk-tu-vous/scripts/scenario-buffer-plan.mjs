@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { auditPlanningBuffer, isDraftReady, dateInTimezone } from './self-improvement-check.mjs';
 import { proposeSeries } from './series-plan.mjs';
+import { readDiscoveryWeek } from './viral-plan.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const names = ['SU','MO','TU','WE','TH','FR','SA'];
@@ -52,6 +53,11 @@ export function proposeBuffer(calendar, {today, episodeIsReady=()=>true}={}) {
     writeDestination:'main',mustWriteToFeatureBranch:false,publishedMediaChangeAllowed:false,proposalsAreScripts:false,
     note:'Date suggestions only. Author full, verified, CTA-free source JSON before registering a new calendar item.'};
 }
+export function reservePlan(calendar,{projectRoot=root,today,now=new Date(),episodeIsReady=()=>true}={}) {
+  const plan=proposeBuffer(calendar,{today,episodeIsReady});
+  const discoveryWeek=readDiscoveryWeek({projectRoot,calendar,today,now});
+  return discoveryWeek?{...plan,discoveryWeek}:plan;
+}
 export function runCli(args=process.argv.slice(2),dir=root) {
   let requested=null,json=false,seriesId=null,startDate=null,totalParts=null;
   for(let i=0;i<args.length;i++) {
@@ -66,10 +72,13 @@ export function runCli(args=process.argv.slice(2),dir=root) {
   const today=requested||dateInTimezone(new Date(),calendar.timezone);
   const seriesRequested=args.some(arg=>['--series-id','--start-date','--parts'].includes(arg));
   const result=seriesRequested ? proposeSeries(calendar,{seriesId,startDate,totalParts,today}) :
-    proposeBuffer(calendar,{today,episodeIsReady:item=>isDraftReady(dir,item)});
+    reservePlan(calendar,{projectRoot:dir,today,episodeIsReady:item=>isDraftReady(dir,item)});
   if(json)console.log(JSON.stringify(result,null,2));
   else if(seriesRequested)console.log('Series '+result.seriesId+': '+result.propose.map(x=>x.date).join(', ')+' (proposal only)');
-  else console.log('Buffer='+result.buffer.readyFutureEpisodes+', repairs='+result.repair.length+', future dates to author='+result.propose.map(x=>x.date).join(', '));
+  else {
+    console.log('Buffer='+result.buffer.readyFutureEpisodes+', repairs='+result.repair.length+', future dates to author='+result.propose.map(x=>x.date).join(', '));
+    for(const slot of result.discoveryWeek?.slots??[])if(slot.contentType==='lesson')console.log('Discovery ('+result.discoveryWeek.mode+') '+slot.date+': '+slot.action+' '+(slot.discoveryFormatId??''));
+  }
   return 0; // returning a proposed plan is not an assertion that drafts have been created
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)) {

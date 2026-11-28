@@ -9,7 +9,7 @@ import { MOTION_KINDS } from "./motion-design-plan.mjs";
 import { graphicSceneSchema } from "./graphic-scene-schema.mjs";
 import { reviewPromoPlan, reviewPromoVariants } from "./promo-plan.mjs";
 import {contentTypeOf} from "./content-schedule.mjs";
-import {proposeBuffer} from "./scenario-buffer-plan.mjs";
+import {reservePlan} from "./scenario-buffer-plan.mjs";
 import {dateInTimezone,isDraftReady} from "./self-improvement-check.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { lessonArtPreflight } from "./review-lesson-art.mjs";
@@ -74,6 +74,7 @@ import {
   writeCtaLab,
 } from "./cta-lab.mjs";
 import { assignmentFor, experimentBrief, readExperiments, reviewExperiments } from "./experiments.mjs";
+import {readDiscoveryRules,discoveryBrief} from "./viral-discovery.mjs";
 
 export const createServer = () => {
   const server = new McpServer(
@@ -425,7 +426,7 @@ export const createServer = () => {
     },
     async ({date})=>withToolErrors(async()=>{
       const calendar=await readJson(CALENDAR_PATH);
-      return proposeBuffer(calendar,{today:date??dateInTimezone(new Date(),calendar.timezone),episodeIsReady:item=>isDraftReady(PROJECT_ROOT,item)});
+      return reservePlan(calendar,{projectRoot:PROJECT_ROOT,today:date??dateInTimezone(new Date(),calendar.timezone),episodeIsReady:item=>isDraftReady(PROJECT_ROOT,item)});
     }),
   );
 
@@ -433,7 +434,7 @@ export const createServer = () => {
     "get_content_experiments",
     {
       title:"Read the content experiments: goal, compared styles, results and the next decision",
-      description:"Owner rule 2026-11-17 (content/EXPERIMENTS.md). Read-only. Without a date: every experiment with its goal, styles A/B, first-week results from sourced Zernio observations joined to verified publications, and the reasoned next decision (never a forced winner). With a date: the script-writer brief and stored/next arm for that calendar item. Never writes scripts, assigns arms, publishes or promotes a style.",
+      description:"Owner rule 2026-11-17 (content/EXPERIMENTS.md). Read-only. Without a date: every experiment with its goal, styles A/B, first-week results from sourced Zernio observations joined to verified publications, and the reasoned next decision (never a forced winner). With a date: the frozen lesson Discovery brief or applicable A/B arm for that calendar item. Never writes scripts, assigns arms, publishes or promotes a style.",
       inputSchema:z.object({date:dateSchema.optional()}),
     },
     async ({date})=>withToolErrors(async()=>{
@@ -441,8 +442,9 @@ export const createServer = () => {
       if(!date) return reviewExperiments({root:PROJECT_ROOT,registry});
       const calendar=await readJson(CALENDAR_PATH);
       const goals=(await readJson(path.join(PROJECT_ROOT,"content","creative-formats.json"))).contentGoals?.byContentType??{};
+      const discovery=readDiscoveryRules(PROJECT_ROOT);
       return calendar.items.filter(item=>item.date===date).map(item=>({id:item.id,assignment:assignmentFor(registry,item),
-        brief:experimentBrief(registry,item,goals)}));
+        brief:discoveryBrief(discovery,item)??experimentBrief(registry,item,goals)}));
     }),
   );
 

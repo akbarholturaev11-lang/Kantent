@@ -1,10 +1,11 @@
+import './viral-discovery.test.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { localDate, recommendCreativeFormats } from './viral-plan.mjs';
-import { validateObservation, deriveMetrics, loadObservations } from './feedback-analyzer.mjs';
+import { localDate, recommendCreativeFormats, readDiscoveryWeek } from './viral-plan.mjs';
+import { validateObservation, deriveMetrics } from './feedback-analyzer.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const read=(p)=>JSON.parse(fs.readFileSync(path.join(root,'content',p),'utf8'));
@@ -44,8 +45,7 @@ test('does not change or assign reviewed/published episodes',()=>{
   assert.equal(episodes[item.episodeFile].publishingStatus,'pending-owner-review');
 });
 test('refuses format attribution without verified mapping',()=>{
-  const obs=structuredClone(loadObservations()[0]);
-  obs.creativeFormatId='speed-quiz';
+  const obs={platform:'instagram',platformPostId:'fixture01',accountUsername:'fixture',publishedAt:'2026-10-01T00:00:00Z',observedAt:'2026-10-05T00:00:00Z',window:'lifetime',source:{provider:'Zernio',endpoint:'fixture',syncedAt:'2026-10-05T00:00:00Z'},metrics:{views:1000,reach:null,likes:null,comments:null,saves:null,shares:null,avgWatchMs:null,skipRatePercent:null,durationSeconds:30},creativeFormatId:'speed-quiz'};
   assert.match(validateObservation(obs).join(';'),/verified episode/);
   obs.episodeId='confirmed-episode';obs.hookFormat='question';obs.hskLevel='HSK 1';
   assert.deepEqual(validateObservation(obs),[]);
@@ -96,4 +96,15 @@ test('rejects invalid and duplicate registry IDs',()=>{
   assert.throws(()=>recommendCreativeFormats({
     calendar,episodeByFile:episodes,registry:broken,feedback:emptyFeedback,policy,date:'2026-10-11'
   }),/duplicate/);
+});
+
+
+test('canonical weekly proposal is available to both reserve and autopilot without changing calendar',()=>{
+ const snapshot=JSON.stringify(calendar);
+ const p=readDiscoveryWeek({projectRoot:root,calendar,today:'2026-11-29',now:new Date('2026-11-29T00:00:00Z')});
+ assert.equal(p.slots.length,7);
+ assert.equal(p.slots.filter(s=>s.contentType==='lesson').length,3);
+ assert.equal(p.assignmentAuthorized,true);
+ assert.equal(p.freezeRecord.slots.length,7);
+ assert.equal(JSON.stringify(calendar),snapshot);
 });

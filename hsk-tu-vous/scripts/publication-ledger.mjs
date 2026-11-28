@@ -49,6 +49,10 @@ export function creativeRecord(episode, experiments = null) {
     storytellingPattern: episode?.storytelling?.pattern ?? null,
     visualStyle: episode?.motionDesignStyle ?? null,
     scriptSha256: episode?.scenes?.length ? sha(scriptText(episode)) : null,
+    ...(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(episode?.storytelling?.serialArc?.familyId??'')?{serialFamilyId:episode.storytelling.serialArc.familyId}:{}),
+    ...(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(episode?.hookExperiment?.discoveryFormatId??'') ? { discoveryFormatId: episode.hookExperiment.discoveryFormatId } : {}),
+    ...(/^HSK\s*[1-6](?:\s*[-–]\s*[1-6])?$/.test(episode?.level??'') ? { hskLevel: episode.level } : {}),
+    ...(/^[a-z][a-z0-9-]{2,80}$/.test(episode?.creativeFormatId??'') ? { creativeFormatId: episode.creativeFormatId } : {}),
   };
 }
 

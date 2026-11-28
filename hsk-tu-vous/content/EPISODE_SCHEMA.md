@@ -34,7 +34,7 @@ Optional storytelling annotations can guide existing storyboard moods. Actual im
 
 For newly authored or deliberately revised, not-yet-voiced **CTA-free** plans, the agent records `episode.storytelling` for its topic-based choice and existing narrated beats. It does not create a new `scene.kind` or a rendered scene and MUST NOT be injected into approved/published records. Existing records without this object remain valid.
 
-- The only active policy is `content/creative-formats.json#storytellingPolicy` (`direct`, `single-rehook`, `layered`; no forced extra questions). Two-part serial continuity, the part-1 teaser and part-2 payoff follow its `seriesPartPolicy`; these are narration rules and add no episode fields.
+- The only active policy is `content/creative-formats.json#storytellingPolicy` (`direct`, `single-rehook`, `layered`; no forced extra questions). Two-part serial continuity, the part-1 teaser and part-2 payoff follow its `seriesPartPolicy`; for new pairs under `narrativeDiscovery`, the additional `storytelling.serialArc` is required. Older pairs remain valid.
 - New authoring includes `situation: {setting, learnerGoal, obstacle}` and `selectionReason`, with concrete nonempty descriptions in the selected explanation language. These describe the life task and why the chosen pattern teaches it; they do not create on-screen text. Earlier annotations without these context fields remain compatible.
 - `schemaVersion: 1`, `pattern` and `firstPayoff: {sceneId, cueText}` describe the earliest real instructional answer. `cueText` must appear verbatim in the cited teaching scene's narration, and its scene must start within the opening ratio set in the policy. Scene timing is planning evidence, NOT exact spoken-word timing.
 - `reHooks: []` contains zero or more `{sceneId, cueText, payoffSceneId, payoffCueText, reason}`. Every re-hook and payoff cue must occur verbatim in its existing scene's narration. Payoff must appear later than its distinct question, and both must be after the first teaching payoff. CTA scenes are never eligible.
@@ -126,3 +126,11 @@ Each language writes its own review root: the original at `review/<id>/`, and th
 - A visual or packaging edit can reuse audio and timestamps, but invalidates both current platform exports and package approval until re-rendered. Immutable approval archives and publication records remain intact.
 - Motion, sound, caption grouping, typography, and safe-area defaults come from `content/visual-system.json` and `content/EDITING_SPEC.md`. Any renderer-level change requires rebuilding and reviewing the dated package.
 - Source receipts may be added through MCP plan edits. They do not replace a human check of the claims.
+
+
+### Viral Discovery (new standalone lessons)
+For new standalone lessons covered by the active discovery policy, the required `hookExperiment.discoveryFormatId` identifies a prospectively authored reusable family from `content/creative-formats.json#discoveryFamilies`; it does not replace `formatId`. The new publication ledger copies it, actual HSK level and explicitly selected creative format from the exact package source. Historical receipts are immutable. The frozen `calendar.json#discoveryWeeks` slot owns assignment; both language versions must match it. Already prepared sources and historical receipts are not rewritten. See `docs/audits/VIRAL_DISCOVERY_ROLLOUT.md`.
+
+### New two-part serial arc
+
+For each language, both parts share `storytelling.serialArc` fields `familyId`, `premise`, `stakes`, `unresolvedQuestion`, `payoffPlan` (identical values within that language); the family ID also matches RU/TG. `opening` and `progress` are `{sceneId,cueText}` exact spoken cues. Part 1 adds `cliffhanger` (exact final non-CTA narration suffix); part 2 adds `resolution` (exact cue after progress), with no further cliffhanger. The calendar alone owns part identity/dates. These fields support structural validation; they do not prove story quality. The editorial check in the narrative policy must also pass before production. Never edit prepared or published historical pairs.

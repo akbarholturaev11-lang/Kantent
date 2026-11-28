@@ -2,6 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { analyzeObservations, loadObservations } from './feedback-analyzer.mjs';
+import { serialReadbacks, serialPlanningBrief } from './series-plan.mjs';
+import { evaluateDiscovery, discoveryWeekCutoff, planDiscoveryWeek, makeDiscoveryFreezeRecord, freezeDiscoveryCalendar, validateDiscoveryCalendar } from './viral-discovery.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -118,10 +120,39 @@ export function recommendCreativeFormats({ calendar, episodeByFile, registry, fe
   };
 }
 
+/** Shared read-only weekly proposal used by the CLI, MCP reserve and autopilot. */
+export function readDiscoveryWeek({ projectRoot=root, calendar, today, now=new Date() }={}) {
+  const policyPath=path.join(projectRoot,'content/hook-lab.json');
+  if(!fs.existsSync(policyPath))return null;
+  const policy=readJson(policyPath).policy.discoveryPilot;
+  if(!policy?.enabled)return null;
+  calendar??=readJson(path.join(projectRoot,'content/calendar.json'));
+  today??=localDate(now,calendar.timezone);
+  const registry=readJson(path.join(projectRoot,'content/creative-formats.json'));
+  const publications=readJson(path.join(projectRoot,'content/feedback/publications.json')).records;
+  const destinations=readJson(path.join(projectRoot,'content/publication-destinations.json'));
+  const week=discoveryWeekCutoff(today,now);
+  const observations=loadObservations(path.join(projectRoot,'content/feedback/observations'),{applyMappings:false});
+  const serialBrief=serialPlanningBrief(registry.storytellingPolicy?.seriesPartPolicy?.narrativeDiscovery,serialReadbacks({publications,observations,asOf:week.cutoff}),week.startDate);
+  const frozen=(calendar.discoveryWeeks??[]).find(w=>w.weekStart===week.startDate);
+  if(frozen){
+    validateDiscoveryCalendar(calendar,registry);
+    return {...frozen,serialBrief,mode:'active',status:'frozen',freezeRecord:frozen,slots:frozen.slots.map(s=>({...s,brief:registry.discoveryFamilies.find(f=>f.id===s.discoveryFormatId)?.brief??null})),assignmentAuthorized:true,publicationAuthorized:false};
+  }
+  const cutoff=week.cutoff;
+  const discovery=evaluateDiscovery({observations,publications,destinations,policy,asOf:cutoff});
+  const plan=planDiscoveryWeek({calendar,registry,discovery,publications,today,now});
+  const active=policy.mode==='active'&&plan.weekStart>=policy.activeFrom;
+  const freezeRecord=makeDiscoveryFreezeRecord(plan,{calendar,registry,policy,now});
+  return {...plan,serialBrief,mode:active?'active':'shadow-read-only',status:freezeRecord?'ready-to-freeze':active?'preview-or-needs-family':'historical-preview',freezeRecord,assignmentAuthorized:!!freezeRecord};
+}
+
 export function runCli(args = process.argv.slice(2), { now = new Date() } = {}) {
-  let json=false, date=null;
+  let json=false, date=null, freeze=false, write=false;
   for(let i=0; i<args.length; i++) {
     if(args[i]==='--json') json=true;
+    else if(args[i]==='--freeze-week') freeze=true;
+    else if(args[i]==='--write') write=true;
     else if(args[i]==='--date' && args[i+1]) date=args[++i];
     else throw new Error('Usage: npm run content:viral-plan -- [--date YYYY-MM-DD] [--json]');
   }
@@ -130,6 +161,15 @@ export function runCli(args = process.argv.slice(2), { now = new Date() } = {}) 
   const policy=readJson(path.join(root,'content/hook-lab.json')).policy;
   const asOf=date ?? localDate(now,calendar.timezone);
   if(!isoDate(asOf)) throw new Error('Invalid date');
+  if(write&&!freeze)throw Error('--write requires --freeze-week');
+  if(freeze){
+    const proposal=readDiscoveryWeek({calendar,today:asOf,now});
+    if(!proposal?.freezeRecord)throw Error('No freeze record available: wait for the Sunday cutoff or register a new family; existing production is untouched');
+    const next=freezeDiscoveryCalendar(calendar,proposal.freezeRecord,registry);
+    if(write&&next!==calendar){const file=path.join(root,'content/calendar.json');const temp=file+'.discovery-tmp';fs.writeFileSync(temp,JSON.stringify(next,null,2)+'\n');fs.renameSync(temp,file);}
+    console.log(JSON.stringify({written:write&&next!==calendar,freezeRecord:proposal.freezeRecord},null,2));
+    return proposal;
+  }
   const episodeByFile={};
   for(const item of calendar.items) {
     if(!item.episodeFile || episodeByFile[item.episodeFile]) continue;
@@ -137,14 +177,24 @@ export function runCli(args = process.argv.slice(2), { now = new Date() } = {}) 
     if(!epPath.startsWith(path.join(root,'content','episodes')+path.sep)) throw new Error('Unsafe episode path');
     if(fs.existsSync(epPath)) episodeByFile[item.episodeFile]=readJson(epPath);
   }
-  const feedback=analyzeObservations(loadObservations(),policy,{asOf:now});
+  const observations=loadObservations();
+  const feedback=analyzeObservations(observations,policy,{asOf:now});
   const plan=recommendCreativeFormats({calendar,episodeByFile,registry,feedback,policy,date:asOf});
+  if(policy.discoveryPilot?.enabled){
+    const publications=readJson(path.join(root,'content/feedback/publications.json')).records;
+    const destinations=readJson(path.join(root,'content/publication-destinations.json'));
+    const raw=loadObservations(undefined,{applyMappings:false});
+    plan.discovery=evaluateDiscovery({observations:raw,publications,destinations,policy:policy.discoveryPilot,asOf:now});
+    plan.serialReadbacks=serialReadbacks({publications,observations:raw,asOf:now});
+    plan.discoveryWeek=readDiscoveryWeek({calendar,today:asOf,now});
+  }
   if(json) console.log(JSON.stringify(plan,null,2));
   else {
     console.log('Viral content PILOT (not guaranteed 50–90K views), from '+asOf);
     for(const item of plan.upcoming)
       console.log(`${item.date} ${item.episodeId}: ${item.creativeFormatId ?? item.status} [${item.currentHookFormat ?? '?'}]`);
     console.log('7d creative evidence: '+plan.evidenceStatus+'; app conversions: unmeasured');
+    if(plan.discovery)console.log('Discovery: '+plan.discovery.families.length+' families; '+plan.discovery.unattributedHits.length+' unattributed threshold hits.');
     console.log('No video, voice, CTA or publication changed.');
   }
   return plan;

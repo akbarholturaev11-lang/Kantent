@@ -14,7 +14,7 @@ description: HSK-specific Instagram Reel hook and editorial beat planning, befor
 
 ## Procedure
 1. Identify one **verified** HSK 1–2 Chinese teaching fact for the selected audience language from `content/languages.json` (Hanzi + tone-marked pinyin + that audience's meaning). Reject invented usage examples, app results and statistics.
-2. Propose **three genuinely different** first-line hook ideas from the currently approved Hook Lab formats; never replace its registered `hookExperiment` or promote an unmeasured alternative. Note the specific beginner problem, the accurate payoff, and what *visual event* would appear immediately.
+2. For a new Discovery lesson, read the frozen family brief first. Propose **three genuinely different** first-line treatments within that family and its compatible Hook Lab format; never replace an existing registered hook or claim an unmeasured alternative is proven. Note the specific beginner problem, the accurate payoff, and what *visual event* would appear immediately.
 3. Screen each hook for clarity, specificity, truthfulness, relevance to the one teaching point and consistency with the scene. These are editorial checks, **not predictive scores or promised virality**.
 4. Produce a short beat-by-beat **proposal**: spoken text in the selected explanation language, a corresponding visual action, Chinese text with pinyin, and a final payoff. Keep current HSK AI CTA *outside* this lesson proposal; central `cta-lab.json` assembles it later.
 5. For a lesson under the active `lessonPresentation` policy, hand the chosen Hook treatment to the owner-authorized scenario agent to author **source JSON and each language's exact spoken `cueText` + drawable `motionBeats`**; original objects/actions need real `visual.graphic` nodes/tracks, not a generic storyboard caption. `auto-storyboard` remains an eligible **legacy-only** path, not the default for current action lessons. Actual Gemini word timestamps validate motion and subtitles during production; advisory durations are not real cues. Never write approved/published lessons or generate media from this advisory skill.
@@ -25,7 +25,7 @@ After verifying one teachable HSK fact and checking the three hook proposals, in
 
 
 ## Output
-Three candidate hooks with editorial weaknesses; one recommended hook **for owner review**; meaning-linked beat/action-frame suggestions compatible with the active scene schema and each configured language; list of Chinese sources and unresolved uncertainties. No MP3/MP4, unapproved edits, CTA replacements or social posting.
+Three candidate hooks with editorial weaknesses; one recommended hook for the authorized scenario writer (the frozen Discovery family is unchanged); meaning-linked beat/action-frame suggestions compatible with the active scene schema and each configured language; list of Chinese sources and unresolved uncertainties. No MP3/MP4, unapproved edits, CTA replacements or social posting.
 
 ## Provenance
 Selectively adapted editorial method from [instagram-agent-skill/ig-reel](https://github.com/Jakeschincariol/instagram-agent-skill/tree/main/skills/ig-reel) (MIT). The original 26-formula list, Python heuristic scorer and target-duration prescriptions are intentionally **not** installed: the local Hook Lab and word-cue validators remain authoritative.
