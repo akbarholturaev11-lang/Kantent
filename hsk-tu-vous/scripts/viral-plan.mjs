@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { analyzeObservations, loadObservations } from './feedback-analyzer.mjs';
+import { evaluateDiscovery } from './viral-discovery.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -137,14 +138,21 @@ export function runCli(args = process.argv.slice(2), { now = new Date() } = {}) 
     if(!epPath.startsWith(path.join(root,'content','episodes')+path.sep)) throw new Error('Unsafe episode path');
     if(fs.existsSync(epPath)) episodeByFile[item.episodeFile]=readJson(epPath);
   }
-  const feedback=analyzeObservations(loadObservations(),policy,{asOf:now});
+  const observations=loadObservations();
+  const feedback=analyzeObservations(observations,policy,{asOf:now});
   const plan=recommendCreativeFormats({calendar,episodeByFile,registry,feedback,policy,date:asOf});
+  if(policy.discoveryPilot?.enabled){
+    const publications=readJson(path.join(root,'content/feedback/publications.json')).records;
+    const destinations=readJson(path.join(root,'content/publication-destinations.json'));
+    plan.discovery=evaluateDiscovery({observations,publications,destinations,policy:policy.discoveryPilot,asOf:now});
+  }
   if(json) console.log(JSON.stringify(plan,null,2));
   else {
     console.log('Viral content PILOT (not guaranteed 50–90K views), from '+asOf);
     for(const item of plan.upcoming)
       console.log(`${item.date} ${item.episodeId}: ${item.creativeFormatId ?? item.status} [${item.currentHookFormat ?? '?'}]`);
     console.log('7d creative evidence: '+plan.evidenceStatus+'; app conversions: unmeasured');
+    if(plan.discovery)console.log('Discovery shadow: '+plan.discovery.families.length+' families; '+plan.discovery.unattributedHits.length+' unattributed threshold hits.');
     console.log('No video, voice, CTA or publication changed.');
   }
   return plan;

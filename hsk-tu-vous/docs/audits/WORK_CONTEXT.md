@@ -207,3 +207,7 @@ See `CURRENT_TASKS.md` (owner actions first). Engineering-wise the next real pro
 - On each session update: base/head SHAs, verified changes, tests with exact run IDs/status, unresolved blockers and next **single** task. Do not label a test `passed` without observable CI evidence.
 - Use no real API key, no `OPENROUTER_API_KEY` or `GEMINI_API_KEY` in commits, logs or test fixtures. Do not run a paid voice or social publish operation without the owner's request.
 - When a bug cannot be reproduced without original audio/visual artifacts, distinguish **code fix / synthetic CI / real-media QA needed**.
+
+
+## 2026-11-28 — Viral Discovery phase 1 (separate branch)
+Owner requested the threshold discovery system. See [Viral Discovery rollout](VIRAL_DISCOVERY_ROLLOUT.md) for scope and remaining gates. Branch `feat/viral-discovery-system` is a separate read-only pilot; existing production and bugfix work remain untouched. No production activation or merge is implied.

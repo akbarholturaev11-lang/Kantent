@@ -25,7 +25,15 @@
     "earlySignalWindow": "24h",
     "primaryDecisionWindow": "7d",
     "missingPrimaryWindowDecision": "insufficient-evidence",
-    "analysisScope": "publishedAt-rolling-window"
+    "analysisScope": "publishedAt-rolling-window",
+    "discoveryPilot": {
+      "enabled": true,
+      "mode": "shadow-read-only",
+      "minimumViews": 3000,
+      "minimumAgeHours": 72,
+      "maximumInitialAttempts": 2,
+      "note": "Owner threshold discovery; shadow only until prospective family registration, weekly allocation and dependent policy migration are complete. Does not override existing exact-window experiment rules."
+    }
   },
   "formats": [
     {
