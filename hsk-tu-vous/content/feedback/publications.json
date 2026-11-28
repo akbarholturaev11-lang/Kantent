@@ -1774,14 +1774,14 @@
       "accountId": "6ac96e053f8f4ffc10b0655f",
       "accountUsername": "hskai_app",
       "zernioPostId": "6b041209fffbe13daab7648b",
-      "platformPostId": null,
-      "status": "scheduled",
+      "platformPostId": "Xyy7_p1n3Ro",
+      "status": "published",
       "videoSha256": "b192d4c4a4130abebfc11ea0d5c172e75f84f83f4bfb69294ffff90a7cd00b00",
       "approvedVideoSha256": "b192d4c4a4130abebfc11ea0d5c172e75f84f83f4bfb69294ffff90a7cd00b00",
       "approvedAt": "2026-11-23T10:13:15.598Z",
       "verifiedAt": "2026-11-23T10:14:35.187Z",
       "scheduledFor": "2026-11-27T21:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-27T13:00:24.000Z",
       "ctaExperimentId": "zhengzai-reading-20261127-youtube-cta-v1",
       "postPreviewSha256": "223d0b3670ca7b2a0cbadb9da45e8d0d74b807bd437e3262baba1eafcb3f7a94",
       "creative": {
@@ -1799,8 +1799,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "23b9b00941c8374d6f6d9a75",
-        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e"
-      }
+        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio_RU posts_get + analytics_get_analytics exact latePostId/account",
+          "verifiedAt": "2026-11-28T00:15:44.000Z",
+          "accountId": "6ac96e053f8f4ffc10b0655f",
+          "zernioPostId": "6b041209fffbe13daab7648b"
+        }
+      },
+      "platformPostUrl": "https://www.youtube.com/watch?v=Xyy7_p1n3Ro"
     },
     {
       "content": {
@@ -1813,14 +1821,14 @@
       "accountId": "6ae16327a2845fbdb07e5ccb",
       "accountUsername": "hskai.app",
       "zernioPostId": "6b04127bdaa125a24873e239",
-      "platformPostId": null,
-      "status": "scheduled",
+      "platformPostId": "7712835519259921684",
+      "status": "published",
       "videoSha256": "656912f1040ab2221f4e56e9438fa14caf0b03f1d348e8b4d76e6ee982917830",
       "approvedVideoSha256": "656912f1040ab2221f4e56e9438fa14caf0b03f1d348e8b4d76e6ee982917830",
       "approvedAt": "2026-11-23T10:14:54.475Z",
       "verifiedAt": "2026-11-23T10:16:30.314Z",
       "scheduledFor": "2026-11-27T21:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-27T13:01:04.038Z",
       "ctaExperimentId": "zhengzai-reading-20261127-tiktok-cta-v1",
       "postPreviewSha256": "4f634d2c780016d496d7dbc8dd917eecb4bf261edc829a3022901bb32edd0e67",
       "creative": {
@@ -1838,8 +1846,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "a98ff42b2dd30967e10ee91a",
-        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e"
-      }
+        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio get_post + accounts_get_account_posts exact authenticated permalink",
+          "verifiedAt": "2026-11-28T00:15:44.000Z",
+          "accountId": "6ae16327a2845fbdb07e5ccb",
+          "zernioPostId": "6b04127bdaa125a24873e239"
+        }
+      },
+      "platformPostUrl": "https://www.tiktok.com/@hskai.app/video/7712835519259921684"
     },
     {
       "content": {
@@ -1852,14 +1868,14 @@
       "accountId": "6a411e989d9472faae10a430",
       "accountUsername": "hskai.app",
       "zernioPostId": "6b04130e545cfe050e428861",
-      "platformPostId": null,
-      "status": "scheduled",
+      "platformPostId": "17896039284615771",
+      "status": "published",
       "videoSha256": "a0f008ea14180356c5294019eeb522ac20c6341afea904f4501565fe6688a44e",
       "approvedVideoSha256": "a0f008ea14180356c5294019eeb522ac20c6341afea904f4501565fe6688a44e",
       "approvedAt": "2026-11-23T10:17:24.987Z",
       "verifiedAt": "2026-11-23T10:18:55.932Z",
       "scheduledFor": "2026-11-27T21:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-27T13:01:34.000Z",
       "ctaExperimentId": "zhengzai-reading-20261127-baseline-v5-20261123",
       "postPreviewSha256": "ea643b96907cef99d987f8d58abbea17efccd53f3093ea0090df9d77d967f436",
       "creative": {
@@ -1877,8 +1893,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "8de5142eef9905a069a7d14e",
-        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e"
-      }
+        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio_RU posts_get + analytics_get_analytics exact latePostId/account",
+          "verifiedAt": "2026-11-28T00:15:44.000Z",
+          "accountId": "6a411e989d9472faae10a430",
+          "zernioPostId": "6b04130e545cfe050e428861"
+        }
+      },
+      "platformPostUrl": "https://www.instagram.com/reel/DgPvQ9Tt9RN/"
     },
     {
       "content": {
@@ -1891,14 +1915,14 @@
       "accountId": "6ae0f16205fd6f5357f8503d",
       "accountUsername": "hskai.apptj",
       "zernioPostId": "6b0413882cd9bd9f0ea05630",
-      "platformPostId": null,
-      "status": "scheduled",
+      "platformPostId": "18173597098472445",
+      "status": "published",
       "videoSha256": "26668298108b382830ddf9c1123bc0017e673a0db5c5a315c1648afe7429335f",
       "approvedVideoSha256": "26668298108b382830ddf9c1123bc0017e673a0db5c5a315c1648afe7429335f",
       "approvedAt": "2026-11-23T10:19:30.023Z",
       "verifiedAt": "2026-11-23T10:20:58.856Z",
       "scheduledFor": "2026-11-27T19:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-27T11:01:59.343Z",
       "ctaExperimentId": "zhengzai-reading-20261127-baseline-v9-20261123",
       "postPreviewSha256": "eb8a18b63737d85830ff2e62028624cf533bb5fa36b54fc1ec77f90ed31317eb",
       "creative": {
@@ -1916,8 +1940,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "8f56db2588d02a7f63ea0584",
-        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e"
-      }
+        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio get_post + accounts_get_account_posts exact authenticated permalink",
+          "verifiedAt": "2026-11-28T00:15:44.000Z",
+          "accountId": "6ae0f16205fd6f5357f8503d",
+          "zernioPostId": "6b0413882cd9bd9f0ea05630"
+        }
+      },
+      "platformPostUrl": "https://www.instagram.com/reel/DgPhlH4KTLe/"
     },
     {
       "content": {
@@ -1930,14 +1962,14 @@
       "accountId": "6ae160123787e4c71b522d64",
       "accountUsername": "hskai.app-tj",
       "zernioPostId": "6b04141079426541785ecc15",
-      "platformPostId": null,
-      "status": "scheduled",
+      "platformPostId": "xq0jWKzQD_E",
+      "status": "published",
       "videoSha256": "af52210ccf1eb3396ba369b29e22709409c427a57eb864eda289fc4d63c2c770",
       "approvedVideoSha256": "af52210ccf1eb3396ba369b29e22709409c427a57eb864eda289fc4d63c2c770",
       "approvedAt": "2026-11-23T10:21:36.067Z",
       "verifiedAt": "2026-11-23T10:23:14.303Z",
       "scheduledFor": "2026-11-27T19:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-27T11:00:00.000Z",
       "ctaExperimentId": "zhengzai-reading-20261127-youtube-cta-v1",
       "postPreviewSha256": "76e7bad01a976f85c096eb3acfef0b3b84162fa6e22d20ac015b04389079e45e",
       "creative": {
@@ -1955,8 +1987,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "ebc90233e20498f31be2466a",
-        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e"
-      }
+        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio get_post + accounts_get_account_posts exact authenticated permalink",
+          "verifiedAt": "2026-11-28T00:15:44.000Z",
+          "accountId": "6ae160123787e4c71b522d64",
+          "zernioPostId": "6b04141079426541785ecc15"
+        }
+      },
+      "platformPostUrl": "https://www.youtube.com/watch?v=xq0jWKzQD_E"
     },
     {
       "content": {
@@ -1969,14 +2009,14 @@
       "accountId": "6ae161de384955d3b3ff194b",
       "accountUsername": "Akbarholturaev",
       "zernioPostId": "6b0414b0bd3d5fc60be348b0",
-      "platformPostId": null,
-      "status": "scheduled",
+      "platformPostId": "1159152280609531_122123972883319062",
+      "status": "published",
       "videoSha256": "5c881c43c2d03a88108f9243966eaf2cc0d0de4c6826e1d5c5c2c449716e5462",
       "approvedVideoSha256": "5c881c43c2d03a88108f9243966eaf2cc0d0de4c6826e1d5c5c2c449716e5462",
       "approvedAt": "2026-11-23T10:23:29.742Z",
       "verifiedAt": "2026-11-23T10:25:53.806Z",
       "scheduledFor": "2026-11-27T19:00:00+08:00",
-      "publishedAt": null,
+      "publishedAt": "2026-11-27T11:01:22.323Z",
       "ctaExperimentId": "zhengzai-reading-20261127-facebook-cta-v1",
       "postPreviewSha256": "c158aae0e0567c30edf544d54bd736b24bff0ff16f63f9748e2510f71989c916",
       "creative": {
@@ -1994,8 +2034,16 @@
         "provider": "Zernio",
         "endpoint": "Zernio GET /v1/posts/{id}",
         "localRequestId": "09a2a3a2fc861ac663f9f80f",
-        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e"
-      }
+        "sourceCommit": "6b03a2137cf9e565c25bcf3da7d0a2c7ebc7652e",
+        "lastReadback": {
+          "provider": "Zernio",
+          "endpoint": "Zernio get_post + accounts_get_account_posts exact authenticated permalink + get_post_analytics",
+          "verifiedAt": "2026-11-28T00:15:44.000Z",
+          "accountId": "6ae161de384955d3b3ff194b",
+          "zernioPostId": "6b0414b0bd3d5fc60be348b0"
+        }
+      },
+      "platformPostUrl": "https://www.facebook.com/watch/?v=2033621497299256"
     },
     {
       "content": {
