@@ -1,7 +1,9 @@
 // Read-only threshold discovery. Never substitutes for an exact-window A/B result.
 import {validatePublicationMapping} from './content-attribution.mjs';
 import {validateObservation} from './feedback-analyzer.mjs';
-import {nextFullCalendarWeek, addCalendarDays, expectedContentSlot} from './content-schedule.mjs';
+import {nextFullCalendarWeek, addCalendarDays, expectedContentSlot, calendarWeekday, contentTypeOf} from './content-schedule.mjs';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const HOUR = 3600000;
 const formatPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -77,7 +79,8 @@ export function evaluateDiscovery({observations, publications, destinations, pol
     const readings=(matched.get(p)??[]).sort((a,b)=>timestamp(a.observedAt)-timestamp(b.observedAt));
     const first=readings.find(x=>x.ageHours>=minimumAgeHours)??null;
     const laterHit=first&&readings.find(x=>x.ageHours>=minimumAgeHours&&x.views>=minimumViews);
-    a.platforms[p.platform]={status:!first?'pending':laterHit?'hit':'miss',first,hit:laterHit??null};
+    const peak=readings.filter(x=>x.ageHours>=minimumAgeHours).sort((a,b)=>b.views-a.views||timestamp(a.observedAt)-timestamp(b.observedAt))[0]??null;
+    a.platforms[p.platform]={status:!first?'pending':laterHit?'hit':'miss',first,hit:laterHit??null,peak};
   }
   const groups=new Map();
   for(const a of attempts.values()){
@@ -144,6 +147,9 @@ export function planDiscoveryWeek({calendar,registry,discovery,publications=[],t
   if(timestamp(discovery.asOf)>+week.cutoff)throw Error('Discovery contains evidence after weekly cutoff');
   const existing=new Map((calendar.items??[]).filter(i=>i.date>=week.startDate&&i.date<=week.endDate).map(i=>[i.date,i]));
   const booked=new Set([...existing.values()].map(i=>i.discoveryFormatId).filter(Boolean));
+  for(const old of calendar.discoveryWeeks??[])if(old.weekStart<week.startDate&&old.weekEnd>=addCalendarDays(week.startDate,-7)){
+    for(const slot of old.slots??[])if(slot.discoveryFormatId&&!publications.some(p=>p.status==='published'&&p.creative?.discoveryFormatId===slot.discoveryFormatId&&calendar.items.some(i=>i.date===slot.date&&i.id===p.content?.id)))booked.add(slot.discoveryFormatId);
+  }
   for(const p of publications)if(['scheduled','processing'].includes(p.status)&&p.content?.type==='lesson'&&p.creative?.discoveryFormatId)booked.add(p.creative.discoveryFormatId);
   const byFamily=new Map(families.map(f=>[f.id,discovery.families.filter(g=>g.actionable&&g.family===f.id)]));
   const classify=f=>{
@@ -151,7 +157,7 @@ export function planDiscoveryWeek({calendar,registry,discovery,publications=[],t
     const canRetry=groups.some(g=>g.nextAction==='retry-new-topic');
     const canRepeat=groups.some(g=>g.nextAction==='replicate');
     const pending=groups.some(g=>['await-existing-attempt','await-data'].includes(g.nextAction));
-    const peak=Math.max(0,...groups.flatMap(g=>g.attempts.flatMap(a=>Object.values(a.platforms).map(p=>p.hit?.views??0))));
+    const peak=Math.max(0,...groups.flatMap(g=>g.attempts.flatMap(a=>Object.values(a.platforms).map(p=>p.peak?.views??p.hit?.views??0))));
     const rank=Math.max(0,...groups.map(g=>g.state==='repeat-hit'?4:g.state==='cross-platform-hit'?3:g.state==='multi-platform-hit'?2:g.state==='platform-hit'?1:0));
     return {f,groups,canRetry,canRepeat,pending,peak,rank};
   };
@@ -162,7 +168,8 @@ export function planDiscoveryWeek({calendar,registry,discovery,publications=[],t
     status:'before-typed-calendar',assignmentAuthorized:false,publicationAuthorized:false};
   const slots=Array.from({length:7},(_,i)=>expectedContentSlot(calendar,addCalendarDays(week.startDate,i)));
   if(slots.some(s=>!s))throw Error('Weekly discovery requires the canonical typed schedule');
-  const sortWins=(a,b)=>b.rank-a.rank||b.peak-a.peak||a.f.id.localeCompare(b.f.id);
+  const tier=views=>views>=100000?4:views>=50000?3:views>=10000?2:views>=3000?1:0;
+  const sortWins=(a,b)=>tier(b.peak)-tier(a.peak)||b.rank-a.rank||b.peak-a.peak||a.f.id.localeCompare(b.f.id);
   const sortRetries=(a,b)=>b.peak-a.peak||a.f.id.localeCompare(b.f.id);
   const queues={replicate:entries.filter(e=>e.canRepeat).sort(sortWins),retry:entries.filter(e=>e.canRetry).sort(sortRetries),explore:entries.filter(e=>!e.groups.length)};
   const desired=['replicate','retry','explore'];
@@ -187,4 +194,77 @@ export function planDiscoveryWeek({calendar,registry,discovery,publications=[],t
   });
   return {mode:'shadow-read-only',weekStart:week.startDate,weekEnd:week.endDate,cutoff:week.cutoff.toISOString(),slots:result,
     assignmentAuthorized:false,publicationAuthorized:false};
+}
+
+export function discoveryApplies(policy,item){
+ return policy?.enabled===true&&policy.mode==='active'&&contentTypeOf(item)==='lesson'&&item.date>=policy.activeFrom;
+}
+export function readDiscoveryRules(root){
+ const file=path.join(root,'content/hook-lab.json');
+ if(!fs.existsSync(file))return null;
+ const policy=JSON.parse(fs.readFileSync(file,'utf8')).policy?.discoveryPilot;
+ if(policy?.mode!=='active'||!policy.enabled)return null;
+ const read=name=>JSON.parse(fs.readFileSync(path.join(root,'content',name),'utf8'));
+ return {policy,calendar:read('calendar.json'),registry:read('creative-formats.json')};
+}
+export function validateDiscoveryCalendar(calendar,registry){
+ const families=new Map(validateDiscoveryFamilies(registry).map(f=>[f.id,f]));
+ const seen=new Set();
+ if(calendar.discoveryWeeks!==undefined&&!Array.isArray(calendar.discoveryWeeks))throw Error('discoveryWeeks must be an array');
+ for(const record of calendar.discoveryWeeks??[]){
+   if(calendarWeekday(record.weekStart)!=='MO'||seen.has(record.weekStart)||record.weekEnd!==addCalendarDays(record.weekStart,6)||
+      record.cutoff!==addCalendarDays(record.weekStart,-1)+'T00:00:00.000Z'||!Array.isArray(record.slots)||record.slots.length!==7)
+      throw Error('Invalid or duplicate frozen discovery week '+record.weekStart);
+   seen.add(record.weekStart);
+   const used=new Set();
+   for(const [i,s] of record.slots.entries()){
+     const date=addCalendarDays(record.weekStart,i);
+     const expected=expectedContentSlot(calendar,date);
+     if(s.date!==date||s.contentType!==expected?.contentType)throw Error('Discovery slot conflicts with calendar '+date);
+     if(s.contentType!=='lesson'){
+       if(s.action!=='unchanged'||s.discoveryFormatId!=null)throw Error('Discovery cannot assign ads or series '+date);
+       continue;
+     }
+     if(s.action==='preserve-existing'){
+       if(!s.contentId||!calendar.items.some(x=>x.date===date&&x.id===s.contentId))throw Error('Preserved source must already exist '+date);
+       continue;
+     }
+     const family=families.get(s.discoveryFormatId);
+     if(!['explore','retry','replicate'].includes(s.action)||!family||family.hookFormat!==s.hookFormat||used.has(family.id))
+       throw Error('Invalid or duplicate lesson family '+date);
+     used.add(family.id);
+   }
+ }
+ return true;
+}
+export function makeDiscoveryFreezeRecord(plan,{calendar,registry,policy,now=new Date()}){
+ if(!policy?.enabled||policy.mode!=='active'||plan.weekStart<policy.activeFrom)return null;
+ const cutoff=addCalendarDays(plan.weekStart,-1)+'T00:00:00.000Z';
+ if(+now<timestamp(cutoff)||plan.cutoff!==cutoff||plan.slots.length!==7)return null;
+ if(plan.slots.some(s=>s.action==='author-new-family'))return null;
+ const record={weekStart:plan.weekStart,weekEnd:plan.weekEnd,cutoff,
+   slots:plan.slots.map(s=>({date:s.date,contentType:s.contentType,action:s.action,
+     ...(s.contentType==='lesson'?{discoveryFormatId:s.discoveryFormatId??null,hookFormat:s.hookFormat??null,
+       ...(s.action==='preserve-existing'?{contentId:s.contentId}:{})}:{} )}))};
+ validateDiscoveryCalendar({...calendar,discoveryWeeks:[...(calendar.discoveryWeeks??[]),record]},registry);
+ return record;
+}
+export function freezeDiscoveryCalendar(calendar,record,registry){
+ const existing=(calendar.discoveryWeeks??[]).find(w=>w.weekStart===record?.weekStart);
+ if(existing){if(JSON.stringify(existing)!==JSON.stringify(record))throw Error('Discovery week is already frozen; no reassignment');return calendar;}
+ if(!record)throw Error('No freeze record: use the actual Sunday cutoff and add a new family if needed');
+ const next={...calendar,discoveryWeeks:[...(calendar.discoveryWeeks??[]),record].sort((a,b)=>a.weekStart.localeCompare(b.weekStart))};
+ validateDiscoveryCalendar(next,registry);
+ return next;
+}
+export function discoveryDraftErrors(rules,item,source){
+ if(!rules||!discoveryApplies(rules.policy,item))return [];
+ const slot=rules.calendar.discoveryWeeks?.flatMap(w=>w.slots).find(s=>s.date===item.date);
+ if(!slot)return ['Discovery: freeze the weekly calendar assignment before authoring '+item.date];
+ if(slot.action==='preserve-existing')return slot.contentId===item.id?[]:['Discovery: preserved content identity changed'];
+ const family=validateDiscoveryFamilies(rules.registry).find(f=>f.id===slot.discoveryFormatId);
+ if(!family||source?.hookExperiment?.discoveryFormatId!==family.id||source?.hookExperiment?.formatId!==family.hookFormat)
+   return ['Discovery: '+item.id+' must carry the frozen family '+slot.discoveryFormatId+' and Hook format '+slot.hookFormat];
+ if(source.experiment?.id==='lesson-opening-v1')return ['Discovery: new lesson must not carry the retired lesson A/B arm'];
+ return [];
 }

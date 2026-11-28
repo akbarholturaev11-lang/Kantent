@@ -12,7 +12,9 @@ const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (rel) => JSON.parse(fs.readFileSync(path.join(ROOT, rel), "utf8"));
 const goals = read("content/creative-formats.json").contentGoals.byContentType;
 const thresholds = read("content/hook-lab.json").policy;
-const registry = readExperiments(ROOT);
+const canonical = readExperiments(ROOT);
+const registry=structuredClone(canonical);
+Object.assign(registry.experiments[0],{status:'active',decision:null});delete registry.experiments[0].supersededFrom;
 const lesson = (id, date) => ({ id, date, contentType: "lesson" });
 
 test("the canonical registry is valid: one active test, goals from contentGoals, the visual test paused", () => {
@@ -137,4 +139,13 @@ test("only the owner's recorded words decide; the next queued test then starts t
   assert.equal(adTest.status, "active");
   assert.equal(adTest.startDate, "2026-12-14", "2026-12-10 is a Thursday → Monday 14th");
   assert.deepEqual(validateExperiments(next, { goals }), []);
+});
+
+
+test('canonical cutover archives the lesson A/B without erasing old assignments',()=>{
+ assert.deepEqual(validateExperiments(canonical,{goals,variety:read('content/visual-variety.json')}),[]);
+ assert.equal(canonical.experiments[0].status,'stopped');
+ assert.equal(activeExperimentFor(canonical,'lesson','2026-11-27').id,'lesson-opening-v1');
+ assert.equal(activeExperimentFor(canonical,'lesson','2026-11-30'),null);
+ assert.equal(canonical.experiments[1].status,'queued');
 });

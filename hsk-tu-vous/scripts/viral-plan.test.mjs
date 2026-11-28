@@ -104,6 +104,7 @@ test('canonical weekly proposal is available to both reserve and autopilot witho
  const p=readDiscoveryWeek({projectRoot:root,calendar,today:'2026-11-29',now:new Date('2026-11-29T00:00:00Z')});
  assert.equal(p.slots.length,7);
  assert.equal(p.slots.filter(s=>s.contentType==='lesson').length,3);
- assert.equal(p.assignmentAuthorized,false);
+ assert.equal(p.assignmentAuthorized,true);
+ assert.equal(p.freezeRecord.slots.length,7);
  assert.equal(JSON.stringify(calendar),snapshot);
 });

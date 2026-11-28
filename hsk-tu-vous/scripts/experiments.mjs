@@ -21,6 +21,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { addCalendarDays, calendarWeekday, contentTypeOf } from "./content-schedule.mjs";
 import { deriveMetrics, loadObservations } from "./feedback-analyzer.mjs";
+import {readDiscoveryRules,discoveryApplies,discoveryDraftErrors} from './viral-discovery.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const EXPERIMENTS_FILE = "content/experiments.json";
@@ -89,7 +90,7 @@ export function validateExperiments(registry, { goals = {}, variety = null } = {
 
 /** The active experiment covering a content type on a date (or null). */
 export function activeExperimentFor(registry, contentType, date) {
-  return (registry?.experiments ?? []).find((exp) => exp.status === "active" && exp.contentType === contentType && date >= exp.startDate) ?? null;
+  return (registry?.experiments ?? []).find((exp) => (exp.status === "active" || (exp.status === "stopped" && exp.supersededFrom && date < exp.supersededFrom)) && exp.contentType === contentType && date >= exp.startDate) ?? null;
 }
 
 const assignmentKey = (exp, item) => (exp.unit === "story" ? item.series?.id : item.id);
@@ -286,9 +287,10 @@ export function reviewExperiments({ root = ROOT, asOf = new Date(), registry = r
         recommendation: "queued", reason: `Starts after ${exp.startsAfter} is decided by the owner.` }
     : { ...experimentResults(registry, exp, { publications: pubs, observations: obs, goals: context.goals, thresholds: context.thresholds, asOf }),
         decision: exp.decision ?? null });
+  for(const exp of experiments)if(exp.status==='stopped'){exp.recommendation='archived';exp.reason='Historical readout only; lesson discovery supersedes the A/B assignment. No promotion or new arm.';}
   const active = experiments.find((exp) => exp.status === "active") ?? null;
   const next = active ? registry.experiments.find((exp) => exp.status === "queued" && exp.startsAfter === active.id) : null;
-  const nextDecision = !active ? "No active test: start the next queued test with the owner."
+  const nextDecision = !active ? "No active A/B test; new lesson planning uses Discovery. Other queued tests remain available for a separate owner decision."
     : active.recommendation === "propose-promotion" ? `Owner decision needed: make "${active.arms[1].name}" the main ${active.contentType} style? (then ${next?.id ?? "no queued test"} starts)`
       : active.recommendation === "propose-keep-current" ? `Owner decision needed: keep "${active.arms[0].name}" and stop ${active.id}? (then ${next?.id ?? "no queued test"} starts)`
         : `Keep running ${active.id}; next review on the next ${registry.policy.reviewWeekday} Feedback run.`;
@@ -353,12 +355,13 @@ export function checkFutureDrafts({ root = ROOT, today }) {
   const { calendar } = readContext(root);
   const languages = readJson(path.join(root, "content", "languages.json"));
   const problems = [];
+  const discovery=readDiscoveryRules(root);
   for (const item of calendar.items.filter((entry) => entry.date >= today)) {
-    if (!activeExperimentFor(registry, contentTypeOf(item), item.date)) continue;
+    if (!activeExperimentFor(registry, contentTypeOf(item), item.date)&&!discoveryApplies(discovery?.policy,item)) continue;
     for (const language of languages.defaultProductionLanguages ?? ["ru"]) {
       const source = sourceFor(root, item, language);
       if (!source) { problems.push(`${item.id} ${language}: source not found`); continue; }
-      for (const error of draftExperimentErrors(registry, item, source)) problems.push(`${item.id} ${language}: ${error}`);
+      for (const error of [...draftExperimentErrors(registry,item,source),...discoveryDraftErrors(discovery,item,source)]) problems.push(`${item.id} ${language}: ${error}`);
     }
   }
   return problems;
@@ -406,7 +409,7 @@ export function runCli(args = process.argv.slice(2), root = ROOT) {
   if (args.includes("--check")) {
     const problems = [...validateExperiments(registry, context), ...checkFutureDrafts({ root, today })];
     for (const problem of problems) console.log(problem);
-    console.log(problems.length ? `${problems.length} experiment problem(s).` : "Every future draft of the active test carries its stored arm.");
+    console.log(problems.length ? `${problems.length} experiment problem(s).` : "Every applicable future draft carries its stored A/B or Discovery assignment.");
     return problems.length ? 1 : 0;
   }
   if (args.includes("--decide")) {

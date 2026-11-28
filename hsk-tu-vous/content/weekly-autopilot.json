@@ -17,7 +17,7 @@
     "standingOwnerApproval": true,
     "scope": "Only videos produced by this weekly run that pass every automated gate below. The run records the owner's standing approval with the exact video and post hashes it published; it never covers a manual or other route.",
     "requiredGates": [
-      "complete source draft in every language (content:buffer), with the active experiment arm (content:experiments -- --check)",
+      "complete source draft in every language (content:buffer), with frozen Discovery family for new lessons or stored arm of an applicable non-Discovery experiment (content:experiments -- --check)",
       "lesson-art frames generated, automatically reviewed AND looked at and confirmed (content:art:review)",
       "meaning visuals covered (meaning-visual-check --strict)",
       "registered CTA and verified kept CTA voice",
@@ -58,7 +58,7 @@
   },
   "report": {
     "file": "content/autopilot/<week-start>-report.md",
-    "contents": "per date and language: content ID, experiment arm, gates, scheduled platforms with Zernio post IDs and times, manual platforms, blockers and money spent",
+    "contents": "per date and language: content ID, Discovery family / experiment arm, gates, scheduled platforms with Zernio post IDs and times, manual platforms, blockers and money spent",
     "commit": "Commit and push the week's source fixes, frames, CTA/voice library, ledger and report to main."
   }
 }

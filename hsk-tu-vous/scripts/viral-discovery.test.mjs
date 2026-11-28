@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {evaluateDiscovery,planDiscoveryWeek,discoveryWeekCutoff} from './viral-discovery.mjs';
+import {evaluateDiscovery,planDiscoveryWeek,discoveryWeekCutoff,makeDiscoveryFreezeRecord,freezeDiscoveryCalendar,discoveryDraftErrors} from './viral-discovery.mjs';
 const h='a'.repeat(64), date='2026-11-01T00:00:00Z', end='2026-11-05T00:00:00Z';
 const destinations={videoDestinations:{ru:{platforms:{instagram:{zernioPublishingAuthorized:true,verifiedAccountId:'ig'},youtube:{zernioPublishingAuthorized:true,verifiedAccountId:'yt'},facebook:{zernioPublishingAuthorized:false,verifiedAccountId:'fb'}}}}};
 function receipt(id,platform){
@@ -103,4 +103,26 @@ test('a Sunday plan cannot use future evidence and a Saturday preview cannot see
 test('historical reports before the typed calendar do not invent a weekly schedule',()=>{
  const p=weekly({families:[]},{calendar:{...calendar,weeklySchedule:{...calendar.weeklySchedule,effectiveFromDate:'2026-12-01'}}});
  assert.equal(p.status,'before-typed-calendar');assert.equal(p.slots.length,0);
+});
+
+test('freeze is idempotent, requires the cutoff and cannot silently reassign a date',()=>{
+ const policy={enabled:true,mode:'active',activeFrom:'2026-11-09'};
+ const p=weekly({families:[]});
+ const record=makeDiscoveryFreezeRecord(p,{calendar,registry,policy,now});
+ assert.equal(record.slots.length,7);
+ const next=freezeDiscoveryCalendar(calendar,record,registry);
+ assert.equal(freezeDiscoveryCalendar(next,record,registry),next);
+ assert.throws(()=>freezeDiscoveryCalendar(next,{...record,slots:record.slots.map((s,i)=>i===0?{...s,discoveryFormatId:'new-two'}:s)},registry),/already frozen/);
+ assert.equal(makeDiscoveryFreezeRecord(p,{calendar,registry,policy,now:new Date('2026-11-07T23:00:00Z')}),null);
+ const slot=record.slots[0], item={id:'fresh-lesson',date:slot.date,contentType:'lesson'};
+ const rules={calendar:next,registry,policy};
+ assert.deepEqual(discoveryDraftErrors(rules,item,{hookExperiment:{discoveryFormatId:slot.discoveryFormatId,formatId:slot.hookFormat}}),[]);
+ assert.match(discoveryDraftErrors(rules,item,{hookExperiment:{discoveryFormatId:'different',formatId:slot.hookFormat}}).join(),/frozen family/);
+ assert.match(discoveryDraftErrors({...rules,calendar},item,{}).join(),/freeze/);
+ assert.deepEqual(discoveryDraftErrors(rules,{...item,contentType:'advertisement'},{}),[]);
+});
+test('later cumulative breakout remains the peak, not only the first threshold crossing',()=>{
+ const g=run(one,[observation(one[0],3100),observation(one[0],100000,'2026-11-08T00:00:00Z'),observation(one[1],3000)]).families[0];
+ assert.equal(g.attempts[0].platforms.instagram.hit.views,3100);
+ assert.equal(g.attempts[0].platforms.instagram.peak.views,100000);
 });

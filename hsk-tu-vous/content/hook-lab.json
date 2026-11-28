@@ -28,11 +28,12 @@
     "analysisScope": "publishedAt-rolling-window",
     "discoveryPilot": {
       "enabled": true,
-      "mode": "shadow-read-only",
+      "mode": "active",
       "minimumViews": 3000,
       "minimumAgeHours": 72,
       "maximumInitialAttempts": 2,
-      "note": "Owner threshold discovery; shadow only until prospective family registration, weekly allocation and dependent policy migration are complete. Does not override existing exact-window experiment rules."
+      "note": "Owner-authorized weekly lesson discovery. Threshold trials use real cumulative snapshots; exact-window retention and other business A/B reports remain separate. Freeze the next weekly assignments in calendar.discoveryWeeks before drafting.",
+      "activeFrom": "2026-11-30"
     }
   },
   "formats": [

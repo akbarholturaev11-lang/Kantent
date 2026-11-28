@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { analyzeObservations, loadObservations } from './feedback-analyzer.mjs';
-import { evaluateDiscovery, discoveryWeekCutoff, planDiscoveryWeek } from './viral-discovery.mjs';
+import { evaluateDiscovery, discoveryWeekCutoff, planDiscoveryWeek, makeDiscoveryFreezeRecord, freezeDiscoveryCalendar, validateDiscoveryCalendar } from './viral-discovery.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -130,16 +130,27 @@ export function readDiscoveryWeek({ projectRoot=root, calendar, today, now=new D
   const registry=readJson(path.join(projectRoot,'content/creative-formats.json'));
   const publications=readJson(path.join(projectRoot,'content/feedback/publications.json')).records;
   const destinations=readJson(path.join(projectRoot,'content/publication-destinations.json'));
+  const week=discoveryWeekCutoff(today,now);
+  const frozen=(calendar.discoveryWeeks??[]).find(w=>w.weekStart===week.startDate);
+  if(frozen){
+    validateDiscoveryCalendar(calendar,registry);
+    return {...frozen,mode:'active',status:'frozen',freezeRecord:frozen,slots:frozen.slots.map(s=>({...s,brief:registry.discoveryFamilies.find(f=>f.id===s.discoveryFormatId)?.brief??null})),assignmentAuthorized:true,publicationAuthorized:false};
+  }
   const observations=loadObservations(path.join(projectRoot,'content/feedback/observations'),{applyMappings:false});
-  const cutoff=discoveryWeekCutoff(today,now).cutoff;
+  const cutoff=week.cutoff;
   const discovery=evaluateDiscovery({observations,publications,destinations,policy,asOf:cutoff});
-  return planDiscoveryWeek({calendar,registry,discovery,publications,today,now});
+  const plan=planDiscoveryWeek({calendar,registry,discovery,publications,today,now});
+  const active=policy.mode==='active'&&plan.weekStart>=policy.activeFrom;
+  const freezeRecord=makeDiscoveryFreezeRecord(plan,{calendar,registry,policy,now});
+  return {...plan,mode:active?'active':'shadow-read-only',status:freezeRecord?'ready-to-freeze':active?'preview-or-needs-family':'historical-preview',freezeRecord,assignmentAuthorized:!!freezeRecord};
 }
 
 export function runCli(args = process.argv.slice(2), { now = new Date() } = {}) {
-  let json=false, date=null;
+  let json=false, date=null, freeze=false, write=false;
   for(let i=0; i<args.length; i++) {
     if(args[i]==='--json') json=true;
+    else if(args[i]==='--freeze-week') freeze=true;
+    else if(args[i]==='--write') write=true;
     else if(args[i]==='--date' && args[i+1]) date=args[++i];
     else throw new Error('Usage: npm run content:viral-plan -- [--date YYYY-MM-DD] [--json]');
   }
@@ -148,6 +159,15 @@ export function runCli(args = process.argv.slice(2), { now = new Date() } = {}) 
   const policy=readJson(path.join(root,'content/hook-lab.json')).policy;
   const asOf=date ?? localDate(now,calendar.timezone);
   if(!isoDate(asOf)) throw new Error('Invalid date');
+  if(write&&!freeze)throw Error('--write requires --freeze-week');
+  if(freeze){
+    const proposal=readDiscoveryWeek({calendar,today:asOf,now});
+    if(!proposal?.freezeRecord)throw Error('No freeze record available: wait for the Sunday cutoff or register a new family; existing production is untouched');
+    const next=freezeDiscoveryCalendar(calendar,proposal.freezeRecord,registry);
+    if(write&&next!==calendar){const file=path.join(root,'content/calendar.json');const temp=file+'.discovery-tmp';fs.writeFileSync(temp,JSON.stringify(next,null,2)+'\n');fs.renameSync(temp,file);}
+    console.log(JSON.stringify({written:write&&next!==calendar,freezeRecord:proposal.freezeRecord},null,2));
+    return proposal;
+  }
   const episodeByFile={};
   for(const item of calendar.items) {
     if(!item.episodeFile || episodeByFile[item.episodeFile]) continue;
@@ -171,7 +191,7 @@ export function runCli(args = process.argv.slice(2), { now = new Date() } = {}) 
     for(const item of plan.upcoming)
       console.log(`${item.date} ${item.episodeId}: ${item.creativeFormatId ?? item.status} [${item.currentHookFormat ?? '?'}]`);
     console.log('7d creative evidence: '+plan.evidenceStatus+'; app conversions: unmeasured');
-    if(plan.discovery)console.log('Discovery shadow: '+plan.discovery.families.length+' families; '+plan.discovery.unattributedHits.length+' unattributed threshold hits.');
+    if(plan.discovery)console.log('Discovery: '+plan.discovery.families.length+' families; '+plan.discovery.unattributedHits.length+' unattributed threshold hits.');
     console.log('No video, voice, CTA or publication changed.');
   }
   return plan;
