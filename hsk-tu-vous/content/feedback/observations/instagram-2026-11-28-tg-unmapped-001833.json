@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "description": "Additional genuine native-ID readback of previously unmapped Tajik Instagram video",
+  "collection": {
+    "collectedAt": "2026-11-28T00:18:33.000Z",
+    "baselineMain": "d6e851284f7a211c51440af9622d479682cdc81f"
+  },
+  "observations": [
+    {
+      "platform": "instagram",
+      "platformPostId": "17928968709205236",
+      "accountId": "6ae0f16205fd6f5357f8503d",
+      "accountUsername": "hskai.apptj",
+      "locale": null,
+      "publishedAt": "2026-11-23T16:53:31.000Z",
+      "observedAt": "2026-11-28T00:18:33.000Z",
+      "collectedAt": "2026-11-28T00:18:33.000Z",
+      "window": "lifetime",
+      "postUrl": "https://www.instagram.com/reel/DgF2LDUsxZn/",
+      "episodeId": null,
+      "contentType": null,
+      "series": null,
+      "hookFormat": null,
+      "hskLevel": null,
+      "effectStyle": null,
+      "creativeFormatId": null,
+      "storytellingPattern": null,
+      "zernioPostId": null,
+      "providerRecordId": "6b048a6c7d18294ed6448160",
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "follows": "count",
+        "avgWatchMs": "milliseconds",
+        "skipRatePercent": "percent",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 301,
+        "reach": 193,
+        "likes": 6,
+        "comments": 0,
+        "saves": 3,
+        "shares": 0,
+        "follows": null,
+        "avgWatchMs": null,
+        "skipRatePercent": null,
+        "durationSeconds": null
+      },
+      "source": {
+        "provider": "Zernio",
+        "connector": "Zernio",
+        "endpoint": "get_post_analytics (native ID lookup) + accounts_get_account_posts",
+        "accountId": "6ae0f16205fd6f5357f8503d",
+        "syncedAt": "2026-11-27T23:30:08.772Z",
+        "syncedAtScope": "platform dashboard dataAsOf; not per-post metric update",
+        "providerMetricUpdatedAt": null,
+        "syncStatus": "synced",
+        "providerRecordId": "6b048a6c7d18294ed6448160",
+        "sourceUrl": "https://www.instagram.com/reel/DgF2LDUsxZn/",
+        "windowEvidence": null,
+        "refresh": {
+          "dashboardDataAsOf": "2026-11-27T23:30:08.772Z",
+          "postRefreshAt": null
+        },
+        "nativeIdentity": {
+          "endpoint": "accounts_get_account_posts",
+          "id": "17928968709205236",
+          "verifiedPermalink": "https://www.instagram.com/reel/DgF2LDUsxZn/"
+        },
+        "attribution": null
+      },
+      "metricCaveat": "Native video verified, no approved Zernio publication mapping. Provider analytics record ID is not a scheduled Zernio post ID. Lifetime only."
+    }
+  ]
+}
