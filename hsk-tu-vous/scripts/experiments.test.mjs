@@ -30,9 +30,11 @@ test("the canonical registry is valid: one active test, goals from contentGoals,
 
 test("arms are balanced, stored once and never hand-picked; stories keep both parts in one arm", () => {
   assert.deepEqual(assignmentFor(registry, lesson("ji-vs-duoshao-books-price-20261118", "2026-11-18")), { experimentId: "lesson-opening-v1", arm: "A", stored: true });
-  const next = assignmentFor(registry, lesson("new-lesson-20261123", "2026-11-23"));
+  const fixture = structuredClone(registry);
+  fixture.experiments[0].assignments = fixture.experiments[0].assignments.filter(a=>a.date<= "2026-11-20");
+  const next = assignmentFor(fixture, lesson("new-lesson-20261123", "2026-11-23"));
   assert.deepEqual(next, { experimentId: "lesson-opening-v1", arm: "A", stored: false }, "tie → opposite of the latest (B)");
-  const { registry: after } = assignItem(registry, lesson("new-lesson-20261123", "2026-11-23"), { today: "2026-11-17" });
+  const { registry: after } = assignItem(fixture, lesson("new-lesson-20261123", "2026-11-23"), { today: "2026-11-17" });
   assert.equal(assignmentFor(after, lesson("new-lesson-20261125", "2026-11-25")).arm, "B", "fewer B → B");
   assert.throws(() => assignItem(registry, lesson("old-20261101", "2026-11-19"), { today: "2026-11-20" }), /past/u);
 

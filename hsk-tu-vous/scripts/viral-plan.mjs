@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { analyzeObservations, loadObservations } from './feedback-analyzer.mjs';
-import { evaluateDiscovery } from './viral-discovery.mjs';
+import { evaluateDiscovery, discoveryWeekCutoff, planDiscoveryWeek } from './viral-discovery.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -144,7 +144,11 @@ export function runCli(args = process.argv.slice(2), { now = new Date() } = {}) 
   if(policy.discoveryPilot?.enabled){
     const publications=readJson(path.join(root,'content/feedback/publications.json')).records;
     const destinations=readJson(path.join(root,'content/publication-destinations.json'));
-    plan.discovery=evaluateDiscovery({observations,publications,destinations,policy:policy.discoveryPilot,asOf:now});
+    const raw=loadObservations(undefined,{applyMappings:false});
+    plan.discovery=evaluateDiscovery({observations:raw,publications,destinations,policy:policy.discoveryPilot,asOf:now});
+    const cutoff=discoveryWeekCutoff(asOf,now).cutoff;
+    const frozen=evaluateDiscovery({observations:raw,publications,destinations,policy:policy.discoveryPilot,asOf:cutoff});
+    plan.discoveryWeek=planDiscoveryWeek({calendar,registry,discovery:frozen,publications,today:asOf,now});
   }
   if(json) console.log(JSON.stringify(plan,null,2));
   else {

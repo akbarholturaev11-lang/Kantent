@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {evaluateDiscovery} from './viral-discovery.mjs';
+import {evaluateDiscovery,planDiscoveryWeek,discoveryWeekCutoff} from './viral-discovery.mjs';
 const h='a'.repeat(64), date='2026-11-01T00:00:00Z', end='2026-11-05T00:00:00Z';
 const destinations={videoDestinations:{ru:{platforms:{instagram:{zernioPublishingAuthorized:true,verifiedAccountId:'ig'},youtube:{zernioPublishingAuthorized:true,verifiedAccountId:'yt'},facebook:{zernioPublishingAuthorized:false,verifiedAccountId:'fb'}}}}};
 function receipt(id,platform){
@@ -57,4 +57,44 @@ test('legacy arm is diagnostic only; no assignment or publication permission',()
  const x=run(rows,rows.map(p=>observation(p,4000)));
  assert.equal(x.families[0].actionable,false);assert.equal(x.assignmentAuthorized,false);
  assert.equal(x.publicationAuthorized,false);
+});
+
+
+test('one known hit can trigger a retry even when another platform has no data',()=>{
+ const g=run(one,[observation(one[0],3000)]).families[0];
+ assert.equal(g.state,'retry');assert.equal(g.nextAction,'retry-new-topic');
+});
+test('wins on different platforms are not repeat success on one platform',()=>{
+ const all=[...one,...two];const g=run(all,[observation(one[0],4000),observation(one[1],10),observation(two[0],10),observation(two[1],4000)]).families[0];
+ assert.equal(g.state,'cross-platform-hit');
+});
+test('a late-collected snapshot cannot enter the frozen cutoff',()=>{
+ const o=observation(one[0],10000);o.collectedAt='2026-11-12T00:00:00Z';
+ assert.equal(run(one,[o]).families[0].state,'pending');
+});
+const calendar={weeklySchedule:{effectiveFromDate:'2026-10-01',days:['MO','TU','WE','TH','FR','SA','SU'].map((weekday,i)=>({weekday,contentType:i>=5?'series-part':i%2?'advertisement':'lesson',...(i>=5?{part:i-4}:{})}))},items:[]};
+const registry={discoveryFamilies:['mistake-fix','new-one','new-two','new-three'].map(id=>({id,hookFormat:'contrast',brief:'Verified lesson distinction'}))};
+const today='2026-11-08',now=new Date('2026-11-08T06:00:00Z');
+function weekly(discovery,extra={}){return planDiscoveryWeek({calendar,registry,discovery:{...discovery,asOf:'2026-11-08T00:00:00Z'},today,now,...extra});}
+test('weekly plan preserves 7 typed slots, chooses retry and fills other slots with exploration',()=>{
+ const discovery=run(one,one.map(p=>observation(p,100)));
+ const p=weekly(discovery);
+ assert.equal(p.slots.length,7);assert.equal(p.weekStart,'2026-11-09');
+ assert.equal(p.slots.filter(s=>s.contentType==='lesson').length,3);
+ assert.equal(p.slots.filter(s=>s.action==='retry').length,1);
+ assert.equal(p.slots.filter(s=>s.action==='explore').length,2);
+ assert.equal(p.slots.filter(s=>s.action==='unchanged').length,4);
+ assert.equal(p.cutoff,'2026-11-08T00:00:00.000Z');
+});
+test('already booked, pending and retired families are not forced into new slots',()=>{
+ const all=[...one,...two];const retired=run(all,all.map(p=>observation(p,100)));
+ const p=weekly(retired,{calendar:{...calendar,items:[{date:'2026-11-09',id:'existing',contentType:'lesson',discoveryFormatId:'new-one'}]},publications:[{status:'scheduled',content:{type:'lesson'},creative:{discoveryFormatId:'new-two'}}]});
+ assert.equal(p.slots[0].action,'preserve-existing');
+ assert.equal(p.slots[0].contentId,'existing');
+ assert.equal(p.slots.filter(s=>s.action==='author-new-family').length,1);
+ assert.ok(p.slots.every(s=>s.discoveryFormatId!=='mistake-fix'&&s.discoveryFormatId!=='new-two'));
+});
+test('a Sunday plan cannot use future evidence and a Saturday preview cannot see Sunday data',()=>{
+ assert.throws(()=>planDiscoveryWeek({calendar,registry,discovery:{families:[],asOf:'2026-11-08T01:00:00Z'},today,now}),/cutoff/);
+ assert.equal(discoveryWeekCutoff('2026-11-07',new Date('2026-11-07T12:00:00Z')).cutoff.toISOString(),'2026-11-07T12:00:00.000Z');
 });

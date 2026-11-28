@@ -293,5 +293,53 @@
         ]
       }
     }
-  }
+  },
+  "discoveryFamilies": [
+    {
+      "id": "real-life-conflict",
+      "hookFormat": "scenario",
+      "brief": "Open with a concrete immediate misunderstanding in China; show the consequence and a useful verified phrase quickly."
+    },
+    {
+      "id": "common-mistake",
+      "hookFormat": "contrast",
+      "brief": "Show a genuinely common error as wrong, correct it immediately and demonstrate one useful example."
+    },
+    {
+      "id": "textbook-vs-reality",
+      "hookFormat": "contrast",
+      "brief": "Contrast a documented textbook expression with a genuinely natural usage; never claim a valid expression is wrong."
+    },
+    {
+      "id": "visual-contrast",
+      "hookFormat": "contrast",
+      "brief": "Open with a meaningful side-by-side difference and let the visual resolve one verified distinction."
+    },
+    {
+      "id": "quick-challenge",
+      "hookFormat": "question",
+      "brief": "An immediately answerable learner challenge; reveal and explain promptly, without artificial suspense."
+    },
+    {
+      "id": "unexpected-fact",
+      "hookFormat": "question",
+      "brief": "Start from a surprising but verified feature of Mandarin that solves a real learner problem."
+    },
+    {
+      "id": "micro-drama",
+      "hookFormat": "scenario",
+      "brief": "Start mid-action with a clear obstacle and resolve it in the same lesson; no forced cliffhanger."
+    },
+    {
+      "id": "survival-phrase",
+      "hookFormat": "scenario",
+      "brief": "Open on a familiar high-need real-life task and demonstrate the phrase before expanding."
+    },
+    {
+      "id": "listen-and-guess",
+      "hookFormat": "question",
+      "brief": "Start with a short natural Mandarin utterance, let the viewer identify its meaning, then explain and practice."
+    }
+  ],
+  "discoveryFamiliesNote": "Initial editorial hypotheses, not verified winners or measured competitor results. Existing formats, goals and A/B pilot remain unchanged while discovery is shadow-only."
 }

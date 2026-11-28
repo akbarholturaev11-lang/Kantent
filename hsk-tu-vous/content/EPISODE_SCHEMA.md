@@ -126,3 +126,7 @@ Each language writes its own review root: the original at `review/<id>/`, and th
 - A visual or packaging edit can reuse audio and timestamps, but invalidates both current platform exports and package approval until re-rendered. Immutable approval archives and publication records remain intact.
 - Motion, sound, caption grouping, typography, and safe-area defaults come from `content/visual-system.json` and `content/EDITING_SPEC.md`. Any renderer-level change requires rebuilding and reviewing the dated package.
 - Source receipts may be added through MCP plan edits. They do not replace a human check of the claims.
+
+
+### Viral Discovery (shadow pilot)
+The optional `hookExperiment.discoveryFormatId` identifies a prospectively authored reusable family from `content/creative-formats.json#discoveryFamilies`; it does not replace `formatId`. The new publication ledger copies it, actual HSK level and explicitly selected creative format from the exact package source. Historical receipts are immutable. Shadow weekly suggestions do not assign calendar items or authorize changing any already prepared sources. See `docs/audits/VIRAL_DISCOVERY_ROLLOUT.md`.

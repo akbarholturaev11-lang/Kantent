@@ -211,3 +211,7 @@ See `CURRENT_TASKS.md` (owner actions first). Engineering-wise the next real pro
 
 ## 2026-11-28 — Viral Discovery phase 1 (separate branch)
 Owner requested the threshold discovery system. See [Viral Discovery rollout](VIRAL_DISCOVERY_ROLLOUT.md) for scope and remaining gates. Branch `feat/viral-discovery-system` is a separate read-only pilot; existing production and bugfix work remain untouched. No production activation or merge is implied.
+
+
+## 2026-11-28 — Viral Discovery phase 2
+Same draft PR #78: added weekly shadow proposal and prospective receipt fields; fixed two existing fixture failures (see rollout). Production rules and main unchanged. Next: verify CI, real-data report, then migrate lesson A/B and persist/validate weekly authoring assignments together.
