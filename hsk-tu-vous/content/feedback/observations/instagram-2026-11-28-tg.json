@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "description": "Verified Tajik Instagram lifetime observations, changed metrics or new posts only",
+  "collection": {
+    "collectedAt": "2026-11-28T00:16:41.000Z",
+    "baselineMain": "2fcb24d0379b3493699f46b287f4caa7b40a014d",
+    "duplicates": 3,
+    "errors": []
+  },
+  "observations": [
+    {
+      "platform": "instagram",
+      "platformPostId": "18173597098472445",
+      "accountId": "6ae0f16205fd6f5357f8503d",
+      "accountUsername": "hskai.apptj",
+      "locale": "tg",
+      "publishedAt": "2026-11-27T11:01:59.343Z",
+      "observedAt": "2026-11-28T00:16:41.000Z",
+      "collectedAt": "2026-11-28T00:16:41.000Z",
+      "window": "lifetime",
+      "postUrl": "https://www.instagram.com/reel/DgPhlH4KTLe/",
+      "episodeId": "zhengzai-reading-20261127",
+      "contentType": "lesson",
+      "content": {
+        "id": "zhengzai-reading-20261127",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "d0377d013690afe548d3d60d11a4aa3fc48d151f43217fdaa00a208b551aba66"
+      },
+      "videoSha256": "26668298108b382830ddf9c1123bc0017e673a0db5c5a315c1648afe7429335f",
+      "series": null,
+      "hookFormat": "question",
+      "hskLevel": null,
+      "effectStyle": "explain-actions-v1",
+      "creativeFormatId": null,
+      "storytellingPattern": null,
+      "zernioPostId": "6b0413882cd9bd9f0ea05630",
+      "providerRecordId": null,
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "follows": "count",
+        "avgWatchMs": "milliseconds",
+        "skipRatePercent": "percent",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 125,
+        "reach": 85,
+        "likes": 1,
+        "comments": 0,
+        "saves": 0,
+        "shares": 0,
+        "follows": null,
+        "avgWatchMs": null,
+        "skipRatePercent": null,
+        "durationSeconds": null
+      },
+      "source": {
+        "provider": "Zernio",
+        "connector": "Zernio",
+        "endpoint": "get_post_analytics + list_posts + accounts_get_account_posts",
+        "accountId": "6ae0f16205fd6f5357f8503d",
+        "syncedAt": "2026-11-27T23:30:08.772Z",
+        "syncedAtScope": "platform dashboard dataAsOf, not per-post timestamp",
+        "providerMetricUpdatedAt": null,
+        "syncStatus": "synced",
+        "providerRecordId": null,
+        "sourceUrl": "https://www.instagram.com/reel/DgPhlH4KTLe/",
+        "windowEvidence": null,
+        "refresh": {
+          "dashboardDataAsOf": "2026-11-27T23:30:08.772Z",
+          "postRefreshAt": null
+        },
+        "nativeIdentity": {
+          "endpoint": "accounts_get_account_posts",
+          "id": "18173597098472445",
+          "verifiedPermalink": "https://www.instagram.com/reel/DgPhlH4KTLe/"
+        },
+        "attribution": {
+          "kind": "approved-ledger-exact-zernio-native-account",
+          "approvedVideoSha256": "26668298108b382830ddf9c1123bc0017e673a0db5c5a315c1648afe7429335f",
+          "sourceHash": "d0377d013690afe548d3d60d11a4aa3fc48d151f43217fdaa00a208b551aba66",
+          "ledgerHead": "2fcb24d0379b3493699f46b287f4caa7b40a014d"
+        }
+      },
+      "metricCaveat": "Lifetime only. Collection time used as observedAt; per-post metric update time absent. Dashboard watermark platform scoped."
+    },
+    {
+      "platform": "instagram",
+      "platformPostId": "18135545563767203",
+      "accountId": "6ae0f16205fd6f5357f8503d",
+      "accountUsername": "hskai.apptj",
+      "locale": "tg",
+      "publishedAt": "2026-11-17T11:05:04.767Z",
+      "observedAt": "2026-11-28T00:16:41.000Z",
+      "collectedAt": "2026-11-28T00:16:41.000Z",
+      "window": "lifetime",
+      "postUrl": "https://www.instagram.com/reel/Df1x9J3DdEq/",
+      "episodeId": "bi-comparison-height-20261116",
+      "contentType": "lesson",
+      "content": {
+        "id": "bi-comparison-height-20261116",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "366ed91502617e9e204f1d83432b739c16d9ac68c5cf6f8c56e640ed0bc40931"
+      },
+      "videoSha256": "ec76269e27429269dee5b2f4fef711d88929f9f34bfb9ca4e9dde1976764596c",
+      "series": null,
+      "hookFormat": "question",
+      "hskLevel": null,
+      "effectStyle": "explain-actions-v1",
+      "creativeFormatId": null,
+      "storytellingPattern": null,
+      "zernioPostId": "6afbc565660b23b40d686cd7",
+      "providerRecordId": null,
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "follows": "count",
+        "avgWatchMs": "milliseconds",
+        "skipRatePercent": "percent",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 308,
+        "reach": 177,
+        "likes": 7,
+        "comments": 3,
+        "saves": 6,
+        "shares": 2,
+        "follows": null,
+        "avgWatchMs": null,
+        "skipRatePercent": null,
+        "durationSeconds": null
+      },
+      "source": {
+        "provider": "Zernio",
+        "connector": "Zernio",
+        "endpoint": "get_post_analytics + list_posts + accounts_get_account_posts",
+        "accountId": "6ae0f16205fd6f5357f8503d",
+        "syncedAt": "2026-11-27T23:30:08.772Z",
+        "syncedAtScope": "platform dashboard dataAsOf, not per-post timestamp",
+        "providerMetricUpdatedAt": null,
+        "syncStatus": "synced",
+        "providerRecordId": null,
+        "sourceUrl": "https://www.instagram.com/reel/Df1x9J3DdEq/",
+        "windowEvidence": null,
+        "refresh": {
+          "dashboardDataAsOf": "2026-11-27T23:30:08.772Z",
+          "postRefreshAt": null
+        },
+        "nativeIdentity": {
+          "endpoint": "accounts_get_account_posts",
+          "id": "18135545563767203",
+          "verifiedPermalink": "https://www.instagram.com/reel/Df1x9J3DdEq/"
+        },
+        "attribution": {
+          "kind": "approved-ledger-exact-zernio-native-account",
+          "approvedVideoSha256": "ec76269e27429269dee5b2f4fef711d88929f9f34bfb9ca4e9dde1976764596c",
+          "sourceHash": "366ed91502617e9e204f1d83432b739c16d9ac68c5cf6f8c56e640ed0bc40931",
+          "ledgerHead": "2fcb24d0379b3493699f46b287f4caa7b40a014d"
+        }
+      },
+      "metricCaveat": "Lifetime only. Collection time used as observedAt; per-post metric update time absent. Dashboard watermark platform scoped."
+    },
+    {
+      "platform": "instagram",
+      "platformPostId": "18084912983713569",
+      "accountId": "6ae0f16205fd6f5357f8503d",
+      "accountUsername": "hskai.apptj",
+      "locale": "tg",
+      "publishedAt": "2026-11-12T11:02:14.703Z",
+      "observedAt": "2026-11-28T00:16:41.000Z",
+      "collectedAt": "2026-11-28T00:16:41.000Z",
+      "window": "lifetime",
+      "postUrl": "https://www.instagram.com/reel/Dfo5o2QFLLO/",
+      "episodeId": "youdianr-vs-yidianr-price-20261111",
+      "contentType": "lesson",
+      "content": {
+        "id": "youdianr-vs-yidianr-price-20261111",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "8ac1f6402a3e84b8ae939f6e4d5b6f7fef4356e2c7875565793f582b37f80652"
+      },
+      "videoSha256": "b60a1b8d5bceb52a3aad57bd57d73f21c876cd9f16c9ecc8f6a072b7a03aaa89",
+      "series": null,
+      "hookFormat": "scenario",
+      "hskLevel": null,
+      "effectStyle": "explain-actions-v1",
+      "creativeFormatId": null,
+      "storytellingPattern": null,
+      "zernioPostId": "6af5197ab7bcb7089973e1a2",
+      "providerRecordId": null,
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "follows": "count",
+        "avgWatchMs": "milliseconds",
+        "skipRatePercent": "percent",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 549,
+        "reach": 365,
+        "likes": 9,
+        "comments": 2,
+        "saves": 7,
+        "shares": 0,
+        "follows": null,
+        "avgWatchMs": null,
+        "skipRatePercent": null,
+        "durationSeconds": null
+      },
+      "source": {
+        "provider": "Zernio",
+        "connector": "Zernio",
+        "endpoint": "get_post_analytics + list_posts + accounts_get_account_posts",
+        "accountId": "6ae0f16205fd6f5357f8503d",
+        "syncedAt": "2026-11-27T23:30:08.772Z",
+        "syncedAtScope": "platform dashboard dataAsOf, not per-post timestamp",
+        "providerMetricUpdatedAt": null,
+        "syncStatus": "synced",
+        "providerRecordId": null,
+        "sourceUrl": "https://www.instagram.com/reel/Dfo5o2QFLLO/",
+        "windowEvidence": null,
+        "refresh": {
+          "dashboardDataAsOf": "2026-11-27T23:30:08.772Z",
+          "postRefreshAt": null
+        },
+        "nativeIdentity": {
+          "endpoint": "accounts_get_account_posts",
+          "id": "18084912983713569",
+          "verifiedPermalink": "https://www.instagram.com/reel/Dfo5o2QFLLO/"
+        },
+        "attribution": {
+          "kind": "approved-ledger-exact-zernio-native-account",
+          "approvedVideoSha256": "b60a1b8d5bceb52a3aad57bd57d73f21c876cd9f16c9ecc8f6a072b7a03aaa89",
+          "sourceHash": "8ac1f6402a3e84b8ae939f6e4d5b6f7fef4356e2c7875565793f582b37f80652",
+          "ledgerHead": "2fcb24d0379b3493699f46b287f4caa7b40a014d"
+        }
+      },
+      "metricCaveat": "Lifetime only. Collection time used as observedAt; per-post metric update time absent. Dashboard watermark platform scoped."
+    }
+  ]
+}
