@@ -77,7 +77,7 @@ export function runCli(args=process.argv.slice(2),dir=root) {
   else if(seriesRequested)console.log('Series '+result.seriesId+': '+result.propose.map(x=>x.date).join(', ')+' (proposal only)');
   else {
     console.log('Buffer='+result.buffer.readyFutureEpisodes+', repairs='+result.repair.length+', future dates to author='+result.propose.map(x=>x.date).join(', '));
-    for(const slot of result.discoveryWeek?.slots??[])if(slot.contentType==='lesson')console.log('Discovery (shadow) '+slot.date+': '+slot.action+' '+(slot.discoveryFormatId??''));
+    for(const slot of result.discoveryWeek?.slots??[])if(slot.contentType==='lesson')console.log('Discovery ('+result.discoveryWeek.mode+') '+slot.date+': '+slot.action+' '+(slot.discoveryFormatId??''));
   }
   return 0; // returning a proposed plan is not an assertion that drafts have been created
 }

@@ -126,3 +126,11 @@ test('later cumulative breakout remains the peak, not only the first threshold c
  assert.equal(g.attempts[0].platforms.instagram.hit.views,3100);
  assert.equal(g.attempts[0].platforms.instagram.peak.views,100000);
 });
+
+
+test('one mature miss with an unavailable platform permits the second attempt but never declares two incomplete attempts failures',()=>{
+ const first=run(one,[observation(one[0],100)]).families[0];
+ assert.equal(first.nextAction,'retry-new-topic');assert.equal(first.attempts[0].complete,false);
+ const second=run([...one,...two],[observation(one[0],100),observation(two[0],150)]).families[0];
+ assert.equal(second.nextAction,'await-existing-attempt');assert.notEqual(second.state,'retired');
+});

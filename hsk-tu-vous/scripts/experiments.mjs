@@ -21,7 +21,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { addCalendarDays, calendarWeekday, contentTypeOf } from "./content-schedule.mjs";
 import { deriveMetrics, loadObservations } from "./feedback-analyzer.mjs";
-import {readDiscoveryRules,discoveryApplies,discoveryDraftErrors} from './viral-discovery.mjs';
+import {readDiscoveryRules,discoveryApplies,discoveryDraftErrors,discoveryBrief} from './viral-discovery.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const EXPERIMENTS_FILE = "content/experiments.json";
@@ -392,8 +392,9 @@ export function runCli(args = process.argv.slice(2), root = ROOT) {
   if (args.includes("--brief")) {
     const date = arg(args, "--brief");
     const items = context.calendar.items.filter((item) => item.date === date);
-    if (!items.length) { console.log(`No calendar item on ${date}.`); return 0; }
-    for (const item of items) console.log(experimentBrief(registry, item, context.goals) ?? `${item.id}: no active experiment covers this ${contentTypeOf(item)}; write it in the current style.`);
+    const discovery=readDiscoveryRules(root);
+    if (!items.length) { console.log(`No calendar item on ${date}; consult the weekly plan for new slots.`); return 0; }
+    for (const item of items) console.log(discoveryBrief(discovery,item) ?? experimentBrief(registry, item, context.goals) ?? `${item.id}: no active experiment covers this ${contentTypeOf(item)}; write it in the current style.`);
     return 0;
   }
   if (args.includes("--assign")) {

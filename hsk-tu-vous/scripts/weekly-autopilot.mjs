@@ -122,7 +122,7 @@ function printPlan(plan) {
   console.log(fallback.fallbackEnabled && fallback.openRouterKey
     ? "Voice: Gemini first, OpenRouter fallback on quota (429) is configured."
     : "WARNING: OpenRouter voice fallback is NOT configured (HSK_AI_OPENROUTER_FALLBACK_ENABLED=true + OPENROUTER_API_KEY) — a Gemini quota stop will wait for the reset.");
-  for(const slot of plan.discoveryWeek?.slots??[])if(slot.contentType==='lesson')console.log('Discovery (shadow) '+slot.date+': '+slot.action+' '+(slot.discoveryFormatId??''));
+  for(const slot of plan.discoveryWeek?.slots??[])if(slot.contentType==='lesson')console.log('Discovery ('+plan.discoveryWeek.mode+') '+slot.date+': '+slot.action+' '+(slot.discoveryFormatId??''));
   for (const day of plan.days) {
     if (day.missing) { console.log(`${day.date} ${day.weekday}: NO calendar item (expected ${day.expected?.contentType ?? "?"}) — author it first`); continue; }
     for (const item of day.items) {

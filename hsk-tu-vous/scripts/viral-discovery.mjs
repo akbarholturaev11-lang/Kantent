@@ -105,7 +105,7 @@ export function evaluateDiscovery({observations, publications, destinations, pol
     if(Object.values(platforms).some(p=>p.hits>=2))state='repeat-hit';
     else if(wins.length>=2)state='cross-platform-hit';
     else if(complete.length>=2)state=wins.length?'platform-hit':'retired';
-    else if(g.attempts.length===1&&(g.attempts[0].complete||wins.length))state=g.attempts[0].hitCount>=2?'multi-platform-hit':'retry';
+    else if(g.attempts.length===1&&Object.values(g.attempts[0].platforms).some(p=>p.status!=='pending'))state=g.attempts[0].hitCount>=2?'multi-platform-hit':'retry';
     // One confirmed hit can trigger a retry despite missing other platforms.
     // A second already published attempt must not be scheduled again while pending.
     const nextAction=(g.attempts.length>=2&&g.attempts.some(a=>!a.complete)&&state!=='repeat-hit')?'await-existing-attempt':
@@ -267,4 +267,15 @@ export function discoveryDraftErrors(rules,item,source){
    return ['Discovery: '+item.id+' must carry the frozen family '+slot.discoveryFormatId+' and Hook format '+slot.hookFormat];
  if(source.experiment?.id==='lesson-opening-v1')return ['Discovery: new lesson must not carry the retired lesson A/B arm'];
  return [];
+}
+
+/** Existing dated authoring interfaces also expose the new frozen family. */
+export function discoveryBrief(rules,item){
+ if(!rules||!discoveryApplies(rules.policy,item))return null;
+ const slot=rules.calendar.discoveryWeeks?.flatMap(w=>w.slots).find(s=>s.date===item.date);
+ if(!slot)return 'Discovery: no frozen assignment. Read the weekly plan and freeze the week before authoring.';
+ if(slot.action==='preserve-existing')return 'Discovery: preserve existing source '+slot.contentId+'; no new assignment.';
+ const family=validateDiscoveryFamilies(rules.registry).find(f=>f.id===slot.discoveryFormatId);
+ if(!family)throw Error('Unknown frozen family '+slot.discoveryFormatId);
+ return 'Discovery '+slot.action+' — '+family.id+' ('+family.hookFormat+'): '+family.brief+'; author a new verified topic in both locales with the frozen family ID.';
 }
