@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "description": "Verified Tajik YouTube lifetime observations, changed metrics or new posts only",
+  "collection": {
+    "collectedAt": "2026-11-28T00:16:41.000Z",
+    "baselineMain": "fd555f368adb0db806a9603bb867496731efcea1",
+    "duplicates": 6,
+    "errors": []
+  },
+  "observations": [
+    {
+      "platform": "youtube",
+      "platformPostId": "xq0jWKzQD_E",
+      "accountId": "6ae160123787e4c71b522d64",
+      "accountUsername": "hskai.app-tj",
+      "locale": "tg",
+      "publishedAt": "2026-11-27T11:00:00.000Z",
+      "observedAt": "2026-11-28T00:16:41.000Z",
+      "collectedAt": "2026-11-28T00:16:41.000Z",
+      "window": "lifetime",
+      "postUrl": "https://www.youtube.com/watch?v=xq0jWKzQD_E",
+      "episodeId": "zhengzai-reading-20261127",
+      "contentType": "lesson",
+      "content": {
+        "id": "zhengzai-reading-20261127",
+        "type": "lesson",
+        "language": "tg",
+        "sourceHash": "d0377d013690afe548d3d60d11a4aa3fc48d151f43217fdaa00a208b551aba66"
+      },
+      "videoSha256": "af52210ccf1eb3396ba369b29e22709409c427a57eb864eda289fc4d63c2c770",
+      "series": null,
+      "hookFormat": "question",
+      "hskLevel": null,
+      "effectStyle": "explain-actions-v1",
+      "creativeFormatId": null,
+      "storytellingPattern": null,
+      "zernioPostId": "6b04141079426541785ecc15",
+      "providerRecordId": null,
+      "mediaType": "video",
+      "metricUnits": {
+        "views": "count",
+        "reach": "accounts",
+        "likes": "count",
+        "comments": "count",
+        "saves": "count",
+        "shares": "count",
+        "follows": "count",
+        "avgWatchMs": "milliseconds",
+        "skipRatePercent": "percent",
+        "durationSeconds": "seconds"
+      },
+      "metrics": {
+        "views": 20,
+        "reach": null,
+        "likes": 0,
+        "comments": 0,
+        "saves": null,
+        "shares": null,
+        "follows": null,
+        "avgWatchMs": null,
+        "skipRatePercent": null,
+        "durationSeconds": null
+      },
+      "source": {
+        "provider": "Zernio",
+        "connector": "Zernio",
+        "endpoint": "get_post_analytics + list_posts + accounts_get_account_posts",
+        "accountId": "6ae160123787e4c71b522d64",
+        "syncedAt": "2026-11-27T22:24:06.187Z",
+        "syncedAtScope": "platform dashboard dataAsOf, not per-post timestamp",
+        "providerMetricUpdatedAt": null,
+        "syncStatus": "synced",
+        "providerRecordId": null,
+        "sourceUrl": "https://www.youtube.com/watch?v=xq0jWKzQD_E",
+        "windowEvidence": null,
+        "refresh": {
+          "dashboardDataAsOf": "2026-11-27T22:24:06.187Z",
+          "postRefreshAt": null
+        },
+        "nativeIdentity": {
+          "endpoint": "accounts_get_account_posts",
+          "id": "xq0jWKzQD_E",
+          "verifiedPermalink": "https://www.youtube.com/watch?v=xq0jWKzQD_E"
+        },
+        "attribution": {
+          "kind": "approved-ledger-exact-zernio-native-account",
+          "approvedVideoSha256": "af52210ccf1eb3396ba369b29e22709409c427a57eb864eda289fc4d63c2c770",
+          "sourceHash": "d0377d013690afe548d3d60d11a4aa3fc48d151f43217fdaa00a208b551aba66",
+          "ledgerHead": "fd555f368adb0db806a9603bb867496731efcea1"
+        }
+      },
+      "metricCaveat": "Lifetime only. Collection time used as observedAt; per-post metric update time absent. Dashboard watermark platform scoped. Unsupported reach/follows null."
+    }
+  ]
+}
