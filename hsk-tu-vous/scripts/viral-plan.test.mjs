@@ -4,7 +4,7 @@ import test from 'node:test';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { localDate, recommendCreativeFormats } from './viral-plan.mjs';
+import { localDate, recommendCreativeFormats, readDiscoveryWeek } from './viral-plan.mjs';
 import { validateObservation, deriveMetrics } from './feedback-analyzer.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
@@ -96,4 +96,14 @@ test('rejects invalid and duplicate registry IDs',()=>{
   assert.throws(()=>recommendCreativeFormats({
     calendar,episodeByFile:episodes,registry:broken,feedback:emptyFeedback,policy,date:'2026-10-11'
   }),/duplicate/);
+});
+
+
+test('canonical weekly proposal is available to both reserve and autopilot without changing calendar',()=>{
+ const snapshot=JSON.stringify(calendar);
+ const p=readDiscoveryWeek({projectRoot:root,calendar,today:'2026-11-29',now:new Date('2026-11-29T00:00:00Z')});
+ assert.equal(p.slots.length,7);
+ assert.equal(p.slots.filter(s=>s.contentType==='lesson').length,3);
+ assert.equal(p.assignmentAuthorized,false);
+ assert.equal(JSON.stringify(calendar),snapshot);
 });

@@ -26,3 +26,6 @@ The existing fixed-window A/B policy remains active until phase 2 is complete.
 - **Still shadow**: no active authoring-policy migration, frozen assignment persistence, or production publishing changes. Activation requires coherent canonical rule and draft-validator migration, real-data verification and full CI.
 
 - CI run 46152787642 exposed an integration issue in the historical October report (before the typed weekly calendar effective date). The planner now returns an explicit empty historical-week proposal rather than inventing slots or throwing; regression test added. The two previous fixture failures were corrected in this run. Full CI must be checked on the new head.
+
+## Phase 2 integration readback
+- The existing reserve CLI, MCP weekly plan and Hafta Rejachisi plan now expose the same shared `readDiscoveryWeek` proposal. It is read-only, leaves the 7-slot source plan/production untouched and has no new scheduler. The existing authoring gate still requires the active A/B arm until migration; frozen decision persistence and actual activation remain outstanding. The existing CI test entry includes a real-calendar weekly proposal test.

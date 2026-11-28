@@ -9,7 +9,7 @@ import { MOTION_KINDS } from "./motion-design-plan.mjs";
 import { graphicSceneSchema } from "./graphic-scene-schema.mjs";
 import { reviewPromoPlan, reviewPromoVariants } from "./promo-plan.mjs";
 import {contentTypeOf} from "./content-schedule.mjs";
-import {proposeBuffer} from "./scenario-buffer-plan.mjs";
+import {reservePlan} from "./scenario-buffer-plan.mjs";
 import {dateInTimezone,isDraftReady} from "./self-improvement-check.mjs";
 import { validateLessonPresentation } from "./lesson-presentation-policy.mjs";
 import { lessonArtPreflight } from "./review-lesson-art.mjs";
@@ -425,7 +425,7 @@ export const createServer = () => {
     },
     async ({date})=>withToolErrors(async()=>{
       const calendar=await readJson(CALENDAR_PATH);
-      return proposeBuffer(calendar,{today:date??dateInTimezone(new Date(),calendar.timezone),episodeIsReady:item=>isDraftReady(PROJECT_ROOT,item)});
+      return reservePlan(calendar,{projectRoot:PROJECT_ROOT,today:date??dateInTimezone(new Date(),calendar.timezone),episodeIsReady:item=>isDraftReady(PROJECT_ROOT,item)});
     }),
   );
 

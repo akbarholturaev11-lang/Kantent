@@ -119,6 +119,23 @@ export function recommendCreativeFormats({ calendar, episodeByFile, registry, fe
   };
 }
 
+/** Shared read-only weekly proposal used by the CLI, MCP reserve and autopilot. */
+export function readDiscoveryWeek({ projectRoot=root, calendar, today, now=new Date() }={}) {
+  const policyPath=path.join(projectRoot,'content/hook-lab.json');
+  if(!fs.existsSync(policyPath))return null;
+  const policy=readJson(policyPath).policy.discoveryPilot;
+  if(!policy?.enabled)return null;
+  calendar??=readJson(path.join(projectRoot,'content/calendar.json'));
+  today??=localDate(now,calendar.timezone);
+  const registry=readJson(path.join(projectRoot,'content/creative-formats.json'));
+  const publications=readJson(path.join(projectRoot,'content/feedback/publications.json')).records;
+  const destinations=readJson(path.join(projectRoot,'content/publication-destinations.json'));
+  const observations=loadObservations(path.join(projectRoot,'content/feedback/observations'),{applyMappings:false});
+  const cutoff=discoveryWeekCutoff(today,now).cutoff;
+  const discovery=evaluateDiscovery({observations,publications,destinations,policy,asOf:cutoff});
+  return planDiscoveryWeek({calendar,registry,discovery,publications,today,now});
+}
+
 export function runCli(args = process.argv.slice(2), { now = new Date() } = {}) {
   let json=false, date=null;
   for(let i=0; i<args.length; i++) {
@@ -146,9 +163,7 @@ export function runCli(args = process.argv.slice(2), { now = new Date() } = {}) 
     const destinations=readJson(path.join(root,'content/publication-destinations.json'));
     const raw=loadObservations(undefined,{applyMappings:false});
     plan.discovery=evaluateDiscovery({observations:raw,publications,destinations,policy:policy.discoveryPilot,asOf:now});
-    const cutoff=discoveryWeekCutoff(asOf,now).cutoff;
-    const frozen=evaluateDiscovery({observations:raw,publications,destinations,policy:policy.discoveryPilot,asOf:cutoff});
-    plan.discoveryWeek=planDiscoveryWeek({calendar,registry,discovery:frozen,publications,today:asOf,now});
+    plan.discoveryWeek=readDiscoveryWeek({calendar,today:asOf,now});
   }
   if(json) console.log(JSON.stringify(plan,null,2));
   else {
