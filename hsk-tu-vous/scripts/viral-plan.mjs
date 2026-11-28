@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { analyzeObservations, loadObservations } from './feedback-analyzer.mjs';
+import { serialReadbacks } from './series-plan.mjs';
 import { evaluateDiscovery, discoveryWeekCutoff, planDiscoveryWeek, makeDiscoveryFreezeRecord, freezeDiscoveryCalendar, validateDiscoveryCalendar } from './viral-discovery.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -183,6 +184,7 @@ export function runCli(args = process.argv.slice(2), { now = new Date() } = {}) 
     const destinations=readJson(path.join(root,'content/publication-destinations.json'));
     const raw=loadObservations(undefined,{applyMappings:false});
     plan.discovery=evaluateDiscovery({observations:raw,publications,destinations,policy:policy.discoveryPilot,asOf:now});
+    plan.serialReadbacks=serialReadbacks({publications,observations:raw,asOf:now});
     plan.discoveryWeek=readDiscoveryWeek({calendar,today:asOf,now});
   }
   if(json) console.log(JSON.stringify(plan,null,2));

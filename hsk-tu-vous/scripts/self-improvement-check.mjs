@@ -5,7 +5,7 @@ import { validateStorytellingEpisode } from './storytelling-plan.mjs';
 import { validateLessonPresentation } from './lesson-presentation-policy.mjs';
 import { validateArtManifest } from './generate-lesson-art.mjs';
 import { activeExperiment, armFor } from './visual-variety-plan.mjs';
-import { validateSeriesCalendar } from './series-plan.mjs';
+import { validateSeriesCalendar, readSerialArcErrors } from './series-plan.mjs';
 import {contentTypeOf,weeklyCoverage,nextFullCalendarWeek} from './content-schedule.mjs';
 import {reviewPromoVariants} from './promo-plan.mjs';
 import { readLanguages, assertLocalizedLessonSource } from './language-context.mjs';
@@ -193,6 +193,8 @@ export function inspectDraftReadiness(rootDirectory, item) {
         if (language !== 'ru') assertLocalizedLessonSource(episode, canonical, language);
         checkLessonSource(episode, item, settings.languageCode, visualSystem, { localized: language !== 'ru' });
         checkLessonArtSource(rootDirectory, episode, visualSystem);
+        const serialErrors=readSerialArcErrors(rootDirectory,item,episode,settings.contentRoot,canonical);
+        if(serialErrors.length)throw Error(serialErrors.join('; '));
         // Owner rule 2026-11-17: a draft of the active test carries its stored arm (content/EXPERIMENTS.md).
         const experimentErrors = [...draftExperimentErrors(readExperimentsIfPresent(rootDirectory), item, episode),...discoveryDraftErrors(readDiscoveryRules(rootDirectory),item,episode)];
         if (experimentErrors.length) throw Error(experimentErrors.join('; '));

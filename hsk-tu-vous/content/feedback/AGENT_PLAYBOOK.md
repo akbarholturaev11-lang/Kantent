@@ -69,3 +69,7 @@ No customer-install attribution, no separate social API token, no user data extr
 ## All-content ownership update
 
 Apply `CONTENT_TRACKING.md` to ordinary lessons, ads and serial parts in every default language. Zernio operations preserve the approved calendar part/date and exact language/platform preview; Feedback validates mappings and analyzes separated cohorts, then proposes tests for Calendar Reserve. Feedback never writes source scripts or calendar rows. Recurring tasks must read current `main` and these canonical runbooks on every run; updating repository instructions does not itself change an external task schedule.
+
+## Serial discovery readback
+
+Read `serialReadbacks` in `content:viral-plan -- --json`. Compare the same story's part 1 and part 2 on the same account/language/platform using verified provider-exact 7d data or separately labelled 72–96h cumulative snapshots. Report actual first-part follows per 1000 views, post-attributed profile visits if the provider supplies them, and descriptive continuation ratio (not individual returning viewers). Note ending/opening retention only where actual curves exist. Record source-backed recommendations for next Sunday's story family in the existing report; missing data never delays a serial pair and never becomes a zero. Never use lesson threshold to judge the serial's follower goal.

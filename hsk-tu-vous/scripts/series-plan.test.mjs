@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import {validateSeriesCalendar, proposeSeries} from './series-plan.mjs';
+import {validateSeriesCalendar, proposeSeries, validateSerialArc, serialReadbacks} from './series-plan.mjs';
 import {runCli} from './scenario-buffer-plan.mjs';
 import {auditPlanningBuffer} from './self-improvement-check.mjs';
 
@@ -105,4 +105,30 @@ test('series CLI is read-only and requires an explicit complete request', () => 
     assert.deepEqual(fs.readdirSync(path.join(dir,'content')),['calendar.json']);
     assert.throws(()=>runCli(['--date',request.today,'--series-id',request.seriesId],dir), /parts/);
   } finally {console.log=previousLog;fs.rmSync(dir,{recursive:true,force:true});}
+});
+
+const arcPolicy={effectiveFromDate:'2026-11-30',families:[{id:'mystery-clue'}]};
+const arcCommon={familyId:'mystery-clue',premise:'A missing ticket',stakes:'Miss the show',unresolvedQuestion:'Who has the ticket?',payoffPlan:'The friend kept it safe'};
+const firstArc={storytelling:{serialArc:{...arcCommon,opening:{sceneId:'a',cueText:'The ticket is gone'},progress:{sceneId:'a',cueText:'I asked for help'},cliffhanger:{sceneId:'b',cueText:'Who took the ticket?'}}},scenes:[{id:'a',narration:'The ticket is gone. I asked for help'},{id:'b',narration:'Who took the ticket?'}]};
+const secondArc={storytelling:{serialArc:{...arcCommon,opening:{sceneId:'a',cueText:'Who took the ticket?'},progress:{sceneId:'a',cueText:'I asked my friend'},resolution:{sceneId:'b',cueText:'My friend kept it safe'}}},scenes:[{id:'a',narration:'Who took the ticket? I asked my friend'},{id:'b',narration:'My friend kept it safe'}]};
+const part=(n)=>({id:'part-'+n,date:'2026-12-0'+(4+n),series:{id:'test-story',part:n,totalParts:2}});
+test('new serial pair binds the actual narrative opening, final cliffhanger and resolution',()=>{
+ assert.deepEqual(validateSerialArc(part(1),firstArc,arcPolicy,secondArc),[]);
+ assert.deepEqual(validateSerialArc(part(2),secondArc,arcPolicy,firstArc),[]);
+ const falseTeaser=structuredClone(firstArc);falseTeaser.storytelling.serialArc.cliffhanger.cueText='Tomorrow a new grammar rule';
+ assert.match(validateSerialArc(part(1),falseTeaser,arcPolicy,secondArc).join(),/final non-CTA/);
+ const wrongPayoff=structuredClone(secondArc);wrongPayoff.storytelling.serialArc.payoffPlan='A stranger kept it';
+ assert.match(validateSerialArc(part(2),wrongPayoff,arcPolicy,firstArc).join(),/same planned narrative/);
+ assert.deepEqual(validateSerialArc({...part(1),date:'2026-11-28'},{},arcPolicy,{}),[]);
+});
+test('series readbacks use matching-age verified posts, never turn missing follows into zero',()=>{
+ const h='a'.repeat(64);
+ const p=(n)=>({content:{id:'part-'+n,type:'series-part',language:'ru',sourceHash:h,series:{id:'test-story',part:n,totalParts:2}},platform:'instagram',accountId:'ig',accountUsername:'test',platformPostId:'native-'+n,zernioPostId:'zernio-'+n,status:'published',publishedAt:'2026-12-0'+(4+n)+'T00:00:00Z',verifiedAt:'2026-12-07T00:00:00Z',approvedAt:'2026-12-04T00:00:00Z',videoSha256:h,approvedVideoSha256:h,source:{provider:'Zernio',endpoint:'receipt'},creative:{serialFamilyId:'mystery-clue'}});
+ const a=p(1),b=p(2);
+ const obs=(p,views,follows)=>{const at=new Date(Date.parse(p.publishedAt)+80*3600000).toISOString();return {content:p.content,platform:p.platform,accountId:p.accountId,accountUsername:p.accountUsername,platformPostId:p.platformPostId,zernioPostId:p.zernioPostId,publishedAt:p.publishedAt,observedAt:at,window:'lifetime',source:{provider:'Zernio',endpoint:'analytics_get_analytics',syncedAt:at},metrics:{views,follows,reach:null,likes:null,comments:null,saves:null,shares:null,avgWatchMs:null,skipRatePercent:null,durationSeconds:30}}};
+ const run=observations=>serialReadbacks({publications:[a,b],observations,asOf:new Date('2026-12-12T00:00:00Z')})[0];
+ const x=run([obs(a,5000,25),obs(b,3500,null)]);
+ assert.equal(x.partContinuationRatio,.7);assert.equal(x.firstPartFollowsPer1000Views,5);assert.equal(x.parts[2].near.follows,null);
+ assert.equal(run([obs(a,5000,25),{...obs(b,3500,null),accountId:'other'}]).partContinuationRatio,null);
+ assert.equal(run([obs(a,5000,null)]).firstPartFollowsPer1000Views,null);
 });
